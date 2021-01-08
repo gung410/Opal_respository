@@ -1,0 +1,13 @@
+<div class="monitor">
+  <div class="monitor__content">
+    <ul class="monitor__api-list">
+      <li
+        *ngFor="let origin of apiOrigins"
+        class="monitor__route"
+        title="Click to view status for api {{ origin }}"
+      >
+        <a (click)="onOriginClicked(origin)">{{ origin }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

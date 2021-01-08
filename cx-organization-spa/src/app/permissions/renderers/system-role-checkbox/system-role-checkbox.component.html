@@ -1,0 +1,41 @@
+<div class="check-box-container">
+  <div class="checkbox-title">
+    <img
+      class="arrow-icon"
+      src="assets/icons/arrow-drop-down.svg"
+      title="Cancel"
+      (click)="onArrowIconClicked($event)"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="radioButtonsContainer"
+    />
+    <span style="display: none">&nbsp;</span>
+    <mat-checkbox
+      [ngStyle]="{ 'font-weight': isSystemRoleChecked ? 'bold' : 'normal' }"
+      class="example-margin"
+      [(ngModel)]="isSystemRoleChecked"
+    >
+      <ng-content></ng-content>
+      <span
+        class="title-description"
+        *ngIf="isSystemRoleChecked"
+      >({{ grantedLabelDic[grantedChoice.toString()] }})</span>
+    </mat-checkbox>
+  </div>
+  <div
+    id="radioButtonsContainer"
+    [ngbCollapse]="isCollapsed"
+    class="radio-buttons-container"
+  >
+    <mat-radio-group
+      [(ngModel)]="grantedChoice"
+      aria-label="Select an option"
+    >
+      <div>
+        <mat-radio-button value="Full">{{fullGrantedLabel}}</mat-radio-button>
+      </div>
+      <div>
+        <mat-radio-button value="Read">{{readGrantedLabel}}</mat-radio-button>
+      </div>
+    </mat-radio-group>
+  </div>
+</div>

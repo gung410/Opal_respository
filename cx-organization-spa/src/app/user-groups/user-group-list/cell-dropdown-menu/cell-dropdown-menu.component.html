@@ -1,0 +1,28 @@
+<div class="d-inline-block ag-grid-dropdown" [placement]="'left'" ngbDropdown>
+  <i
+    class="material-icons more-vert ag-grid-dropdown--more-vert-icon"
+    ngbDropdownToggle
+  ></i>
+  <div
+    class="ag-grid-dropdown--menu"
+    aria-labelledby="dropdownEdit"
+    ngbDropdownMenu
+  >
+    <div class="ag-grid-dropdown--arrow-menu"></div>
+    <button
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('edit')"
+    >
+      <span>Edit</span>
+    </button>
+
+    <button
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('delete')"
+    >
+      <span>Delete</span>
+    </button>
+  </div>
+</div>

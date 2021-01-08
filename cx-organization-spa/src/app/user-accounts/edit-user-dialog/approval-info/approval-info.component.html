@@ -1,0 +1,124 @@
+<div class="approval-info">
+  <div
+    *ngIf="allPrimaryApprovalGroups"
+    class="approval-info__approving-officer"
+  >
+    <h5 class="approval-info__approving-officer-label">
+      {{
+        'User_Account_Page.User_Edit_Dialog.Approval_Info_Tab.Primary_Approving_Officer'
+          | translate
+      }}
+    </h5>
+    <div class="approval-info__approving-officer-selection">
+      <people-picker
+        [disabled]="disabled"
+        [(selectedPeople)]="primarySelectedGroup"
+        [closeOnSelect]="true"
+        [avatarField]="'avatarUrl'"
+        [displayPrimaryField]="'name'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [multiple]="false"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="allVisiblePrimaryApprovalGroups"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="stopLoadingPrimaryGroups"
+        (loadMore)="loadMorePrimaryGroups($event)"
+        (focus)="updateAvailablePrimaryGroups()"
+        (selectedPeopleChange)="onSelectPrimaryApprovalGroup($event)"
+        [compareWith]="approvalGroupComparator"
+      >
+      </people-picker>
+    </div>
+  </div>
+  <div
+    *ngIf="allAlternateApprovalGroups"
+    class="approval-info__approving-officer"
+  >
+    <h5 class="approval-info__approving-officer-label">
+      {{
+        'User_Account_Page.User_Edit_Dialog.Approval_Info_Tab.Alternate_Approving_Officer'
+          | translate
+      }}
+    </h5>
+    <div class="approval-info__approving-officer-selection">
+      <people-picker
+        [disabled]="disabled"
+        [(selectedPeople)]="alternateSelectedGroup"
+        [closeOnSelect]="true"
+        [avatarField]="'avatarUrl'"
+        [displayPrimaryField]="'name'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [multiple]="false"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="allVisibleAlternateApprovalGroups"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="stopLoadingAlternateGroups"
+        (loadMore)="loadMoreAlternateGroups($event)"
+        (focus)="updateAvailableAlternateGroups()"
+        (selectedPeopleChange)="onSelectAlternateApprovalGroup($event)"
+        [compareWith]="approvalGroupComparator"
+      >
+      </people-picker>
+    </div>
+  </div>
+  <div *ngIf="isReportingOfficer" class="approval-info__members">
+    <h5 class="approval-info__approving-officer-label">
+      {{
+        'User_Account_Page.User_Edit_Dialog.Approval_Info_Tab.Primary_AO_For'
+          | translate
+      }}
+    </h5>
+    <div class="approval-info__people-picker">
+      <people-picker
+        [disabled]="disabled"
+        [(selectedPeople)]="selectedMembersOfPrimaryGroup"
+        [closeOnSelect]="false"
+        [avatarField]="'jsonDynamicAttributes.avatarUrl'"
+        [displayPrimaryField]="'firstName'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [emailField]="'emailAddress'"
+        [multiple]="true"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="visibleMembersForPrimaryGroup"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="isLoadAllMemberForPrimaryGroup"
+        (loadMore)="loadMoreMembersForPrimaryGroup($event)"
+        (open)="updateVisibleMembersForPrimaryGroup()"
+        [compareWith]="approvalMemberComparator"
+      >
+      </people-picker>
+    </div>
+  </div>
+  <div *ngIf="isReportingOfficer" class="approval-info__members">
+    <h5 class="approval-info__approving-officer-label">
+      {{
+        'User_Account_Page.User_Edit_Dialog.Approval_Info_Tab.Alternate_AO_For'
+          | translate
+      }}
+    </h5>
+    <div class="approval-info__people-picker">
+      <people-picker
+        [disabled]="disabled"
+        [(selectedPeople)]="selectedMembersOfAlternateGroup"
+        [closeOnSelect]="false"
+        [avatarField]="'jsonDynamicAttributes.avatarUrl'"
+        [displayPrimaryField]="'firstName'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [emailField]="'emailAddress'"
+        [multiple]="true"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="visibleMembersForAlternateGroup"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="isLoadAllMemberForAlternateGroup"
+        (loadMore)="loadMoreMembersForAlternateGroup($event)"
+        (open)="updateVisibleMembersForAlternateGroup()"
+        [compareWith]="approvalMemberComparator"
+      >
+      </people-picker>
+    </div>
+  </div>
+</div>

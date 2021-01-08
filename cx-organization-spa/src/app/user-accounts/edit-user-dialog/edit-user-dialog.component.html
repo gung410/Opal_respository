@@ -1,0 +1,156 @@
+<cx-dialog-template
+  [cancelButtonText]="'Common.Button.Cancel' | translate"
+  [doneButtonText]="'Common.Button.Save' | translate"
+  (cancel)="onCancel()"
+  (done)="onSave()"
+  [fixedHeight]="true"
+  [doneButtonDisabled]="mode === EditUserDialogModeEnum.View"
+  [showCustomFooter]="mode === EditUserDialogModeEnum.Create"
+>
+  <modal-footer>
+    <div class="cx-button-group">
+      <input
+        #cancelButton
+        class="cx-btn cx-btn-secondary"
+        type="button"
+        [value]="'Common.Button.Cancel' | translate"
+        (click)="onCancel()"
+      />
+      <input
+        #prevButton
+        [hidden]="isFirstPage"
+        class="cx-btn cx-btn-secondary"
+        type="button"
+        [value]="'Common.Button.Previous' | translate"
+        (click)="onClickPrevPage()"
+      />
+      <input
+        #nextButton
+        [hidden]="isLastPage"
+        class="cx-btn"
+        type="button"
+        [value]="'Common.Button.Next' | translate"
+        (click)="onClickNextPage()"
+      />
+      <input
+        #submitButton
+        [hidden]="!isLastPage"
+        class="cx-btn"
+        type="button"
+        [value]="'Common.Button.Submit' | translate"
+        (click)="onSave()"
+      />
+    </div>
+  </modal-footer>
+  <modal-header>
+    <h4>
+      {{
+        (mode === EditUserDialogModeEnum.Create
+          ? 'User_Account_Page.User_Edit_Dialog.Create_Dialog_Title'
+          : 'User_Account_Page.User_Edit_Dialog.Edit_Dialog_Title'
+        ) | translate
+      }}
+      <span *ngIf="user"> - {{ user.firstName }}</span>
+    </h4>
+    <mat-tab-group
+      #userInfoTabsGroup
+      [(selectedIndex)]="tabIndex"
+      (selectedIndexChange)="onSwitchingTab($event)"
+      [@.disabled]="true"
+    >
+      <mat-tab
+        #basicInfoTab
+        label="{{
+          'User_Account_Page.User_Edit_Dialog.Basic_Info_Tab.Title' | translate
+        }}"
+      >
+      </mat-tab>
+      <mat-tab
+        #advanceInfoTab
+        label="{{
+          'User_Account_Page.User_Edit_Dialog.Advanced_Info_Tab.Title'
+            | translate
+        }}"
+      >
+      </mat-tab>
+      <mat-tab
+        *ngIf="mode !== EditUserDialogModeEnum.Create && !isPendingUser"
+        aria-label="professionalDevelopmentTab"
+        label="{{
+          'User_Account_Page.User_Edit_Dialog.Professional_Development_Tab.Title'
+            | translate
+        }}"
+      >
+      </mat-tab>
+      <mat-tab
+        *ngIf="mode !== EditUserDialogModeEnum.Create && !isPendingUser"
+        label="{{
+          'User_Account_Page.User_Edit_Dialog.Approval_Info_Tab.Title'
+            | translate
+        }}"
+      >
+      </mat-tab>
+      <mat-tab
+        *ngIf="mode !== EditUserDialogModeEnum.Create"
+        label="{{
+          'User_Account_Page.User_Edit_Dialog.Audit_History.Title' | translate
+        }}"
+      >
+      </mat-tab>
+    </mat-tab-group>
+  </modal-header>
+  <content>
+    <div
+      class="edit-user-dialog__tab"
+      [hidden]="tabIndex !== TabIndex.approvalInfo"
+      *ngIf="!isPendingUser"
+    >
+      <approval-info
+        [disabled]="mode === EditUserDialogModeEnum.View"
+        [(approvalData)]="editUserSubmitModel.approvalData"
+        [user]="user"
+        *ngIf="user"
+        [systemRoles]="getUsersCurrentSystemRoles"
+        [departmentTypes]="departmentTypes"
+      ></approval-info>
+    </div>
+    <div
+      class="edit-user-dialog__tab"
+      [hidden]="
+        (!isPendingUser && tabIndex !== TabIndex.auditHistory) ||
+        (isPendingUser && tabIndex !== auditHistoryTabIndexOnPendingUser)
+      "
+      *ngIf="
+        ((!isPendingUser &&
+          selectedTabIndexes.includes(TabIndex.auditHistory)) ||
+          (isPendingUser &&
+            selectedTabIndexes.includes(auditHistoryTabIndexOnPendingUser))) &&
+        mode !== EditUserDialogModeEnum.Create
+      "
+    >
+      <user-audit-history [user]="user" *ngIf="user"></user-audit-history>
+    </div>
+    <div
+      class="edit-user-dialog__tab"
+      [hidden]="
+        (!isPendingUser && tabIndex > 2) ||
+        (isPendingUser && tabIndex === auditHistoryTabIndexOnPendingUser)
+      "
+    >
+      <cx-surveyjs
+        #basicInfoSurveyJs
+        [data]="userData"
+        [hideSubmitBtn]="true"
+        [json]="userFormJSON"
+        [validationFunctions]="validationFunctions"
+        [variables]="basicInfoSurveyVariables"
+        (cancel)="onCancel()"
+        (changePage)="onSurveyPageChanged($event)"
+        (submitting)="onSubmitting($event)"
+        (valueChanged)="onUserFormChanged($event)"
+        (afterSurveyRender)="onAfterSurveyRendered($event)"
+      >
+      </cx-surveyjs>
+    </div>
+  </content>
+</cx-dialog-template>

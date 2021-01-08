@@ -1,0 +1,9 @@
+<div class="data-check-indicator__content">
+  <ng-content> </ng-content>
+</div>
+<div
+  class="data-check-indicator__has-data-indicator"
+  *ngIf="numberOfRemainingData > 0"
+>
+  {{ numberOfRemainingData }}
+</div>

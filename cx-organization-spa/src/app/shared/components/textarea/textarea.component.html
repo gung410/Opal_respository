@@ -1,0 +1,20 @@
+<textarea
+  [ngClass]="className"
+  [ngStyle]="styles"
+  [cols]="width"
+  [rows]="height"
+  [placeholder]="placeholder"
+  (keydown.enter)="onEnter($event)"
+  [(ngModel)]="textValue"
+  (ngModelChange)="onModelChange($event)"
+  [attr.maxlength]="maxNumberOfCharacters"
+></textarea>
+
+<div [ngStyle]="positionStyle" [ngSwitch]="counterDisplay">
+  <span *ngSwitchCase="'fraction'"
+    >{{ currentNumberOfChars }} / {{ maxNumberOfCharacters }}</span
+  >
+  <span *ngSwitchCase="'charsLeft'"
+    >{{ maxNumberOfCharacters - currentNumberOfChars }} characters left</span
+  >
+</div>

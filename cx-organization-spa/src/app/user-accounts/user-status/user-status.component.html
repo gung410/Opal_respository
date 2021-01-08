@@ -1,0 +1,32 @@
+<div class="user-status">
+  <div class="user-status__status-text">
+    <div [class]="'dot-container' + ' ' + statusClass"></div>
+    {{ status }}
+  </div>
+
+  <div
+    *ngIf="
+      employee.entityStatus.statusReasonId &&
+      employee.entityStatus.statusId !== statusTypeEnum.Active.code
+    "
+    class="user-status__status-reason"
+    title="{{ statusReason }}"
+  >
+    {{ statusReason }}
+  </div>
+</div>
+
+<!-- <div class="d-inline-block" [placement]="'bottom-right'" ngbDropdown>
+  <span class="user-status__status" [ngClass]="statusClass">
+    {{status}}
+    <div *ngIf="statusHistoricalData && statusHistoricalData.data && statusHistoricalData.data.eventMany.length"
+      ngbDropdownMenu>
+      <status-historical-data-panel [statusHistoricalData]="statusHistoricalData.data.eventMany" [user]="employee"
+        ngbDropdownItem>
+      </status-historical-data-panel>
+    </div>
+  </span>
+  <span *ngIf="employee.entityStatus.statusReasonId &&
+                                                    (employee.entityStatus.statusId !== statusTypeEnum.Active.code)"
+    class="user-status__status-reason" title="{{statusReason}}">{{statusReason}}</span>
+</div> -->

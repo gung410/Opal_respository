@@ -1,0 +1,171 @@
+<div class="user-list">
+  <cx-table
+    *ngIf="items"
+    [checkboxDisabled]="viewOnly"
+    [containerChildrenCountRoute]="'childrenCount'"
+    [currentSortType]="currentUserTableSortType"
+    [fixedHeaderTopPositionWhenWindowScrollInPx]="90"
+    [headers]="headers"
+    [isDataLazyLoad]="false"
+    [itemIdRoutes]="['identity.id']"
+    [items]="items"
+    [itemTemplate]="employeeRowTemplate"
+    [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+    [showActionsButtonInLastRow]="false"
+    [showMassDefaultAction]="false"
+    (sortTypeChange)="onSortTypeChange($event)"
+  >
+    <cx-table-mass-actions
+      *ngIf="!viewOnly"
+      class="user-list__mass-modification-button"
+    >
+      <cx-button
+        [iconClass]="'material-icons accept'"
+        (clicked)="onAcceptClicked()"
+      >
+        {{
+          (isCurrentUserSuperAdmin || isCurrentUserAccountAdmin
+            ? 'User_Account_Page.User_Context_Menu.Accept_2nd_Level_Approval'
+            : 'User_Account_Page.User_Context_Menu.Accept_1st_Level_Approval'
+          ) | translate
+        }}
+      </cx-button>
+      <cx-button
+        [iconClass]="'material-icons reject'"
+        (clicked)="onRejectClicked()"
+      >
+        {{ 'User_Account_Page.User_Context_Menu.Reject' | translate }}
+      </cx-button>
+      <cx-button
+        *ngIf="
+          !isPendingSpecialApprovalList &&
+          (isCurrentUserSuperAdmin || isCurrentUserAccountAdmin)
+        "
+        [iconClass]="'material-icons request-icon'"
+        (clicked)="onRequestSpecialApprovalClicked()"
+      >
+        {{
+          'User_Account_Page.User_Context_Menu.Request_Special_Approval'
+            | translate
+        }}
+      </cx-button>
+    </cx-table-mass-actions>
+    <ng-template #employeeRowTemplate class="user-list" let-employee="item">
+      <td class="user-list__display-value">
+        <div *ngIf="employee.emailAddress" class="user-list__avatar">
+          <img
+            class="user-list__avatar--circle"
+            [src]="getUserImage(employee)"
+          />
+        </div>
+        <div
+          class="user-list__info"
+          (click)="!viewOnly && onEditPendingUserClicked(employee)"
+        >
+          <span
+            class="user-list__info"
+            [ngClass]="!viewOnly ? 'user-list__info--text' : ''"
+            >{{ employee.firstName }}</span
+          >
+        </div>
+      </td>
+      <td>
+        <div class="user-list__info">
+          <span>{{ employee.emailAddress }}</span>
+        </div>
+      </td>
+      <td>
+        <div class="user-list__info">
+          <span>{{ employee.departmentName }}</span>
+        </div>
+      </td>
+      <td>
+        <div class="user-list__info">
+          <span>{{ employee.created | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+        </div>
+      </td>
+      <td *ngIf="employee.entityStatus">
+        <div class="user-list__info">
+          <user-status [employee]="employee"> </user-status>
+        </div>
+      </td>
+    </ng-template>
+    <ng-template
+      #lastColumnCustomTemplate
+      let-user="item"
+      class="cx-custom-action-list"
+    >
+      <div
+        *ngIf="!viewOnly"
+        [autoClose]="'outside'"
+        ngbDropdown
+        container="body"
+      >
+        <div class="user-list__show-actions-button" ngbDropdownToggle>
+          <i class="material-icons more-vert"></i>
+        </div>
+        <div ngbDropdownMenu>
+          <cx-item-custom-action
+            [icon]="'material-icons accept'"
+            [item]="user"
+            (customActionClick)="onAcceptClicked(user)"
+            ngbDropdownItem
+          >
+            <cx-item-action-content>
+              {{
+                (isCurrentUserSuperAdmin || isCurrentUserAccountAdmin
+                  ? 'User_Account_Page.User_Context_Menu.Accept_2nd_Level_Approval'
+                  : 'User_Account_Page.User_Context_Menu.Accept_1st_Level_Approval'
+                ) | translate
+              }}
+            </cx-item-action-content>
+          </cx-item-custom-action>
+          <cx-item-custom-action
+            [icon]="'material-icons reject'"
+            [item]="user"
+            (customActionClick)="onRejectClicked(user)"
+            ngbDropdownItem
+          >
+            <cx-item-action-content>
+              {{ 'User_Account_Page.User_Context_Menu.Reject' | translate }}
+            </cx-item-action-content>
+          </cx-item-custom-action>
+          <cx-item-custom-action
+            *ngIf="
+              user.entityStatus.statusId ===
+              statusTypeEnum.PendingApproval2nd.code
+            "
+            [icon]="'material-icons request-icon'"
+            [item]="user"
+            (customActionClick)="onRequestSpecialApprovalClicked(user)"
+            ngbDropdownItem
+          >
+            <cx-item-action-content>
+              {{
+                'User_Account_Page.User_Context_Menu.Request_Special_Approval'
+                  | translate
+              }}
+            </cx-item-action-content>
+          </cx-item-custom-action>
+          <cx-item-custom-action
+            [icon]="'material-icons edit-icon'"
+            [item]="user"
+            (customActionClick)="onEditPendingUserClicked(user)"
+            ngbDropdownItem
+          >
+            <cx-item-action-content>
+              {{ 'User_Account_Page.User_Context_Menu.Edit' | translate }}
+            </cx-item-action-content>
+          </cx-item-custom-action>
+        </div>
+      </div>
+    </ng-template>
+  </cx-table>
+  <div *ngIf="items && !items?.length" class="user-list__empty-table">
+    <div *ngIf="!items?.length" class="user-list__empty-message">
+      <div class="user-list__empty-message-title">
+        {{ 'User_Account_Page.User_List.No_Employee' | translate }}
+      </div>
+    </div>
+  </div>
+</div>

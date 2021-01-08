@@ -1,0 +1,145 @@
+<div class="dialog-header">
+  <div class="selected-departments-container">
+    <div class="row selected-departments">
+      <ng-container *ngFor="let department of selectedDepartments">
+        <button type="button" class="btn btn-secondary mr-3 mb-3">
+          {{ department.departmentName }}
+          <span
+            (click)="onRemoveDepartmentItem(department.identity.id)"
+            class="badge badge-light"
+            >X</span
+          >
+        </button>
+      </ng-container>
+      <i
+        (click)="onAllDepartmentsDeselected()"
+        [hidden]="!selectedDepartments.length"
+        class="icon-close cursor-pointer"
+      ></i>
+    </div>
+  </div>
+  <div class="form-group has-search">
+    <input
+      type="text"
+      class="form-control pl-3"
+      [(ngModel)]="searchKey"
+      (keyup.enter)="onSearchDepartment()"
+      placeholder="Search for department(s)/ organisation(s)"
+    />
+    <i
+      [hidden]="!searchKey.trim().length"
+      (click)="onSearchTextCleared()"
+      class="icon-close cursor-pointer"
+    ></i>
+    <i class="icon-search"></i>
+  </div>
+</div>
+<div *ngIf="!isSearching; else searchView" class="dialog-tree-body">
+  <div>
+    <h4>Choose departments below:</h4>
+  </div>
+  <cx-extensive-tree
+    *ngIf="flatDepartmentsArray && flatDepartmentsArray.length"
+    [buttonCondition]="buttonCondition"
+    [countChildrenFieldRoute]="'childrenCount'"
+    [displayFieldRoute]="'departmentName'"
+    [extensiveTreeHeader]="'Organisation Unit'"
+    [flatObjectsArray]="flatDepartmentsArray"
+    [havingExtensiveArea]="true"
+    [headerExtensiveTemplate]="departmentHeaderTemplate"
+    [idFieldRoute]="'identity.id'"
+    [itemExtensiveTemplate]="departmentRowTemplate"
+    [nameDepartmentTemplate]="nameTemplate"
+    [parentIdFieldRoute]="'parentDepartmentId'"
+    [text]="text"
+    (loadChildren)="loadChildren($event)"
+    [isDetectExpandTree]="isDetectExpandTree"
+    [currentDepartmentId]="currentDepartmentId"
+  >
+    <ng-template #nameTemplate let-object="item">
+      <span
+        class="department__department-name cursor-pointer"
+        title="{{
+          object.organizationalUnitTypes
+            ? object.organizationalUnitTypes[0].localizedData[0].fields[0]
+                .localizedText
+            : ''
+        }}"
+        [ngClass]="{
+          highlight: selectedDepartmentIds.includes(object.identity.id)
+        }"
+        (click)="onClickOnDepartmentItem(object)"
+        >{{ object.departmentName }}
+      </span>
+    </ng-template>
+    <ng-template #departmentHeaderTemplate="">
+      <div class="department__info-item">
+        <div class="department__header-item">
+          {{
+            'Department_Page.Department_List.Type_Of_School_Organisation'
+              | translate
+          }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #departmentRowTemplate let-department="item">
+      <div class="department__info-item">
+        <div class="department__extensive-item">
+          <ng-container
+            *ngIf="department?.jsonDynamicAttributes?.typeOfOrganizationUnits"
+          >
+            {{ displayText(department) }}
+          </ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </cx-extensive-tree>
+  <ng-container *ngTemplateOutlet="footerButtons"></ng-container>
+</div>
+<ng-template #searchView>
+  <div class="dialog-search-body">
+    <content>
+      <span
+        *ngIf="searchDepartmentResult.length > 0"
+        class="content-search__result-match"
+      >
+        {{ searchResultText }}
+      </span>
+      <div>
+        <ul
+          *ngFor="let department of searchDepartmentResult"
+          class="list-group list-group-flush"
+        >
+          <li
+            (click)="onClickItemResult(department)"
+            class="list-group-item cursor-pointer"
+          >
+            <div class="content-search__result--name text-primary">
+              {{ department.departmentName }}
+            </div>
+            <div class="text-primary">
+              {{ departmentPathMap[department.identity.id] }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="isNoDepartment">
+        <span class="content-search__no-result text-primary">
+          {{
+            'Department_Page.Department_Search.No_Result_Message' | translate
+          }}
+        </span>
+      </div>
+    </content>
+  </div>
+  <ng-container *ngTemplateOutlet="footerButtons"></ng-container>
+</ng-template>
+
+<ng-template #footerButtons>
+  <div class="dialog-footer">
+    <button class="cx-btn" mat-button (click)="onClose()">Close</button>
+    <button class="cx-btn ml-1" mat-button (click)="onSubmit()">
+      {{ 'Common.Button.Save' | translate }}
+    </button>
+  </div>
+</ng-template>

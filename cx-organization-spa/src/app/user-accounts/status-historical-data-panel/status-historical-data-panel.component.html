@@ -1,0 +1,16 @@
+<ng-container *ngIf="statusHistoricalData.length && modifyingUsers.length">
+  <perfect-scrollbar class="status-historical-crollbar">
+    <div class="status-historical-data-panel-container">
+      <ng-container
+        *ngFor="let historicalStatusData of statusHistoricalData; let i = index"
+      >
+        <status-historical-row
+          [historicalStatusData]="historicalStatusData"
+          [modifyingUser]="modifyingUsers[i]"
+          [user]="user"
+        >
+        </status-historical-row>
+      </ng-container>
+    </div>
+  </perfect-scrollbar>
+</ng-container>

@@ -1,0 +1,42 @@
+---
+environments:
+  linux:
+    pipelines:
+      - build-organization-opal-spa-snapshot
+  development-opal:
+    pipelines:
+      - development-organization-opal-spa-snapshot
+format_version: 3
+pipelines:
+  build-organization-opal-spa-snapshot:
+    group: organization-opal-spa-snapshot
+    label_template: 'snapshot-1.0.${COUNT}'
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      SONAR_PROJECTKEY: organization-opal-spa-snapshot
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-organization-spa
+      ENVIRONMENT_NAME: development
+    template: angular-linux-docker-build-sonarqube-scanner
+    materials:
+      bitbuket-git:
+        branch: develop
+        git: 'git@bitbucket.org:cxdev/cx-organization-spa.git'
+  development-organization-opal-spa-snapshot:
+    group: organization-opal-spa-snapshot
+    label_template: '${upstream}'
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials:
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-organization-opal-spa-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-opal
+      UP_STREAME_PIPELINE_NAME: build-organization-opal-spa-snapshot
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-organization-spa

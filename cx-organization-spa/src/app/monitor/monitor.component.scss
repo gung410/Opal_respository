@@ -1,0 +1,15 @@
+monitor {
+  .monitor {
+    padding: 20px;
+
+    &__route {
+      cursor: pointer;
+    }
+  }
+
+  .app-header-middle-area {
+    &__middle-area {
+      padding-left: 20px;
+    }
+  }
+}

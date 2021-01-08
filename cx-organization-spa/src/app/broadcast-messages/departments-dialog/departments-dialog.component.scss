@@ -1,0 +1,95 @@
+$close-icon-color: #aaa;
+
+.dialog-header {
+  .selected-departments-container {
+    .selected-departments {
+      position: relative;
+      background-color: #f0f0f3;
+      border-radius: 4px;
+      margin-bottom: 7px;
+      padding-right: 24px;
+
+      .icon-close {
+        top: calc(50% - 7px);
+        right: 0;
+        position: absolute;
+        margin-right: 7px;
+        color: $close-icon-color;
+      }
+    }
+
+    .close-button {
+      .close-symbol {
+        margin-right: -3px;
+      }
+    }
+  }
+
+  .has-search {
+    display: flex;
+    position: relative;
+
+    .icon-search {
+      position: absolute;
+      right: 0;
+      width: 2.375rem;
+      line-height: 2.375rem;
+      text-align: center;
+      pointer-events: none;
+      color: $close-icon-color;
+    }
+
+    .icon-close {
+      position: absolute;
+      right: 0;
+      width: 2.8rem;
+      line-height: 2.375rem;
+      text-align: left;
+      color: $close-icon-color;
+    }
+  }
+}
+
+.dialog-tree-body {
+  overflow-y: scroll;
+  max-height: 650px;
+
+  .material-icons {
+    color: #5b6a83 !important;
+    font-size: 0;
+  }
+
+  .cx-extensive-tree__btn i.material-icons::before {
+    font-size: 18px !important;
+    border: 2px solid #5b6a83;
+  }
+}
+
+.dialog-search-body {
+  .list-group {
+    .list-group-item {
+      .content-search__result--name {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  margin-right: 1rem;
+}
+
+.highlight {
+  background-color: lightgrey;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cx-extensive-tree__display-area--selected {
+  background-color: white !important;
+}

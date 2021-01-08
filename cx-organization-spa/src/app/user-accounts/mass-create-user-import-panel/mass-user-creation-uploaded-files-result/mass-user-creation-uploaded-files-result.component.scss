@@ -1,0 +1,11 @@
+.mass-user-creation-files {
+  &__uploaded {
+    margin-top: 20px;
+
+    .user-creation-container {
+      margin-top: 30px;
+      min-height: 110px;
+      position: relative;
+    }
+  }
+}

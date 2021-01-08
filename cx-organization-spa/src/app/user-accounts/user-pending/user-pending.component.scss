@@ -1,0 +1,164 @@
+@import 'assets/styles/mixins.scss';
+@import 'assets/styles/variables.scss';
+
+.user-list {
+  &__empty-table {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__empty-message {
+    margin: auto 0;
+  }
+
+  &__empty-message-title {
+    font-size: 1.1em;
+  }
+
+  &__empty-message-description {
+    font-size: 1.285em;
+  }
+
+  &__loading-data-message {
+    padding-left: 20px;
+    width: 100%;
+  }
+
+  &__loading-data-message-content {
+    text-align: left;
+    font-size: 1.5em;
+  }
+
+  &__display-value {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatar {
+    width: 40px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+
+    &--circle {
+      width: inherit;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+    display: inline-block;
+    vertical-align: middle;
+
+    &--item-sub {
+      font-size: 1em;
+      color: #909090;
+      margin: 0;
+    }
+
+    &--text {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__show-actions-button {
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &::after {
+      content: none;
+    }
+
+    &:hover {
+      border-color: $main-color-white !important;
+    }
+
+    i {
+      font-size: 32px !important;
+    }
+
+    i {
+      font-size: 36px;
+      display: block;
+    }
+
+    &--action {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      white-space: nowrap;
+
+      i {
+        font-size: 36px;
+        margin-right: 10px;
+      }
+    }
+
+    &--action:hover {
+      color: #1aadce;
+    }
+  }
+
+  &__cx-custom-action-list {
+    border: none;
+    @include rounded-corners(10px);
+    @include box-shadow(0px 2px 6px #808080);
+  }
+
+  &__show-actions-button.dropdown-toggle::after {
+    display: none;
+  }
+
+  &__mass-modification-button {
+    display: inline-block;
+    margin: 1rem 0 0;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-item {
+  padding: 0px !important;
+  &:hover {
+    background-color: #e4e4e4;
+    color: #16181b;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+}
+
+.cx-table-containers__action i {
+  margin: 0 5px;
+}
+
+.cx-table {
+  tbody {
+    display: block;
+    height: 350px;
+    overflow: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+
+    // TODO: we will improve the logic below,
+    // because table-layout: fixed will not be able to horizontal scroll,
+    // but don't set, the body propertites will not align with the header.
+    table-layout: fixed;
+  }
+}

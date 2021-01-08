@@ -1,0 +1,318 @@
+@import '../../../assets/styles/variables.scss';
+@import '../../../assets/styles/mixins.scss';
+
+$column-cell-color: #f9f9f9;
+
+.permissions-table-container {
+  .menu-action {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+  }
+
+  .show-hide-colums-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn-show-hide-colums {
+      width: 35px;
+      height: 32px;
+      min-width: unset;
+      min-height: unset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >i {
+        margin: 0;
+        transform: unset;
+      }
+    }
+  }
+
+
+
+  ag-grid-angular {
+    ::ng-deep .high-light-column {
+      background-color: $column-cell-color !important;
+    }
+
+    ::ng-deep .first-level {
+      font-weight: bold;
+    }
+
+    ::ng-deep .second-level {
+      padding-left: 10%;
+    }
+
+    ::ng-deep .third-level {
+      padding-left: 15%;
+    }
+
+    ::ng-deep .fourth-level {
+      padding-left: 20%;
+    }
+  }
+
+  ::ng-deep .ag-row:nth-child(even) {
+    background-color: $column-cell-color;
+  }
+
+  .ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after {
+    color: var(--ag-checkbox-checked-color, #313552);
+  }
+
+  .cx-page-container .ag-theme-material.permission-matrix-table {
+    .text-overflow-wrap {
+      .ag-header-cell-text {
+        white-space: normal;
+      }
+    }
+
+    .ag-row-hover,
+    .ag-row-selected {
+      .text-overflow-overlay {
+        .ag-cell-wrapper {
+          &::before {
+            background-image: none !important;
+          }
+        }
+      }
+    }
+
+    .ag-cell {
+      justify-content: center;
+      line-height: normal;
+
+      &.text-overflow-overlay {
+        .ag-cell-wrapper {
+          &::before {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0);
+            background: -moz-linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 1) 100%);
+            background: -webkit-linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 1) 100%);
+            background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ffffff", GradientType=1);
+            position: absolute;
+            right: 0px;
+            content: '';
+          }
+        }
+      }
+
+      .ag-cell-value {
+        overflow: visible;
+        margin-left: 4px;
+      }
+
+      .ag-selection-checkbox {
+        padding-left: 4px;
+        padding-right: 4px;
+        margin-right: 0px;
+      }
+    }
+  }
+
+  .permission-matrix-table {
+    color: $cx-color-text-main;
+    font-size: 16px;
+    margin-top: 8px;
+
+    ::ng-deep .ag-header-cell {
+      justify-content: center;
+    }
+
+    ::ng-deep .ag-header {
+      .ag-pinned-left-header {
+        .ag-header-row {
+          dropdown-list-modules-header {
+            width: 100%;
+
+            opal-select {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    ::ng-deep .ag-grid-header-fixed {
+      width: 100%;
+      display: flex;
+      position: relative;
+      top: unset;
+      left: unset;
+      margin: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    ::ng-deep .ag-center-cols-clipper .ag-cell {
+      justify-content: center;
+    }
+
+    .ag-pinned-right-header {
+      border: none;
+    }
+
+    .ag-center-cols-clipper .ag-row::after {
+      content: '';
+    }
+
+    &__items-info {
+      display: inline-flex;
+      align-items: flex-start;
+      vertical-align: middle;
+      flex-direction: column;
+    }
+
+    &__items-user-group {
+      line-height: normal;
+    }
+
+    &__items-info-data {
+      &--main {
+        color: $cx-color-text-main;
+        line-height: normal;
+
+        a {
+          font-size: 16px;
+          color: $cx-color-text-main;
+          line-height: 24px;
+          text-decoration: none;
+        }
+      }
+
+      &--secondary {
+        color: $cx-color-text-secondary;
+        line-height: 12px;
+        font-size: 12px;
+      }
+    }
+
+    &__items {
+      &--avatar {
+        cursor: pointer;
+        width: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 15px;
+        margin-left: 15px;
+
+        &-image {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+      }
+
+      &--info {
+        position: relative;
+        cursor: pointer;
+
+        &-item {
+          display: table;
+        }
+
+        &-item-sub {
+          font-size: 1em;
+          color: #909090;
+          margin: 0;
+        }
+
+        &-action-hover:hover {
+          cursor: pointer;
+          color: #0052cc;
+        }
+
+        .cx-progress {
+          cursor: pointer;
+        }
+      }
+
+      &--due-date {
+        text-align: center;
+        color: #ca3c3c;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
+    &__status {
+      &--logged-label {
+        color: #909090;
+      }
+
+      &--logged-in {
+        color: #5db31f;
+      }
+    }
+
+    &__roles {
+      color: #909090;
+    }
+
+    &__paging-area {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .grid-header-centered {
+      .ag-header-cell-label {
+        justify-content: center;
+      }
+    }
+
+    .grid-cell-centered {
+      .ag-cell-wrapper {
+        justify-content: center;
+      }
+    }
+
+    .ag-header-cell-label .ag-header-cell-text {
+      color: $cx-color-text-main;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .ag-body-horizontal-scroll {
+      background: #fff;
+      height: 36px !important;
+      min-height: unset !important;
+      max-height: unset !important;
+      display: flex;
+      align-items: center;
+      box-shadow: inset 0px 0px 0px 1px #d8dce6;
+      border-radius: 5px;
+      position: fixed;
+      bottom: 0px;
+      width: calc(100% - 83px);
+      z-index: 1;
+
+      @media only screen and (max-width: $screen-xs-max) {
+        width: calc(100% - 32px);
+      }
+
+      &.ag-body-horizontal-scroll-unfixed {
+        position: unset;
+        bottom: unset;
+        width: calc(100% - 3px);
+        z-index: unset;
+      }
+    }
+  }
+
+
+}

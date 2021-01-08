@@ -1,0 +1,71 @@
+<cx-dialog-template
+  (cancel)="onCancel()"
+  [showConfirmButton]="false"
+  [showCloseButton]="false"
+  [cancelButtonText]="cancelButtonText"
+>
+  <modal-header>
+    <h4>Error detail</h4>
+  </modal-header>
+  <content>
+    <div class="invalid-users-creation-content">
+      <table
+        style="width: 100%"
+        class="table invalid-users-creation-table"
+      >
+        <tr>
+          <th>S/N</th>
+          <th>Salutation</th>
+          <th>Name</th>
+          <th>Official Email</th>
+          <th>Gender</th>
+          <th>Place of Work</th>
+          <th>Account Active From</th>
+          <th>Date of Expiry of Account</th>
+          <th>Reason for User Account Request</th>
+          <th>System Roles</th>
+          <th>Personal Space Limitation</th>
+          <th>Reason</th>
+        </tr>
+        <tr *ngFor="let user of invalidUsersCreationResults">
+          <td>
+            <div>{{ user.number }}</div>
+          </td>
+          <td>
+            <div>{{ user.salutation }}</div>
+          </td>
+          <td>
+            <div>{{ user.name }}</div>
+          </td>
+          <td>
+            <div>{{ user.officialEmail }}</div>
+          </td>
+          <td>
+            <div>{{ user.gender }}</div>
+          </td>
+          <td>
+            <div>{{ user.placeOfWork }}</div>
+          </td>
+          <td>
+            <div>{{ user.accountActiveFrom }}</div>
+          </td>
+          <td>
+            <div>{{ user.dateOfExpiryAccount }}</div>
+          </td>
+          <td>
+            <div>{{ user.reasonForUserAccountRequest }}</div>
+          </td>
+          <td>
+            <div>{{ user.systemRole }}</div>
+          </td>
+          <td>
+            <div>{{ user.personalSpaceLimitation }}</div>
+          </td>
+          <td>
+            <div>{{ user.reason }}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </content>
+</cx-dialog-template>

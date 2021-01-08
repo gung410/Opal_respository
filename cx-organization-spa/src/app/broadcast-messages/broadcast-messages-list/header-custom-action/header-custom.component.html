@@ -1,0 +1,36 @@
+<div>
+  <div
+    *ngIf="!params.column.colDef.suppressMenu"
+    class="customHeaderMenuButton"
+    (click)="onHeaderCheckBoxChange()"
+  >
+    <i
+      #headerCheckBox
+      class="material-icons {{ params.menuIcon }} header-check-box-icon"
+    ></i>
+  </div>
+  <div class="customHeaderLabel header-cell-menu-name">
+    {{ params.displayName }}
+  </div>
+  <div
+    *ngIf="params.enableSorting && isShowArrowUpIcon"
+    (click)="onSortRequested('asc', $event)"
+    class="customSortDownLabel"
+  >
+    <i class="material-icons arrow_upward"></i>
+  </div>
+  <div
+    *ngIf="params.enableSorting && isShowArrowDownIcon"
+    (click)="onSortRequested('desc', $event)"
+    class="customSortUpLabel"
+  >
+    <i class="material-icons arrow_downward"></i>
+  </div>
+  <div
+    *ngIf="params.enableSorting && isShowCloseIcon"
+    (click)="onSortRequested('', $event)"
+    class="customSortRemoveLabel"
+  >
+    <i class="material-icons close-icon-global"></i>
+  </div>
+</div>

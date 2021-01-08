@@ -1,0 +1,84 @@
+<cx-dialog-template
+  [cancelButtonText]="'Common.Button.Cancel' | translate"
+  [doneButtonText]="'Common.Button.Confirm' | translate"
+  (cancel)="onCancel()"
+  (done)="onDone()"
+>
+  <modal-header>
+    <h3>
+      {{ 'User_Account_Page.Assign_Approving_Officer.Title' | translate }}
+    </h3>
+  </modal-header>
+  <content>
+    <span class="assign-ao-dialog__label"
+      >{{ itemsSelected.length }}
+      {{
+        'User_Account_Page.Assign_Approving_Officer.User_Selected' | translate
+      }}:</span
+    >
+    <div class="assign-ao-dialog">
+      <div
+        *ngFor="let item of itemsSelected"
+        class="assign-ao-dialog__user-info"
+      >
+        <div class="assign-ao-dialog__avatar">
+          <img
+            class="assign-ao-dialog__avatar--circle"
+            [src]="getUserImage(item)"
+          />
+        </div>
+        <div class="assign-ao-dialog__info">
+          <span class="assign-ao-dialog__info">{{ item.firstName }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="assign-ao-dialog__label">
+      <span>{{
+        'User_Account_Page.Assign_Approving_Officer.Primary_AO_Label'
+          | translate
+      }}</span>
+    </div>
+    <div class="assign-ao-dialog__select-box">
+      <people-picker
+        [(selectedPeople)]="primarySelectedGroup"
+        [closeOnSelect]="true"
+        [avatarField]="'jsonDynamicAttributes.avatarUrl'"
+        [displayPrimaryField]="'name'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [multiple]="false"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="allVisiblePrimaryApprovalGroups"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="stopLoadingPrimaryGroups"
+        (loadMore)="loadMorePrimaryGroups($event)"
+        (focus)="updateAvailablePrimaryGroups()"
+      >
+      </people-picker>
+    </div>
+    <div class="assign-ao-dialog__label">
+      <span>{{
+        'User_Account_Page.Assign_Approving_Officer.Alternate_AO_Label'
+          | translate
+      }}</span>
+    </div>
+    <div class="assign-ao-dialog__select-box">
+      <people-picker
+        [(selectedPeople)]="alternateSelectedGroup"
+        [closeOnSelect]="true"
+        [avatarField]="'jsonDynamicAttributes.avatarUrl'"
+        [displayPrimaryField]="'name'"
+        [displaySecondaryField]="'emailAddress'"
+        [displayThirdField]="'departmentName'"
+        [multiple]="false"
+        [numberOfItemsBeforeFetchingMore]="numberOfItemsBeforeFetchingMoreUser"
+        [people]="allVisibleAlternateApprovalGroups"
+        [placeholder]="'Select user'"
+        [stopLoadMore]="stopLoadingAlternateGroups"
+        (loadMore)="loadMoreAlternateGroups($event)"
+        (focus)="updateAvailableAlternateGroups()"
+      >
+      </people-picker>
+    </div>
+  </content>
+</cx-dialog-template>

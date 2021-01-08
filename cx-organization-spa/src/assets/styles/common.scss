@@ -1,0 +1,89 @@
+@import 'variables.scss';
+
+body.body-contain {
+  font-size: 14px;
+  font-family: $main-font;
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #ebebeb;
+  overflow-x: hidden;
+
+  @media only screen and (max-width: $screen-sm-max) {
+    .filter-dialog-custom-size .modal-lg {
+      max-width: 650px;
+      margin: 1.75rem auto;
+
+      .sv_qstn .sv_p_container {
+        min-width: 86%;
+      }
+
+      .sv_bootstrap_css .sv_qstn {
+        padding: 0.5em 1em 1.5em 0;
+      }
+    }
+  }
+}
+
+.me-icon {
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.button {
+  cursor: pointer;
+  margin: 0 10px 0 0;
+  display: inline-table;
+  text-align: center;
+  height: 35px;
+  line-height: 33px;
+  position: relative;
+}
+
+@media only screen and (min-width: $screen-lg-min) {
+  body {
+    background-color: #f2f2f2;
+  }
+}
+
+// Surveyjs stylesheet override
+
+.sv_qstn .sv_p_container {
+  min-width: 60%;
+  width: auto !important;
+}
+
+.sv_main.sv_main .sv-paneldynamic__remove-btn {
+  min-width: auto;
+  font-size: 14px;
+  padding: 0 10px;
+  position: absolute;
+  right: 4px;
+  min-height: 48px;
+}
+
+.ag-header-cell {
+  background-color: #fff;
+}
+
+.ag-theme-material
+  .ag-ltr
+  .ag-has-focus
+  .ag-cell-focus:not(.ag-cell-range-selected) {
+  border: none !important;
+
+  &.ag-cell-first-right-pinned {
+    border-left: 1px solid #e2e2e2 !important;
+  }
+}
+
+.ag-pinned-right-header .ag-header-row {
+  border-bottom: 1px solid #e2e2e2 !important;
+}
+
+.dropdown-menu {
+  min-width: 2rem;
+}

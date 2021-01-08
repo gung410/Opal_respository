@@ -1,0 +1,61 @@
+@import './variables.scss';
+
+.material-icons::before {
+  font-size: 20px;
+}
+
+.material-icons.hover {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+i.unlock-icon::before {
+  content: 'lock_open';
+}
+
+i.active-icon::before {
+  content: 'check_circle_outline';
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    content: 'check_circle';
+  }
+}
+
+i.reset-password-icon::before {
+  content: 'refresh';
+}
+
+i.change-status-icon::before {
+  content: 'cached';
+}
+
+i.pending-list-icon::before {
+  content: 'how_to_reg';
+}
+
+i.user-list-icon::before {
+  content: 'people';
+}
+
+i.assign-icon::before {
+  content: 'assignment';
+}
+
+i.close-icon-global::before {
+  content: 'close';
+}
+
+i.request-icon::before {
+  content: 'priority_high';
+}
+
+i.arrow_downward::before {
+  content: 'arrow_downward';
+}
+
+i.arrow_upward::before {
+  content: 'arrow_upward';
+}

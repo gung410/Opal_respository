@@ -1,0 +1,44 @@
+@import '../../assets/styles/variables.scss';
+
+app-header {
+  .app-header {
+    height: auto;
+    background: #fff;
+    top: 0;
+    width: 100vw;
+    z-index: 10;
+
+    .cx-header {
+      background: #fff;
+
+      .cx-header-content {
+        .general-search-box {
+          .search-input {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    &__placeholder {
+      display: none;
+      background-color: #fff;
+    }
+  }
+
+  .hideSearchBar {
+    .cx-header {
+      .general-search-box {
+        display: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .app-header {
+    &__nav-bar {
+      display: inline;
+    }
+  }
+}

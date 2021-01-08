@@ -1,0 +1,295 @@
+<div *ngIf="!isLoadingEmployee && !isLoadingDepartments" class="user-accounts">
+  <div class="cx-page-container">
+    <cx-universal-toolbar
+      [buttonCondition]="buttonCondition"
+      [breadCrumbNavigation]="breadCrumbNavigation"
+      [departmentModel]="departmentModel"
+      (searchDepartment)="onSearch($event)"
+      (expandChildDepartment)="expandChildDepartment($event)"
+      (selectDepartmentTree)="onSelectDepartmentTree($event)"
+      (breadcrumbNavigationClick)="onSelectedDepartmentClick($event)"
+      (searchResultClick)="onClickSearchResult($event)"
+      [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+    >
+      <universal-toolbar-actions>
+        <div class="toolbar-actions">
+          <button
+            class="cx-btn cx-btn-secondary cx-btn-icon-right filter-btn"
+            (click)="onFilterButtonClick()"
+            [hidden]="isHideFilterButton"
+          >
+            {{ 'Common.Label.Filter' | translate }}
+            <i class="icon-filter"></i>
+            <a
+              *ngIf="filterDataApplied?.appliedFilter?.length"
+              class="filter-btn__number"
+            >
+              {{ filterDataApplied.appliedFilter.length }}
+            </a>
+          </button>
+          <div class="w-100"></div>
+          <div ngbDropdown class="d-inline-block actions-items-container">
+            <div class="actions-items-float-right" style="float: right">
+              <button
+                class="cx-btn cx-btn-secondary"
+                id="exportBtn"
+                ngbDropdownToggle
+                [hidden]="isHideExportButton"
+              >
+                {{ 'Common.Button.Export' | translate }}
+                <i class="dropdown-toggle"></i>
+              </button>
+              <div
+                class="cx-dropdown-menu"
+                ngbDropdownMenu
+                aria-labelledby="exportBtn"
+              >
+                <div
+                  *ngFor="let action of userActionsForExportButton"
+                  class="cx-dropdown-menu__item"
+                  (click)="onMenuActionClick(action)"
+                >
+                  {{ action.text | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ngbDropdown class="d-inline-block actions-items-container">
+            <div class="actions-items-float-right" style="float: right">
+              <button
+                class="cx-btn create-account-request-btn"
+                id="createAccBtn"
+                ngbDropdownToggle
+              >
+                {{ 'Common.Label.CreateUserAccount' | translate }}
+                <i class="dropdown-toggle"></i>
+              </button>
+              <div
+                class="cx-dropdown-menu right-dropdown"
+                ngbDropdownMenu
+                aria-labelledby="createAccBtn"
+              >
+                <div
+                  *ngFor="let action of userActionsForCreateAccButton"
+                  class="cx-dropdown-menu__item"
+                  (click)="onMenuActionClick(action)"
+                >
+                  {{ action.text | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </universal-toolbar-actions>
+      <extend-footer-department-tree>
+        <div
+          *ngIf="this.isDisplayOrganisationSearch"
+          class="checkbox-sub-organisation-container"
+        >
+          <cx-checkbox
+            [selected]="isSearchedAcrossSubOrg"
+            (selectedChange)="searchSubOrg($event)"
+            class="checkbox-sub-organisation"
+          >
+            {{ 'Common.Label.SearchSubOrganisation' | translate }}
+          </cx-checkbox>
+          <div class="cx-tree-dropdown-divider"></div>
+        </div>
+      </extend-footer-department-tree>
+    </cx-universal-toolbar>
+  </div>
+
+  <div
+    class="action-group-container"
+    [cxFloatingToolbar]="gridToolbarAttribute"
+  >
+    <cx-action-toolbar
+      [actions]="userActions"
+      [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+      (menuActionClick)="onMenuActionClick($event)"
+    ></cx-action-toolbar>
+    <button
+      class="cx-btn cx-btn-secondary cx-btn-icon btn-show-hide-colums"
+      (click)="openDialogToEnableColumns()"
+      [hidden]="isHideColumnButton"
+    >
+      <i class="icon icon-colums"></i>
+    </button>
+  </div>
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+    <mat-tab
+      label="{{ 'User_Account_Page.User_List.User_List_Label' | translate }}"
+      [aria-label]="userAccountTabEnum.UserAccounts"
+    >
+      <user-list
+        *ngIf="userItemsData"
+        [userItemsData]="userItemsData.items"
+        [currentUser]="currentUser"
+        [currentUserRoles]="currentUser.systemRoles"
+        [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
+        [showHideColumns]="showHideColumns"
+        [isClearSelected]="isClearSelected"
+        (userActions)="onActionChanged($event)"
+        (userActionsForExportButton)="onExportButtonActionChanged($event)"
+        (userActionsForCreateAccButton)="onCreateAccButtonActionChanged($event)"
+        (columnShowHideDef)="onColumnShowHideDef($event)"
+        (singleAction)="onSingleActionClicked($event)"
+        (selectedUser)="onSelectedUserChange($event)"
+        (editUser)="onEditUserClicked($event)"
+        (sortChange)="onSortTypeChange($event)"
+        (gridApi)="onGridApiReady($event)"
+      >
+      </user-list>
+      <div *ngIf="userItemsData" class="user-accounts__paging-area">
+        <cx-paging
+          [currentPage]="userItemsData.pageIndex"
+          [recordsPerPage]="userItemsData.pageSize"
+          [currentPageSize]="defaultPageSize"
+          [totalRecords]="userItemsData.totalItems"
+          (currentPageChange)="onUserAccountPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"
+        ></cx-paging>
+      </div>
+    </mat-tab>
+    <div *ngIf="!noneAdminRole.length" class="user-accounts__pending-list">
+      <mat-tab
+        *ngIf="!noneAdminRole.length || divisionBranchSchoolRoles.length"
+        label="{{
+          'User_Account_Page.User_List.Pending_1st_Level_List_Label' | translate
+        }}"
+        [aria-label]="userAccountTabEnum.Pending1st"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="pending1stLevelApprovalList"
+            [checkHasDataFn]="
+              checkPendingUsersLevelHasDataFnCreator('PendingApproval1st')
+            "
+          >
+            {{
+              'User_Account_Page.User_List.Pending_1st_Level_List_Label'
+                | translate
+            }}
+          </data-check-indicator>
+        </ng-template>
+        <user-pending-list
+          [isClearSelected]="isClearSelected"
+          *ngIf="pending1stLevelApprovalList"
+          [currentUserRoles]="currentUser.systemRoles"
+          [isCurrentUserDivAdmin]="divisionBranchSchoolRoles.length > 0"
+          [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
+          [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
+          [userItemsData]="pending1stLevelApprovalList"
+          (userActions)="onPendingActionChanged($event)"
+          (columnShowHideDef)="onColumnShowHideDef($event)"
+          (singleAction)="onPendingSingleActionClicked($event)"
+          (selectedUser)="onPendingSelectedUserChange($event)"
+          (editUser)="onEditUserClicked($event, false)"
+          (gridApi)="onGridApiReady($event)"
+        >
+        </user-pending-list>
+      </mat-tab>
+      <mat-tab
+        *ngIf="!noneAdminRole.length || divisionBranchSchoolRoles.length"
+        label="{{
+          'User_Account_Page.User_List.Pending_2nd_Level_List_Label' | translate
+        }}"
+        [aria-label]="userAccountTabEnum.Pending2nd"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="pending2ndLevelApprovalList"
+            [checkHasDataFn]="
+              checkPendingUsersLevelHasDataFnCreator('PendingApproval2nd')
+            "
+          >
+            {{
+              'User_Account_Page.User_List.Pending_2nd_Level_List_Label'
+                | translate
+            }}
+          </data-check-indicator>
+        </ng-template>
+        <user-pending-list
+          [isClearSelected]="isClearSelected"
+          *ngIf="pending2ndLevelApprovalList"
+          [currentUserRoles]="currentUser.systemRoles"
+          [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
+          [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
+          [viewOnly]="divisionBranchSchoolRoles.length > 0"
+          [userItemsData]="pending2ndLevelApprovalList"
+          [superAdminRole]="superAdminRole.length > 0"
+          (userActions)="onPendingActionChanged($event)"
+          (singleAction)="onPendingSingleActionClicked($event)"
+          (selectedUser)="onPendingSelectedUserChange($event)"
+          (editUser)="onEditUserClicked($event, false)"
+        >
+        </user-pending-list>
+      </mat-tab>
+      <mat-tab
+        *ngIf="!noneAdminRole.length"
+        label="{{
+          'User_Account_Page.User_List.Pending_3rd_Level_List_Label' | translate
+        }}"
+        [aria-label]="userAccountTabEnum.Pending3rd"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="pendingSpecialLevelApprovalList"
+            [checkHasDataFn]="
+              checkPendingUsersLevelHasDataFnCreator('PendingApproval3rd')
+            "
+          >
+            {{
+              'User_Account_Page.User_List.Pending_3rd_Level_List_Label'
+                | translate
+            }}
+          </data-check-indicator>
+        </ng-template>
+        <user-pending-list
+          [isClearSelected]="isClearSelected"
+          *ngIf="pendingSpecialLevelApprovalList"
+          [currentUserRoles]="currentUser.systemRoles"
+          [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
+          [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
+          [viewOnly]="
+            userAccountAdminRole.length > 0 ||
+            divisionBranchSchoolRoles.length > 0
+          "
+          [userItemsData]="pendingSpecialLevelApprovalList"
+          (userActions)="onPendingActionChanged($event)"
+          (singleAction)="onPendingSingleActionClicked($event)"
+          (selectedUser)="onPendingSelectedUserChange($event)"
+          (editUser)="onEditUserClicked($event, false)"
+        >
+        </user-pending-list>
+      </mat-tab>
+      <mat-tab
+        *ngIf="userAccountAdminRole.length > 0 || superAdminRole.length > 0"
+        label="{{ 'User_Account_Page.User_List.OtherPlaceOfWork' | translate }}"
+        [aria-label]="userAccountTabEnum.UserOtherPlace"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="userOtherPlaceList"
+            [checkHasDataFn]="
+              checkPendingUsersOtherPlaceOfWorkHasDataFnCreator()
+            "
+          >
+            {{ 'User_Account_Page.User_List.OtherPlaceOfWork' | translate }}
+          </data-check-indicator>
+        </ng-template>
+        <user-other-place-list
+          *ngIf="userOtherPlaceList"
+          [currentUserRoles]="currentUser.systemRoles"
+          [userItemsData]="userOtherPlaceList"
+          [isClearSelected]="isClearSelected"
+          (userActions)="onPendingActionChanged($event)"
+          (singleAction)="onPendingSingleActionClicked($event)"
+          (selectedUser)="onPendingSelectedUserChange($event)"
+          (editUser)="onEditUserClicked($event, false)"
+        >
+        </user-other-place-list>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
+</div>

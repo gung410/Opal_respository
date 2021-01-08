@@ -1,0 +1,107 @@
+<div class="department">
+  <div class="filter-section__filter-button text-right">
+    <button class="cx-btn cx-btn-icon-right" (click)="onClickFilter()">
+      {{ 'Common.Label.Filter' | translate }}
+      <i class="icon-controls"></i>
+    </button>
+  </div>
+  <div class="department__tree">
+    <div *ngIf="flatDepartmentsArray" class="department__filter-section">
+      <div
+        *ngIf="departmentTagData && departmentTagData.length > 0"
+        class="department__filter-tag"
+      >
+        <cx-tag-group
+          [backgroundColor]="'#f1f1f1'"
+          [tagGroup]="departmentTagData"
+          [tagGroupField]="'groupConstant'"
+          [tagProperty]="'options'"
+          [tagTemplate]="tagTemplate"
+          (clearAll)="onClearAllFilter()"
+          (closeTagGroup)="onCloseTagGroup($event)"
+        >
+          <ng-template #tagTemplate let-groupConst="groupConst" let-tag="item">
+            <div *ngIf="tag.isSelected" class="filter-tag__filtered-item">
+              <span class="filtered-item__item-text">{{ tag.value }}</span>
+              <i
+                class="filtered-item__item-icon material-icons close-icon-global d-print-none"
+                aria-hidden="true"
+                (click)="onCloseTag(tag, groupConst)"
+              ></i>
+            </div>
+          </ng-template>
+        </cx-tag-group>
+      </div>
+    </div>
+
+    <cx-extensive-tree
+      *ngIf="flatDepartmentsArray && flatDepartmentsArray.length"
+      [buttonCondition]="buttonCondition"
+      [countChildrenFieldRoute]="'childrenCount'"
+      [displayFieldRoute]="'departmentName'"
+      [extensiveTreeHeader]="'Organisation Unit'"
+      [flatObjectsArray]="flatDepartmentsArray"
+      [havingExtensiveArea]="havingExtensiveArea"
+      [headerExtensiveTemplate]="departmentHeaderTemplate"
+      [idFieldRoute]="'identity.id'"
+      [itemExtensiveTemplate]="departmentRowTemplate"
+      [nameDepartmentTemplate]="nameTemplate"
+      [parentIdFieldRoute]="'parentDepartmentId'"
+      [text]="text"
+      (addItem)="onOpenAddDepartmentForm($event)"
+      (editItem)="onUpdateDepartment($event)"
+      (loadChildren)="loadChildren($event)"
+      [isDetectExpandTree]="isDetectExpandTree"
+      [currentDepartmentId]="currentDepartmentId"
+      (deleteItem)="onDeleteItem($event)"
+    >
+      <ng-template #nameTemplate let-object="item">
+        <span
+          class="department__department-name"
+          title="{{
+            object.organizationalUnitTypes
+              ? object.organizationalUnitTypes[0].localizedData[0].fields[0]
+                  .localizedText
+              : ''
+          }}"
+          (click)="onUpdateDepartment(object)"
+          >{{ object.departmentName }}
+        </span>
+      </ng-template>
+      <ng-template #departmentHeaderTemplate="">
+        <div class="department__info-item">
+          <div class="department__header-item">
+            {{
+              'Department_Page.Department_List.Level_Of_Education' | translate
+            }}
+          </div>
+          <div class="department__header-item">
+            {{
+              'Department_Page.Department_List.Type_Of_School_Organisation'
+                | translate
+            }}
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #departmentRowTemplate let-department="item">
+        <div class="department__info-item">
+          <div class="department__extensive-item">
+            {{ levelOfEducationMap[department.identity.id] }}
+          </div>
+          <div class="department__extensive-item">
+            <ng-container
+              *ngIf="department?.jsonDynamicAttributes?.typeOfOrganizationUnits"
+            >
+              {{ displayText(department) }}
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
+    </cx-extensive-tree>
+  </div>
+  <div class="department__empty">
+    <span *ngIf="isNoDepartment" class="department__error-message">
+      {{ 'Department_Page.Department_List.Department_Is_Empty' | translate }}
+    </span>
+  </div>
+</div>

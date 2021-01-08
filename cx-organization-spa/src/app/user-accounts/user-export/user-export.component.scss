@@ -1,0 +1,18 @@
+@import '../../../assets/styles/variables.scss';
+
+user-export {
+  .user-export {
+    color: $main-color;
+
+    &__fields {
+    }
+
+    &__fields-sub {
+      margin-left: 50px;
+    }
+  }
+
+  .material-icons {
+    color: #5b6a83 !important;
+  }
+}

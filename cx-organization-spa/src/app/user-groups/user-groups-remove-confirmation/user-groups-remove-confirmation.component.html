@@ -1,0 +1,21 @@
+<cx-dialog-template
+  [cancelButtonText]="'Cancel'"
+  [doneButtonDisabled]="doneButtonDisabled"
+  [doneButtonText]="doneButtonText"
+  (cancel)="onCancel()"
+  (done)="onComplete()"
+>
+  <modal-header>
+    <h3>{{ 'Common.Label.ConfirmationDialog' | translate }}</h3>
+  </modal-header>
+  <content>
+    <h5>{{ message | translate }}</h5>
+    <div>
+      <div *ngIf="removedGroups">
+        <ol>
+          <li *ngFor="let group of removedGroups">{{ group }}</li>
+        </ol>
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

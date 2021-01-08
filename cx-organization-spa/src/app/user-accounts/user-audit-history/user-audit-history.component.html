@@ -1,0 +1,11 @@
+<audit-history
+  *ngIf="auditHistories && auditHistories.length"
+  [auditHistories]="auditHistories"
+  [displaySubTemplate]="getDisplaySubTemplate"
+  [displayTemplate]="getDisplayTemplate"
+  [subLabelConstant]="userFieldNameConstant"
+>
+</audit-history>
+<div *ngIf="auditHistories && !auditHistories.length">
+  {{ 'User_Account_Page.Audit_History.Empty' | translate }}
+</div>

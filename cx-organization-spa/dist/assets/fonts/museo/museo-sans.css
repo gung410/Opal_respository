@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'museo-sans';
+  src: url('MuseoSans_900-webfont.ttf') format('truetype'),
+    url('MuseoSans_900-webfont.eot');
+  font-weight: 900;
+  font-style: normal;
+}

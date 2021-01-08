@@ -1,0 +1,11 @@
+@media (min-width: 1024px) {
+  ::ng-deep .export-confirmation .sv-selectbase__item.sv-q-col-1 {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  ::ng-deep .export-confirmation .sv-selectbase__item.sv-q-col-1 {
+    width: 100% !important;
+  }
+}

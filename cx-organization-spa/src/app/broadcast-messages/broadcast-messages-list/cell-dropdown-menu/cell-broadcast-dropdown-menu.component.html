@@ -1,0 +1,23 @@
+<div
+  class="cell-dropdown-action ag-grid-dropdown"
+  [ngClass]="{
+    'cell-dropdown-action__disable': actionList && actionList.length == 0
+  }"
+>
+  <i
+    class="material-icons more-vert cell-dropdown-action__icon-menu dropleft"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  ></i>
+  <div class="dropdown-menu cx-dropdown-menu">
+    <a
+      *ngFor="let action of actionList"
+      class="cx-dropdown-menu__item"
+      (click)="onClick(action)"
+    >
+      <i class="cx-dropdown-item__icon" [ngClass]="action.icon"></i>
+      <span class="cx-dropdown-item__text">{{ action.text | translate }}</span>
+    </a>
+  </div>
+</div>

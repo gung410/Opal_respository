@@ -1,0 +1,39 @@
+@import 'assets/styles/variables.scss';
+
+.app-root {
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        background-color: #f9f9f9;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    &__main-content {
+        padding: $screen-maincontent-padding;
+        padding-top:0px ;
+        min-height: calc(100vh - 150px);
+    }
+
+    &__notification-alert {
+        padding: 15px 40px;
+        padding-bottom: 0px;
+        background-color: #f9f9f9;
+
+        iframe {
+            width: 100%;
+            border: none;
+        }
+
+        &.empty {
+            padding: 0;
+            margin: 0;
+            height: 0;
+
+            iframe {
+                height: 0;
+            }
+        }
+    }
+}

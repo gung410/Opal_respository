@@ -1,0 +1,26 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  [cancelButtonText]="'Common.Button.Cancel' | translate"
+  [doneButtonText]="'Common.Button.OK' | translate"
+  (cancel)="onCancel()"
+>
+  <modal-header>
+    <h4>
+      {{ 'Export_Confirmation.Dialog.Title' | translate }}
+    </h4>
+  </modal-header>
+  <content>
+    <div class="export-confirmation">
+      <cx-surveyjs
+        #appliedFilterSurveyJs
+        [json]="surveyFormJSON"
+        [cancelName]="'Common.Button.Cancel' | translate"
+        [variables]="surveyVariables"
+        (cancel)="onCancel()"
+        [submitName]="'Common.Button.OK' | translate"
+        (submitting)="onConfirmClick($event)"
+      >
+      </cx-surveyjs>
+    </div>
+  </content>
+</cx-dialog-template>

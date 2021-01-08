@@ -1,0 +1,41 @@
+export enum JsonDynamicEnum {
+  signupReason = 'signupReason',
+  finishOnBoarding = 'finishOnBoarding',
+  identityType = 'identityType',
+  dateJoinedMinistry = 'dateJoinedMinistry',
+  designation = 'designation',
+  portfolio = 'portfolio',
+  roleSpecificProficiencies = 'roleSpecificProficiencies',
+  teachingSubjects = 'teachingSubjects',
+  teachingLevels = 'teachingLevels',
+  jobFamily = 'jobFamily',
+  cocurricularActivities = 'cocurricularActivities',
+  professionalInterestArea = 'professionalInterestArea',
+  teachingCourseOfStudy = 'teachingCourseOfStudy',
+  titleSalutation = 'titleSalutation',
+  avatarUrl = 'avatarUrl',
+  manualOrganizationUnitType = 'manualOrganizationUnitType',
+  manualOrganizationUnitAddress = 'manualOrganizationUnitAddress',
+  manualOrganizationUnitZone = 'manualOrganizationUnitZone',
+  manualOrganizationUnitCluster = 'manualOrganizationUnitCluster',
+  isFromExistingPlaceOfWork = 'isFromExistingPlaceOfWork',
+  notificationPreference = 'notificationPreference',
+  holdsSupervisoryRole = 'holdsSupervisoryRole',
+  personalStorageSize = 'personalStorageSize',
+  isStorageUnlimited = 'isStorageUnlimited'
+}
+
+export const JSON_DYNAMIC_FIELDS = [
+  JsonDynamicEnum.jobFamily,
+  JsonDynamicEnum.teachingLevels,
+  JsonDynamicEnum.teachingCourseOfStudy,
+  JsonDynamicEnum.titleSalutation,
+  JsonDynamicEnum.designation,
+  JsonDynamicEnum.portfolio,
+  JsonDynamicEnum.roleSpecificProficiencies,
+  JsonDynamicEnum.teachingSubjects,
+  JsonDynamicEnum.cocurricularActivities,
+  JsonDynamicEnum.professionalInterestArea,
+  JsonDynamicEnum.personalStorageSize,
+  JsonDynamicEnum.isStorageUnlimited
+];

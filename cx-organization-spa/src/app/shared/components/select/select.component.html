@@ -1,0 +1,97 @@
+<ng-select
+  class="opal-select"
+  #ngSelect
+  [ngClass]="ngSelectNgClass"
+  [loading]="loading"
+  (scrollToEnd)="onScrollToEnd($event)"
+  [items]="items"
+  [bindValue]="valueField"
+  [bindLabel]="labelField"
+  [placeholder]="placeholder"
+  (change)="onChanged($event)"
+  (focus)="onFocused($event)"
+  (clear)="onCleared($event)"
+  (blur)="onBlurred($event)"
+  [ngModel]="selectedValue"
+  (ngModelChange)="onSelectedValueChange($event)"
+  [clearable]="clearable ? clearable : isDisplayCloseIcon"
+  [disabled]="disabled"
+  [searchable]="searchable"
+  [multiple]="multiple"
+  [addTag]="addTag"
+  [selectOnTab]="selectOnTab"
+  [clearAllText]="clearAllText"
+  [virtualScroll]="virtualScroll"
+  [addTagText]="addTagText"
+  [closeOnSelect]="closeOnSelect"
+  [clearSearchOnAdd]="clearSearchOnAdd"
+  [labelForId]="labelForId"
+  dropdownPosition="bottom"
+  appendTo="body"
+  [title]="isOpened || multiple ? '' : selectedItemLabel"
+  [tabIndex]="tabIndex"
+  [notFoundText]="notFoundText"
+  (open)="onOpened($event)"
+  (close)="onClosed($event)"
+  (search)="onSearched($event)"
+  [searchFn]="searchFnCreator()"
+  (focusout)="onFocusOut($event)"
+>
+  <ng-template ng-header-tmp *ngIf="showSelectAll()">
+    <button (click)="selectAllItem()" class="cx-btn pull-right">
+      {{ isSelectAll ? 'Deselect All' : 'Select All' }}
+    </button>
+  </ng-template>
+  <ng-container *ngIf="labelTemplate">
+    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+      <ng-template
+        [ngTemplateOutlet]="labelTemplate"
+        [ngTemplateOutletContext]="{ item: item, clear: clear }"
+      ></ng-template>
+    </ng-template>
+  </ng-container>
+  <ng-template ng-label-tmp let-item="item" let-clear="clear">
+    <ng-template
+      [ngTemplateOutlet]="labelTemplate || defaultLabelTemplate"
+      [ngTemplateOutletContext]="{ item: item, clear: clear }"
+    ></ng-template>
+    <ng-template #defaultLabelTemplate="">
+      <span
+        aria-hidden="true"
+        (click)="clear(item)"
+        [ngClass]="
+          !isDisplayCloseIcon ? 'display-icon-none' : 'ng-value-icon left'
+        "
+        >×</span
+      >
+      <span
+        class="ng-value-label"
+        [title]="item[labelField] != null ? item[labelField] : item"
+      >
+        {{ item[labelField] != null ? item[labelField] : item }}
+      </span>
+    </ng-template>
+  </ng-template>
+  <ng-template
+    ng-option-tmp
+    let-item="item"
+    let-item$="item$"
+    let-index="index"
+  >
+    <div
+      class="opal-select__item"
+      [ngClass]="selectItemNgClass(item, item$)"
+      [title]="item[labelField] != null ? item[labelField] : item"
+    >
+      <ng-template
+        [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate"
+        [ngTemplateOutletContext]="{ item: item, item$: item$, index: index }"
+      ></ng-template>
+    </div>
+    <ng-template #defaultOptionTemplate="">
+      <span class="ng-option-label">{{
+        item[labelField] != null ? item[labelField] : item
+      }}</span>
+    </ng-template>
+  </ng-template>
+</ng-select>

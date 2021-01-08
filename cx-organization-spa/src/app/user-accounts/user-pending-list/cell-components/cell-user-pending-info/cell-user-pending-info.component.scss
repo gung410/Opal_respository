@@ -1,0 +1,51 @@
+cell-user-pending-info {
+  .cell-user-pending {
+    &__items {
+      &--avatar {
+        cursor: pointer;
+        width: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 15px;
+
+        &__image {
+          width: inherit;
+          border-radius: 50%;
+        }
+        &__icon {
+          top: 0px;
+          font-size: 16px;
+          position: absolute;
+          margin-left: 30px;
+        }
+      }
+
+      &--info {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: flex-start;
+        vertical-align: middle;
+        flex-direction: column;
+
+        &-item {
+          display: table;
+        }
+
+        &-item-sub {
+          font-size: 1em;
+          color: #909090;
+          margin: 0;
+        }
+
+        &-action-hover:hover {
+          cursor: pointer;
+          color: #0052cc;
+        }
+
+        .cx-progress {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

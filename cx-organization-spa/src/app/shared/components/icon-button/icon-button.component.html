@@ -1,0 +1,12 @@
+<button
+  *ngIf="visible"
+  class="button-wrapper"
+  [ngClass]="{ 'flex-row': !alignElementCenter }"
+  [ngStyle]="{ 'background-color': backgroundColor }"
+>
+  <span class="button-text">{{ text }}</span>
+  <span class="icon-container">
+    <span *ngIf="haveNotification" class="notification"></span>
+    <i class="me-icon {{ iconClass }}"></i>
+  </span>
+</button>

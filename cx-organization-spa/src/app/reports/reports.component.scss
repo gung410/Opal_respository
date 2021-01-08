@@ -1,0 +1,18 @@
+::ng-deep .sv_qstn[name='reportIframe'] .cx-question-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  iframe {
+    width: 100%;
+    border: none;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-grow: 1;
+  }
+}
+
+::ng-deep cx-surveyjs .card-footer {
+  text-align: left !important;
+}

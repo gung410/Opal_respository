@@ -1,0 +1,41 @@
+<cx-dialog-template [showFooterActionButtons]="false" (cancel)="onCancel()">
+  <modal-header>
+    <h4>{{ dialogHeaderText }}</h4>
+  </modal-header>
+  <content>
+    <span
+      *ngIf="searchDepartmentResult.length > 0"
+      class="content-search__result-match"
+    >
+      {{ resultMatch }}
+    </span>
+    <div>
+      <ul
+        *ngFor="let department of searchDepartmentResult"
+        class="list-group list-group-flush"
+      >
+        <li class="list-group-item">
+          <div
+            class="content-search__result--name text-primary"
+            (click)="onClickItemResult(department)"
+          >
+            {{ department.departmentName }}
+          </div>
+          <div class="text-primary">
+            {{ departmentPathMap[department.identity.id] }}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isNoSearchResult">
+      <span class="content-search__no-result text-primary">
+        {{
+          (isSearchAction
+            ? 'Department_Page.Department_Search.No_Result_Message'
+            : 'Department_Page.Department_Filter.No_Result_Message'
+          ) | translate
+        }}
+      </span>
+    </div>
+  </content>
+</cx-dialog-template>

@@ -1,0 +1,38 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  width: 100%;
+
+  .button-wrapper {
+    border: 1px solid transparent;
+    width: 100%;
+    outline: none;
+
+    .button-text {
+      flex-grow: 1;
+      text-align: start;
+    }
+  }
+
+  .icon-container {
+    position: relative;
+    width: 25px;
+    text-align: right;
+    vertical-align: middle;
+    display: inline-block;
+
+    .me-icon {
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .notification {
+      width: 11px;
+      height: 11px;
+      position: absolute;
+      background-color: $notification-color;
+      top: -6px;
+      right: -1px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<div class="user-pending-list">
+  <ag-grid-angular
+    #grid
+    *ngIf="agGridConfig"
+    class="ag-grid-header-floatable ag-grid-scroll-floatable ag-theme-material styled-grid user-pending-table"
+    domLayout="autoHeight"
+    [columnDefs]="agGridConfig.columnDefs"
+    [context]="agGridConfig.context"
+    [rowHeight]="82"
+    [defaultColDef]="agGridConfig.defaultColDef"
+    [frameworkComponents]="agGridConfig.frameworkComponents"
+    [rowData]="agGridConfig.rowData"
+    [rowMultiSelectWithClick]="true"
+    [rowSelection]="'multiple'"
+    [suppressMenuHide]="true"
+    [overlayNoRowsTemplate]="
+      'User_Account_Page.User_List.Search_Result_Dialog.No_Result_Message'
+        | translate
+    "
+    [gridOptions]="{ suppressMovableColumns: true }"
+    [suppressRowClickSelection]="true"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectionChanged($event)"
+    (sortChanged)="onSortChange($event)"
+  >
+  </ag-grid-angular>
+</div>

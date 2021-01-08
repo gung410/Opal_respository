@@ -1,0 +1,282 @@
+<form [formGroup]="recurringForm" id="recurring">
+  <h1 mat-dialog-title>Recurring Setting for {{ name }}</h1>
+  <div mat-dialog-content>
+    <!-- Recurring Type -->
+    <p class="mb-0 pl-0 col-12">Recurring Type *</p>
+    <mat-form-field appearance="outline" class="pl-0 col-12">
+      <!-- Due to https://github.com/angular/components/issues/4190  -->
+      <!-- Use this ngModelOptions to workaround. It means separating this ngModel with formControl in formGroup  -->
+      <!-- Because we reset form whenever RecurrenceType change -->
+      <!-- but we don't expect to reset this field -->
+      <mat-select
+        [(ngModel)]="recurrenceOptionType"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Recurring Type *"
+      >
+        <mat-option *ngFor="let type of recurringType" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Recurring Date -->
+    <!-- Start Date -->
+    <p class="mb-0 pl-0 col-6 d-inline-block">Recurring Start Date *</p>
+    <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+    <mat-form-field appearance="outline" class="pl-0 col-6">
+      <mat-datepicker-toggle
+        class="custom-datepicker"
+        matSuffix
+        [for]="recurringStartDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #recurringStartDate disabled="false"></mat-datepicker>
+      <input
+        readonly
+        [max]="maxRecurringStartDate"
+        [min]="minRecurringStartDate"
+        (dateChange)="onDateChange('recurringStartDate', $event)"
+        class="input-date"
+        formControlName="recurringStartDate"
+        [(ngModel)]="data.recurringStartDate"
+        [matDatepicker]="recurringStartDate"
+        matInput
+      />
+    </mat-form-field>
+    <!-- Start Time -->
+    <mat-form-field appearance="outline" class="pr-0 col-6">
+      <input
+        matInput
+        formControlName="recurringStartTime"
+        type="time"
+        placeholder="Recurring Start Time"
+        [(ngModel)]="data.recurringStartTime"
+      />
+    </mat-form-field>
+    <!-- End Date -->
+    <p class="mb-0 pl-0 col-6 d-inline-block">Recurring End Date *</p>
+    <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+    <mat-form-field appearance="outline" class="pl-0 col-6">
+      <mat-datepicker-toggle
+        class="custom-datepicker"
+        matSuffix
+        [for]="recurringEndDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #recurringEndDate disabled="false"></mat-datepicker>
+      <input
+        readonly
+        class="input-date"
+        [max]="maxRecurringEndDate"
+        [min]="minRecurringEndDate"
+        (dateChange)="onDateChange('recurringEndDate', $event)"
+        formControlName="recurringEndDate"
+        [(ngModel)]="data.recurringEndDate"
+        [matDatepicker]="recurringEndDate"
+        matInput
+      />
+    </mat-form-field>
+    <!-- Recurring End Date -->
+    <!-- End Time -->
+    <mat-form-field appearance="outline" class="pr-0 col-6">
+      <input
+        matInput
+        formControlName="recurringEndTime"
+        placeholder="Recurring End Time"
+        type="time"
+        [(ngModel)]="data.recurringEndTime"
+      />
+    </mat-form-field>
+    <div *ngIf="recurringDateValidation.date.isError" class="error">
+      {{ recurringDateValidation.date.message }}
+    </div>
+    <div *ngIf="recurringDateValidation.time.isError" class="error">
+      {{ recurringDateValidation.time.message }}
+    </div>
+    <div *ngIf="recurringDateValidation.inPast.isError" class="error">
+      {{ recurringDateValidation.inPast.message }}
+    </div>
+
+    <!-- Case: Weekly -->
+    <div *ngIf="isWeekly()">
+      <p class="mb-0 pl-0 col-6 d-inline-block">Start Weekday *</p>
+      <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="pl-0 col-6">
+        <mat-select
+          [(ngModel)]="data.startWeekDay"
+          formControlName="startWeekDay"
+        >
+          <mat-option *ngFor="let day of daysOfTheWeek" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="pr-0 col-6">
+        <input
+          matInput
+          type="time"
+          formControlName="startAt"
+          [(ngModel)]="data.startAt"
+        />
+      </mat-form-field>
+      <p class="mb-0 pl-0 col-6 d-inline-block">End Weekday *</p>
+      <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="pl-0 col-6">
+        <mat-select [(ngModel)]="data.endWeekDay" formControlName="endWeekDay">
+          <mat-option *ngFor="let day of daysOfTheWeek" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-6 pr-0">
+        <input
+          matInput
+          type="time"
+          formControlName="endAt"
+          [(ngModel)]="data.endAt"
+        />
+      </mat-form-field>
+    </div>
+    <!-- End Case Weekly -->
+
+    <!-- Case: Monthly -->
+    <div *ngIf="isMonthly()">
+      <p class="mb-0 pl-0 col-6 d-inline-block">Start month date *</p>
+      <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="pl-0 col-6">
+        <mat-select [(ngModel)]="data.startDay" formControlName="startDay">
+          <mat-option *ngFor="let day of daysOfMonth" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="pr-0 col-6">
+        <input
+          matInput
+          type="time"
+          formControlName="startAt"
+          [(ngModel)]="data.startAt"
+        />
+      </mat-form-field>
+      <p class="mb-0 pl-0 col-6 d-inline-block">End month date *</p>
+      <p class="mb-0 pr-0 col-6 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="col-6 pl-0">
+        <mat-select [(ngModel)]="data.endDay" formControlName="endDay">
+          <mat-option *ngFor="let day of daysOfMonth" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-6 pr-0">
+        <input
+          matInput
+          type="time"
+          formControlName="endAt"
+          [(ngModel)]="data.endAt"
+        />
+      </mat-form-field>
+    </div>
+    <!-- End Case Weekly -->
+
+    <!-- Case: Yearly -->
+    <div *ngIf="isYearly()">
+      <!-- Month -->
+      <p class="mb-0 pl-0 col-4 d-inline-block">Start Month *</p>
+      <p class="mb-0 pl-0 col-4 d-inline-block">Start Date *</p>
+      <p class="mb-0 pl-0 col-4 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="pl-0 col-4">
+        <mat-select [(ngModel)]="data.startMonth" formControlName="startMonth">
+          <mat-option
+            *ngFor="let month of months; let i = index"
+            [value]="i + 1"
+          >
+            {{ month }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Date -->
+      <mat-form-field appearance="outline" class="pl-0 col-4">
+        <mat-select [(ngModel)]="data.startDay" formControlName="startDay">
+          <mat-option *ngFor="let day of startDays" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="pl-0 col-4 pr-0">
+        <input
+          formControlName="startAt"
+          matInput
+          type="time"
+          [(ngModel)]="data.startAt"
+        />
+      </mat-form-field>
+      <!-- Month -->
+      <p class="mb-0 pl-0 col-4 d-inline-block">End Month *</p>
+      <p class="mb-0 pl-0 col-4 d-inline-block">End Date *</p>
+      <p class="mb-0 pl-0 col-4 d-inline-block">Set time *</p>
+      <mat-form-field appearance="outline" class="pl-0 col-4">
+        <mat-select [(ngModel)]="data.endMonth" formControlName="endMonth">
+          <mat-option
+            *ngFor="let month of months; let i = index"
+            [value]="i + 1"
+          >
+            {{ month }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Day -->
+      <mat-form-field appearance="outline" class="pl-0 col-4">
+        <mat-select [(ngModel)]="data.endDay" formControlName="endDay">
+          <mat-option *ngFor="let day of endDays" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-4 pr-0 pl-0">
+        <input
+          matInput
+          type="time"
+          formControlName="endAt"
+          [(ngModel)]="data.endAt"
+        />
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="recurrenceOptionType === 'Week'">
+      <div *ngIf="weeklyValidation.weekday.isError" class="error">
+        {{ weeklyValidation.weekday.message }}
+      </div>
+      <div *ngIf="weeklyValidation.time.isError" class="error">
+        {{ weeklyValidation.time.message }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="recurrenceOptionType === 'Month'">
+      <div *ngIf="monthlyValidation.date.isError" class="error">
+        {{ monthlyValidation.date.message }}
+      </div>
+      <div *ngIf="monthlyValidation.time.isError" class="error">
+        {{ monthlyValidation.time.message }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="recurrenceOptionType === 'Year'">
+      <div *ngIf="yearlyValidation.month.isError" class="error">
+        {{ yearlyValidation.month.message }}
+      </div>
+      <div *ngIf="yearlyValidation.date.isError" class="error">
+        {{ yearlyValidation.date.message }}
+      </div>
+      <div *ngIf="yearlyValidation.time.isError" class="error">
+        {{ yearlyValidation.time.message }}
+      </div>
+    </ng-container>
+  </div>
+  <div mat-dialog-actions>
+    <button class="cx-btn" mat-button (click)="onNoClick()">Close</button>
+    <button
+      class="cx-btn ml-1"
+      mat-button
+      (click)="onSubmit()"
+      [disabled]="recurringForm.invalid"
+    >
+      {{ 'Common.Button.Save' | translate }}
+    </button>
+  </div>
+</form>

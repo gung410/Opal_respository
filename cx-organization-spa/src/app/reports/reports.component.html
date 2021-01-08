@@ -1,0 +1,12 @@
+<div class="reports">
+  <cx-surveyjs
+    #reportSurvey
+    [json]="reportFormJSON"
+    [variables]="surveyVariables"
+    [hideSubmitBtn]="hideExportButton"
+    (valueChanged)="onChange($event)"
+    [submitName]="'Common.Button.Export' | translate"
+    (submitting)="onExportClick($event)"
+  >
+  </cx-surveyjs>
+</div>

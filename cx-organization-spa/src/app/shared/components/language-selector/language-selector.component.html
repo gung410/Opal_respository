@@ -1,0 +1,46 @@
+<div *ngIf="true" class="selector-container row">
+  <div class="language-selector" (click)="openSelector()">
+    <icon-button
+      class="pull-right"
+      [alignElementCenter]="false"
+      [text]="selectedLanguageName"
+      backgroundColor="unset"
+      iconClass="icon-chevron"
+    >
+    </icon-button>
+  </div>
+  <div class="list-container" [@openSelector]="state">
+    <icon-button
+      class="pull-right close-container"
+      [alignElementCenter]="false"
+      [text]="'Language.PreferedLanguage' | translate"
+      (click)="openSelector()"
+      backgroundColor="unset"
+      iconClass="icon-close"
+    ></icon-button>
+    <ul class="language-list">
+      <li
+        *ngFor="let lang of languageList"
+        class="language-list__item"
+        [class.selected]="lang.code == selectedLanguage"
+        (click)="changeLanguage(lang.code, lang.name)"
+      >
+        <icon-button
+          *ngIf="lang.code == selectedLanguage"
+          [alignElementCenter]="false"
+          iconClass="icon-check-nobox"
+        >
+        </icon-button>
+        <span>{{ lang.name }}</span>
+        <span
+          *ngIf="lang.code == selectedLanguage"
+          class="note current pull-right"
+          >{{ 'Language.CurrentLanguage' | translate }}</span
+        >
+        <span *ngIf="lang.code != selectedLanguage" class="note pull-right">{{
+          'Common.Navigation.Select' | translate
+        }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

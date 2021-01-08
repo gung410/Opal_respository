@@ -1,0 +1,39 @@
+audit-history {
+  .audit-history {
+    padding-top: 5px;
+
+    &__item {
+      display: flex;
+      padding: 5px 0;
+    }
+
+    &__avatar {
+      width: 40px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+
+      &--circle {
+        height: 40px;
+        width: inherit;
+        border-radius: 50%;
+      }
+    }
+
+    &__previous-value {
+      color: #8993a4;
+    }
+
+    &__current-value {
+      font-weight: 600;
+    }
+
+    &__sub-info {
+      margin-bottom: 0;
+    }
+
+    &__info {
+      margin: auto 0;
+    }
+  }
+}

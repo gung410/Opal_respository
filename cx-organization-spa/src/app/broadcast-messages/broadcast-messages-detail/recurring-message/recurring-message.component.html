@@ -1,0 +1,76 @@
+<div class="recurring-message-container">
+  <div class="row configuration-item">
+    <div class="config-label col-12 pl-0">
+      <span>Repeats every *</span>
+    </div>
+    <div class="col-8 form-control input-repetition">
+      <input
+        #repetitionInput
+        class="input-repetition__content"
+        [disabled]="isDisabledControls"
+        #repetitionInput
+        matInput
+        min="1"
+        value="1"
+        [(ngModel)]="numberOfRepetition"
+        (change)="onRepetitionChange($event.target.value)"
+        [ngModelOptions]="{ standalone: true }"
+        max="99"
+        type="number"
+      >
+    </div>
+    <div class="col-4 form-control input-recurring-type">
+      <mat-select
+        [(ngModel)]="recurringTypeOption"
+        [disabled]="isDisabledControls"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <mat-option
+          *ngFor="let type of recurringType"
+          [value]="type"
+        >
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <div class="row configuration-item">
+    <div class="config-label col-12 pl-0">
+      <span>Repeat on *</span>
+    </div>
+    <ng-container [ngSwitch]="recurringTypeOption">
+      <div
+        *ngSwitchCase="'Week'"
+        class="day-buttons"
+      >
+        <ng-container *ngFor="let day of dayRepetitionItems">
+          <button
+            [disabled]="isDisabledControls"
+            type="button"
+            (click)="onDayClicked(day)"
+            class="btn-circle"
+            [ngClass]="{'active-btn': dayRepetitions && dayRepetitions.includes(day)}"
+          >{{getDayToString(day)}}</button>
+        </ng-container>
+      </div>
+      <div
+        *ngSwitchCase="'Month'"
+        class="month-repetition"
+      >
+        <opal-select
+          [disabled]="isDisabledControls"
+          [(ngModel)]="monthRepetition"
+          [ngModelOptions]="{ standalone: true }"
+          [isDisplayCloseIcon]="false"
+          [items]="monthRepetitionItems"
+          [valueField]="'monthRepetition'"
+          [labelField]="'description'"
+          position="top"
+        >
+        </opal-select>
+      </div>
+
+    </ng-container>
+
+  </div>
+</div>

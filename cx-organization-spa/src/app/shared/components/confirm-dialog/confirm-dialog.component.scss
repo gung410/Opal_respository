@@ -1,0 +1,16 @@
+.confirm-body{
+  &__content{
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+}
+.confirm-footer {
+  .cx-btn-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .anti-cx-btn {
+      min-width: 0;
+    }
+  }
+}

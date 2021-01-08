@@ -1,0 +1,60 @@
+<div class="app-header" *ngIf="userData">
+  <cx-header
+    [ngClass]="{ hideSearchBar: isHideSearchBar }"
+    [(searchValue)]="currentSearchText"
+    [applications]="userData.headerData.applications"
+    [currentURL]="currentSite"
+    [currentUser]="userData"
+    [logo]="userData.headerData.logo"
+    [multipleLanguages]="userData.headerData.multipleLanguages"
+    [notificationList]="notifications"
+    [isShowNotificationBell]="isShowNotificationBell"
+    [bellUrl]="notificationBellUrl"
+    [placeholderText]="
+      isInUserManagement
+        ? 'Search in User Management'
+        : ('Search in Organisation Management' | translate)
+    "
+    (clickedHamburger)="onClickedHamburger()"
+    (clickedNotification)="onClickNotification($event)"
+    (openNotificationPopUp)="onOpenNotificationPopUp($event)"
+    (clickedClearNotification)="onClickClearNotification($event)"
+    (clickedClearAllNotifications)="onClickClearAllNotification()"
+    (clickSettings)="onClickSettings()"
+    (clickSupport)="onClickSupport()"
+    (editProfile)="onEditProfile()"
+    (searchOnSearchBox)="onSearch($event)"
+    (signOut)="onLogout()"
+  >
+    <cx-header-user-dropdown>
+      <a class="cx-dropdown-menu__item" (click)="onChangePassword()">
+        <i class="icon-controls cx-user-menu-item__icon"></i>
+        Change password
+      </a>
+      <a class="cx-dropdown-menu__item" (click)="onEditProfile()">
+        <i class="icon-staff cx-user-menu-item__icon"></i>
+        Profile
+      </a>
+      <a class="cx-dropdown-menu__item" (click)="onLogout()">
+        <i class="icon-logout cx-user-menu-item__icon"></i>
+        Sign out
+      </a>
+      <!-- TODO: Temporary remove https://cxtech.atlassian.net/browse/CP-5408 -->
+      <!-- <button class="cx-user-menu-item" (click)="onClickSettings()">
+        <i class="icon-settings cx-user-menu-item__icon"></i>
+        <span class="cx-user-menu-item__title">Settings</span>
+      </button>
+      <button class="cx-user-menu-item" (click)="onClickSupport()">
+        <i class="icon-headphones cx-user-menu-item__icon"></i>
+        <span class="cx-user-menu-item__title">Support</span>
+      </button> -->
+    </cx-header-user-dropdown>
+  </cx-header>
+  <div class="app-header__nav-bar">
+    <cx-navbar
+      *ngIf="userData.headerData.menus"
+      [listMenu]="userData.headerData.menus"
+      (clickItem)="onMenuItemClicked($event)"
+    ></cx-navbar>
+  </div>
+</div>

@@ -1,0 +1,507 @@
+<div class="row broadcast-message">
+  <div class="broadcast-message__header">
+    <div class="broadcast-message__header__left-container">
+      <button
+        class="cx-btn pull-right cx-back-button"
+        (click)="onBackButtonClicked()"
+      >
+        <img
+          class="back-icon"
+          src="assets/icons/icon-chevron-right-bold.svg"
+        />
+        {{ 'Common.Button.Back' | translate }}
+      </button>
+
+      <div class="broadcast-message-title">{{ broadcastMessage.title }}</div>
+    </div>
+    <div class="broadcast-message__header__center-container"></div>
+    <div class="broadcast-message__header__right-container">
+      <div
+        class="modification-info"
+        *ngIf="broadcastMessage.ownerInfo"
+      >
+        <div class="modification-info__metadata">
+          <div class="avatar">
+            <img
+              class="avatar-image"
+              [src]="broadcastMessage.ownerInfo.avatarUrl"
+              data-toggle="tooltip"
+              title="{{ broadcastMessage.ownerInfo.fullName }}"
+            />
+          </div>
+
+          <div
+            class="avatar"
+            *ngIf="
+              broadcastMessage.lastUpdatedUserInfo &&
+              broadcastMessage.ownerInfo.userCxId.toLowerCase() !==
+                broadcastMessage.lastUpdatedUserInfo.userCxId.toLowerCase()
+            "
+          >
+            <img
+              class="avatar-image"
+              [src]="broadcastMessage.lastUpdatedUserInfo.avatarUrl"
+              data-toggle="tooltip"
+              title="{{ broadcastMessage.lastUpdatedUserInfo.fullName }}"
+            />
+          </div>
+
+          <div class="modification-info__metadata__time-text">
+            <p *ngIf="broadcastMessage.ownerInfo">
+              <span>{{ 'Common.Label.Created' | translate }}</span>
+              <span title="{{ getDateTimeFormat(broadcastMessage.createdDate) }}">{{
+                  ' ' + getDateTimeFromNow(broadcastMessage.createdDate) + ' '
+                }}</span>
+              <span>
+                {{ 'Common.Label.By' | translate }}
+                {{ broadcastMessage.ownerInfo.fullName }}</span>
+            </p>
+            <p *ngIf="broadcastMessage.lastUpdatedUserInfo">
+              <span>{{ 'Common.Label.LastUpdated' | translate }}</span>
+              <span title="{{ getDateTimeFormat(broadcastMessage.lastUpdated) }}">{{
+                  ' ' + getDateTimeFromNow(broadcastMessage.lastUpdated) + ' '
+                }}</span>
+              <span *ngIf="broadcastMessage.lastUpdatedBy">
+                {{ 'Common.Label.By' | translate }}
+                {{ broadcastMessage.lastUpdatedUserInfo.fullName }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <button
+        class="cx-btn pull-right cx-save-button"
+        (click)="onSave()"
+      >
+        {{ 'Common.Button.Confirm' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+<div
+  [formGroup]="broadcastMessageForm"
+  class="row broadcast-message"
+>
+  <div class="broadcast-message-col-left broadcast-message__body">
+    <div class="broadcast-message__body__container__head__title">
+      <span>CONFIGURATION</span>
+    </div>
+    <hr />
+    <div class="broadcast-message__body__container">
+      <section class="recurring mb-4">
+        <mat-checkbox
+          [checked]="isRecurring"
+          (click)="checkRecurring()"
+          class="config-label recurring-checked"
+        >Message Type</mat-checkbox>
+        <div class="mb-2 mt-3">
+          <mat-radio-group
+            [disabled]="isEditMode"
+            class="recurring-select"
+            (change)="checkRecurring()"
+            aria-label="Select an option"
+          >
+            <mat-radio-button
+              class="option-layout"
+              [checked]="!isRecurring"
+              [ngClass]="{greyout: isEditMode && isRecurring}"
+              [value]="false"
+            >One-time</mat-radio-button>
+            <mat-radio-button
+              class="option-layout"
+              [ngClass]="{greyout: isEditMode && !isRecurring}"
+              [checked]="isRecurring"
+              [value]="true"
+            >Recurring</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </section>
+      <div class="mb-2">
+        <div class="row configuration-item">
+          <span class="config-label col-12 pl-0">Start Date *</span>
+          <mat-form-field
+            [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+            appearance="outline"
+            class="pl-0 pr-0 col-12"
+            (click)="validFromDate.open()"
+          >
+            <img
+              class="custom-datepicker"
+              src="assets/icons/calendar.svg"
+              (click)="validFromDate.open()"
+            />
+            <mat-datepicker
+              #validFromDate
+              disabled="false"
+            ></mat-datepicker>
+            <input
+              [disabled]="isEditMode && isRecurring"
+              readonly
+              [min]="minFromDate"
+              [max]="maxFromDate"
+              class="input-date"
+              formControlName="validFromDate"
+              [(ngModel)]="broadcastMessage.validFromDate"
+              (ngModelChange)="validFromDateChange($event)"
+              (dateChange)="onDateChange('validFrom', $event)"
+              [matDatepicker]="validFromDate"
+              matInput
+            />
+            <img
+              class="custom-dropdown"
+              src="assets/icons/dropdown.svg"
+              (click)="validFromDate.open()"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row configuration-item">
+          <span class="config-label col-12 pl-0">End Date *</span>
+          <mat-form-field
+            [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+            appearance="outline"
+            class="pl-0 pr-0 col-12"
+            (click)="validToDate.open()"
+          >
+            <img
+              class="custom-datepicker"
+              src="assets/icons/calendar.svg"
+              (click)="validToDate.open()"
+            />
+            <mat-datepicker
+              #validToDate
+              disabled="false"
+            ></mat-datepicker>
+            <input
+              readonly
+              [disabled]="isEditMode && isRecurring"
+              [min]="minToDate"
+              [max]="maxToDate"
+              class="input-date"
+              formControlName="validToDate"
+              [(ngModel)]="broadcastMessage.validToDate"
+              (dateChange)="onDateChange('validTo', $event)"
+              [matDatepicker]="validToDate"
+              matInput
+            />
+            <img
+              class="custom-dropdown"
+              src="assets/icons/dropdown.svg"
+              (click)="validToDate.open()"
+            />
+          </mat-form-field>
+        </div>
+        <div class="row configuration-item">
+          <div class="config-label col-6 pl-0">Show from *</div>
+          <div class="config-label col-6 pr-0">Show until *</div>
+          <div class="mat-form-field col-6">
+            <div
+              [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+              class="time-field"
+              (click)="validFromTime.open()"
+            >
+              <img
+                class="custom-clock"
+                src="assets/icons/clock.svg"
+              />
+              <input
+                [disabled]="isEditMode && isRecurring"
+                class="custom-timepicker"
+                formControlName="validFromTime"
+                [(ngModel)]="broadcastMessage.validFromTime"
+                [ngxTimepicker]="validFromTime"
+                readonly
+              />
+
+              <ngx-material-timepicker
+                #validFromTime
+                [enableKeyboardInput]="true"
+              ></ngx-material-timepicker>
+            </div>
+          </div>
+
+          <div class="mat-form-field col-6">
+            <div
+              [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+              class="time-field"
+              (click)="validToTime.open()"
+            >
+              <img
+                class="custom-clock"
+                src="assets/icons/clock.svg"
+              />
+              <input
+                [disabled]="isEditMode && isRecurring"
+                class="custom-timepicker"
+                formControlName="validToTime"
+                [(ngModel)]="broadcastMessage.validToTime"
+                [ngxTimepicker]="validToTime"
+                readonly
+              />
+
+              <ngx-material-timepicker
+                #validToTime
+                [enableKeyboardInput]="true"
+              ></ngx-material-timepicker>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="isInPastWarning"
+          class="warning-container"
+        >
+          <span class="date-range-warning">Date/Time range cannot be in the past.</span>
+        </div>
+        <div
+          *ngIf="isInvalidTimeRangeWarning"
+          class="warning-container"
+        >
+          <span class="date-range-warning">Show until must be after Show from.</span>
+        </div>
+        <div
+          [hidden]="!isRecurring"
+          class="recurring-section"
+        >
+          <recurring-message
+            [(recurringTypeOption)]="broadcastMessage.recurringType"
+            [(dayRepetitions)]="broadcastMessage.dayRepetitions"
+            [(monthRepetition)]="broadcastMessage.monthRepetition"
+            [(numberOfRepetition)]="broadcastMessage.numberOfRecurrence"
+            [isDisabledControls]="isEditMode"
+            [targetDate]="targetDate"
+          ></recurring-message>
+        </div>
+      </div>
+      <div class="configuration-item">
+        <span class="config-label">Send As *</span> <br />
+        <span>All messages will be shown as a notification and sent on email.</span>
+        <br />
+        <opal-select
+          [disabled]="isEditMode"
+          [(ngModel)]="broadcastMessage.sendMode"
+          formControlName="sendMode"
+          [items]="sendModeItems"
+          [valueField]="'sendMode'"
+          [labelField]="'sendModeLabel'"
+          position="top"
+        >
+        </opal-select>
+      </div>
+      <div class="configuration-item">
+        <span class="config-label">Who will see the message *</span>
+        <opal-select
+          [disabled]="isEditMode"
+          [(ngModel)]="broadcastMessage.targetUserType"
+          formControlName="targetUserType"
+          [items]="targetUserTypeItems"
+          [valueField]="'targetUserType'"
+          [labelField]="'targetUserTypeLabel'"
+          (selectedValueChange)="onSelectTargetUserTypeChange($event)"
+          position="top"
+        >
+        </opal-select>
+        <div
+          class="target-audience-container"
+          [hidden]="!isSpecificMode"
+        >
+          <div
+            *ngIf="isInvalidTargetAudience && isSpecificMode"
+            class="error"
+          >
+            Please choose 1 out of 4 target audiences below.
+          </div>
+          <div
+            formGroupName="recipients"
+            class="target-audience-container"
+          >
+            <div
+              *ngIf="!isEditMode || flatDepartmentsArray.length"
+              class="configuration-item"
+            >
+              <span class="config-label">Organisation(s) / Department(s)</span>
+              <div
+                class="modal-container"
+                (click)="openDepartmentsDialog()"
+              >
+                <opal-select
+                  [disabled]="
+                    isDisabledTargetAudienceSelectBox('department') ||
+                    isEditMode
+                  "
+                  [selectedValue]="broadcastMessage.selectedDepartments"
+                  [(ngModel)]="broadcastMessage.departments"
+                  formControlName="departments"
+                  [readOnly]="true"
+                  [multiple]="true"
+                  [clearable]="false"
+                  [items]="flatDepartmentsArray"
+                  [valueField]="'identity.id'"
+                  [isDisplayCloseIcon]="false"
+                  [labelField]="'departmentName'"
+                  [clearable]="true"
+                  [virtualScroll]="true"
+                  [disableSelectAll]="true"
+                  position="top"
+                >
+                </opal-select>
+              </div>
+            </div>
+            <div class="configuration-item">
+              <span class="config-label">Specific user(s)</span>
+              <opal-select
+                [disabled]="
+                  isDisabledTargetAudienceSelectBox('user') || isEditMode
+                "
+                [fetchDataFn]="fetchUsersFn"
+                formControlName="users"
+                [(ngModel)]="broadcastMessage.users"
+                [items]="broadcastMessage.selectedUsers"
+                [clearable]="true"
+                [multiple]="true"
+                [valueField]="'identity.extId'"
+                [labelField]="'firstName'"
+                [disableSelectAll]="true"
+                position="top"
+              >
+              </opal-select>
+            </div>
+            <div class="configuration-item">
+              <span class="config-label">Group(s)</span>
+              <opal-select
+                [disabled]="
+                  isDisabledTargetAudienceSelectBox('group') || isEditMode
+                "
+                [multiple]="true"
+                [(ngModel)]="broadcastMessage.groups"
+                [fetchDataFn]="fetchGroupsFn"
+                formControlName="groups"
+                [fetchNoPaging]="true"
+                [(ngModel)]="broadcastMessage.groups"
+                [items]="broadcastMessage.selectedGroups"
+                [valueField]="'identity.id'"
+                [labelField]="'name'"
+                [clearable]="true"
+                [disableSelectAll]="true"
+                position="top"
+              >
+              </opal-select>
+            </div>
+            <div
+              *ngIf="rolesArray && rolesArray.length"
+              class="configuration-item"
+            >
+              <span class="config-label">Role(s)</span>
+              <opal-select
+                [disabled]="
+                  isDisabledTargetAudienceSelectBox('role') || isEditMode
+                "
+                [selectedValue]="broadcastMessage.selectedRoles"
+                [(ngModel)]="broadcastMessage.roles"
+                formControlName="roles"
+                [multiple]="true"
+                [items]="rolesArray"
+                [valueField]="'id'"
+                [labelField]="'roleName'"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [disableSelectAll]="true"
+                position="top"
+              >
+              </opal-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="broadcast-message-col-right broadcast-message__body">
+    <div class="broadcast-message__body__container">
+      <div class="broadcast-message__body__container--items">
+        <div class="broadcast-message__body__container__title">
+          <span>MESSAGE TITLE *</span>
+        </div>
+      </div>
+      <div class="broadcast-message__body__container--items">
+        <opal-textarea
+          matInput
+          [className]="'form-control'"
+          [styles]="opalTextAreaStyle"
+          [placeholder]="'Type here...'"
+          formControlName="title"
+          [(ngModel)]="broadcastMessage.title"
+          [counterDisplay]="'charsLeft'"
+          [height]="1"
+          [preventEnter]="true"
+          [counterPosition]="'right'"
+          [maxNumberOfCharacters]="MESSAGE_TITLE_MAX_LENGTH"
+        >
+        </opal-textarea>
+        <div *ngIf="
+            broadcastMessageTitle.invalid &&
+            (broadcastMessageTitle.dirty || broadcastMessageTitle.touched)
+          ">
+          <div
+            *ngIf="broadcastMessageTitle.errors.required"
+            class="error"
+          >
+            Title is required.
+          </div>
+          <div
+            *ngIf="broadcastMessageTitle.errors.whiteSpace"
+            class="error"
+          >
+            Title can not only contain white space.
+          </div>
+          <div
+            *ngIf="broadcastMessageTitle.errors.maxlength"
+            class="error"
+          >
+            Title must be less than 100 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="broadcast-message__body__container--items">
+        <div class="broadcast-message__body__container__title">
+          <span>MESSAGE *</span>
+        </div>
+      </div>
+      <div class="broadcast-message__body__container--items">
+        <div class="broadcast-message__body__container__content">
+          <opal-textarea
+            [className]="'form-control'"
+            [styles]="opalTextAreaStyle"
+            [placeholder]="'Type here...'"
+            [height]="10"
+            formControlName="content"
+            [(ngModel)]="broadcastMessage.content"
+            [counterDisplay]="'charsLeft'"
+            [counterPosition]="'right'"
+            [maxNumberOfCharacters]="MESSAGE_CONTENT_MAX_LENGTH"
+          >
+          </opal-textarea>
+          <div *ngIf="
+              broadcastMessageContent.invalid &&
+              (broadcastMessageContent.dirty || broadcastMessageContent.touched)
+            ">
+            <div
+              *ngIf="broadcastMessageContent.errors.required"
+              class="error"
+            >
+              Content is required.
+            </div>
+            <div
+              *ngIf="broadcastMessageContent.errors.whiteSpace"
+              class="error"
+            >
+              Content can not only contain white space.
+            </div>
+            <div
+              *ngIf="broadcastMessageContent.errors.maxlength"
+              class="error"
+            >
+              Content must be less than 1000 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

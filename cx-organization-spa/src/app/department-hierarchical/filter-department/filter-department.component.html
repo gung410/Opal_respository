@@ -1,0 +1,38 @@
+<cx-dialog-template
+  class="filter-department"
+  (done)="onDone()"
+  (cancel)="onCancel()"
+  [doneButtonText]="'Common.Label.Apply' | translate"
+  [cancelButtonText]="'Common.Button.Cancel' | translate"
+>
+  <modal-header>
+    <h5>{{ 'Department_Page.Filter_Section.Title' | translate }}</h5>
+  </modal-header>
+  <content>
+    <div *ngIf="departmentFilterOptions" class="filter-department__content">
+      <div *ngFor="let departmentFilterOption of departmentFilterOptions">
+        <div
+          *ngIf="departmentFilterOption.name"
+          class="filter-department__header"
+        >
+          <span>{{ departmentFilterOption.name | uppercase }}</span>
+        </div>
+        <div
+          *ngIf="departmentFilterOption.options"
+          class="filter-department__items row m-0"
+        >
+          <ng-container
+            *ngFor="let deparmentType of departmentFilterOption.options"
+          >
+            <cx-checkbox
+              class="col-12 col-sm-6 col-lg-4 p-0"
+              [(selected)]="deparmentType.isSelected"
+            >
+              {{ deparmentType.value }}
+            </cx-checkbox>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

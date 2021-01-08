@@ -1,0 +1,57 @@
+@import '~assets/styles/variables.scss';
+
+cell-dropdown-action {
+  .cell-dropdown-action {
+    &__icon-menu {
+      &:hover,
+      &[aria-expanded='true'] {
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #e4e4e4;
+      }
+    }
+
+    .cx-dropdown-menu {
+      margin: 0;
+      padding: 5px 10px 3px 10px;
+      transform: translate3d(-101%, 0px, 0) !important;
+      box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.14);
+      line-height: initial;
+
+      &::after {
+        display: none;
+      }
+
+      &__item {
+        display: inline-block;
+        margin: 0;
+      }
+    }
+
+    &__disable {
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    @media only screen and (max-width: $screen-xs-max) {
+      .cx-dropdown-menu {
+        .cx-dropdown-item {
+          &__text {
+            display: none;
+          }
+
+          &__icon {
+            margin-right: 0;
+            min-width: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ag-pinned-right-header {
+  width: 50px !important;
+  max-width: 50px !important;
+  min-width: 50px !important;
+}

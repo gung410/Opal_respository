@@ -1,0 +1,61 @@
+$active-btn-color: #313552;
+
+.recurring-message-container {
+  .configuration-item {
+    margin: 0.25em 0;
+    margin-top: 20px;
+
+    .month-repetition {
+      width: 100%;
+    }
+
+    .day-buttons {
+      background-size: auto;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .btn-circle {
+        min-width: 35px;
+        min-height: 35px;
+        border-radius: 50%;
+        font-size: 18px;
+        color: $active-btn-color;
+        border: 1px solid #D8DCE6;
+        text-align: center;
+        transition: 0.5s;
+
+        &:focus {
+          outline: none;
+          transition: 0.5s;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+        }
+      }
+
+      .active-btn {
+        background-color: $active-btn-color;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .input-repetition {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    #mat-input-2::-webkit-inner-spin-button,
+    #mat-input-2::-webkit-outer-spin-button {
+      -webkit-appearance: auto !important;
+      opacity: 1;
+    }
+  }
+
+  .input-recurring-type {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+}

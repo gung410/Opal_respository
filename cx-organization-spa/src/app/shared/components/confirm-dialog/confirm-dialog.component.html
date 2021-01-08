@@ -1,0 +1,33 @@
+<div class="confirm-header">
+  <h5>{{ title }}</h5>
+</div>
+
+<div class="confirm-body">
+  <div mat-dialog-content>
+    <div
+      class="confirm-body__content"
+      [innerHTML]="convertedContent"
+    ></div>
+  </div>
+</div>
+<div class="confirm-footer">
+  <div
+    class="cx-btn-container"
+    mat-dialog-actions
+  >
+    <button
+      class="cx-btn-secondary anti-cx-btn"
+      mat-button
+      (click)="onDismiss()"
+    >
+      {{cancelButtonText}}
+    </button>
+    <button
+      class="cx-btn ml-1 anti-cx-btn"
+      mat-button
+      (click)="onConfirm()"
+    >
+      {{confirmButtonText}}
+    </button>
+  </div>
+</div>

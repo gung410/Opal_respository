@@ -1,0 +1,23 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+>
+  <modal-header>
+    <h5>{{ 'Common.Button.EnableColumns' | translate }}</h5>
+  </modal-header>
+  <content>
+    <div
+      class="column-dropdown-menu"
+      *ngIf="systemRoleListColumnDef"
+    >
+      <div *ngFor="let column of systemRoleListColumnDef">
+        <cx-checkbox
+          [selected]="!column.hide"
+          (selectedChange)="changeSelectedColumn($event, column)"
+        >
+          {{ column.headerName }}
+        </cx-checkbox>
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

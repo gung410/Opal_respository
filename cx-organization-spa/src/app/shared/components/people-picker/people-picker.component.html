@@ -1,0 +1,101 @@
+<div class="people-picker-container">
+  <ng-select
+    class="cx-people-picker"
+    #ngSelect
+    [disabled]="disabled"
+    [items]="people"
+    [(ngModel)]="selectedPeople"
+    [virtualScroll]="true"
+    [hideSelected]="true"
+    [closeOnSelect]="closeOnSelect"
+    [multiple]="multiple"
+    [loading]="loading"
+    [placeholder]="placeholder"
+    [searchFn]="searchFn"
+    appendTo="body"
+    (open)="onOpen()"
+    (clear)="onClear()"
+    (search)="onSearch($event)"
+    (scroll)="onScroll($event)"
+    (scrollToEnd)="onScrollToEnd()"
+    (change)="selectPeople($event)"
+    (focus)="onFocus()"
+    [compareWith]="compareWith"
+  >
+    <ng-template ng-footer-tmp>
+      <div class="ng-input-1">
+        <input
+          #selectFooterInput
+          class="ng-search-input"
+          role="combobox"
+          autocorrect="off"
+          autocapitalize="off"
+          type="text"
+          aria-expanded="true"
+          (input)="ngSelect.filter($event.target.value)"
+        />
+      </div>
+    </ng-template>
+    <ng-template ng-header-tmp>
+      <div class="ng-input-1">
+        <input
+          #selecHeaderInput
+          class="ng-search-input"
+          role="combobox"
+          autocorrect="off"
+          autocapitalize="off"
+          type="text"
+          aria-expanded="true"
+          (input)="ngSelect.filter($event.target.value)"
+        />
+      </div>
+    </ng-template>
+    <ng-template
+      ng-label-tmp
+      let-user="item"
+      let-index="index"
+      let-clear="clear"
+    >
+      <div class="people-picker">
+        <div class="people-picker__avatar">
+          <img class="people-picker__avatar-image" [src]="getAvatar(user)" />
+        </div>
+        <div class="people-picker__full-info">
+          <div class="people-picker__info-primary">
+            {{ getPropertyValue(user, displayPrimaryField) }}
+          </div>
+          <div class="people-picker__info-secondary">
+            {{ getPropertyValue(user, displaySecondaryField) }}
+          </div>
+          <div class="people-picker__info-third">
+            {{ getPropertyValue(user, displayThirdField) }}
+          </div>
+        </div>
+        <span
+          class="ng-value-icon people-picker__clear-button"
+          (click)="clear(user)"
+        >
+          <i class="material-icons close-icon"></i>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template ng-option-tmp let-user="item" let-index="index">
+      <div class="people-picker">
+        <div class="people-picker__avatar">
+          <img class="people-picker__avatar-image" [src]="getAvatar(user)" />
+        </div>
+        <div class="people-picker__full-info">
+          <div class="people-picker__info-primary">
+            {{ getPropertyValue(user, displayPrimaryField) }}
+          </div>
+          <div class="people-picker__info-secondary">
+            {{ getPropertyValue(user, displaySecondaryField) }}
+          </div>
+          <div class="people-picker__info-third">
+            {{ getPropertyValue(user, displayThirdField) }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-select>
+</div>

@@ -1,0 +1,32 @@
+<div class="app-root">
+  <app-header
+    class="app-root__header"
+    [userData]="currentUser"
+    *ngIf="hasValidUser && currentUser && showHeader"
+    [isShowNotificationBell]="isShowNotificationBell"
+    [notifications]="notifications"
+    (signOut)="onLogout()"
+    (editProfile)="onGoToProfile()"
+    (changePassword)="onChangePassword()"
+    (openNotificationPopup)="onOpenNotificationPopup($event)"
+    (clickNotificationItem)="onClickNotificationItem($event)"
+  >
+  </app-header>
+  <div
+    *ngIf="enableBroadCast && hasValidUser && showHeader"
+    class="app-root__notification-alert"
+    [ngClass]="cssClass"
+    [ngStyle]="{
+      display: enableBroadCast && hasValidUser && showHeader ? '' : 'none'
+    }"
+  >
+    <iframe [src]="notificationAlertUrl" [height]="heightIframe"></iframe>
+  </div>
+  <div class="app-root__content">
+    <div class="app-root__main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<cx-footer [footerData]="footerData"></cx-footer>
+<report-iframe *ngIf="hasValidUser && currentUser"> </report-iframe>

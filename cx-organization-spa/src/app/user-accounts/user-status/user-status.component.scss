@@ -1,0 +1,65 @@
+@import '../../../assets/styles/variables.scss';
+
+user-status {
+  .user-status {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: 500;
+
+    &__status-text {
+      display: flex;
+      align-items: center;
+      font-size: $medium-font-size;
+
+      .dot-container {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 4px;
+        flex-shrink: 0;
+        margin-right: 6px;
+      }
+    }
+
+    &__status-reason {
+      font-size: $small-font-size;
+      font-style: italic;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-weight: 500;
+      padding-top: 2px;
+    }
+  }
+
+  .success-status {
+    background: #3bdc87;
+  }
+
+  .danger-status {
+    background: #ff6262;
+  }
+
+  @media only screen and (max-width: $screen-xs-max) {
+    .user-status {
+      text-align: left;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      background: none;
+      text-transform: capitalize;
+      max-width: 150px;
+      height: unset;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      &__status-text {
+        .dot-container {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

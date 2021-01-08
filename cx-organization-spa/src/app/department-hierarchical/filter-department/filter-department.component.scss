@@ -1,0 +1,9 @@
+.filter-department {
+  &__header {
+    margin: 20px 0px 10px 4px;
+    font-weight: 500;
+  }
+  &__items {
+    columns: 3;
+  }
+}

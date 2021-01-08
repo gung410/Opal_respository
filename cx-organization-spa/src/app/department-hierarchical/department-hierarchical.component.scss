@@ -1,0 +1,204 @@
+@import 'assets/styles/variables.scss';
+
+department-hierarchical {
+    .department {
+        &__title {
+            font-size: 1.5em;
+        }
+
+        &__tree {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+        }
+
+        &__header-item {
+            border: none !important;
+            white-space: nowrap;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        &__info-item {
+            display: flex;
+        }
+
+        &__department-name {
+            cursor: pointer;
+        }
+
+        &__check-icon {
+            padding: 5px 0;
+            font-size: 24px !important;
+        }
+
+        &__extensive-item {
+            width: 100%;
+        }
+
+        &__error-message {
+            font-size: 1.5em;
+            color: red;
+        }
+
+        &__loading-message {
+            font-size: 1.5em;
+        }
+
+        &__filter-section {}
+
+        &__filter-dropdown {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        &__filter-tag {
+            margin-left: 20px;
+        }
+
+        .material-icons {
+            color: #5b6a83 !important;
+            font-size: 0;
+        }
+
+        .cx-extensive-tree__btn i.material-icons::before {
+            font-size: 18px !important;
+            border: 2px solid #5b6a83;
+        }
+
+        &__empty {
+            text-align: center;
+        }
+    }
+
+    .filter-tag {
+        &__filtered-item {
+            height: 35px;
+            display: inline-block;
+            background: #cfdbe5;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    }
+
+    .filtered-item {
+        &__item-text {
+            height: 100%;
+            float: left;
+            padding: 7px;
+        }
+
+        &__item-icon {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            margin-top: 4px;
+            transform: translateY(3px);
+
+            &:before {
+                font-size: 20px !important;
+            }
+
+            &:hover {
+                color: white !important;
+            }
+        }
+    }
+
+    .filter-section {
+        &__filter-dropdown {
+            box-shadow: 0 4px 10px #9ba7bf;
+            border: none;
+            margin-top: 10px;
+
+            .filter-dropdown {
+                &__filter {
+                    width: 400px;
+                    padding: 10px 20px 20px 20px !important;
+                    border: none !important;
+                }
+
+                &__filter-header {
+                    text-align: center;
+                    font-size: $medium-font-size;
+                    font-weight: bold;
+                }
+
+                &__filter-items {
+                    max-height: 40vh;
+                    font-size: $medium-font-size;
+                    overflow: auto;
+                }
+
+                &__action-buttons {
+                    width: 100%;
+                    margin-bottom: 10px;
+                    padding-top: 20px;
+                    padding-right: 20px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    ::ng-deep .cx-tree {
+        &__act-btn--command {
+            padding: 5px 15px 5px 10px;
+
+            &:hover {
+                background-color: #dcdcdc;
+                border-radius: 5px;
+            }
+        }
+
+        .cx-tree-node {
+            &__current-data {
+                &:hover {
+                    background-color: #dbe2ea;
+                }
+
+                &--selected {
+                    background-color: #dbe2ea;
+                }
+            }
+        }
+
+        .material-icons {
+            color: $main-color;
+
+            &::before {
+                font-size: 30px;
+            }
+        }
+
+        .expand-icon,
+        .collapse-icon {
+            &::before {
+                font-size: 24px;
+                border-color: $main-color;
+            }
+        }
+    }
+}
+
+.cx-dialog-template {
+    .content-search {
+        &__result--name {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        &__result-match {
+            padding-left: 20px;
+        }
+
+        &__no-result {
+            padding-left: 13px;
+            font-size: 17px;
+        }
+    }
+}
+
+.sv_qcbx .checkbox label {
+    float: left;
+}

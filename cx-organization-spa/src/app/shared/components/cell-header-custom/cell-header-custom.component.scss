@@ -1,0 +1,38 @@
+.custom-header {
+  &__label,
+  &__sort-down-label,
+  &__sort-up-label,
+  &__sort-remove-label {
+    float: left;
+    margin: 0 0 0 2px;
+    .material-icons {
+      &::before {
+        font-size: 18px !important;
+      }
+    }
+  }
+  &--menu-name {
+    margin-top: 4px;
+  }
+  &__menu-button {
+    float: left;
+    margin: 0 20px 0 0;
+    .material-icons {
+      &::before {
+        font-size: 25px !important;
+      }
+    }
+  }
+
+  &__sort-up-label {
+    margin: 0;
+  }
+
+  &__sort-down-label {
+    font-size: 11px;
+  }
+
+  .active {
+    color: cornflowerblue;
+  }
+}

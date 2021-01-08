@@ -1,0 +1,112 @@
+<div class="user-group-modify-form">
+  <div class="user-group-modify-form__title">
+    {{ dialogTitle }}
+    <button
+      type="button"
+      class="close-btn"
+      aria-label="Close"
+      (click)="onCancel()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <mat-tab-group #modifyGrid>
+    <mat-tab label="{{ firstTabLabel }}">
+      <ng-container
+        *ngTemplateOutlet="isEditMode ? usersTab : informationTab"
+      ></ng-container>
+    </mat-tab>
+
+    <mat-tab label="{{ secondTabLabel }}">
+      <ng-container
+        *ngTemplateOutlet="isEditMode ? informationTab : usersTab"
+      ></ng-container>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="user-group-modify-form__footer">
+    <div class="user-group-modify-form__footer__actions-button">
+      <button class="cx-btn cx-btn-secondary" (click)="onCancel()">
+        {{
+          'User_Group_Page.Modify_User_Group_Popup.Button.Cancel' | translate
+        }}
+      </button>
+      <button class="cx-btn" (click)="onConfirmBtnClicked()">
+        {{
+          'User_Group_Page.Modify_User_Group_Popup.Button.Confirm' | translate
+        }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #informationTab>
+  <div class="modify-form-container">
+    <form [formGroup]="modifyUserGroupForm">
+      <div class="modify-form-container__label">
+        {{
+          'User_Group_Page.Modify_User_Group_Popup.Label.Name_Input'
+            | translate
+        }}*
+      </div>
+      <opal-textarea
+        matInput
+        formControlName="name"
+        [className]="'form-control name-input'"
+        [placeholder]="'Add group name...'"
+        [height]="1"
+        [preventEnter]="true"
+        [counterPosition]="'right'"
+        [(ngModel)]="modifyUserGroup.name"
+        [ngClass]="{ 'input-error': isMissingNameField }"
+        [counterDisplay]="'charsLeft'"
+        [maxNumberOfCharacters]="DEFAULT_MAX_LENGTH"
+      >
+      </opal-textarea>
+      <span
+        class="warning-text"
+        [style.visibility]="isMissingNameField ? 'visible' : 'hidden'"
+        >Please fill in the name of the user group.
+      </span>
+
+      <div class="modify-form-container__label">
+        {{
+          'User_Group_Page.Modify_User_Group_Popup.Label.Description_Input'
+            | translate
+        }}
+        {{
+          'User_Group_Page.Modify_User_Group_Popup.Label.Optional' | translate
+        }}
+      </div>
+      <opal-textarea
+        matInput
+        formControlName="description"
+        [className]="'form-control description-input'"
+        [placeholder]="'Add description...'"
+        [height]="4"
+        [preventEnter]="true"
+        [counterPosition]="'right'"
+        [(ngModel)]="modifyUserGroup.description"
+        [counterDisplay]="'charsLeft'"
+        [maxNumberOfCharacters]="DEFAULT_MAX_LENGTH"
+      >
+      </opal-textarea>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #usersTab>
+  <div class="assign-users-container" *ngIf="belongingGroupUserIds">
+    <div class="assign-users-container__label">
+      {{ 'User_Group_Page.Modify_User_Group_Popup.Label.Users' | translate }}
+    </div>
+    <div class="assign-users-container__select-box">
+      <user-select
+        [selectedUserExtIds]="belongingGroupUserIds"
+        (selectedUserChange)="onSelectedUserChange($event)"
+        (removeRequestChange)="onRemoveRequestChange($event)"
+      ></user-select>
+    </div>
+  </div>
+</ng-template>

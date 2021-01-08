@@ -1,0 +1,42 @@
+---
+environments:
+  linux:
+    pipelines:
+      - build-organization-opal-spa-release
+  systemtest-opal:
+    pipelines:
+      - systemtest-organization-opal-spa-release
+format_version: 3
+pipelines:
+  build-organization-opal-spa-release:
+    group: organization-opal-spa-release
+    label_template: 'release-1.0.${COUNT}'
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      SONAR_PROJECTKEY: organization-opal-spa-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-1.0.1
+      DOCKER_IMAGE_REPO: cx-organization-spa
+      ENVIRONMENT_NAME: systemtest
+    template: angular-linux-docker-build-sonarqube-scanner
+    materials:
+      bitbuket-git:
+        branch: release/opal-1.0
+        git: 'git@bitbucket.org:cxdev/cx-organization-spa.git'
+  systemtest-organization-opal-spa-release:
+    group: organization-opal-spa-release
+    label_template: '${upstream}'
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials:
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-organization-opal-spa-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: systemtest-opal
+      UP_STREAME_PIPELINE_NAME: build-organization-opal-spa-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-1.0.1
+      DOCKER_IMAGE_REPO: cx-organization-spa

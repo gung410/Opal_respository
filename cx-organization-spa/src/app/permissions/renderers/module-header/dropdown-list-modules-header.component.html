@@ -1,0 +1,18 @@
+<div class="module-header-container">
+  <div>
+    <span>Select Module</span>
+  </div>
+  <div *ngIf="moduleItems.length">
+    <opal-select
+      class="module-select"
+      [valueField]="'id'"
+      [labelField]="'dataName'"
+      (selectedValueChange)="onItemChanged($event)"
+      [items]="moduleItems"
+      [(ngModel)]="selectedModuleId"
+      [ngModelOptions]="{ standalone: true }"
+      position="top"
+    >
+    </opal-select>
+  </div>
+</div>

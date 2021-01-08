@@ -1,0 +1,12 @@
+status-historical-data-panel {
+  .status-historical-crollbar {
+    max-width: 600px;
+    max-height: 300px;
+  }
+
+  .status-historical-data-panel-container {
+    display: block;
+    z-index: 2;
+    padding: 5px;
+  }
+}

@@ -1,0 +1,57 @@
+@import './../../../node_modules/@conexus/cx-angular-common/lib/styles/variables';
+
+$screen-xxs-max: 479px;
+$screen-xs-min: 480px;
+$screen-xs-max: 767px;
+$screen-sm-min: 768px;
+$screen-sm-max: 991px;
+$screen-md-min: 992px;
+$screen-md-max: 1199px;
+$screen-lg-min: 1200px;
+
+$main-font: 'Roboto', Arial, Helvetica Neue, Helvetica, sans-serif;
+
+$main-bg: #fff;
+$main-color: #5b6a83;
+$main-color-lighter: #49648e;
+$main-color-white: #89aae0;
+$main-text-color: #253e5a;
+$cx-color-text-secondary: #8799ba;
+$basic-text-color: #000;
+$disabled-text-color: #909090;
+$btn-start-bg: #7ed321;
+$notification-color: #e7472c;
+$active-menu-color: #b4d5fc;
+$button-bg: #253e5a;
+$survey-choice-bg: #b4d5fc;
+$buddy-bg: #ffde00;
+$box-shadow: #ccc;
+$completed-color: #ffde00;
+$landing-arrow-color: #d8f1ea;
+$ie-button-color: #0079d2;
+
+$form-control-margin-bottom: 10px;
+$red-active: rgb(221, 80, 80);
+
+$screen-maincontent-padding: 40px;
+
+$small-font-size: 10px;
+$medium-font-size: 12px;
+$large-font-size: 14px;
+$status-new-color: #83fff7;
+$status-active-color: #3bdc87;
+$status-pending-color: #efdc33;
+$status-locked-color: #ff7979;
+$status-suspended-color: #e7e7e7;
+$status-deactive-color: #a1a8b6;
+$status-rejected-color: #a1a8b6;
+$status-archived-color: #ff30dc;
+$panel-border-radius: 5px;
+$panel-border-color: #d8dce6;
+$main-control-height: 48px;
+$main-grid-unit: 8px;
+
+// Mobile color variables
+$cx-mobile-background-color: #f2f6fa;
+$app-background-color: #f9f9f9;
+$panel-background-color: #fff;

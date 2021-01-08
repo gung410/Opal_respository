@@ -1,0 +1,115 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+
+.selector-container {
+  padding-top: 10px;
+
+  .language-selector {
+    min-height: 20px;
+    background-color: white;
+    font-size: 0.64em;
+    padding: 2px 0px 0px 18px;
+    width: 100px;
+    font-weight: 400;
+    right: 15px;
+    float: right;
+    position: absolute;
+    cursor: pointer;
+    border: solid 1px #d7d7d7;
+    @include rounded-corners(40px);
+
+    p {
+      display: inline;
+      line-height: 18px;
+    }
+
+    ::ng-deep icon-button {
+      font-size: 12px;
+
+      .icon-container {
+        font-size: 1.2em;
+        margin-top: 1px;
+      }
+    }
+
+    &:hover {
+      background-color: #deedff;
+    }
+  }
+
+  .list-container {
+    background-color: white;
+    padding: 10px;
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    right: 15px;
+    top: 50px;
+    border-radius: 5px;
+    @include box-shadow(0 1px 5px 0px rgba(0, 0, 0, 0.4));
+
+    ::ng-deep app-icon-button.close-container {
+      .icon-container {
+        text-align: right;
+
+        .icon-close {
+          color: $main-text-color;
+        }
+      }
+    }
+
+    ::ng-deep & > icon-button {
+      .button-text {
+        font-weight: bold;
+      }
+
+      .icon-container {
+        margin-top: 5px;
+      }
+    }
+
+    .prefer-language {
+      font-size: 0.85em;
+      display: inline-block;
+      color: #222222;
+    }
+
+    .language-list {
+      margin: 0;
+      padding: 0 10px;
+
+      &__item {
+        line-height: 40px;
+        font-size: 1.07em;
+        color: $main-text-color;
+        cursor: pointer;
+        text-align: left;
+        margin-top: 5px;
+
+        &.selected {
+          color: $basic-text-color;
+
+          ::ng-deep app-icon-button {
+            .icon-check-nobox {
+              font-size: 1.2em;
+            }
+          }
+        }
+
+        .note {
+          color: $main-text-color;
+          font-size: 0.85em;
+
+          &.current {
+            color: $disabled-text-color;
+          }
+        }
+
+        .pull-right {
+          font-weight: bold;
+          color: #1d63bd;
+        }
+      }
+    }
+  }
+}

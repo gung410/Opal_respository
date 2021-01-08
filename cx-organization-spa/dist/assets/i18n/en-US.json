@@ -1,0 +1,629 @@
+{
+  "LoginPage": {
+    "IntroText": "The System Administrator Module is accessible only for System / Division / Branch / School Administrators, for Division Learning Coordinators and for School Staff Developers. The module manages status and information about user accounts, organisations and other core information of the system.",
+    "Title": "System Administration Module"
+  },
+  "Language": {
+    "PreferedLanguage": "Preferred language:",
+    "CurrentLanguage": "Current",
+    "MoreLanguages": "More languages"
+  },
+  "SessionTimeoutPage": {
+    "Header": "Oops, as time flies!",
+    "Content": "For security reasons, you have been logged out of the system. This happens automatically after you have been inactive for too long.",
+    "ReturnText": "Please login again."
+  },
+  "SessionTimeoutPopup": {
+    "Content": "Your session is about to end in 5 minutes. Please click OK to continue your session."
+  },
+  "ErrorPage": {
+    "Oops": "Oops!",
+    "SomeTrouble": "It looks like our systems are having some trouble at the moment.",
+    "TryAgain": "Try again",
+    "PagePermission": "You don't have permission to access this page.",
+    "SitePermission": "You don't have permission to access this site.",
+    "ModuleDescription": "Please navigate to one of the following apps:",
+    "PendingUserDescription": "Your account is not activated yet, please wait for approval."
+  },
+  "Header": {
+    "Title": "System Admin",
+    "Logo": {
+      "Alt": "System Administrator"
+    },
+    "UserMenu": {
+      "Profile": "My Profile",
+      "Settings": "Settings",
+      "Support": "Support",
+      "SignOut": "Sign Out"
+    },
+    "Notification": "Notification",
+    "Search": "Search"
+  },
+  "Footer": {
+    "ReportVulnerability": "Report Vulnerability",
+    "PrivacyStatement": "Privacy Statement",
+    "TermsOfUse": "Terms of Use",
+    "CopyRight": "Copyright © 2020 Ministry of Education. Singapore.",
+    "AllRightReserved": "All rights reserved.",
+    "LastUpdated": "Last updated"
+  },
+  "RequestErrorMessage": {
+    "401": "Oops, Server detected you don't have right to access current system, please contact your admin.",
+    "403": "Oops, You don't have permission to do this action, please check again.",
+    "404": "Oops, Your request not found on this server.",
+    "408": "Oops, Request time out.",
+    "500": "Oops, Unexpected error occurred, please try later.",
+    "502": "Oops, Server can't complete your request now, please try later.",
+    "503": "Oops, Server unavailable, please try later.",
+    "504": "Oops, Something went wrong, please try later.",
+    "InvalidSession": "You have been logged out of the OPAL2.0 session as your account has been logged in from another device/location. If you have not authorised the login, please reset your password and/or contact your administrator.",
+    "Common": "Oops, Something went wrong, please try again.",
+    "DownloadFile": "You have no right to download the file",
+    "FileNotFound": "File not found."
+  },
+  "Common": {
+    "Navigation": {
+      "Back": "Back",
+      "Select": "Select",
+      "Logout": "Sign out",
+      "Start": "Start",
+      "Continue": "Continue",
+      "Resume": "Resume",
+      "Next": "Next",
+      "Help": "Help",
+      "Pause": "Pause",
+      "ConfirmPause": "Yes, Pause",
+      "ContinueAnswer": "No, continue to answer",
+      "Previous": "Previous",
+      "Complete": "Complete",
+      "MoveOn": "Move on"
+    },
+    "Label": {
+      "ConfirmationDialog": "Confirmation",
+      "Warning": "Warning",
+      "Filter": "Filter",
+      "Apply": "Apply",
+      "Cancel": "Cancel",
+      "Status": "Status",
+      "Role": "Role",
+      "ServiceScheme": "Service Scheme",
+      "Category": "Category",
+      "Designation": "Designation",
+      "UserAccountType": "User Account Type",
+      "AgeGroup": "Age Group",
+      "DevelopmentalRole": "Developmental Role",
+      "JobDesignation": "Job Designation",
+      "TeachingSubjects": "Teaching Subjects",
+      "JobFunctionGroup": "Job Function Group",
+      "SearchSubOrganisation": "Include sub-organisations",
+      "CreateUserAccount": "Create User Account Request",
+      "Created": "Created",
+      "By": "by",
+      "LastUpdated": "Last updated"
+    },
+    "Button": {
+      "Save": "Save",
+      "Yes": "Yes",
+      "No": "No",
+      "Close": "Close",
+      "Cancel": "Cancel",
+      "Previous": "Previous",
+      "Back": "Back",
+      "Next": "Next",
+      "Submit": "Submit",
+      "Confirm": "Confirm",
+      "Remove": "Remove",
+      "CreateNew": "Create new",
+      "CreateGroup": "Create new group",
+      "CreateRole": "Create new role",
+      "Export": "Export",
+      "Export_Selected": "Export Selected User(s)",
+      "Export_All": "All Users",
+      "Create_User_Account": "Single User",
+      "Mass_Create_User_Account_Request": "Mass Create Users",
+      "EnableColumns": "Show/Hide Columns",
+      "OK": "OK",
+      "Add_To_Group": "Add to Group",
+      "Set_Approving_Officers": "Set Approving Officers",
+      "Single_User": "Single User",
+      "Account_Review_Report": "Account Review Report"
+    },
+    "Unsaved_Changes_Warning": "You have unsaved changes, would you like to save it now?",
+    "Search_Result_Dialog": {
+      "No_Result_Message": "We can’t find any results that match to your search"
+    },
+    "Mandatory_Text": "* refers to mandatory fields",
+    "Messages": {
+      "ReportPreparingSendViaEmail": "The report is being generated and will be sent via email shortly."
+    }
+  },
+  "User_Account_Page": {
+    "Validation": {
+      "Warning": {
+        "Change_Status_Action": {
+          "Cannot_Suspend_User": "Only new and active accounts can be suspended.",
+          "Cannot_Activate_User": "Only suspended accounts can be activated."
+        },
+        "Add_Member_To_Group_Without_User_Selected": "No user account is selected. Your action has been cancelled.",
+        "System_Role_Must_Not_Be_Empty_In_Users": "System role should not be empty in user account(s)",
+        "System_Role_Must_Not_Be_Empty": "System role should not be empty"
+      }
+    },
+    "Mass_Modification_Action": {
+      "Change_User_Status": "Change User Status"
+    },
+    "Search_Result_Dialog": {
+      "No_Result_Message": "We can’t find any results that match to your search"
+    },
+    "User_Context_Menu": {
+      "RequestSpecialApproval": "Request Special Approval",
+      "Archive": "Archive",
+      "Unarchive": "Unarchive",
+      "Edit": "Edit",
+      "Active": "Activate",
+      "Suspend": "Suspend",
+      "Unlock": "Unlock",
+      "ResetPassword": "Reset Password",
+      "Endorse": "Endorse",
+      "Approve": "Approve",
+      "Accept": "Accept",
+      "Reject": "Reject",
+      "SetApprovingOfficers": "Set Approving Officers",
+      "SetExpirationDate": "Set Expiration Date",
+      "AddToGroup": "Add to Group",
+      "ChangeUserPlaceOfWork": "Change Place of Work",
+      "CreateNewOrgUnit": "Create a Organisation Unit",
+      "Deactivate": "Deactivate",
+      "Delete": "Delete"
+    },
+    "User_List": {
+      "Pending_List_Label": "Pending Approval",
+      "Pending_1st_Level_List_Label": "Pending 1st Level Approval",
+      "Pending_2nd_Level_List_Label": "Pending 2nd Level Approval",
+      "Pending_3rd_Level_List_Label": "Pending Approval From Overall System Administrator",
+      "OtherPlaceOfWork": "Other Place of Work",
+      "User_List_Label": "User Account List",
+      "No_Employee": "There are no Employees here yet.",
+      "Move_Or_Invite_Employees": "Move or invite employees to this department.",
+      "Empty_Department": "This department is empty.",
+      "Activate_User_Warning": "You are about to activate {{selectedItemMapLength}} user(s), proceed?",
+      "Unlock_User_Warning": "You are about to unlock {{selectedItemMapLength}} user(s), proceed?",
+      "Accept_Warning": "You are about to accept {{selectedItemMapLength}} user(s).",
+      "Change_User_Status_Warning": "You are about to set {{selectedItemMapLength}} user(s) to {{newStatus}} status, proceed?",
+      "Reset_Password_Warning": "You are about to reset password for {{selectedItemMapLength}} user(s), proceed?",
+      "Accept_Message": "However, you are not able to use your account at the moment because your administrator has set up a date for your account to be activated automatically on {{activeDate}}. Please contact your administrator if you need further information.",
+      "Reject_Warning": "You are about to reject {{selectedItemMapLength}} user(s), proceed?",
+      "Set_Expiration_Date_Warning": "You are about to set expiration date for {{selectedItemMapLength}} user(s), proceed?",
+      "Reject_Place_Holder": "Enter the reason for rejection here (limit 1000 characters)",
+      "Reject_Reason": "Reason",
+      "Archive_User_Warning": "You are about to archive {{selectedItemMapLength}} user. Please note that you are locking the account temporarily. Proceed?",
+      "Archive_Multiple_User_Warning": "You are about to archive {{selectedItemMapLength}} users. Please note that you are locking the accounts temporarily. Proceed?",
+      "UnArchive_User_Warning": "You are about to unarchive {{selectedItemMapLength}} user. Please note that you are unlocking the account temporarily. Proceed?",
+      "UnArchive_Multiple_User_Warning": "You are about to unarchive {{selectedItemMapLength}} users. Please note that you are unlocking the accounts temporarily. Proceed?",
+      "Remove_User_Warning": "You are about to delete {{selectedItemMapLength}} user. Please note that you cannot restore the account. Proceed?",
+      "Remove_Multiple_User_Warning": "You are about to delete {{selectedItemMapLength}} users. Please note that you cannot restore the accounts. Proceed?",
+      "Request_Special_Approval_Warning": "You are about to request special approval for {{selectedItemMapLength}} user(s), proceed?",
+      "User_Historical_Status": {
+        "New_User_Text": "User is ready to login into system",
+        "Newly_Created_User_Text": "User was created",
+        "Newly_Activated_User_Text": "User has been activated",
+        "Approved_Special_Level_Action": "{{firstName}} {{role}} approved special level",
+        "Approved_2nd_Level_Action": "{{firstName}} {{role}} approved 2nd level",
+        "Approved_1st_Level_Action": "{{firstName}} {{role}} approved 1st level",
+        "Requested_Special_Approval_Action": "{{firstName}} {{role}} requested special approval",
+        "Rejected_1st_Level_Action": "{{firstName}} {{role}} rejected 1st level",
+        "Rejected_2nd_Level_Action": "{{firstName}} {{role}} rejected 2nd level",
+        "Rejected_3rd_Level_Action": "{{firstName}} {{role}} rejected special approval",
+        "Suspended_User_Action": "{{firstName}} {{role}} suspended this user",
+        "Deactivated_User_Action": "{{firstName}} {{role}} deleted this user",
+        "Unlocked_User_Action": "{{firstName}} {{role}} unlocked this user",
+        "Locked_User_Action": "System changed status to locked",
+        "Activated_User_Action": "{{firstName}} {{role}} activated this user"
+      },
+      "Search_Result_Dialog": {
+        "No_Result_Message": "We can’t find any results that match to your search"
+      },
+      "Confirm_Dialog": {
+        "Instruction_Final_Approval_Single_User": "Please fill out and review below information before accepting. You could change it if you would like to.",
+        "Instruction_Final_Approval_Multi_User": "Please fill out below information before accepting.",
+        "Instruction_First_Level_Approval": "For learning needs analysis and participation in courses, this learner should have an approving officer. Please select an AO.",
+        "Required_Primary_ApprovingOfficer": "Please select Approving Officer.",
+        "Required_Alternative_ApprovingOfficer": "Please select Alternate Approving Officer."
+      }
+    },
+    "Table_Header": {
+      "Name": "Name",
+      "Email": "Official Email",
+      "Department": "Organisation",
+      "Registered": "Registered",
+      "ApprovingOfficer": "Approving Officers",
+      "Roles": "Roles",
+      "SystemRoles": "System Roles",
+      "GrowthModel": "Career Tracks",
+      "ServiceScheme": "Service Scheme",
+      "Status": "Status",
+      "AcceptUserTitle": "Accept user",
+      "RejectUserTitle": "Reject user",
+      "Designation": "Designation",
+      "OrganisationUnit": "Place of Work",
+      "DevelopmentalRole": "Developmental Role"
+    },
+    "Filter": {
+      "Title": "Filter User Account"
+    },
+    "Export_User_Account": "Export User Account",
+    "Export_User": {
+      "Export_All_Title": "Export For All Users",
+      "Export_Selected_Title": "Export Selected User(s)",
+      "Export_Info": "Export Info",
+      "Not_Selected_Users": "No records selected on the user list."
+    },
+    "Report_User_Account": {
+      "Header": "Generate Account Review Report",
+      "Message": "It will take some minutes to generate and send the report to email: {{emailUser}}",
+      "Sent": "The report is being generated and will be sent via email shortly."
+    },
+    "Assign_Approving_Officer": {
+      "Title": "Set Approving Officers",
+      "User_Selected": "user(s) has been selected",
+      "Primary_AO_Label": "Approving Officer",
+      "Alternate_AO_Label": "Alternate Approving Officer",
+      "Primary_AO_Placeholder": "Select Approving Officer",
+      "Alternate_AO_Placeholder": "Select Alternate Approving Officer"
+    },
+    "User_Status": {
+      "Unknown": "Unknown",
+      "Suspended": "Suspended",
+      "Deleted": "Deleted",
+      "Locked": "Locked",
+      "Active": "Active",
+      "Pending": "Pending",
+      "Pending_1st_Level_Approval": "Pending 1st Level Approval",
+      "Pending_2nd_Level_Approval": "Pending 2nd Level Approval",
+      "Pending_3rd_Level_Approval": "Pending for Special Approval",
+      "New": "New",
+      "All": "All"
+    },
+    "User_Edit_Dialog": {
+      "Edit_Dialog_Title": "Edit User",
+      "Create_Dialog_Title": "Create User",
+      "Basic_Info_Tab": {
+        "Title": "Basic Information"
+      },
+      "Advanced_Info_Tab": {
+        "Title": "Advanced Information"
+      },
+      "Professional_Development_Tab": {
+        "Title": "Professional Development"
+      },
+      "Approval_Info_Tab": {
+        "Title": "Approval Information",
+        "Primary_Approving_Officer": "Approving Officer",
+        "Alternate_Approving_Officer": "Alternate Approving Officer",
+        "Primary_Approving_Officer_Placeholder": "Select Approving Officer",
+        "Alternate_Approving_Officer_Placeholder": "Select Alternate Approving Officer",
+        "User_To_Approve": "Users to approve",
+        "Primary_AO_For": "Approving Officer for",
+        "Alternate_AO_For": "Alternate Approving Officer for",
+        "No_User_Selected_For_Officers": "Please select Approving Officer/Alternate Approving Officer",
+        "Duplicate_Primary_Alternate_Officer": "Approving Officer and Alternate Approving Officer of a user account should be different. Please try again."
+      },
+      "Error": {
+        "Email_Existed": "There is already an account associated with this email address.",
+        "Invalid_Email_Domain": "Please enter a valid official email address."
+      },
+      "Audit_History": {
+        "Title": "Audit History"
+      }
+    },
+    "Audit_History": {
+      "FailedLogin": "Reason: 6 repeated failed login attempts from {{ipAddress}}",
+      "Field_Change_Title": {
+        "User_Created": "created this user account",
+        "User_Registered": "User account request was registered",
+        "Mass_Created": "mass created this user account",
+        "User_Updated": "updated user account information",
+        "Status_Changed": "changed the <b>Status</b>",
+        "Not_Found": "action type not found.",
+        "Primary_AO_Changed": "changed the <b>Approving Officer</b>",
+        "Alternate_AO_Changed": "changed the <b>Alternate Approving Officer</b>",
+        "User_Imported": "User account was imported"
+      },
+      "EntityStatusChanged": {
+        "Approve1st": "<b>{{user}}</b> approved 1st level",
+        "Approve2nd": "<b>{{user}}</b> approved 2nd level",
+        "Approve3rd": "<b>{{user}}</b> approved special level",
+        "Reject1st": "<b>{{user}}</b> rejected 1st level",
+        "Reject2nd": "<b>{{user}}</b> rejected 2nd level",
+        "Reject3rd": "<b>{{user}}</b> rejected special level",
+        "Suspend": "<b>{{user}}</b> suspended this user account",
+        "Archive": "<b>{{user}}</b> archived this user account",
+        "Auto_Archive": "This user was auto-archived by the system",
+        "Unarchive": "<b>{{user}}</b> unarchived this user account",
+        "Deactive": "<b>{{user}}</b> deleted this user account permanently",
+        "ResetPassword": "<b>{{user}}</b> requested to reset password for this user account",
+        "Activate": "<b>{{user}}</b> activated this user account",
+        "FirstLogin": "First login",
+        "RequestSpecialApproval": "<b>{{user}}</b> requested special approval for this user account ",
+        "Locked": "This user account is locked"
+      },
+      "Sub_Field_Change_Title": {
+        "None": "None",
+        "Unassign": "Unassign"
+      },
+      "User_Fields": {
+        "Department_Name": "Organisation Unit",
+        "First_Name": "Name",
+        "Mobile_Code": "Mobile Code",
+        "Mobile_Number": "Mobile Number",
+        "SSN": "Identity No",
+        "Gender": "Gender",
+        "Date_of_Birth": "Date of Birth",
+        "Email": "Official Email",
+        "System_Roles": "System Roles",
+        "Personnel_Groups": "Service Scheme",
+        "Career_Paths": "Track",
+        "Salutation": "Salutation",
+        "Designation": "Designation",
+        "Portfolio": "Portfolio",
+        "Developmental_Roles": "Developmental Roles",
+        "Learning_Frameworks": "Learning Frameworks",
+        "Teaching_Study": "Teaching Course of Study",
+        "Teaching_Level": "Teaching Level(s)",
+        "Teaching_Subject": "Teaching Subject(s)",
+        "Cocurricular_Activity": "Co-curricular Activity",
+        "Role_Specific_Proficiency": "Role-Specific Proficiency",
+        "Job_Family": "Job Family",
+        "Areas_Professional_Interest": "Areas of Professional Interest",
+        "Primary_Approving_Officer": "Approving Officer",
+        "Alternate_Approving_Officer": "Alternate Approving Officer",
+        "Status": "Status",
+        "Activation_Date": "Date Account is Activated",
+        "Expiration_Date": "Date of Expiry of Account",
+        "Personal_Space_Limitation": "Personal Space Limitation"
+      },
+      "Empty": "There is no audit history to show."
+    },
+    "User_Change_Email": {
+      "To_Old_Email": {
+        "Content": "Your email for OPAL2.0 account has been changed from this email to {{newEmailAddress}} on {{toDate}}.",
+        "Alert_Text": "If you did not make this request or this is beyond your knowledge, your account has been compromised. Please contact your administrator for further support."
+      },
+      "To_New_Email": {
+        "Content": "Your email for OPAL2.0 account has been changed from {{oldEmailAddress}} to this email on {{toDate}}. Now you can use this email to access into OPAL2.0 as well as receive notifications.",
+        "Alert_Text": "If you did not make this request or this is beyond your knowledge, your account has been compromised. Please reset your password or contact your administrator for further support."
+      }
+    },
+    "Email_Info": {
+      "Status_Change": {
+        "Body": "Status change notification",
+        "Subject": "Status change notification",
+        "AlertText": "Congratulations",
+        "CallBackText": "Login into system",
+        "AlertText_Supspended_InActive": "Account status modification"
+      },
+      "Reset_Password": {
+        "Body": "Reset Password",
+        "Subject": "Reset Password",
+        "CallBackText": "Login and create new password"
+      },
+      "New_Account_Created": {
+        "Body": "New account created successfully",
+        "Subject": "New account created successfully",
+        "CallBackText": "Login and create new password"
+      },
+      "New_Account_Approved": {
+        "Body": "New Account Approved",
+        "Subject": "New Account Approved",
+        "AlertText": "Congratulations",
+        "CallBackText": "Login into system"
+      },
+      "New_Account_Rejected": {
+        "Body": "New Account Rejected",
+        "Subject": "New Account Rejected",
+        "AlertText": "Sorry",
+        "CallBackText": "Sign up another account"
+      },
+      "Archive_Account": {
+        "Body": "Archive notification",
+        "Subject": "Archive notification",
+        "AlertText": "Sorry"
+      },
+      "Welcome_Account": {
+        "Body": "Welcome to OPAL 2.0",
+        "Subject": "Welcome to OPAL 2.0",
+        "AlertText": "Hi {{fullName}},",
+        "OtpCode": "Your OTP: {{OtpCode}}",
+        "GuideText_WebVer": "Please click on the link below to use the system.",
+        "GuideText": "Please click on the link below to use the system or download the learner app.",
+        "App_FirstLinkText": "Learner App (Android)",
+        "App_SecondLinkText": "Learner App (IOS)",
+        "Web_FirstLinkText": "System Administration",
+        "Web_SecondLinkText": "Professional Development Planner"
+      }
+    },
+    "Change_User_Place_of_Work": {
+      "Dialog": {
+        "Header": "Move user account(s) to other Place of Work",
+        "Confirm_Button": "Move"
+      },
+      "Validation": {
+        "No_User_Selected": "No user account is selected. Your action has been cancelled.",
+        "All_User_Have_Same_New_Destination": "All selected user account(s) have the same new Place of Work. Your action has been cancelled.",
+        "Move_Externally_User": "The following is externally user account(s) which is not allowed to do this action: {{users}}.",
+        "Move_Externally__User_Count": "{{numberOfInvalidUsers}} account(s) not allowed to move place of work",
+        "Move_Yourself": "You're not allowed to move yourself to other Place of Work."
+      },
+      "Message": {
+        "Move_User_Success": "{{userCount}} user account(s) moved to '{{newDepartmentName}}'.",
+        "Move_User_To_Same_Location_Warning": "The following user account(s) has been skipped since they have the same new Place of Work: {{users}}.",
+        "Move_User_Error": "Failed to move the following user account(s): {{users}}",
+        "Create_Org_Unit_Hint": "To create new Organisation Unit, system will navigate to Organisation Management page after click OK"
+      }
+    }
+  },
+  "Department_Page": {
+    "Filter_Section": {
+      "Title": "Filter Department",
+      "Filter_Options": {
+        "Education_Level": "Education Level"
+      }
+    },
+    "Department_List": {
+      "Unit_Type": "Unit Type",
+      "Unit_Name": "Unit Name",
+      "MOE_Identifier": "MOE Identifier",
+      "Level_Of_Education": "Level Of Education",
+      "Is_MOE_OU": "Is MOE OU",
+      "Type_Of_School_Organisation": "Type of School/Organisation",
+      "Address_Information": "Address Information",
+      "Department_Is_Empty": "Department Is Empty."
+    },
+    "Department_Search": {
+      "Dialog_Header": "Result(s) search of Organisation Unit",
+      "ResultMatch": "{{resultLength}} results matched your search criteria",
+      "No_Result_Message": "We can’t find any results that match to your search"
+    },
+    "Department_Filter": {
+      "Dialog_Header": "Result(s) filter of Organisation Unit",
+      "ResultMatch": "{{resultLength}} results matched your filter criteria",
+      "No_Result_Message": "We can’t find any results that match to your filter"
+    },
+    "Department_Delete": {
+      "Deactivate": "Do you sure want to delete \"{{departmentName}}\" organisation unit?",
+      "Successfully": "{{departmentName}} organisation unit has been deleted",
+      "Error": "There is something wrong, Please try again."
+    }
+  },
+  "Broadcast_Message_Page": {
+    "Title": "Broadcast Messages List",
+    "TableHeader": {
+      "Title": "Title",
+      "CreatedDate": "Created Date",
+      "CreatedBy": "Created By",
+      "Recipients": "Recipients",
+      "ValidFromDate": "Start Date",
+      "ValidToDate": "End Date",
+      "Status": "Status"
+    },
+    "Recurring_dialog": {
+      "validation_message": {
+        "Recurring": {
+          "Date": "Recurring End Date must be greater than Recurring Start Date.",
+          "Time": "Recurring End Time must be greater than Recurring Start Time.",
+          "InPast": "Only allow to select the current or future Recurring Time."
+        },
+        "Yearly": {
+          "Month": "End Month must be greater than Start Month.",
+          "Date": "End Date must be greater than Start Date.",
+          "Time": "End Time must be greater than Start Time."
+        },
+        "Monthly": {
+          "Date": "End Month Date must be greater than Start Month Date.",
+          "Time": "End Time must be greater than Start Time."
+        },
+        "Weekly": {
+          "Weekday": "End Weekday must be greater than Start Weekday and in the same week.",
+          "Time": "End Weekday Time must be greater than Start Weekday Time."
+        }
+      }
+    }
+  },
+  "Mass_User_Creation_Panel": {
+    "Uploaded_Files_Table": {
+      "Headers": {
+        "FileName": "FILE NAME",
+        "CreatedBy": "CREATED BY",
+        "CreatedDate": "CREATED DATE",
+        "NumberOfAccountRequest": "NO. OF ACCOUNT REQUEST"
+      },
+      "Empty_Message": "No data"
+    }
+  },
+  "User_Group_Page": {
+    "Title": "User Group List",
+    "TableHeader": {
+      "Name": "Name",
+      "Description": "Description",
+      "Members": "Members"
+    },
+    "Modify_User_Group_Popup": {
+      "Title": {
+        "Create": "Create New Group",
+        "Edit": "Edit User Group"
+      },
+      "Tab": {
+        "Information_Tab": "Information",
+        "Users_Added_Tab": "Users"
+      },
+      "Label": {
+        "Name_Input": "Name",
+        "Description_Input": "Description",
+        "Optional": "(optional)",
+        "Users": "Users"
+      },
+      "Button": {
+        "Cancel": "Cancel",
+        "Confirm": "Confirm",
+        "Add": "Add",
+        "Remove": "Remove"
+      },
+      "Placeholder": "Select from the list"
+    },
+    "Edit_User_Group_Popup": {},
+    "Remove_User_Group": {
+      "Confirmation": "Are you sure you want to delete the following User Group(s)?",
+      "RemoveSuccess": "The following User Group(s) have been removed",
+      "RemoveFailed": "The following User Group(s) still have members and cannot be removed",
+      "Error": "There is something wrong, Please try again."
+    }
+  },
+  "Export_Confirmation": {
+    "Dialog": {
+      "Title": "Export Confirmation"
+    }
+  },
+  "MassUsersCreation": {
+    "Info": {
+      "GenderAndSalutation": "Gender and Salutation must be in agreement.",
+      "SemicolonSeparatedSystemRole": "System Role must be separated by semicolon."
+    },
+    "Warning": {
+      "Header": "Warning",
+      "Content": "Something is wrong with the file. Please check and upload again. Click on See More to view the details.",
+      "ConfirmButton": "See More"
+    },
+    "UploadedFile": {
+      "Header": "Warning",
+      "Content": "The file is not in correct extension. Please check and upload again."
+    },
+    "EmptyFile": {
+      "Header": "Warning",
+      "Content": "The File is empty."
+    },
+    "LimitRecord": {
+      "Header": "Warning",
+      "Content": "The file exceeds 50 records and cannot be proceeded. Please check and upload again."
+    },
+    "UserRowEmpty": {
+      "Header": "Warning",
+      "Content": "Some rows are empty. Please check and upload again."
+    },
+    "Processing": {
+      "Header": "Info",
+      "Content": "The result file is being created and users will be generated in the system shortly."
+    },
+    "GeneralError": {
+      "Header": "Warning",
+      "Content": "Oops, Something went wrong, please try again."
+    },
+    "FileIsNotSelected": {
+      "Header": "Warning",
+      "Content": "The file is not selected. Please select file before uploading."
+    },
+    "InvalidTemplate": {
+      "Header": "Warning",
+      "Content": "An incorrect file was selected. Please select a valid template file."
+    }
+  }
+}

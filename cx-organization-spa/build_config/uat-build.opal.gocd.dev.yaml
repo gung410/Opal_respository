@@ -1,0 +1,22 @@
+---
+environments:
+  linux:
+    pipelines:
+      - build-organization-opal-spa-release-uat
+format_version: 3
+pipelines:
+  build-organization-opal-spa-release-uat:
+    group: organization-opal-spa-release
+    label_template: 'release-1.0.${COUNT}'
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      SONAR_PROJECTKEY: organization-opal-spa-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: uat-1.0.1
+      DOCKER_IMAGE_REPO: cx-organization-spa
+      ENVIRONMENT_NAME: uat
+    template: angular-linux-docker-build-sonarqube-scanner-manual
+    materials:
+      bitbuket-git:
+        branch: release/opal-1.0
+        git: 'git@bitbucket.org:cxdev/cx-organization-spa.git'

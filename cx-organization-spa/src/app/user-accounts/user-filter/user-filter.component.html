@@ -1,0 +1,31 @@
+<cx-dialog-template
+  [showFooterActionButtons]="true"
+  (cancel)="onCancel()"
+  [isShowingMandatoryText]="true"
+  (done)="onSave()"
+>
+  <modal-header>
+    <h4>{{ 'User_Account_Page.Filter.Title' | translate }}</h4>
+  </modal-header>
+  <content>
+    <cx-surveyjs
+      #filterSurveyJs
+      [json]="filterFormJSON"
+      [submitName]="'Add new filter criteria'"
+      [variables]="filterVariables"
+      (submitting)="onAddNewFilter($event)"
+      (valueChanged)="onAddCriteriaChanged($event)"
+    >
+    </cx-surveyjs>
+    <cx-surveyjs
+      #appliedFilterSurveyJs
+      [data]="appliedData"
+      [hideSubmitBtn]="true"
+      [json]="appliedFilterFormJSON"
+      [submitName]="'Apply'"
+      (changeValue)="onChanged($event)"
+      (submit)="onApplyFilter($event)"
+    >
+    </cx-surveyjs>
+  </content>
+</cx-dialog-template>

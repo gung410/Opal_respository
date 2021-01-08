@@ -1,0 +1,26 @@
+<cx-tag-group-simple
+  *ngIf="
+    filterDataApplied &&
+    filterDataApplied.appliedFilter &&
+    filterDataApplied.appliedFilter.length > 0
+  "
+  [backgroundColor]="'#f1f1f1'"
+  [tagGroup]="filterDataApplied.appliedFilter"
+  [tagGroupField]="'filterOptions'"
+  [tagGroupFieldDisplay]="'text'"
+  [tagProperty]="'data'"
+  [tagTemplate]="tagTemplate"
+  (clearAll)="onClearAllFilter()"
+  (closeTagGroup)="onCloseTagGroup($event)"
+>
+  <ng-template #tagTemplate let-groupConst="groupConst" let-tag="item">
+    <div class="user-filter-tag-group__filtered-item">
+      <span class="user-filter-tag-group__text">{{ tag.text }}</span>
+      <i
+        class="material-icons close-icon-global user-filter-tag-group__icon d-print-none"
+        aria-hidden="true"
+        (click)="onCloseTag(tag)"
+      ></i>
+    </div>
+  </ng-template>
+</cx-tag-group-simple>

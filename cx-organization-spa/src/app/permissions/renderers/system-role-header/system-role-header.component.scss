@@ -1,0 +1,26 @@
+.system-role-header-container {
+  font-size: 1rem;
+  text-align: center;
+
+  .default-action {
+    text-align: center;
+    color: rgba(29, 145, 207, 1);
+    text-decoration: underline;
+  }
+
+  .header-name {
+    &__input {
+      border: none;
+      text-align: center;
+    }
+  }
+
+  .role-action {
+    margin: 6px;
+    cursor: pointer;
+  }
+}
+
+.mat-menu-item:focus {
+  outline: none;
+}

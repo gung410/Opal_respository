@@ -1,0 +1,39 @@
+<div class="audit-history">
+  <ng-container *ngIf="auditHistories">
+    <div *ngFor="let item of auditHistories" class="audit-history__item">
+      <div class="audit-history__avatar">
+        <img
+          class="audit-history__avatar--circle"
+          [src]="item.actionUserInfo.avatarUrl"
+          [defaultSrc]="defaultActionUserAvatar"
+        />
+      </div>
+      <div class="audit-history__info">
+        <span [innerHTML]="displayTemplate(item)"></span>
+        <span title="{{ getDateTimeTooltip(item.date) }}">
+          - {{ getDisplayDateTime(item.date) }}</span
+        >
+        <div *ngIf="item.info" [innerHTML]="item.info"></div>
+        <ul
+          *ngIf="item.payload && item.actionType !== ACCOUNT_CREATED_TYPE"
+          class="audit-history__sub-info"
+        >
+          <li *ngFor="let prop of item.payload | keyvalue">
+            <div>
+              <span *ngIf="item.showSubInfo"
+                >{{ subLabelConstant[prop.key] | translate }}:
+              </span>
+              <span class="audit-history__previous-value">{{
+                displaySubTemplate(prop.key, prop.value.previous)
+              }}</span>
+              →
+              <span class="audit-history__current-value">{{
+                displaySubTemplate(prop.key, prop.value.current)
+              }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</div>

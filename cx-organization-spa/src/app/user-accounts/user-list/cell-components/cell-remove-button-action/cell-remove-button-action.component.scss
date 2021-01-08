@@ -1,0 +1,22 @@
+.cell-remove-button-action {
+    width: 100%;
+
+    .remove-btn {
+        width: 133px;
+        height: 40px;
+        padding: 8px 23px;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+
+        .icon-remove {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            color: #fff;
+            background-color: #ff6262;
+            padding: 5px 3px 4px 3.25px;
+            margin-right: 10px;
+        }
+    }
+}

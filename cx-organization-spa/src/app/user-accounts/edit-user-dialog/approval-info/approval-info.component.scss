@@ -1,0 +1,72 @@
+@import 'assets/styles/variables.scss';
+
+.approval-info {
+  display: flex;
+  flex-direction: column;
+  .error-required-value {
+    color: $notification-color;
+    padding-bottom: 10px;
+  }
+  &__approving-officer {
+    margin-bottom: 20px;
+  }
+  &__users-to-approve {
+    flex-grow: 1;
+  }
+  &__approving-officer-label {
+    margin-bottom: $form-control-margin-bottom;
+  }
+  &__approving-officer-selection {
+    width: 100%;
+    ::ng-deep .ng-select.ng-select-single .ng-select-container {
+      height: auto;
+      padding: 3px 0;
+    }
+    .people-picker {
+      display: flex;
+      align-items: center;
+      &__avatar {
+        width: 40px;
+        height: 40px;
+
+        &--center {
+          margin: 0 auto;
+        }
+      }
+
+      &__avatar-image {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+      }
+
+      &__full-info {
+        display: inline-flex;
+        align-items: flex-start;
+        vertical-align: middle;
+        flex-direction: column;
+        padding-left: 10px;
+      }
+
+      &__info-secondary {
+        font-style: italic;
+        color: #909090;
+      }
+    }
+  }
+  &__user-info {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  &__info {
+    padding-left: 10px;
+  }
+  &__members {
+    margin-bottom: 20px;
+  }
+  &__people-picker {
+    max-height: 150px;
+    overflow: auto;
+  }
+}

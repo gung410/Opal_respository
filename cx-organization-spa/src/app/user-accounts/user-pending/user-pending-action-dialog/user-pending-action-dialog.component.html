@@ -1,0 +1,16 @@
+<cx-dialog-template
+  [doneButtonText]="'Accept'"
+  (cancel)="cancel()"
+  (done)="done()"
+>
+  <modal-header>
+    <h4>{{ dialogHeaderText }}</h4>
+  </modal-header>
+  <content>
+    <ul>
+      <li *ngFor="let item of items" style="list-style-type: square">
+        {{ item.firstName }} - {{ item.emailAddress }}
+      </li>
+    </ul>
+  </content>
+</cx-dialog-template>

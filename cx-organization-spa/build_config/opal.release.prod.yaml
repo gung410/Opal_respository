@@ -1,0 +1,79 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-organization-spa-build
+      - cx-organization-spa-systemtest
+  # uat:
+  #   pipelines:
+  #     - cx-organization-spa-uat
+  # production:
+  #   pipelines:
+  #     - cx-organization-spa-production
+pipelines:
+  cx-organization-spa-build:
+    group: cx-organization-spa
+    label_template: 'release-1.0.${COUNT}'
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: ''
+      SONAR_PROJECTKEY: cx-organization-spa-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-1.0.1
+      DOCKER_IMAGE_REPO: cx-organization-spa
+      ENVIRONMENT_NAME: systemtest
+    template: angular-linux-docker-build-sonarqube-scanner
+    materials:
+      bitbuket-git:
+        branch: release/opal-1.1
+        git: 'https://bitbucket.org/cxdev/cx-organization-spa.git'
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+
+  cx-organization-spa-systemtest:
+    group: cx-organization-spa
+    label_template: '${upstream}'
+    materials:
+      upstream:
+        pipeline: cx-organization-spa-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-organization-spa-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-1.0.1
+      DOCKER_IMAGE_REPO: cx-organization-spa
+    template: ansible-deploy-fetch-upstream
+
+  # cx-organization-spa-uat:
+  #   group: cx-organization-spa
+  #   materials:
+  #     upstream:
+  #       pipeline: cx-organization-spa-systemtest
+  #       stage: deploy-stage
+  #   parameters: # list of parameters that can be configured for a pipeline
+  #     UP_STREAME_PIPELINE_NAME: cx-organization-spa-systemtest
+  #     UP_STREAME_PIPELINE_STAGE: deploy-stage
+  #     UP_STREAME_PIPELINE_JOB: deploy
+  #   environment_variables:
+  #     DOCKER_IMAGE_TAG:
+  #     DOCKER_IMAGE_REPO: cx-organization-spa
+  #   template: ansible-deploy-fetch-upstream
+
+  # cx-organization-spa-production:
+  #   group: cx-organization-spa
+  #   label_template: "${upstream}"
+  #   materials:
+  #     upstream:
+  #       pipeline: cx-organization-spa-uat
+  #       stage: deploy-stage
+  #   parameters: # list of parameters that can be configured for a pipeline
+  #     UP_STREAME_PIPELINE_NAME: cx-organization-spa-uat
+  #     UP_STREAME_PIPELINE_STAGE: deploy-stage
+  #     UP_STREAME_PIPELINE_JOB: deploy
+  #   environment_variables:
+  #     DOCKER_IMAGE_TAG:
+  #     DOCKER_IMAGE_REPO: cx-organization-spa
+  #   template: ansible-deploy-fetch-upstream

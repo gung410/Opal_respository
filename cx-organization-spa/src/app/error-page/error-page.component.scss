@@ -1,0 +1,137 @@
+@import '~assets/styles/variables.scss';
+
+$error-page-text-color: #5f5f5f;
+.error-container {
+  padding: 50px;
+  margin: 5vh auto;
+  background-color: #fff;
+  max-width: 1200px;
+  background: #e6f2f3;
+  border-radius: 10px;
+
+  &__action-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .user-info {
+    text-align: center;
+    margin-bottom: 50px;
+
+    &__image {
+      width: 90px;
+      border-radius: 50%;
+      box-shadow: 0 1px 5px #808080;
+    }
+
+    &__name {
+      font-size: 1.5em;
+      text-align: center;
+      color: $error-page-text-color;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    &__email {
+      font-size: 1rem;
+      text-align: center;
+      color: $error-page-text-color;
+    }
+  }
+
+  .error {
+    &__circle {
+      margin-bottom: 30px;
+      text-align: center;
+
+      img {
+        height: 180px;
+      }
+    }
+
+    &__description {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.5em;
+      color: $error-page-text-color;
+
+      :nth-child(2) {
+        font-size: 1.3em !important;
+      }
+    }
+
+    &__sub-description {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.3em;
+      color: $error-page-text-color;
+      margin-top: 60px;
+    }
+
+    &__action {
+      margin-left: 10px;
+      margin-right: 10px;
+      text-align: center;
+      width: 200px;
+      height: 50px;
+      font-size: 1.2em;
+      background-color: #2458e8;
+      line-height: 2.7em;
+      cursor: pointer;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 50px;
+
+      span {
+        color: #ffffff;
+      }
+
+      &:hover {
+        background: #3769f3;
+      }
+    }
+  }
+
+  .err-apps-switcher {
+    vertical-align: top;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+    &__item {
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 10px;
+      .text-center {
+        padding: 10px;
+        text-decoration: none;
+        color: #253e5a;
+      }
+      &:hover {
+        background: #c8e4e6;
+      }
+    }
+
+    &__item-image {
+      height: 80px;
+    }
+
+    &__item-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'Open Sans', Roboto, sans-serif;
+      font-size: 14px;
+      color: #5a6981;
+      margin-top: 10px;
+      margin-bottom: 0px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .error-container {
+    height: 100vh;
+    margin: 0;
+  }
+}

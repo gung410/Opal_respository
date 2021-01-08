@@ -1,0 +1,38 @@
+<div class="historical-data__row">
+  <div class="historical-data__datetime">
+    <div class="date">
+      {{ historicalStatusData.created | date: 'dd/MM/yyyy' }}
+    </div>
+    <div class="time">
+      {{ historicalStatusData.created | date: 'HH:mm:ss' }}
+    </div>
+  </div>
+  <div class="historical-data__info">
+    <div *ngIf="!modifyingUser" class="historical-data__activity">
+      {{ statusChangeLog | translate }}
+    </div>
+    <div
+      *ngIf="modifyingUser"
+      class="historical-data__activity"
+      title="{{
+        statusChangeLog
+          | translate
+            : { firstName: modifyingUser.firstName, role: modifyingUserRole }
+      }}"
+    >
+      {{
+        statusChangeLog
+          | translate
+            : { firstName: modifyingUser.firstName, role: modifyingUserRole }
+      }}
+    </div>
+    <div class="historical-data__status">
+      <div class="status__original-status">
+        {{ originalStatus }}
+      </div>
+      <div *ngIf="newStatus != ''" class="status__new-status">
+        →{{ newStatus }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+$color-gainsboro: #d8dce6;
+$main-border-radius: 5px;
+$opal-select-border: 1px solid $color-gainsboro;
+$opal-select-ng-clear-wrapper-font-size: 18px;
+$opal-select-input-vertical-padding: 9px;
+$opal-select-input-horizontal-padding: 10px;
+
+opal-select {
+  display: inline-flex;
+  min-width: 80px;
+  height: auto;
+  border-radius: $main-border-radius;
+  border: $opal-select-border;
+  border-width: 0;
+  background-color: white;
+
+  .ng-dropdown-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &.-disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  &.-readonly {
+    pointer-events: none;
+  }
+
+  &.-push-down-mode,
+  &.-static-mode {
+    .opal-select {
+      &.ng-select {
+        .ng-dropdown-panel {
+          position: relative;
+          margin: 0;
+
+          &.ng-select-bottom {
+            margin-bottom: 0;
+            top: 0;
+            border-top: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.-multiple-inline {
+    .opal-select {
+      &.ng-select.ng-select-multiple {
+        .ng-select-container {
+          .ng-value-container {
+            .ng-value {
+              width: auto;
+            }
+
+            .ng-input {
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.-multiple-inline-no-wrap {
+    .opal-select {
+      &.ng-select.ng-select-multiple {
+        .ng-select-container {
+          .ng-value-container {
+            .ng-value-label {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+%opal-select__item {
+  padding: $opal-select-input-vertical-padding
+    $opal-select-input-horizontal-padding;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+$opal-select-ng-arrow-half-width: 5px;
+
+.opal-select {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  flex-grow: 1;
+  flex-basis: 100%;
+  background: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-color: #d8dce6;
+  border-radius: inherit;
+
+  * {
+    cursor: pointer;
+  }
+
+  &__item {
+    @extend %opal-select__item;
+
+    &.-end-of-group {
+      border-bottom: $opal-select-border;
+    }
+
+    &.-text-wrap {
+      text-overflow: initial;
+      white-space: pre-wrap;
+
+      .ng-select-container {
+        min-height: 0;
+        padding-top: $opal-select-input-vertical-padding;
+        padding-bottom: $opal-select-input-vertical-padding;
+        background-color: inherit;
+        height: 100%;
+        border-radius: inherit;
+        border-color: inherit;
+        cursor: pointer;
+
+        .ng-value-container {
+          padding-left: $opal-select-input-horizontal-padding;
+          padding-top: 0;
+          min-width: 0;
+          align-items: flex-start;
+          cursor: pointer;
+          position: relative;
+
+          .ng-value {
+            padding-bottom: 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.display-icon-none {
+  display: none;
+}
