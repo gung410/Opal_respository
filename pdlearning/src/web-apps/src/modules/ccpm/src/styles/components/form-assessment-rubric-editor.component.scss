@@ -1,0 +1,82 @@
+form-assessment-rubric-editor {
+  width: 100%;
+  background: $white;
+
+  &:hover {
+    border-color: $color-gainsboro;
+    background: $color-smoke;
+  }
+}
+
+.form-assessment-rubric-editor {
+  &__title {
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    width: fit-content;
+    color: #fff;
+    padding: 10px 20px 10px 10px;
+    margin-bottom: 20px;
+    background-color: $color-light-gray;
+    border-radius: 0 0 10px 0;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+  }
+
+  &__drop-zone {
+    position: relative;
+
+    &.drop-handle {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      z-index: 10;
+
+      .k-icon {
+        opacity: 0.5;
+        font-size: 1.7rem;
+        border: 1px solid #d8dce6;
+        border-radius: 5px;
+
+        &:hover {
+          opacity: 1;
+          cursor: move;
+        }
+      }
+    }
+  }
+
+  &__rubric-edit-container {
+    padding: 30px;
+    border: 1px solid $color-gainsboro;
+    border-radius: $main-border-radius;
+  }
+
+  &__rubric-scale-title {
+    font-size: $font-h5;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  &__rubric-criteria-title {
+    min-width: 150px;
+
+    &.-empty {
+      color: $color-blue-light;
+    }
+  }
+
+  &__option {
+    display: flex;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    align-items: center;
+  }
+
+  .-readonly {
+    pointer-events: none;
+  }
+}

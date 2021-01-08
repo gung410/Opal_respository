@@ -1,0 +1,367 @@
+@import './variables';
+@import './mixins';
+@import './components/_checkbox.scss';
+@import './components/_radio.scss';
+@import './components/dialogs/common-dialog.scss';
+@import './components/form-editor-config.component.scss';
+@import './components/form-editor-page.component.scss';
+@import './components/form-editor.component.scss';
+@import './components/form-question-editor.component.scss';
+@import './components/form-question-config.component.scss';
+@import './components/form-question-indicator.component.scss';
+@import './components/form-question-template.component.scss';
+@import './components/form-question-adder.component.scss';
+@import './components/form-question-option-editor.component.scss';
+@import './components/form-repository-page.component.scss';
+@import './components/form-detail-page.component.scss';
+@import './components/form-general-tab.component.scss';
+@import './components/digital-content-general-tab.component';
+@import './directives/inline-display-textbox.directive.scss';
+@import './components/digital-content-detail-page.component.scss';
+@import './components/digital-upload-content-editor-page.scss';
+@import './components/dialogs/digital-upload-content-dialog.component.scss';
+@import './components/digital-learning-content-editor-page.component.scss';
+@import './components/digital-additional-information-tab.component.scss';
+@import './components/dialogs/digital-learning-content-dialog.component.scss';
+@import './components/dialogs/digital-content-upload-dialog.component.scss';
+@import './components/dialogs/comment-dialog-template.component.scss';
+@import './components/tabs/audit-log-tab.component.scss';
+@import './components/tabs/access-right-tab.component.scss';
+@import './components/digital-content-feedback-tab.component.scss';
+@import './components/dialogs/date-question-selection-dialog.component.scss';
+@import './components/dialogs/copy-metadata-dialog.component.scss';
+@import './components/form-section-editor.component.scss';
+@import './components/tabs/standalone-form.component.scss';
+@import './components/tabs/additional-information-tab-content.component.scss';
+@import './components/dialogs/add-participant-dialog.component.scss';
+@import './components/dialogs/import-form-dialog.component.scss';
+@import './components/dialogs/standalone-form-answer-review-dialog.component.scss';
+@import './components/dialogs/compare-version-dialog.scss';
+@import './components/form-question-comparison.component.scss';
+@import './components/digital-content-comparison.component.scss';
+@import './components/standalone-survey-answer-player.component.scss';
+@import './components/standalone-survey-detail-page.component.scss';
+@import './components/standalone-survey-editor-page.component.scss';
+@import './components/standalone-survey-editor.component.scss';
+@import './components/standalone-survey-repository-page.scss';
+@import './components/standalone-survey-question-adder.component.scss';
+@import './components/standalone-survey-question-answer-player.component.scss';
+@import './components/standalone-survey-question-editor.component.scss';
+@import './components/standalone-survey-question-option-editor.component.scss';
+@import './components/standalone-survey-question-template.component.scss';
+@import './components/standalone-survey-section-editor.component.scss';
+@import './components/standalone-survey-quiz-player-page.component.scss';
+@import './components/standalone-survey-general-tab.component.scss';
+@import './components/personal-space-repository.component.scss';
+@import './components/form-assessment-indicator.component.scss';
+@import './components/form-assessment-rubric-editor.component.scss';
+@import './components/form-assessment-adder.component.scss';
+@import './components/form-assessment-rubric-management-page.component.scss';
+@import './components/question-bank-list.component.scss';
+@import './components/assessment-rubric-comparison.component.scss';
+@import './components/assessment-rubric-compare-indicator.component.scss';
+
+.ccpm-repository-page {
+  &__delete-text {
+    color: $red;
+  }
+}
+
+ccpm-app {
+  @extend %box-sizing;
+  padding: 0 50px;
+
+  &.match-parent {
+    overflow: inherit;
+  }
+
+  app-digital-content-detail-page {
+    .k-item:first-child {
+      &.k-state-active {
+        border-bottom-left-radius: 5px;
+      }
+    }
+  }
+
+  digital-learning-content-editor-page {
+
+    .learning-content-drop-zone {
+      display: none;
+      position: absolute;
+      margin-top: 80px;
+      width: 100%;
+      height: 80%;
+
+      &.-on-drop {
+        display: flex;
+      }
+    }
+
+    .editor-toolbar {
+      margin: 20px 0 5px;
+
+      .flex {
+        background: $white;
+        border-radius: $main-border-radius;
+
+        kendo-toolbar.k-toolbar {
+          padding: 6px 8px;
+        }
+      }
+
+      .k-button {
+        &.k-overflow-anchor {
+          top: calc(50% - 19px);
+        }
+      }
+    }
+  }
+
+  .k-pager-wrap {
+    margin-bottom: 10px;
+  }
+
+  comment-tab {
+    .k-grid {
+      overflow: initial;
+    }
+  }
+
+  kendo-switch {
+    &.k-switch-on {
+
+      .k-switch-container,
+      &:hover .k-switch-container {
+        color: white;
+        background-color: $color-light-gray;
+      }
+    }
+  }
+}
+
+.digital-content-repository-page-sub-toolbar {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-end;
+
+  &__sort-label {
+    margin-right: 10px;
+    align-self: center;
+    font-weight: $font-weight-medium;
+  }
+
+  &__sort-select {
+    min-width: 175px;
+  }
+}
+
+.digital-content-repository-page-toolbar {
+  padding: 15px 50px 15px 50px;
+
+  @include flex-layout-media('tablet-horizontal') {
+    padding: 10px 50px 10px 50px;
+  }
+
+  &.f-app-toolbar {
+    &.no-bottom {
+      .toolbar {
+        padding: 25px 20px 25px 0;
+
+        @include flex-layout-media('tablet-horizontal') {
+          padding: 5px 20px 5px 0;
+        }
+      }
+    }
+  }
+
+  .k-textbox {
+    min-width: 230px;
+  }
+
+  toolbar-right {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .digital-content-filter,
+  .form-filter {
+    min-width: 175px;
+  }
+
+  &__filter {
+    margin-left: 10px;
+
+    label {
+      font-weight: $font-weight-medium;
+    }
+
+    .opal-select.ng-select {
+      height: auto;
+    }
+  }
+
+  &__import {
+    margin-left: 10px;
+  }
+
+  &.f-app-toolbar {
+    .toolbar {
+      >div {
+        overflow: inherit;
+      }
+
+      &__left-container {
+
+        detail-title,
+        .title-group {
+          max-width: 100%;
+          overflow: hidden;
+
+          >div {
+            display: flex;
+            max-width: 100%;
+          }
+
+          .edit-icon {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .status-indicator__text {
+    font-size: 0.813rem !important;
+  }
+}
+
+.digital-content-popup-editor-controls {
+  max-height: 35vh;
+}
+
+.repository-page-toolbar {
+  padding: 15px 50px 15px 50px;
+
+  @include flex-layout-media('tablet-horizontal') {
+    padding: 10px 50px 10px 50px;
+  }
+
+  &.f-app-toolbar {
+    &.no-bottom {
+      .toolbar {
+        padding: 25px 20px 25px 0;
+
+        @include flex-layout-media('tablet-horizontal') {
+          padding: 5px 20px 5px 0;
+        }
+      }
+    }
+
+    .toolbar {
+      >div {
+        overflow: inherit;
+      }
+
+      &__left-container {
+
+        detail-title,
+        .title-group {
+          max-width: 100%;
+          overflow: hidden;
+
+          >div {
+            display: flex;
+            max-width: 100%;
+          }
+
+          .edit-icon {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .k-textbox {
+    min-width: 230px;
+  }
+
+  toolbar-right {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__filter {
+    margin-left: 1rem;
+
+    .opal-select.ng-select {
+      height: auto;
+    }
+  }
+
+  &__label {
+    align-self: center;
+    font-weight: $font-weight-medium;
+  }
+
+  &__select {
+    margin-left: 1rem;
+    min-width: 200px;
+  }
+}
+
+.repository-page-sub-toolbar {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-end;
+
+  &__sort-label {
+    align-self: center;
+    font-weight: $font-weight-medium;
+  }
+
+  &__sort-select {
+    margin-left: 1rem;
+    min-width: 200px;
+    height: auto;
+  }
+}
+
+video,
+audio {
+  @include no-border();
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder * {
+  opacity: 0.5;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+question-bank-repository-page {
+  display: flex;
+  flex-grow: 1;
+}
+
+.ellipsis {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

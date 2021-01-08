@@ -1,0 +1,150 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column *ngIf="showCheckboxColumn()"
+                     [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'title'"
+                     [title]="'Course Title'"
+                     [width]="200"
+                     *ngIf="showTitleColumn()">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <p class="main-title"
+         [class.main-title-selected]="dataItem.selected">{{ dataItem.courseName }}</p>
+      <p class="sub-title">{{ dataItem.courseCode }}</p>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'createdDate'"
+                     [title]="'Created Date'"
+                     [width]="130"
+                     *ngIf="showCreatedDateColumn()">
+    <!-- Cell template of created date field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.createdDate | date: 'dd/MM/yyyy'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'yearCycle'"
+                     [title]="'In Planning Period'"
+                     [width]="150"
+                     *ngIf="showInPlanningPeriod()">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.yearCycle ? dataItem.yearCycle : 'Outside planning cycle'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'pdActivityTypeDisplayText'"
+                     [title]="'Type'"
+                     [width]="150"
+                     *ngIf="showPDActivityTypeColumn()"> </kendo-grid-column>
+  <kendo-grid-column [field]="'learningModeDisplayText'"
+                     [title]="'Mode of Learning'"
+                     [width]="150"
+                     *ngIf="showLearningModeColumn()"> </kendo-grid-column>
+
+  <kendo-grid-column [field]="'owner'"
+                     [title]="'Owner'"
+                     [width]="250"
+                     *ngIf="showOwnerColumn()">
+    <!-- Cell template of owner field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.owner"
+                  [owner]="dataItem.owner"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'learningModeDisplayText'"
+                     [title]="'Archived By'"
+                     [width]="130"
+                     *ngIf="showArchivedByColumn()">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.archivedByUser"
+                  [owner]="dataItem.archivedByUser"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'learningModeDisplayText'"
+                     [title]="'Archived Date'"
+                     [width]="130"
+                     *ngIf="showArchivedDateColumn()">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.archiveDate | date: 'dd/MM/yyyy'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+
+
+  <kendo-grid-column [field]="showContentStatus() ? 'contentStatus' : 'status'"
+                     [title]="showContentStatus() ? 'Content Status' : 'Status'"
+                     [width]="150"
+                     *ngIf="showStatusColumn()">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="displayStatus(dataItem)"
+                        [mapping]="getStatusColorMap(dataItem)"
+                        [prefix]="isResubmit(dataItem) ? '(Resubmit)' : ''"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60"
+                     *ngIf="searchType === SearchCourseType.Owner">
+    <!-- Cell template of actions field-->
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="getContextMenuByCourse(dataItem).length !== 0">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="getContextMenuByCourse(dataItem)"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

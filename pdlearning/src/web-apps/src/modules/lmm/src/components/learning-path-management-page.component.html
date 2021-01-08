@@ -1,0 +1,43 @@
+<div class="content-management-container">
+  <div class="content-management">
+    <div class="management-toolbar"
+         *ngIf="canCreateLearningPath()">
+      <div class="management-toolbar__left-container">
+        <!-- <div class="search-field">
+          <input type="text"
+                 placeholder="{{ 'Search in Learning Path Administration' | translator }}">
+          <i class="search-icon cursor-pointer"></i>
+        </div> -->
+        <!-- <button class="button-white-bg -icon-right" kendoButton [icon]="'saturation'">{{ 'Filter' | translator }}</button>
+        <action-bar style="margin-left: 10px;"
+                    [buttons]="actionBtnGroup"></action-bar> -->
+      </div>
+      <div class="management-toolbar__right-container">
+        <button *ngIf="canCreateLearningPath()"
+                [primary]="true"
+                [icon]="'plus'"
+                (click)="onCreateNewLearningPath()"
+                kendoButton>{{ 'Create Learning Path' | translator }}</button>
+        <!-- <button class="button-white-bg -icon-right" kendoButton [icon]="'saturation'">{{ 'Filter' | translator }}</button> -->
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #learningPathManagementStickyTabHeaderElement="stickyTabHeaderElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.LearningPathsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Learning Paths' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-learning-path-grid (viewLearningPath)="onViewLearningPath($event)"
+                                   [filter]="filter"
+                                   [mergeHeader]="true"
+                                   [stickyDependElement]="learningPathManagementStickyTabHeaderElement.headerElement">
+          </list-learning-path-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

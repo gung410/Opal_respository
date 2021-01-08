@@ -1,0 +1,12 @@
+<div class="calendar-list">
+  <div class="learning-calendar-title"
+       (click)="onShowMoreClicked()">{{ 'Calendar' | translator }}</div>
+  <div class="calendar-container"
+       [ngClass]="{'height-2': numberOfHeightTimes === 2, 'height-3': numberOfHeightTimes === 3 }">
+    <div class="container-table">
+      <personal-calendar-widget [showWorkHours]="showWorkHours"
+                                (openFullCalendarClicked)="onShowMoreClicked()">
+      </personal-calendar-widget>
+    </div>
+  </div>
+</div>

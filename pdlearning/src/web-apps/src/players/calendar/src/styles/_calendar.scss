@@ -1,0 +1,148 @@
+@import './components/team-calendar.component.scss';
+@import './components/personal-calendar.component.scss';
+@import './components/personal-event-detail-form.component.scss';
+@import './components/community-event-detail-form.component.scss';
+@import './components/event-tooltip.component.scss';
+@import './components/specific-community-calendar.component.scss';
+@import './components/communities-calendar.component.scss';
+@import './components/calendar-view-template.component.scss';
+@import './components/personal-calendar-widget.component.scss';
+@import './components/team-calendar-container.component.scss';
+@import './components/share-calendar.component.scss';
+
+.community-event-tooltip {
+  .k-tooltip-content {
+    padding: 0 !important;
+  }
+
+  .k-i-close {
+    color: #303450;
+    margin: 8px 0px;
+  }
+}
+
+calendar-player {
+  background: #FFFFFF;
+
+  .calendar {
+    &-content {
+      width: -webkit-fill-available;
+    }
+
+    &-btn {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 167px;
+      height: 48px;
+    }
+  }
+
+  .k-checkbox {
+    width: 20px;
+    height: 20px;
+
+    &:checked {
+      background-color: #303450;
+      border-color: #303450;
+    }
+
+    &:hover {
+      border-color: #303450;
+    }
+
+    border-color: #303450;
+  }
+
+  .calendar-title {
+    height: 56px;
+    border-bottom: 1px solid #eee;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+
+    .title-item {
+      font-weight: 400;
+      font-size: 1rem;
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .k-i-team-calendar {
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/team-calendar.svg') no-repeat center;
+  }
+
+  .k-i-personal-calendar {
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/personal-calendar.svg') no-repeat center;
+  }
+}
+
+
+.k-animation-container {
+  .calendar-preview-button-modes {
+    padding: 3px;
+
+    .k-list {
+      .k-item {
+        padding: 10px 18px 10px 18px;
+        position: relative;
+
+        &.k-state-focused {
+          box-shadow: none;
+        }
+
+        &::before {
+          content: '';
+          margin-right: 8px;
+          width: 24px;
+          height: 24px;
+          background: url('../assets/images/icons/team-calendar.svg') no-repeat center;
+        }
+
+        &:first-child {
+          &::before {
+            content: '';
+            margin-right: 8px;
+            width: 24px;
+            height: 24px;
+            background: url('../assets/images/icons/personal-calendar.svg') no-repeat center;
+          }
+        }
+      }
+    }
+
+    &.k-popup {
+      border-color: transparent;
+
+      .k-i-personal-calendar,
+      .k-i-team-calendar {
+        display: none;
+      }
+    }
+  }
+}
+
+@include flex-layout-media('tablet-portrait') {
+  .opened-calendar-selector {
+    .k-animation-container-fixed {
+      z-index: $z-index-level-2 + 1;
+      display: none;
+    }
+
+    &::after {
+      position: fixed;
+      content: '';
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $color-black;
+      opacity: 0.7;
+      display: block;
+    }
+  }
+}

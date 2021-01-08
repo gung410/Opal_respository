@@ -1,0 +1,88 @@
+.add-participant-dialog {
+  width: 640px;
+  max-height: 100%;
+  overflow-y: auto;
+
+  .dialog-header {
+    &__title {
+      font-size: $font-h3;
+      color: $color-blue-dard;
+      font-weight: normal;
+    }
+  }
+
+  .owner-container {
+    display: flex;
+    padding: 0.5rem 1rem;
+
+    &__avatar,
+    &__action {
+      flex-shrink: 1;
+    }
+  }
+
+  &__dropdown {
+    margin-top: 1rem;
+
+    .opal-select__item {
+      padding: 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    .owner-container {
+      padding: 0.8rem 1rem;
+
+      &.--selected {
+        background-color: $color-light-gray;
+        color: $color-white;
+        border-bottom-color: $color-blue-dard;
+      }
+    }
+  }
+
+  &__users-list {
+    min-height: 235px;
+
+    @include flex-layout-media('tablet-horizontal') {
+      min-height: 160px;
+    }
+
+  }
+
+  &__users-selected {
+    max-height: 325px;
+    padding: 0.5rem;
+    overflow-y: auto;
+
+    @include flex-layout-media('tablet-horizontal') {
+      max-height: 140px;
+    }
+
+    .owner-container {
+
+      &+.owner-container {
+        border-top: 1px solid $color-border;
+      }
+
+      &__action {
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+
+      &__remove-buttom {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form-controls-group {
+    display: block;
+    padding: 0;
+    width: 100%;
+
+    &.-radio-horizontal {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

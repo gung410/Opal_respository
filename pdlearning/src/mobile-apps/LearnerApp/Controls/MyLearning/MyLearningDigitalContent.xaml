@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.MyLearning.MyLearningDigitalContent"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    VerticalOptions="FillAndExpand"
+    mc:Ignorable="d">
+
+    <RefreshView x:Name="RefreshView" Refreshing="RefreshView_Refreshing">
+        <StackLayout Padding="10,10,10,0" Spacing="10">
+            <StackLayout Spacing="5">
+                <Frame
+                    Padding="1"
+                    BackgroundColor="{StaticResource WhiteColor}"
+                    BorderColor="LightGray"
+                    CornerRadius="4"
+                    HasShadow="False"
+                    HorizontalOptions="FillAndExpand"
+                    IsClippedToBounds="True">
+                    <StackLayout Padding="10,0,10,0" Orientation="Horizontal">
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="22"
+                            Source="search.svg"
+                            WidthRequest="22">
+                            <ffimagesvg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDigitalContentSearch_Tapped" />
+                            </ffimagesvg:SvgCachedImage.GestureRecognizers>
+                        </ffimagesvg:SvgCachedImage>
+                        <controls:CustomEntry
+                            x:Name="KeywordSearchEntry"
+                            Margin="{StaticResource BaseMarginTextbox}"
+                            ClearButtonVisibility="WhileEditing"
+                            Completed="OnDigitalContentSearch_Tapped"
+                            FontSize="16"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Search Digital Content"
+                            PlaceholderColor="LightGray"
+                            TextChanged="KeywordSearchEntry_TextChanged" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    x:Name="DigitalContentFilterStack"
+                    Padding="10"
+                    BorderColor="#D8DCE6"
+                    CornerRadius="4"
+                    HasShadow="False">
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DigitalContentStatusSelected" />
+                        </StackLayout.GestureRecognizers>
+                        <Label
+                            x:Name="CurrentStatusFilterLbl"
+                            FontSize="16"
+                            TextColor="{StaticResource MainBodyTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="10"
+                            HorizontalOptions="EndAndExpand"
+                            Source="participation_down.svg"
+                            WidthRequest="10" />
+                    </StackLayout>
+                </Frame>
+                <controls:SearchGroupFilter
+                    x:Name="SearchGroupFilter"
+                    IsVisible="false"
+                    OnBack="SearchGroupFilter_OnBack"
+                    OnFilter="SearchGroupFilter_OnFilter" />
+            </StackLayout>
+
+            <CollectionView
+                x:Name="DigitalContentList"
+                IsVisible="false"
+                RemainingItemsThresholdReached="DigitalContentList_Loadmore"
+                SelectionChanged="DigitalContentList_Selected"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="0,0,0,5">
+                            <Frame
+                                Padding="10"
+                                android:VisualElement.Elevation="5"
+                                ios:VisualElement.IsShadowEnabled="true"
+                                ios:VisualElement.ShadowColor="Black"
+                                ios:VisualElement.ShadowOpacity="0.3"
+                                ios:VisualElement.ShadowRadius="2.5"
+                                BorderColor="#D8DCE6"
+                                CornerRadius="4"
+                                HasShadow="False"
+                                VerticalOptions="Start">
+                                <ios:VisualElement.ShadowOffset>
+                                    <Size>
+                                        <x:Arguments>
+                                            <x:Double>0</x:Double>
+                                            <x:Double>1.5</x:Double>
+                                        </x:Arguments>
+                                    </Size>
+                                </ios:VisualElement.ShadowOffset>
+                                <StackLayout>
+                                    <StackLayout
+                                        HeightRequest="25"
+                                        HorizontalOptions="EndAndExpand"
+                                        IsVisible="{Binding IsVisibleBookmark}"
+                                        WidthRequest="50">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                CommandParameter="{Binding .}"
+                                                NumberOfTapsRequired="1"
+                                                Tapped="BookmarkDigitalContent_Tapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <ffimagesvg:SvgCachedImage
+                                            HeightRequest="25"
+                                            HorizontalOptions="EndAndExpand"
+                                            Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                                            WidthRequest="25" />
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                        <AbsoluteLayout>
+                                            <StackLayout AbsoluteLayout.LayoutBounds="0, 10, 130, 75">
+                                                <Frame
+                                                    Padding="40,25,40,10"
+                                                    BorderColor="#D8DCE6"
+                                                    CornerRadius="4"
+                                                    HasShadow="False">
+                                                    <ffimagesvg:SvgCachedImage
+                                                        HeightRequest="40"
+                                                        Source="{Binding ThumbnailUrl}"
+                                                        WidthRequest="25" />
+                                                </Frame>
+                                            </StackLayout>
+                                            <StackLayout AbsoluteLayout.LayoutBounds="0.2, 0.05, 100, 20" AbsoluteLayout.LayoutFlags="XProportional, YProportional">
+                                                <Frame
+                                                    Padding="6"
+                                                    BackgroundColor="{Binding Status, Converter={StaticResource LabelColorConverter}}"
+                                                    CornerRadius="4"
+                                                    HasShadow="False">
+                                                    <Label
+                                                        FontFamily="{StaticResource RobotoBold}"
+                                                        FontSize="10"
+                                                        HorizontalOptions="CenterAndExpand"
+                                                        Text="{Binding Status, Converter={StaticResource LabelStatusConverter}}"
+                                                        TextColor="{StaticResource MainBodyTextColor}"
+                                                        VerticalOptions="CenterAndExpand" />
+                                                </Frame>
+                                            </StackLayout>
+                                        </AbsoluteLayout>
+
+                                        <Label
+                                            FontFamily="{StaticResource RobotoRegular}"
+                                            FontSize="16"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="2"
+                                            Text="{Binding Name}"
+                                            TextColor="{StaticResource MainBodyTextColor}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                        <controls:Ratingv2View
+                                            IsEnableRate="False"
+                                            Rate="{Binding Rating}"
+                                            StarSize="10"
+                                            StarSpacing="5" />
+                                        <Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label
+                x:Name="EmpltListLbl"
+                HorizontalOptions="CenterAndExpand"
+                IsVisible="false"
+                Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+        </StackLayout>
+    </RefreshView>
+</ContentView>

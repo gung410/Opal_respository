@@ -1,0 +1,211 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Metadata' | translator }}</label>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let serviceSchemeId of learningPathDetailVM.serviceSchemeIds">
+            <div class="metadata-tag-text"
+                 *ngIf="serviceSchemeId">
+              {{ learningPathDetailVM.metadataTagsDic[serviceSchemeId] ? learningPathDetailVM.metadataTagsDic[serviceSchemeId].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="learningPathDetailVM.serviceSchemeIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="learningPathDetailVM.serviceSchemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="learningPathDetailVM.serviceSchemeIds"
+                       [multiple]="true"
+                       formControlName="serviceSchemeIds"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.selectedLearningFrameworkTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span
+                *ngIf="learningPathDetailVM.selectedLearningFrameworkTree == null || learningPathDetailVM.selectedLearningFrameworkTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.learningFrameworkTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="learningPathDetailVM.learningFrameworkTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="learningFrameworkItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="learningPathDetailVM.learningFrameworkTree == null || learningPathDetailVM.learningFrameworkTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Dimension, Learning Areas and Sub-Areas' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.selectedLearningDimensionAreaTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span
+                *ngIf="learningPathDetailVM.selectedLearningDimensionAreaTree == null || learningPathDetailVM.selectedLearningDimensionAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.learningDimensionAreaTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="learningPathDetailVM.learningDimensionAreaTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="learningDimensionAreaItemIsCheckedFn">
+          </kendo-treeview>
+          <span
+                *ngIf="learningPathDetailVM.learningDimensionAreaTree == null || learningPathDetailVM.learningDimensionAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Subject' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.selectedSubjectAreaTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="learningPathDetailVM.selectedSubjectAreaTree == null || learningPathDetailVM.selectedSubjectAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="learningPathDetailVM.subjectAreaTree"
+                          [children]="learningPathDetailVM.getMetadataTagChilds"
+                          [hasChildren]="learningPathDetailVM.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="learningPathDetailVM.subjectAreaTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="subjectAreaItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="learningPathDetailVM.subjectAreaTree == null || learningPathDetailVM.subjectAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'PD Area / Theme' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let pdAreaThemeId of learningPathDetailVM.pdAreaThemeIds">
+            <div class="metadata-tag-text"
+                 *ngIf="pdAreaThemeId">
+              {{ learningPathDetailVM.metadataTagsDic[pdAreaThemeId] ? learningPathDetailVM.metadataTagsDic[pdAreaThemeId].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="learningPathDetailVM.pdAreaThemeIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="learningPathDetailVM.pdAreaThemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="learningPathDetailVM.pdAreaThemeIds"
+                       [multiple]="true"
+                       formControlName="pdAreaThemeIds"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Course Level' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let courseLevelId of learningPathDetailVM.courseLevelIds">
+            <div class="metadata-tag-text"
+                 *ngIf="courseLevelId">
+              {{ learningPathDetailVM.metadataTagsDic[courseLevelId] ? learningPathDetailVM.metadataTagsDic[courseLevelId].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="learningPathDetailVM.courseLevelIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="learningPathDetailVM.courseLevelSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="learningPathDetailVM.courseLevelIds"
+                       [multiple]="true"
+                       formControlName="courseLevelIds"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Metadata Keys' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let metadataKey of learningPathDetailVM.metadataKeys">
+            <div class="metadata-tag-text"
+                 *ngIf="metadataKey">
+              {{ metadataKey }}
+            </div>
+          </ng-container>
+          <span *ngIf="learningPathDetailVM.metadataKeys == null || learningPathDetailVM.metadataKeys.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [fetchDataFn]="fetchSuggestedSearchTagsFn"
+                       [valueField]="'name'"
+                       [labelField]="'name'"
+                       [(ngModel)]="learningPathDetailVM.metadataKeys"
+                       [addTag]="true"
+                       [multiple]="true"
+                       [disableSelectAll]="true"
+                       [minDropdownHeight]="0"
+                       [clearSearchOnAdd]="true"
+                       formControlName="metadataKeys"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,5 @@
+https_proxy: http://proxy.opal:3128
+DeveloperExceptionEnabled: true
+ProxyOptions_DefaultFallbackUrl: https://www.uat-next.opal2.conexus.net/app/common/webinar-error
+WebinarDomain: webinar.uat-next.opal2.conexus.net
+AuthenticationOptions_CheckSessionEndpoint: https://api.uat-next.opal2.conexus.net/check-session/

@@ -1,0 +1,61 @@
+<div class="lecture-player">
+  <div class="lecture-player__course-title-container">
+    <div class="lecture-player__back"
+         (click)="onBackClick()">
+      <i class="icon back"></i>
+      {{"Back" | globalTranslator}}
+    </div>
+    <!-- The below div is duplicated so that lecture-player__course-title can be in the center -->
+    <div class="lecture-player__back hidden--keep-space"
+         (click)="onBackClick()">
+      <i class="icon back"></i>
+      {{"Back" | globalTranslator}}
+    </div>
+  </div>
+  <div class="lecture-player__steps-container">
+    <div class="lecture-player__change-lecture"
+         (click)="previous()">{{"Previous" | globalTranslator}}</div>
+    <div class="lecture-player__steps-text">
+    </div>
+    <!--
+      We temporarily remove this button hidden checking as the customer required for testing.
+      You can feel free to enable this later.
+      [ngClass]="{'hidden--keep-space': hideNextOrFinish}"
+    -->
+    <div class="lecture-player__change-lecture --align-right"
+         (click)="finishDigitalContent()"
+         [ngClass]="{'disabled': !canFinish()}">
+      {{ "Finish" | globalTranslator}}
+    </div>
+  </div>
+  <div class="lecture-player__progress-bar">
+    <div class="lecture-player__progress-bar-inner"
+         [ngClass]="{ '--full': true}"
+         [style.width]="(100) + '%'"></div>
+  </div>
+
+  <ng-container *ngIf="!showFinishScreen">
+    <div class="lecture-player__lecture-content">
+      <div class="lecture-player__digital-content">
+        <digital-content-player [resourceId]="digitalContent.digitalContentId"
+                                [displayMode]="'learn'"
+                                [myDigitalContentId]="myDigitalContentId"
+                                [onScormFinishCallback]="onScormFinishCallback.bind(this)"
+                                [disableDownload]="!hasContentDownloadPermission"
+                                (onDownloadFile)="onDownloadDigitalContent(digitalContent.digitalContentId)"
+                                maxMainContentHeight="680px"></digital-content-player>
+      </div>
+    </div>
+    <!--<div class="learner-primary-btn lecture-player__action-btn lecture-player__next-btn"
+            (click)="finishDigitalContent()">
+    {{ "Finish" | globalTranslator}}
+  </div>-->
+  </ng-container>
+
+  <learning-feedbacks *ngIf="showFinishScreen"
+                      [learningId]="digitalContentOriginalId"
+                      [learningTitle]="title"
+                      [reviewType]="reviewType"
+                      [configuration]="feedbacksConfig"
+                      (submit)="onSubmitFeedbacks()"></learning-feedbacks>
+</div>

@@ -1,0 +1,40 @@
+<div class="date-question-template">
+  <div class="date-question-template__close">
+    <span class="k-icon k-i-close"
+          (click)="onCloseDialog()">
+    </span>
+  </div>
+  <div class="date-question-template__title">
+    <div>{{'Please select format' | translator}}</div>
+  </div>
+
+  <div class="date-question-template__content">
+
+    <div class="date-question-template__content-radio">
+      <input class="k-radio"
+             type="checkbox"
+             [checked]="this.selectedQuestionType === QuizAssignmentQuestionType.DatePicker"
+             (click)="onDateQuestionChanged(QuizAssignmentQuestionType.DatePicker)">
+      <span class="title">{{'One date' | translator}}</span>
+    </div>
+    <div class="date-question-template__content-radio">
+      <input class="k-radio"
+             type="checkbox"
+             [checked]="this.selectedQuestionType === QuizAssignmentQuestionType.DateRangePicker"
+             (click)="onDateQuestionChanged(QuizAssignmentQuestionType.DateRangePicker)">
+      <span class="title">{{'Date range' | translator}}</span>
+    </div>
+  </div>
+  <div class="date-question-template__action">
+    <button kendoButton
+            [primary]="true"
+            (click)="onDateQuestionSelected()">
+      {{ 'Confirm ' | translator }}
+    </button>
+    <button kendoButton
+            [primary]="true"
+            (click)="onCloseDialog()">
+      {{ 'Cancel' | translator }}
+    </button>
+  </div>
+</div>

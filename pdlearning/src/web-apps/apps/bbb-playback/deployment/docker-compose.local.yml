@@ -1,0 +1,12 @@
+version: '2'
+services:
+  opal-web-app-bbb-playback:
+    image: orientdevacr/bbb-playback:latest
+    container_name: local-webinar-playback-opal
+    environment:
+      - PROJECT_NAME=opal
+      - VIRTUAL_HOST=localhost
+    ports:
+      - 4203:80
+    volumes:
+      - C:\Users\Public\presentation:/var/bigbluebutton/presentation/

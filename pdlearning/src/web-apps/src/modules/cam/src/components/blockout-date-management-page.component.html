@@ -1,0 +1,39 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search in Block Out Dates' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"></data-filter>
+      </div>
+      <div class="management-toolbar__right-container">
+        <button *ngIf="canConfirmBlockoutDate()"
+                kendoButton
+                [primary]="true"
+                (click)="onConfirmBlockoutDate()">
+          {{ 'Confirm the list' | translator }}
+        </button>
+        <button *ngIf="canCreateBlockoutDate()"
+                kendoButton
+                [icon]="'plus'"
+                [primary]="true"
+                (click)="onCreateBlockoutDate()">
+          {{ 'Create New Date' | translator }}
+        </button>
+      </div>
+    </div>
+
+    <list-blockout-date-grid [filter]="filter"
+                             [indexActionColumns]="[6]"
+                             [contextMenuItems]="contextMenuItemsForBlockoutDates"
+                             [coursePlanningCycleId]="coursePlanningCycleDetailPageInput.data.id"
+                             (viewBlockoutDate)="onViewBlockoutDate($event)"
+                             (selectedContextMenu)="onBlockoutDateGridContextMenuSelected($event)"
+                             [stickyDependElement]="stickyDependElement">
+    </list-blockout-date-grid>
+  </div>
+</div>

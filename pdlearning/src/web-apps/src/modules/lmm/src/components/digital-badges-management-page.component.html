@@ -1,0 +1,83 @@
+<div class="content-management-container">
+  <div class="content-management">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search for the user' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <!-- <data-filter [applyFn]="onApplyFilter.bind(this)"></data-filter> -->
+      </div>
+      <div class="management-toolbar__right-container">
+        <div class="digital-badges-management__setting-container"
+             *ngIf="showSettingBadgeCriteria"
+             (click)="onSettingBadgeCriteria()">
+          <span class="digital-badges-management__setting-title">{{ 'Settings' | translator }}</span>
+          <span class="k-icon k-i-custom"></span>
+        </div>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #digitalBadgesManagementStickyTabHeaderElement="stickyTabHeaderElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.DigitalLearnerTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Digital Learners' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-badge-learner-grid [(selectedItems)]="allDigitalLearnersSelectedItems"
+                                   [displayColumns]="getDigitalLearnerDisplayColumn"
+                                   [badgeId]="BadgeId.DigitalLearner"
+                                   [stickyDependElement]="digitalBadgesManagementStickyTabHeaderElement.headerElement"
+                                   [mergeHeader]="true"></list-badge-learner-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.ReflectiveLearnerTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Reflective Learners' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-badge-learner-grid [(selectedItems)]="allReflectiveLearnersSelectedItems"
+                                   [displayColumns]="getReflectiveLearnerDisplayColumn"
+                                   [badgeId]="BadgeId.ReflectiveLearner"
+                                   [stickyDependElement]="digitalBadgesManagementStickyTabHeaderElement.headerElement"
+                                   [mergeHeader]="true"></list-badge-learner-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.ActiveContributorTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Active Contributors' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-badge-learner-grid [(selectedItems)]="allActiveContributorsSelectedItems"
+                                   [displayColumns]="getActiveContributorLearnerDisplayColumn"
+                                   [badgeId]="BadgeId.ActiveContributor"
+                                   [stickyDependElement]="digitalBadgesManagementStickyTabHeaderElement.headerElement"
+                                   [mergeHeader]="true"></list-badge-learner-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.LifeLongLearnerTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Life-Long Learners' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-badge-learner-grid [(selectedItems)]="allLifeLongSelectedItems"
+                                   [displayColumns]="getLifeLongDisplayColumn"
+                                   [badgeId]="BadgeId.LifeLong"
+                                   [stickyDependElement]="digitalBadgesManagementStickyTabHeaderElement.headerElement"
+                                   [mergeHeader]="true"></list-badge-learner-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

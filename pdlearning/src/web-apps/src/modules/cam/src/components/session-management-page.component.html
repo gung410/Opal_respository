@@ -1,0 +1,32 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+      </div>
+      <div class="management-toolbar__right-container">
+        <button *ngIf="canCreateSession()"
+                kendoButton
+                [icon]="'plus'"
+                [primary]="true"
+                (click)="onCreateSession()">
+          {{ 'Create Session' | translator }}
+        </button>
+      </div>
+    </div>
+    <list-session-grid [classRun]="classRun"
+                       [course]="course"
+                       [classRunId]="classRunDetailPageInput.data.id"
+                       [searchType]="SearchSessionType.Owner"
+                       [classRunSearchType]="classRunSearchType"
+                       [filter]="filter"
+                       [isRescheduleMode]="isRescheduleMode"
+                       (viewSession)="onViewSession($event)"
+                       (loadedData)="loadedDataGrid($event)"
+                       (selectedContextMenu)="selectedContextMenu($event)"
+                       [stickyDependElement]="stickyDependElement"
+                       [disableChangeLearningMethod]="true"
+                       [displayColumns]="allClassRunDisplayColumns"
+                       [indexActionColumns]="[7]"></list-session-grid>
+  </div>
+</div>

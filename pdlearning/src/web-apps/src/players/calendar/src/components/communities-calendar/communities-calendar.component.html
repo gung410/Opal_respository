@@ -1,0 +1,65 @@
+<detail-content>
+  <detail-content-fragment class="flex detail-page f-detail-content-container"></detail-content-fragment>
+  <detail-content-left>
+    <div class="community-calendar-menu">
+      <ul class="community-calendar-menu__tabs">
+        <li class="calendar-title">
+          <span class="title-item">
+            <span class="k-icon k-i-team-calendar"></span>
+            {{ 'Community Calendar' | translator }}
+            <button class="icon-moe-down-arrow filter-btn"
+                    (click)="onOpenFilterPanel()"></button>
+          </span>
+        </li>
+        <li class="community-tree">
+          <kendo-treeview #treeview
+                          [nodes]="communityHierarchy"
+                          [childrenField]="'subCommunities'"
+                          [textField]="'title'"
+                          [hasChildren]="hasChildren"
+                          [children]="children"
+                          [checkedKeys]="checkedKeys"
+                          [checkBy]="'id'"
+                          [kendoTreeViewCheckable]="checkableSettings"
+                          kendoTreeViewSelectable
+                          kendoTreeViewHierarchyBinding
+                          kendoTreeViewExpandable
+                          (checkedKeysChange)="onCheckedKeysChange()">
+            <ng-template kendoTreeViewNodeTemplate
+                         let-dataItem
+                         let-index="index">
+              {{dataItem.title}}
+            </ng-template>
+          </kendo-treeview>
+          <button class="filter-event-close"
+                  type="button"
+                  (click)="onCloseFilterPanel()"></button>
+        </li>
+        <li class="event-action">
+          <kendo-dropdownbutton class="create-event-btn"
+                                [popupSettings]="{popupClass: 'create-popup'}"
+                                (itemClick)="onCreateItemClick($event)"
+                                [data]="createOptions"
+                                [primary]="true">
+            <span class="k-i-add-event"></span>
+            {{"Create new" | globalTranslator}}
+            <ng-template kendoDropDownButtonItemTemplate
+                         let-dataItem>
+              <span>{{dataItem}}</span>
+            </ng-template>
+          </kendo-dropdownbutton>
+        </li>
+      </ul>
+    </div>
+  </detail-content-left>
+  <detail-content-right>
+    <calendar-view-template [events]="filteredEvents"
+                            [selectedDate]="selectedDate"
+                            [modelFields]="communityCalendarModel"
+                            [resources]="{}"
+                            (eventDblClick)="onEventDblClick($event)"
+                            (dateChange)="onDateChange($event)"
+                            style="max-height: 100vh; height: 100%;"></calendar-view-template>
+
+  </detail-content-right>
+</detail-content>

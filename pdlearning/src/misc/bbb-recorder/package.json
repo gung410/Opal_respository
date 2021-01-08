@@ -1,0 +1,21 @@
+{
+  "name": "opal-bbb-recorder",
+  "version": "0.0.2",
+  "description": "Capture BBB recording & export as a video",
+  "scripts": {
+    "example": "node export.js \"http://BBB_HOST/playback/presentation/2.3/MEETING_ID\" MEETING_ID.webm 10 true",
+    "export": "node export"
+  },
+  "keywords": [
+    "record",
+    "chrome",
+    "puppeteer",
+    "screencast"
+  ],
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "puppeteer": "^2.1.1",
+    "ws": "^7.2.3",
+    "xvfb": "^0.3.0"
+  }
+}

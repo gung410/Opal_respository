@@ -1,0 +1,132 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Overview Information' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label>{{ 'Class Title' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">{{ classRun.classTitle }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 kendoErrorTooltip
+                 position="top"
+                 formControlName="classTitle"
+                 [(ngModel)]="classRun.classTitle"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="mode !== ClassRunDetailMode.NewClassRun">
+      <label>{{ 'Class Run Code' | translator }}</label>
+      {{ classRun.classRunCode || 'N/A' }}
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class Start Date' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div class="reschedule-date-info">
+            <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+              {{ classRun.startDate | date: 'dd/MM/yyyy'}}</p>
+
+            <p class="reschedule-date-info__new-date"
+               *ngIf="isRescheduleMode"> <span
+                    class="k-icon k-i-arrow-right"></span>{{ classRun.data.rescheduleStartDate | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #startDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="startDatePicker.toggle(true)"
+                            kendoErrorTooltip
+                            formControlName="startDate"
+                            [(ngModel)]="classRun.startDate"
+                            [min]="classRun.course.startDate"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class End Date' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div class="reschedule-date-info">
+            <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+              {{ classRun.endDate | date: 'dd/MM/yyyy' }}</p>
+
+            <p class="reschedule-date-info__new-date"
+               *ngIf="isRescheduleMode"> <span
+                    class="k-icon k-i-arrow-right"></span>{{ classRun.data.rescheduleEndDate | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #endDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="endDatePicker.toggle(true)"
+                            kendoErrorTooltip
+                            formControlName="endDate"
+                            [(ngModel)]="classRun.endDate"
+                            [min]="classRun.course.startDate"
+                            [max]="classRun.course.expiredDate"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Class Start Time' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div class="reschedule-date-info">
+            <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+              {{ classRun.planningStartTime ? (classRun.planningStartTime | date: 'hh:mm a') : '- N/A' }}</p>
+
+            <p class="reschedule-date-info__new-date"
+               *ngIf="isRescheduleMode">
+              <span class="k-icon k-i-arrow-right"></span>
+              {{ classRun.data.rescheduleStartDateTime ? (classRun.data.rescheduleStartDateTime | date: 'hh:mm a') : '- N/A' }}</p>
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-timepicker class="form-control"
+                            #startTimePicker
+                            [placeholder]="''"
+                            formControlName="planningStartTime"
+                            [(ngModel)]="classRun.planningStartTime"
+                            (focus)="startTimePicker.toggle(true)"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Class End Time' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div class="reschedule-date-info">
+            <p [ngClass]="{'reschedule-date-info__previous-date': isRescheduleMode}">
+              {{ classRun.planningEndTime ? (classRun.planningEndTime | date: 'hh:mm a') : '- N/A' }}</p>
+
+            <p class="reschedule-date-info__new-date"
+               *ngIf="isRescheduleMode">
+              <span class="k-icon k-i-arrow-right"></span>
+              {{ classRun.data.rescheduleEndDateTime ? (classRun.data.rescheduleEndDateTime | date: 'hh:mm a') : '- N/A' }}</p>
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-timepicker class="form-control"
+                            #endTimePicker
+                            [placeholder]="''"
+                            formControlName="planningEndTime"
+                            [(ngModel)]="classRun.planningEndTime"
+                            (focus)="endTimePicker.toggle(true)"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

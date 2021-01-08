@@ -1,0 +1,24 @@
+<ng-container [formGroup]="form">
+  <div class="additional-information-tab-content">
+    <label class="additional-information-tab-content__title">Metadata</label>
+    <div class="form-controls-group">
+      <label>{{'Search tag' | globalTranslator}}</label>
+      <opal-select class="metadata-editor__form-control"
+                   formControlName="searchTags"
+                   [(ngModel)]="resource.searchTags"
+                   [fetchDataFn]="fetchSearchTagsFn"
+                   [fetchDataByValuesFn]="fetchSearchTagsByNamesFn"
+                   [valueField]="'name'"
+                   [labelField]="'name'"
+                   [placeholder]="'Select' | globalTranslator"
+                   [multiple]="true"
+                   [readOnly]="mode === FormDetailMode.View"
+                   [clearable]="true"
+                   [addTag]="customSearchTagAddedFn"
+                   [hasMoreDataToFetch]="true"
+                   kendoErrorTooltip
+                   autofocus
+                   position="top"></opal-select>
+    </div>
+  </div>
+</ng-container>

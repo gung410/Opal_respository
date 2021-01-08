@@ -1,0 +1,21 @@
+<div class="learner-toolbar ">
+  <div class="learner-toolbar__left">
+    <div class="learner-toolbar__navigation ng-star-inserted">
+      <button class="back-button k-button k-flat k-button-icontext"
+              kendoButton
+              (click)="onBackClicked()">
+        <span class="k-icon k-i-arrow-chevron-left ng-star-inserted"></span>
+        {{'Back ' | translator }}</button>
+    </div>
+    <div class="learner-toolbar__heading ng-star-inserted">
+      <div>
+        <div class="learner-toolbar__title ng-star-inserted"> {{'E-Certificates' | translator }}
+        </div>
+        <small class="ng-star-inserted"> {{totalCount}} {{'item(s) in the list' | translator }} </small>
+      </div>
+    </div>
+  </div>
+  <div class="learner-toolbar__right"></div>
+</div>
+<learning-ecertificates-list (onGetECertificatesCallBack)="onGetECertificates($event)">
+</learning-ecertificates-list>

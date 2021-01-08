@@ -1,0 +1,37 @@
+<div class="learner-course-content">
+  <div class="learner-course-content__content-item"
+       *ngFor="let content of displayContents; index as index">
+    <div class="learner-course-content__content-unit"
+         *ngIf="content.type === contentType.Section">
+      {{index + 1}}. {{content.title}}
+    </div>
+    <div class="learner-course-content__content-lecture"
+         *ngIf="content.type === contentType.Lecture"
+         [ngClass]="{
+           '--completed': completedLectureIds.includes(content.id),
+           '--next-lecture': !disableLearning && content.id === highlightLectureId,
+           'cursor-pointer': !disableLearning && showCursorPointerLectureIds.includes(content.id),
+           '--disabled-current-lecture': disableLearning && content.id === highlightLectureId,
+           '--disabled-cursor-pointer': disableLearning
+        }"
+         (click)="!disableLearning && onLectureClick(content.id)">
+      <span class="learner-course-content__content-item-number">{{index + 1}}</span>
+      <span class="learner-course-content__content-item-title"> {{content.title}}</span>
+    </div>
+    <div *ngIf="content.type === contentType.Section && content.items">
+      <div class="learner-course-content__content-lecture learner-course-content__content-child"
+           *ngFor="let child of content.items; index as i"
+           [ngClass]="{
+            '--completed': completedLectureIds.includes(child.id),
+            '--next-lecture': !disableLearning && child.id === highlightLectureId,
+            'cursor-pointer': !disableLearning && showCursorPointerLectureIds.includes(child.id),
+            '--disabled-current-lecture': disableLearning && child.id === highlightLectureId,
+            '--disabled-cursor-pointer': disableLearning
+            }"
+           (click)="!disableLearning && onLectureClick(child.id)">
+        <span class="learner-course-content__content-item-number">{{i + 1}}</span>
+        <span> {{child.title}}</span>
+      </div>
+    </div>
+  </div>
+</div>

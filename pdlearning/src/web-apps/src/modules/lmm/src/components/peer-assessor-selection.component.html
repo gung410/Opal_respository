@@ -1,0 +1,46 @@
+<div class="form-container"
+     [formGroup]="form">
+  <div class="form-controls-group -required">
+    <label for="ch2">{{ 'Search for the user' | translator }}</label>
+    <div class="form-controls-group -horizontal peer-assessor-selection__peer-assessor-selection">
+      <opal-select class="form-controls peer-assessor-selection__individual-assessor"
+                   [ngModel]="peerAssessmentVm.selectedToAddPeerAssessorId"
+                   [fetchDataLogicDependenciesInput]="peerAssessmentVm ? peerAssessmentVm.peerAssessorIds : []"
+                   [fetchDataFn]="fetchUserInfoItemsFn"
+                   (selectedItemChange)="peerAssessmentVm.setSelectedToAddPeerAssessor($event)"
+                   [labelField]="'fullName'"
+                   [valueField]="'id'"
+                   [placeholder]="'Search by name/email'"
+                   formControlName="selectedToAddPeerAssessor"
+                   [virtualScroll]="true"
+                   kendoErrorTooltip
+                   position="top">
+      </opal-select>
+      <button class="peer-assessor-selection__add-peer-assessor-btn"
+              kendoButton
+              [primary]="true"
+              (click)="onAddButtonClicked()">{{'Add' | translator}}</button>
+    </div>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Added users' | translator }}</label>
+    <span *ngIf="peerAssessmentVm.peerAssessors == null || peerAssessmentVm.peerAssessors.length === 0">{{ '- N/A' | translator }}</span>
+    <opal-list [(items)]="peerAssessmentVm.peerAssessors"
+               [canRemoveFn]="canRemoveAssessorFn"
+               (remove)="onRemoveButtonClicked($event)">
+      <ng-template opalListItemTmp
+                   let-item="item">
+        <div class="peer-assessor-selection__user-list-container"
+             (click)="onPeerAssessorClicked(item)">
+          <div class="peer-assessor-selection__user-info-item">
+            <owner-info [owner]="peerAssessmentVm.displayPeerAssessorsDic[item.userId]"></owner-info>
+          </div>
+          <div *ngIf="item.submittedDate"
+               class="peer-assessor-selection__mark-submitted">
+            <img src="assets/images/icons/icon-accept.svg">
+          </div>
+        </div>
+      </ng-template>
+    </opal-list>
+  </div>
+</div>

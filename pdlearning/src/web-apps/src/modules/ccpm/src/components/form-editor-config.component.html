@@ -1,0 +1,111 @@
+<div class="form-editor-config">
+  <div class="form-editor-config__item">
+    <div class="form-editor-config__item-title">{{'Time limit' | translator}}</div>
+    <kendo-numerictextbox placeholder="Unlimited"
+                          [min]="1"
+                          [max]="604800"
+                          autoCorrect="true"
+                          decimals="0"
+                          format="# {{'minutes' | translator}}"
+                          [value]="inMinutesTimeLimit"
+                          [disabled]="mode === FormDetailMode.View"
+                          (valueChange)="onTimeLimitChange($event)"></kendo-numerictextbox>
+  </div>
+  <div class="form-editor-config__item">
+    <div class="form-editor-config__item-title">{{'Max attempts' | translator}}</div>
+    <editable [modeView]="this.formConfig.passingMarkScore || this.formConfig.passingMarkPercentage">
+      <ng-template editableViewMode="">
+        Unlimited
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-numerictextbox placeholder="Unlimited"
+                              [min]="1"
+                              [max]="10000"
+                              autoCorrect="true"
+                              decimals="0"
+                              format="#"
+                              [value]="displayedFormConfiguration.maxAttempt"
+                              [disabled]="mode === FormDetailMode.View"
+                              (valueChange)="onMaxAttemptChange($event)"></kendo-numerictextbox>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-editor-config__item">
+    <div class="form-editor-config__item-title">{{'Passing Mark Percentage' | translator}}</div>
+    <editable [modeView]="this.formConfig.passingMarkScore || this.formConfig.maxAttempt">
+      <ng-template editableViewMode="">
+        Not Set
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-numerictextbox placeholder="Not Set"
+                              [min]="1"
+                              [max]="100"
+                              autoCorrect="true"
+                              decimals="0"
+                              format="#"
+                              [value]="displayedFormConfiguration.passingMarkPercentage"
+                              [disabled]="mode === FormDetailMode.View"
+                              (valueChange)="onPassingMarkPercentageChanged($event)"></kendo-numerictextbox>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-editor-config__item">
+    <div class="form-editor-config__item-title">{{'Passing Mark Score' | translator}}</div>
+    <editable [modeView]="this.formConfig.passingMarkPercentage || this.formConfig.maxAttempt">
+      <ng-template editableViewMode="">
+        Not Set
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-numerictextbox [placeholder]="this.formConfig.passingMarkScore ? this.formConfig.passingMarkScore : 'Not Set'"
+                              [min]="1"
+                              [max]="passingMarkMaxScore"
+                              autoCorrect="true"
+                              decimals="0"
+                              format="#"
+                              [value]="displayedFormConfiguration.passingMarkScore"
+                              [disabled]="mode === FormDetailMode.View"
+                              (valueChange)="onPassingMarkScoreChanged($event)"></kendo-numerictextbox>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-editor-config__item">
+    <div class="form-editor-config__item-title">{{'Display feedback' | translator}}</div>
+    <opal-select class="form-control"
+                 [items]="answerFeedbackDisplayOptionSelectedItems"
+                 [valueField]="'value'"
+                 [(ngModel)]="displayedFormConfiguration.answerFeedbackDisplayOption"
+                 [labelField]="'display'"
+                 [placeholder]="'Select' | globalTranslator"
+                 (selectedValueChange)="onConfigFeedbackDisplayOptionChanged($event)">
+    </opal-select>
+  </div>
+  <div class="form-editor-config__item"
+       *ngIf="canSelectAttempsToShowFeedback">
+    <form [formGroup]="form">
+      <kendo-numerictextbox placeholder="Enter the number"
+                            autoCorrect="true"
+                            formControlName="attemptToShowFeedback"
+                            kendoErrorTooltip
+                            position="top"
+                            decimals="0"
+                            format="#"
+                            [min]="1"
+                            [max]="getMaxAttemptToShowFeedback()"
+                            [(ngModel)]="formConfig.attemptToShowFeedback"
+                            [disabled]="mode === FormDetailMode.View"
+                            (valueChange)="onConfigAttemptToShowFeedbackChanged($event)"></kendo-numerictextbox>
+    </form>
+  </div>
+  <div class="form-editor-config__item">
+    <div class="flex">
+      <input class="k-checkbox"
+             id="form-editor-config__randomize-checkbox"
+             type="checkbox"
+             [ngModel]="displayedFormConfiguration.randomizedQuestions"
+             [attr.disabled]="mode === FormDetailMode.View ? 'true' : null"
+             (ngModelChange)="onConfigRandomizedQuestionsChange($event)">
+      <label class="k-checkbox-label"
+             for="form-editor-config__randomize-checkbox">{{'Randomize questions' | translator}}</label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.digital-badges-management {
+  &__setting-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__setting-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+
+  &__setting-icon {
+    font-size: 24px;
+  }
+}

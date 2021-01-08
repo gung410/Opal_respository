@@ -1,0 +1,72 @@
+  <div class="form-section-editor"
+       [formGroup]="form">
+    <div class="form-question-editor__title-container">
+      <div class="form-question-editor__index-in-form">{{formSection.priority + 1}}</div>
+      <div class="form-question-editor__question-type">
+        {{'Question Section' | translator}}
+      </div>
+      <ng-container *ngIf="canEditQuestion()">
+        <img class="form-question-editor__context-menu icon action"
+             src="assets/images/icons/more.svg"
+             #contextMenu>
+        <kendo-contextmenu [target]="contextMenu"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           showOn="click"
+                           (select)="onContextMenuItemSelect($event.item.data)">
+          <kendo-menu-item [text]="'Move up' | globalTranslator"
+                           [data]="{ id: 'MoveUp' }"
+                           [disabled]="isDisableMoveUp"></kendo-menu-item>
+          <kendo-menu-item [text]="'Move down' | globalTranslator"
+                           [data]="{ id: 'MoveDown' }"
+                           [disabled]="isDisableMoveDown"></kendo-menu-item>
+          <kendo-menu-item [text]="'Delete' | globalTranslator"
+                           [data]="{ id: 'Delete' }"
+                           [cssClass]="'form-question-editor__delete-context-menu-item'"></kendo-menu-item>
+        </kendo-contextmenu>
+      </ng-container>
+    </div>
+    <input class="form-section-editor__title textbox"
+           [ngClass]="{'-readonly': !canEditQuestion()}"
+           inlineDisplayTextbox
+           kendoTextBox
+           autoTrim
+           kendoErrorTooltip
+           autofocus
+           position="bottom"
+           formControlName="title"
+           placeholder="{{'Title' | translator}}"
+           [ngModel]="formSection.mainDescription"
+           [readOnly]="!canEditQuestion()"
+           (keyup)="onSectionTitleChanged($event.target.value)">
+    <textarea class="form-section-editor__description textbox"
+              [ngClass]="{'-readonly': !canEditQuestion()}"
+              kendoTextArea
+              kendoErrorTooltip
+              autofocus
+              rows="2"
+              position="bottom"
+              formControlName="description"
+              placeholder="{{'Description' | translator}}"
+              (keyup)="onSectionDescriptionChanged($event.target.value)"
+              [ngModel]="formSection.additionalDescription"></textarea>
+    <ng-content></ng-content>
+    <div class="form-question-editor__next-question-configuration"
+         *ngIf="formType === formTypeEnum.Survey">
+      <div class="next-question-configuration">
+        <span class="next-question-configuration__label">After question: </span>
+        <opal-select class="form-control next-question-configuration__dropdown"
+                     formControlName="nextQuestionId"
+                     [items]="getBranchingOptions()"
+                     [valueField]="'value'"
+                     [labelField]="'text'"
+                     [placeholder]="'Continue to next question' | translator"
+                     [readOnly]="!canEditQuestion()"
+                     [autoScrollToViewOnOpen]="false"
+                     (selectedValueChange)="onChooseNextQuestion($event)"
+                     [(ngModel)]="formSection.nextQuestionId">
+        </opal-select>
+      </div>
+    </div>
+  </div>

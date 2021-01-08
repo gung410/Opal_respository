@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.Report.ReportPageView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:report="clr-namespace:LearnerApp.ViewModels.Report;assembly=LearnerApp"
+    Title="Report"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="report:ReportPageViewModel">
+
+    <WebView
+        x:Name="WebView"
+        HorizontalOptions="FillAndExpand"
+        Navigated="SocialWebview_Navigated"
+        Source="{Binding SourceUrl}"
+        VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.StandAloneFormView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.DigitalContentPlayer"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="Form Standalone"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:StandAloneFormViewModel">
+
+    <controls:DigitalContentPlayer
+        Data="{Binding StandAlonePlayerData}"
+        VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

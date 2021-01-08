@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.Calendar.CalendarView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	Title="Calendar"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+	<ContentPage.Content>
+		<controls:CustomHybridWebView
+			x:Name="CalendarWebview"
+			HorizontalOptions="FillAndExpand"
+			Source="{Binding SourceUrl}"
+			VerticalOptions="FillAndExpand" />
+	</ContentPage.Content>
+</common:BaseLearnerContentPage>
+

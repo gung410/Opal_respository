@@ -1,0 +1,39 @@
+.k-radio {
+  @extend %box-sizing;
+  width: 20px;
+  height: 20px;
+  border: 2px solid $color-blue-dard;
+  flex-shrink: 0;
+
+  &:hover,
+  &:focus {
+    border-color: $color-blue-dard;
+  }
+
+  &:checked {
+    border-color: $color-blue-dard;
+    background-color: $white;
+
+    &:focus {
+      border-color: $color-blue-dard;
+      box-shadow: none;
+    }
+
+    &::before {
+      color: $color-blue-dard;
+      background-color: $color-blue-dard;
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  &+.k-radio-label {
+    margin-left: 0;
+    padding-left: 10px;
+  }
+
+  +.k-textbox {
+    height: $main-small-control-height;
+    line-height: $main-small-control-height;
+  }
+}

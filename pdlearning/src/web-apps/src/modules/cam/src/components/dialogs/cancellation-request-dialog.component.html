@@ -1,0 +1,36 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ title }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+
+<div class="dialog-content"
+     [ngClass]="{ '-loading': loadingData }">
+  <form [formGroup]="form">
+    <div class="form-controls-group  -required">
+      <label for="ch2">{{ 'Reason' | translator }}</label>
+      <textarea class="form-control"
+                formControlName="comment"
+                [placeholder]="'Please add reason why you cancel this class run' | translator"
+                kendoTextArea
+                [autoSize]="true"
+                kendoErrorTooltip
+                [(ngModel)]="this.classRun.comment"
+                rows="5"
+                position="top"></textarea>
+    </div>
+  </form>
+</div>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+  <button type="submit"
+          kendoButton
+          (click)="onProceed()"
+          [primary]="true">{{ 'Proceed' | globalTranslator }}</button>
+</div>

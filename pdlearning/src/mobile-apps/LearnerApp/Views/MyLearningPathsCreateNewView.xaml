@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.MyLearningPathsCreateNewView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+	xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	Title="{Binding Title}"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	BackgroundColor="{StaticResource ContentPageColor}"
+	mc:Ignorable="d">
+
+	<ContentPage.Content>
+		<StackLayout
+			Padding="10"
+			Spacing="10"
+			VerticalOptions="FillAndExpand">
+			<ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+				<StackLayout VerticalOptions="FillAndExpand">
+					<StackLayout>
+						<StackLayout HorizontalOptions="EndAndExpand" IsVisible="{Binding IsVisibleDeleteButton}">
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding DeleteLearningPathsCommand}" />
+							</StackLayout.GestureRecognizers>
+							<ffimagesvg:SvgCachedImage
+								HeightRequest="30"
+								Source="delete.svg"
+								WidthRequest="30" />
+						</StackLayout>
+						<AbsoluteLayout
+							HeightRequest="100"
+							HorizontalOptions="Center"
+							WidthRequest="100">
+							<AbsoluteLayout.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding UploadImageCommand}" />
+							</AbsoluteLayout.GestureRecognizers>
+							<ffimageloading:CachedImage
+								AbsoluteLayout.LayoutBounds="0,0,1,1"
+								AbsoluteLayout.LayoutFlags="All"
+								Aspect="AspectFit"
+								DownsampleToViewSize="true"
+								HeightRequest="100"
+								HorizontalOptions="Center"
+								LoadingPlaceholder="loading.gif"
+								Source="{Binding LearningPathImageSource}"
+								VerticalOptions="Center"
+								WidthRequest="100">
+								<ffimageloading:CachedImage.Transformations>
+									<fftransformations:CircleTransformation BorderHexColor="#E5E5E5" BorderSize="3" />
+								</ffimageloading:CachedImage.Transformations>
+							</ffimageloading:CachedImage>
+							<Frame
+								Padding="5"
+								AbsoluteLayout.LayoutBounds="1,0,30,30"
+								AbsoluteLayout.LayoutFlags="PositionProportional"
+								BackgroundColor="White"
+								CornerRadius="15"
+								HasShadow="False"
+								IsClippedToBounds="True">
+								<ffimagesvg:SvgCachedImage
+									Aspect="AspectFit"
+									HeightRequest="15"
+									Source="learning_path_edit.svg" />
+							</Frame>
+						</AbsoluteLayout>
+
+					</StackLayout>
+
+					<StackLayout>
+						<Label
+							FontFamily="{StaticResource RobotoRegular}"
+							FontSize="16"
+							Text="Name"
+							TextColor="{StaticResource MainBodyTextColor}" />
+						<Frame
+							Padding="7"
+							BorderColor="{Binding EmptyNameBorderColor}"
+							CornerRadius="4"
+							HasShadow="False">
+							<controls:CustomEntry
+								BackgroundColor="Transparent"
+								HeightRequest="35"
+								Keyboard="Text"
+								Text="{Binding LearningPathsName, Mode=TwoWay}"
+								VerticalOptions="FillAndExpand" />
+						</Frame>
+					</StackLayout>
+
+					<StackLayout Orientation="Horizontal">
+						<Label
+							FontFamily="{StaticResource RobotoRegular}"
+							FontSize="16"
+							Text="PD Opportunities"
+							TextColor="{StaticResource MainBodyTextColor}" />
+						<Label
+							FontFamily="{StaticResource RobotoRegular}"
+							FontSize="16"
+							HorizontalOptions="EndAndExpand"
+							Text="{Binding TotalCount, Converter={StaticResource LearningPathsCountConverter}}"
+							TextColor="{StaticResource MainBodyTextColor}" />
+					</StackLayout>
+
+					<StackLayout IsVisible="{Binding IsVisibleHint, Converter={StaticResource InverseBoolConverter}}">
+						<StackLayout.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding SelectCourseCommand}" />
+						</StackLayout.GestureRecognizers>
+						<ffimagesvg:SvgCachedImage
+							Aspect="AspectFill"
+							HeightRequest="30"
+							HorizontalOptions="Center"
+							Source="learning_path_create.svg"
+							WidthRequest="30" />
+						<Label
+							FontFamily="{StaticResource RobotoRegular}"
+							FontSize="14"
+							HorizontalOptions="Center"
+							Text="Select PD Opportunities"
+							TextColor="{StaticResource MainBodyTextColor}" />
+					</StackLayout>
+
+					<StackLayout IsVisible="{Binding IsVisibleHint}">
+						<Button
+							Padding="0"
+							BackgroundColor="White"
+							BorderColor="#D8DCE6"
+							BorderWidth="1"
+							Command="{Binding SelectCourseCommand}"
+							CornerRadius="4"
+							FontSize="12"
+							HeightRequest="40"
+							HorizontalOptions="Start"
+							Text="+ Select"
+							TextColor="{StaticResource MainBodyTextColor}"
+							WidthRequest="150" />
+						<Label
+							FontSize="12"
+							HorizontalOptions="CenterAndExpand"
+							Text="(Drag and Drop for reorder and swipe to delete)" />
+					</StackLayout>
+
+					<telerikDataControls:RadListView
+						x:Name="CourseList"
+						IsItemSwipeEnabled="True"
+						IsItemsReorderEnabled="True"
+						ItemsSource="{Binding CourseSelectedCollection}"
+						SelectionMode="None"
+						SwipeOffset="0, 0, 120, 0"
+						SwipeThreshold="10"
+						VerticalOptions="FillAndExpand"
+						VerticalScrollBarVisibility="Never">
+						<telerikDataControls:RadListView.ItemSwipeContentTemplate>
+							<DataTemplate>
+								<Grid
+									Margin="0"
+									Padding="0"
+									ColumnSpacing="0"
+									RowSpacing="0">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="120" />
+									</Grid.ColumnDefinitions>
+									<StackLayout Grid.Column="1" WidthRequest="120">
+										<StackLayout.GestureRecognizers>
+											<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="RemoveCourse_Clicked" />
+										</StackLayout.GestureRecognizers>
+										<StackLayout
+											HorizontalOptions="CenterAndExpand"
+											Orientation="Horizontal"
+											VerticalOptions="CenterAndExpand">
+											<Label Text="Remove" VerticalOptions="CenterAndExpand" />
+											<ffimagesvg:SvgCachedImage
+												HeightRequest="30"
+												Source="remove.svg"
+												VerticalOptions="CenterAndExpand"
+												WidthRequest="30" />
+										</StackLayout>
+
+									</StackLayout>
+								</Grid>
+							</DataTemplate>
+						</telerikDataControls:RadListView.ItemSwipeContentTemplate>
+						<telerikDataControls:RadListView.ItemTemplate>
+							<DataTemplate>
+								<telerikListView:ListViewTemplateCell>
+									<StackLayout>
+										<Frame
+											Padding="10"
+											BorderColor="LightGray"
+											CornerRadius="4"
+											HasShadow="False"
+											HorizontalOptions="FillAndExpand"
+											IsClippedToBounds="True">
+											<StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+												<Frame
+													Padding="0"
+													BorderColor="LightGray"
+													CornerRadius="6"
+													HasShadow="False"
+													HeightRequest="60"
+													IsClippedToBounds="True"
+													VerticalOptions="Start">
+													<ffimagesvg:SvgCachedImage
+														Aspect="AspectFill"
+														DownsampleToViewSize="True"
+														ErrorPlaceholder="image_place_holder_h60.png"
+														Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='Tile'}"
+														VerticalOptions="FillAndExpand"
+														WidthRequest="120" />
+												</Frame>
+												<Label
+													LineBreakMode="TailTruncation"
+													MaxLines="2"
+													Text="{Binding Name}"
+													VerticalOptions="CenterAndExpand" />
+											</StackLayout>
+										</Frame>
+									</StackLayout>
+								</telerikListView:ListViewTemplateCell>
+							</DataTemplate>
+						</telerikDataControls:RadListView.ItemTemplate>
+					</telerikDataControls:RadListView>
+				</StackLayout>
+			</ScrollView>
+
+			<StackLayout Orientation="Horizontal">
+				<Button
+					Padding="0"
+					BackgroundColor="White"
+					BorderColor="#D8DCE6"
+					BorderWidth="1"
+					Command="{Binding CancelCommand}"
+					CornerRadius="4"
+					FontSize="16"
+					HeightRequest="40"
+					HorizontalOptions="FillAndExpand"
+					Text="Cancel"
+					TextColor="{StaticResource MainBodyTextColor}" />
+				<Button
+					Padding="0"
+					BackgroundColor="{StaticResource MainBodyTextColor}"
+					Command="{Binding CreateCommand}"
+					CornerRadius="4"
+					FontSize="16"
+					HeightRequest="40"
+					HorizontalOptions="FillAndExpand"
+					Text="{Binding ConfirmedButtonLbl}"
+					TextColor="White" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</common:BaseLearnerContentPage>

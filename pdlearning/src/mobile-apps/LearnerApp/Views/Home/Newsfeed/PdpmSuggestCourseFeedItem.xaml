@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Home.Newsfeed.PdpmSuggestCourseFeedItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:svgImage="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+	<ContentView.Content>
+		<Frame
+			Margin="1"
+			Padding="10"
+			android:VisualElement.Elevation="5"
+			ios:VisualElement.IsShadowEnabled="true"
+			ios:VisualElement.ShadowColor="Black"
+			ios:VisualElement.ShadowOpacity="0.3"
+			ios:VisualElement.ShadowRadius="2.5"
+			BackgroundColor="White"
+			BorderColor="LightGray"
+			CornerRadius="6"
+			HasShadow="False">
+			<ios:VisualElement.ShadowOffset>
+				<Size>
+					<x:Arguments>
+						<x:Double>0</x:Double>
+						<x:Double>1.5</x:Double>
+					</x:Arguments>
+				</Size>
+			</ios:VisualElement.ShadowOffset>
+			<StackLayout Orientation="Horizontal">
+				<Frame
+					Padding="0"
+					BorderColor="LightGray"
+					CornerRadius="6"
+					HasShadow="False"
+					HeightRequest="60"
+					IsClippedToBounds="True"
+					VerticalOptions="Start"
+					WidthRequest="140">
+					<svgImage:SvgCachedImage
+						Aspect="AspectFill"
+						DownsampleToViewSize="True"
+						ErrorPlaceholder="image_place_holder_h150.png"
+						HeightRequest="60"
+						Source="{Binding ThumbnailUrl}"
+						WidthRequest="140" />
+				</Frame>
+				<StackLayout>
+					<Label
+						FontSize="13"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding UpdateInfo}"
+						TextColor="{StaticResource MainBodyTextColor}" />
+					<Label
+						FontSize="16"
+						LineBreakMode="TailTruncation"
+						Text="{Binding Name}"
+						TextColor="Black" />
+					<Label
+						FontSize="10"
+						LineBreakMode="TailTruncation"
+						Text="{Binding CreatedDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+						TextColor="{StaticResource SecondaryTextColor}" />
+				</StackLayout>
+			</StackLayout>
+			<Frame.GestureRecognizers>
+				<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="CourseDetails_Tapped" />
+			</Frame.GestureRecognizers>
+		</Frame>
+	</ContentView.Content>
+</ContentView>

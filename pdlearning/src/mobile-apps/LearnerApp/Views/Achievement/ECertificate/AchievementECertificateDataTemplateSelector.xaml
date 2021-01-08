@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataTemplateSelector:SkeletonDataTemplateSelector
+    x:Class="LearnerApp.Views.Achievement.ECertificate.AchievementECertificateDataTemplateSelector"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dataTemplateSelector="clr-namespace:LearnerApp.Common.DataTemplateSelector;assembly=LearnerApp"
+    xmlns:forms="http://xamarin.com/schemas/2014/forms"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:eCertificate="clr-namespace:LearnerApp.Views.Achievement.ECertificate;assembly=LearnerApp">
+    <dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+        <DataTemplate>
+            <eCertificate:AchievementECertificateItemView />
+        </DataTemplate>
+    </dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+    <dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+        <DataTemplate>
+            <forms:Frame
+                Margin="1"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="LightGray"
+                CornerRadius="6"
+                HasShadow="False">
+                <shimmer:LearnerShimmer
+                    HeightRequest="75"
+                    Type="Feed"
+                />
+            </forms:Frame>
+        </DataTemplate>
+    </dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+</dataTemplateSelector:SkeletonDataTemplateSelector>

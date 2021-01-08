@@ -1,0 +1,21 @@
+<video controls
+       controlsList="nodownload"
+       [ngStyle]="styles"
+       *ngIf="!canShowMessageForOgvIos">
+  <source type="video/mp4"
+          [src]="src">
+  <source type="video/ogg"
+          [src]="src">
+  <source type="video/m4v"
+          [src]="src">
+  <source type="video/avi"
+          [src]="src">
+  <p>
+    Your browser doesn't support HTML5 video.
+    Here is a <a href="{{src}}">link to download the video</a> instead.
+  </p>
+</video>
+<div class="description-label"
+     *ngIf="canShowMessageForOgvIos">
+  The OGV video isn't supported on this browser, please use the desktop version or IOS/Android version.
+</div>

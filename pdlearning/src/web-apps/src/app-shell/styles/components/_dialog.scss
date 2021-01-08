@@ -1,0 +1,147 @@
+.k-window {
+  border-radius: $main-border-radius;
+}
+
+.k-dialog {
+  max-height: 95vh;
+  max-width: 95vw;
+
+  .k-dialog-content {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    >* {
+      max-width: 100%;
+      max-height: 100%;
+      min-height: 100%;
+    }
+  }
+}
+
+.k-dialog-titlebar {
+  background: $white;
+  border-top-left-radius: $main-border-radius;
+  border-top-right-radius: $main-border-radius;
+  color: $color-gray;
+}
+
+.k-dialog-buttongroup .k-primary:not(:hover):not(.k-state-hover):not(:active):not(.k-state-active) {
+  color: $color-gray;
+  border-color: $white;
+  box-shadow: none;
+}
+
+.k-dialog-buttongroup {
+
+  .k-button.k-primary:hover,
+  .k-button.k-primary.k-state-hover,
+  .k-action-buttons .k-primary:hover,
+  .k-action-buttons .k-primary.k-state-hover {
+    background: $color-light-gray;
+    border-color: $color-light-gray;
+    color: $white;
+  }
+}
+
+// TODO: Workaround for z-index of dialog is under window.
+.k-dialog-wrapper {
+  z-index: 100000;
+}
+
+.k-dialog-content {
+  white-space: pre-wrap;
+
+  .dialog-title {
+    display: flex;
+    justify-content: center;
+    font-weight: $font-weight-medium;
+    color: $color-light-gray;
+    margin-bottom: 20px;
+  }
+
+
+  .dialog-header {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    color: $color-black;
+    margin-bottom: 15px;
+    font-weight: 500;
+
+    &__title {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding-right: 10px;
+      flex-shrink: 1;
+      word-break: break-word;
+      max-height: 90px;
+      overflow: auto;
+    }
+
+    &__actions {
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      align-items: center;
+      vertical-align: top;
+
+      span {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .dialog-content {
+    min-height: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 0;
+  }
+
+  .dialog-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    justify-content: flex-end;
+
+    >button {
+      margin-left: 10px;
+    }
+  }
+}
+
+
+opal-confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.opal-confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+  max-width: 100%;
+
+  &__body-confirm-request-success-msg {
+    color: $color-blue;
+  }
+
+  &__body-confirm-request-failed-msg {
+    color: $color-coral;
+  }
+
+  &__body-confirm-msg {}
+}

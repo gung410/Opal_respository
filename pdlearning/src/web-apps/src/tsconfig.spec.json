@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": ["jasmine", "node"]
+  },
+  "files": ["app-shell/test.ts", "app-shell/polyfills.ts"],
+  "include": ["app-shell/**/*.spec.ts", "app-shell/**/*.d.ts"]
+}

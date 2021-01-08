@@ -1,0 +1,8 @@
+<div [ngSwitch]="selectedViewMode">
+  <personal-calendar-container *ngSwitchCase="viewModeEnum.Personal"
+                               [calendarHeight]="calendarHeight"></personal-calendar-container>
+
+  <specific-community-calendar *ngSwitchCase="viewModeEnum.Community"></specific-community-calendar>
+
+  <communities-calendar *ngSwitchCase="viewModeEnum.Communities"></communities-calendar>
+</div>

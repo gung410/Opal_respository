@@ -1,0 +1,69 @@
+<div class="broken-link-report-dialog"
+     style="width: 60vw;">
+  <div class="dialog-header"
+       *ngIf="isShowInvalidMessage()">
+    <div class="dialog-header__title broken-link-report-dialog__title">
+      {{getDialogTitle()}}
+    </div>
+  </div>
+  <kendo-grid class="column flex access-right-grid opal-grid"
+              style="max-height: 50vh; overflow: auto;"
+              #grid
+              [data]="gridResult">
+    <kendo-grid-column [title]="'URL' | translator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span>{{dataItem.url}}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [title]="'Description' | translator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span *ngIf="dataItem.description">{{dataItem.description}}</span>
+        <span *ngIf="!dataItem.description">-N/A</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [width]="200"
+                       [title]="'Status' | translator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <div class="broken-link-scanner-dialog__checking-status"
+             style="display: flex; flex-direction: row;">
+          <div class="loading-container">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="dataItem.status === urlStatus.Valid">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="dataItem.status === urlStatus.Invalid">
+            <img class="loading-icon"
+                 src="assets/images/loading.gif"
+                 alt="Loading"
+                 style="width: 20px;"
+                 *ngIf="dataItem.status === urlStatus.Checking">
+          </div>
+          <span>{{dataItem.status}}</span>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+  <br>
+  <div class="broken-link-report-dialog__description"
+       *ngIf="isUrlChecking">
+    <span>{{numberLinkChecked}}</span>/<span>{{totalLink}}</span> <span> link is checked.</span>
+  </div>
+  <div class="broken-link-report-dialog__description">
+    <span *ngIf="isShowInvalidMessage()">{{'Please check the link(s) and revise them.' | globalTranslator}}</span>
+    <span *ngIf="isShowValidMessage()">{{'There is no broken link.' | globalTranslator}}</span>
+    <img src="assets/images/icons/completed-mark-blue.svg"
+         alt="icon"
+         *ngIf="isShowValidMessage()">
+  </div>
+  <div class="dialog-actions">
+    <button (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+  </div>
+</div>

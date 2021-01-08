@@ -1,0 +1,55 @@
+<div class="learner-assignment-comment">
+  <div class="learner-course-detail__comment">
+    <div class="learner-course-detail__section-title">
+      {{"Comments" | translator}}
+      <span *ngIf="total">({{total}})</span>
+    </div>
+  </div>
+  <div class="learner-assignment-comment__show-more"
+       *ngIf="isShowMore"
+       (click)="showMoreComment()">{{ "View ##remainingComment## older comments" | translator: { remainingComment: remainingComment } }}
+  </div>
+  <div *ngIf="commentsVm"
+       class="learner-assignment-comment__list"
+       [ngClass]="[remainingComment < total - pagingState.take ? 'limit-height': '']">
+    <div class="learner-assignment-comment__single-comment"
+         *ngFor="let userRow of commentsVm | reverse">
+      <div class="learner-assignment-comment__user-photo"
+           *ngIf="userRow.user">
+        <img [src]="userRow.user.avatarUrl ? userRow.user.avatarUrl : 'assets/images/others/default-avatar.png'">
+      </div>
+      <div class="learner-assignment-comment__user-info"
+           *ngIf="userRow.user">
+        <div class="learner-assignment-comment__user-name">{{userRow.user.fullName}}</div>
+        <div class="learner-assignment-comment__user-position">{{userRow.user.departmentName }}</div>
+        <div class="learner-assignment-comment__comment-date">{{ userRow.createdDate | date: 'h:mm - dd/MM/yyyy' }}</div>
+        <div class="learner-assignment-comment__comment">{{ userRow.content }}</div>
+      </div>
+    </div>
+  </div>
+  <div [ngStyle]="{'position': remainingComment < total - pagingState.take ? 'sticky': ''}"
+       class="learner-assignment-comment__form">
+    <form [formGroup]="form">
+      <div class="learner-assignment-comment__input-section"
+           [ngClass]="{'-required': requiredCommentField}">
+        <div class="learner-assignment-comment__user-photo"><img alt
+               [src]="avatarUrl"></div>
+        <textarea class="form-control learner-assignment-comment__textarea"
+                  formControlName="comment"
+                  [placeholder]="'Add your comment' | translator"
+                  kendoTextArea
+                  [autoSize]="true"
+                  rows="5"
+                  [(ngModel)]="comment"
+                  kendoErrorTooltip
+                  position="top"></textarea>
+      </div>
+      <div class="learner-assignment-comment__submit">
+        <button class="learner-assignment-comment__button-submit"
+                kendoButton
+                [primary]="true"
+                (click)="onSubmit()">{{'Submit' | translator}}</button>
+      </div>
+    </form>
+  </div>
+</div>

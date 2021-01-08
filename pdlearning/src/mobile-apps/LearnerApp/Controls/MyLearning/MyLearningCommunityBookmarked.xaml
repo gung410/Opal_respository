@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.MyLearning.MyLearningCommunityBookmarked"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:listitemcard="clr-namespace:LearnerApp.Controls.ListItemCard"
+    BackgroundColor="{StaticResource ContentPageColor}"
+	VerticalOptions="FillAndExpand"
+	mc:Ignorable="d">
+
+	<ContentView.Content>
+		<StackLayout Padding="10" VerticalOptions="FillAndExpand">
+			<StackLayout
+				x:Name="BackBtn"
+				HeightRequest="30"
+				Orientation="Horizontal"
+				Spacing="0">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Tapped" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="20"
+					Source="arrow_left.svg"
+					VerticalOptions="CenterAndExpand"
+					WidthRequest="20" />
+				<Label
+					FontSize="15"
+					Text="Back"
+					VerticalOptions="CenterAndExpand" />
+			</StackLayout>
+
+			<listitemcard:VerticalListView
+				IsRemoveWhenUnBookmark="True"
+				OnLoadmoreCommand="{Binding LoadmoreBookmarkCommand}"
+				OnRefreshCommand="{Binding RefreshCommand}"
+				Source="{Binding CommunityCollection}"
+				TotalCount="{Binding TotalBookmarkCount}" />
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

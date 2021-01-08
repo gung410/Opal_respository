@@ -1,0 +1,70 @@
+<div class="cropper">
+  <div class="cropper-wrapper">
+    <image-cropper [imageFile]="file"
+                   [aspectRatio]="aspectRatio"
+                   [maintainAspectRatio]="maintainAspectRatio"
+                   [resizeToWidth]="width"
+                   [cropperMinWidth]="128"
+                   [roundCropper]="false"
+                   format="{{ fileFormat }}"
+                   outputType="file"
+                   (imageCropped)="imageCropped($event)"
+                   (imageLoaded)="imageLoaded()"
+                   (cropperReady)="cropperReady()"
+                   (loadImageFailed)="loadImageFailed()"
+                   [style.display]="showCropper ? null : 'none'"
+                   [alignImage]="'left'"></image-cropper>
+  </div>
+</div>
+<div class="row">
+  <div class="w-50">
+    <div class="form-group">
+      <h3>Ratio:</h3>
+      <kendo-dropdownlist [data]="allowedaspectRatios"
+                          textField="label"
+                          valueField="value"
+                          [valuePrimitive]="true"
+                          (valueChange)="updateRenderRatio()"
+                          [(ngModel)]="aspectRatio"></kendo-dropdownlist>
+    </div>
+    <div class="form-group">
+      <h3>Dimension:</h3>
+      <div class="d-inline">
+        <label>{{'Width (px)' | globalTranslator}}</label>
+        <input class="k-textbox"
+               type="number"
+               opalNumeric
+               (change)="updateRenderSizeByRatio(this.width, null)"
+               [(ngModel)]="width"
+               min="0">
+
+      </div>
+      <div class="d-inline">
+        <label>{{'Height (px)' | globalTranslator}}</label>
+        <input class="k-textbox"
+               type="number"
+               opalNumeric
+               (change)="updateRenderSizeByRatio(null, this.height)"
+               [(ngModel)]="height"
+               min="0">
+      </div>
+    </div>
+  </div>
+  <div class="thumbnail w-50"
+       [hidden]="!thumbnail">
+    <img #img
+         (load)="initRatios()"
+         [src]="thumbnail">
+  </div>
+
+</div>
+<div class="actions row">
+  <button *ngIf="croppedFile"
+          (click)="save()"
+          kendoButton>{{ 'Save' | globalTranslator }}
+  </button>
+  <button [look]="'outline'"
+          (click)="cancel()"
+          kendoButton>{{ 'Cancel' | globalTranslator }}
+  </button>
+</div>

@@ -1,0 +1,5 @@
+// tslint:disable:max-line-length
+
+export const REGISTRATION_MODULES: IRegistrationModule[] = [
+  /*MODULES*/
+];

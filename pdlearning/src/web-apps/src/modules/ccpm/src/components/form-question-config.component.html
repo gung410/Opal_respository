@@ -1,0 +1,56 @@
+<div class="form-question-config">
+  <div class="form-question-config__item"
+       *ngIf="formQuestion.randomizedOptions !== undefined">
+    <div class="flex">
+      <input class="k-checkbox"
+             id="form-question-config__randomize-checkbox"
+             type="checkbox"
+             [ngModel]="formQuestion.randomizedOptions"
+             [disabled]="mode === FormDetailMode.View"
+             (ngModelChange)="onRandomizedOptionsChange($event)">
+      <label class="k-checkbox-label"
+             for="form-question-config__randomize-checkbox">
+        {{'Randomise options' | translator}}
+      </label>
+    </div>
+  </div>
+  <div class="form-question-config__item"
+       *ngIf="formQuestion.score !==  undefined">
+    <div class="form-question-config__item-title">{{'Score' | translator}}</div>
+    <kendo-switch class="k-switch form-question-config__item-switch-score"
+                  [readonly]="mode === FormDetailMode.View"
+                  [(ngModel)]="formQuestion.isScoreEnabled"
+                  (valueChange)="onToggleEnableScore($event)"
+                  [onLabel]="' '"
+                  [offLabel]="' '"></kendo-switch>
+    <kendo-numerictextbox class="form-question-config__numeric-textbox"
+                          [min]="1"
+                          [max]="10000"
+                          autoCorrect="true"
+                          decimals="0"
+                          format="#"
+                          [value]="formQuestion.score"
+                          [disabled]="mode === FormDetailMode.View || !formQuestion.isScoreEnabled"
+                          (valueChange)="onScoreChange($event)"></kendo-numerictextbox>
+  </div>
+  <div class="form-question-config__item"
+       *ngIf="isShowExplationNote">
+    <div class="form-question-config__item-title">{{'Explanation note' | translator}}
+    </div>
+    <textarea class="form-question-config__text-area"
+              kendoTextArea
+              [placeholder]="'Write to explain for the question' | translator"
+              [value]="formQuestion.answerExplanatoryNote"
+              [readOnly]="mode === FormDetailMode.View"
+              (keyup)="onAnswerExplanatoryNoteChange($event.target.value)"></textarea>
+  </div>
+  <div class="form-question-config__item">
+    <div class="form-question-config__item-title">{{'Hint' | translator}}</div>
+    <textarea class="form-question-config__text-area"
+              kendoTextArea
+              [placeholder]="'Write to hint for the correct answer' | translator"
+              [value]="formQuestion.questionHint"
+              [readOnly]="mode === FormDetailMode.View"
+              (keyup)="onQuestionHintChange($event.target.value)"></textarea>
+  </div>
+</div>

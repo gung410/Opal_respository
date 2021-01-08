@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.LoginView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+
+	<StackLayout>
+		<StackLayout IsVisible="{Binding IsVisibleLogin}">
+			<StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+				<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+					<ContentView
+						HeightRequest="500"
+						HorizontalOptions="CenterAndExpand"
+						VerticalOptions="CenterAndExpand"
+						WidthRequest="200">
+						<Image Source="launch_logo.png" />
+					</ContentView>
+				</StackLayout>
+			</StackLayout>
+
+			<StackLayout Padding="63,0,64,0" Orientation="Vertical">
+				<Button
+					AutomationId="BtnLogin"
+					Command="{Binding LoginCommand}"
+					Text="Launch App" />
+			</StackLayout>
+
+			<StackLayout
+				Margin="10"
+				Padding="20,0,20,40"
+				Orientation="Vertical">
+				<Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span
+								FontSize="11"
+								Text="By signing in, I accept the "
+								TextColor="Black" />
+							<Span
+								FontAttributes="Bold"
+								FontSize="11"
+								Text="Terms Of Use."
+								TextColor="Black"
+								TextDecorations="Underline">
+								<Span.GestureRecognizers>
+									<TapGestureRecognizer Command="{Binding TermsAndConditionCommand}" />
+								</Span.GestureRecognizers>
+							</Span>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+			</StackLayout>
+		</StackLayout>
+	</StackLayout>
+</common:BaseLearnerContentPage>

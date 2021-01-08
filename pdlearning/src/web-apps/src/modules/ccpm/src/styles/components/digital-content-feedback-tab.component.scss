@@ -1,0 +1,138 @@
+digital-content-feedback-tab {
+  display: flex;
+  flex-direction: column;
+
+  .k-grid {
+    background: white;
+    border-radius: 0 0 $main-border-radius $main-border-radius;
+    border: 1px solid $color-gainsboro;
+    border-top: unset;
+    padding: 20px 20px 40px 20px;
+    box-sizing: border-box;
+  }
+
+  tr {
+    &:nth-child(even) {
+      td {
+        background: $color-white-smoke;
+      }
+    }
+  }
+
+  .header {
+    padding: 25px 8px;
+
+    .right {
+      text-align: right;
+    }
+  }
+
+  .comment-item {
+    display: flex;
+    justify-content: flex-start;
+
+    &__avatar {
+      width: 60px;
+      height: 60px;
+      background-size: cover;
+      min-width: 60px;
+      background-position: center center;
+      margin: 2px 5px;
+
+      // for people without avatar
+      background-color: $color-coral;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-white;
+      font-size: 20px;
+      text-transform: uppercase;
+
+      &.has-img {
+        * {
+          display: none;
+        }
+      }
+
+      &.circle {
+        border-radius: 50%;
+      }
+    }
+
+    &__data {
+      margin-left: 12px;
+
+      &__header {
+        margin: 2px 0 -10px 0;
+      }
+
+      &__content {
+        font-size: $font-h6;
+        color: $color-blue-dard;
+
+        p {
+          overflow: hidden;
+          width: 1500px;
+          word-break: break-word;
+        }
+      }
+
+      .name {
+        font-weight: $font-weight-medium;
+        font-size: $font-h6;
+        color: $color-blue-dard;
+        margin-bottom: 5px;
+      }
+    }
+
+    .review-item {
+      &__rating-container {
+        justify-content: unset;
+      }
+
+      &__date {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .wrapper {
+    background-color: $color-white;
+    margin-top: 20px;
+    border: 1px solid $color-gainsboro;
+    border-bottom: unset;
+    border-radius: $main-border-radius $main-border-radius 0 0;
+    padding-top: 30px;
+    padding-left: 30px;
+
+    .overal {
+      display: flex;
+      width: 240px;
+      align-items: center;
+      justify-content: space-between;
+      font-family: $main-font;
+      font-style: normal;
+      font-weight: normal;
+      font-size: $font-h6;
+      line-height: 25px;
+
+      .rate {
+        font-size: $font-h4;
+        line-height: 105.69%;
+        text-align: center;
+        color: $color-blue-dard;
+      }
+
+      .vote {
+        font-size: $font-normal;
+        line-height: 17px;
+        text-align: center;
+        color: $color-blue-dard;
+      }
+    }
+  }
+
+  .k-grid-content {
+    min-height: 40vh;
+  }
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:TabRootContentPage
+	x:Class="LearnerApp.Views.CatalogueView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:catelogue="clr-namespace:LearnerApp.Views.Catelogue"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:controls="clr-namespace:LearnerApp.Controls.ListItemCard"
+	xmlns:home="clr-namespace:LearnerApp.Views.Sharing.Home;assembly=LearnerApp"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+	Title="Catalogue"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	x:DataType="viewModels:CatalogueViewModel"
+	BackgroundColor="{StaticResource ContentPageColor}">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="TagFrame" TargetType="Frame">
+				<Setter Property="BorderColor" Value="{StaticResource EntryLineColor}" />
+				<Setter Property="CornerRadius" Value="6" />
+				<Setter Property="HasShadow" Value="False" />
+				<Setter Property="Padding" Value="5" />
+			</Style>
+			<Style x:Key="TagFrameLabel" TargetType="Label">
+				<Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+				<Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<StackLayout Padding="10" VerticalOptions="FillAndExpand">
+
+			<!--  SEARCH  -->
+			<catelogue:CatalogueSearchResultView HorizontalOptions="FillAndExpand" OnDismissSearch="CatalogueSearchResultView_OnDismissSearch" />
+
+			<RefreshView
+				x:Name="CatalogueSession"
+				Command="{Binding RefreshCommand}"
+				IsRefreshing="{Binding IsRefreshingForRefreshView}"
+				VerticalOptions="FillAndExpand">
+				<ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+					<!--  List Catalogue  -->
+					<StackLayout Spacing="20" VerticalOptions="FillAndExpand">
+
+						<home:SharingSectionView BindingContext="{Binding SharingSection}" />
+
+						<!--  Recommendations catalogues  -->
+						<controls:HorizontalListView
+							IsLoading="{Binding IsRefreshing}"
+							NavigationKey="RecommendationsForYou"
+							NavigationTitle="Recommendations for You"
+							Source="{Binding MySuggestionCollection}"
+							TotalCount="{Binding RecommendationsTotalCount}" />
+
+						<!--  Recommendations Organization  -->
+						<controls:HorizontalListView
+							IsLoading="{Binding IsRefreshing}"
+							NavigationKey="RecommendationByYourOrganisation"
+							NavigationTitle="Recommendations by Your Organisation"
+							Source="{Binding RecommendationByOrgCollection}"
+							TotalCount="{Binding RecommendationOrgTotalCount}" />
+
+						<!--  Newly Added catalogues  -->
+						<controls:HorizontalListView
+							IsLoading="{Binding IsRefreshing}"
+							NavigationKey="NewlyAdded"
+							NavigationTitle="Newly added"
+							Source="{Binding NewlyAddedCollection}"
+							TotalCount="{Binding NewlyAddedTotalCount}" />
+					</StackLayout>
+				</ScrollView>
+			</RefreshView>
+		</StackLayout>
+	</ContentPage.Content>
+</common:TabRootContentPage>

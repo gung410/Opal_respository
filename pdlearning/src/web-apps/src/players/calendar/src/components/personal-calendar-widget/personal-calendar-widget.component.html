@@ -1,0 +1,30 @@
+<div class="personal-calendar-widget-overview">
+  <div class="header">
+    <div class="header__left">
+      {{today | date: 'MMM'}}
+    </div>
+    <div class="header__right">
+      {{today | date: 'dd'}}
+    </div>
+  </div>
+
+  <div class="overview">
+    <p><strong>{{dayEventCount}}</strong> personal event today.</p>
+    <p><strong>{{weekEventCount}}</strong> events this week.</p>
+    <p><strong>{{monthEventCount}}</strong> events this month.</p>
+  </div>
+</div>
+
+<calendar-view-template [calendarHeight]="calendarHeight"
+                        [selectedViewIndex]="selectedViewIndex"
+                        [resources]="resources"
+                        [events]="events"
+                        [selectedDate]="today"
+                        [modelFields]="personalCalendarModel"
+                        [workDayStart]="workDayStart"
+                        [workDayEnd]="workDayEnd"
+                        [showWorkHours]="showWorkHours"></calendar-view-template>
+<div class="link-wrapper">
+  <a class="link-wrapper__link"
+     (click)="openFullCalendar()">OPEN FULL CALENDAR</a>
+</div>

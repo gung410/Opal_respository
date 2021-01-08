@@ -1,0 +1,46 @@
+send-course-publicity-page {
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.send-course-publicity-page {
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &__left-container {
+    width: 400px !important;
+    margin-right: 20px;
+
+    > * {
+      overflow: visible !important;
+    }
+  }
+
+  &__right-container {
+    display: flex;
+    flex-grow: 1;
+
+    .scrollable-menu-content__tab-content {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row;
+
+      .form-controls-group {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  &__group-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}

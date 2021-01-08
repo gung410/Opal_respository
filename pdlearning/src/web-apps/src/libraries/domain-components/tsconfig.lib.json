@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@opal20/infrastructure": ["./libraries/infrastructure/lib"],
+      "@opal20/infrastructure/*": ["./libraries/infrastructure/lib/*"],
+      "@opal20/authentication": ["./libraries/authentication/lib"],
+      "@opal20/authentication/*": ["./libraries/authentication/lib/*"],
+      "@opal20/common-components": ["./libraries/common-components/lib"],
+      "@opal20/common-components/*": ["./libraries/common-components/lib/*"],
+      "@opal20/domain-api": ["./libraries/domain-api/lib"],
+      "@opal20/domain-api/*": ["./libraries/domain-api/lib/*"]
+    }
+  }
+}

@@ -1,0 +1,1 @@
+sharpie bind --sdk=iphoneos14.1 --output="XamarinApiDef" --namespace="LearnerApp.Binding.Wogaa.iOS" --scope="/Users/huy.vu/Downloads/Release fat/Tracker.framework/Headers/" "/Users/huy.vu/Downloads/Release fat/Tracker.framework/Headers/Tracker-Swift.h"

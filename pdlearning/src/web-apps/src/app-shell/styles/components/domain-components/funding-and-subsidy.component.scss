@@ -1,0 +1,49 @@
+funding-and-subsidy {
+  display: flex;
+}
+
+.funding-and-subsidy {
+  &__item {
+    width: 25%;
+    padding-left: 10px;
+    border-right: 1px solid black;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__item-title {
+    display: contents;
+    color: #2d3469;
+    font-size: 16px;
+  }
+
+  &__item-content {
+    color: #8799ba;
+    font-size: 16px;
+    word-break: break-word;
+  }
+
+  &__item-showLink {
+    text-decoration: underline;
+    cursor: pointer;
+    color: $color-blue-navy;
+  }
+
+  &__item-references-container {
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  &__item-reference {
+    &-title {
+      padding-top: 10px;
+    }
+
+    &-link {
+      word-break: break-word;
+      height: 100%;
+    }
+  }
+}

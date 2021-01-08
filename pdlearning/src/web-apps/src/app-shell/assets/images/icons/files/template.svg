@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="38px" viewBox="0 0 30 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icons/files/template</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/files/template" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(1.000000, 1.000000)">
+            <path d="M5.70698,0.29293 C5.89452,0.10537 6.14889,0 6.41413,0 L27,0 C27.5523,0 28,0.44772 28,1 L28,35 C28,35.5523 27.5523,36 27,36 L1,36 C0.44771,36 0,35.5523 0,35 L0,6.41476 C0,6.14956 0.10534,5.89523 0.29285,5.70769 L5.70698,0.29293 Z" id="Path" stroke="#BDC7E2" fill="#E4E8F3"></path>
+            <rect id="Rectangle" fill="#EDEFF5" fill-rule="nonzero" x="3" y="5" width="22" height="27"></rect>
+            <g id="icons/files/types/general" transform="translate(3.000000, 8.000000)" fill="#BDC7E2" fill-rule="nonzero">
+                <rect id="Rectangle" x="3" y="1" width="16" height="4"></rect>
+                <rect id="Rectangle" x="3" y="9" width="16" height="4"></rect>
+                <rect id="Rectangle" x="3" y="17" width="16" height="4"></rect>
+            </g>
+            <path d="M6.00159,0 L6.00159,5.00058 C6.00159,5.55286 5.55387,6.00058 5.00159,6.00058 L0,6.00058 L6.00159,0 Z" id="Path" fill="#BDC7E2"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,261 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Metadata' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('serviceSchemeIds', asViewMode()) || course.isPublishedOnce">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let serviceSchemeId of course.serviceSchemeIds">
+            <div class="metadata-tag-text"
+                 *ngIf="serviceSchemeId">
+              {{ course.metadataTagsDic[serviceSchemeId] ? course.metadataTagsDic[serviceSchemeId].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.serviceSchemeIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.serviceSchemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [minDropdownHeight]="200"
+                       [(ngModel)]="course.serviceSchemeIds"
+                       [multiple]="true"
+                       formControlName="serviceSchemeIds"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [ngClass]="{'-required':course.learningFrameworkTree && course.learningFrameworkTree.length > 0}">
+      <div class="form-controls-title-group">
+        <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+        <opal-select class="form-control -virtual"
+                     [multiple]="true"
+                     formControlName="learningFrameworkIds"
+                     [(ngModel)]="course.learningFrameworkIds"
+                     kendoErrorTooltip
+                     position="top"
+                     [readOnly]="asViewMode() || asViewModeForCompletingCourseForPlanning()">
+        </opal-select>
+      </div>
+      <editable [modeView]="course.isViewOnlyForField('learningFrameworkIds', asViewMode())">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.selectedLearningFrameworkTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="course.selectedLearningFrameworkTree == null || course.selectedLearningFrameworkTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.learningFrameworkTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="course.learningFrameworkTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="learningFrameworkItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="course.learningFrameworkTree == null || course.learningFrameworkTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Dimension, Learning Areas and Sub-Areas' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('learningFrameworkIds', asViewMode())">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.selectedLearningDimensionAreaTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="course.selectedLearningDimensionAreaTree == null || course.selectedLearningDimensionAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.learningDimensionAreaTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="course.learningDimensionAreaTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="learningDimensionAreaItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="course.learningDimensionAreaTree == null || course.learningDimensionAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [ngClass]="{'-required':course.subjectAreaTree && course.subjectAreaTree.length > 0}">
+      <div class="form-controls-title-group">
+        <label for="ch2">{{ 'Subject' | translator }}</label>
+        <opal-select class="form-control -virtual"
+                     [multiple]="true"
+                     formControlName="subjectAreaIds"
+                     [(ngModel)]="course.subjectAreaIds"
+                     kendoErrorTooltip
+                     position="top"
+                     [readOnly]="asViewMode() || asViewModeForCompletingCourseForPlanning() || course.isPublishedOnce">
+        </opal-select>
+      </div>
+      <editable [modeView]="course.isViewOnlyForField('subjectAreaIds', asViewMode()) || course.isPublishedOnce">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.selectedSubjectAreaTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="course.selectedSubjectAreaTree == null || course.selectedSubjectAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.subjectAreaTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="course.subjectAreaTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="subjectAreaItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="course.subjectAreaTree == null || course.subjectAreaTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'PD Area / Theme' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('pdAreaThemeId', asViewMode()) || course.isPublishedOnce">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.pdAreaThemeId">
+            {{ course.metadataTagsDic[course.pdAreaThemeId] ? course.metadataTagsDic[course.pdAreaThemeId].displayText : '' }}
+          </div>
+          <span *ngIf="!course.pdAreaThemeId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.pdAreaThemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [minDropdownHeight]="50"
+                       [(ngModel)]="course.pdAreaThemeId"
+                       formControlName="pdAreaThemeId"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Course Level' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('courseLevel', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.courseLevel">
+            {{ course.metadataTagsDic[course.courseLevel] ? course.metadataTagsDic[course.courseLevel].displayText : '' }}
+          </div>
+          <span *ngIf="!course.courseLevel">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.courseLevelSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="course.courseLevel"
+                       [minDropdownHeight]="200"
+                       formControlName="courseLevel"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Metadata Keys' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('metadataKeys', asViewMode())">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let metadataKey of course.metadataKeys">
+            <div class="metadata-tag-text"
+                 *ngIf="metadataKey">
+              {{ metadataKey }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.metadataKeys == null || course.metadataKeys.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [fetchDataFn]="fetchSuggestedSearchTagsFn"
+                       [valueField]="'name'"
+                       [labelField]="'name'"
+                       [(ngModel)]="course.metadataKeys"
+                       [addTag]="true"
+                       [multiple]="true"
+                       [disableSelectAll]="true"
+                       [minDropdownHeight]="0"
+                       [clearSearchOnAdd]="true"
+                       formControlName="metadataKeys"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="!isPlanningVerificationRequired() || canViewFieldOfCourseInPlanningCycle()">
+      <label for="ch2">{{ 'Teacher Outcome' | translator }}</label>
+      <editable [modeView]="asViewMode() || asViewModeForCompletingCourseForPlanning()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.selectedTeacherOutcomeTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="course.selectedTeacherOutcomeTree == null || course.selectedTeacherOutcomeTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="course.teacherOutcomeTree"
+                          [children]="course.getMetadataTagChilds"
+                          [hasChildren]="course.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="course.teacherOutcomeTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="teacherOutcomeItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="course.teacherOutcomeTree == null || course.teacherOutcomeTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,16 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+    "esbenp.prettier-vscode",
+    "eg2.tslint",
+    "hookyqr.beautify",
+    "yzhang.markdown-all-in-one",
+    "eamodio.gitlens",
+    "stringham.move-ts",
+    "christian-kohler.path-intellisense",
+    "mrmlnc.vscode-attrs-sorter",
+    "michelemelluso.code-beautifier"
+  ]
+}

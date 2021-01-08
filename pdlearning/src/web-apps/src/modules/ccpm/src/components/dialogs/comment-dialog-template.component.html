@@ -1,0 +1,35 @@
+<div class="comment-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">{{ dialogTitle }}</div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="cancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group">
+      <div class="comment-form">
+        <div class="form-wraper">
+          <textarea kendoTextArea
+                    rows="4"
+                    class="form-control no-resize"
+                    [placeholder]="'Enter your comment here...' | translator"
+                    [(ngModel)]="commentContent"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-actions">
+    <button (click)="cancel()"
+            kendoButton>
+      {{ 'Cancel' | globalTranslator }}
+    </button>
+    <button kendoButton
+            [primary]="true"
+            class="right"
+            [disabled]="(requireComment ? !commentContent : false)"
+            (click)="save()">
+      {{ btnSaveText }}
+    </button>
+  </div>
+</div>

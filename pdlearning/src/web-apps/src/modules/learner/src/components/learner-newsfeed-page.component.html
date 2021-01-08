@@ -1,0 +1,51 @@
+<div class="learner-toolbar ">
+  <div class="learner-toolbar__left">
+    <div class="learner-toolbar__navigation ng-star-inserted">
+      <button class="back-button k-button k-flat k-button-icontext"
+              (click)="onBackClicked()"
+              kendobutton><span class="k-icon k-i-arrow-chevron-left ng-star-inserted"></span> Back </button></div>
+    <div class="learner-toolbar__heading ng-star-inserted">
+      <div>
+        <div class="learner-toolbar__title ng-star-inserted"> News feed
+        </div>
+        <small class="ng-star-inserted"> {{totalNewsfeed}} Item(s) Found </small>
+      </div>
+    </div>
+  </div>
+  <div class="learner-toolbar__right"></div>
+</div>
+<div class="newsfeed-list"
+     [ngClass]="{'newsfeed-list--empty': isEmpty}">
+  <div class="learning-newsfeed-title">{{ 'News Feed' | translator }}</div>
+  <div class="newsfeed-container"
+       *ngIf="!isEmpty; else showingEmptyMsg">
+    <div class="learning-newsfeed-item"
+         [ngClass]="{
+        last: isLast
+      }"
+         *ngFor="let item of newsfeedData$ | async; index as i; last as isLast; trackBy: trackByFn">
+      <ng-container [ngSwitch]="item.type">
+        <learning-newsfeed *ngSwitchCase="NewsfeedType.Post"
+                           [newsfeed]="item"
+                           [users]="users$ | async"
+                           (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed>
+        <learning-newsfeed *ngSwitchCase="NewsfeedType.CommunityPost"
+                           [newsfeed]="item"
+                           [users]="users$ | async"
+                           (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed>
+        <learning-newsfeed-course *ngSwitchCase="NewsfeedType.Course"
+                                  [newsfeed]="item"
+                                  (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed-course>
+      </ng-container>
+    </div>
+    <div class="newsfeed-showmore"
+         *ngIf="showLoadMore"
+         (click)="loadMore()">Load more</div>
+  </div>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg ">{{ "There's nothing here yet!" | translator }}</span>
+  </ng-template>
+</div>

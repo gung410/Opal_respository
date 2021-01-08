@@ -1,0 +1,488 @@
+assignment-question-editor {
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    .assignment-question-editor__context-menu {
+      visibility: visible;
+    }
+  }
+}
+
+.assignment-question-editor {
+  display: flex;
+  flex-direction: row;
+
+  &__dropdown-question {
+    position: relative;
+    margin-left: 10px;
+
+    .opal-select.ng-select .ng-select-container {
+      padding-top: 5px !important;
+      padding-bottom: 5px !important;
+    }
+
+    &.-correct::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -28px;
+      top: 8px;
+      background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+    }
+
+    &.-incorrect::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -28px;
+      top: 9px;
+      background: url('../assets/images/icons/incorrect-mark.svg') no-repeat center;
+    }
+  }
+
+  &__give-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+  }
+
+  &__question-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+
+  &__give-score-container {
+    display: flex;
+    margin-top: 10px;
+    border-bottom: 1px solid $color-black;
+
+    &.-fill-in-the-blanks {
+      margin-top: 3px !important;
+    }
+  }
+
+  &__give-score-input {
+    width: 40px;
+    border: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    text-align: center;
+    font-weight: bold;
+
+    .k-numeric-wrap {
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    input {
+      text-align: center;
+      padding: 0 !important;
+    }
+
+    .k-select {
+      display: none !important;
+    }
+  }
+
+  &__give-score-text {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  &__title-container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__index-in-assignment {
+    display: flex;
+    align-items: center;
+    @extend %box-sizing;
+    @extend %center-center;
+    width: 19px;
+    height: 19px;
+    border: 1px solid $color-blue-dard;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    font-weight: $font-weight-medium;
+    color: $color-blue-dard;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__question-type {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+  }
+
+  &__question-title {
+    flex-grow: 1;
+    font-weight: bold;
+    color: $color-blue-dard;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    width: 100%;
+    margin-left: 10px;
+    word-break: break-all;
+  }
+
+  &__body-container {
+    display: flex;
+    margin-top: 5px;
+
+    &.-track-mode {
+      font-weight: 500;
+      color: $color-black;
+      flex-direction: column;
+      margin-top: 30px;
+
+      .assignment-fill-in-the-blank-question__text-label {
+        padding: 0 10px !important;
+      }
+    }
+  }
+
+  &__fill-in-the-blank-question {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+  }
+
+  &__track-answer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-left: 30px;
+  }
+
+  &__track-text {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  &__give-score-symbol {
+    margin-top: 4px;
+  }
+
+  &__max-score {
+    margin-right: 3px;
+    margin-left: 3px;
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 19px;
+  }
+
+  &__explanatory-note-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 20px;
+    border: 1px solid #d8dce6;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  &__explanatory-note-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  &__explanatory-note-content {
+    margin: 0;
+    margin-top: 5px;
+  }
+
+  &__assignment-control {
+    position: relative;
+
+    &.-readonly {
+      &.-correct::before {
+        top: 9px;
+      }
+
+      &.-incorrect::before {
+        top: 9px;
+      }
+    }
+
+    &.-correct::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -28px;
+      top: 16px;
+      background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+    }
+
+    &.-incorrect::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -28px;
+      top: 16px;
+      background: url('../assets/images/icons/incorrect-mark.svg') no-repeat center;
+    }
+  }
+
+  &__body-question-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 35px;
+    padding-right: 30px;
+
+    &.date-range-picker {
+      .assignment-question-editor {
+        &__correct-answer-textbox-container {
+          flex-direction: row;
+
+          .k-datepicker {
+            margin-right: 10px;
+          }
+        }
+
+        &__range-symbol {
+          margin-right: 40px;
+          margin-top: 15px;
+
+          &.-view-mode {
+            margin-left: 5px;
+            margin-top: 10px;
+            margin-right: 35px;
+            font-size: 12px;
+          }
+
+          &.-learner-mode {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &__correct-answer-textbox-container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    margin-left: 10px;
+
+    editable {
+      &.textbox-container {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+
+    &.-correct::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -31px;
+      top: 3px;
+      background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+    }
+  }
+
+  &__correct-answer-textbox {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__question-title-info {
+    display: flex;
+  }
+
+  &__hint-container {
+    margin-right: 20px;
+  }
+
+  &__hint-icon {
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  &__context-menu {
+    visibility: hidden;
+    transform: rotate(-90deg);
+
+    &:hover,
+    &.-visible {
+      visibility: visible;
+    }
+  }
+
+  &__delete-context-menu-item {
+    color: $red;
+  }
+
+  &__logic-validation-errors {
+    margin-left: 2em;
+    margin-top: 10px;
+  }
+
+  &__answer-info {
+    display: flex;
+    flex-direction: row;
+    margin-left: 35px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  &__answer-date {
+    margin-top: 8px;
+  }
+
+  &__answer-info-item {
+    display: flex;
+    flex-direction: row;
+    margin-right: 20px;
+
+    img {
+      margin-right: 5px;
+    }
+  }
+
+  assignment-question-option-editor {
+    &.-addNewOption {
+      opacity: 0.7;
+
+      &.-value-input-focused {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.assignment-fill-in-the-blank-question {
+  &__option-control {
+    border-radius: 5px;
+    width: fit-content;
+
+    .k-icon {
+      font-size: 21px;
+      color: $color-dim-gray;
+      margin-right: 22px;
+    }
+
+    &__add-blank-title {
+      font-size: $font-h6;
+      color: $color-dim-gray;
+    }
+  }
+
+  &__option-control ~ &__option-control {
+    margin-top: 10px;
+  }
+
+  &__blank-label {
+    display: inline-block;
+    width: auto;
+    min-height: 20px;
+    text-align: center;
+    position: relative;
+    margin-right: 10px;
+    border-bottom: 1px solid $color-blue-dard;
+
+    &.-correct::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      top: -9px;
+      right: -15px;
+      background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+    }
+
+    &.-incorrect::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      top: -9px;
+      right: -15px;
+      background: url('../assets/images/icons/incorrect-mark.svg') no-repeat center;
+    }
+  }
+
+  &__add-option-controls {
+    margin-top: 15px;
+  }
+
+  &__text-label {
+    display: inline-block;
+    margin-right: 5px;
+    @extend %box-sizing;
+    @extend %smooth;
+    border: 1px solid transparent;
+    border-radius: $main-border-radius;
+  }
+
+  &__learner-answer {
+    padding: 0px;
+    height: 20px;
+    border: none;
+    border-bottom: 1px solid $color-black;
+    border-radius: 0px;
+    margin-right: 10px;
+    text-align: center;
+
+    &:focus {
+      box-shadow: none !important;
+      border-bottom: 1px solid $color-black !important;
+      color: $color-black;
+    }
+
+    &:hover {
+      border-color: $color-black !important;
+    }
+  }
+}
+
+question-text-option-editor,
+question-blank-option-editor {
+  display: inline-block;
+}
+
+.question-hint {
+  .k-tooltip-button {
+    top: 5px;
+    color: $color-black;
+    right: 4px;
+  }
+
+  .k-tooltip-content {
+    background: $white;
+    color: $color-black;
+    padding: 10px 30px 10px 20px;
+    border: 1px solid #bee5eb;
+  }
+
+  .k-callout {
+    border: 1px solid #bee5eb;
+  }
+}

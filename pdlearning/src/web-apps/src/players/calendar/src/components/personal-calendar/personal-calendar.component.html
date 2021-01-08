@@ -1,0 +1,65 @@
+<detail-content>
+  <detail-content-fragment class="flex detail-page f-detail-content-container"></detail-content-fragment>
+  <detail-content-left>
+    <div class="pesonal-calendar-menu">
+      <ul class="pesonal-calendar-menu__tabs">
+        <li class="calendar-title">
+          <span class="title-item">
+            <span class="k-icon k-i-personal-calendar"></span>
+            {{ 'My schedule' | translator }}
+            <button class="icon-moe-down-arrow filter-btn"
+                    (click)="onOpenFilterPanel()"></button>
+          </span>
+        </li>
+        <li class="filter-event">
+          <kendo-panelbar>
+            <kendo-panelbar-item title
+                                 [expanded]="item.expanded"
+                                 *ngFor="let item of eventFilterModel.panelBarItems">
+              <ng-template kendoPanelBarItemTitle="">
+                <span [ngClass]="item.iconClass"></span>
+                {{item.title}}
+              </ng-template>
+
+              <ng-template kendoPanelBarContent="">
+                <kendo-treeview [nodes]="item.content.filterSet"
+                                [textField]="'text'"
+                                [checkedKeys]="item.content.checkedKeys"
+                                [checkBy]="'value'"
+                                [kendoTreeViewCheckable]="checkableSettings"
+                                (checkedKeysChange)="onFilterKeyChange()">
+                </kendo-treeview>
+              </ng-template>
+
+            </kendo-panelbar-item>
+          </kendo-panelbar>
+          <button class="filter-event-close"
+                  type="button"
+                  (click)="onCloseFilterPanel()"></button>
+        </li>
+        <li class="event-action">
+          <button class="calendar-btn"
+                  kendoButton
+                  [primary]="true"
+                  (click)="createEvent()"><span class="k-i-add-event"></span>{{"Create new" | globalTranslator}}</button>
+        </li>
+
+      </ul>
+    </div>
+
+  </detail-content-left>
+
+  <detail-content-right>
+    <calendar-view-template [selectedViewIndex]="1"
+                            [calendarHeight]="calendarHeight"
+                            [resources]="resources"
+                            [events]="filteredEvents"
+                            [selectedDate]="selectedDate"
+                            [modelFields]="personalCalendarModel"
+                            [workDayStart]="workDayStart"
+                            [workDayEnd]="workDayEnd"
+                            (eventDblClick)="onEventDblClick($event)"
+                            (slotDblClick)="onSlotDblClick($event)"
+                            (dateChange)="onDateChange($event)"></calendar-view-template>
+  </detail-content-right>
+</detail-content>

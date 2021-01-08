@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityCopyrightCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="10">
+        <Label
+            FontFamily="{StaticResource RobotoRegular}"
+            FontSize="24"
+            Text="Copyrights"
+            TextColor="{StaticResource MainBodyTextColor}" />
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Licence Permissions and Terms of Use" />
+            <Label x:Name="AllowPersonalDownload" Text="Download for personal reference only" />
+            <Label x:Name="AllowNonCommerInMOEReuseWithModification" Text="Reuse without modification for non-commercial purpose in MOE schools / devisions only" />
+            <Label x:Name="AllowNonCommerReuseWithModification" Text="Reuse without modification for non-commerical purpose" />
+            <Label x:Name="AllowNonCommerInMoeReuseWithoutModification" Text="Reuse with modification for non-commercial purpose in MOE schools / devisions only" />
+            <Label x:Name="AllowNonCommerReuseWithoutModification" Text="Reuse with modification for non-commerical purpose" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Copyright Owner" />
+            <Label Style="{StaticResource TitleGroup}" Text="The name of the owner of the licence / main creator of item" />
+            <Label x:Name="CopyrightOwner" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Acknowledge and Credit" />
+            <Label Style="{StaticResource TitleGroup}" Text="The names of all parties who have helped in one way or another in the creation of this item" />
+            <Label x:Name="AcknowledgementAndCredit" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Additional Remarks" />
+            <Label Style="{StaticResource TitleGroup}" Text="Additional notes governing the proper use of this resource (if any)" />
+            <Label x:Name="Remarks" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Course Content Creator" />
+            <Label x:Name="CourseContentCreator" />
+        </StackLayout>
+    </StackLayout>
+</ContentView>

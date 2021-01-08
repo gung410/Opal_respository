@@ -1,0 +1,19 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <div class="scrollable-menu-content"
+         stickyElement
+         [stickyDependElement]="stickyDependElement"
+         [stickySpacing]="stickySpacing">
+      <div class="scrollable-menu-content__tab-content">
+        <learner-basic-info [learnerVm]="learnerVm"></learner-basic-info>
+      </div>
+    </div>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <learner-metadata-info [learnerVm]="learnerVm"></learner-metadata-info>
+      </div>
+    </div>
+  </div>
+</div>

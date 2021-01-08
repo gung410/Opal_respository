@@ -1,0 +1,32 @@
+<compare-version-dialog title="{{ 'Form Comparison' | globalTranslator}}">
+  <div class="compare-version-section">
+    <div class="compare-version-section__wrap --title">
+      <div class="compare-version-section__item">
+        <label class="title"> {{ getVersionString(oldVersionTrackingVm.versionString) }}</label>
+      </div>
+      <div class="compare-version-section__item">
+        <label class="title"> {{ getVersionString(newVersionTrackingVm.versionString) }} </label>
+      </div>
+    </div>
+    <div class="compare-version-section__wrap"
+         *ngIf="isFinishCompareProcess && !nothingToCompare">
+      <div class="compare-version-section__item --body">
+        <form-comparison [comparisonFormData]="compareParameter.oldComparisonFormViewModels"
+                         [side]="compareSide.Left"></form-comparison>
+      </div>
+      <div class="compare-version-section__item --body">
+        <form-comparison [comparisonFormData]="compareParameter.newComparisonFormViewModels"
+                         [side]="compareSide.Right"></form-comparison>
+      </div>
+    </div>
+    <div class="compare-version-section__wrap"
+         *ngIf="isFinishCompareProcess && nothingToCompare">
+      <div class="compare-version-section__item --body">
+        <span>No questions to compare</span>
+      </div>
+      <div class="compare-version-section__item --body">
+        <span>No questions to compare</span>
+      </div>
+    </div>
+  </div>
+</compare-version-dialog>

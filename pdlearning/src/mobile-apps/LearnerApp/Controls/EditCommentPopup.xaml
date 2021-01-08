@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Controls.EditCommentPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <Frame
+        Margin="40,0,40,0"
+        Padding="0"
+        BackgroundColor="White"
+        BorderColor="LightGray"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Center">
+        <StackLayout VerticalOptions="Center">
+            <StackLayout
+                Padding="30,10,0,10"
+                BackgroundColor="LightGray"
+                Orientation="Horizontal">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Closed_Clicked" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Edit feedback" />
+                <ffimagesvg:SvgCachedImage
+                    Margin="0,0,10,0"
+                    HeightRequest="20"
+                    HorizontalOptions="Start"
+                    Source="close.svg"
+                    WidthRequest="20" />
+            </StackLayout>
+            <StackLayout Padding="10">
+                <StackLayout x:Name="RatingStackLayout">
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="14"
+                        Text="Rating" />
+                    <controls:Ratingv2View
+                        x:Name="RatingView"
+                        HorizontalOptions="CenterAndExpand"
+                        IsEnableRate="True"
+                        RateChanged="RatingView_RateChanged"
+                        StarSize="40"
+                        VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="14"
+                        Text="Your feedback" />
+                    <Frame
+                        Padding="7"
+                        BorderColor="LightGray"
+                        CornerRadius="4"
+                        HasShadow="False"
+                        VerticalOptions="FillAndExpand">
+                        <controls:CustomEditor
+                            x:Name="CommentEditor"
+                            BackgroundColor="Transparent"
+                            HeightRequest="150"
+                            VerticalOptions="FillAndExpand" />
+                    </Frame>
+                </StackLayout>
+                <Button
+                    BackgroundColor="#303450"
+                    Clicked="Save_Clicked"
+                    CornerRadius="5"
+                    Text="Save"
+                    TextColor="White" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

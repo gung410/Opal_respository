@@ -1,0 +1,266 @@
+.form-question-indicator {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-form-question-indicator {
+  -webkit-appearance: none;
+  background: $light-gray-bg;
+  border: none;
+  color: $text;
+  border-radius: 20px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 2px 12px;
+
+  &.active,
+  &:hover {
+    background: $accent;
+    color: $white;
+  }
+
+  &.checkbox {
+    border-radius: 5px;
+  }
+}
+
+.form-question-indicator {
+  .btn-form-question-indicator:not(:last-child) {
+    margin-right: 4px;
+  }
+}
+
+.card.quiz {
+  position: relative;
+
+  .icon.action.more {
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  &:hover {
+    .icon.action.more {
+      opacity: 1;
+    }
+  }
+}
+
+.question-scroll-area {
+  padding: 20px 20px 0 20px;
+  flex: 1;
+  overflow: auto;
+}
+
+.add-quiz {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 40px;
+  border: $border;
+  cursor: pointer;
+
+  .icon.add-item {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background: $gray100;
+  }
+}
+
+.space-placehoder {
+  height: 20px;
+}
+
+.quiz-inline-add {
+  opacity: 0;
+  z-index: 1;
+  right: -18px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  position: relative;
+
+  &:after {
+    content: '';
+    border-bottom: 1px solid $accent;
+    position: absolute;
+    height: 1px;
+    left: 0;
+    right: 0;
+    top: 8px;
+  }
+
+  .icon.add-item {
+    position: absolute;
+    right: -16px;
+    bottom: -1px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.quiz-inline-add,
+.quiz-wrapper {
+  flex-shrink: 0;
+}
+
+// Tooltip
+.k-tooltip {
+  padding: 0; // remove if there is an other way to remove padding
+  border-radius: 5px;
+}
+
+.k-callout {
+  color: white;
+}
+
+form-question-template {
+  background: $white;
+  display: block;
+  padding: 10px 0;
+  border-radius: 5px;
+  color: $text;
+  max-height: calc(50vh - 20px);
+  overflow-y: auto;
+
+  .question-template {
+    cursor: pointer;
+    min-width: 280px;
+    padding: 10px;
+
+    &:hover {
+      background: $accent;
+      color: $white;
+    }
+
+    border-bottom: $border;
+
+    &:first-child {
+      border-top: $border;
+    }
+
+    .question-type {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      span {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.question-preview {
+  width: 100%;
+  position: relative;
+
+  &.free-text {
+    height: 30px;
+    border: $border;
+    border-radius: 5px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 100px;
+      bottom: 5px;
+      background: $light-gray-bg;
+    }
+  }
+
+  &.true-false {
+    margin: 5px;
+    height: 14px;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+    }
+
+    &:before {
+      width: 14px;
+      height: 14px;
+      border-radius: 10px;
+      box-shadow: 134px 0 0 $light-gray-bg;
+      border: 1px solid $light-gray-bg;
+    }
+
+    &:after {
+      width: 60px;
+      height: 14px;
+      left: 24px;
+      background: $light-gray-bg;
+      box-shadow: 134px 0 0 $light-gray-bg;
+    }
+  }
+
+  &.radios {
+    margin: 5px;
+    height: 42px;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+    }
+
+    &:before {
+      width: 14px;
+      height: 14px;
+      border-radius: 10px;
+      box-shadow: 0 28px 0 $light-gray-bg;
+      border: 1px solid $light-gray-bg;
+    }
+
+    &:after {
+      width: 140px;
+      height: 14px;
+      left: 24px;
+      background: $light-gray-bg;
+      box-shadow: 0 28px 0 $light-gray-bg;
+    }
+  }
+
+  &.checkboxes {
+    margin: 5px;
+    height: 42px;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+    }
+
+    &:before {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      box-shadow: 0 28px 0 $light-gray-bg;
+      border: 1px solid $light-gray-bg;
+    }
+
+    &:after {
+      width: 140px;
+      height: 14px;
+      left: 24px;
+      background: $light-gray-bg;
+      box-shadow: 0 28px 0 $light-gray-bg;
+    }
+  }
+}

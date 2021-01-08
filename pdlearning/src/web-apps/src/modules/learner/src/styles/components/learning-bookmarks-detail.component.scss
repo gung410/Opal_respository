@@ -1,0 +1,17 @@
+.my-learning-bookmark-detail {
+  .bookmark-header {
+    margin-bottom: 40px;
+
+    .bookmark-title {
+      font-size: 28px;
+    }
+  }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+}

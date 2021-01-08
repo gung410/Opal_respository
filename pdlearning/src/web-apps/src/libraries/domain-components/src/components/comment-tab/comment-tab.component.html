@@ -1,0 +1,68 @@
+<div class="comment-show-more-container"
+     *ngIf="showLoadMore">
+  <span class="comment-show-more-container__text"
+        (click)="onShowMore()">{{ 'View 10 older comments' | translator }}</span>
+</div>
+<kendo-grid class="column flex"
+            #grid
+            [hideHeader]="true"
+            [data]="gridView"
+            [rowClass]="rowCommentCallback">
+  <kendo-grid-column [title]="''"
+                     field="content">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="comment-item"
+           *ngIf="dataItem.user">
+        <div class="comment-item__avatar">
+          <img src="{{ dataItem.user.avatarUrl ? dataItem.user.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+        </div>
+        <div class="comment-item__data">
+          <div class="comment-item__data__header">
+            <div class="name">
+              <strong>{{ dataItem.user.fullName }}</strong></div>
+            <div class="department">
+              <span>{{ dataItem.user.departmentName }}</span>
+            </div>
+            <div class="date">
+              <span>{{ dataItem.createdDate | date: 'dd/MM/yyyy hh:mm a' }}</span>
+            </div>
+            <div class="action"
+                 *ngIf="displayActionField(dataItem)">
+              <strong>{{ input.mappingAction[dataItem.action] || '' }}</strong>
+            </div>
+          </div>
+          <div class="comment-item__data__content">
+            <span>{{ dataItem.content }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+<div class="comment-reply-container"
+     *ngIf="input?.hasReply">
+  <div class="comment-reply-container__avatar">
+    <img alt
+         [src]="avatarUrl">
+  </div>
+  <div class="comment-reply-container__input-group">
+    <div class="form-controls-group comment-reply-container__input-container">
+      <textarea class="form-control"
+                kendoTextArea
+                [autoSize]="true"
+                rows="3"
+                [placeholder]="'Add your comment' | translator"
+                [(ngModel)]="comment"
+                [ngModelOptions]="{ standalone: true }"></textarea>
+    </div>
+    <div class="comment-reply-container__button-group">
+      <button kendoButton
+              [disabled]="disableButton"
+              [primary]="true"
+              (click)="onSubmitComment()">
+        {{ 'Submit' | translator }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{
+  "Form content can not be updated when has some users answered it": "Form content can not be updated when has some users answered it",
+  "[TBD] Some data is invalid.": "[TBD] Some data is invalid.",
+  "share.footer.reportVulnerability": "Report Vulnerability",
+  "share.footer.privacyStatement": "Privacy Statement",
+  "share.footer.termsOfUse": "Terms of Use",
+  "share.footer.copyright": "Copyright © 2019 Ministry of Education, Singapore. All rights reserved. Last updated 25 February 2020",
+  "share.contentDialog.General": "General",
+  "share.contentDialog.MetaData": "Metadata",
+  "share.contentDialog.DigitalRight": "Rights",
+  "share.validationMessage.invalidCopyrightExpiryDate": "The expiry date must be greater than today or start date",
+  "share.validationMessage.invalidCopyrightStartDate": "The start date must not be in the past",
+  "share.text.Not_Applicable": "Not Applicable",
+  "share.text.profile": "Profile",
+  "share.text.objectivesOutcomes": "Objectives/Outcomes"
+}

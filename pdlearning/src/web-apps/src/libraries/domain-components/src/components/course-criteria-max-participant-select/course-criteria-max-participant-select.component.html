@@ -1,0 +1,33 @@
+<div class="course-criteria-max-participant-select">
+  <table class="course-criteria-max-participant-select__table">
+    <thead>
+      <tr class="course-criteria-max-participant-select__row">
+        <th>{{itemsTypeTitle}}</th>
+        <th>{{'Maximum participants' | translator}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="course-criteria-max-participant-select__row"
+          *ngFor="let item of items">
+        <td>{{labelFn ? labelFn(item) : item[labelField]}}</td>
+        <td>
+          <kendo-numerictextbox class="course-criteria-max-participant-select__max-participants-input"
+                                type="number"
+                                *ngIf="!(readonly && item[maxParticipantsField] == null)"
+                                [min]="1"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                [(ngModel)]="item[maxParticipantsField]"
+                                [disabled]="readonly"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+
+          <ng-container *ngIf="readonly && item[maxParticipantsField] == null">
+            {{'n/a' | translator}}
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

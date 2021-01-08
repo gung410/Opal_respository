@@ -1,0 +1,14 @@
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <clipPath id="clip0">
+   <rect id="svg_1" fill="white" height="16" width="16"/>
+  </clipPath>
+ </defs>
+ <g>
+  <rect fill="none" id="canvas_background" height="18" width="18" y="-1" x="-1"/>
+ </g>
+ <g>
+  <path fill="#303450" id="svg_3" stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#ffffff" d="m0.666016,8.00033c0,0 2.666664,-5.33334 7.333334,-5.33334c4.66665,0 7.33335,5.33334 7.33335,5.33334c0,0 -2.6667,5.33337 -7.33335,5.33337c-4.66667,0 -7.333334,-5.33337 -7.333334,-5.33337z"/>
+  <path fill="#303450" id="svg_4" stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#ffffff" d="m7.968001,9.968001c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2z"/>
+ </g>
+</svg>

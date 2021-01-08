@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Controls.ConfirmMessagePopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <Frame
+        Margin="40,0,40,0"
+        Padding="20"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Center">
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <Label
+                x:Name="MessageLbl"
+                Margin="0,20,0,20"
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="20"
+                HorizontalTextAlignment="Center" />
+
+            <Frame
+                x:Name="ReasonFrame"
+                Padding="7"
+                BorderColor="LightGray"
+                CornerRadius="4"
+                HasShadow="False"
+                VerticalOptions="FillAndExpand">
+                <controls:CustomEditor
+                    x:Name="Reason"
+                    BackgroundColor="Transparent"
+                    HeightRequest="100"
+                    Placeholder="Type your answer"
+                    TextChanged="Reason_OnTextChanged" />
+            </Frame>
+
+            <StackLayout Orientation="Horizontal">
+                <Frame
+                    BorderColor="#D8D8D8"
+                    CornerRadius="6"
+                    HasShadow="False"
+                    HorizontalOptions="FillAndExpand">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Closed_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Label
+                        x:Name="CancelBtn"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="{StaticResource MainBodyTextColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </Frame>
+                <Frame
+                    x:Name="ConfirmFrame"
+                    BackgroundColor="{StaticResource DefaultTextColor}"
+                    BorderColor="{StaticResource DefaultTextColor}"
+                    CornerRadius="6"
+                    HasShadow="False"
+                    HorizontalOptions="FillAndExpand">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Confirmed_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Label
+                        x:Name="ConfirmBtn"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        LineBreakMode="TailTruncation"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" />
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

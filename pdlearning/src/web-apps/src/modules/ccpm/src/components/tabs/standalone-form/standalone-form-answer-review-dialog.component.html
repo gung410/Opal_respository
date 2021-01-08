@@ -1,0 +1,24 @@
+<div class="standalone-form-answer-review-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <form-question-answer-review [formQuestion]="formQuestion"
+                                 [formDataType]="formDataType"
+                                 [sectionsQuestion]="sectionsQuestion"
+                                 [formAnswer]="formAnswer"></form-question-answer-review>
+  </div>
+
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+    <button kendoButton
+            *ngIf="canShowSaveButton()"
+            [primary]="true"
+            (click)="onSave()"
+            [disabled]="!isScoreChanged()">{{ 'Save' | globalTranslator }}</button>
+  </div>
+</div>

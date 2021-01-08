@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.ShareMyLearningPathsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:local="clr-namespace:LearnerApp.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    Title="Share Learning Path"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+        <StackLayout Margin="10" VerticalOptions="FillAndExpand">
+            <Frame
+                Padding="10"
+                BackgroundColor="White"
+                CornerRadius="6"
+                HasShadow="False"
+                VerticalOptions="FillAndExpand">
+                <StackLayout Spacing="20">
+                    <Frame
+                        Padding="1"
+                        BackgroundColor="White"
+                        BorderColor="LightGray"
+                        CornerRadius="4"
+                        HasShadow="False"
+                        HorizontalOptions="FillAndExpand"
+                        IsClippedToBounds="True">
+                        <StackLayout Padding="10,5,10,5" Orientation="Horizontal">
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="30"
+                                Source="search.svg"
+                                WidthRequest="30">
+                                <ffimagesvg:SvgCachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SearchCommand}" />
+                                </ffimagesvg:SvgCachedImage.GestureRecognizers>
+                            </ffimagesvg:SvgCachedImage>
+                            <local:CustomEntry
+                                ClearButtonVisibility="WhileEditing"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="Search for the users"
+                                PlaceholderColor="LightGray"
+                                ReturnCommand="{Binding SearchCommand}"
+                                Text="{Binding TextSearch}" />
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout IsVisible="{Binding IsVisibleListSharedUser, Converter={StaticResource InverseBoolConverter}}" VerticalOptions="CenterAndExpand">
+                        <forms:CachedImage
+                            HeightRequest="100"
+                            Source="no_user_selected.png"
+                            WidthRequest="150" />
+
+                        <Label
+                            Margin="20"
+                            FontFamily="{StaticResource RobotoRegular}"
+                            FontSize="12"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Text="In order to share Learning Path, please add the users by using search."
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding IsVisibleListSharedUser}" VerticalOptions="FillAndExpand">
+                        <Label
+                            FontFamily="{StaticResource RobotoRegular}"
+                            Text="{Binding TotalUserShared}"
+                            TextColor="#8799BA" />
+
+                        <ScrollView VerticalOptions="FillAndExpand">
+                            <telerikDataControls:RadListView
+                                IsItemSwipeEnabled="True"
+                                ItemsSource="{Binding UserCollection}"
+                                SelectionMode="None"
+                                SwipeOffset="0, 0, 120, 0"
+                                SwipeThreshold="10"
+                                VerticalOptions="FillAndExpand"
+                                VerticalScrollBarVisibility="Never">
+                                <telerikDataControls:RadListView.ItemSwipeContentTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            Margin="0"
+                                            Padding="0"
+                                            ColumnSpacing="0"
+                                            RowSpacing="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="120" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout Grid.Column="1" WidthRequest="120">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="RemoveCourse_Clicked" />
+                                                </StackLayout.GestureRecognizers>
+                                                <StackLayout
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Orientation="Horizontal"
+                                                    VerticalOptions="CenterAndExpand">
+                                                    <Label Text="Remove" VerticalOptions="CenterAndExpand" />
+                                                    <ffimagesvg:SvgCachedImage
+                                                        HeightRequest="30"
+                                                        Source="remove.svg"
+                                                        VerticalOptions="CenterAndExpand"
+                                                        WidthRequest="30" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </telerikDataControls:RadListView.ItemSwipeContentTemplate>
+                                <telerikDataControls:RadListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <telerikListView:ListViewTemplateCell>
+                                            <StackLayout
+                                                Padding="5"
+                                                BackgroundColor="White"
+                                                Orientation="Horizontal">
+                                                <forms:CachedImage
+                                                    DownsampleToViewSize="true"
+                                                    HeightRequest="60"
+                                                    HorizontalOptions="Center"
+                                                    Source="{Binding AvatarUrl, Converter={StaticResource AvatarUrlConverter}}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="60">
+                                                    <forms:CachedImage.Transformations>
+                                                        <fftransformations:CircleTransformation />
+                                                    </forms:CachedImage.Transformations>
+                                                </forms:CachedImage>
+                                                <StackLayout Spacing="0">
+                                                    <Label
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="16"
+                                                        LineBreakMode="TailTruncation"
+                                                        Text="{Binding FullName}"
+                                                        VerticalOptions="CenterAndExpand" />
+                                                    <Label
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="14"
+                                                        LineBreakMode="TailTruncation"
+                                                        Text="{Binding EmailAddress}"
+                                                        TextColor="#8799BA"
+                                                        VerticalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </telerikListView:ListViewTemplateCell>
+                                    </DataTemplate>
+                                </telerikDataControls:RadListView.ItemTemplate>
+                            </telerikDataControls:RadListView>
+                        </ScrollView>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <StackLayout Orientation="Horizontal">
+                <Button
+                    Padding="0"
+                    BackgroundColor="White"
+                    BorderColor="#D8DCE6"
+                    BorderWidth="1"
+                    Command="{Binding CancelCommand}"
+                    CornerRadius="4"
+                    FontSize="16"
+                    HeightRequest="40"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Cancel"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Button
+                    Padding="0"
+                    BackgroundColor="{StaticResource MainBodyTextColor}"
+                    Command="{Binding ConfirmCommand}"
+                    CornerRadius="4"
+                    FontSize="16"
+                    HeightRequest="40"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Confirm"
+                    TextColor="White" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

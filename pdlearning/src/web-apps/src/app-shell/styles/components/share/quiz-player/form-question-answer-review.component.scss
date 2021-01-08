@@ -1,0 +1,30 @@
+.form-question-answer-review {
+  width: 100%;
+  margin-bottom: 2rem;
+
+  &__overal-score-container {
+    display: flex;
+    padding: 1rem;
+  }
+
+  &__overal-score-item {
+    display: flex;
+
+    & + & {
+      margin-left: 3rem;
+    }
+  }
+
+  &__overal-score-text {
+    text-transform: uppercase;
+  }
+
+  &__overal-score-value {
+    font-weight: bold;
+    margin-left: 1rem;
+  }
+
+  &__answer-list {
+    margin-top: 0.5rem;
+  }
+}

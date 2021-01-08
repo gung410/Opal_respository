@@ -1,0 +1,40 @@
+<div class="review-item">
+  <div class="review-item__avatar"></div>
+  <div class="review-item__details-container">
+    <div class="review-item__name">{{review.userFullName}} {{review.isMine ? '(you)' : ''}}</div>
+    <div class="review-item__rating-container">
+      <div class="review-item__rating-stars"
+           *ngIf="hasRating">
+        <i class="icon tiny {{ review.rate < 1 ? 'star-outline' : 'star' }}"></i>
+        <i class="icon tiny {{ review.rate >= 2 ? 'star' : 'star-outline' }}"></i>
+        <i class="icon tiny {{ review.rate === 3 ? 'star' : 'star-outline' }}"></i>
+      </div>
+    </div>
+    <div class="review-item__comment"
+         *ngIf="review.commentContent">
+      <div multilineText
+           *ngIf="wordsCount <= 50">
+        {{review.commentContent}}
+      </div>
+      <ng-container *ngIf="wordsCount > 50">
+        <div *ngIf="!showingMore">
+          {{partialComment ? partialComment : ''}}
+          <span class="review-item__comment-action"
+                (click)="showingMore = true">&nbsp;{{"Read more" | translator}}</span>
+        </div>
+        <div *ngIf="showingMore">
+          {{review.commentContent}}
+          <span class="review-item__comment-action"
+                (click)="showingMore = false">&nbsp;{{"Read less" | translator}}</span>
+        </div>
+      </ng-container>
+    </div>
+    <div class="review-item__date">
+      {{ (review.changedDate !== undefined ? review.changedDate : review.createdDate) | date:'dd/MM/yyyy HH:mm'}}
+      <img class="review-item__edit-btn"
+           src="assets/images/icons/edit.svg"
+           *ngIf="canEdit"
+           (click)="onEditCliked()">
+    </div>
+  </div>
+</div>

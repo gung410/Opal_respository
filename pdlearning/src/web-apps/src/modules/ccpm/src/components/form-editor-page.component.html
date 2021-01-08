@@ -1,0 +1,51 @@
+<div class="form-editor-page__left-col"
+     *ngIf="formData.type === formType.Quiz"
+     #formEditorPageLeftCol>
+  <kendo-panelbar class="panelbar-custom"
+                  (stateChange)="onPanelStateChange()">
+    <kendo-panelbar-item class="panelbar-custom__item"
+                         title
+                         *ngIf="selectedFormQuestion !== undefined"
+                         [icon]="'arrow-60-right'"
+                         [expanded]="isExpandedOption"
+                         [iconClass]="'panelbar-custom__icon-collapse'">
+      <ng-template kendoPanelBarItemTitle="">
+        <div class="panelbar-custom__title">
+          {{'Selected Question' | translator}}{{' ' + indexInform}}</div>
+      </ng-template>
+      <ng-template kendoPanelBarContent="">
+        <form-question-config *ngIf="selectedFormQuestion !== undefined"
+                              [formQuestion]="selectedFormQuestion"
+                              [canDisableScore]="canDisableScore"
+                              (formQuestionChange)="onSelectedFormQuestionChange($event)"></form-question-config>
+      </ng-template>
+    </kendo-panelbar-item>
+    <kendo-panelbar-item class="panelbar-custom__item"
+                         title
+                         [icon]="'arrow-60-right'"
+                         [expanded]="true"
+                         [iconClass]="'panelbar-custom__icon-collapse'">
+      <ng-template kendoPanelBarItemTitle="">
+        <div class="panelbar-custom__title">{{'Configuration' | translator}}</div>
+      </ng-template>
+      <ng-template kendoPanelBarContent="">
+        <form-editor-config #formEditorConfig
+                            [formConfig]="formConfig"
+                            [passingMarkMaxScore]="passingMarkMaxScore"
+                            (formConfigChange)="onFormConfigChange($event)"></form-editor-config>
+      </ng-template>
+    </kendo-panelbar-item>
+  </kendo-panelbar>
+
+</div>
+<div class="form-editor-page__center-col">
+  <form-editor #formEditor
+               [formData]="formData"
+               [selectedQuestionId]="selectedQuestionId"
+               (formDataChange)="onFormDataChanged($event)"
+               (selectedQuestionIdChange)="onSelectedQuestionIdChange($event)"
+               (selectedQuestion)="onQuestionSelect()"
+               (moveQuestion)="onQuestionMoved($event)"
+               [(formSectionsQuestions)]="formSectionsQuestions"
+               [mode]="mode"></form-editor>
+</div>

@@ -1,0 +1,97 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-content-api-build
+      - cx-content-api-systemtest
+  uat:
+    pipelines:
+      - cx-content-api-uat
+  pre-production:
+    pipelines:
+      - cx-content-api-pre-production
+  production:
+    pipelines:
+      - cx-content-api-production
+pipelines:
+  cx-content-api-build:
+    group: cx-content-api
+    label_template: "release-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/content-microservice/Api/
+      SONAR_PROJECTKEY: cx-content-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/content-microservice/Api/**/*.*
+  cx-content-api-systemtest:
+    group: cx-content-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream
+  cx-content-api-uat:
+    group: cx-content-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-systemtest
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-systemtest
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream
+  cx-content-api-pre-production:
+    group: cx-content-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream
+  cx-content-api-production:
+    group: cx-content-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream

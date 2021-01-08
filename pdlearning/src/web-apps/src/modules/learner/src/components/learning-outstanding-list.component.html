@@ -1,0 +1,80 @@
+<div class="outstanding-list"
+     [ngClass]="{'outstanding-list--empty': isEmpty}">
+  <div class="learning-outstanding-title"
+       (click)="onShowMoreClicked()">{{ 'Outstanding Tasks' | translator }} ({{outstandingTaskItemsTotalCount}}) ></div>
+  <div class="outstanding-container"
+       *ngIf="!isEmpty; else showingEmptyMsg"
+       [ngClass]="{'height-2': numberOfHeightTimes === 2, 'height-3': numberOfHeightTimes === 3 }">
+    <div class="container-table">
+      <table>
+        <colgroup>
+          <col>
+          <col style="width:100px">
+          <col style="width:100px">
+          <col style="width:100px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>{{'Name' | translator }}</th>
+            <th>{{'Start date' | translator }}</th>
+            <th>{{'Due date' | translator }}</th>
+            <th>{{'Progress' | translator }}</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of outstandingTaskItems;">
+          <tr>
+            <td class="outstanding-title">
+              <div class="title-group">
+                <img class="icon"
+                     *ngIf="canShowFileIcon(item)"
+                     [src]="getFileIcon(item)">
+                <div> {{item.name}}</div>
+              </div>
+            </td>
+            <td>{{getStartDate(item)}}</td>
+            <td>{{getDueDate(item)}}</td>
+            <td *ngIf="canShowProgress(item)">{{item.progress}}%</td>
+            <td *ngIf="!canShowProgress(item)">
+              <div class="container-button">
+                <button *ngIf="showStartByPermission(item)"
+                        kendoButton
+                        [title]="buttonTooltip(item)"
+                        [primary]="!item.isNotStarted"
+                        [disabled]="!canStartTask(item)"
+                        (click)="onOutstandingTaskClicked(item)">{{ item.isNotStarted ? 'Start' : 'Continue' | translator }}</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="canShowProgress(item)">
+            <td colspan="4">
+              <div class="progress-container">
+                <div class="card-progress">
+                  <div class="progress-inner"
+                       [style.width]="(item.progress) + '%'"></div>
+                </div>
+              </div>
+              <div class="container-button">
+                <button *ngIf="showStartByPermission(item)"
+                        kendoButton
+                        [title]="buttonTooltip(item)"
+                        [primary]="!item.isNotStarted"
+                        [disabled]="!canStartTask(item)"
+                        (click)="onOutstandingTaskClicked(item)">{{ item.isNotStarted ? 'Start' : 'Continue' | translator }}</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="outstanding-showmore"
+           *ngIf="canLoadMore && !isShowMore"
+           (click)="onLoadMoreClicked()">{{"Load more" | translator}}</div>
+
+      <div class="outstanding-showmore"
+           *ngIf="isShowMore && outstandingTaskItemsTotalCount > outstandingTaskItems.length"
+           (click)="onShowMoreClicked()">{{"Load more" | translator}}</div>
+    </div>
+  </div>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator }}</span>
+  </ng-template>
+</div>

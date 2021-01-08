@@ -1,0 +1,220 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #classRunDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <span class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </span>
+            <p class="toolbar__left-group__title-group__sub-title"
+               *ngIf="subTitle"> {{ subTitle }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="displayStatus()"
+                              [prefix]="displayStatusPrefix()"
+                              [mapping]="classRunStatusColorMap"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+    <div class="management-toolbar -margin-top"
+         [hidden]="!canFilterParticipant">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="registrationSearchText"
+                        [placeholder]="'Search for learner' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilterParticipant.bind(this)"></data-filter>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip detail-page__content-tabs top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #classRunDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="classRunDetailStickyToolbarElement.element">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.ClassRunInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <classrun-detail [form]="form"
+                           [classRun]="classRunVM"
+                           [mode]="detailPageInput.data.mode"
+                           [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"
+                           [stickySpacing]="stickySpacing"></classrun-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.ClassRunContentTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Content' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <content-detail-page *ngIf="course"
+                               [course]="course"
+                               [classRun]="classRunVM.data"
+                               [courseId]="detailPageInput.data.courseId"
+                               [classRunId]="detailPageInput.data.id"></content-detail-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewSessions() }"
+                          [selected]="selectedTab === LMMTabConfiguration.SessionsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Sessions' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <session-management-page *ngIf="canViewSessions()"
+                                   [course]="course"
+                                   [classRun]="classRunVM.data"
+                                   [classRunDetailPageInput]="detailPageInput"
+                                   [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"></session-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewParticipants() }"
+                          [selected]="selectedTab === LMMTabConfiguration.ParticipantsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Participants' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <div class="management-toolbar">
+              <div class="management-toolbar__left-container">
+              </div>
+              <div class="management-toolbar__right-container"
+                   *ngIf="canViewCompletionRate()">
+                <label class="completion-rate">
+                  {{ 'Completion Rate' | translator }} : {{completionRate ? completionRate + '%' : 0 +  '%'}}
+                </label>
+                <opal-report-dynamic class="exporting"
+                                     [paramsReportDynamic]="paramsReportDynamic"></opal-report-dynamic>
+              </div>
+            </div>
+            <list-registration-grid *ngIf="canViewParticipants()"
+                                    [searchType]="SearchRegistrationsType.Participant"
+                                    [displayColumns]="participantsGridDisplayColumns"
+                                    [filter]="registrationFilter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    [displayLearningStatus]="true"
+                                    (selectedContextMenu)="onGridContextMenuSelected($event)"
+                                    [indexActionColumns]="[0, 10]"
+                                    (viewRegistration)="onViewRegistration($event, LMMTabConfiguration.ParticipantsTab, SearchLearnerProfileType.Participant)"
+                                    [(selectedItems)]="participantSelectedItems"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !classRunVM.displayAssignmentsTab() }"
+                          [selected]="selectedTab === LMMTabConfiguration.AssignmentsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Assignments' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-assignment-grid *ngIf="classRunVM.displayAssignmentsTab()"
+                                  [courseId]="detailPageInput.data.courseId"
+                                  [classRunId]="detailPageInput.data.id"
+                                  (viewAssignment)="onViewAssignment($event)"
+                                  [filter]="assignmentFilter"
+                                  [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"></list-assignment-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewFeedback() }"
+                          [selected]="selectedTab === LMMTabConfiguration.FeedbackTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Rating and Review' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <feedback-detail-page *ngIf="course && canViewFeedback()"
+                                [course]="course"
+                                [classRunId]="detailPageInput.data.id"></feedback-detail-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewAttendanceTracking() }"
+                          [selected]="selectedTab === LMMTabConfiguration.AttendanceTrackingTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Attendance Tracking' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <attendance-tracking-management-page *ngIf="canViewAttendanceTracking()"
+                                               [classRun]="classRunVM.data"
+                                               [classRunId]="detailPageInput.data.id"
+                                               [course]="course"
+                                               (viewAttendanceTracking)="viewAttendanceTracking($event)"
+                                               [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+          </attendance-tracking-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewComment() }"
+                          [selected]="selectedTab === LMMTabConfiguration.ClassRunCommentTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewComment()"
+                                [checkHasDataFn]="checkCommentsHasDataFnCreator()">
+            {{ 'Comments' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <comment-tab *ngIf="canViewComment()"
+                       [input]="commentTabInput">
+          </comment-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="detailPageInput.activeTab === LMMTabConfiguration.ReportBrokenLinkTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Report broken link' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <broken-link-report-tab [parentIds]="detailPageInput.data.id"
+                                  [module]="brokenLinkModule"
+                                  [loadOnInit]="true"
+                                  [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"></broken-link-report-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewAnnouncement() }"
+                          [selected]="detailPageInput.activeTab === LMMTabConfiguration.AnnouncementTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Send Announcements' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <announcement-page *ngIf="canViewAnnouncement()"
+                             [courseId]="detailPageInput.data.courseId"
+                             [classRunId]="detailPageInput.data.id"
+                             [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"></announcement-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

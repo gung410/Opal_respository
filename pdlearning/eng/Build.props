@@ -1,0 +1,30 @@
+<Project>
+  <ItemGroup>
+    <ProjectToExclude Include="$(RepoRoot)\src\platform\**\bin\**\*" />
+    <ProjectToExclude Include="$(RepoRoot)\src\platform\**\obj\**\*" />
+
+    <ProjectToExclude Include="$(RepoRoot)\src\microservices\**\bin\**\*" />
+    <ProjectToExclude Include="$(RepoRoot)\src\microservices\**\obj\**\*" />
+
+    <ProjectToExclude Include="$(RepoRoot)\src\toolkit\**\bin\**\*" />
+    <ProjectToExclude Include="$(RepoRoot)\src\toolkit\**\obj\**\*" />
+
+    <ProjectToExclude Include="$(RepoRoot)\src\mobile-apps\**\*" />
+  </ItemGroup>
+
+  <Choose>
+    <!-- Project selection can be overridden on the command line by passing in -projects -->
+    <When Condition="'$(ProjectToBuild)' != ''">
+      <ItemGroup>
+        <ProjectToBuild Include="$(ProjectToBuild)" Exclude="@(ProjectToExclude)" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <ProjectToBuild Include="$(RepoRoot)\src\platform\**\*.csproj" Exclude="@(ProjectToExclude)" />
+        <ProjectToBuild Include="$(RepoRoot)\src\microservices\**\*.csproj" Exclude="@(ProjectToExclude)" />
+        <!-- <ProjectToBuild Include="$(RepoRoot)\src\toolkit\**\*.csproj" Exclude="@(ProjectToExclude)" /> -->
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+</Project>

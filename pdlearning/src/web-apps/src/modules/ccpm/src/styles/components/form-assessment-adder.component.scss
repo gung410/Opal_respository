@@ -1,0 +1,73 @@
+form-assessment-adder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  position: relative;
+}
+
+.form-assessment-adder {
+  display: flex;
+  height: 46px;
+  align-items: center;
+
+  &.-outline {
+    width: fit-content;
+    cursor: pointer;
+    color: $white;
+    background: $color-light-gray;
+    font-size: $font-h5;
+    padding: 2px 70px;
+    font-weight: $font-weight-medium;
+    border-radius: $main-border-radius;
+
+    &:hover {
+      background: $color-indigo;
+      color: $white;
+      @extend %smooth;
+    }
+
+    &[disabled] {
+      background: $color-light-gray;
+      opacity: 0.2;
+      @extend %smooth;
+    }
+  }
+
+  &__question-separator {
+    background-color: $color-gainsboro;
+    mix-blend-mode: normal;
+    height: 1px;
+    flex-grow: 1;
+  }
+
+  &__add-question-btn {
+    width: 150px;
+    color: $color-gainsboro;
+    border: 1px solid $color-gainsboro;
+    border-radius: 30px;
+    background: $color-light-gray;
+    position: absolute;
+    left: calc(50% - 75px);
+    padding: 5px 10px 5px 10px;
+    line-height: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    @extend %smooth;
+
+    &:hover {
+      background: white;
+      border-color: $color-light-gray;
+      color: $color-blue-light;
+      transform: scale(1.1);
+      cursor: pointer;
+      @extend %smooth;
+    }
+
+    &.-readonly {
+      pointer-events: none;
+    }
+  }
+}

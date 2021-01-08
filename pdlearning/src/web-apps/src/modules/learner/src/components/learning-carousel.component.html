@@ -1,0 +1,45 @@
+<div class="learning-carousel-header">
+  <div class="learning-carousel-title"
+       (click)="onShowAllClick()">{{ title }} ({{ learningCardItemsTotalCount }})<i class="icon right"></i>
+  </div>
+</div>
+
+<div class="horizontal-list">
+  <span class="learning-empty-msg"
+        *ngIf="!learningCardItems || learningCardItems.length === 0">
+    {{ emptyText ? emptyText : "There's nothing here yet!" | translator }}
+  </span>
+  <div class="list-control prev"
+       (click)="scrollLeft()"
+       *ngIf="learningCardItems?.length > 0"></div>
+  <div class="list-control next"
+       (click)="scrollRight()"
+       *ngIf="learningCardItems?.length > 0"></div>
+  <div class="scroll-inner"
+       *ngIf="learningCardItems?.length > 0"
+       #scrollElement>
+    <ng-container *ngFor="let item of learningCardItems">
+      <learning-card *ngIf="item.type === learningType.Course"
+                     [showBookmark]="hasPermissionToBookmark"
+                     [learningCardItem]="item"
+                     [showProgressBar]="item.status !== undefined"
+                     (learningCardClick)="onLearningCardClick($event)"></learning-card>
+
+      <digital-content-card *ngIf="item.type === learningType.DigitalContent"
+                            [showBookmark]="hasPermissionToBookmark"
+                            [learningCardItem]="item"
+                            (learningCardClick)="digitalContentCardClick($event)"></digital-content-card>
+
+      <learning-path-card *ngIf="item.type === learningType.LearningPath || item.type === learningType.LearningPathLMM"
+                          [showBookmark]="hasPermissionToBookmark"
+                          [learningCardItem]="item"
+                          (learningCardClick)="learningPathCardClick($event)"></learning-path-card>
+    </ng-container>
+
+    <div class="learning-carousel-show-all">
+      <div>
+        <div (click)="onShowAllClick()">{{"Show all" | globalTranslator}}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<app-toolbar *ngIf="mode===questionBankMode.View"
+             [customClass]="'repository-page-toolbar'">
+  <toolbar-left>
+    <search-input [(ngModel)]="textSearch"
+                  [placeholder]="'Search in Question Bank' | translator"
+                  (search)="onSubmitSearch()">
+    </search-input>
+  </toolbar-left>
+  <toolbar-center class="flex row"></toolbar-center>
+  <toolbar-right>
+    <div class="repository-page-toolbar__filter">
+      <label class="repository-page-toolbar__label">{{ 'Filter' | globalTranslator }}</label>
+      <question-bank-group [displayMode]="questionGroupDisplayMode.DropDownList"
+                           [isFilterByUsing]="true"
+                           [multiple]="true"
+                           (questionGroupChange)="onQuestionGroupChange($event)"></question-bank-group>
+    </div>
+  </toolbar-right>
+</app-toolbar>
+<kendo-tabstrip #personalSpaceTabstrip="">
+  <kendo-tabstrip-tab [title]="'ALL' | translator"
+                      [selected]="true">
+    <ng-template kendoTabContent="">
+      <question-bank-list #questionBankList
+                          [search]="submitSearch"
+                          [mode]="mode"
+                          [questionGroupIds]="questionGroupIds"></question-bank-list>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>

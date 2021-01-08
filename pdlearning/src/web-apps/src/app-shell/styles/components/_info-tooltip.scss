@@ -1,0 +1,10 @@
+.info-tooltip {
+  .k-tooltip-content {
+    @extend %alert;
+    @extend %alert-info;
+  }
+
+  .k-callout {
+    color: $light-blue;
+  }
+}

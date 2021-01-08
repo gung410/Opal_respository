@@ -1,0 +1,37 @@
+<div class="add-collaborator-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">
+      {{'Transfer Ownership' | translator}}
+    </div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group">
+      <opal-select class="form-control"
+                   kendoErrorTooltip
+                   [maxDropdownHeight]="200"
+                   [staticMode]="true"
+                   [fetchDataFn]="fetchCollaboratorsFn"
+                   [hasMoreDataToFetch]="_hasMoreDataToFetch"
+                   [searchFn]="filterCollaboratorFn"
+                   [(ngModel)]="selectedValue"
+                   [labelField]="'fullName'"
+                   [valueField]="'id'"
+                   [clearable]="true"
+                   [placeholder]="'Select an user' | translator">
+      </opal-select>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button kendoButton
+            [disabled]="!selectedValue"
+            [primary]="true"
+            (click)="onProceed()">{{ 'Proceed' | globalTranslator }}</button>
+  </div>
+</div>

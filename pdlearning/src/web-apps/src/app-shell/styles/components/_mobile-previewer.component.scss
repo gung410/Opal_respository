@@ -1,0 +1,204 @@
+mobile-previewer {
+  width: 100%;
+  height: 100%;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+
+  .container {
+    width: 408px;
+    height: 820px;
+    background: url('../assets/images/mobile/iphone_xs_bg.png') no-repeat center;
+    background-size: contain;
+    box-sizing: border-box;
+    padding: 52px 27px 27px 27px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .content {
+    flex: 1;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 10px;
+  }
+
+  .navigation-bar {
+    background: url('../assets/images/mobile/mobile_navigation.svg') no-repeat center;
+    height: 62px;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    background-size: contain;
+  }
+
+  button {
+    border: none;
+    background: none;
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  digital-content-player {
+    display: flex;
+  }
+
+  .form-answer-player {
+    &__hint-btn.k-button {
+      margin-right: 0;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    &__action-btn-container {
+
+      .k-animation-container {
+        .question-hint-popup-container {
+          max-width: 250px;
+          padding: 15px;
+
+          &__header {
+            margin-bottom: 10px;
+          }
+
+          &__close-icon {
+            top: 10px;
+            right: 10px;
+          }
+
+          &__body {
+            margin-bottom: 20px;
+            overflow: auto;
+          }
+        }
+
+      }
+
+    }
+
+    &__questions-container {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      max-height: 560px; // max-height available content can be displayed without scroll outside mobile background
+      overflow: auto;
+    }
+
+    &__form-question-answer-player {
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    &__form-title {
+      margin: 5px 0;
+    }
+
+    &__question-index-desc,
+    &__header-container {
+      margin-bottom: 10px;
+    }
+
+  }
+
+  .form-question-answer-player,
+  .form-question-answer-player-review {
+    &__title-container {
+      margin-bottom: 15px;
+    }
+
+    &__answer-textbox {
+      min-width: auto;
+    }
+
+    &__answer-dropdown {
+      width: 100%;
+    }
+  }
+
+  .form-question-answer-player-review {
+    max-height: 40vh;
+    overflow: auto;
+  }
+
+  form-question-answer-player-review {
+    flex-grow: 1;
+  }
+
+  .form-question-answer-player {
+
+    .FillInTheBlanksReview,
+    .FillInTheBlanks {
+      margin-right: 30px;
+
+      .form-question-answer-player {
+        &__question-option-container {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+.web-preview {
+
+  mobile-previewer {
+    digital-content-player {
+      height: auto;
+      max-height: 635px;
+      overflow: auto;
+      padding-top: 10px;
+      box-sizing: border-box;
+
+      .digital-content-player {
+        margin-bottom: 10px;
+
+        &__description-title {
+          margin-bottom: 0;
+        }
+
+        &__description-container {
+          margin: 10px 20px;
+        }
+
+        &__content-title {
+          margin-bottom: 10px;
+
+          &:after {
+            height: 30px;
+            margin-top: 10px;
+          }
+        }
+
+        &__learning-content {
+          padding: 10px;
+          margin-top: 10px;
+          overflow-x: auto;
+
+          img {
+            max-width: 100%;
+          }
+        }
+
+        &__main-content-container {
+          height: 100%;
+        }
+
+        &__broken-link-report {
+          margin-right: 20px;
+          margin-left: 20px;
+        }
+      }
+    }
+
+    document-viewer iframe {
+      min-height: 55vh;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "Logging": {
+    "IncludeScopes": true,
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Warning"
+    }
+  },
+  "DeveloperExceptionEnabled": true,
+  "ThunderSecretKey": "fUOdC1AMmu24Hz1u5GVBhR7JiPyQWnE4",
+  "AuthSettings": {
+    "IdmClientId": "cxDomainInternalApi",
+    "IdmClientSecret": "AiOiJKV1QiLCJ4NXQiOiJhM",
+    "AuthorityUrl": "https://idm.development.opal2.conexus.net"
+  },
+  "OutboxOptions": {
+    "SendBatchSize": 10,
+    "DeleteBatchSize": 10,
+    "DeleteMessageAfterDays": 7
+  },
+  "InboxOptions": {
+    "DeleteBatchSize": 10,
+    "DeleteMessageAfterDays": 7
+  },
+  "GetAccessRightsUrl": "https://api.development.opal2.conexus.net/development-competence-opal-api-portal/me/accessRights"
+}

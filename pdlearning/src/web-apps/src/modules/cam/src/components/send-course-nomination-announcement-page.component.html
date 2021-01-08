@@ -1,0 +1,79 @@
+<div class="send-course-nomination-announcement-page">
+  <div class="send-course-nomination-announcement-page__left-container">
+    <div class="scrollable-menu"
+         stickyElement
+         [stickyDependElement]="stickyDependElement"
+         [stickySpacing]="stickySpacing">
+      <div class="form-container">
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Who will get the notification' | translator }}</label>
+          <editable [modeView]="false">
+            <ng-template editableViewMode="">
+            </ng-template>
+            <ng-template editableEditMode="">
+              <div class="form-controls-group -horizontal">
+                <div class="k-checkbox-container">
+                  <input class="k-radio"
+                         name="applicable"
+                         type="radio"
+                         (click)="sendCourseNominationAnnoucementVm.setOption(SendCourseNominationAnnoucementOption.AllUsers)"
+                         [checked]="sendCourseNominationAnnoucementVm.option === SendCourseNominationAnnoucementOption.AllUsers">
+                  <label>{{ 'All DLCs/SSDs' | translator }}</label>
+                </div>
+                <div class="k-checkbox-container">
+                  <input class="k-radio"
+                         name="applicable"
+                         type="radio"
+                         [checked]="sendCourseNominationAnnoucementVm.option === SendCourseNominationAnnoucementOption.SpecificOrganisation"
+                         (click)="sendCourseNominationAnnoucementVm.setOption(SendCourseNominationAnnoucementOption.SpecificOrganisation)">
+                  <label>{{ 'From specific organisation(s)' | translator }}</label>
+                </div>
+              </div>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group"
+             [hidden]="sendCourseNominationAnnoucementVm.option == SendCourseNominationAnnoucementOption.AllUsers">
+          <label for="ch2">{{ 'Select Organisation' | translator }}</label>
+          <editable [modeView]="false">
+            <ng-template editableViewMode="">
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="sendCourseNominationAnnoucementVm.organisationsSelectItems"
+                           [valueField]="'id'"
+                           [labelField]="'departmentName'"
+                           [(ngModel)]="sendCourseNominationAnnoucementVm.organisationIds"
+                           kendoErrorTooltip
+                           position="top"
+                           [clearable]="true"
+                           [multiple]="true"
+                           [dropdownBoundary]="'.send-course-nomination-announcement-page__left-container'"
+                           [minDropdownHeight]="250"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="send-course-nomination-announcement-page__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <div class="form-container">
+          <div class="form-controls-group">
+            <mail-editor [tags]="mailTags"
+                         [(mailContent)]="sendCourseNominationAnnoucementVm.mailContent"></mail-editor>
+            <div class="send-course-nomination-announcement-page__group-buttons">
+              <button kendoButton
+                      (click)="onReset()">{{ 'Reset' | globalTranslator }}</button>
+              <button type="submit"
+                      kendoButton
+                      [primary]="true"
+                      (click)="onSend()">{{ 'Send' | globalTranslator }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

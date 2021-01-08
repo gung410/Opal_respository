@@ -1,0 +1,63 @@
+<!DOCTYPE HTML
+          PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+
+<head>
+  <title>SCORM Player</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <link href="styles/style.css"
+        rel="stylesheet">
+  <script src="js/sscompat.js"
+          type="text/javascript"></script>
+  <script src="js/sscorlib.js"
+          type="text/javascript"></script>
+  <script src="js/ssfx.Core.js"
+          type="text/javascript"></script>
+  <script src="js/API_BASE.js"
+          type="text/javascript"></script>
+  <script src="js/API.js"
+          type="text/javascript"></script>
+  <script src="js/API_1484_11.js"
+          type="text/javascript"></script>
+  <script src="js/Controls.js"
+          type="text/javascript"></script>
+  <script src="js/LocalStorage.js"
+          type="text/javascript"></script>
+  <script src="js/Player.js"
+          type="text/javascript"></script>
+  <script src="js/main.js"
+          type="text/javascript"></script>
+</head>
+
+<body onload="window.ScormPlayer.onContentLoaded();">
+  <div class="scorm-home-screen"
+       id="start-screen">
+    <div class="scorm-icon"></div>
+    <div class="scorm-start-button"
+         onclick="initPlayer()">Open</div>
+  </div>
+
+  <div class="scorm-home-screen"
+       id="complete-screen">
+    <div class="scorm-icon scorm-finish-icon"></div>
+    <p class="scorm-text">The current learning package has been completed!</p>
+    <div class="scorm-start-button"
+         onclick="initPlayer()">View</div>
+  </div>
+
+  <div class="scorm-container">
+    <div class="navigation-container"
+         id="placeholder_navigationContainer"></div>
+    <div class="main-content">
+      <div class="tree-container"
+           id="placeholder_treeContainer"></div>
+      <div class="content-iframe"
+           id="placeholder_contentIFrame"></div>
+      <div class="content-debugger"
+           id="placeholder_debugger"></div>
+    </div>
+  </div>
+</body>
+
+</html>

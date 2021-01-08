@@ -1,0 +1,236 @@
+$index-in-form-container-with: 1.5em;
+
+standalone-survey-question-editor {
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    .standalone-survey-question-editor__context-menu {
+      visibility: visible;
+    }
+  }
+}
+
+.standalone-survey-question-editor {
+  display: flex;
+  flex-direction: column;
+
+  &__form {
+    border: 1px solid transparent;
+    border-radius: $main-border-radius;
+    padding: 15px;
+
+    .standalone-survey-editor__question-item.-selected &,
+    .standalone-survey-editor__question-item:hover & {
+      border-color: $color-gainsboro;
+      background: $color-smoke;
+    }
+  }
+
+  &__title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__index-in-form {
+    display: flex;
+    align-items: center;
+    @extend %box-sizing;
+    @extend %center-center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid $color-blue-dard;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-normal;
+    font-weight: $font-weight-medium;
+    color: $color-blue-dard;
+    border-radius: 50%;
+
+    &.section-question {
+      border: none;
+      font-size: $font-size-normal;
+      width: 45px;
+      color: $color-black;
+    }
+  }
+
+  &__question-type {
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+    margin-left: 15px;
+    width: calc(100% - 47px);
+  }
+
+  &__question-title {
+    flex-grow: 1;
+    font-weight: bold;
+    color: $color-blue-dard;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    width: 100%;
+  }
+
+  &__question-option-label {
+
+    &:hover,
+    &:active {
+      cursor: pointer;
+    }
+  }
+
+  &__body-container {
+    display: flex;
+    margin-top: 5px;
+  }
+
+  &__body-question-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: $index-in-form-container-with;
+
+    &.date-range-picker {
+      .standalone-survey-question-editor {
+        &__correct-answer-textbox-container {
+          flex-direction: column;
+
+          .k-datepicker {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &__correct-answer-textbox-container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &.-has-value::before {
+      @include correct-question-answer-sign();
+    }
+  }
+
+  &__correct-answer-textbox {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__context-menu {
+    visibility: hidden;
+    transform: rotate(-90deg);
+
+    &:hover,
+    &.-visible {
+      visibility: visible;
+    }
+  }
+
+  &__delete-context-menu-item {
+    color: $red;
+  }
+
+  &__logic-validation-errors {
+    margin-left: 2em;
+    margin-top: 5px;
+  }
+
+  standalone-survey-question-option-editor {
+    &.-addNewOption {
+      opacity: 0.7;
+
+      &.-value-input-focused {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.fill-in-the-blank-question {
+  &__option-control {
+    cursor: pointer;
+    border-radius: 5px;
+    width: fit-content;
+
+    .k-icon {
+      font-size: 21px;
+      color: $color-dim-gray;
+      margin-right: 22px;
+    }
+
+    &__add-blank-title {
+      font-size: $font-h6;
+      color: $color-dim-gray;
+    }
+  }
+
+  &__option-control~&__option-control {
+    margin-top: 15px;
+  }
+
+  &__blank-label {
+    display: inline-block;
+    width: auto;
+    height: 20px;
+    text-align: center;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: -6px;
+      left: 0;
+      width: 100%;
+      height: 32px;
+      border: 1px solid $color-gainsboro;
+      border-radius: $main-border-radius;
+      background: #efefef;
+      @extend %smooth;
+      visibility: hidden;
+    }
+
+    >span {
+      position: relative;
+      z-index: 1;
+      padding: 0 25px 0 20px;
+      border-bottom: 1px solid $color-blue-dard;
+    }
+
+    &:hover {
+      &::before {
+        visibility: visible;
+      }
+    }
+  }
+
+  &__add-option-controls {
+    margin-top: 20px;
+  }
+
+  &__text-label {
+    display: inline-block;
+    padding: 5px 10px;
+    @extend %box-sizing;
+    @extend %smooth;
+    border: 1px solid transparent;
+    border-radius: $main-border-radius;
+
+    &:hover {
+      border-color: $color-gainsboro;
+      background: #efefef;
+      @extend %smooth;
+    }
+  }
+}
+
+question-text-option-editor,
+question-blank-option-editor {
+  display: inline-block;
+}

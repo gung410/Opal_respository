@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:TabRootContentPage
+    x:Class="LearnerApp.Views.MyLearningView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    Title="My Learning"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+
+    <ContentPage.Content>
+        <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
+            <StackLayout
+                Margin="10"
+                Orientation="Horizontal"
+                Spacing="10">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MyLearningContentCommand}" />
+                </StackLayout.GestureRecognizers>
+
+                <StackLayout IsVisible="{Binding IsVisibleMyLearningContent}" Orientation="Horizontal">
+                    <Label
+                        FontSize="16"
+                        Text="{Binding CurrentMyLearningContent}"
+                        VerticalOptions="CenterAndExpand" />
+
+                    <ffimagesvg:SvgCachedImage
+                        HeightRequest="10"
+                        Source="participation_down.svg"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="10" />
+                </StackLayout>
+            </StackLayout>
+
+            <ContentPresenter Content="{Binding CurrentContentSelected}" VerticalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</common:TabRootContentPage>

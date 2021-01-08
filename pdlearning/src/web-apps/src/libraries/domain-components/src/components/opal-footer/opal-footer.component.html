@@ -1,0 +1,18 @@
+<div class="footer-left"
+     *ngIf="isShowFooter">
+  <a class="footer-link"
+     [href]="appGlobal.environment.reportVulnerabilityUrl"
+     target="_blank">{{ 'Report Vulnerability' | globalTranslator }}<i class="icon open"></i></a>
+  <a class="footer-link"
+     [href]="appGlobal.environment.privacyPolicyUrl"
+     target="_blank">{{ 'Privacy Statement' | globalTranslator }}</a>
+  <a class="footer-link"
+     [href]="appGlobal.environment.termOfUse"
+     target="_blank">{{ 'Terms of Use' | globalTranslator }}</a>
+</div>
+<div class="footer-right"
+     *ngIf="isShowFooter">
+  <div class="copyright">
+    {{ 'Copyright © ##year## Ministry of Education, Singapore. All rights reserved. Last updated ##lastUpdateString##' | globalTranslator:copyrightInfo }}
+  </div>
+</div>

@@ -1,0 +1,159 @@
+<div class="send-announcement">
+  <form [formGroup]="form">
+    <div class="form-container send-announcement__form-container">
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Preselected announcement templates' | translator }}</label>
+        <opal-select class="form-control"
+                     [ngModelOptions]="{standalone: true}"
+                     [(ngModel)]="announcementVm.selectedAnnouncementTemplateId"
+                     [(items)]="announcementVm.announcementTemplates"
+                     [fetchDataFn]="fetchAnnouncementTemplatesFn"
+                     [labelField]="'title'"
+                     [valueField]="'id'"
+                     kendoErrorTooltip
+                     position="top">
+          <ng-template opalOptionTmp
+                       let-item="item"
+                       let-item$="item$"
+                       let-index="index">
+            <div class="send-announcement__preselected-announcement-templates">
+              <div class="send-announcement__preselected-announcement-title">
+                <span> {{ item.title }}</span>
+                <span class="send-announcement__owner"
+                      *ngIf="hasOwnerAnnouncementTemplate(item.createdBy)">{{ '(Owner)' }}</span>
+              </div>
+              <i class="k-icon k-i-delete"
+                 *ngIf="item.canBeDeleted(currentUser)"
+                 (click)="onDeleteAnnouncementTemplate(item.id)"></i>
+            </div>
+          </ng-template>
+        </opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Announcement title' | translator }}</label>
+        <input class="form-control"
+               type="text"
+               formControlName="announcementTitle"
+               [(ngModel)]="announcementVm.title"
+               kendoErrorTooltip
+               position="top">
+      </div>
+      <div class="form-controls-group">
+        <input class="form-control -virtual -fullwidth"
+               type="text"
+               formControlName="announcementMessage"
+               [(ngModel)]="announcementVm.message"
+               kendoErrorTooltip
+               position="top">
+        <mail-editor [(mailContent)]="announcementVm.message"></mail-editor>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Select when the announcement will be sent' | translator }}</label>
+        <div class="form-controls-group -horizontal">
+          <div class="k-checkbox-container">
+            <input class="k-radio"
+                   name="announcementTime"
+                   type="radio"
+                   (click)="announcementVm.setIsSentNow(true)"
+                   [checked]="announcementVm.isSentNow">
+            <label>{{ 'Immediately' | translator }}</label>
+          </div>
+          <div class="k-checkbox-container">
+            <input class="k-radio"
+                   name="announcementTime"
+                   type="radio"
+                   (click)="announcementVm.setIsSentNow(false)"
+                   [checked]="!announcementVm.isSentNow">
+            <label>{{ 'Select a time for the announcement' | translator }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-controls-group"
+           [hidden]="announcementVm.isSentNow">
+        <kendo-datetimepicker class="form-control"
+                              #scheduleDatePicker
+                              [(value)]="announcementVm.scheduleDate"
+                              formControlName="scheduleDate"
+                              [placeholder]="''"
+                              [format]="'dd/MM/yyyy hh:mm a'"
+                              (focus)="scheduleDatePicker.toggle(true)"
+                              kendoErrorTooltip
+                              position="top"></kendo-datetimepicker>
+
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Who will get the announcement' | translator }}</label>
+        <div class="form-controls-group -horizontal">
+          <div class="k-checkbox-container">
+            <input class="k-radio"
+                   name="announcementParticipants"
+                   type="radio"
+                   (click)="announcementVm.setIsSentToAllParticipants(true)"
+                   [checked]="announcementVm.isSentToAllParticipants">
+            <label>{{ 'All participants' | translator }}</label>
+          </div>
+          <div class="k-checkbox-container">
+            <input class="k-radio"
+                   name="announcementParticipants"
+                   type="radio"
+                   (click)="announcementVm.setIsSentToAllParticipants(false)"
+                   [checked]="!announcementVm.isSentToAllParticipants">
+            <label>{{ 'Specific participants' | translator }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-container send-announcement__grid-container"
+         *ngIf="!announcementVm.isSentToAllParticipants">
+      <div class="content-management-container -no-padding-margin">
+        <div class="content-management">
+          <div class="management-toolbar">
+            <div class="management-toolbar__left-container">
+              <div class="search-field">
+                <search-input [placeholder]="'Search for learner' | translator"
+                              (search)="onSubmitSearch()"
+                              [(ngModel)]="searchText"
+                              [ngModelOptions]="{standalone: true}"></search-input>
+              </div>
+              <data-filter [component]="filterPopupContent"
+                           [applyFn]="onApplyFilter.bind(this)"></data-filter>
+            </div>
+          </div>
+          <list-registration-grid [searchType]="
+                                  SearchRegistrationsType.Participant"
+                                  [displayColumns]="participantsGridDisplayColumns"
+                                  [courseId]="courseId"
+                                  [classRunId]="classRunId"
+                                  [displayLearningStatus]="true"
+                                  [indexActionColumns]="[0]"
+                                  [(selectedItems)]="announcementVm.selectedRegistrations"
+                                  [filter]="filter">
+          </list-registration-grid>
+        </div>
+      </div>
+    </div>
+    <div class="form-container send-announcement__buttons-container">
+      <div class="send-announcement__button-groups">
+        <button kendoButton
+                [primary]="false"
+                (click)="onClickReset()">{{'Reset' | translator}}
+        </button>
+        <button kendoButton
+                [disabled]="!announcementVm.message"
+                [primary]="true"
+                (click)="onClickPreview()">{{'Preview' | translator}}
+        </button>
+        <button kendoButton
+                [disabled]="!announcementVm.dataHasChanged()"
+                [primary]="true"
+                (click)="onClickSend()">{{'Send' | translator}}
+        </button>
+        <button kendoButton
+                [disabled]="!announcementVm.dataHasChanged()"
+                [primary]="true"
+                (click)="onClickSendAndSave()">{{'Send and Save as Template' | translator}}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

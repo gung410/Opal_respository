@@ -1,0 +1,30 @@
+<div class="search-filter-result">
+  <div class="search-filter-result__searching-section">
+    <div class="search-filter-result__search-result-info"
+         *ngIf="searchText !== undefined">
+      <div class="search-filter-result__result-for">
+        <div>Results for <strong>{{searchText}}</strong></div>
+      </div>
+      <div class="search-filter-result__items-count">
+        <span>{{ "##temsCount## items found" | translator: { itemsCount: total } }}</span>
+      </div>
+
+      <div class="search-filter-result__search-type-container"
+           *ngIf="statisticResult">
+        <span [ngClass]="{'active': this.currenSearchModel.learningTypeFilter === item.type }"
+              *ngFor="let item of statisticResult"
+              (click)="searchOnType(item.type)"> {{ getFilterNames(item.type) | translator }} ({{item.totalCount}})</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-filter-result__list">
+    <learning-card-list #searchFilterResultList
+                        [getPagedLearningItemsCallback]="getPagedItemsCallBack.bind(this)"
+                        [numberOfItemsOnPage]="12"
+                        [showLongCard]="showLongCard"
+                        (learningCardClick)="onLearningCardClick($event)"
+                        [showTitle]="false">
+    </learning-card-list>
+  </div>
+</div>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.WidgetSettingView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:behaviors="clr-namespace:LearnerApp.Behaviors"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	Title="Customize homepage widgets"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	BackgroundColor="{StaticResource ContentPageColor}">
+
+	<StackLayout Margin="10" Spacing="10">
+		<StackLayout
+			Padding="10"
+			BackgroundColor="White"
+			Spacing="30"
+			VerticalOptions="FillAndExpand">
+			<Label
+				FontFamily="{StaticResource RobotoRegular}"
+				FontSize="16"
+				HorizontalOptions="CenterAndExpand"
+				Text="Please select widget(s) to display on your homepage. At least one widget must be selected."
+				TextColor="{StaticResource MainBodyTextColor}" />
+			<StackLayout Spacing="15">
+				<!--  CALENDAR  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Calendar"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowCalendar}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  NEWSFEED  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="News Feed"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowNewsFeed}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  OUTSTANDING  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Outstanding Tasks"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowOutstanding}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  SHARED BY OTHER USERS  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Shared by Other Users"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowSharedByOtherUsers}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  MY LEARNING  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="My learning"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowMyLearning}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  RECOMMENDATION FOR YOU  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Recommended for You"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowReccommendedForYou}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  RECOMMENDATION BY ORG  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Recommended by Your Organisation"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowReccommendedByYourOrg}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+				<BoxView
+					BackgroundColor="LightGray"
+					HeightRequest="1"
+					HorizontalOptions="FillAndExpand" />
+
+				<!--  BOOKMARKS  -->
+				<StackLayout Orientation="Horizontal">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						HorizontalOptions="StartAndExpand"
+						Text="Bookmarks"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<Switch IsToggled="{Binding ShowBookmarks}" VerticalOptions="CenterAndExpand">
+						<Switch.Behaviors>
+							<behaviors:SwitchBehavior ToggledCommand="{Binding ToggledChangedCommand}" />
+						</Switch.Behaviors>
+					</Switch>
+				</StackLayout>
+			</StackLayout>
+		</StackLayout>
+
+		<StackLayout Orientation="Horizontal" Spacing="10">
+			<Button
+				BackgroundColor="White"
+				BorderColor="LightGray"
+				BorderWidth="1"
+				Command="{Binding CancelCommand}"
+				CornerRadius="4"
+				HorizontalOptions="FillAndExpand"
+				Text="Cancel"
+				TextColor="{StaticResource MainBodyTextColor}" />
+			<Button
+				BackgroundColor="{Binding EnableSubmit, Converter={StaticResource ConfirmButtonBackgroundConverter}}"
+				BorderColor="{Binding EnableSubmit, Converter={StaticResource ConfirmButtonBackgroundConverter}}"
+				BorderWidth="1"
+				Command="{Binding UpdateSettingCommand}"
+				CornerRadius="4"
+				HorizontalOptions="FillAndExpand"
+				IsEnabled="{Binding EnableSubmit}"
+				Text="Submit"
+				TextColor="White" />
+		</StackLayout>
+	</StackLayout>
+</common:BaseLearnerContentPage>

@@ -1,0 +1,27 @@
+<div class="cat-tree"
+     *ngIf="metadataTagsTree.length > 0 && isFirstLevel">
+  <ng-container [ngTemplateOutlet]="recursiveTreeTemplate"
+                [ngTemplateOutletContext]="{ metadataTagsTree: metadataTagsTree, isFirstLevel: isFirstLevel }"></ng-container>
+</div>
+
+<ng-container *ngIf="metadataTagsTree.length > 0 && !isFirstLevel"
+              [ngTemplateOutlet]="recursiveTreeTemplate"
+              [ngTemplateOutletContext]="{ metadataTagsTree: metadataTagsTree, isFirstLevel: isFirstLevel }"></ng-container>
+
+<ng-template #recursiveTreeTemplate
+             let-metadataTagsTree="metadataTagsTree"
+             let-isFirstLevel="isFirstLevel">
+  <ul>
+    <li *ngFor="let rootItem of metadataTagsTree;trackBy: metadataTagsTreeTrackByFn">
+      {{rootItem.displayText}}
+      <ul *ngIf="rootItem.childs.length > 0">
+        <li [ngClass]="{'first-level': isFirstLevel}"
+            *ngFor="let childItem of rootItem.childs;trackBy: metadataTagsTreeTrackByFn">
+          {{childItem.displayText}}
+          <ng-container [ngTemplateOutlet]="recursiveTreeTemplate"
+                        [ngTemplateOutletContext]="{ metadataTagsTree: childItem.childs, isFirstLevel: false }"></ng-container>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</ng-template>

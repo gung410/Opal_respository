@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="LearnerApp.Views.Common.TabRootContentPage"
+             x:Name="ThisTabRootContentPage">
+    <Shell.TitleView>
+        <StackLayout
+            x:Name="CustomNavigationView"
+            Padding="50,0,10,0"
+            Orientation="Horizontal">
+            <Label
+        	    x:Name="NavigateTitle"
+        	    FontAttributes="Bold"
+        	    FontSize="22"
+        	    HorizontalOptions="CenterAndExpand"
+        	    Text="{Binding Source={x:Reference ThisTabRootContentPage}, Path=Title}"
+        	    TextColor="Black"
+        	    VerticalOptions="CenterAndExpand" />
+            <AbsoluteLayout>
+                  <AbsoluteLayout.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="Android" Value="0, 10, 0, 0" />
+                    </OnPlatform>
+                </AbsoluteLayout.Margin>
+        	    <AbsoluteLayout.GestureRecognizers>
+        		    <TapGestureRecognizer Command="{Binding NavigateToMyProfileCommand}" />
+        	    </AbsoluteLayout.GestureRecognizers>
+        	    <Frame
+        		    Padding="0"
+        		    CornerRadius="20"
+        		    HasShadow="False"
+        		    IsClippedToBounds="True">
+        		    <Image
+        			    Aspect="AspectFill"
+        			    HeightRequest="40"
+        			    Source="{Binding Source={x:Reference CustomNavigationView}, Path=BindingContext.Avatar}"
+        			    WidthRequest="40" />
+        	    </Frame>
+        	    <Frame
+        		    Padding="0"
+        		    AbsoluteLayout.LayoutBounds="30,0,16,16"
+        		    AbsoluteLayout.LayoutFlags="YProportional"
+        		    BackgroundColor="Red"
+        		    BorderColor="Red"
+        		    CornerRadius="8"
+        		    HasShadow="False"
+        		    IsVisible="{Binding TotalNewNotification, Converter={StaticResource TotalNewNotificationConverter}}">
+        		    <Label
+                        x:Name="TotalNotification"
+        			    FontSize="6"
+        			    HorizontalOptions="CenterAndExpand"
+        			    Text="{Binding Source={x:Reference CustomNavigationView}, Path=BindingContext.TotalNewNotification}"
+        			    TextColor="White"
+        			    VerticalOptions="CenterAndExpand" />
+        	    </Frame>
+        	    <Frame
+        		    Padding="0"
+        		    AbsoluteLayout.LayoutBounds="0,30,40,10"
+        		    AbsoluteLayout.LayoutFlags="XProportional"
+        		    BorderColor="Gray"
+        		    CornerRadius="4"
+        		    HasShadow="False">
+        		    <Button
+        			    Padding="0"
+        			    BackgroundColor="Transparent"
+        			    BorderColor="Gray"
+        			    Command="{Binding Source={x:Reference CustomNavigationView}, Path=BindingContext.NavigateToMyProfileCommand}"
+        			    FontSize="6"
+        			    Text="Profile"
+        			    TextColor="Black" />
+        	    </Frame>
+            </AbsoluteLayout>
+        </StackLayout>
+    </Shell.TitleView>
+</ContentPage>

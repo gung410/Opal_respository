@@ -1,0 +1,41 @@
+<div class="compare-version-section"
+     *ngIf="isCompleted && diffHtmlResult && !noDataToCompare">
+  <div class="compare-version-section__wrap">
+    <div class="compare-version-section__item --body">
+      <div class="digital-content-comparison overlay-layer"
+           [innerHTML]="diffHtmlResult.newResource | safeHtml:'html'">
+      </div>
+    </div>
+    <div class="compare-version-section__item --body">
+      <div class="digital-content-comparison overlay-layer"
+           [innerHTML]="diffHtmlResult.oldResource | safeHtml:'html'">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="compare-version-section"
+     *ngIf="isCompleted && !diffHtmlResult && !noDataToCompare">
+  <div class="compare-version-section__wrap">
+    <div class="compare-version-section__item --body">
+      <preview-digital-content [digitalContent]="oldDigitalContent">
+      </preview-digital-content>
+    </div>
+    <div class="compare-version-section__item --body">
+      <preview-digital-content [digitalContent]="newDigitalContent">
+      </preview-digital-content>
+    </div>
+  </div>
+</div>
+
+<div class="compare-version-section"
+     *ngIf="isCompleted && noDataToCompare">
+  <div class="compare-version-section__wrap">
+    <div class="compare-version-section__item --body">
+      <span>No content to compare</span>
+    </div>
+    <div class="compare-version-section__item --body">
+      <span>No content to compare</span>
+    </div>
+  </div>
+</div>

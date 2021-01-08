@@ -1,0 +1,23 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <peer-assessor-selection [peerAssessmentVm]="peerAssessmentVm"
+                                 [input]="input"
+                                 [courseId]="courseId"
+                                 [classRunId]="classRunId"
+                                 [assignmentId]="assignmentId"
+                                 (peerAssessmentSelected)="onSelectedAssessmentAnswer($event)">
+        </peer-assessor-selection>
+      </div>
+    </div>
+  </div>
+  <div class="detail-content__right-container"
+       *ngIf="currentSeletedAssessmentAnswer">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <assessment-answer-editor [input]="assessmentInput"></assessment-answer-editor>
+      </div>
+    </div>
+  </div>
+</div>

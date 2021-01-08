@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Controls.DropDownSelectionPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <Frame
+        x:Name="MainStack"
+        Margin="40,0,40,0"
+        Padding="0"
+        BackgroundColor="White"
+        CornerRadius="4"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Center">
+        <StackLayout>
+            <StackLayout
+                x:Name="ItemsSourseStack"
+                BackgroundColor="#D8DCE6"
+                Spacing="1" />
+            <StackLayout
+                x:Name="CloseBtnStack"
+                Margin="0,0,0,100"
+                HeightRequest="50"
+                HorizontalOptions="CenterAndExpand"
+                IsVisible="False"
+                VerticalOptions="EndAndExpand"
+                WidthRequest="50">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Close_Tapped" />
+                </StackLayout.GestureRecognizers>
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="20"
+                    Source="close.svg"
+                    WidthRequest="20" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

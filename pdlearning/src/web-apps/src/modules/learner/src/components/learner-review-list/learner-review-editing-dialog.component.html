@@ -1,0 +1,32 @@
+<div class="learning-feedbacks__on-list">
+  <div [formGroup]="form">
+    <div class="learning-feedbacks__section"
+         *ngIf="isShow(configuration.rating)">
+      <editable [modeView]="displayMode">
+        <ng-template editableEditMode="">
+          <div class="learning-feedbacks__comment-text">{{"Your Rating" | translator}}</div>
+          <rating-stars class="learning-feedbacks__rating-stars"
+                        size="lg"
+                        [(ngModel)]="rating"
+                        [clickable]="true"
+                        formControlName="rating"
+                        kendoErrorTooltip></rating-stars>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="learning-feedbacks__section"
+         *ngIf="isShow(configuration.review)">
+      <editable [modeView]="displayMode">
+        <ng-template editableEditMode="">
+          <div class="learning-feedbacks__comment-text">{{"Your Feedback" | translator}}</div>
+          <textarea class="learning-feedbacks__comment-textarea"
+                    maxlength="2000"
+                    [(ngModel)]="reviewComment"
+                    formControlName="comment"
+                    kendoErrorTooltip></textarea>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</div>

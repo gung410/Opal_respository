@@ -1,0 +1,28 @@
+.k-textbox {
+  height: $main-control-height;
+  line-height: $main-control-height;
+  border-radius: $main-border-radius;
+  padding: 0 16px;
+  color: $color-blue-dard;
+  width: 100%;
+
+  &::-webkit-input-placeholder {
+    /* Edge */
+    color: $color-dim-gray;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $color-dim-gray;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  &::placeholder {
+    color: $color-dim-gray;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}

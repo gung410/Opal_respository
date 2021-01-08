@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:eCertificate="clr-namespace:LearnerApp.ViewModels.Achievement.ECertificate;assembly=LearnerApp"
+             x:Class="LearnerApp.Views.Achievement.Badge.AchievementBadgeItemView"
+             x:DataType="eCertificate:AchievementBadgeItemViewModel"
+             Padding="5,5,5, 5"
+             WidthRequest="200">
+    <controls:LearnerContentFrame Padding="10">
+        <controls:LearnerContentFrame.GestureRecognizers>
+            <TapGestureRecognizer
+                Command="{Binding OnBadgeClickedCommand}"/>
+        </controls:LearnerContentFrame.GestureRecognizers>
+        <Grid RowDefinitions="160, *" VerticalOptions="StartAndExpand">
+            <ContentView Padding="5,0,5,0" Grid.Row="0" VerticalOptions="Start">
+                <forms:CachedImage
+                    Aspect="AspectFit"
+                    HeightRequest="150"
+                    HorizontalOptions="Fill"
+                    Source="{Binding ImageUrl}"/>
+            </ContentView>
+
+            <StackLayout Orientation="Vertical" Spacing="10" Grid.Row="1">
+                <Label Text="{Binding BadgeName}"
+                       HorizontalOptions="Center"/>
+                <Label Text="{Binding ReceivedDateStr}"
+                       HorizontalOptions="Center"/>
+                <Label Text="{Binding AdditionalInfo}"
+                       MaxLines="2"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+    </controls:LearnerContentFrame>
+</ContentView>
+

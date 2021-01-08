@@ -1,0 +1,46 @@
+peer-assessor-selection {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  max-width: 100%;
+
+  .peer-assessor-selection {
+    &__item-title {
+      font-size: $font-branding;
+      margin-top: 10px;
+      color: $color-blue-light;
+      text-transform: uppercase;
+
+      &.-selected {
+        color: $color-blue-dard;
+        font-weight: 500;
+      }
+    }
+
+    &__peer-assessor-selection {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__individual-assessor {
+      flex: 1 1 auto;
+    }
+
+    &__add-peer-assessor-btn {
+      flex: 0 1 auto;
+    }
+
+    &__user-list-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &__user-info-item {
+      display: flex;
+      flex-grow: 1;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="assessment-criteria">
+  <div class="assessment-criteria__title-container"
+       *ngIf="criteria.name">
+    <span class="assessment-criteria__title">{{ criteria.name }}</span>
+  </div>
+  <assessment-scale *ngFor="let scale of scales"
+                    [scale]="scale"
+                    [criteriaScale]="criteriaScaleDic[scale.id]"
+                    [checked]="assessmentAnswerVm.getCriteriaAnswer(criteria.id).scaleId === scale.id"
+                    (checkedChange)="updateScaleAnswer($event,  scale.id)"
+                    [viewMode]="viewMode">
+  </assessment-scale>
+  <div class="assessment-criteria__comment-container">
+    <label class="assessment-criteria__comment-title">{{ 'Comment:' | translator }}</label>
+    <editable [modeView]="viewMode">
+      <ng-template editableViewMode="">{{ assessmentAnswerVm.getCriteriaAnswer(criteria.id).comment || '- N/A' }}</ng-template>
+      <ng-template editableEditMode="">
+        <textarea class="assessment-criteria__comment"
+                  [placeholder]="'Add comment ...' | translator"
+                  kendoTextArea
+                  [autoSize]="true"
+                  rows="5"
+                  [ngModel]="assessmentAnswerVm.getCriteriaAnswer(criteria.id).comment"
+                  (ngModelChange)="assessmentAnswerVm.updateCommentAnswer(criteria.id, $event)"
+                  [ngModelOptions]="{ standalone: true }"></textarea>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="assessment-criteria__logic-validation-errors alert -danger"
+       *ngIf="logicValidationErrors">
+    <div *ngFor="let key of logicValidationErrorKeys">{{ logicValidationErrors[key] | translator}}</div>
+  </div>
+</div>

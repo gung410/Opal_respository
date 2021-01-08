@@ -1,0 +1,67 @@
+lecture-content-editor {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.lecture-content-editor {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow: auto;
+
+  &__title-editor {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border: 1px solid $border-color;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 9px 10px;
+    margin: 8px;
+    outline: none;
+    font-size: $font-h6;
+  }
+
+  &__value-group {
+    flex-grow: 1;
+  }
+
+  &__value-editor {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid $color-gainsboro;
+    flex-grow: 1;
+    min-height: 500px;
+
+    > kendo-toolbar {
+      display: flex;
+      min-height: auto;
+    }
+
+    iframe.k-content {
+      height: auto;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    button + button {
+      margin-left: 10px;
+    }
+  }
+
+  > .form-controls-group {
+    padding-right: 0;
+  }
+
+  &__digital-content-downloadable-checkbox {
+    align-items: flex-end;
+    margin-top: 15px;
+  }
+}

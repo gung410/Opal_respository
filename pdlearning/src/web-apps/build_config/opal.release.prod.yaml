@@ -1,0 +1,180 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-opal-web-apps-build
+      - cx-opal-web-apps-build-uat
+      - cx-opal-web-apps-build-pre-prod
+      - cx-opal-web-apps-build-prod
+      - cx-opal-web-apps-systemtest
+  uat:
+    pipelines:
+      - cx-opal-web-apps-uat
+  pre-production:
+    pipelines:
+      - cx-opal-web-apps-pre-prod
+  production:
+    pipelines:
+      - cx-opal-web-apps-prod
+pipelines:
+  cx-opal-web-apps-build:
+    group: cx-opal-web-apps
+    label_template: "release-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: "src/web-apps"
+      SONAR_PROJECTKEY: cx-opal-web-apps-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+      ENVIRONMENT_NAME: systemtest
+    template: osd-angular-linux-docker-build-sonarqube-scanner
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/web-apps/**/*.*
+
+  cx-opal-web-apps-systemtest:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-opal-web-apps-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: systemtest-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+    template: ansible-deploy-fetch-upstream
+
+  cx-opal-web-apps-build-uat:
+    group: cx-opal-web-apps
+    label_template: "release-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: "src/web-apps"
+      SONAR_PROJECTKEY: cx-opal-web-apps-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: uat-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+      ENVIRONMENT_NAME: uat
+    template: osd-angular-linux-docker-build-sonarqube-scanner
+    materials:
+      # Temporary remove upstream to support direct deployment updates to UAT environment.
+      # upstream:
+      #   pipeline: cx-opal-web-apps-systemtest
+      #   stage: deploy-stage
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        blacklist:
+          - /**
+
+  cx-opal-web-apps-uat:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    lock_behavior: none
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-build-uat
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-opal-web-apps-build-uat
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: uat-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+    template: ansible-deploy-fetch-upstream
+
+  cx-opal-web-apps-build-pre-prod:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: "src/web-apps"
+      SONAR_PROJECTKEY: cx-opal-web-apps-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: pre-prod-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+      ENVIRONMENT_NAME: pre-prod
+    template: osd-angular-linux-docker-build-sonarqube-scanner
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-uat
+        stage: deploy-stage
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        blacklist:
+          - /**
+
+  cx-opal-web-apps-pre-prod:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    lock_behavior: none
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-build-pre-prod
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-opal-web-apps-build-pre-prod
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: pre-prod-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+    template: ansible-deploy-fetch-upstream
+
+  cx-opal-web-apps-build-prod:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: "src/web-apps"
+      SONAR_PROJECTKEY: cx-opal-web-apps-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: prod-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+      ENVIRONMENT_NAME: prod
+    template: osd-angular-linux-docker-build-sonarqube-scanner
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-uat
+        stage: deploy-stage
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        blacklist:
+          - /**
+
+  cx-opal-web-apps-prod:
+    group: cx-opal-web-apps
+    label_template: "${upstream}"
+    lock_behavior: none
+    materials:
+      upstream:
+        pipeline: cx-opal-web-apps-build-prod
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-opal-web-apps-build-prod
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: prod-2.0.0
+      DOCKER_IMAGE_REPO: cx-opal-web-apps
+    template: ansible-deploy-fetch-upstream

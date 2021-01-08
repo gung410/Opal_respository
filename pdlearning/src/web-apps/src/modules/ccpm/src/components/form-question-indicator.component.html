@@ -1,0 +1,8 @@
+<button class="form-question-indicator__indicator-btn"
+        [ngClass]="{'-active': isActive(questionNumber)}"
+        *ngFor="let questionNumber of questionNumberList"
+        kendoButton
+        [look]="isActive(questionNumber) ? '' : 'outline'"
+        (click)="onIndicatorBtnClicked(questionNumber)">
+  {{questionNumber}}
+</button>

@@ -1,0 +1,179 @@
+@mixin flex-layout-media($media-type) {
+  @if($media-type=="xs"or $media-type=="lt-sm") {
+    @media (max-width: $media-breakpoint-xs) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="gt-xs") {
+    @media (min-width: $media-breakpoint-gt-xs) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="sm") {
+    @media (min-width: $media-breakpoint-gt-xs) and (max-width: $media-breakpoint-sm) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="gt-sm") {
+    @media (min-width: $media-breakpoint-gt-sm) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lt-md") {
+    @media (max-width: $media-breakpoint-sm) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="md") {
+    @media (min-width: $media-breakpoint-gt-sm) and (max-width: $media-breakpoint-md) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="gt-md") {
+    @media (min-width: $media-breakpoint-gt-md) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lt-lg") {
+    @media (max-width: $media-breakpoint-md) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lg") {
+    @media (min-width: $media-breakpoint-gt-md) and (max-width: $media-breakpoint-lg) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="gt-lg") {
+    @media (min-width: $media-breakpoint-gt-lg) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lt-xl") {
+    @media (max-width: $media-breakpoint-lg) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="xl") {
+    @media (min-width: $media-breakpoint-gt-lg) and (max-width: $media-breakpoint-xl) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="grid-sm") {
+    @media (max-width: $media-break-grid-md) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="grid-ipad") {
+    @media (max-width: $media-break-grid-sm) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="tablet-portrait") {
+    @media (max-width: $media-breakpoint-tb) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="tablet-horizontal") {
+    @media (max-height: $media-breakpoint-tb) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="tablet-horizontal-small") {
+    @media (max-height: $media-breakpoint-tbsmall) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lt-smallpad") {
+    @media (max-width: $media-breakpoint-lt-smallpad) {
+      @content;
+    }
+  }
+
+  @else if($media-type=="lt-mobile") {
+    @media (max-width: $media-breakpoint-lt-mobile) {
+      @content;
+    }
+  }
+}
+
+@mixin flex-column-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin two-line-truncate-text {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+  -ms-line-clamp: 2;
+  -o-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-box-orient: vertical;
+  -o-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+/*Fonts*/
+@mixin text-body {
+  font-size: $font-h6;
+  line-height: 25px;
+}
+
+@mixin text-small {
+  font-size: $font-normal;
+  line-height: 17px;
+}
+
+@mixin text-statuses {
+  font-size: $font-normal;
+  font-weight: $font-weight-bold;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+@mixin default-variables-input {
+  height: $main-control-height;
+  padding: 0 16px;
+  font-size: $font-h6;
+  border-radius: $main-border-radius;
+  font-weight: $font-weight-medium;
+  line-height: 100%;
+
+  @include flex-layout-media('lt-lg') {
+    height: $main-small-control-height;
+  }
+}

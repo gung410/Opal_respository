@@ -1,0 +1,126 @@
+.video-js {
+
+  //#region Customization
+  .vjs-button {
+    cursor: pointer;
+  }
+
+  .vjs-play-progress:before {
+    z-index: 2 !important;
+  }
+
+  .vjs-progress-control.vjs-control:hover .vjs-chapter {
+    font-size: 2em;
+  }
+
+  .vjs-big-play-button {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .vjs-play-progress.vjs-slider-bar {
+    background-color: rgba(255, 255, 255, 0.5)
+  }
+
+  .vjs-current-time,
+  .vjs-time-control,
+  .vjs-duration {
+    display: block;
+  }
+
+  .vjs-time-control.vjs-time-divider {
+    padding: 0;
+    width: fit-content;
+    min-width: unset;
+  }
+
+  $mobile-size: "lt-md";
+
+  .vjs-volume-panel.vjs-control {
+    @include flex-layout-media($mobile-size) {
+      display: none;
+    }
+  }
+
+  //#endregion
+
+  .vjs-annotation-btn {
+    &:before {
+      content: url('../assets/images/icons/eye.svg');
+    }
+
+    &-off:before {
+      content: url('../assets/images/icons/eye-off.svg');
+    }
+  }
+
+  .vjs-chapters {
+    margin-left: 10px;
+    width: calc(100% - 20px);
+    height: 100%;
+    position: absolute;
+  }
+
+  .vjs-chapter {
+    top: 0;
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+
+    .vjs-chapter-progress {
+      width: 100%;
+      // width: calc(100% - 3px);
+      height: 0.3em;
+      ;
+      position: absolute;
+      top: calc(50% - 0.3em/2);
+      transition: all 0.3s;
+
+      &:before,
+      &:after {
+        width: 3px;
+        height: 100%;
+        background-color: $color-white;
+        display: block;
+        position: absolute;
+        content: ""
+      }
+
+      &:before {
+        left: 0;
+      }
+
+      &:after {
+        right: 0;
+      }
+    }
+
+    &:hover .vjs-chapter-progress {
+      height: 0.6em;
+      background: #1D91CF;
+      top: calc(50% - 0.6em/2);
+    }
+
+    .vjs-chapter-name {
+      opacity: 0;
+      transition: all 0.3s;
+      color: $color-blue-dard;
+      background: $color-white;
+      width: fit-content;
+      margin: -50px auto 0;
+      padding: 8px;
+      border-radius: 5px;
+      position: absolute;
+      white-space: nowrap;
+      transform: translateX(-50%);
+      left: 50%;
+      font-size: 14px;
+    }
+
+    &:hover .vjs-chapter-name {
+      opacity: 1;
+    }
+  }
+
+}

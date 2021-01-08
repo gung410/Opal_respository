@@ -1,0 +1,33 @@
+<div class="question-bank-add-dialog ccpm-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">{{ 'Move To Question Bank' | translator }}</div>
+  </div>
+  <div class="dialog-body">
+    <div class="question-bank-add-dialog__container">
+      <form [formGroup]="form">
+        <div class="form-controls-group">
+          <label>{{'Title' | globalTranslator}}</label>
+          <input class="form-control"
+                 formControlName="title"
+                 kendoTextBox
+                 kendoErrorTooltip
+                 position="top"
+                 autofocus
+                 [placeholder]="'Enter the name of the title for question' | globalTranslator"
+                 [(ngModel)]="title">
+        </div>
+        <div class="form-controls-group">
+          <label>{{'Question Group' | globalTranslator}}</label>
+          <question-bank-group [(questionGroupName)]="questionGroupName"></question-bank-group>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+    <button kendoButton
+            [primary]="true"
+            (click)="onSubmit()">{{ 'Submit' | globalTranslator }}</button>
+  </div>
+</div>

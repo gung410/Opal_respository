@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.MyLearningPathsDetailsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:listitemcard="clr-namespace:LearnerApp.Controls.ListItemCard"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="Learning Path"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:MyLearningPathsDetailsViewModel"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout IsVisible="{Binding IsRefreshing, Converter={StaticResource InverseBoolConverter}}">
+                <AbsoluteLayout>
+                    <ffimagesvg:SvgCachedImage
+                        AbsoluteLayout.LayoutBounds="0,0,1,200"
+                        AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                        Aspect="AspectFill"
+                        BackgroundColor="AliceBlue"
+                        CacheType="Disk"
+                        ErrorPlaceholder="learning_path_thumbnail.png"
+                        Source="{Binding LearningPathsImage, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='LearningPath'}" />
+                    <StackLayout
+                        Margin="20,0,20,0"
+                        AbsoluteLayout.LayoutBounds="0,0,1,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                        IsVisible="{Binding IsVisibleMore}"
+                        Orientation="Horizontal">
+                        <Frame
+                            Padding="0"
+                            BorderColor="{StaticResource TintColor}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HeightRequest="40"
+                            HorizontalOptions="EndAndExpand"
+                            IsClippedToBounds="True"
+                            VerticalOptions="Center"
+                            WidthRequest="40">
+                            <ffimagesvg:SvgCachedImage
+                                Aspect="AspectFit"
+                                HeightRequest="20"
+                                HorizontalOptions="CenterAndExpand"
+                                Source="more.svg"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="20" />
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MoreCommand}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                </AbsoluteLayout>
+                <StackLayout Margin="10,-30,10,10" Spacing="10">
+                    <controls:LearnerContentFrame
+                        Padding="10"
+                        CornerRadius="6"
+                        HasShadow="False">
+                        <StackLayout Spacing="10">
+                            <StackLayout IsVisible="{Binding IsMyOwnLearningPath}" Orientation="Horizontal">
+                                <Button
+                                    Padding="0"
+                                    BackgroundColor="White"
+                                    BorderColor="#D8DCE6"
+                                    BorderWidth="1"
+                                    Command="{Binding ShareLearningPathCommand}"
+                                    CornerRadius="6"
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="18"
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="Share"
+                                    TextColor="{StaticResource MainBodyTextColor}" />
+                                <Button
+                                    Padding="0"
+                                    BackgroundColor="{StaticResource MainBodyTextColor}"
+                                    Command="{Binding EditLearningPathCommand}"
+                                    CornerRadius="6"
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="18"
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    IsVisible="{Binding IsVisibileLearningPathCUD}"
+                                    Text="Edit"
+                                    TextColor="White" />
+                            </StackLayout>
+
+                            <Label
+                                FontFamily="{StaticResource RobotoRegular}"
+                                FontSize="16"
+                                Text="{Binding Title}"
+                                TextColor="{StaticResource MainBodyTextColor}" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="14"
+                                    Text="Learning Path"
+                                    TextColor="#8799BA" />
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="14"
+                                    Text="{Binding TotalCount, Converter={StaticResource LearningPathsCountConverter}}"
+                                    TextColor="#8799BA" />
+                            </StackLayout>
+                        </StackLayout>
+                    </controls:LearnerContentFrame>
+                    <controls:LearnerContentFrame
+                        Padding="10"
+                        CornerRadius="6"
+                        HasShadow="False">
+                        <StackLayout>
+                            <Label
+                                FontFamily="{StaticResource RobotoRegular}"
+                                FontSize="{StaticResource BaseButtonFontSize}"
+                                Text="PD Opportunities"
+                                TextColor="{StaticResource SecondaryTextColor}" />
+                            <listitemcard:VerticalListView
+                                Source="{Binding CourseCollection}"
+                                TotalCount="{Binding TotalCount}"
+                                VerticalOptions="Start" />
+                        </StackLayout>
+                    </controls:LearnerContentFrame>
+                </StackLayout>
+            </StackLayout>
+            <ContentView BackgroundColor="White" IsVisible="{Binding IsRefreshing}">
+                <shimmer:LearnerShimmer
+                    HeightRequest="200"
+                    Type="Video"
+                    VerticalOptions="StartAndExpand" />
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

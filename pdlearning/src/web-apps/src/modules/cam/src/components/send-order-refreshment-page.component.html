@@ -1,0 +1,58 @@
+<div class="send-order-refreshment-page">
+  <div class="send-order-refreshment-page__center-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <div class="form-container">
+          <div class="form-controls-group">
+            <label>{{'To:' | translator}}</label>
+            <opal-select class="form-control"
+                         [items]="sendOrderRefreshmentVm.sendToEmails"
+                         [(ngModel)]="sendOrderRefreshmentVm.sendToEmails"
+                         [valueField]="'emailAddress'"
+                         [labelField]="'emailAddress'"
+                         [disableSelectAll]="true"
+                         [addTag]="true"
+                         [multiple]="true"
+                         [clearSearchOnAdd]="true"
+                         [minDropdownHeight]="0"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </div>
+          <div class="form-controls-group">
+            <label>{{'CC:' | translator}}</label>
+            <opal-select class="form-control"
+                         [items]="sendOrderRefreshmentVm.emailCC"
+                         [(ngModel)]="sendOrderRefreshmentVm.emailCC"
+                         [fetchDataFn]="fetchCourseAdministratorItemsFn"
+                         [valueField]="'emailAddress'"
+                         [labelField]="'emailAddress'"
+                         [disableSelectAll]="true"
+                         [addTag]="true"
+                         [multiple]="true"
+                         [clearSearchOnAdd]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </div>
+          <div class="form-controls-group">
+            <label>{{'Subject:' | translator}}</label>
+            <input class="form-control"
+                   type="text"
+                   [(ngModel)]="sendOrderRefreshmentVm.emailSubject"
+                   kendoErrorTooltip
+                   position="top"
+                   autoFocus>
+          </div>
+          <mail-editor [(mailContent)]="sendOrderRefreshmentVm.emailContent"></mail-editor>
+          <div class="send-order-refreshment-page__group-buttons">
+            <button kendoButton
+                    (click)="onReset()">{{ 'Reset' | globalTranslator }}</button>
+            <button type="submit"
+                    kendoButton
+                    (click)="onSend()"
+                    [primary]="true">{{ 'Send' | globalTranslator }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

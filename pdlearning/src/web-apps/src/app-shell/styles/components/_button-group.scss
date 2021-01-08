@@ -1,0 +1,19 @@
+.button-group {
+  &__more-button {
+    width: 16px;
+    height: 40px;
+    border: none;
+
+    &:hover {
+      background: transparent;
+    }
+
+    &.k-state-focused {
+      box-shadow: none !important;
+    }
+  }
+
+  &__button {
+    margin-left: 10px;
+  }
+}

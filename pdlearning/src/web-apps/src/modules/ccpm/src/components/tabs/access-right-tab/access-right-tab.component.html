@@ -1,0 +1,105 @@
+<div class="access-right-tab__header">
+  <div class="access-right-tab__header-right">
+    <button *ngIf="allowAddCollaborator"
+            kendoButton
+            [primary]="false"
+            (click)="openModalRevertVersion()">
+      {{ 'Add Users' | translator }}
+    </button>
+
+  </div>
+</div>
+
+<kendo-grid class="column flex access-right-grid opal-grid"
+            #grid
+            [data]="gridData"
+            [pageable]="true"
+            [pageSize]="pageSize"
+            [skip]="pageNumber"
+            (pageChange)="onPageChange($event)">
+
+  <kendo-grid-column [title]="'Name' | translator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span *ngIf="dataItem.collaborator">{{dataItem.collaborator.fullName}}</span>
+      <i *ngIf="!dataItem.collaborator">Unknow User</i>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Email' | translator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span *ngIf="dataItem.collaborator">{{dataItem.collaborator.emailAddress}}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Place of Work' | globalTranslator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span *ngIf="dataItem.collaborator">{{dataItem.collaborator.departmentName}}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Date' | translator"
+                     field="createdDate">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      {{ dataItem.createdDate | date:'dd/MM/yyyy HH:mm a' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column title
+                     [width]="60"
+                     *ngIf="allowDeleteCollaborator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span class="k-icon k-i-close"
+            (click)="onClickDeleteAccessRight(dataItem)"></span>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+
+<ng-template #addCollaboratorDialogTemplate="">
+  <div class="add-collaborator-dialog">
+    <div class="dialog-header">
+      <div class="dialog-header__title">{{ 'Add Users to "##title##"' | translator : {title: itemTitle} }}</div>
+      <div class="dialog-header__actions">
+        <span class="k-icon k-i-close"
+              (mousedown)="onclickCloseDialog($event)"></span>
+      </div>
+    </div>
+    <div class="dialog-content">
+      <div class="form-controls-group">
+        <div class="form-title">{{ 'Add Users' | translator }}</div>
+        <opal-select class="form-control"
+                     [placeholder]="'Select users' | translator"
+                     [labelField]="'fullName'"
+                     [valueField]="'id'"
+                     [(ngModel)]="collaboratorSelectedIds"
+                     [hasMoreDataToFetch]="_hasMoreDataToFetch"
+                     [fetchDataFn]="fetchCollaboratorsFn"
+                     [searchFn]="filterCollaboratorFn"
+                     [maxDropdownHeight]="320"
+                     [disableSelectAll]="true"
+                     [staticMode]="true"
+                     [multiple]="true">
+        </opal-select>
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <button (mousedown)="onclickCloseDialog($event)"
+              kendoButton>{{ 'Cancel' | globalTranslator }}
+      </button>
+      <button kendoButton
+              [disabled]="collaboratorSelectedIds.length === 0"
+              (click)="onClickAddCollaborators()"
+              [primary]="true">
+        {{ 'Accept' | globalTranslator }}
+      </button>
+    </div>
+  </div>
+</ng-template>

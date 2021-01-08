@@ -1,0 +1,70 @@
+<div class="wrapper"
+     *ngIf="canViewRating()">
+  <div class="overal"
+       *ngIf="this.averageRating > 0">
+    {{ 'Overall rate' | translator }}
+    <div class="review-item__rating-stars">
+      <i class="icon tiny {{ averageRating < 1 ? 'star-outline' : 'star' }}"></i>
+      <i class="icon tiny {{ averageRating >= 2 ? 'star' : 'star-outline' }}"></i>
+      <i class="icon tiny {{ averageRating === 3 ? 'star' : 'star-outline' }}"></i>
+    </div>
+    <div class="rate">
+      {{averageRating|number:'1.1-1'}}
+    </div>
+    <div class="vote">
+      ({{this.totalVotes}} {{ 'votes' | translator }})
+    </div>
+  </div>
+</div>
+
+<div class="feedback-show-more-container"
+     *ngIf="showLoadMore">
+  <span class="feedback-show-more-container__text"
+        (click)="onShowMore()">{{ 'View 10 older feedbacks' | translator }}</span>
+</div>
+
+<kendo-grid class="column flex"
+            #grid
+            [hideHeader]="true"
+            [data]="gridView">
+  <kendo-grid-column [title]="''"
+                     field="content">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="feedback-item"
+           *ngIf="dataItem.user">
+        <div class="feedback-item__avatar">
+          <img src="{{ dataItem.user.avatarUrl ? dataItem.user.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+        </div>
+        <div class="feedback-item__data">
+          <div class="feedback-item__data__header">
+            <div class="name">
+              <strong>{{ dataItem.user.fullName }}</strong></div>
+            <div class="department">
+              <span>{{ dataItem.user.departmentName }}</span>
+            </div>
+            <div class="review-item__rating-container">
+              <div class="review-item__rating-stars"
+                   *ngIf="canViewRating()">
+                <i class="icon tiny {{ dataItem.rate < 1 ? 'star-outline' : 'star' }}"></i>
+                <i class="icon tiny {{ dataItem.rate >= 2 ? 'star' : 'star-outline' }}"></i>
+                <i class="icon tiny {{ dataItem.rate === 3 ? 'star' : 'star-outline' }}"></i>
+              </div>
+              <div class="review-item__overall"
+                   *ngIf="canViewRating()">
+                {{dataItem.rate}}
+              </div>
+              <div class="review-item__date">
+                {{ dataItem.createdDate | date:'dd/MM/yyyy hh:mm a'}}
+              </div>
+            </div>
+          </div>
+          <div class="feedback-item__data__content"
+               multilineText>
+            <p>{{ dataItem.commentContent }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

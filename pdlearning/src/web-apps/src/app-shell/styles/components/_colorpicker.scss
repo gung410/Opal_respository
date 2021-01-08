@@ -1,0 +1,18 @@
+.k-colorpicker {
+  .k-picker-wrap {
+    background: transparent;
+    border-radius: 4px;
+    border: $border;
+
+    .k-tool-icon,
+    .k-select {
+      height: 38px;
+      padding: 10px 5px;
+    }
+  }
+}
+
+.k-colorpalette {
+  max-height: 180px;
+  overflow: scroll;
+}

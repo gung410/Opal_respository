@@ -1,0 +1,812 @@
+<form [formGroup]="form">
+  <div class="scrollable-menu-content">
+    <div class="scrollable-menu-content__tab-content">
+      <div class="form-container">
+        <label class="form-title">{{ 'Overview Information' | translator }}</label>
+
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Name of Community/ Title' | translator }}</label>
+          <input type="text"
+                 readonly
+                 [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="communityInfo.nameOfCommunity">
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Privacy ' | translator }}</label>
+          <input type="text"
+                 readonly
+                 [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="communityInfo.privacy">
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Modules ' | translator }}</label>
+          <input type="text"
+                 readonly
+                 [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="communityInfo.modules">
+        </div>
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Type of PD Activity' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div class="metadata-tag-text"
+                   *ngIf="communityMetadataModel.pdActivityType">
+                {{ metadataList.metadataTagsDic[communityMetadataModel.pdActivityType] ? metadataList.metadataTagsDic[communityMetadataModel.pdActivityType].displayText : '' }}
+              </div>
+              <span *ngIf="!communityMetadataModel.pdActivityType">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.pdTypeSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [readOnly]="isCourseAssociated"
+                           [(ngModel)]="communityMetadataModel.pdActivityType"
+                           (selectedValueChange)="onPdActivityTypeChange($event)"
+                           formControlName="pdActivityType"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Mode of Learning' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div class="metadata-tag-text"
+                   *ngIf="communityMetadataModel.learningMode">
+                {{ metadataList.metadataTagsDic[communityMetadataModel.learningMode] ? metadataList.metadataTagsDic[communityMetadataModel.learningMode].displayText : '' }}
+              </div>
+              <span *ngIf="!communityMetadataModel.learningMode">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.modeOfLearningSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.learningMode"
+                           [readOnly]="communityMetadataModel.isMicrolearning || isCourseAssociated"
+                           formControlName="learningMode"
+                           kendoErrorTooltip
+                           position="top">
+              </opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Category' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let categoryId of communityMetadataModel.categoryIds">
+                <div class="metadata-tag-text"
+                     *ngIf="categoryId">
+                  {{ metadataList.metadataTagsDic[categoryId] ? metadataList.metadataTagsDic[categoryId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.categoryIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.categorySelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [readOnly]="isCourseAssociated"
+                           [(ngModel)]="communityMetadataModel.categoryIds"
+                           [multiple]="true"
+                           formControlName="categoryIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+      </div>
+    </div>
+    <div class="scrollable-menu-content__tab-content">
+      <div class="form-container">
+        <label class="form-title">{{ 'Target Participants' | translator }}</label>
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Place of Work' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div class="metadata-tag-text">
+                {{ placeOfWorkTitleDic[communityMetadataModel.placeOfWork] }}
+              </div>
+              <span *ngIf="!communityMetadataModel.placeOfWork">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <div class="form-controls-group -horizontal">
+                <div class="k-checkbox-container">
+                  <input class="k-radio"
+                         id="placeOfWork_ApplicableForEveryone"
+                         name="applicable"
+                         type="radio"
+                         [disabled]="isCourseAssociated"
+                         (click)="communityMetadataModel.setPlaceOfWork(PlaceOfWorkType.ApplicableForEveryone)"
+                         [checked]="communityMetadataModel.placeOfWork === PlaceOfWorkType.ApplicableForEveryone">
+                  <label for="placeOfWork_ApplicableForEveryone">{{ 'Applicable for everyone' | translator }}</label>
+                </div>
+                <div class="k-checkbox-container">
+                  <input class="k-radio"
+                         id="placeOfWork_ApplicableForUsersInSpecificOrganisation"
+                         name="applicable"
+                         type="radio"
+                         [disabled]="isCourseAssociated"
+                         [checked]="communityMetadataModel.placeOfWork === PlaceOfWorkType.ApplicableForUsersInSpecificOrganisation"
+                         (click)="communityMetadataModel.setPlaceOfWork(PlaceOfWorkType.ApplicableForUsersInSpecificOrganisation)">
+                  <label
+                         for="placeOfWork_ApplicableForUsersInSpecificOrganisation">{{ 'Applicable for users in specific organisation(s)' | translator }}</label>
+                </div>
+
+                <input class="form-control -virtual"
+                       type="text"
+                       formControlName="placeOfWork"
+                       [(ngModel)]="communityMetadataModel.placeOfWork"
+                       kendoErrorTooltip
+                       position="top">
+              </div>
+            </ng-template>
+          </editable>
+        </div>
+
+
+        <ng-container *ngIf="communityMetadataModel.placeOfWork === PlaceOfWorkType.ApplicableForUsersInSpecificOrganisation">
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Division' | translator }}</label>
+            <editable [modeView]="viewOnly">
+              <ng-template editableViewMode="">
+                <ng-container *ngFor="let applicableDivisionId of communityMetadataModel.applicableDivisionIds">
+                  <div class="metadata-tag-text"
+                       *ngIf="applicableDivisionId">
+                    {{ metadataList.departmentsDic[applicableDivisionId] ? metadataList.departmentsDic[applicableDivisionId].departmentName : '' }}
+                  </div>
+                </ng-container>
+                <span *ngIf="communityMetadataModel.applicableDivisionIds.length === 0">- N/A</span>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <opal-select class="form-control"
+                             [multiple]="true"
+                             formControlName="applicableDivisionIds"
+                             [(ngModel)]="communityMetadataModel.applicableDivisionIds"
+                             [fetchDataFn]="fetchOwnerDivisionFn"
+                             [fetchDataByValuesFn]="fetchDepartmentByIdsFn"
+                             [items]="metadataList.divisionSelectItems"
+                             [readOnly]="isCourseAssociated"
+                             [valueField]="'id'"
+                             [labelField]="'departmentName'"
+                             [clearable]="true"
+                             kendoErrorTooltip
+                             position="top"></opal-select>
+              </ng-template>
+            </editable>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Branch' | translator }}</label>
+            <editable [modeView]="viewOnly">
+              <ng-template editableViewMode="">
+                <ng-container *ngFor="let applicableBranchId of communityMetadataModel.applicableBranchIds">
+                  <div class="metadata-tag-text"
+                       *ngIf="applicableBranchId">
+                    {{ metadataList.departmentsDic[applicableBranchId] ? metadataList.departmentsDic[applicableBranchId].departmentName : '' }}
+                  </div>
+                </ng-container>
+                <span *ngIf="communityMetadataModel.applicableBranchIds.length === 0">- N/A</span>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <opal-select class="form-control"
+                             formControlName="applicableBranchIds"
+                             [(ngModel)]="communityMetadataModel.applicableBranchIds"
+                             [fetchDataFn]="fetchBranchFn"
+                             [fetchDataByValuesFn]="fetchDepartmentByIdsFn"
+                             [items]="metadataList.branchSelectItems"
+                             [readOnly]="isCourseAssociated"
+                             [valueField]="'id'"
+                             [labelField]="'departmentName'"
+                             [multiple]="true"
+                             [clearable]="true"
+                             kendoErrorTooltip
+                             position="top"></opal-select>
+              </ng-template>
+            </editable>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Zone' | translator }}</label>
+            <editable [modeView]="viewOnly">
+              <ng-template editableViewMode="">
+                <ng-container *ngFor="let applicableZoneId of communityMetadataModel.applicableZoneIds">
+                  <div class="metadata-tag-text"
+                       *ngIf="applicableZoneId">
+                    {{ metadataList.departmentsDic[applicableZoneId] ? metadataList.departmentsDic[applicableZoneId].departmentName : '' }}
+                  </div>
+                </ng-container>
+                <span *ngIf="communityMetadataModel.applicableZoneIds.length === 0">- N/A</span>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <opal-select class="form-control"
+                             [multiple]="true"
+                             formControlName="applicableZoneIds"
+                             [items]="metadataList.zoneSelectItems"
+                             [(ngModel)]="communityMetadataModel.applicableZoneIds"
+                             [fetchDataFn]="fetchZoneFn"
+                             [fetchDataByValuesFn]="fetchDepartmentByIdsFn"
+                             [readOnly]="isCourseAssociated"
+                             [valueField]="'id'"
+                             [labelField]="'departmentName'"
+                             [clearable]="true"
+                             kendoErrorTooltip
+                             position="top"></opal-select>
+              </ng-template>
+            </editable>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Cluster' | translator }}</label>
+            <editable [modeView]="viewOnly">
+              <ng-template editableViewMode="">
+                <ng-container *ngFor="let applicableClusterId of communityMetadataModel.applicableClusterIds">
+                  <div class="metadata-tag-text"
+                       *ngIf="applicableClusterId">
+                    {{ metadataList.departmentsDic[applicableClusterId] ? metadataList.departmentsDic[applicableClusterId].departmentName : '' }}
+                  </div>
+                </ng-container>
+                <span *ngIf="communityMetadataModel.applicableClusterIds.length === 0">- N/A</span>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <opal-select class="form-control"
+                             [multiple]="true"
+                             formControlName="applicableClusterIds"
+                             [(ngModel)]="communityMetadataModel.applicableClusterIds"
+                             [fetchDataFn]="fetchClusterFn"
+                             [fetchDataByValuesFn]="fetchDepartmentByIdsFn"
+                             [items]="metadataList.clusterSelectItems"
+                             [readOnly]="isCourseAssociated"
+                             [valueField]="'id'"
+                             [labelField]="'departmentName'"
+                             [clearable]="true"
+                             kendoErrorTooltip
+                             position="top"></opal-select>
+              </ng-template>
+            </editable>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'School' | translator }}</label>
+            <editable [modeView]="viewOnly">
+              <ng-template editableViewMode="">
+                <ng-container *ngFor="let applicableSchoolId of communityMetadataModel.applicableSchoolIds">
+                  <div class="metadata-tag-text"
+                       *ngIf="applicableSchoolId">
+                    {{ metadataList.departmentsDic[applicableSchoolId] ? metadataList.departmentsDic[applicableSchoolId].departmentName : '' }}
+                  </div>
+                </ng-container>
+                <span *ngIf="communityMetadataModel.applicableSchoolIds.length === 0">- N/A</span>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <opal-select class="form-control"
+                             [multiple]="true"
+                             formControlName="applicableSchoolIds"
+                             [(ngModel)]="communityMetadataModel.applicableSchoolIds"
+                             [fetchDataFn]="fetchSchoolFn"
+                             [fetchDataByValuesFn]="fetchDepartmentByIdsFn"
+                             [items]="metadataList.schoolSelectItems"
+                             [readOnly]="isCourseAssociated"
+                             [valueField]="'id'"
+                             [labelField]="'departmentName'"
+                             [clearable]="true"
+                             kendoErrorTooltip
+                             position="top"></opal-select>
+              </ng-template>
+            </editable>
+          </div>
+        </ng-container>
+
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let serviceSchemeId of communityMetadataModel.serviceSchemeIds">
+                <div class="metadata-tag-text"
+                     *ngIf="serviceSchemeId">
+                  {{ metadataList.metadataTagsDic[serviceSchemeId] ? metadataList.metadataTagsDic[serviceSchemeId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.serviceSchemeIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.serviceSchemeSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.serviceSchemeIds"
+                           (selectedValueChange)="onSchemaChange($event)"
+                           [readOnly]="isCourseAssociated"
+                           [multiple]="true"
+                           formControlName="serviceSchemeIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Track' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let trackId of communityMetadataModel.trackIds">
+                <div class="metadata-tag-text"
+                     *ngIf="trackId">
+                  {{ metadataList.metadataTagsDic[trackId] ? metadataList.metadataTagsDic[trackId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.trackIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="trackIds"
+                           [(ngModel)]="communityMetadataModel.trackIds"
+                           [items]="metadataList.trackSelectItems"
+                           [readOnly]="isCourseAssociated"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group"
+             [ngClass]="{'-required':metadataList.developmentalRoleSelectItems && metadataList.developmentalRoleSelectItems.length > 0}">
+          <label for="ch2">{{ 'Developmental Role' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let developmentalRoleId of communityMetadataModel.developmentalRoleIds">
+                <div class="metadata-tag-text"
+                     *ngIf="developmentalRoleId">
+                  {{ metadataList.metadataTagsDic[developmentalRoleId] ? metadataList.metadataTagsDic[developmentalRoleId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.developmentalRoleIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="developmentalRoleIds"
+                           [(ngModel)]="communityMetadataModel.developmentalRoleIds"
+                           [items]="metadataList.developmentalRoleSelectItems"
+                           [readOnly]="isCourseAssociated"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Subject Area' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let subjectAreaId of communityMetadataModel.subjectAreaIds">
+                <div class="metadata-tag-text"
+                     *ngIf="subjectAreaId">
+                  {{ metadataList.metadataTagsDic[subjectAreaId] ? metadataList.metadataTagsDic[subjectAreaId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.subjectAreaIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.subjectSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.subjectAreaIds"
+                           [multiple]="true"
+                           [readOnly]="isCourseAssociated"
+                           formControlName="subjectAreaIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group"
+             [ngClass]="{'-required':metadataList.teachingLevelsSelectItems && metadataList.teachingLevelsSelectItems.length > 0}"
+             [hidden]="communityMetadataModel.hasOnlyOneServiceSchemesChecked() &&
+             serviceSchemesContains(MetadataCodingScheme.ExecutiveAndAdministrativeStaff)">
+          <label for="ch2">{{ 'Teaching Level' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let teachingLevel of communityMetadataModel.teachingLevels">
+                <div class="metadata-tag-text"
+                     *ngIf="teachingLevel">
+                  {{ metadataList.metadataTagsDic[teachingLevel] ? metadataList.metadataTagsDic[teachingLevel].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.teachingLevels.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="teachingLevels"
+                           [(ngModel)]="communityMetadataModel.teachingLevels"
+                           [items]="metadataList.teachingLevelsSelectItems"
+                           [readOnly]="isCourseAssociated"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group"
+             [ngClass]="{'-required':metadataList.teachingCourseStudySelectItems && metadataList.teachingCourseStudySelectItems.length > 0}"
+             [hidden]="communityMetadataModel.hasOnlyOneServiceSchemesChecked() &&
+             serviceSchemesContains(MetadataCodingScheme.ExecutiveAndAdministrativeStaff)">
+          <label for="ch2">{{ 'Teaching Course of Study' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let teachingCourseStudyId of communityMetadataModel.teachingCourseStudyIds">
+                <div class="metadata-tag-text"
+                     *ngIf="teachingCourseStudyId">
+                  {{ metadataList.metadataTagsDic[teachingCourseStudyId] ? metadataList.metadataTagsDic[teachingCourseStudyId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.teachingCourseStudyIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="teachingCourseStudyIds"
+                           [(ngModel)]="communityMetadataModel.teachingCourseStudyIds"
+                           [items]="metadataList.teachingCourseStudySelectItems"
+                           [readOnly]="isCourseAssociated"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+      </div>
+    </div>
+    <div class="scrollable-menu-content__tab-content">
+      <div class="form-container">
+        <label class="form-title">{{ 'Provider Information' | translator }}</label>
+        <div class="form-controls-group -required">
+          <label>
+            {{ 'Moderator' | translator }}
+          </label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div style="margin-bottom: 10px;">
+                <owner-info *ngIf="communityMetadataModel.moderatorId"
+                            [owner]="metadataList.usersDic[communityMetadataModel.moderatorId]"></owner-info>
+              </div>
+              <span *ngIf="!communityMetadataModel.moderatorId">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           formControlName="moderatorId"
+                           [(items)]="metadataList.moderatorItems"
+                           [fetchDataLogicDependenciesInput]="communityMetadataModel.coModeratorId"
+                           [fetchDataFn]="fetchModeratorItemsFn"
+                           [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                           [readOnly]="isCourseAssociated"
+                           [ignoreItemFn]="ignoreCoModeratorItemFn"
+                           [labelField]="'fullName'"
+                           [valueField]="'id'"
+                           [(ngModel)]="communityMetadataModel.moderatorId"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group">
+          <label>
+            {{ 'Co-Moderator' | translator }}
+          </label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div style="margin-bottom: 10px;">
+                <owner-info *ngIf="communityMetadataModel.coModeratorId"
+                            [owner]="metadataList.usersDic[communityMetadataModel.coModeratorId]"></owner-info>
+              </div>
+              <span *ngIf="!communityMetadataModel.coModeratorId">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           formControlName="coModeratorId"
+                           [(items)]="metadataList.coModeratorItems"
+                           [fetchDataLogicDependenciesInput]="communityMetadataModel.moderatorId"
+                           [fetchDataFn]="fetchCoModeratorItemsFn"
+                           [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                           [ignoreItemFn]="ignoreModeratorItemFn"
+                           [readOnly]="isCourseAssociated"
+                           [labelField]="'fullName'"
+                           [valueField]="'id'"
+                           [(ngModel)]="communityMetadataModel.coModeratorId"
+                           [clearable]="true"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group -required"
+             [hidden]="communityMetadataModel.isMicrolearning">
+          <label for="ch2">{{ 'Name of MOE officer (Owner division)' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <div class="metadata-tag-text">
+                {{ metadataList.moeOfficerDic[communityMetadataModel.moeOfficerId] ? metadataList.moeOfficerDic[communityMetadataModel.moeOfficerId].fullName : '' }}
+              </div>
+              <span *ngIf="!communityMetadataModel.moeOfficerId">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           formControlName="moeOfficerId"
+                           [(ngModel)]="communityMetadataModel.moeOfficerId"
+                           [fetchDataFn]="fetchMoeOfficerItemsFn"
+                           [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                           [(items)]="metadataList.moeOfficerItems"
+                           [readOnly]="isCourseAssociated"
+                           (selectedValueChange)="onMOEOfficerChange($event)"
+                           [valueField]="'id'"
+                           [labelField]="'fullName'"
+                           kendoErrorTooltip
+                           position="top">
+              </opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group -required"
+             [hidden]="communityMetadataModel.isMicrolearning">
+          <label for="ch2">{{ 'Email of MOE officer (Owner division)' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              {{ communityMetadataModel.moeOfficerEmail || '- N/A' }}
+            </ng-template>
+            <ng-template editableEditMode="">
+              <input class="form-control"
+                     type="text"
+                     readonly
+                     formControlName="moeOfficerEmail"
+                     [(ngModel)]="communityMetadataModel.moeOfficerEmail"
+                     kendoErrorTooltip
+                     position="top">
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Owner Division/ Academy' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let ownerDivisionId of communityMetadataModel.ownerDivisionIds">
+                <div class="metadata-tag-text"
+                     *ngIf="ownerDivisionId">
+                  {{ metadataList.departmentsDic[ownerDivisionId] ? metadataList.departmentsDic[ownerDivisionId].departmentName : '' }}
+                </div>
+                <span *ngIf="communityMetadataModel.ownerDivisionIds.length === 0">- N/A</span>
+              </ng-container>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="ownerDivisionIds"
+                           [(ngModel)]="communityMetadataModel.ownerDivisionIds"
+                           [readOnly]="true"
+                           [items]="metadataList.ownerDivisionSelectItems"
+                           [valueField]="'id'"
+                           [labelField]="'departmentName'"
+                           kendoErrorTooltip
+                           position="top">
+              </opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Owner Branch/ Unit' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let ownerBranchId of communityMetadataModel.ownerBranchIds">
+                <div class="metadata-tag-text"
+                     *ngIf="ownerBranchId">
+                  {{ metadataList.departmentsDic[ownerBranchId] ? metadataList.departmentsDic[ownerBranchId].departmentName : '' }}
+                </div>
+                <span *ngIf="communityMetadataModel.ownerBranchIds.length === 0">- N/A</span>
+              </ng-container>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [multiple]="true"
+                           formControlName="ownerBranchIds"
+                           [(ngModel)]="communityMetadataModel.ownerBranchIds"
+                           [items]="metadataList.ownerBranchSelectItems"
+                           [readOnly]="true"
+                           [valueField]="'id'"
+                           [labelField]="'departmentName'"
+                           kendoErrorTooltip
+                           position="top">
+              </opal-select>
+            </ng-template>
+          </editable>
+        </div>
+      </div>
+    </div>
+    <div class="scrollable-menu-content__tab-content">
+      <div class="form-container">
+        <label class="form-title">{{ 'Metadata' | translator }}</label>
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let learningFrameworkId of communityMetadataModel.learningFrameworkIds">
+                <div class="metadata-tag-text"
+                     *ngIf="learningFrameworkId">
+                  {{ metadataList.metadataTagsDic[learningFrameworkId] ? metadataList.metadataTagsDic[learningFrameworkId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.learningFrameworkIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.learningFrameworksSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.learningFrameworkIds"
+                           (selectedValueChange)="onLearningFrameworkChange($event)"
+                           [readOnly]="isCourseAssociated"
+                           [multiple]="true"
+                           formControlName="learningFrameworkIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+
+        <div class="form-controls-group"
+             [ngClass]="{'-required':metadataList.learningDimensionSelectItems && metadataList.learningDimensionSelectItems.length > 0}">
+          <label for="ch2">{{ 'Learning Dimension' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor=" let learningDimensionId of communityMetadataModel.learningDimensionIds">
+                <div class="metadata-tag-text"
+                     *ngIf="learningDimensionId">
+                  {{ metadataList.metadataTagsDic[learningDimensionId] ? metadataList.metadataTagsDic[learningDimensionId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.learningDimensionIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.learningDimensionSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.learningDimensionIds"
+                           (selectedValueChange)="onLearningDimensionChange($event)"
+                           [readOnly]="isCourseAssociated"
+                           [multiple]="true"
+                           formControlName="learningDimensionIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+
+        <div class="form-controls-group"
+             [ngClass]="{'-required':metadataList.learningAreaSelectItems && metadataList.learningAreaSelectItems.length > 0}">
+          <label for="ch2">{{ 'Learning Area' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let learningAreaId of communityMetadataModel.learningAreaIds">
+                <div class="metadata-tag-text"
+                     *ngIf="learningAreaId">
+                  {{ metadataList.metadataTagsDic[learningAreaId] ? metadataList.metadataTagsDic[learningAreaId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.learningAreaIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.learningAreaSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.learningAreaIds"
+                           (selectedValueChange)="onLearningAreaChange($event)"
+                           [readOnly]="isCourseAssociated"
+                           [multiple]="true"
+                           formControlName="learningAreaIds"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Learning Sub-Area' | translator }}</label>
+          <editable [modeView]="viewOnly">
+            <ng-template editableViewMode="">
+              <ng-container *ngFor="let learningSubAreaId of communityMetadataModel.learningSubAreaIds">
+                <div class="metadata-tag-text"
+                     *ngIf="learningSubAreaId">
+                  {{ metadataList.metadataTagsDic[learningSubAreaId] ? metadataList.metadataTagsDic[learningSubAreaId].displayText : '' }}
+                </div>
+              </ng-container>
+              <span *ngIf="communityMetadataModel.learningSubAreaIds.length === 0">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-select class="form-control"
+                           [items]="metadataList.learningSubAreaSelectItems"
+                           [valueField]="'tagId'"
+                           [labelField]="'displayText'"
+                           [(ngModel)]="communityMetadataModel.learningSubAreaIds"
+                           [multiple]="true"
+                           [readOnly]="isCourseAssociated"
+                           formControlName="learningSubAreaIds"
+                           [clearable]="true"
+                           kendoErrorTooltip
+                           position="top"></opal-select>
+            </ng-template>
+          </editable>
+        </div>
+
+        <div class="form-controls-group">
+          <label>{{'Search tag' | globalTranslator}}</label>
+          <opal-select class="metadata-editor__form-control"
+                       formControlName="searchTags"
+                       [(ngModel)]="communityMetadataModel.searchTags"
+                       [fetchDataFn]="fetchSearchTagsFn"
+                       [fetchDataByValuesFn]="fetchSearchTagsByNamesFn"
+                       [valueField]="'name'"
+                       [labelField]="'name'"
+                       [readOnly]="isCourseAssociated"
+                       [placeholder]="'Select' | globalTranslator"
+                       [multiple]="true"
+                       [clearable]="true"
+                       [addTag]='customSearchTagAddedFn'
+                       [hasMoreDataToFetch]="true"
+                       kendoErrorTooltip
+                       autofocus
+                       position="top"></opal-select>
+
+        </div>
+      </div>
+    </div>
+    <div class="scrollable-menu-content__tab-content">
+      <div class="form-container">
+        <label class="form-title">{{ 'Date Time' | translator }}</label>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Last Posted Date ' | translator }}</label>
+          <kendo-datepicker class="archival-tab__date-picker"
+                            [(value)]="communityInfo.lastPostedDate"
+                            [format]="'dd/MM/yyyy'"
+                            [disabled]="true"></kendo-datepicker>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Start Date ' | translator }}</label>
+          <kendo-datepicker class="archival-tab__date-picker"
+                            [(value)]="communityInfo.startDate"
+                            [format]="'dd/MM/yyyy'"
+                            [disabled]="true"></kendo-datepicker>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Archival Date ' | translator }}</label>
+          <kendo-datepicker class="archival-tab__date-picker"
+                            [(value)]="communityInfo.archivedDate"
+                            [format]="'dd/MM/yyyy'"
+                            [disabled]="true"></kendo-datepicker>
+        </div>
+        <div class="form-btn-container">
+          <button [primary]="true"
+                  [disabled]="isCourseAssociated"
+                  kendoButton
+                  (click)="onSaveButtonClick()">{{ 'Save' | globalTranslator }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<ng-template #loadingBlock="">Loading...</ng-template>

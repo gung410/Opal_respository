@@ -1,0 +1,429 @@
+<div class="form-question-answer-player-review">
+  <div *ngFor="let section of sectionsQuestion; let idx = index">
+    <!-- Form Section Info -->
+    <form-section-info [formSectionVm]="section"></form-section-info>
+    <!-- End Form Section Info -->
+    <div *ngFor="let items of section.questions; let i = index">
+      <!-- Short Text -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.ShortText">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container-withrow">
+          <div class="icon-container">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isShortTextAnswerCorrect(getAnswerValue(items.id), items.questionCorrectAnswer)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isShortTextAnswerIncorrect(getAnswerValue(items.id), items.questionCorrectAnswer)">
+          </div>
+          <input class="form-question-answer-player-review__answer-textbox"
+                 [ngClass]="{'-correct': isShortTextAnswerCorrect(getAnswerValue(items.id), items.questionCorrectAnswer) || getAnswerValue(items.id) && formDataType !== formType.Quiz,
+                                  '-wrong': isShortTextAnswerIncorrect(getAnswerValue(items.id), items.questionCorrectAnswer)}"
+                 kendoTextBox
+                 [disabled]="true"
+                 placeholder="{{getAnswerValue(items.id)}}">
+        </div>
+      </div>
+      <!-- Free Response -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.FreeResponse">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div *ngIf="getAnswerValue(items.id)"
+             class="form-question-answer-player-review__body-question-container-withrow">
+          <input class="form-question-answer-player-review__answer-textbox"
+                 kendoTextBox
+                 [disabled]="true"
+                 placeholder="{{getAnswerValue(items.id)}}">
+
+        </div>
+        <form-answer-attachments [formAnswerAttachmentsVm]="getFormAnswerAttachment(items.id)"
+                                 [showRemovedBtn]="false"></form-answer-attachments>
+      </div>
+      <!-- Single Choice -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.SingleChoice">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container">
+          <div class="form-question-answer-player-review__question-option-container"
+               *ngFor="let questionOption of items.questionOptions; let i = index;">
+            <div class="question-option"
+                 [ngClass]="{'-correct': isShortTextAnswerCorrect(questionOption.value, items.questionCorrectAnswer) || questionOption.value == getAnswerValue(items.id) && formDataType !== formType.Quiz,
+                                      '-wrong': isShortTextAnswerIncorrect(questionOption.value, items.questionCorrectAnswer)}">
+              <div class="icon-container">
+                <img src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isShortTextAnswerCorrect(questionOption.value, items.questionCorrectAnswer)"
+                     [ngClass]="{'-hidden': questionOption.value !== getAnswerValue(items.id)}">
+                <img src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="isShortTextAnswerIncorrect(questionOption.value, items.questionCorrectAnswer)"
+                     [ngClass]="{'-hidden': questionOption.value !== getAnswerValue(items.id)}">
+              </div>
+              <input class="k-radio"
+                     type="checkbox"
+                     [checked]="questionOption.value == getAnswerValue(items.id)"
+                     [disabled]="true">
+              <div class="form-question-answer-player-review__question-option-value"
+                   *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}
+              </div>
+            </div>
+            <div class="option-image">
+              <img class="image"
+                   src="{{getMediaUrl(questionOption.imageUrl)}}"
+                   *ngIf="questionOption.imageUrl">
+              <video class="video"
+                     *ngIf="questionOption.videoUrl"
+                     width="100%"
+                     height="100%"
+                     style="max-width:100%"
+                     #videoElement
+                     controls
+                     controlsList="nodownload">
+                <source [src]="getMediaUrl(questionOption.videoUrl)"
+                        controls>
+                <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                    video</a> instead.</p>
+              </video>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngFor="let item of items.questionOptions">
+          <div class="form-question-answer-player__explanation-note-container"
+               *ngIf="item.feedback && item.value == getAnswerValue(items.id)">
+            <div class="form-question-answer-player__explanation-note-title">
+              {{'Feedback' | globalTranslator}}
+            </div>
+            <div class="form-question-answer-player__explanation-note-content">
+              {{ item.feedback }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <!-- True/False -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.TrueFalse">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container">
+          <div class="form-question-answer-player-review__question-option-container">
+            <div class="question-option"
+                 [ngClass]="{'-correct': isCheckOptionValueCorrect(items, items.questionOptions[0].value) ||
+                 getAnswerValue(items.id) == items.questionOptions[0].value.toString(),
+                                      '-wrong': isCheckOptionValueIncorrect(items, items.questionOptions[0].value)}">
+              <div class="icon-container">
+                <img src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueCorrect(items, items.questionOptions[0].value)"
+                     [ngClass]="{'-hidden': getAnswerValue(items.id) !== items.questionOptions[0].value.toString()}">
+                <img src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueIncorrect(items, items.questionOptions[0].value)"
+                     [ngClass]="{'-hidden': getAnswerValue(items.id) !== items.questionOptions[0].value.toString()}">
+              </div>
+              <input class="k-radio"
+                     type="checkbox"
+                     [disabled]="true"
+                     [checked]="getAnswerValue(items.id) == items.questionOptions[0].value.toString()">
+              <div class="form-question-answer-player-review__question-option-value">
+                {{getTrueFalseQuestionOptionLabel(items.questionOptions[0].value) | globalTranslator}}
+              </div>
+            </div>
+          </div>
+          <div class="form-question-answer-player-review__question-option-container">
+            <div class="question-option"
+                 [ngClass]="{'-correct': isCheckOptionValueCorrect(items, items.questionOptions[1].value) ||
+                 getAnswerValue(items.id) === items.questionOptions[1].value.toString(),
+                                  '-wrong': isCheckOptionValueIncorrect(items, items.questionOptions[1].value)}">
+              <div class="icon-container">
+                <img src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueCorrect(items, items.questionOptions[1].value)"
+                     [ngClass]="{'-hidden': getAnswerValue(items.id) !== items.questionOptions[1].value.toString()}">
+                <img src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueIncorrect(items, items.questionOptions[1].value)"
+                     [ngClass]="{'-hidden': getAnswerValue(items.id) !== items.questionOptions[1].value.toString()}">
+              </div>
+              <input class="k-radio"
+                     type="checkbox"
+                     [disabled]="true"
+                     [checked]="getAnswerValue(items.id) === items.questionOptions[1].value.toString()">
+              <div class="form-question-answer-player-review__question-option-value">
+                {{getTrueFalseQuestionOptionLabel(items.questionOptions[1].value) | globalTranslator}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-question-answer-player__explanation-note-container"
+             *ngIf="items.feedbackCorrectAnswer && getAnswerValue(items.id) === items.questionOptions[0].value.toString()">
+          <div class="form-question-answer-player__explanation-note-title">
+            {{'Feedback' | globalTranslator}}
+          </div>
+          <div class="form-question-answer-player__explanation-note-content">
+            {{ items.feedbackCorrectAnswer }}
+          </div>
+        </div>
+        <div class="form-question-answer-player__explanation-note-container"
+             *ngIf="items.feedbackWrongAnswer && getAnswerValue(items.id)=== items.questionOptions[1].value.toString()">
+          <div class="form-question-answer-player__explanation-note-title">
+            {{'Feedback' | globalTranslator}}
+          </div>
+          <div class="form-question-answer-player__explanation-note-content">
+            {{ items.feedbackWrongAnswer }}
+          </div>
+        </div>
+      </div>
+      <!-- Multiple Choice -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.MultipleChoice">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container">
+          <div class="form-question-answer-player-review__question-option-container"
+               *ngFor="let questionOption of items.questionOptions; let i = index;">
+            <div class="question-option"
+                 [ngClass]="{'-checked': isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value),
+                                '-correct': isCheckOptionValueCorrect(items, questionOption.value) || isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value) && formDataType !== formType.Quiz,
+                                '-wrong': isCheckOptionValueIncorrect(items, questionOption.value)}">
+              <div class="icon-container">
+                <img src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueCorrect(items, questionOption.value)"
+                     [ngClass]="{'-hidden': !isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value)}">
+                <img src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="isCheckOptionValueIncorrect(items, questionOption.value)"
+                     [ngClass]="{'-hidden': !isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value)}">
+              </div>
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [disabled]="true"
+                     [checked]="isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value)">
+              <div class="form-question-answer-player-review__question-option-value"
+                   *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}
+              </div>
+            </div>
+            <div class="option-image">
+              <img class="image"
+                   src="{{getMediaUrl(questionOption.imageUrl)}}"
+                   *ngIf="questionOption.imageUrl">
+              <video class="video"
+                     *ngIf="questionOption.videoUrl"
+                     width="100%"
+                     height="100%"
+                     style="max-width:100%"
+                     #videoElement
+                     controls
+                     controlsList="nodownload">
+                <source [src]="getMediaUrl(questionOption.videoUrl)"
+                        controls>
+                <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                    video</a> instead.</p>
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fill In The Blank -->
+      <div class="form-question-answer-player-review__title-container FillInTheBlanksReview"
+           *ngIf="items.questionType === questionType.FillInTheBlanks">
+        <div class="form-question-answer-player-review__index-in-form"
+             *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+        <ng-template #noSection="">
+          <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+        </ng-template>
+        <div class="form-question-answer-player-review__body-question-container-in-blank">
+          <ng-container *ngFor="let questionOption of items.questionOptions; let i = index;">
+            <ng-container *ngIf="questionOption.type === questionOptionTypeEnum.Text">
+              {{ questionOption.value }}
+            </ng-container>
+            <ng-container *ngIf="questionOption.type === questionOptionTypeEnum.Blank">
+              <span class="blank-answer">
+                <img class="blank-answer__icon"
+                     src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value) && formDataType === formType.Quiz">
+                <img class="blank-answer__icon"
+                     src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="!isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value) && formDataType === formType.Quiz">
+                <span class="blank-answer__text"
+                      [ngClass]="{'-correct': isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value) || questionOption.value && formDataType !== formType.Quiz,
+                '-wrong': !isMultipleChoiceAnswerMatch(getQuestionAnswer(items.id), questionOption.value) && formDataType === formType.Quiz}">
+                  {{questionOption.value}}
+                </span>
+              </span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <!-- Date Picker -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.DatePicker">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container-withrow">
+          <div class="icon-container">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerCorrect(items)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerIncorrect(items)">
+          </div>
+          <kendo-datepicker class="form-question-answer-player-review__answer-textbox"
+                            [ngClass]="{'-correct': isCheckAnswerCorrect(items) ||
+                                                    getQuestionAnswer(items.id).answerValue && formDataType !== formType.Quiz,
+                                        '-wrong': isCheckAnswerIncorrect(items)}"
+                            [value]="getDatePickerAnswer(items.id)"
+                            position="top"
+                            [format]="'dd/MM/yyyy'"
+                            [disabled]="true"></kendo-datepicker>
+        </div>
+      </div>
+      <!-- Date Range Picker -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.DateRangePicker">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-question-container">
+          <div class="icon-container">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerCorrect(items)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerIncorrect(items)">
+          </div>
+          <kendo-datepicker class="form-question-answer-player-review__answer-textbox"
+                            [ngClass]="{'-correct': isCheckAnswerCorrect(items),
+                                        '-wrong': isCheckAnswerIncorrect(items)}"
+                            position="top"
+                            [format]="'dd/MM/yyyy'"
+                            [value]="getDateRangePickerAnswer(items.id, 0)"
+                            [disabled]="true">
+          </kendo-datepicker>
+          <kendo-datepicker class="form-question-answer-player-review__answer-textbox"
+                            [ngClass]="{'-correct': isCheckAnswerCorrect(items),
+                                        '-wrong': isCheckAnswerIncorrect(items)}"
+                            position="top"
+                            [format]="'dd/MM/yyyy'"
+                            [value]="getDateRangePickerAnswer(items.id, 1)"
+                            [disabled]="true">
+          </kendo-datepicker>
+        </div>
+      </div>
+      <!-- Dropdown -->
+      <div class="form-question-answer-player-review__question-container"
+           *ngIf="items.questionType === questionType.DropDown">
+        <div class="form-question-answer-player-review__title-container">
+          <div class="form-question-answer-player-review__index-in-form"
+               *ngIf="items.formSectionId; else noSection">{{idx + 1}}.{{i + 1}}.</div>
+          <ng-template #noSection="">
+            <div class="form-question-answer-player-review__index-in-form">{{idx + 1}}.</div>
+          </ng-template>
+          <div class="form-question-answer-player-review__question-title"
+               externalLinkGuard
+               [innerHTML]="items.questionTitleSafeHtml"></div>
+        </div>
+        <div class="form-question-answer-player-review__body-container">
+          <div class="form-question-answer-player-review__body-question-container-withrow">
+            <div class="icon-container">
+              <img src="assets/images/icons/completed-mark-blue.svg"
+                   alt="icon"
+                   *ngIf="isCheckAnswerCorrect(items)">
+              <img src="assets/images/icons/rejected-outline.svg"
+                   alt="icon"
+                   *ngIf="isCheckAnswerIncorrect(items)">
+            </div>
+            <opal-select class="form-question-answer-player-review__answer-dropdown"
+                         [ngClass]="{'-correct': isCheckAnswerCorrect(items) || getQuestionAnswer(items.id).answerValue && formDataType !== formType.Quiz,
+                                      '-wrong': isCheckAnswerIncorrect(items)}"
+                         [items]="items.questionOptions"
+                         [ngModel]="getQuestionAnswer(items.id).answerValue"
+                         [labelField]="'value'"
+                         [valueField]="'value'"
+                         [disabled]="true">
+            </opal-select>
+          </div>
+        </div>
+        <ng-container *ngFor="let item of items.questionOptions">
+          <div class="form-question-answer-player__explanation-note-container"
+               *ngIf="item.feedback && item.value == getAnswerValue(items.id)">
+            <div class="form-question-answer-player__explanation-note-title">
+              {{'Feedback' | globalTranslator}}
+            </div>
+            <div class="form-question-answer-player__explanation-note-content">
+              {{ item.feedback }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="form-question-answer-player-review__close-btn-group">
+    <span class="form-question-answer-player-review__close-btn k-icon k-i-close"
+          (click)="onClickExit()"></span>&nbsp;
+    <span class="form-question-answer-player-review__close-btn-group-text">{{'Exit' | globalTranslator}}</span>
+  </div>
+</div>

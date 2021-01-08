@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<StackLayout
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    x:Class="LearnerApp.Controls.PagingControl.PagingControl"
+    Orientation="Horizontal"
+    x:Name="This">
+
+    <controls:LearnerContentFrame
+        Opacity="{Binding Path=IsPreviousButtonVisible,
+            Source={x:Reference This},
+            Converter={StaticResource OpacityVisibleConverter}}"
+        HeightRequest="{Binding Path=Height, Source={x:Reference This}}"
+        WidthRequest="{Binding Path=Height, Source={x:Reference This}}">
+        <controls:LearnerContentFrame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackButtonPressed"/>
+        </controls:LearnerContentFrame.GestureRecognizers>
+        <forms:SvgCachedImage
+            HeightRequest="35"
+            WidthRequest="35"
+            Source="arrow_left.svg" />
+    </controls:LearnerContentFrame>
+
+    <controls:LearnerContentFrame
+        HeightRequest="{Binding Path=Height, Source={x:Reference This}}"
+        WidthRequest="100">
+        <controls:LearnerContentFrame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnLabelClicked"/>
+        </controls:LearnerContentFrame.GestureRecognizers>
+        <Label x:Name="PickerLabel" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+    </controls:LearnerContentFrame>
+
+    <Picker
+        IsVisible="False"
+        ios:Picker.UpdateMode="WhenFinished"
+        SelectedIndex="{Binding Path=SelectedIndex, Source={x:Reference This}}"
+        SelectedIndexChanged="Picker_OnSelectedIndexChanged"
+        WidthRequest="100"
+        Title="Page number"
+        x:Name="Picker"
+        />
+
+    <controls:LearnerContentFrame
+        Opacity="{Binding Path=IsNextButtonVisible,
+            Source={x:Reference This},
+            Converter={StaticResource OpacityVisibleConverter}}"
+        HeightRequest="{Binding Path=Height, Source={x:Reference This}}"
+        WidthRequest="{Binding Path=Height, Source={x:Reference This}}">
+        <controls:LearnerContentFrame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnNextButtonTapped"/>
+        </controls:LearnerContentFrame.GestureRecognizers>
+        <forms:SvgCachedImage
+            HeightRequest="35"
+            WidthRequest="35"
+            Source="arrow_right.svg" />
+    </controls:LearnerContentFrame>
+
+</StackLayout>
+

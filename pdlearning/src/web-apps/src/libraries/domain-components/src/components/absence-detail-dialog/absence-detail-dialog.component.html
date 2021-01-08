@@ -1,0 +1,27 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ title }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onClose()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="form-controls-group">
+    {{ reasonForAbsence }}
+  </div>
+  <div class="form-controls-group">
+    <div class="attachment-container">
+      <div class="attachment"
+           *ngFor="let item of attachment">
+        <span class="k-icon k-i-attachment absence-detail-dialog__attachment-icon"></span>
+        <a class="absence-detail-dialog__attachment-file-name"
+           target="_blank"
+           [href]="getAttachmentUrl(item)">{{ getFileName(item) }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Close' | globalTranslator }}</button>
+</div>

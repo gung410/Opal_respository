@@ -1,0 +1,46 @@
+<!DOCTYPE html
+          PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>CloudFront Cookie Signer</title>
+</head>
+
+<body>
+  <form id="form"
+        method="POST"
+        action>
+    <input id="token"
+           name="AccessToken"
+           type="text"
+           style="visibility: hidden;"><br>
+  </form>
+  <script type="text/javascript">
+    window.signinCloudFront = function(data) {
+      if (!data) {
+        return;
+      }
+
+      var form = document.querySelector('#form');
+      form.action = data.cloudfrontUrl + '/api/cloudfront/signin';
+
+      if (data.returnUrl) {
+        form.action += '?returnUrl=' + data.returnUrl;
+      }
+
+      var input = document.querySelector('#token');
+      input.value = data.accessToken;
+
+      form.submit();
+    }
+
+    // if (window.addEventListener) {
+    //   // For standards-compliant web browsers
+    //   window.addEventListener("message", onMessage, false);
+    // } else {
+    //   window.attachEvent("onmessage", onMessage);
+    // }
+  </script>
+</body>
+
+</html>

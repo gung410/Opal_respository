@@ -1,0 +1,50 @@
+toolbar-left,
+toolbar-center {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+toolbar-left {
+  max-width: 100%;
+}
+
+.toolbar {
+  min-height: 100%;
+  padding: 0 10px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  box-shadow: inset 0 -1px 0 $gray100;
+  background: $white;
+  flex: 1;
+  align-items: center;
+
+  .k-menu-as-button,
+  .search-field {
+    margin-right: 10px;
+  }
+
+  label {
+    margin-right: 10px;
+  }
+
+  >div {
+    max-width: 100%;
+    min-width: 0;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+  }
+
+  &__left-container {}
+
+  &__center-container {
+    flex-grow: 1;
+  }
+
+  &__right-container {
+    flex-shrink: 0 !important;
+  }
+}

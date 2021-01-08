@@ -1,0 +1,14 @@
+<div class="data-filter">
+  <div class="data-filter__filter-container">
+    <button class="button-white-bg -icon-right"
+            kendoButton
+            [icon]="'saturation'"
+            (click)="openFilterPopup()">{{ 'Filter' | translator }}</button>
+    <div class="data-filter__has-data-indicator"
+         *ngIf="hasDataFilter"></div>
+  </div>
+  <button class="button-white-bg"
+          *ngIf="hasDataFilter"
+          kendoButton
+          (click)="onClear()">{{ 'Clear' | translator }}</button>
+</div>

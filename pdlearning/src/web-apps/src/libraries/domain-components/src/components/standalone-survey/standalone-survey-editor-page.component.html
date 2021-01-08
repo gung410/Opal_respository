@@ -1,0 +1,10 @@
+<div class="form-editor-page__center-col">
+  <standalone-survey-editor #formEditor
+                            [formData]="formData"
+                            [selectedQuestionId]="selectedQuestionId"
+                            (formDataChange)="onFormDataChanged($event)"
+                            (selectedQuestionIdChange)="onSelectedQuestionIdChange($event)"
+                            (selectedQuestion)="onQuestionSelect()"
+                            (moveQuestion)="onQuestionMoved($event)"
+                            [(formSectionsQuestions)]="formSectionsQuestions"></standalone-survey-editor>
+</div>

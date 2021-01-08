@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.SearchGroupFilter"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<StackLayout>
+		<Label x:Name="TotalSearchCount" />
+
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+			</Grid.RowDefinitions>
+
+			<controls:WrapLayout
+				x:Name="GroupFilterWrap"
+				Grid.Row="0"
+				HorizontalOptions="FillAndExpand"
+				Spacing="5" />
+			<StackLayout
+				Grid.Row="1"
+				HorizontalOptions="FillAndExpand"
+				Orientation="Horizontal">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer Tapped="OnBack_Tapped" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="22"
+					Source="arrow_left.svg"
+					VerticalOptions="CenterAndExpand"
+					WidthRequest="22" />
+				<Label
+					x:Name="KeywordLbl"
+					FontSize="20"
+					HorizontalOptions="StartAndExpand"
+					LineBreakMode="TailTruncation"
+					MaxLines="1"
+					TextType="Html"
+					VerticalOptions="CenterAndExpand" />
+			</StackLayout>
+		</Grid>
+	</StackLayout>
+</ContentView>

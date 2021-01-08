@@ -1,0 +1,307 @@
+<ng-container *ngIf="resourceMetadataForm != null"
+              [formGroup]="form">
+  <label class="metadata-editor__title">Metadata</label>
+  <div class="form-controls-group -required"
+       [hidden]="isFromDigitalContent">
+    <label>{{'PD Opportunity Type' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ resourceMetadataForm.metadataTagsDic[resourceMetadataForm.pdOpportunityType] ? resourceMetadataForm.metadataTagsDic[resourceMetadataForm.pdOpportunityType].displayText : '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="metadata-editor__form-control"
+                     formControlName="pdOpportunityType"
+                     [items]="resourceMetadataForm.pdTypeSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [(ngModel)]="resourceMetadataForm.pdOpportunityType"
+                     [clearable]="true"
+                     (ngModelChange)="syncResourceMetadataForm()"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top"></opal-select>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group -required">
+    <label>{{'Service Schemes' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let serviceSchemeId of resourceMetadataForm.serviceSchemes">
+          <div class="metadata-tag-text"
+               *ngIf="serviceSchemeId">
+            {{ resourceMetadataForm.metadataTagsDic[serviceSchemeId].displayText }}
+          </div>
+        </ng-container>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="metadata-editor__form-control"
+                     formControlName="serviceSchemes"
+                     [items]="resourceMetadataForm.metadataTagsDicByGroupCode[metadataTagGroupCode.SERVICE_SCHEMES]"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [multiple]="true"
+                     [(ngModel)]="resourceMetadataForm.serviceSchemes"
+                     [clearable]="true"
+                     (ngModelChange)="syncResourceMetadataForm()"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top"></opal-select>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group -required">
+    <label>{{'Main Subject Area' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ resourceMetadataForm.metadataTagsDic[resourceMetadataForm.mainSubjectArea] ? resourceMetadataForm.metadataTagsDic[resourceMetadataForm.mainSubjectArea].displayText : '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="metadata-editor__form-control"
+                     *ngIf="resourceMetadataForm.subjectAreaSelectItems.length > 0"
+                     formControlName="mainSubjectArea"
+                     [items]="subjectAreaSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [placeholder]="'Select' | globalTranslator"
+                     (filterChange)="handleMainSubjectAreaFilter($event)"
+                     [(ngModel)]="resourceMetadataForm.mainSubjectArea"
+                     [disabled]="resourceMetadataForm.subjectAreaSelectItems.length == 0"
+                     [clearable]="true"
+                     (ngModelChange)="syncResourceMetadataForm()"
+                     kendoErrorTooltip
+                     position="top"
+                     autofocus></opal-select>
+      </ng-template>
+    </editable>
+    <div class="metadata-editor__form-control"
+         *ngIf="resourceMetadataForm.subjectAreaSelectItems.length == 0">- - -</div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{'Course Level' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let courseLevelId of resourceMetadataForm.courseLevels">
+          <div class="metadata-tag-text"
+               *ngIf="courseLevelId">
+            {{ resourceMetadataForm.metadataTagsDic[courseLevelId].displayText }}
+          </div>
+        </ng-container>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="metadata-editor__form-control"
+                     formControlName="courseLevels"
+                     [items]="resourceMetadataForm.getCurrentMetadataCourseLevels()"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [multiple]="true"
+                     [(ngModel)]="resourceMetadataForm.courseLevels"
+                     [clearable]="true"
+                     (ngModelChange)="syncResourceMetadataForm()"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top"></opal-select>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="metadata-editor__form-group-title">{{'Target Audience' | globalTranslator}}</div>
+  <div class="form-controls-group">
+    <label>{{'Developmental Roles' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="resourceMetadataForm.developmentalRolesTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="developmentalRolesItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="resourceMetadataForm.developmentalRolesTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        metadataAutoCheckAllChilds
+                        [(checkedKeys)]="resourceMetadataForm.developmentalRoles"
+                        (checkedKeysChange)="syncResourceMetadataForm()"
+                        [checkBy]="'tagId'"
+                        [isChecked]="developmentalRolesItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+    </editable>
+    <div class="metadata-editor__form-control"
+         *ngIf="resourceMetadataForm.developmentalRolesTree.length == 0">- - -</div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{'Prerequisites' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ resourceMetadataForm.resource.preRequisties || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <textarea class="metadata-editor__form-control"
+                  kendoTextArea
+                  formControlName="preRequisites"
+                  [(ngModel)]="resourceMetadataForm.resource.preRequisties"
+                  (ngModelChange)="syncResourceMetadataForm()"
+                  [maxLength]="4000"
+                  kendoErrorTooltip
+                  autofocus
+                  position="top"></textarea>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="metadata-editor__form-group-title">{{'Content is related to' | globalTranslator}}</div>
+  <div class="form-controls-group">
+    <label>{{'Subject Areas and General Keywords' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="resourceMetadataForm.subjectAreasAndKeywordsTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="subjectAreasAndKeywordsItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="resourceMetadataForm.subjectAreasAndKeywordsTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        metadataAutoCheckAllChilds
+                        [(checkedKeys)]="resourceMetadataForm.subjectAreasAndKeywords"
+                        (checkedKeysChange)="syncResourceMetadataForm()"
+                        [checkBy]="'tagId'"
+                        [isChecked]="subjectAreasAndKeywordsItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+    </editable>
+    <div class="metadata-editor__form-control"
+         *ngIf="resourceMetadataForm.subjectAreasAndKeywordsTree.length == 0">- - -</div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{'Learning Frameworks' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let learningFrameworkId of resourceMetadataForm.learningFrameworks">
+          <div class="metadata-tag-text"
+               *ngIf="learningFrameworkId">
+            {{ resourceMetadataForm.metadataTagsDic[learningFrameworkId].displayText }}
+          </div>
+        </ng-container>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="metadata-editor__form-control"
+                     *ngIf="resourceMetadataForm.learningFrameworksSelectItems.length > 0"
+                     formControlName="learningFrameworks"
+                     [items]="resourceMetadataForm.learningFrameworksSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [multiple]="true"
+                     [disabled]="resourceMetadataForm.learningFrameworksSelectItems.length == 0"
+                     [(ngModel)]="resourceMetadataForm.learningFrameworks"
+                     [clearable]="true"
+                     (ngModelChange)="syncResourceMetadataForm()"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top"></opal-select>
+      </ng-template>
+    </editable>
+    <div class="metadata-editor__form-control"
+         *ngIf="resourceMetadataForm.learningFrameworksSelectItems.length == 0">- - -</div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{'Dimensions and Learning Areas' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        *ngIf="resourceMetadataForm.dimensionsAndAreasTree.length > 0"
+                        [nodes]="resourceMetadataForm.dimensionsAndAreasTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="dimensionsAndAreasItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-treeview class="metadata-editor__form-control"
+                        *ngIf="resourceMetadataForm.dimensionsAndAreasTree.length > 0"
+                        [nodes]="resourceMetadataForm.dimensionsAndAreasTree"
+                        [children]="resourceMetadataForm.getMetadataTagChilds"
+                        [hasChildren]="resourceMetadataForm.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        metadataAutoCheckAllChilds
+                        [(checkedKeys)]="resourceMetadataForm.dimensionsAndAreas"
+                        (checkedKeysChange)="syncResourceMetadataForm()"
+                        [checkBy]="'tagId'"
+                        [isChecked]="dimensionsAndAreasItemIsCheckedFn">
+        </kendo-treeview>
+      </ng-template>
+    </editable>
+    <div class="metadata-editor__form-control"
+         *ngIf="resourceMetadataForm.dimensionsAndAreasTree.length == 0">- - -</div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{"Objectives/Outcomes" | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ resourceMetadataForm.resource.objectivesOutCome || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <textarea class="metadata-editor__form-control"
+                  kendoTextArea
+                  formControlName="objectivesOutCome"
+                  [(ngModel)]="resourceMetadataForm.resource.objectivesOutCome"
+                  (ngModelChange)="syncResourceMetadataForm()"
+                  [maxLength]="4000"
+                  kendoErrorTooltip
+                  autofocus
+                  position="top"></textarea>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{'Search tag' | globalTranslator}}</label>
+    <opal-select class="metadata-editor__form-control"
+                 formControlName="searchTags"
+                 [(ngModel)]="resourceMetadataForm.resource.searchTags"
+                 [fetchDataFn]="fetchSearchTagsFn"
+                 [fetchDataByValuesFn]="fetchSearchTagsByNamesFn"
+                 [valueField]="'name'"
+                 [labelField]="'name'"
+                 [placeholder]="'Select' | globalTranslator"
+                 [multiple]="true"
+                 [readOnly]="mode === DigitalContentDetailMode.View"
+                 [clearable]="true"
+                 [addTag]="customSearchTagAddedFn"
+                 [hasMoreDataToFetch]="true"
+                 (ngModelChange)="syncResourceMetadataForm()"
+                 kendoErrorTooltip
+                 autofocus
+                 position="top"></opal-select>
+
+  </div>
+</ng-container>

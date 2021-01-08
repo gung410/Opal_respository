@@ -1,0 +1,16 @@
+blockout-date-warning {
+  span {
+    background: lightgray;
+    padding-left: 5px;
+    padding-right: 10px;
+    cursor: pointer;
+    align-self: flex-start;
+    text-decoration: underline;
+    font-weight: 500;
+
+    i {
+      margin-right: 3px;
+      font-size: large;
+    }
+  }
+}

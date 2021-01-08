@@ -1,0 +1,97 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-form-api-build
+      - cx-form-api-systemtest
+  uat:
+    pipelines:
+      - cx-form-api-uat
+  pre-production:
+    pipelines:
+      - cx-form-api-pre-production
+  production:
+    pipelines:
+      - cx-form-api-production
+pipelines:
+  cx-form-api-build:
+    group: cx-form-api
+    label_template: "release-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/form-microservice/Api/
+      SONAR_PROJECTKEY: cx-form-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-form-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/form-microservice/Api/**/*.*
+  cx-form-api-systemtest:
+    group: cx-form-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-form-api-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-form-api-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-form-api
+    template: ansible-deploy-fetch-upstream
+  cx-form-api-uat:
+    group: cx-form-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-form-api-systemtest
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-form-api-systemtest
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-form-api
+    template: ansible-deploy-fetch-upstream
+  cx-form-api-pre-production:
+    group: cx-form-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-form-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-form-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-form-api
+    template: ansible-deploy-fetch-upstream
+  cx-form-api-production:
+    group: cx-form-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-form-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-form-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-form-api
+    template: ansible-deploy-fetch-upstream

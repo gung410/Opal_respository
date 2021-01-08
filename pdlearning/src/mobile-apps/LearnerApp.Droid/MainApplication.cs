@@ -1,0 +1,62 @@
+using System;
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+
+namespace LearnerApp.Droid
+{
+    [Application]
+    public class MainApplication : Application, Application.IActivityLifecycleCallbacks
+    {
+        public MainApplication(IntPtr handle, JniHandleOwnership jniHandleOwnership)
+            : base(handle, jniHandleOwnership)
+        {
+        }
+
+        internal static Context CurrentContext { get; private set; }
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            RegisterActivityLifecycleCallbacks(this);
+        }
+
+        public override void OnTerminate()
+        {
+            base.OnTerminate();
+            UnregisterActivityLifecycleCallbacks(this);
+        }
+
+        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
+        {
+            CurrentContext = activity;
+        }
+
+        public void OnActivityDestroyed(Activity activity)
+        {
+        }
+
+        public void OnActivityPaused(Activity activity)
+        {
+        }
+
+        public void OnActivityResumed(Activity activity)
+        {
+            CurrentContext = activity;
+        }
+
+        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
+        {
+        }
+
+        public void OnActivityStarted(Activity activity)
+        {
+            CurrentContext = activity;
+        }
+
+        public void OnActivityStopped(Activity activity)
+        {
+        }
+    }
+}

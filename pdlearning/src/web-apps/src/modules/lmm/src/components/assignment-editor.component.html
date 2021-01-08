@@ -1,0 +1,32 @@
+<div class="assignment-editor">
+  <assignment-question-adder class="assignment-editor__first-question-adder"
+                             *ngIf="assignmentVm.questions.length == 0 && mode === AssignmentMode.Edit"
+                             [type]="assignmentVm.type"
+                             [inlineAdd]="false"
+                             [priority]="0"
+                             (selectQuestion)="onQuestionTemplateSelect($event)"
+                             [mode]="mode"></assignment-question-adder>
+  <div class="assignment-editor__question-container"
+       [ngClass]="{'-selected': isQuestionSelected(question)}"
+       *ngFor="let question of assignmentVm.questions; let i = index; trackBy: assignmentQuestionsDataTrackByFn">
+    <assignment-question-editor class="assignment-editor__question-item"
+                                [ngClass]="{'-selected': isQuestionSelected(question)}"
+                                [data]="question"
+                                [mode]="mode"
+                                [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                [positionInAssignment]="i+1"
+                                [selected]="isQuestionSelected(question)"
+                                [totalQuestion]="assignmentVm.totalQuestion"
+                                [assignmentType]="assignmentVm.type"
+                                (dataChange)="onQuestionChanged($event)"
+                                (delete)="onQuestionDelete($event)"
+                                (moveUp)="onQuestionMoveUp($event)"
+                                (moveDown)="onQuestionMoveDown($event)"
+                                (click)="onSelectQuestion(question)"></assignment-question-editor>
+    <assignment-question-adder *ngIf="mode === AssignmentMode.Edit"
+                               [inlineAdd]="(assignmentVm.questions.length - 1) != i"
+                               [type]="assignmentVm.type"
+                               [priority]="i + 1"
+                               (selectQuestion)="onQuestionTemplateSelect($event)"></assignment-question-adder>
+  </div>
+</div>

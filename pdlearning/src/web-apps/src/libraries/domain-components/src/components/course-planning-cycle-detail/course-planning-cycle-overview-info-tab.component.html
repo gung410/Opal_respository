@@ -1,0 +1,94 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Overview Information' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label>{{ 'Title' | translator }}</label>
+      <editable [modeView]="mode === CoursePlanningCycleDetailMode.View">
+        <ng-template editableViewMode="">{{ coursePlanningCycle.title }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 kendoErrorTooltip
+                 position="top"
+                 formControlName="title"
+                 [(ngModel)]="coursePlanningCycle.title"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="!coursePlanningCycle.isConfirmedBlockoutDate">
+      <label for="ch2">{{ 'Start Date of Planning' | translator }}</label>
+      <editable [modeView]="isViewMode()">
+        <ng-template editableViewMode="">
+          {{ coursePlanningCycle.startDate ? (coursePlanningCycle.startDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #startDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="startDatePicker.toggle(true)"
+                            kendoErrorTooltip
+                            formControlName="startDate"
+                            [(ngModel)]="coursePlanningCycle.startDate"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="!coursePlanningCycle.isConfirmedBlockoutDate">
+      <label for="ch2">{{ 'End Date of Planning' | translator }}</label>
+      <editable [modeView]="mode === CoursePlanningCycleDetailMode.View">
+        <ng-template editableViewMode="">
+          {{ coursePlanningCycle.endDate ? (coursePlanningCycle.endDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #endDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="endDatePicker.toggle(true)"
+                            kendoErrorTooltip
+                            formControlName="endDate"
+                            [(ngModel)]="coursePlanningCycle.endDate"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Course Planning for The Year' | translator }}</label>
+      <editable [modeView]="isViewMode()">
+        <ng-template editableViewMode="">
+          {{ coursePlanningCycle.yearCycle }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="coursePlanningCycle.yearCycleItems"
+                       [(ngModel)]="coursePlanningCycle.yearCycle"
+                       formControlName="yearCycle"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label>
+        {{ 'Description' | translator }}
+      </label>
+      <editable [modeView]="mode === CoursePlanningCycleDetailMode.View">
+        <ng-template editableViewMode="">{{ coursePlanningCycle.description || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    formControlName="description"
+                    [(ngModel)]="coursePlanningCycle.description"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"
+                    kendoErrorTooltip
+                    position="top"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

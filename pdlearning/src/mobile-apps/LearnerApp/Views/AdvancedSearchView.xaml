@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Views.AdvancedSearchView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+    BackgroundColor="White"
+    mc:Ignorable="d">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="RadAutoCompleteStyle" TargetType="telerikInput:RadAutoCompleteView">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BorderColor" Value="#D8D8D8" />
+                <Setter Property="SuggestionViewBackgroundColor" Value="#f5f5f5" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="TextSearchPath" Value="DisplayText" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout
+        Padding="10"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <!--  TITLE  -->
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Close_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <ffimagesvg:SvgCachedImage
+                        HeightRequest="25"
+                        HorizontalOptions="Start"
+                        Source="close.svg"
+                        WidthRequest="25" />
+                    <Label
+                        FontSize="20"
+                        Text="Filter"
+                        TextColor="{StaticResource MainBodyTextColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                    <StackLayout>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ClearFilter_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Label
+                            Text="Clear filter"
+                            TextColor="#8799BA"
+                            TextDecorations="Underline"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+
+                    <Frame Padding="20,5,20,5" BackgroundColor="{StaticResource MainBodyTextColor}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ApplyCommand}"
+                                NumberOfTapsRequired="1"
+                                Tapped="OnApplyFilter_Tapped" />
+                        </Frame.GestureRecognizers>
+                        <Label
+                            FontSize="15"
+                            Text="Apply"
+                            TextColor="White" />
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+
+        <!--  FILTER FIELDS  -->
+        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <StackLayout Spacing="10">
+                <StackLayout>
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="16"
+                        Text="Type of PD Activity"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <telerikInput:RadAutoCompleteView
+                        x:Name="TypePDActivitySelect"
+                        DisplayMode="Plain"
+                        SuggestMode="SuggestAppend"
+                        Focused="Selection_Focused"
+                        Style="{StaticResource RadAutoCompleteStyle}">
+                        <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <DataTemplate>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No item was found"
+                                    VerticalOptions="CenterAndExpand" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                    </telerikInput:RadAutoCompleteView>
+                </StackLayout>
+
+                <StackLayout>
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="16"
+                        Text="Mode of Learning"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <telerikInput:RadAutoCompleteView
+                        x:Name="ModeOfLearningSelect"
+                        DisplayMode="Plain"
+                        SuggestMode="SuggestAppend"
+                        Focused="Selection_Focused"
+                        Style="{StaticResource RadAutoCompleteStyle}">
+                        <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <DataTemplate>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No item was found"
+                                    VerticalOptions="CenterAndExpand" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                    </telerikInput:RadAutoCompleteView>
+                </StackLayout>
+
+                <StackLayout>
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="16"
+                        Text="Category"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <telerikInput:RadAutoCompleteView
+                        x:Name="PdoCategorySelect"
+                        DisplayMode="Tokens"
+                        Focused="Selection_Focused"
+                        Style="{StaticResource RadAutoCompleteStyle}"
+                        SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                        <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <DataTemplate>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No item was found"
+                                    VerticalOptions="CenterAndExpand" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                    </telerikInput:RadAutoCompleteView>
+                </StackLayout>
+
+                <StackLayout>
+                    <Label
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="16"
+                        Text="Service Scheme"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <telerikInput:RadAutoCompleteView
+                        x:Name="ServiceSchemesSelect"
+                        DisplayMode="Tokens"
+                        Focused="Selection_Focused"
+                        Style="{StaticResource RadAutoCompleteStyle}"
+                        SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected"
+                        Unfocused="ServiceSchemesSelect_Unfocused">
+                        <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <DataTemplate>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No item was found"
+                                    VerticalOptions="CenterAndExpand" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                            </DataTemplate>
+                        </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                    </telerikInput:RadAutoCompleteView>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Developmental Role"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="DevelopmentalRolesSelect"
+                            DisplayMode="Tokens"
+                            Focused="DevelopmentalRolesSelect_Focused"
+                            IsEnabled="False"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Teaching Level"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="TeachingLevelSelect"
+                            DisplayMode="Tokens"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout x:Name="ShowMoreStack" IsVisible="False">
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Course Level"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="CourseLevelSelect"
+                            DisplayMode="Plain"
+                            SuggestMode="SuggestAppend"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Subject / Interest Area"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="SubjectSelect"
+                            DisplayMode="Tokens"
+                            Focused="Selection_Focused"
+                            IsEnabled="False"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Learning Framework"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="LearningFrameworkSelect"
+                            DisplayMode="Tokens"
+                            Focused="LearningFrameworkSelect_Focused"
+                            IsEnabled="False"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected"
+                            Unfocused="LearningFrameworkSelect_Unfocused">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Learning Dimension"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="LearningDimensionSelect"
+                            DisplayMode="Tokens"
+                            Focused="LearningDimensionSelect_Focused"
+                            IsEnabled="False"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected"
+                            Unfocused="LearningDimensionSelect_Unfocused">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                            <telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding ., StringFormat=' (+{0})'}" VerticalTextAlignment="Center" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.ShowMoreTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Learning Area"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="LearningAreaSelect"
+                            DisplayMode="Tokens"
+                            Focused="LearningAreaSelect_Focused"
+                            IsEnabled="False"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Learning Sub-Area"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="LearningSubAreaSelect"
+                            DisplayMode="Plain"
+                            SuggestMode="SuggestAppend"
+                            Focused="LearningSubAreaSelect_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Nature of Course"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="NatureCourseSelect"
+                            DisplayMode="Plain"
+                            SuggestMode="SuggestAppend"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Community Type"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="CommunityTypeSelect"
+                            DisplayMode="Tokens"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Attachment Type"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="AttachmentTypeSelect"
+                            DisplayMode="Plain"
+                            SuggestMode="SuggestAppend"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoBold}"
+                            FontSize="16"
+                            Text="Job designation"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                        <telerikInput:RadAutoCompleteView
+                            x:Name="JobDesignationSelect"
+                            DisplayMode="Plain"
+                            SuggestMode="SuggestAppend"
+                            Focused="Selection_Focused"
+                            Style="{StaticResource RadAutoCompleteStyle}"
+                            SuggestionItemSelected="RadAutoCompleteView_SuggestionItemSelected">
+                            <telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="No item was found"
+                                        VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </telerikInput:RadAutoCompleteView.NoResultsTemplate>
+                        </telerikInput:RadAutoCompleteView>
+                    </StackLayout>
+                </StackLayout>
+
+                <!--  SHOW MORE  -->
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Showmore_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <Label
+                        x:Name="ShowmoreLbl"
+                        FontFamily="{StaticResource RobotoBold}"
+                        FontSize="14"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Show more"
+                        TextColor="{StaticResource MainBodyTextColor}"
+                        TextDecorations="Underline" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</pages:PopupPage>

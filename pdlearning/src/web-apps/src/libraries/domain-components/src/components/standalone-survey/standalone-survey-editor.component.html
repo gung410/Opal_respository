@@ -1,0 +1,64 @@
+<div class="standalone-survey-editor">
+  <standalone-survey-question-adder class="standalone-survey-editor__first-question-adder"
+                                    *ngIf="orderedFormQuestionsData.length == 0"
+                                    [inlineAdd]="false"
+                                    [priority]="0"
+                                    (selectQuestion)="onQuestionTemplateSelect($event)"></standalone-survey-question-adder>
+  <div class="standalone-survey-editor__question-container"
+       [ngClass]="{'-selected': selectedQuestionId == question.id}"
+       *ngFor="let question of orderedFormQuestionsData; let i = index; trackBy: formQuestionsDataTrackByFn">
+    <standalone-survey-section-editor *ngIf="question.questionType == StandaloneSurveyQuestionType.Structure ; else noSection"
+                                      [formSection]="formSectionDic[question.formSectionId]"
+                                      [branchingOptionQuestions]="branchingOptionQuestions"
+                                      (formSectionChange)="onSectionChanged($event)"
+                                      (move)="onSectionMove($event)"
+                                      (delete)="onSectionDelete($event)">
+      <standalone-survey-question-adder class="standalone-survey-editor__first-question-adder"
+                                        *ngIf="!questionsDicByFormSection[question.formSectionId]"
+                                        [inlineAdd]="false"
+                                        [priority]="i"
+                                        [minorPriority]="0"
+                                        (selectQuestion)="onQuestionTemplateSelect($event,question.formSectionId)">
+      </standalone-survey-question-adder>
+      <ng-container
+                    *ngFor="let sectionQuestion of getOrderedQuestionsBySection(question.formSectionId); let j = index; trackBy: formQuestionsDataTrackByFn">
+        <div class="standalone-survey-editor__question-container"
+             [ngClass]="{'-selected': selectedQuestionId == sectionQuestion.id}">
+          <standalone-survey-question-editor class="standalone-survey-editor__question-item"
+                                             [ngClass]="{'-selected': selectedQuestionId == sectionQuestion.id}"
+                                             [data]="sectionQuestion"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             [selected]="selectedQuestionId == sectionQuestion.id"
+                                             [branchingOptionQuestions]="getOrderedQuestionsBySection(question.formSectionId)"
+                                             (dataChange)="onSectionQuestionDataChange($event)"
+                                             (delete)="onSectionQuestionDelete($event)"
+                                             (moveUp)="onSectionQuestionMove($event,-1)"
+                                             (moveDown)="onSectionQuestionMove($event,1)"
+                                             (click)="selectQuestion(sectionQuestion)">
+          </standalone-survey-question-editor>
+          <standalone-survey-question-adder [inlineAdd]="(questionsDicByFormSection[question.formSectionId].length - 1) != j"
+                                            [priority]="i"
+                                            [minorPriority]="j + 1"
+                                            (selectQuestion)="onQuestionTemplateSelect($event,question.formSectionId)">
+          </standalone-survey-question-adder>
+        </div>
+      </ng-container>
+    </standalone-survey-section-editor>
+    <ng-template #noSection="">
+      <standalone-survey-question-editor class="standalone-survey-editor__question-item"
+                                         [ngClass]="{'-selected': selectedQuestionId == question.id}"
+                                         [data]="question"
+                                         [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                         [selected]="selectedQuestionId == question.id"
+                                         [branchingOptionQuestions]="branchingOptionQuestions"
+                                         (dataChange)="onQuestionChanged($event)"
+                                         (delete)="onQuestionDelete($event)"
+                                         (moveUp)="onQuestionMoveUp($event)"
+                                         (moveDown)="onQuestionMoveDown($event)"
+                                         (click)="selectQuestion(question)"></standalone-survey-question-editor>
+    </ng-template>
+    <standalone-survey-question-adder [inlineAdd]="(orderedFormQuestionsData.length - 1) != i"
+                                      [priority]="i + 1"
+                                      (selectQuestion)="onQuestionTemplateSelect($event)"></standalone-survey-question-adder>
+  </div>
+</div>

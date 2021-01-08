@@ -1,0 +1,18 @@
+<div class="rating-stars {{size}}"
+     [ngClass]="{ '--clickable':  clickable }">
+  <i class="rating-stars__star icon icon-fill {{size}} star-outline"
+     [class.star]="value >= 1 || clickable && (mouserOverStar1 || mouserOverStar2 || mouserOverStar3)"
+     (click)="onStarClick(1)"
+     (mouseout)="mouserOverStar1=false"
+     (mouseover)="mouserOverStar1=true"></i>
+  <i class="rating-stars__star icon icon-fill {{size}} star-outline"
+     [class.star]="value >= 2 || clickable && (mouserOverStar2 || mouserOverStar3)"
+     (click)="onStarClick(2)"
+     (mouseout)="mouserOverStar2=false"
+     (mouseover)="mouserOverStar2=true"></i>
+  <i class="rating-stars__star icon icon-fill {{size}} star-outline"
+     [class.star]="value === 3 || clickable && (mouserOverStar3)"
+     (click)="onStarClick(3)"
+     (mouseout)="mouserOverStar3=false"
+     (mouseover)="mouserOverStar3=true"></i>
+</div>

@@ -1,0 +1,348 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Course Planning' | translator }}</label>
+    <div class="form-controls-group -required"
+         [hidden]="isPlanningVerificationRequired()">
+      <label for="ch2">{{ 'Nature of Course' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('natureOfCourse', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.natureOfCourse">
+            {{ course.metadataTagsDic[course.natureOfCourse] ? course.metadataTagsDic[course.natureOfCourse].displayText : '' }}
+          </div>
+          <span *ngIf="!course.natureOfCourse"> - N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="natureOfCourse"
+                       [(ngModel)]="course.natureOfCourse"
+                       [items]="course.natureCourseSelectItems"
+                       [minDropdownHeight]="100"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'New / Recurring' | translator }}</label>
+      <editable [modeView]="true">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               style="font-size: 18px; padding: 5px 15px !important;">
+            {{ createMode }}
+          </div>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Number of Classes Planned to Be Conducted' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('numOfPlannedClass', asViewMode())">
+        <ng-template editableViewMode="">{{ course.numOfPlannedClass != null ? course.numOfPlannedClass :   '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="numOfPlannedClass"
+                                [(ngModel)]="course.numOfPlannedClass"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Number of Sessions Per Class' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('numOfSessionPerClass', asViewMode())">
+        <ng-template editableViewMode="">{{ course.numOfSessionPerClass != null ? course.numOfSessionPerClass :  '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="numOfSessionPerClass"
+                                [(ngModel)]="course.numOfSessionPerClass"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-section -required"
+         [hidden]="course.isMicrolearning">
+      <label class="form-section-title"
+             for="ch2">{{ 'Duration Per Session' | translator }}</label>
+      <div class="form-section-group">
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Hours' | translator }}</label>
+          <editable [modeView]="course.isViewOnlyForField('numOfHoursPerSession', asViewMode())">
+            <ng-template editableViewMode="">{{ course.numOfHoursPerSession != null ? course.numOfHoursPerSession :  '- N/A' }}
+            </ng-template>
+            <ng-template editableEditMode="">
+              <kendo-numerictextbox class="form-control"
+                                    type="number"
+                                    [min]="0"
+                                    [max]="maxInt"
+                                    [decimals]="0"
+                                    [format]="'n0'"
+                                    autoCorrect="true"
+                                    formControlName="numOfHoursPerSession"
+                                    [(ngModel)]="course.numOfHoursPerSession"
+                                    kendoErrorTooltip
+                                    position="top"></kendo-numerictextbox>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Minutes' | translator }}</label>
+          <editable [modeView]="course.isViewOnlyForField('numOfMinutesPerSession', asViewMode())">
+            <ng-template editableViewMode="">{{ course.numOfMinutesPerSession != null ? course.numOfMinutesPerSession : '- N/A' }}
+            </ng-template>
+            <ng-template editableEditMode="">
+              <kendo-numerictextbox class="form-control"
+                                    type="number"
+                                    [min]="0"
+                                    [max]="59"
+                                    [decimals]="0"
+                                    [format]="'n0'"
+                                    autoCorrect="true"
+                                    [(ngModel)]="course.numOfMinutesPerSession"
+                                    formControlName="numOfMinutesPerSession"
+                                    kendoErrorTooltip
+                                    position="top"></kendo-numerictextbox>
+            </ng-template>
+          </editable>
+        </div>
+      </div>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Total Number of Hours to Attend Within The Year' | translator }}</label>
+      <editable [modeView]="true">
+        <ng-template editableViewMode="">{{ course.totalHoursAttendWithinYear || '- N/A' }}</ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Date to Publish Course' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('planningPublishDate', asViewMode())">
+        <ng-template editableViewMode="">{{ course.planningPublishDate ? (course.planningPublishDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #planningPublishDatePicker
+                            formControlName="planningPublishDate"
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="planningPublishDatePicker.toggle(true)"
+                            [(ngModel)]="course.planningPublishDate"
+                            kendoErrorTooltip
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Start Date' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('startDate', asViewMode())">
+        <ng-template editableViewMode="">{{ course.startDate ? (course.startDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #startDatePicker
+                            formControlName="startDate"
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="startDatePicker.toggle(true)"
+                            [(ngModel)]="course.startDate"
+                            kendoErrorTooltip
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'End Date' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('expiredDate', asViewMode())">
+        <ng-template editableViewMode="">{{ course.expiredDate ? (course.expiredDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #expiredDatePicker
+                            formControlName="expiredDate"
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="expiredDatePicker.toggle(true)"
+                            [(ngModel)]="course.expiredDate"
+                            kendoErrorTooltip
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Date to Archive Course' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('planningArchiveDate', asViewMode())">
+        <ng-template editableViewMode="">{{ course.planningArchiveDate ? (course.planningArchiveDate | date: 'dd/MM/yyyy') : '- N/A' }}
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #planningArchiveDatePicker
+                            formControlName="planningArchiveDate"
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="planningArchiveDatePicker.toggle(true)"
+                            [(ngModel)]="course.planningArchiveDate"
+                            kendoErrorTooltip
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <div class="k-checkbox-container">
+        <input class="k-checkbox"
+               type="checkbox"
+               [disabled]="asViewMode() || asViewModeForCompletingCourseForPlanning()"
+               [(ngModel)]="course.willArchiveCommunity"
+               [ngModelOptions]="{ standalone: true }">
+        <label class="k-checkbox-label"
+               for="ch2">{{ 'Archive the community together with the course' | translator }}</label>
+      </div>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Period of PD Opportunity' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('pdActivityPeriods', asViewMode())">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let pdActivityPeriod of course.pdActivityPeriods">
+            <div class="metadata-tag-text"
+                 *ngIf="pdActivityPeriod">
+              {{ course.metadataTagsDic[pdActivityPeriod] ? course.metadataTagsDic[pdActivityPeriod].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.pdActivityPeriods.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="pdActivityPeriods"
+                       [(ngModel)]="course.pdActivityPeriods"
+                       [items]="course.pdActivityPeriodSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       kendoErrorTooltip
+                       position="top"
+                       [multiple]="true"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Minimum Participants Per Class' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('minParticipantPerClass', asViewMode())">
+        <ng-template editableViewMode="">{{ course.minParticipantPerClass || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="minParticipantPerClass"
+                                [(ngModel)]="course.minParticipantPerClass"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Maximum Participants Per Class' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('maxParticipantPerClass', asViewMode())">
+        <ng-template editableViewMode="">{{ course.maxParticipantPerClass || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="maxParticipantPerClass"
+                                [(ngModel)]="course.maxParticipantPerClass"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title-group">
+        <label class="form-section-title -required">
+          {{ 'Number of times one participant can learn' | translator }}
+        </label>
+        <kendo-numerictextbox class="form-control -virtual"
+                              type="number"
+                              [min]="1"
+                              [max]="maxInt"
+                              [decimals]="0"
+                              [format]="'n0'"
+                              autoCorrect="true"
+                              formControlName="maxReLearningTimes"
+                              [(ngModel)]="course.maxReLearningTimes"
+                              kendoErrorTooltip
+                              position="top"
+                              [readonly]="asViewMode() || asViewModeForCompletingCourseForPlanning()"></kendo-numerictextbox>
+      </div>
+      <editable [modeView]="course.isViewOnlyForField('maxReLearningTimes', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.maxReLearningTimes">
+            {{ course.maxReLearningTimes === maxInt ? 'Unlimited' : course.maxReLearningTimes }}
+          </div>
+          <span *ngIf="!course.maxReLearningTimes">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [disabled]="course.isMicrolearning"
+                     [(ngModel)]="course.checkMaxReLearningTimesUnlimited"
+                     [ngModelOptions]="{ standalone: true }">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Unlimited' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group -horizontal"
+               *ngIf="!course.isMicrolearning">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [(ngModel)]="course.checkMaxReLearningTimesOther"
+                     [ngModelOptions]="{ standalone: true }">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Other' | translator }}</label>
+            </div>
+            <kendo-numerictextbox class="provider-info-tab__training-agency-input"
+                                  type="number"
+                                  [min]="1"
+                                  [max]="maxMaxReLearningTimes"
+                                  [decimals]="0"
+                                  [format]="'n0'"
+                                  autoCorrect="true"
+                                  [readonly]="!course.checkMaxReLearningTimesOther"
+                                  [(ngModel)]="course.maxReLearningTimesOther"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  kendoErrorTooltip
+                                  position="top"></kendo-numerictextbox>
+          </div>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

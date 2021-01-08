@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Conexus.Opal.Microservice.WebinarProxy.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "session/api/join?area=101301134&fullName=User+3740570&meetingID=asdasdasd&password=mp&redirect=true&userID=AB86884C-B885-46C2-A817-B9600C6211E4&checksum=e687ae822bf72ddd85b2aa46579df3c7fbfae9ee",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5012"
+    }
+  }
+}

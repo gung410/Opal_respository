@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.Learner.LearningOpportunityAssignmentCard"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp">
+	<StackLayout>
+		<StackLayout>
+			<Label
+				x:Name="EmpltListLbl"
+				HorizontalOptions="CenterAndExpand"
+				Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+		</StackLayout>
+		<controls:RepeatableStack x:Name="Source" Orientation="Vertical">
+			<controls:RepeatableStack.ItemTemplate>
+				<DataTemplate>
+					<StackLayout>
+						<StackLayout.GestureRecognizers>
+							<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnItem_Tapped" />
+						</StackLayout.GestureRecognizers>
+						<!--  Status  -->
+						<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+							<Frame
+								Padding="0"
+								BackgroundColor="{Binding Status, Converter={StaticResource AssignmentStatusBackgroundColorConverter}}"
+								CornerRadius="5"
+								HasShadow="False"
+								HeightRequest="10"
+								HorizontalOptions="EndAndExpand"
+								VerticalOptions="Center"
+								WidthRequest="10" />
+							<Label
+								FontFamily="{StaticResource RobotoRegular}"
+								FontSize="15"
+								Text="{Binding Status, Converter={StaticResource AssignmentStatusConverter}}"
+								TextColor="{StaticResource SecondaryTextColor}" />
+						</StackLayout>
+						<StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+							<ffimagesvg:SvgCachedImage
+								HeightRequest="40"
+								Source="assignments.svg"
+								WidthRequest="40" />
+							<Label Text="{Binding Title, StringFormat='{0}'}" VerticalTextAlignment="Center" />
+						</StackLayout>
+						<!--  DATE TIME  -->
+						<StackLayout Orientation="Horizontal">
+							<StackLayout>
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="15"
+									Text="START DATE"
+									TextColor="{StaticResource SecondaryTextColor}" />
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="{StaticResource BaseButtonFontSize}"
+									Text="{Binding StartDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+									TextColor="{StaticResource MainBodyTextColor}" />
+							</StackLayout>
+							<StackLayout HorizontalOptions="EndAndExpand">
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="15"
+									Text="END DATE"
+									TextColor="{StaticResource SecondaryTextColor}" />
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="{StaticResource BaseButtonFontSize}"
+									Text="{Binding EndDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+									TextColor="{StaticResource MainBodyTextColor}" />
+							</StackLayout>
+						</StackLayout>
+
+						<StackLayout>
+							<Label
+								FontFamily="{StaticResource RobotoRegular}"
+								FontSize="15"
+								Text="SCORE"
+								TextColor="{StaticResource SecondaryTextColor}" />
+							<Label
+								FontFamily="{StaticResource RobotoRegular}"
+								FontSize="{StaticResource BaseButtonFontSize}"
+								Text="{Binding QuizAnswer, Converter={StaticResource AssignmentScoreConverter}}"
+								TextColor="{StaticResource MainBodyTextColor}" />
+						</StackLayout>
+
+						<!--  Comment  -->
+						<Frame
+							Padding="0"
+							BorderColor="{StaticResource TintColor}"
+							CornerRadius="20"
+							HasShadow="False"
+							HeightRequest="40"
+							HorizontalOptions="StartAndExpand"
+							IsClippedToBounds="True"
+							VerticalOptions="Center"
+							WidthRequest="40">
+							<Frame.GestureRecognizers>
+								<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="GotoComments_Tapped" />
+							</Frame.GestureRecognizers>
+							<ffimagesvg:SvgCachedImage
+								Aspect="AspectFit"
+								HeightRequest="15"
+								HorizontalOptions="CenterAndExpand"
+								Source="comment.svg"
+								VerticalOptions="CenterAndExpand"
+								WidthRequest="15" />
+						</Frame>
+						<BoxView
+							BackgroundColor="#D8DCE6"
+							HeightRequest="1"
+							IsVisible="{Binding IsLastItem, Converter={StaticResource InverseBoolConverter}}"
+							VerticalOptions="FillAndExpand" />
+					</StackLayout>
+				</DataTemplate>
+			</controls:RepeatableStack.ItemTemplate>
+		</controls:RepeatableStack>
+	</StackLayout>
+</ContentView>

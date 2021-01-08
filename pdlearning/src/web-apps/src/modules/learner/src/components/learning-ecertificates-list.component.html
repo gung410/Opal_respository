@@ -1,0 +1,80 @@
+<div class="learning-ecertificates-list">
+  <div class="learning-ecertificates-title"
+       *ngIf="isShowMore"
+       (click)="onShowMoreClicked()">
+    {{ 'E-Certificates' | translator }}
+    <i class="icon right"></i>
+  </div>
+  <ng-container *ngIf="totalCount > 0; else showingEmptyMsg">
+    <div class="vertical-list">
+      <div class="ecertificate-list">
+        <ng-container *ngFor="let item of eCertificateItems">
+          <div class="learning-long-card">
+            <div class="container">
+              <div class="course"
+                   (click)="onECertificateClick(item)">
+                <div class="course-img-container">
+                  <div class="course-img">
+                    <img src="{{ item.thumbnail }}"
+                         *ngIf="item.thumbnail">
+                  </div>
+                </div>
+                <div class="card-info">
+                  <div class="card-title two-line-truncate-text"
+                       title="{{ item.title }}">{{ item.title }}</div>
+                  <div class="tags two-line-truncate-text"
+                       *ngIf="(metadata | async) != null">
+                    <ng-container *ngFor="let tagId of item.tagIds.slice(0, 2)">
+                      <span class="tag-item"
+                            *ngIf="getTagName((metadata | async), tagId)">
+                        {{ getTagName((metadata | async), tagId) }}</span>
+                    </ng-container>
+                  </div>
+                  <span class="general-info">
+                    <div>{{ 'Completion date' | translator }}: {{ item.completionDate | date: 'dd/MM/yyyy' }}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="vertical-center">
+              <button class="opal-confirm-dialog__btn"
+                      kendoButton
+                      [primary]="false"
+                      [icon]="'download'"
+                      (click)="onDownloadECertificateClick(item)">
+                {{ 'Download E-Certificate' | translator}}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="ecertificate-showmore"
+           *ngIf="isShowMore && totalCount > eCertificateItems.length"
+           (click)="onShowMoreClicked()">{{"Load more" | translator}}
+      </div>
+    </div>
+    <div class="paging"
+         *ngIf="!isShowMore && totalCount > eCertificateItems.length">
+      <div class="paginator">
+        <div class="prev"
+             [ngClass]="{ 'empty': activePageNumber === 1}"
+             (click)="loadPreviousPage()">◀</div>
+        <div class="items">
+          <div class="nav-item"
+               *ngFor="let pageNumber of pages"
+               [ngClass]="[pageNumber === activePageNumber ? 'active': '', pageNumber === undefined ? 'empty': '' ]"
+               (click)="loadPageItems(pageNumber)">
+            {{ pageNumber ? pageNumber : '...'}}
+          </div>
+        </div>
+        <div class="next"
+             [ngClass]="{ 'empty': activePageNumber === totalPages}"
+             (click)="loadNextPage()">▶</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator}}</span>
+  </ng-template>
+</div>

@@ -1,0 +1,32 @@
+assignment-editor-config {
+  .assignment-editor-config {
+    &__randomize {
+      margin-top: 10px;
+    }
+
+    &__randomize-checkbox {
+      margin-right: 10px;
+    }
+
+    &__randomize-image {
+      margin-left: 5px;
+      width: 17px;
+    }
+
+    &__can-preview-select-item {
+      display: flex;
+    }
+
+    &__can-preview-select-item-title {
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__can-preview-select-item-btn {
+      cursor: pointer;
+      text-decoration: underline;
+      margin: 2px 20px;
+    }
+  }
+}

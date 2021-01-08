@@ -1,0 +1,44 @@
+<div class="broken-link-report-tab">
+  <kendo-grid class="column flex audit-log-grid opal-grid -no-merge"
+              #grid
+              [data]="gridData"
+              [pageable]="true"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+              [skip]="pageNumber"
+              stickyGridHeaderElement
+              [stickyDependElement]="stickyDependElement">
+    <kendo-grid-column [title]="'URL' | globalTranslator"
+                       field="url"></kendo-grid-column>
+    <kendo-grid-column [title]="'Description' | globalTranslator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span *ngIf="dataItem.description">{{dataItem.description}}</span>
+        <i *ngIf="!dataItem.description">-N/A</i>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [title]="'Reporter' | globalTranslator"
+                       field="reportByUser.fullName">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span *ngIf="dataItem.reportByUser">{{dataItem.reportByUser.fullName}}</span>
+        <i *ngIf="dataItem.isSystemReport; else unknowUser">
+          {{'System' | globalTranslator}}
+        </i>
+        <ng-template #unknowUser="">
+          <i *ngIf="!dataItem.reportByUser">{{'Unknown User' | globalTranslator}}</i>
+        </ng-template>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [title]="'Date' | globalTranslator"
+                       field="createdDate">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        {{ dataItem.createdDate | relativeTimespan: 'dd/MM/yyyy h:mm a' }}
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+</div>

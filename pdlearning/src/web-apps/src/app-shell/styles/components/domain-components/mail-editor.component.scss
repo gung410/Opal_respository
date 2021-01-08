@@ -1,0 +1,35 @@
+mail-editor {
+  display: flex;
+  flex-grow: 1;
+
+  .mail-editor-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    &__tags {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid $color-gainsboro;
+      margin-bottom: 10px;
+      padding: 10px;
+
+      &__tag {
+        background: #f2f5fb;
+        border: 1px solid $color-gainsboro;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-size: 14px;
+        padding: 3px 10px;
+        cursor: pointer;
+      }
+    }
+
+    &__editor {
+      display: flex;
+      flex-grow: 1;
+      border: 1px solid $color-gainsboro;
+      min-height: 500px;
+    }
+  }
+}

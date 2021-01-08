@@ -1,0 +1,86 @@
+.personal-files-dialog {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  width: 990px;
+  height: 640px;
+  align-items: stretch;
+
+  @include flex-layout-media('tablet-horizontal') {
+    max-height: 100%;
+  }
+
+  .dialog-body {
+    display: flex;
+    flex-grow: 1;
+    overflow-y: hidden;
+  }
+
+  .batch-upload-files {
+    &__list-file {
+      max-height: 290px;
+
+      @include flex-layout-media('tablet-horizontal') {
+        max-height: 250px;
+      }
+    }
+
+    &__content {
+      padding: 0;
+    }
+  }
+
+  .k-tabstrip {
+    & > .k-tabstrip-items {
+      border: none !important;
+    }
+  }
+
+  .personal-file-header {
+    margin-bottom: 1rem;
+  }
+
+  .search-input {
+    max-width: 50%;
+  }
+
+  personal-file-list {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
+  }
+
+  .personal-file-body {
+    display: flex;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .personal-file-control {
+    margin-top: 1rem;
+    text-align: right;
+  }
+
+  .personal-file-button {
+    line-height: 2rem;
+    height: 2rem;
+    margin-left: 16px;
+  }
+
+  .personal-file-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem 0;
+    width: 100%;
+    min-height: 450px;
+
+    &.--batch-upload {
+      justify-content: center;
+    }
+
+    @include flex-layout-media('tablet-horizontal') {
+      min-height: 300px;
+    }
+  }
+}

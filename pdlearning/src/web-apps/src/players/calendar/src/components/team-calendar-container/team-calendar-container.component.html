@@ -1,0 +1,13 @@
+<kendo-tabstrip>
+  <kendo-tabstrip-tab [title]="'Calendar'"
+                      [selected]="true">
+    <ng-template kendoTabContent="">
+      <team-calendar></team-calendar>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab [title]="'Share Calendar'">
+    <ng-template kendoTabContent="">
+      <share-calendar></share-calendar>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>

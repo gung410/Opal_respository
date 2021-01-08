@@ -1,0 +1,19 @@
+lmm-outlet classrun-detail-page {
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+
+    .management-toolbar {
+      min-height: 40px;
+      position: relative;
+
+      .completion-rate {
+        text-align: end;
+        border-bottom: 1px solid $color-gainsboro !important;
+        color: black;
+        font-size: 16px;
+      }
+    }
+  }
+}

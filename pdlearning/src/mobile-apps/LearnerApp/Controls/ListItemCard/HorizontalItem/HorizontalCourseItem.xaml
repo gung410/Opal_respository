@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.ListItemCard.HorizontalItem.HorizontalCourseItem"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    Padding="0,0,5,5">
+    <Frame
+        Padding="0"
+        android:VisualElement.Elevation="5"
+        ios:VisualElement.IsShadowEnabled="true"
+        ios:VisualElement.ShadowColor="Black"
+        ios:VisualElement.ShadowOpacity="0.3"
+        ios:VisualElement.ShadowRadius="2.5"
+        BackgroundColor="White"
+        BorderColor="{StaticResource EntryLineColor}"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Fill"
+        WidthRequest="300">
+        <ios:VisualElement.ShadowOffset>
+            <Size>
+                <x:Arguments>
+                    <x:Double>2.5</x:Double>
+                    <x:Double>2.5</x:Double>
+                </x:Arguments>
+            </Size>
+        </ios:VisualElement.ShadowOffset>
+        <!--  item tapped  -->
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer
+                CommandParameter="{Binding .}"
+                NumberOfTapsRequired="1"
+                Tapped="Item_Selected" />
+        </Frame.GestureRecognizers>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <AbsoluteLayout Grid.Row="0">
+                <!--  main image  -->
+                <StackLayout
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    HeightRequest="150">
+                    <StackLayout HeightRequest="150">
+                        <forms:CachedImage
+                            Aspect="AspectFill"
+                            DownsampleToViewSize="True"
+                            ErrorPlaceholder="image_place_holder_h150.png"
+                            HeightRequest="150"
+                            Source="{Binding ThumbnailUrl}" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 0.55, 0.25" AbsoluteLayout.LayoutFlags="All">
+                    <Frame
+                        Padding="6"
+                        BackgroundColor="{Binding Status, Converter={StaticResource LabelColorConverter}}"
+                        CornerRadius="3"
+                        HasShadow="False">
+                        <Label
+                            FontFamily="{StaticResource RobotoRegular}"
+                            FontSize="{StaticResource BaseFontSize}"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{Binding Status, Converter={StaticResource LabelStatusConverter}}"
+                            TextColor="{StaticResource MainBodyTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Frame>
+                </StackLayout>
+
+                <!--  bookmark icon  -->
+                <Frame
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="0.97, 0.05, 40, 40"
+                    AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                    BorderColor="{StaticResource TintColor}"
+                    CornerRadius="20"
+                    HasShadow="False"
+                    IsClippedToBounds="True"
+                    IsVisible="{Binding IsVisibleBookmark}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            CommandParameter="{Binding .}"
+                            NumberOfTapsRequired="1"
+                            Tapped="Bookmark_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <ffimagesvg:SvgCachedImage
+                        Aspect="AspectFit"
+                        HeightRequest="15"
+                        HorizontalOptions="CenterAndExpand"
+                        Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="15" />
+                </Frame>
+            </AbsoluteLayout>
+
+            <!--  progress bar  -->
+            <ProgressBar
+                Grid.Row="1"
+                Progress="{Binding ProgressMeasure, Converter={StaticResource ProgressBarConverter}}"
+                ProgressColor="{StaticResource TabSelected}" />
+
+            <StackLayout Grid.Row="2" Padding="10">
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal">
+                        <controls:Ratingv2View
+                            IsEnableRate="False"
+                            Rate="{Binding Rating}"
+                            StarSize="10"
+                            StarSpacing="5" />
+                        <Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+                        <Label
+                            FontSize="{StaticResource LittleSize}"
+                            Text="{Binding ReviewsCount, Converter={StaticResource ReviewsCountConverter}}"
+                            TextColor="{StaticResource SecondaryTextColor}" />
+                    </StackLayout>
+
+                    <!--  DURATION MINUTES  -->
+                    <StackLayout
+                        IsVisible="{Binding DurationMinutes, Converter={StaticResource DurationVisibleConverter}}"
+                        Orientation="Horizontal"
+                        Spacing="4"
+                        VerticalOptions="CenterAndExpand">
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="{StaticResource LittleSize}"
+                            Source="clock.svg"
+                            WidthRequest="{StaticResource LittleSize}" />
+                        <Label
+                            FontSize="{StaticResource LittleSize}"
+                            LineBreakMode="TailTruncation"
+                            MaxLines="2"
+                            Text="{Binding DurationMinutes, Converter={StaticResource DurationConverter}}" />
+                    </StackLayout>
+                </StackLayout>
+                <Label
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="{StaticResource LargerSize}"
+                    HeightRequest="70"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="2"
+                    Text="{Binding Name}"
+                    TextColor="{StaticResource MainBodyTextColor}"
+                    VerticalTextAlignment="Center" />
+                <controls:TagView HeightRequest="70" Items="{Binding Tags}" />
+            </StackLayout>
+        </Grid>
+    </Frame>
+</ContentView>

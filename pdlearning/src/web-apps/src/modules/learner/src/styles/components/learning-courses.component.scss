@@ -1,0 +1,34 @@
+learning-courses,
+learning-microlearning,
+learning-digital-content,
+learning-communities {
+  @include flex-column-container;
+
+  .status-label {
+    font-family: Roboto;
+    font-style: normal;
+    font-size: $font-h6;
+    line-height: 22px;
+    display: inline-block;
+    margin-right: 20px;
+    text-transform: capitalize;
+  }
+
+  .quick-status-filter {
+    margin: -10px 0px 40px 0px;
+  }
+
+  .quick-status-list {
+    display: inline-block;
+    margin-right: 40px;
+    font-size: $font-h6;
+
+    .k-radio {
+      &:checked {
+        + .k-radio-label {
+          font-weight: $font-weight-medium;
+        }
+      }
+    }
+  }
+}

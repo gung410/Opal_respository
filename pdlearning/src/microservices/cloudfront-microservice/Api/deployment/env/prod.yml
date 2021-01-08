@@ -1,0 +1,7 @@
+https_proxy: http://proxy.opal:3128
+cloudfront_private_file: private_key.pem
+cloudfront_key_id: APKAIWMT7ADSSVAD647A
+CloudFrontSettings_CloudFrontUrl: "https://d32u4p9rbaq5ex.cloudfront.net"
+Logging_LogLevel_Default: Error
+GetAccessRightsUrl: http://prod-competence-opal-api-portal.opal/me/accessRights
+DeveloperExceptionEnabled: false

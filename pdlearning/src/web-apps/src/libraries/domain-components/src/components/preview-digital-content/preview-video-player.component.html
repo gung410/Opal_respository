@@ -1,0 +1,21 @@
+<video #videoEl
+       controls
+       controlsList="nodownload"
+       [ngStyle]="styles">
+  <source type="video/mp4"
+          [src]="videoSrc"
+          (error)="handleVideoError($event)">
+  <source type="video/ogg"
+          [src]="videoSrc"
+          (error)="handleVideoError($event)">
+  <source type="video/m4v"
+          [src]="videoSrc"
+          (error)="handleVideoError($event)">
+  <source type="video/avi"
+          [src]="videoSrc"
+          (error)="handleVideoError($event)">
+  <p>
+    Your browser doesn't support HTML5 video.
+    Here is a <a href="{{src}}">link to download the video</a> instead.
+  </p>
+</video>

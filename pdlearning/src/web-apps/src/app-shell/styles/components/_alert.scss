@@ -1,0 +1,19 @@
+.alert {
+  @extend %alert;
+
+  &.-danger {
+    @extend %alert-danger;
+  }
+
+  &.-info {
+    @extend %alert-info;
+  }
+
+  &.-warning {
+    @extend %alert-warning;
+  }
+
+  &.-success {
+    @extend %alert-success;
+  }
+}

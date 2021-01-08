@@ -1,0 +1,187 @@
+<div class="scrollable-menu-content">
+  <div class="scrollable-menu-content__tab-content">
+    <div class="form-container"
+         [formGroup]="form">
+      <div class="form-controls-group -required">
+        <label for="ch2">{{ 'Select a class run' | translator }}</label>
+        <opal-select class="form-controls"
+                     [fetchDataFn]="fetchClassRunSelectItemFn"
+                     [(items)]="addingParticipantVM.classRuns"
+                     [labelField]="'classTitle'"
+                     [valueField]="'id'"
+                     formControlName="selectedClassRunId"
+                     [(ngModel)]="addingParticipantVM.selectedClassRunId"
+                     position="top"
+                     [fetchOnInit]="true">
+
+        </opal-select>
+        <span class="alert -warning"
+              *ngIf="addingParticipantVM.classRuns.length === 0">{{'All class-runs are started. Please create new class-run.' | translator}}</span>
+        <div class="adding-participant"
+             *ngIf="addingParticipantVM.selectedClassRunId">
+          <div class="adding-participant__item-class-title"> {{ addingParticipantVM.classTitle}}</div>
+          <div class="adding-participant__item-references-container">
+            <div class="adding-participant__item-references">
+              <div class="adding-participant__item-references-title">{{'Application Date' | translator}}</div>
+              <div class="adding-participant__item-references-value">
+                {{ addingParticipantVM.applicationStartDate | date: 'dd/MM/yyyy'}} -
+                {{ addingParticipantVM.applicationEndDate | date: 'dd/MM/yyyy'}} </div>
+            </div>
+            <div class="adding-participant__item-references">
+              <div class="adding-participant__item-references-title">{{'Class Start Date' | translator}}</div>
+              <div class="adding-participant__item-references-value">
+                {{ addingParticipantVM.startDate | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="adding-participant__item-references">
+              <div class="adding-participant__item-references-title">{{'Class End Date' | translator}}</div>
+              <div class="adding-participant__item-references-value">
+                {{ addingParticipantVM.endDate | date: 'dd/MM/yyyy '}}</div>
+            </div>
+          </div>
+
+          <div class="adding-participant__item-title">
+            <label for="ch2">{{ 'Class Size' | translator }}</label>
+          </div>
+          <span>{{addingParticipantVM.classSize + '  people'}}</span>
+        </div>
+      </div>
+      <ng-container *ngIf="addingParticipantVM.selectedClassRunId">
+        <!-- <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Target Participant' | translator }}</label>
+          <div class="form-controls-group -horizontal">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="applicable"
+                     type="radio"
+                     [checked]="addingParticipantVM.checkApplicableForEveryoneType()"
+                     (click)="addingParticipantVM.setTargetParticipant(TargetParticipantType.ApplicableForEveryone)">
+              <label>{{ 'Applicable for everyone' | translator }}</label>
+            </div>
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="applicable"
+                     type="radio"
+                     [checked]="addingParticipantVM.checkFollowingCourseTargetParticipantType()"
+                     (click)="addingParticipantVM.setTargetParticipant(TargetParticipantType.FollowingCourseTargetParticipant)">
+              <label>{{ "Following course's target participant" | translator }}</label>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-controls-group -required">
+          <label for="ch2">{{ 'Select Learner' | translator }}</label>
+          <div class="form-controls-group -horizontal">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="Learner"
+                     type="radio"
+                     [checked]="addingParticipantVM.checkIndividualLeanerType()"
+                     (click)="addingParticipantVM.setSelectLearnerAndDepartments(SelectLearnerType.SelectIndividualLearners)">
+              <label>{{ 'Select Individual Learners' | translator }}</label>
+            </div>
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="Learner"
+                     type="radio"
+                     [checked]="addingParticipantVM.checkDepartmentType()"
+                     (click)="addingParticipantVM.setSelectLearnerAndDepartments(SelectLearnerType.SelectDepartments)">
+              <label>{{ 'Select Departments' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group -horizontal adding-participant__learner-selection">
+            <opal-select class="form-controls adding-participant__individual-learner"
+                         *ngIf="addingParticipantVM.checkIndividualLeanerType()"
+                         [ngModel]="addingParticipantVM.selectedToAddLearnerId"
+                         [fetchDataFn]="fetchUserSelectItemFn"
+                         [fetchDataLogicDependenciesInput]="addingParticipantVM.targetParticipantType"
+                         (selectedItemChange)="addingParticipantVM.setSelectedToAddLearner($event)"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [placeholder]="'Search and pick learner'"
+                         formControlName="selectedToAddLearnerId"
+                         [virtualScroll]="true"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+            <opal-select class="form-controls adding-participant__department-learner"
+                         *ngIf="addingParticipantVM.checkDepartmentType()"
+                         [ngModel]="addingParticipantVM.selectedToAddLearnerDepartmentId"
+                         [fetchDataFn]="fetchDepartmentSelectItemFn"
+                         [fetchDataLogicDependenciesInput]="addingParticipantVM.targetParticipantType"
+                         (selectedItemChange)="addingParticipantVM.setSelectedToAddLearnerDepartment($event)"
+                         [labelField]="'departmentName'"
+                         [valueField]="'id'"
+                         formControlName="selectedToAddLearnerDepartment"
+                         [placeholder]="'Search and pick department'"
+                         [virtualScroll]="true"
+                         kendoErrorTooltip
+                         position="top"
+                         [fetchNoPaging]="true">
+            </opal-select>
+            <button class="adding-participant__add-learner-btn"
+                    kendoButton
+                    [primary]="true"
+                    (click)="addingParticipantVM.addSelectedUserByCourseItem()">{{'Add' | translator}}</button>
+          </div>
+        </div>
+        <div *ngIf="addingParticipantVM.checkIndividualLeanerType() && addingParticipantVM.selectedLearners.length > 0">
+          <opal-list [(items)]="addingParticipantVM.selectedLearners">
+            <ng-template opalListItemTmp
+                         let-item="item">
+              <div class="user-list-container">
+                <div class="user-list-container__user-info">
+                  <owner-info [owner]="addingParticipantVM.displaySelectedUsersDic[item.id]"></owner-info>
+                </div>
+                <div class="user-list-container__department">
+                  {{
+                    addingParticipantVM.displaySelectedUsersDic[item.id] ? addingParticipantVM.displaySelectedUsersDic[item.id].departmentName : ''}}
+                </div>
+              </div>
+
+            </ng-template>
+          </opal-list>
+        </div>
+        <div *ngIf="addingParticipantVM.checkDepartmentType() && addingParticipantVM.selectedLearnerDepartments.length > 0">
+          <opal-list [(items)]="addingParticipantVM.selectedLearnerDepartments">
+            <ng-template opalListItemTmp
+                         let-item="item">
+              <div class="owner-container">
+                <div class="user-info">
+                  <p class="main-title">
+                    {{item.departmentName}}
+                  </p>
+                </div>
+              </div>
+            </ng-template>
+          </opal-list>
+        </div>
+        <button class="btn-submit"
+                (click)="onSubmitBtnClicked()"
+                [disabled]="!addingParticipantVM.formValid()"
+                [primary]="true"
+                kendoButton>{{'Submit' | translator}}</button>
+      </ng-container>
+    </div>
+  </div>
+  <div class="scrollable-menu-content__tab-content adding-participant__list-participant"
+       *ngIf="addingParticipantVM.selectedClassRunId">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search for learner' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"></data-filter>
+      </div>
+    </div>
+    <list-registration-grid [searchType]="searchRegistrationsType.AddedByCA"
+                            [filter]="filter"
+                            [courseId]="courseDetailPageInput.data.id"
+                            [classRunId]="addingParticipantVM.selectedClassRunId"
+                            [displayColumns]="displayColumnsAddParticipants"
+                            (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.AddingParticipantTab, SearchLearnerProfileType.AddingParticipant)"
+                            [stickyDependElement]="stickyDependElement">
+    </list-registration-grid>
+  </div>
+</div>

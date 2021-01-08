@@ -1,0 +1,130 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target arm64-apple-ios8.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Tracker
+import Foundation
+import Swift
+import SystemConfiguration
+@_exported import Tracker
+import UIKit
+@_inheritsConvenienceInitializers @objc public class ReachabilityBridge : ObjectiveC.NSObject {
+  @objc public static func connectionType() -> Swift.String
+  @objc public static func isOnline() -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class Tracker : ObjectiveC.NSObject {
+  public typealias OnSuccess = (Swift.Int) -> Swift.Void
+  public typealias OnFailure = (Swift.Int, Swift.Int) -> Swift.Void
+  public static var version: Swift.String {
+    get
+  }
+  public static func start(for environment: Environment = .staging, onSuccess: OnSuccess? = nil, onFailure: OnFailure? = nil)
+  @objc public static func start()
+  @objc public static func start(with environment: Environment)
+  @objc public static func setGeoLocationEnabled(enabled: Swift.Bool)
+  @objc public static func setAutotrackScreenViews(enabled: Swift.Bool)
+  public static func trackViewDidAppear(_ viewController: UIKit.UIViewController)
+  public static func trackScreenView(with id: Swift.String, name: Swift.String)
+  public static func trackEvent(with category: Swift.String, action: Swift.String, label: Swift.String? = nil, property: Swift.String? = nil, value: Swift.Double? = nil)
+  @objc deinit
+}
+@objc public enum Environment : Swift.Int, Swift.RawRepresentable {
+  case development, staging, production
+  public typealias RawValue = Swift.String
+  public var rawValue: Environment.RawValue {
+    get
+  }
+  public init?(rawValue: Environment.RawValue)
+}
+public enum ReachabilityError : Swift.Error {
+  case FailedToCreateWithAddress(Darwin.sockaddr_in)
+  case FailedToCreateWithHostname(Swift.String)
+  case UnableToSetCallback
+  case UnableToSetDispatchQueue
+  case UnableToGetInitialFlags
+}
+@available(*, unavailable, renamed: "Notification.Name.reachabilityChanged")
+public let ReachabilityChangedNotification: Foundation.NSNotification.Name
+extension NSNotification.Name {
+  public static let reachabilityChanged: Foundation.Notification.Name
+}
+public class Reachability {
+  public typealias NetworkReachable = (Reachability) -> ()
+  public typealias NetworkUnreachable = (Reachability) -> ()
+  @available(*, unavailable, renamed: "Connection")
+  public enum NetworkStatus : Swift.CustomStringConvertible {
+    case notReachable, reachableViaWiFi, reachableViaWWAN
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: Reachability.NetworkStatus, b: Reachability.NetworkStatus) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public enum Connection : Swift.CustomStringConvertible {
+    case none, wifi, cellular
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: Reachability.Connection, b: Reachability.Connection) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public var whenReachable: Reachability.NetworkReachable?
+  public var whenUnreachable: Reachability.NetworkUnreachable?
+  final public let reachableOnWWAN: Swift.Bool
+  public var allowsCellularConnection: Swift.Bool
+  public var notificationCenter: Foundation.NotificationCenter
+  public var currentReachabilityString: Swift.String {
+    get
+  }
+  @available(*, unavailable, renamed: "connection")
+  public var currentReachabilityStatus: Reachability.Connection {
+    get
+  }
+  public var connection: Reachability.Connection {
+    get
+  }
+  required public init(reachabilityRef: SystemConfiguration.SCNetworkReachability, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil)
+  convenience public init?(hostname: Swift.String, queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil)
+  convenience public init?(queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil)
+  @objc deinit
+}
+extension Reachability {
+  public func startNotifier() throws
+  public func stopNotifier()
+  public var isReachable: Swift.Bool {
+    get
+  }
+  public var isReachableViaWWAN: Swift.Bool {
+    get
+  }
+  public var isReachableViaWiFi: Swift.Bool {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class TrackerConfig : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  public func getEnvironment() -> Environment
+  public func setEnvironment(environment: Environment)
+  public func getGeoLocationEnabled() -> Swift.Bool
+  public func setGeoLocationEnabled(enabled: Swift.Bool)
+  public func getAutoScreenviewEnabled() -> Swift.Bool
+  public func setAutoScreenviewEnabled(enabled: Swift.Bool)
+  @objc deinit
+}
+extension Environment : Swift.Equatable {}
+extension Environment : Swift.Hashable {}
+@available(*, unavailable, renamed: "Connection")
+extension Reachability.NetworkStatus : Swift.Equatable {}
+@available(*, unavailable, renamed: "Connection")
+extension Reachability.NetworkStatus : Swift.Hashable {}
+extension Reachability.Connection : Swift.Equatable {}
+extension Reachability.Connection : Swift.Hashable {}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Grid
+	x:Class="LearnerApp.Controls.LoadingSwapView.LoadingSwapView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Name="This"
+	BackgroundColor="Bisque">
+	<ContentPresenter
+		x:Name="ActiveLayout"
+		Grid.Row="0"
+		IsVisible="{Binding Source={x:Reference This}, Path=IsLoading, Converter={StaticResource InverseBoolConverter}}"
+		VerticalOptions="Fill" />
+
+	<ContentPresenter
+		x:Name="LoadingLayout"
+		Grid.Row="0"
+		IsVisible="{Binding Source={x:Reference This}, Path=IsLoading}"
+		VerticalOptions="StartAndExpand" />
+</Grid>

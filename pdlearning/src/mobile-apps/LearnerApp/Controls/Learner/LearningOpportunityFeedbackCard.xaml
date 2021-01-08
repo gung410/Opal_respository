@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.Learner.LearningOpportunityFeedbackCard"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<Style x:Key="LabelReview" TargetType="Label">
+				<Setter Property="HorizontalTextAlignment" Value="Center" />
+			</Style>
+			<Style x:Key="ErrorMessage" TargetType="Label">
+				<Setter Property="HorizontalTextAlignment" Value="Center" />
+				<Setter Property="VerticalTextAlignment" Value="Center" />
+				<Setter Property="TextColor" Value="Red" />
+				<Setter Property="Text" Value="This field is required." />
+			</Style>
+		</ResourceDictionary>
+	</ContentView.Resources>
+
+	<StackLayout
+		Padding="10"
+		HorizontalOptions="FillAndExpand"
+		Spacing="10"
+		VerticalOptions="FillAndExpand">
+		<ScrollView VerticalOptions="FillAndExpand">
+			<StackLayout
+				HorizontalOptions="FillAndExpand"
+				Spacing="0"
+				VerticalOptions="FillAndExpand">
+				<StackLayout>
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="60"
+						Source="course_complete_circle.svg"
+						WidthRequest="60" />
+					<Label
+						FontFamily="{StaticResource RobotoBold}"
+						FontSize="20"
+						Style="{StaticResource LabelReview}"
+						Text="Congratulations!"
+						TextColor="{StaticResource DefaultTextColor}" />
+				</StackLayout>
+
+				<StackLayout Spacing="20">
+					<Label
+						x:Name="CourseNameLbl"
+						FontSize="18"
+						Style="{StaticResource LabelReview}"
+						Text="{Binding Name}"
+						TextColor="{StaticResource DefaultTextColor}" />
+
+					<Label
+						FontSize="16"
+						Style="{StaticResource LabelReview}"
+						Text="LEAVE A COMMENT&#x0a;AND RATE THIS CONTENT"
+						TextColor="{StaticResource SecondaryTextColor}" />
+
+					<Label
+						FontSize="16"
+						Style="{StaticResource LabelReview}"
+						Text="(Your review will be shared at the content information page.)"
+						TextColor="{StaticResource SecondaryTextColor}" />
+
+					<controls:Ratingv2View
+						x:Name="RatingStack"
+						Margin="0,0,0,20"
+						HorizontalOptions="CenterAndExpand"
+						RateChanged="RatingStack_RateChanged"
+						StarSize="40"
+						StarSpacing="15" />
+
+					<Label
+						x:Name="RatingErrorMessage"
+						IsVisible="False"
+						Style="{StaticResource ErrorMessage}" />
+				</StackLayout>
+
+				<StackLayout
+					x:Name="CommentStack"
+					Margin="15"
+					HorizontalOptions="Center"
+					Orientation="Horizontal"
+					Spacing="10">
+					<Label
+						x:Name="CommentLabel"
+						FontFamily="{StaticResource RobotoBold}"
+						FontSize="16"
+						HorizontalOptions="FillAndExpand"
+						HorizontalTextAlignment="Center"
+						TextColor="{StaticResource MainBodyTextColor}" />
+					<StackLayout x:Name="EditCommentButton">
+						<StackLayout.GestureRecognizers>
+							<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="EditComment_Tapped" />
+						</StackLayout.GestureRecognizers>
+						<ffimagesvg:SvgCachedImage
+							HeightRequest="20"
+							Source="edit_pencil.svg"
+							WidthRequest="20" />
+					</StackLayout>
+				</StackLayout>
+
+				<Frame
+					x:Name="EditCommentStack"
+					Padding="7"
+					BorderColor="LightGray"
+					CornerRadius="4"
+					HasShadow="False"
+					VerticalOptions="FillAndExpand">
+					<controls:CustomEditor
+						x:Name="EditCommentEntry"
+						AutoSize="TextChanges"
+						BackgroundColor="Transparent"
+						HeightRequest="50"
+						VerticalOptions="FillAndExpand" />
+				</Frame>
+
+				<Label
+					x:Name="CommentErrorMessage"
+					IsVisible="False"
+					Style="{StaticResource ErrorMessage}" />
+
+				<Frame
+					x:Name="SubmitStack"
+					Margin="0,20,0,0"
+					Padding="1"
+					BackgroundColor="#303450"
+					CornerRadius="4"
+					HasShadow="False"
+					VerticalOptions="EndAndExpand">
+					<Label
+						Margin="10"
+						HorizontalTextAlignment="Center"
+						Text="Submit"
+						TextColor="White"
+						VerticalTextAlignment="Center" />
+					<Frame.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SubmitRating_Tapped" />
+					</Frame.GestureRecognizers>
+				</Frame>
+			</StackLayout>
+		</ScrollView>
+	</StackLayout>
+</ContentView>

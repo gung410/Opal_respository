@@ -1,0 +1,24 @@
+<div class="digital-upload-content-dialog__scorm-confirmation column">
+  <div class="dialog-title">{{ fileName }}</div>
+  <div class="actions row">
+    <div class="horizontal-form-controls-group">
+      <div class="dialog-title">{{ 'Choose package type' | translator }}</div>
+      <kendo-dropdownlist #zipPackageControl
+                          [data]="zipPackages"
+                          [value]="zipPackages[0]"
+                          textField="text"
+                          valueField="value"></kendo-dropdownlist>
+    </div>
+  </div>
+  <div class="actions row">
+    <div class="flex"></div>
+    <button (click)="chooseZipPackage()"
+            kendoButton>
+      {{ 'Apply' | globalTranslator }}
+    </button>
+    <button (click)="dialogRef.close()"
+            kendoButton>
+      {{ 'Cancel' | globalTranslator }}
+    </button>
+  </div>
+</div>

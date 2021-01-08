@@ -1,0 +1,137 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'user'"
+                     [title]="'Name'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.user"
+                  [owner]="dataItem.user"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'awarded'"
+                     [title]="'Awarded'"
+                     [width]="60">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.awarded ? 'Yes' : 'No' }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayCompletedMLUColumn()"
+                     [field]="'statistic.numOfCompletedMLU'"
+                     [title]="'Completed MLU'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayCompletedDigitalResourcesColumn()"
+                     [field]="'statistic.numOfCompletedDigitalResources'"
+                     [title]="'Completed Digital Resources'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayCompletedElearningColumn()"
+                     [field]="'statistic.numOfCompletedElearning'"
+                     [title]="'Completed E-Learning'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayReflectionColumn()"
+                     [field]="'statistic.numOfReflection'"
+                     [title]="'PDO Reflection'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displaySharedReflectionColumn()"
+                     [field]="'statistic.numOfSharedReflection'"
+                     [title]="'PDO Reflection Shared'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayAwardedCollaborativeLearnersBadgeColumn()"
+                     [field]="'awardedCollaborativeLearnersBadge'"
+                     [title]="'Awarded Collaborative Learners Badge'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayAwardedCommunityBuilderBadgeColumn()"
+                     [field]="'awardedCommunityBuilderBadgeBadge'"
+                     [title]="'Awarded Community Builder Badge'"
+                     [width]="250">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayAwardedDigitalLearnersBadgeColumn()"
+                     [field]="'awardedDigitalLearnersBadge'"
+                     [title]="'Awarded Digital Learners Badge'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayAwardedReflectiveLearnersBadgeColumn()"
+                     [field]="'awardedReflectiveLearnersBadge'"
+                     [title]="'Awarded Reflective Learners Badge'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayCreatedLearningPathColumn()"
+                     [field]="'statistic.numOfCreatedLearningPath'"
+                     [title]="'Learning Paths Created'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displaySharedLearningPathColumn()"
+                     [field]="'statistic.numOfSharedLearningPath'"
+                     [title]="'Learning Paths Shared'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayBookmarkedLearningPathColumn()"
+                     [field]="'statistic.numOfBookmarkedLearningPath'"
+                     [title]="'Learning Paths Bookmarked By Others'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayCreatedMLUColumn()"
+                     [field]="'statistic.numOfCreatedMLU'"
+                     [title]="'Number of MLU Created (ranked top from Rating)'"
+                     [width]="150">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayAwardedActiveContributorsBadgeColumn()"
+                     [field]="'awardedActiveContributorsBadge'"
+                     [title]="'Awarded Active Contributors Badge'"
+                     [width]="150">
+  </kendo-grid-column>
+</kendo-grid>

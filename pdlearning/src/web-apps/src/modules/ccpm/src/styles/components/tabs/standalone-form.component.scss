@@ -1,0 +1,56 @@
+standalone-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .k-grid-content {
+    height: 40vh;
+  }
+
+  .standalone-form-grid.opal-grid .k-grid-header .k-header {
+    border-top: 1px solid #D8DCE6;
+  }
+}
+
+.standalone-form {
+
+  &__link-input {
+    display: inline-block;
+    background-color: $white;
+    margin: 0 1rem;
+  }
+
+  &__header-control {
+    display: flex;
+    align-items: flex-start;
+
+    &+.standalone-form__header-control {
+      margin-top: 0.5rem;
+    }
+
+    &.--left {
+      justify-content: space-between;
+    }
+  }
+
+  &__state-control {
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  &__toggle-button {
+    margin-left: 1rem;
+  }
+}
+
+.tab-content-inner {
+  &__header {
+    padding: 1.5rem 0;
+  }
+}
+
+.access-mode-switch {
+  width: 85px;
+}

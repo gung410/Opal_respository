@@ -1,0 +1,15 @@
+.k-checkbox {
+  width: 19px;
+  height: 19px;
+  border-radius: 3px;
+  border: 2px solid $color-blue-light;
+
+  &:checked {
+    border-color: $color-blue-light;
+    background-color: $color-blue-light;
+
+    &::before {
+      color: $white;
+    }
+  }
+}

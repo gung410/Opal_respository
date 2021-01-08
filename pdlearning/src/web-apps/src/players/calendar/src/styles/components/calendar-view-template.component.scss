@@ -1,0 +1,40 @@
+calendar-view-template {
+  .k-scheduler-monthview .today .k-nav-day {
+    background: url('../assets/images/icons/today.svg') no-repeat center;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 15px 7px;
+    text-align: center;
+  }
+
+  kendo-scheduler .k-event,
+  .k-event {
+    background-color: #8799ba;
+  }
+}
+
+.calendar-view-template-body {
+  .k-calendar {
+    .k-state-selected .k-link {
+      border-color: #8799ba;
+      background-color: #8799ba;
+    }
+
+    .k-footer .k-nav-today:hover,
+    .k-footer .k-nav-today:focus,
+    .k-calendar-header .k-today:hover,
+    .k-calendar-header .k-today:focus,
+    .k-calendar-navigation li:hover,
+    .k-calendar-header .k-today {
+      color: #8799ba;
+    }
+
+    .k-content .k-today {
+      color: rgb(255, 98, 98);
+    }
+  }
+
+  .community-event-tooltip {
+    z-index: $z-index-level-2 !important;
+  }
+}

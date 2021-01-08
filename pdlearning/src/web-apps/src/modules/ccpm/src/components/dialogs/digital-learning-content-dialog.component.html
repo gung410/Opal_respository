@@ -1,0 +1,50 @@
+<content-dialog [title]="'Learning Content' | translator"
+                [generalTabTemplate]="generalTabTemplate"
+                [metaDataTabTemplate]="metaDataTabTemplate"
+                [digitalRightTabTemplate]="digitalRightTabTemplate"
+                [(activeTab)]="activeTab"
+                [displaySaveBtn]="learningContent"
+                [displayCreateBtn]="!learningContent"
+                [displayStopBtn]="false"
+                [displayCancelBtn]="true"
+                [displayMetaDataTab]="true"
+                [displayDigitalRightTab]="true"
+                [hasErrorTabs]="hasErrorTabs"
+                (save)="checkAndSave()"
+                (cancel)="checkAndCancel()"
+                (activeTabChange)="validate()">
+
+</content-dialog>
+
+<ng-container [formGroup]="form">
+  <ng-template #generalTabTemplate="">
+    <div class="input-group">
+      <label class="on-top">{{ 'Title' | globalTranslator }}</label>
+      <input class="file-input"
+             position="top"
+             formControlName="title"
+             kendoTextBox
+             kendoErrorTooltip
+             autofocus>
+    </div>
+
+    <div class="input-group"
+         style="margin-top:20px;">
+      <label class="on-top">{{ 'Description' | globalTranslator }}</label>
+      <textarea style="width: 100%;"
+                kendoTextArea
+                rows="15"
+                position="top"
+                formControlName="description"
+                kendoTextBox
+                kendoErrorTooltip
+                autofocus></textarea>
+    </div>
+  </ng-template>
+  <ng-template #metaDataTabTemplate="">
+    <metadata-editor></metadata-editor>
+  </ng-template>
+  <ng-template #digitalRightTabTemplate="">
+    <copyright-form [data]="learningContent"></copyright-form>
+  </ng-template>
+</ng-container>

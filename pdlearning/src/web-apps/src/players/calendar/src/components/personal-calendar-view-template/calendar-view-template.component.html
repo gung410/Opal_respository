@@ -1,0 +1,68 @@
+<kendo-scheduler [selectedViewIndex]="selectedViewIndex"
+                 [resources]="resources"
+                 [kendoSchedulerBinding]="events"
+                 [selectedDate]="selectedDate"
+                 [modelFields]="modelFields"
+                 [workDayStart]="workDayStart"
+                 [workDayEnd]="workDayEnd"
+                 [scrollTime]="scrollTime"
+                 [slotClass]="getSlotClass"
+                 [showWorkHours]="showWorkHours"
+                 (eventDblClick)="onEventDblClick($event)"
+                 (slotDblClick)="onSlotDblClick($event)"
+                 (dateChange)="onDateChange($event)"
+                 [ngStyle]="{ 'height': calendarHeight }"
+                 style="max-height: 100vh;">
+  <ng-template kendoSchedulerEventTemplate
+               let-event="event"
+               let-eventResources="resources">
+    <div class="event-template"
+         kendoTooltip
+         tooltipClass="community-event-tooltip"
+         [offset]="0"
+         [closable]="tooltipClosable"
+         [tooltipTemplate]="eventTooltipTemplate"
+         filter="[event-title]"
+         [attr.event-source]="event.dataItem.source"
+         [attr.community-title]="event.dataItem.communityTitle"
+         [attr.event-title]="event.title"
+         [attr.event-start]="event.start"
+         [attr.event-end]="event.end"
+         [attr.event-description]="event.description"
+         [attr.event-isAllDay]="event.isAllDay"
+         [attr.event-id]="event.id">
+      {{ event.title }}
+    </div>
+  </ng-template>
+  <ng-template kendoSchedulerAllDayEventTemplate
+               let-event="event"
+               let-eventResources="resources">
+    <div class="event-template"
+         kendoTooltip
+         tooltipClass="community-event-tooltip"
+         [offset]="0"
+         [closable]="tooltipClosable"
+         [tooltipTemplate]="eventTooltipTemplate"
+         filter="[event-title]"
+         [attr.event-source]="event.dataItem.source"
+         [attr.community-title]="event.dataItem.communityTitle"
+         [attr.event-title]="event.title"
+         [attr.event-start]="event.start"
+         [attr.event-end]="event.end"
+         [attr.event-description]="event.description"
+         [attr.event-isAllDay]="event.isAllDay">
+      {{ event.title }}
+    </div>
+  </ng-template>
+  <ng-template kendoSchedulerDateHeaderTemplate
+               let-date="date">
+    <strong>{{ date | date:'dd/MM/yyyy' }}</strong>
+  </ng-template>
+  <kendo-scheduler-day-view [selectedDateFormat]="'{0:dd/MM/yyyy}'"></kendo-scheduler-day-view>
+  <kendo-scheduler-week-view [selectedDateFormat]="'{0:dd/MM/yyyy} - {1:dd/MM/yyyy}'"></kendo-scheduler-week-view>
+  <kendo-scheduler-month-view></kendo-scheduler-month-view>
+</kendo-scheduler>
+<ng-template #eventTooltipTemplate
+             let-eventElement>
+  <event-tooltip [eventElement]="eventElement"></event-tooltip>
+</ng-template>

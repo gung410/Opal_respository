@@ -1,0 +1,86 @@
+<div class="pd-opportunities-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">{{ 'Share' | globalTranslator}}</div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group user-sharing-search">
+      <label class="form-label shared-label"
+             for="ch2">{{ 'Search for the users' | globalTranslator }}</label>
+      <opal-select class="form-control user-sharing-search__select search"
+                   [fetchDataFn]="fetchUsersFn"
+                   [labelField]="'fullName'"
+                   [valueField]="'id'"
+                   [virtualScroll]="true"
+                   [maxDropdownHeight]="400"
+                   [placeholder]="'Search by name/email' | globalTranslator"
+                   [searchFn]="selectSearchFn"
+                   (selectedItemChange)="onSelectedItemChanged()"
+                   position="top">
+        <ng-template opalOptionTmp
+                     let-item="item"
+                     let-item$="item$"
+                     let-index="index">
+          <div class="user-sharing-search__item">
+            <owner-info [owner]="item"
+                        [iconLocation]="isUserIdSelected(item.id) ? 'assets/images/icons/icon-accept.svg' : undefined"
+                        iconPosition="top-right"></owner-info>
+            <div class="user-sharing-search__right-section">
+              <span class="user-sharing-list__status"
+                    *ngIf="item.isFollowing">
+                <i class="k-icon k-i-user"></i>
+                {{'Following' | globalTranslator}}
+              </span>
+              <button class="user-sharing-search__btn"
+                      kendoButton
+                      *ngIf="!isUserIdSelected(item.id)"
+                      (click)="onAddUser(item)">
+                {{'Add' | globalTranslator }}</button>
+              <button class="user-sharing-search__btn"
+                      kendoButton
+                      *ngIf="isUserIdSelected(item.id)"
+                      (click)="onRemoveUser(item)">
+                <img class="user-sharing-search__icon --reject"
+                     src="assets/images/icons/icon-reject.svg"
+                     alt>
+                {{'Delete' | globalTranslator }}</button>
+            </div>
+          </div>
+        </ng-template>
+      </opal-select>
+    </div>
+    <div class="form-controls-group user-sharing-list"
+         *ngIf="selectedUsers && selectedUsers.length">
+      <label class="form-label user-sharing-list__label shared-label"
+             for="ch2">{{ 'Added users' | globalTranslator }}</label>
+      <div class="form-controls-group user-sharing-list__container">
+        <div class="user-sharing-list__card"
+             *ngFor="let user of selectedUsers">
+          <owner-info [owner]="user"></owner-info>
+          <div class="user-sharing-list__control">
+
+            <span class="user-sharing-list__status"
+                  *ngIf="user.isFollowing">
+              <i class="k-icon k-i-user"></i>
+              {{'Following' | globalTranslator}}
+            </span>
+            <span class="user-sharing-list__remove"
+                  (click)="onRemoveUser(user)">
+              <i class="k-icon k-i-close"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button kendoButton
+            (click)="onShare()"
+            [primary]="true">{{'Share' | globalTranslator }}</button>
+  </div>
+</div>

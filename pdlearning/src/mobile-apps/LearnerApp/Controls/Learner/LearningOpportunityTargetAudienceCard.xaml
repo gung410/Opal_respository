@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityTargetAudienceCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="10">
+        <Label
+            FontFamily="{StaticResource RobotoRegular}"
+            FontSize="24"
+            Text="Target Audience"
+            TextColor="{StaticResource MainBodyTextColor}" />
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Pre-Requisite" />
+            <Label x:Name="PreRequisite" />
+        </StackLayout>
+
+        <!--  Show or hide base on place of work  -->
+        <StackLayout x:Name="DivisionStack" Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Division" />
+            <Label x:Name="Division" />
+        </StackLayout>
+
+        <StackLayout x:Name="BranchStack" Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Branch" />
+            <Label x:Name="Branch" />
+        </StackLayout>
+
+        <StackLayout x:Name="ZoneStack" Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Zone" />
+            <Label x:Name="Zone" />
+        </StackLayout>
+
+        <StackLayout x:Name="ClusterStack" Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Cluster" />
+            <Label x:Name="Cluster" />
+        </StackLayout>
+
+        <StackLayout x:Name="SchoolStack" Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="School" />
+            <Label x:Name="School" />
+        </StackLayout>
+        <!--  Show or hide base on place of work  -->
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="User Profile" />
+            <Label Style="{StaticResource TitleGroup}" Text="Track" />
+            <Label x:Name="Track" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Developmental Role" />
+            <Label x:Name="DevelopmentalRole" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Teaching Level" />
+            <Label x:Name="TeachingLevel" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Teaching Subject" />
+            <Label x:Name="TeachingSubject" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Job Family" />
+            <Label x:Name="JobFamily" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Teaching Course Of Study" />
+            <Label x:Name="TeachingCourseOfStudy" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Co-curricular Activity" />
+            <Label x:Name="CocurricularActivity" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="EAS Substantive Grade Banding" />
+            <Label x:Name="EASSubstantiveGradeBanding" />
+        </StackLayout>
+
+    </StackLayout>
+</ContentView>

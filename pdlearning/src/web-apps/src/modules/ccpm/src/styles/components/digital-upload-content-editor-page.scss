@@ -1,0 +1,69 @@
+digital-upload-content-editor-page {
+  width: 100%;
+  background: $white;
+
+  .edit-aria {
+    max-width: 100%;
+
+    .description-label {
+      background-color: white;
+      font-size: $font-h6;
+      font-weight: $font-weight-medium;
+      padding: 30px 25px 20px 25px;
+      box-sizing: border-box;
+      box-shadow: none;
+      color: #9eaebe;
+    }
+
+    .input-control.description {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      font-size: $font-h6;
+      margin: 0;
+      color: $color-light-gray;
+      padding: 20px;
+      min-height: 150px;
+    }
+
+    preview-digital-content {
+      align-items: center;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .upload-content-detail {
+      text-align: center;
+      margin: 22px 0;
+
+      &_file-name {
+        color: black;
+        font-size: $font-h6;
+        margin-right: 65px;
+      }
+
+      &_button {
+        height: 38px;
+        color: $color-light-gray;
+        font-size: $font-h5;
+        font-weight: $font-weight-medium;
+        padding: 0 55px 0 35px;
+        border: 1px solid $color-gainsboro;
+        border-radius: $main-border-radius;
+        background: white;
+        position: relative;
+        cursor: pointer;
+        margin-left: 65px;
+
+        &::before {
+          content: '';
+          position: absolute;
+          right: 34px;
+          width: 13px;
+          height: 16px;
+          background: url('../assets/images/icons/remove.svg') no-repeat center;
+        }
+      }
+    }
+  }
+}

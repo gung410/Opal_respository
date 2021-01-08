@@ -1,0 +1,65 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-cloudfront-api-snapshot-build
+  development:
+    pipelines:
+      - cx-cloudfront-api-development
+  uat-next:
+    pipelines:
+      - cx-cloudfront-api-uat-next
+pipelines:
+  cx-cloudfront-api-snapshot-build:
+    group: cx-cloudfront-api-snapshot
+    label_template: "snapshot-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/cloudfront-microservice/Api/
+      SONAR_PROJECTKEY: cx-cloudfront-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-cloudfront-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/cloudfront-microservice/Api/**/*.*
+  cx-cloudfront-api-development:
+    group: cx-cloudfront-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-cloudfront-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-cloudfront-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-cloudfront-api
+      PUBLIC_DNS: ",content.development.opal2.conexus.net"
+    template: ansible-deploy-fetch-upstream
+  cx-cloudfront-api-uat-next:
+    group: cx-cloudfront-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-cloudfront-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-cloudfront-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-cloudfront-api
+      PUBLIC_DNS: ",content.uat-next.opal2.conexus.net"
+    template: ansible-deploy-fetch-upstream

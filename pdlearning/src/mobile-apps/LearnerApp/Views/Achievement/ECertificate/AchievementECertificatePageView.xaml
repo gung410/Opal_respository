@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<common:BaseLearnerContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView;assembly=LearnerApp"
+    xmlns:eCertificate="clr-namespace:LearnerApp.Views.Achievement.ECertificate;assembly=LearnerApp"
+    xmlns:eCertificate1="clr-namespace:LearnerApp.ViewModels.Achievement.ECertificate;assembly=LearnerApp"
+    xmlns:pagingControl="clr-namespace:LearnerApp.Controls.PagingControl;assembly=LearnerApp"
+    x:Class="LearnerApp.Views.Achievement.ECertificate.AchievementECertificatePageView"
+    base:ViewModelLocator.AutoWireViewModel="true"
+    Title="E-Certificate"
+    x:DataType="eCertificate1:AchievementECertificatePageViewModel">
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, 35">
+            <RefreshView
+                x:Name="RefreshView"
+                IsRefreshing="{Binding IsRefreshingForRefreshView}"
+                Command="{Binding RefreshCommand}"
+                VerticalOptions="FillAndExpand">
+                <learnerCustomCollectionView:LearnerCustomCollectionView
+                    Margin="10,10,10,0"
+                    IsLoading="{Binding IsLoading}"
+                    RealItemsSource="{Binding ECertificateSource}"
+                    x:Name="List">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <eCertificate:AchievementECertificateDataTemplateSelector />
+                    </CollectionView.ItemTemplate>
+                </learnerCustomCollectionView:LearnerCustomCollectionView>
+            </RefreshView>
+            <StackLayout Grid.Row="1" Margin="0,0,10,0">
+                <pagingControl:PagingControl
+                    TotalPageNumber="{Binding TotalPageNumber}"
+                    CurrentPageNumber="{Binding Page}"
+                    OnPageChangedCommand="{Binding LoadPageCommand}"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="End"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+
+</common:BaseLearnerContentPage>

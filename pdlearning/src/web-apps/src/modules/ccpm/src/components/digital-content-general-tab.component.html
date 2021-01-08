@@ -1,0 +1,90 @@
+<ng-container [formGroup]="form">
+  <label class="copyright-form__title">General Information</label>
+  <div class="form-controls-group">
+    <label>{{'Description' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ contentViewModel.description }}
+        <span *ngIf="!contentViewModel.description">- N/A</span>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <textarea [(ngModel)]="contentViewModel.description"
+                  kendoTextArea
+                  rows="15"
+                  position="top"
+                  formControlName="description"
+                  kendoTextBox
+                  kendoErrorTooltip
+                  autofocus></textarea>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-section">
+    <label class="form-section-title">{{
+      'Assign Approving Officer(s) to Manage Your Digital Content Through Approval Process (At least 1 must be assigned)' | translator
+    }}</label>
+    <div class="form-controls-group -required">
+      <label>
+        {{ 'Primary Approving Officer' | translator }}
+      </label>
+      <editable [modeView]="mode === DigitalContentDetailMode.View || mode === DigitalContentDetailMode.ForApprover">
+        <ng-template editableViewMode="">
+          <owner-info *ngIf="contentViewModel.primaryApprovingOfficerId"
+                      [owner]="usersDicById[contentViewModel.primaryApprovingOfficerId]"></owner-info>
+          <span *ngIf="!contentViewModel.primaryApprovingOfficerId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="primaryApprovingOfficerId"
+                       [(ngModel)]="contentViewModel.primaryApprovingOfficerId"
+                       [searchFn]="filterApprovalOfficersFn"
+                       [fetchDataFn]="fetchPrimaryApprovalOfficersFn"
+                       [fetchDataByValuesFn]="fetchApprovalOfficersByIdsFn"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       (selectedItemChange)="createFetchAlternativeApprovalOfficersFn()"
+                       [staticMode]="true"
+                       [clearable]="true"
+                       [hasMoreDataToFetch]="true"
+                       [maxDropdownHeight]="400"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label>
+        {{ 'Alternate Approving Officer' | translator }}
+      </label>
+      <editable [modeView]="mode === DigitalContentDetailMode.View || mode === DigitalContentDetailMode.ForApprover">
+        <ng-template editableViewMode="">
+          <owner-info *ngIf="contentViewModel.alternativeApprovingOfficerId"
+                      [owner]="usersDicById[contentViewModel.alternativeApprovingOfficerId]"></owner-info>
+          <span *ngIf="!contentViewModel.alternativeApprovingOfficerId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="alternativeApprovingOfficerId"
+                       [(ngModel)]="contentViewModel.alternativeApprovingOfficerId"
+                       [searchFn]="filterApprovalOfficersFn"
+                       [fetchDataFn]="fetchAlternativeApprovalOfficersFn"
+                       [fetchDataByValuesFn]="fetchApprovalOfficersByIdsFn"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       (selectedItemChange)="createFetchPrimaryApprovalOfficersFn()"
+                       [staticMode]="true"
+                       [clearable]="true"
+                       [hasMoreDataToFetch]="true"
+                       [maxDropdownHeight]="400"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+  <publish-setting-tab [form]="form"
+                       [date]="contentViewModel.autoPublishDate"
+                       [isAutoPublish]="contentViewModel.isAutoPublish"
+                       [readOnly]="mode === DigitalContentDetailMode.View || mode === DigitalContentDetailMode.ForApprover"
+                       (onDateChange)="onPublishDateInputChange($event)"></publish-setting-tab>
+</ng-container>

@@ -1,0 +1,66 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <div class="form-heading">
+      <label class="form-title">{{ 'Basic info' | globalTranslator }}</label>
+      <div class="form-sub-title">{{ 'refers to mandatory fields' | globalTranslator }}</div>
+    </div>
+    <div class="form-controls-group -required">
+      <label class="form-label"
+             for="ch2">{{ 'Learning path name' | globalTranslator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">{{ learningPathDetailVM.title || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 maxlength="2000"
+                 [(ngModel)]="learningPathDetailVM.title"
+                 formControlName="title"
+                 kendoErrorTooltip
+                 position="top"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label class="form-label"
+             for="ch2">{{ 'Thumbnail picture' | globalTranslator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <opal-file-uploader class="basic-info-tab__thumbnail-uploader"
+                              *ngIf="learningPathDetailVM.thumbnailUrl"
+                              [(ngModel)]="learningPathDetailVM.thumbnailUrl"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="'learning-path-thumbnails'"
+                              formControlName="thumbnailUrl"
+                              [readOnly]="true"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+          <span *ngIf="!learningPathDetailVM.thumbnailUrl">N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-file-uploader class="basic-info-tab__thumbnail-uploader"
+                              [(ngModel)]="learningPathDetailVM.thumbnailUrl"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="'learning-path-thumbnails'"
+                              [showBtnDelete]=" true"
+                              formControlName="thumbnailUrl"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+        </ng-template>
+      </editable>
+    </div>
+    <!-- <div class="form-controls-group">
+      <label class="form-label"
+             for="ch2">{{ 'Description' | translator }}</label>
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">{{ learningPathDetailVM?.description || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"></textarea>
+        </ng-template>
+      </editable>
+    </div> -->
+  </div>
+</form>

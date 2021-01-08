@@ -1,0 +1,19 @@
+<ng-container [formGroup]="form">
+  <div class="additional-information-tab-content">
+    <label class="additional-information-tab-content__title">{{'Archival' |translator }}</label>
+    <div class="form-controls-group">
+      <label>{{'Archival date' | globalTranslator}}</label>
+      <kendo-datepicker class="additional-information-tab-content__date-picker"
+                        formControlName="archiveDate"
+                        kendoErrorTooltip
+                        position="top"
+                        [(ngModel)]="date"
+                        (valueChange)="onDateInputChange($event)"
+                        [placeholder]="'Select the archive date' | globalTranslator"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="readOnly"
+                        [disabledDates]="disabledDatesInThePast"
+                        [disabledDatesValidation]="false"></kendo-datepicker>
+    </div>
+  </div>
+</ng-container>

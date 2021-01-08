@@ -1,0 +1,127 @@
+personal-calendar-widget {
+  .link-wrapper {
+    display: flex;
+
+    &__link {
+      margin: 24px auto;
+      text-decoration: none;
+      color: #8799ba;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+  }
+
+  .k-scheduler-views {
+    .k-state-selected .k-link {
+      border-color: #8799ba;
+      background-color: #8799ba;
+    }
+
+    li.k-state-selected {
+      background-color: #8799ba;
+    }
+
+    .k-footer .k-nav-today:hover,
+    .k-footer .k-nav-today:focus,
+    .k-calendar-header .k-today:hover,
+    .k-calendar-header .k-today:focus,
+    .k-calendar-navigation li:hover,
+    .k-calendar-header .k-today {
+      color: #8799ba;
+    }
+
+    .k-content .k-today {
+      color: rgb(255, 98, 98);
+    }
+  }
+
+  kendo-scheduler .k-event,
+  .k-event {
+    background-color: #8799ba;
+  }
+
+  .k-scheduler {
+    .k-event {
+      color: #303450;
+    }
+
+    &-dayview,
+    &-weekview {
+      th {
+        font-weight: 500;
+        color: #8799ba;
+        text-align: center;
+        align-items: center;
+
+        strong {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .k-scheduler-toolbar,
+    .k-scheduler-footer {
+      /* make them invisible */
+      display: none;
+
+      /* prevent height and paddings from influencing the size calculations */
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  }
+
+  .personal-calendar-widget-overview {
+    position: relative;
+    padding-bottom: 18px;
+
+    >.header {
+      width: 90px;
+      border-radius: 5px;
+      position: absolute;
+
+      >.header__left {
+        height: 30px;
+        line-height: 30px;
+        background-color: #ff6262;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.125rem;
+        color: #fff;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border: 1px solid #ff6262;
+        border-bottom: 0;
+      }
+
+      >.header__right {
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.5rem;
+        color: #303450;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 1px solid #d8dce6;
+        border-top: 0;
+      }
+    }
+
+    >.overview {
+      padding-left: 106px;
+      display: block;
+
+      >p {
+        margin: 8px 0;
+        font-weight: 500;
+        font-size: 1rem;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

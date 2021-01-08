@@ -1,0 +1,9 @@
+<calendar-view-template [selectedViewIndex]="1"
+                        [resources]="resources"
+                        [events]="events"
+                        [selectedDate]="selectedDate"
+                        [modelFields]="communityCalendarModel"
+                        [workDayStart]="workDayStart"
+                        [workDayEnd]="workDayEnd"
+                        (eventDblClick)="onEventDblClick($event)"
+                        (dateChange)="onDateChange($event)"></calendar-view-template>

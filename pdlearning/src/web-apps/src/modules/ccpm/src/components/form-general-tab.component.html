@@ -1,0 +1,168 @@
+<ng-container [formGroup]="form">
+  <label class="copyright-form__title">General Information</label>
+
+  <div class="form-section">
+    <label class="form-section-title">{{
+      'Assign Approving Officer(s) to Manage Your Digital Content Through Approval Process (At least 1 must be assigned)' | translator
+    }}</label>
+
+    <div class="form-controls-group -required">
+      <label>
+        {{ 'Primary Approving Officer' | translator }}
+      </label>
+      <editable [modeView]="mode !== FormDetailMode.Edit">
+        <ng-template editableViewMode="">
+          <owner-info *ngIf="formData.primaryApprovingOfficerId"
+                      [owner]="usersDicById[formData.primaryApprovingOfficerId]">
+          </owner-info>
+          <span *ngIf="!formData.primaryApprovingOfficerId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="primaryApprovingOfficerId"
+                       [searchFn]="filterApprovalOfficersFn"
+                       [fetchDataFn]="fetchPrimaryApprovalOfficersFn"
+                       [fetchDataByValuesFn]="fetchApprovalOfficersByIdsFn"
+                       [(ngModel)]="formData.primaryApprovingOfficerId"
+                       (selectedItemChange)="createFetchAlternativeApprovalOfficersFn()"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       [staticMode]="true"
+                       [hasMoreDataToFetch]="true"
+                       [clearable]="true"
+                       [maxDropdownHeight]="400"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group">
+      <label>
+        {{ 'Alternate Approving Officer' | translator }}
+      </label>
+      <editable [modeView]="mode !== FormDetailMode.Edit">
+        <ng-template editableViewMode="">
+          <owner-info *ngIf="formData.alternativeApprovingOfficerId"
+                      [owner]="usersDicById[formData.alternativeApprovingOfficerId]"></owner-info>
+          <span *ngIf="!formData.alternativeApprovingOfficerId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="alternativeApprovingOfficerId"
+                       [(ngModel)]="formData.alternativeApprovingOfficerId"
+                       [searchFn]="filterApprovalOfficersFn"
+                       [fetchDataFn]="fetchAlternativeApprovalOfficersFn"
+                       [fetchDataByValuesFn]="fetchApprovalOfficersByIdsFn"
+                       (selectedItemChange)="createFetchPrimaryApprovalOfficersFn()"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       [staticMode]="true"
+                       [hasMoreDataToFetch]="true"
+                       [clearable]="true"
+                       [maxDropdownHeight]="400"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group"
+         *ngIf="formData.type === formType.Survey">
+      <label>
+        {{ 'Survey Type' | translator }}
+      </label>
+      <opal-select class="form-control"
+                   formControlName="surveyType"
+                   [items]="surveyTypes"
+                   [readOnly]="mode !== FormDetailMode.Edit || form.value.sqRatingType"
+                   [labelField]="'text'"
+                   [valueField]="'value'"
+                   [placeholder]="'Select' | globalTranslator"
+                   position="top"
+                   [staticMode]="true"></opal-select>
+    </div>
+
+    <div class="form-controls-group"
+         *ngIf="form.value.sqRatingType">
+      <label>
+        {{ 'SQ Rating Type' | translator }}
+      </label>
+      <opal-select class="form-control"
+                   formControlName="sqRatingType"
+                   [items]="sqRatingTypes"
+                   [readOnly]="mode !== FormDetailMode.Edit || form.value.sqRatingType"
+                   [labelField]="'text'"
+                   [valueField]="'value'"
+                   [placeholder]="'Select' | globalTranslator"
+                   position="top"
+                   [staticMode]="true"></opal-select>
+    </div>
+    <ng-container *ngIf="formData.type !== formType.Quiz">
+      <label class="form-section-title">
+        {{ 'Validity period' | translator }}</label>
+      <div class="form-controls-group-inline">
+        <div class="form-controls-group">
+          <label>
+            {{ 'Start date' | translator }}
+          </label>
+          <kendo-datepicker class="form-control"
+                            formControlName="startDate"
+                            kendoErrorTooltip
+                            position="top"
+                            [(ngModel)]="formData.startDate"
+                            [placeholder]="'Select the from date (day/month/year)' | globalTranslator"
+                            [format]="'dd/MM/yyyy'"
+                            [disabledDates]="disableDatesBeforeToday.bind(this)"
+                            [disabled]="mode !== FormDetailMode.Edit"
+                            #startDatePicker></kendo-datepicker>
+        </div>
+        <div class="form-controls-group">
+          <label>
+            {{ 'End date' | translator }}
+          </label>
+          <kendo-datepicker class="form-control"
+                            formControlName="endDate"
+                            kendoErrorTooltip
+                            position="top"
+                            [ngModel]="formData.endDate"
+                            (ngModelChange)="onEndDateSelectChange($event)"
+                            [placeholder]="'Select the end date (day/month/year)' | globalTranslator"
+                            [format]="'dd/MM/yyyy'"
+                            [disabledDates]="disableDatesBeforeStartDate.bind(this)"
+                            [disabled]="mode !== FormDetailMode.Edit"
+                            #endDatePicker></kendo-datepicker>
+        </div>
+      </div>
+      <ng-container *ngIf="formData.type === formType.Survey">
+        <div class="form-controls-group">
+          <div class="k-checkbox-container"
+               *ngIf="formData.endDate">
+            <input class="k-checkbox"
+                   type="checkbox"
+                   [disabled]="isViewMode()"
+                   [checked]="formData.isSendNotification"
+                   (click)="onCheckSendNotifyItem($event.target.checked)">
+
+            <label class="k-checkbox-label">{{ 'Send Notification' | translator }}</label>
+          </div>
+        </div>
+        <div class="form-controls-group"
+             *ngIf="formData.isSendNotification">
+          <label>{{'Remind before day' | translator }}</label>
+          <kendo-numerictextbox placeholder="0"
+                                [min]="0"
+                                [max]="maximumDatesRemind"
+                                [disabled]="isViewMode()"
+                                [value]="formData.remindBeforeDays"
+                                (valueChange)="onFormRemindBeforeDaysChange($event)"
+                                autoCorrect="true"
+                                decimals="0"
+                                format="#"></kendo-numerictextbox>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

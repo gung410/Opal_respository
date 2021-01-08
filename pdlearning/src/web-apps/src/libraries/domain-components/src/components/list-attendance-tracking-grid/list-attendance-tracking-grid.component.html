@@ -1,0 +1,103 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Name'"
+                     [width]="200">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.register"
+                  [owner]="dataItem.register">
+      </owner-info>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Place of Work'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.register ? dataItem.register.departmentName : '' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Reason For Absence'"
+                     [width]="180">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <span class="k-icon k-i-attachment list-attendance-tracking-grid__view-absence-detail-icon"
+            *ngIf="dataItem.status == AttendanceStatus.Absent && dataItem.reasonForAbsence"
+            (click)="viewAbsenceDetail(dataItem)"></span>
+      {{ getReasonData(dataItem) || 'N/A'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="140"
+                     [title]="'Service Scheme'">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.serviceChemeDisplayText ? dataItem.serviceChemeDisplayText  : 'N/A'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="150"
+                     [title]="'Teaching Level'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingLevelDisplayText ? dataItem.teachingLevelDisplayText : 'N/A' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="150"
+                     [title]="'Teaching Subject'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingSubjectsDisplayText ? dataItem.teachingSubjectsDisplayText : 'N/A'  }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Attendance Status'"
+                     [width]="100">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Learner has checked-in'"
+                     [width]="150"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <span class="k-icon k-i-check -success"
+            *ngIf="dataItem.isCodeScanned"></span>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

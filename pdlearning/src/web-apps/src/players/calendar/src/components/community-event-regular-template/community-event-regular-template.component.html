@@ -1,0 +1,120 @@
+<form class="k-form-inline event-form-content"
+      [formGroup]="form">
+  <div class="form-controls-group"
+       *ngIf="communitySelectable">
+    <div class="form-title">{{ 'Community' | translator }}</div>
+    <opal-select class="form-control community-select"
+                 [items]="communities"
+                 [labelField]="'title'"
+                 [valueField]="'id'"
+                 formControlName="communityId"
+                 [clearable]="true"
+                 [placeholder]="'Select from the list' | translator"
+                 kendoErrorTooltip
+                 position="top">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <div class="form-title">{{'Title' | translator}}</div>
+    <input class="form-control"
+           kendoTextBox
+           placeholder="Type event title"
+           formControlName="title"
+           kendoErrorTooltip
+           position="top">
+  </div>
+
+  <div class="form-controls-group event-form-all-day">
+    <label for="isAllDay">
+      <input class="k-checkbox"
+             id="isAllDay"
+             type="checkbox"
+             kendoCheckBox
+             kendoErrorTooltip
+             (change)="onIsAllDayChanged($event.target.checked)"
+             formControlName="isAllDay"> {{'All day' | translator}}</label>
+    <label for="dailyRepeat">
+      <input class="k-checkbox"
+             id="dailyRepeat"
+             type="checkbox"
+             kendoCheckBox
+             kendoErrorTooltip
+             (change)="onDailyRepeatChanged($event.target.checked)"
+             formControlName="dailyRepeat"> {{'Daily Repeat' | translator}}</label>
+  </div>
+
+  <div class="form-controls-group -horizontal event-form-datetime-picker">
+    <div class="form-controls-group">
+      <div class="form-title">{{'Start date' | translator}}</div>
+      <kendo-datepicker #dateStart
+                        formControlName="dateStartsAt"
+                        placeholder="Select the date"
+                        kendoErrorTooltip
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabledDates]="startDisabledDates.bind(this)"
+                        (valueChange)="onDatesChanged()">
+      </kendo-datepicker>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="!isDailyRepeat">
+      <div class="form-title">{{'End date' | translator}}</div>
+      <kendo-datepicker #dateEnd
+                        formControlName="dateEndsAt"
+                        placeholder="Select the date"
+                        kendoErrorTooltip
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabledDates]="endDisabledDates.bind(this)"
+                        (valueChange)="onDatesChanged()">
+      </kendo-datepicker>
+    </div>
+
+    <div class="form-controls-group"
+         *ngIf="isDailyRepeat">
+      <div class="form-title">{{'Repeat Until' | translator}}</div>
+      <kendo-datepicker #repeatUntil
+                        formControlName="repeatUntil"
+                        placeholder="Select the date"
+                        kendoErrorTooltip
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabledDates]="repeatUntilDisabledDates.bind(this)"
+                        (valueChange)="onDatesChanged()">
+      </kendo-datepicker>
+    </div>
+  </div>
+  <div class="form-controls-group -horizontal event-form-datetime-picker"
+       *ngIf="!form.value.isAllDay">
+    <div class="form-controls-group">
+      <div class="form-title">{{'Start time' | translator}}</div>
+      <kendo-timepicker #timeStart
+                        formControlName="timeStartsAt"
+                        placeholder="Select the time"
+                        kendoErrorTooltip
+                        position="top"
+                        (valueChange)="onTimesChanged()">
+      </kendo-timepicker>
+    </div>
+    <div class="form-controls-group">
+      <div class="form-title">{{'End time' | translator}}</div>
+      <kendo-timepicker #timeEnd
+                        formControlName="timeEndsAt"
+                        placeholder="Select the time"
+                        kendoErrorTooltip
+                        position="top"
+                        (valueChange)="onTimesChanged()">
+      </kendo-timepicker>
+    </div>
+  </div>
+
+  <div class="form-controls-group">
+    <div class="form-title">{{'Description' | translator}}</div>
+    <textarea class="form-control event-form-description"
+              kendoTextArea
+              placeholder="Add description"
+              formControlName="description"
+              kendoErrorTooltip
+              position="top"></textarea>
+  </div>
+</form>

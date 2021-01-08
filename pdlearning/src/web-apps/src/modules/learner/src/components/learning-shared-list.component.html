@@ -1,0 +1,56 @@
+<div class="shared-list"
+     [ngClass]="{'shared-list--empty': isEmpty}">
+  <div class="learning-shared-title"
+       (click)="onShowMoreClicked()">{{ 'Shared by other users' | translator }} ({{totalCount}}) ></div>
+  <div class="shared-container"
+       *ngIf="!isEmpty; else showingEmptyMsg"
+       [ngClass]="{'height-2': numberOfHeightTimes === 2, 'height-3': numberOfHeightTimes === 3 }">
+    <div class="container-table">
+      <table>
+        <colgroup>
+          <col>
+          <col style="width:200px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>{{'Title' | translator }}</th>
+            <th>{{'Shared by' | translator }}</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of sharedItems;">
+          <tr (click)="onSharedClicked(item)">
+            <td class="shared-title">
+              <div class="title-group">
+                <img class="icon"
+                     src="{{item.thumbnailUrl}}"
+                     *ngIf="item.thumbnailUrl">
+                <div>{{item.title}}</div>
+              </div>
+              <div class="tags two-line-truncate-text"
+                   *ngIf="(sharedMetadata | async) != null">
+                <ng-container *ngFor="let tagId of item.tagIds">
+                  <span class="tag-item"
+                        *ngIf="getTagName((sharedMetadata | async), tagId, item.itemType)">
+                    {{ getTagName((sharedMetadata | async), tagId, item.itemType) }}</span>
+                </ng-container>
+              </div>
+            </td>
+            <td>
+              {{item.sharedByUsers[0]}}
+              {{(item.sharedByUsers.length > 1 ? (" and " + (item.sharedByUsers.length - 1) + " other(s)") : "")}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="shared-showmore"
+           *ngIf="canLoadMore && !isShowMore"
+           (click)="onLoadMoreClicked()">{{"Load more" | translator}}</div>
+
+      <div class="shared-showmore"
+           *ngIf="isShowMore && totalCount > sharedItems.length"
+           (click)="onShowMoreClicked()">{{"Load more" | translator}}</div>
+    </div>
+  </div>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator }}</span>
+  </ng-template>
+</div>

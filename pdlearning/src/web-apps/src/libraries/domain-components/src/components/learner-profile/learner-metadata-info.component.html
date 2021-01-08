@@ -1,0 +1,164 @@
+<div class="form-container">
+  <div class="form-controls-group">
+    <label>{{ 'Portfolio' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let portfolio of learnerVm.portfoliosDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="portfolio">
+            {{ portfolio }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.portfoliosDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Designation' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <div [ngClass]="{'metadata-tag-text': learnerVm.designationDisplayText}">
+          {{ learnerVm.designationDisplayText || 'N/A' }}
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Role-Specific Proficiency (RSP)' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let roleSpecificProficiency of learnerVm.roleSpecificProficienciesDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="roleSpecificProficiency">
+            {{ roleSpecificProficiency }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.roleSpecificProficienciesDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Place of Work' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <div [ngClass]="{'metadata-tag-text': learnerVm.user.departmentName}">
+          {{ learnerVm.user.departmentName || 'N/A' }}
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Type of School /Organisation' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <div [ngClass]="{'metadata-tag-text': learnerVm.typeOfOrganizationDisplayText}">
+          {{ learnerVm.typeOfOrganizationDisplayText || 'N/A' }}
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Organisation Address' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <div [ngClass]="{'metadata-tag-text': learnerVm.user.organizationAddress}">
+          {{ learnerVm.user.organizationAddress || 'N/A' }}
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Service Scheme' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <div [ngClass]="{'metadata-tag-text': learnerVm.serviceSchemeDisplayText}">
+          {{ learnerVm.serviceSchemeDisplayText || 'N/A' }}
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Teaching Subjects/Job family' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let teachingSubject of learnerVm.teachingSubjectsDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="teachingSubject">
+            {{ teachingSubject }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.teachingSubjectsDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Teaching Level(s)' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let teachingLevel of learnerVm.teachingLevelDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="teachingLevel">
+            {{ teachingLevel }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.teachingLevelDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Teaching Course of Study' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let teachingCourseOfStudy of learnerVm.teachingCourseOfStudyDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="teachingCourseOfStudy">
+            {{ teachingCourseOfStudy }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.teachingCourseOfStudyDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Co-curricular Activity' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let coCurricularActivity of learnerVm.coCurricularActivitiesDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="coCurricularActivity">
+            {{ coCurricularActivity }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.coCurricularActivitiesDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Areas of Professional Interest' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let areaOfProfessionalInterest of learnerVm.areasOfProfessionalInterestDisplayTexts">
+          <div class="metadata-tag-text"
+               *ngIf="areaOfProfessionalInterest">
+            {{ areaOfProfessionalInterest }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.areasOfProfessionalInterestDisplayTexts.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Notification Preferences' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        <ng-container *ngFor="let notificationPreference of learnerVm.user.notificationPreferences">
+          <div class="metadata-tag-text"
+               *ngIf="notificationPreference">
+            {{ notificationPreference }}
+          </div>
+        </ng-container>
+        <span *ngIf="learnerVm.user.notificationPreferences.length === 0">- N/A</span>
+      </ng-template>
+    </editable>
+  </div>
+</div>

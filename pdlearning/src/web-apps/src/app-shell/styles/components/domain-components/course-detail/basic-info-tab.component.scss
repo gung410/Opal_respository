@@ -1,0 +1,25 @@
+basic-info-tab {
+  .basic-info-tab {
+    &__thumbnail-uploader {
+      width: 320px;
+      height: 150px;
+      border: 1px solid $color-gainsboro;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+  }
+
+  .opal-file-uploader__drop-file-area {
+    &:not(.-has-file) {
+      .add-file-icon__title {
+        display: inline-block;
+        color: $color-dim-gray;
+      }
+    }
+  }
+
+  .opal-file-uploader__drop-file-area,
+  .opal-file-uploader__upload-progress {
+    background-color: transparent;
+  }
+}

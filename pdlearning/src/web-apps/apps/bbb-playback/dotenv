@@ -1,0 +1,7 @@
+# local enviroment for build playback web app.
+# copy this to .env file if you want to custom bbb-playback in local env.
+
+SKIP_PREFLIGHT_CHECK=true
+PUBLIC_URL=http://localhost:4203/playback/presentation/2.3
+REACT_APP_NO_ROUTER=1
+BBB_PLAYBACK_VERSION=2.3

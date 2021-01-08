@@ -1,0 +1,136 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Overview Information' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label>{{ 'Session Title' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">{{ session.sessionTitle }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 kendoErrorTooltip
+                 position="top"
+                 formControlName="sessionTitle"
+                 [(ngModel)]="session.sessionTitle"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label>{{ 'Learning Method' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">{{ session.learningMethod ? "Online" : "Offline" }}</ng-template>
+        <ng-template editableEditMode="">
+          {{ session.learningMethod ? "Online" : "Offline" }}
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label>{{ 'Session Venue' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">{{ session.learningMethod ? "Webinar" : session.venue }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 kendoErrorTooltip
+                 position="top"
+                 formControlName="venue"
+                 [(ngModel)]="session.venue">
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Session Date' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">
+          <div class="reschedule-date-info">
+            <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+              {{ session.sessionDate | date: 'dd/MM/yyyy' }}</p>
+
+            <p class="reschedule-date-info__new-date"
+               *ngIf="isRescheduleMode"> <span
+                    class="k-icon k-i-arrow-right"></span>{{ session.sessionData.rescheduleStartDateTime | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #sessionDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="sessionDatePicker.toggle(true)"
+                            kendoErrorTooltip
+                            formControlName="sessionDate"
+                            [ngModel]="session.sessionDate"
+                            (ngModelChange)="onSessionDateChanged($event)"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+      <blockout-date-warning [blockOutDates]="this.blockOutDates"></blockout-date-warning>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Session Start Time' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">{{ session.startTime ? (session.startTime | date: 'hh:mm a') : '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-timepicker class="form-control"
+                            #startTimePicker
+                            [placeholder]="''"
+                            formControlName="startTime"
+                            [(ngModel)]="session.startTime"
+                            (focus)="startTimePicker.toggle(true)"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Session End Time' | translator }}</label>
+      <editable [modeView]="mode === SessionDetailMode.View">
+        <ng-template editableViewMode="">{{ session.endTime ? (session.endTime | date: 'hh:mm a') : '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-timepicker class="form-control"
+                            #endTimePicker
+                            [placeholder]="''"
+                            formControlName="endTime"
+                            [(ngModel)]="session.endTime"
+                            (focus)="endTimePicker.toggle(true)"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <div *ngIf="session.learningMethod === true">
+      <div class="form-controls-group -horizontal">
+        <label class="k-checkbox-label"
+               [ngClass]="{'-readonly': forModule != 'lmm'}">{{ 'Pre-recorded Clip' | translator }} </label>
+        <input class="k-checkbox"
+               type="checkbox"
+               [disabled]="forModule != 'lmm' || session.sessionData.isStarted() == true"
+               [(ngModel)]="session.usePreRecordClip"
+               (ngModelChange)="onUsePreRecordClipChanged($event)"
+               [ngModelOptions]="{ standalone: true }">
+      </div>
+      <div class="form-controls-group -horizontal"
+           *ngIf="session.usePreRecordClip && session.preRecordClip">
+        <label> {{ session.preRecordClip.title }} </label>
+      </div>
+      <div class="form-controls-group -horizontal"
+           *ngIf="session.usePreRecordClip
+                  && forModule == 'lmm'
+                  && session.sessionData.isStarted() == false">
+        <button class="form-control"
+                *ngIf="!session.preRecordClip  && forModule == 'lmm'"
+                kendoButton
+                position="top"
+                [primary]="true"
+                (click)="displaySelectDigitalContentDialog()">{{'Repository' | translator}}</button>
+        <button class="form-control"
+                *ngIf="session.preRecordClip && forModule == 'lmm'"
+                kendoButton
+                position="top"
+                [primary]="true"
+                (click)="removePreRecordClip()">{{'Remove Clip' | translator}}</button>
+      </div>
+    </div>
+  </div>
+</form>

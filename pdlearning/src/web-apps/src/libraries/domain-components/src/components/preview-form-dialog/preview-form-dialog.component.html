@@ -1,0 +1,21 @@
+<div class="column flex web-preview"
+     *ngIf="(previewFormMode === PreviewMode.Web || previewFormMode === PreviewMode.Mobile)">
+  <button class="k-button-close-preview"
+          (click)="closePreview()"><span class="k-icon k-i-arrow-chevron-left"></span><span>Close Preview</span></button>
+  <kendo-dropdownlist [data]="previewOptions"
+                      [(ngModel)]="previewFormMode">
+  </kendo-dropdownlist>
+  <div class="preview-form__content">
+    <device-view-simulation [previewMode]="previewFormMode">
+      <ng-template webTemplate="">
+        <main-quiz-player-page [formQuestionsData]="FormQuestionModel.removeUnsupportedQuestionTypes(formQuestionsData)"
+                               [isPreviewMode]="true">
+        </main-quiz-player-page>
+      </ng-template>
+      <ng-template mobileTemplate="">
+        <main-quiz-player-page [formQuestionsData]="FormQuestionModel.removeUnsupportedQuestionTypes(formQuestionsData)"
+                               [isPreviewMode]="true"></main-quiz-player-page>
+      </ng-template>
+    </device-view-simulation>
+  </div>
+</div>

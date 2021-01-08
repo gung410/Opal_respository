@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Conexus.Opal.OutboxPattern</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(MicrosoftExtensionsHostingAbstractionsPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCorePackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(MicrosoftEntityFrameworkCoreRelationalPackageVersion)" />
+    <PackageReference Include="MongoDB.Driver" Version="$(MongoDBDriverPackageVersion)" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Thunder.Platform.Cqrs" />
+    <Reference Include="Conexus.Opal.Connector.RabbitMQ" />
+  </ItemGroup>
+
+  <!--Nuget Package References-->
+
+  <!--Thunder Package References-->
+  <ItemGroup>
+    <Reference Include="Thunder.Platform.Core" />
+  </ItemGroup>
+
+  <!--Others-->
+  <ItemGroup>
+    <Compile Include="..\..\shared\MongoDb\IMongoDbContext.cs" Link="Variants\MongoDb\Infrastructure\IMongoDbContext.cs" />
+    <Compile Include="..\..\shared\MongoDb\IHasMongoId.cs" Link="Variants\MongoDb\Entities\IHasMongoId.cs" />
+    <Compile Include="..\..\shared\MongoDb\MongoEntity.cs" Link="Variants\MongoDb\Entities\MongoEntity.cs" />
+  </ItemGroup>
+
+</Project>

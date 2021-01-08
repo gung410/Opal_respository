@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icons/completed-mark</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/completed-mark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="assignee" fill-rule="nonzero" cx="8" cy="8" r="8"></circle>
+        <path d="M5.39619408,11.5961941 L5.39619408,9.59619408 L8.39619408,9.59619408 L8.39619408,3.59619408 L10.3961941,3.59619408 L10.3961941,11.5961941 L5.39619408,11.5961941 Z" id="Combined-Shape" fill="#3F8863" fill-rule="nonzero" transform="translate(7.896194, 7.596194) rotate(45.000000) translate(-7.896194, -7.596194) "></path>
+    </g>
+</svg>

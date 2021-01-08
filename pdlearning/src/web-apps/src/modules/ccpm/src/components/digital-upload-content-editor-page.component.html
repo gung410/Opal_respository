@@ -1,0 +1,16 @@
+<div class="edit-aria flex column">
+  <ng-template [ngIf]="contentViewModel.id">
+    <label class="description-label">
+      {{ 'uploaded file' | globalTranslator | uppercase }}
+    </label>
+    <preview-digital-content class="column"
+                             [digitalContent]="contentViewModel.data"
+                             [mode]="mode"></preview-digital-content>
+    <div class="upload-content-detail">
+      <span class="upload-content-detail_file-name">{{contentViewModel.data.fileName}}</span>
+      <button class="upload-content-detail_button"
+              *ngIf="canShowReplaceButton"
+              (click)="onReplaceBtnClicked()">Replace</button>
+    </div>
+  </ng-template>
+</div>

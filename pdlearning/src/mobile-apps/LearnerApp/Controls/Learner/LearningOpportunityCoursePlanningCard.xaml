@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityCoursePlanningCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="10">
+        <Label
+            FontFamily="{StaticResource RobotoRegular}"
+            FontSize="24"
+            Text="Course Planning"
+            TextColor="{StaticResource MainBodyTextColor}" />
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Nature of Course" />
+            <Label x:Name="NatureOfCourse" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Total Number of Hours to Attend Within The Year" />
+            <Label x:Name="TotalHoursAttendWithinYear" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Minimum Participants Per Class" />
+            <Label x:Name="MinParticipantPerClass" />
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource TitleGroup}" Text="Maximum Participants Per Class" />
+            <Label x:Name="MaxParticipantPerClass" />
+        </StackLayout>
+    </StackLayout>
+</ContentView>

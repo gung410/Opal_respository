@@ -1,0 +1,98 @@
+.video-chapter-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @mixin video-chapter-detail__item {
+    margin: 12px 0 24px;
+  }
+
+  &__range {
+    @include video-chapter-detail__item;
+
+    &--edit-mode {
+      editable {
+        display: flex;
+        align-items: center;
+        word-break: normal;
+      }
+
+      kendo-timepicker {
+        margin-left: 16px;
+        width: 100px !important;
+      }
+
+      .video-chapter-detail__time-to {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &__title {
+    @include video-chapter-detail__item;
+  }
+
+  &__description {
+    @include video-chapter-detail__item;
+  }
+
+  &__attachments {
+    @include video-chapter-detail__item;
+  }
+
+  &__attachment-empty {
+    color: $color-blue-light;
+  }
+
+  &__time-to {
+    margin-left: 40px;
+  }
+
+  &__time {
+    margin-left: 10px;
+  }
+
+  &__attachment-group {
+    display: flex;
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+  }
+
+  &__attachment {
+    @include truncate-text;
+    width: 90%;
+  }
+
+  &__attachment-icon {
+    font-size: 20px;
+    margin-right: 3px;
+  }
+
+  &__attachment-file-name {
+    color: $color-blue-dard;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__uploader {
+    margin-top: 16px;
+  }
+
+  &__toolbar {
+  }
+
+  &__empty-chapter {
+    color: $color-blue-light;
+    text-align: center;
+  }
+}

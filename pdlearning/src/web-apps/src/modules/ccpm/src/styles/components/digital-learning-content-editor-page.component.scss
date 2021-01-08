@@ -1,0 +1,24 @@
+digital-learning-content-editor-page {
+  .k-editor {
+    padding-left: 10px;
+
+    &.readonly {
+      pointer-events: visible;
+      overflow: hidden;
+
+      .k-editor-content {
+        overflow: auto;
+      }
+
+      .k-editor-content > .ProseMirror {
+        height: auto;
+        pointer-events: none;
+      }
+    }
+
+    kendo-toolbar {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+  }
+}

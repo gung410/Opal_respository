@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.CourseDetailsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:learner="clr-namespace:LearnerApp.Controls.Learner"
+    xmlns:learnerTabControl="clr-namespace:LearnerApp.Controls.LearnerTabControl;assembly=LearnerApp"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="Details"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:CourseDetailsViewModel"
+    BackgroundColor="#E5E5E5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand">
+            <StackLayout IsVisible="{Binding IsRefreshing, Converter={StaticResource InverseBoolConverter}}" Spacing="0">
+                <learnerTabControl:LearnerTabControl
+                    x:Name="TabControl"
+                    BackgroundColor="White"
+                    ItemSource="{Binding TabItemSource}"
+                    OnTabClicked="LearningTabControl_OnOnTabClicked" />
+                <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshingForRefreshView}">
+                    <ScrollView
+                        x:Name="ScrollStack"
+                        Scrolled="ScrollStack_OnScrolled"
+                        VerticalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Never">
+                        <StackLayout x:Name="LearningInformationArea" VerticalOptions="FillAndExpand">
+                            <AbsoluteLayout>
+                                <ffimagesvg:SvgCachedImage
+                                    AbsoluteLayout.LayoutBounds="0,0,1,200"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                                    Aspect="AspectFill"
+                                    Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='Card'}" />
+                                <StackLayout
+                                    Margin="20,0,20,0"
+                                    AbsoluteLayout.LayoutBounds="0,0,1,60"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                                    Orientation="Horizontal">
+                                    <Frame
+                                        x:Name="Status"
+                                        Padding="10"
+                                        BorderColor="Transparent"
+                                        CornerRadius="6"
+                                        HasShadow="False"
+                                        IsVisible="{Binding MyCourseStatus, Converter={StaticResource StatusFrameConverter}}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="140">
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="12"
+                                                Text="{Binding MyCourseStatus, Converter={StaticResource CourseLearningStatusConverter}}"
+                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="{Binding MyCourseStatus, Converter={StaticResource CourseLearningStatusColorConverter}}"
+                                                CornerRadius="5"
+                                                HasShadow="False"
+                                                HeightRequest="10"
+                                                HorizontalOptions="EndAndExpand"
+                                                VerticalOptions="Center"
+                                                WidthRequest="10" />
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                            <StackLayout Margin="10,-30,10,10">
+                                <StackLayout Spacing="10">
+                                    <!--  ENROLL  -->
+                                    <controls:LearnerContentFrame>
+                                        <StackLayout>
+                                            <!--  CONFIRM POPUP  -->
+                                            <StackLayout IsVisible="{Binding MyCourseStatus, Converter={StaticResource PendingPopupConverter}}" Spacing="15">
+                                                <StackLayout Spacing="0">
+                                                    <Label
+                                                        FontSize="16"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding PendingPopupTitle}" />
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="16"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding MyClassRunName}" />
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Spacing="15">
+                                                    <Button
+                                                        BackgroundColor="White"
+                                                        BorderColor="Black"
+                                                        BorderWidth="1"
+                                                        Command="{Binding DeclineClassRunCommand}"
+                                                        CornerRadius="6"
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="18"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Text="Decline"
+                                                        TextColor="Black" />
+                                                    <Button
+                                                        BackgroundColor="{StaticResource MainBodyTextColor}"
+                                                        Command="{Binding AcceptClassRunCommand}"
+                                                        CornerRadius="6"
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="18"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Text="Accept" />
+                                                </StackLayout>
+                                            </StackLayout>
+
+                                            <!--  LEARNING STATUS  -->
+                                            <StackLayout>
+                                                <Button
+                                                    BackgroundColor="{Binding MyCourseStatus, Converter={StaticResource LearningStatusBackgroundColorConverter}}"
+                                                    Clicked="LearningStatus_Clicked"
+                                                    CornerRadius="6"
+                                                    FontFamily="{StaticResource RobotoRegular}"
+                                                    FontSize="24"
+                                                    IsEnabled="{Binding MyCourseStatus, Converter={StaticResource LearningStatusEnableConverter}}"
+                                                    IsVisible="{Binding MyCourseStatus, Converter={StaticResource LearningStatusVisibleConverter}}"
+                                                    Text="{Binding LearningStatus, Converter={StaticResource LearningStatusConverter}}"
+                                                    TextColor="White" />
+                                            </StackLayout>
+
+                                            <!--  RATING  -->
+                                            <StackLayout HeightRequest="20" Orientation="Horizontal">
+                                                <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                                    <controls:Ratingv2View
+                                                        IsEnableRate="False"
+                                                        Rate="{Binding Rating}"
+                                                        StarSize="10"
+                                                        StarSpacing="5" />
+                                                    <Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+                                                </StackLayout>
+                                                <BoxView
+                                                    BackgroundColor="{StaticResource TintColor}"
+                                                    IsVisible="{Binding Duration, Converter={StaticResource DurationVisibleConverter}}"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="1" />
+                                                <StackLayout
+                                                    IsVisible="{Binding Duration, Converter={StaticResource DurationVisibleConverter}}"
+                                                    Orientation="Horizontal"
+                                                    Spacing="4"
+                                                    VerticalOptions="CenterAndExpand">
+                                                    <ffimagesvg:SvgCachedImage
+                                                        HeightRequest="{StaticResource LittleSize}"
+                                                        Source="clock.svg"
+                                                        WidthRequest="{StaticResource LittleSize}" />
+                                                    <Label FontSize="{StaticResource LittleSize}" Text="{Binding Duration, Converter={StaticResource DurationConverter}}" />
+                                                </StackLayout>
+                                            </StackLayout>
+
+                                            <!--  COURSE NAME  -->
+                                            <Label FontSize="{StaticResource BigSize}" Text="{Binding CourseName}" />
+
+                                            <!--  TAGS  -->
+                                            <controls:TagView Items="{Binding TagList}" />
+
+                                            <StackLayout HeightRequest="40" IsVisible="{Binding IsVisibleMore}">
+                                                <BoxView
+                                                    Margin="0,20,0,0"
+                                                    BackgroundColor="#D8DCE6"
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="FillAndExpand" />
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                Margin="0,0,0,10"
+                                                IsVisible="{Binding IsVisibleMore}"
+                                                Orientation="Horizontal"
+                                                VerticalOptions="Center">
+                                                <!--  LIKE  -->
+                                                <StackLayout IsVisible="{Binding IsVisibleLike}" Orientation="Horizontal">
+                                                    <StackLayout VerticalOptions="Center">
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding LikeCommand}" NumberOfTapsRequired="1" />
+                                                        </StackLayout.GestureRecognizers>
+                                                        <ffimagesvg:SvgCachedImage
+                                                            Margin="5,0,5,0"
+                                                            Aspect="AspectFit"
+                                                            HeightRequest="20"
+                                                            HorizontalOptions="Start"
+                                                            Source="{Binding LearningOpportunityInformationCardTransfer, Converter={StaticResource CourseLikeIconSourceConverter}}"
+                                                            WidthRequest="20" />
+                                                    </StackLayout>
+                                                    <Label
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Text="{Binding LearningOpportunityInformationCardTransfer, Converter={StaticResource CourseLikeStatusConverter}}"
+                                                        VerticalOptions="Center" />
+                                                </StackLayout>
+                                                <StackLayout HorizontalOptions="EndAndExpand">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding MoreCommand}" NumberOfTapsRequired="1" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <ffimagesvg:SvgCachedImage
+                                                        Aspect="AspectFit"
+                                                        HeightRequest="30"
+                                                        HorizontalOptions="End"
+                                                        Source="more_vertical.svg"
+                                                        WidthRequest="30" />
+                                                </StackLayout>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  UPCOMING SESSION  -->
+                                    <learner:LearningOpportunityUpcomingSessionCardView IsVisible="{Binding IsVisibleUpComingSession}" UpComingSession="{Binding UpComingSession}" />
+
+                                    <!--  ABOUT  -->
+                                    <controls:LearnerContentFrame x:Name="AboutStack">
+                                        <StackLayout Spacing="15">
+                                            <StackLayout IsVisible="{Binding IsVisibleAboutStack}">
+                                                <Label Style="{StaticResource TitleGroup}" Text="ABOUT" />
+
+                                                <Label
+                                                    FontFamily="{StaticResource RobotoRegular}"
+                                                    FontSize="{StaticResource BaseFontSize}"
+                                                    Text="{Binding CourseDescription}"
+                                                    TextColor="{StaticResource MainBodyTextColor}"
+                                                    TextType="Html" />
+
+                                                <learner:LearningOpportunityBasicInformationCard
+                                                    CourseName="{Binding CourseName}"
+                                                    IsScrolling="{Binding IsScrolling}"
+                                                    IsVisibleCommunity="{Binding MyCourseStatus, Converter={StaticResource CourseCommunityVisibleConverter}}"
+                                                    OpenCommunityCommand="{Binding OpenCourseCommunityCommand}"
+                                                    Source="{Binding LearningOpportunityInformationCardTransfer}" />
+                                            </StackLayout>
+
+                                            <Grid x:Name="AboutInformationStack" IsVisible="{Binding IsVisibleAboutInformationStack}">
+                                                <StackLayout IsVisible="{Binding IsLoadingCourseDetailData, Converter={StaticResource InverseBoolConverter}}" Spacing="15">
+                                                    <learner:LearningOpportunityTaggingCard Source="{Binding LearningOpportunityCardTransfer}" />
+                                                </StackLayout>
+                                                <shimmer:LearnerShimmer
+                                                    HeightRequest="200"
+                                                    IsVisible="{Binding IsLoadingCourseDetailData}"
+                                                    Type="Feed"
+                                                    VerticalOptions="StartAndExpand" />
+                                            </Grid>
+
+                                            <!--  SHOW MORE BUTTON  -->
+                                            <StackLayout HeightRequest="20">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="About_ShowMore_Tapped" />
+                                                </StackLayout.GestureRecognizers>
+                                                <Label
+                                                    x:Name="AboutShowMoreBtn"
+                                                    FontFamily="{StaticResource RobotoRegular}"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="SHOW MORE"
+                                                    TextColor="#8799BA" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  CLASS RUNS  -->
+                                    <controls:LearnerContentFrame x:Name="ClassRunStack" IsVisible="{Binding IsMicroLearningType, Converter={StaticResource InverseBoolConverter}}">
+                                        <StackLayout>
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="{StaticResource BaseButtonFontSize}"
+                                                Text="CLASS RUNS"
+                                                TextColor="{StaticResource SecondaryTextColor}" />
+                                            <StackLayout Spacing="15">
+                                                <learner:LearningOpportunityClassRunCardView Data="{Binding LearningOpportunityClassRunCardTransfer}" OnSetLearningStatus="LearningOpportunityClassRunCardView_OnSetLearningStatus" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  CONTENT  -->
+                                    <controls:LearnerContentFrame x:Name="ContentStack">
+                                        <StackLayout>
+                                            <StackLayout>
+                                                <Label Style="{StaticResource TitleGroup}" Text="CONTENT" />
+                                                <learner:LearningOpportunityContentsCard
+                                                    LearningContentTransferData="{Binding LearningContentTransferData}"
+                                                    MyLectureInfoItems="{Binding MyTableOfContentData}"
+                                                    ToCItems="{Binding TableOfContentData}" />
+                                            </StackLayout>
+                                            <!--  POST COURSE  -->
+                                            <StackLayout IsVisible="{Binding IsMicroLearningType, Converter={StaticResource InverseBoolConverter}}">
+                                                <StackLayout
+                                                    IsEnabled="{Binding IsEnablePostCourse}"
+                                                    IsVisible="{Binding IsVisiblePostCourse}"
+                                                    Orientation="Horizontal"
+                                                    Spacing="10">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding PostCourseCommand}" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <ffimagesvg:SvgCachedImage Source="document.svg" />
+                                                    <Label Text="Post course evaluation" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  ASSIGNMENT  -->
+                                    <ContentView x:Name="AssignmentStack" IsVisible="{Binding IsVisibleAssignment, Converter={StaticResource InverseBoolConverter}}">
+                                        <controls:LearnerContentFrame>
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RobotoRegular}"
+                                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                                    Text="ASSIGNMENTS"
+                                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                                <learner:LearningOpportunityAssignmentCard AssignmentDetails="{Binding AssignmentDetails}" />
+                                            </StackLayout>
+                                        </controls:LearnerContentFrame>
+                                    </ContentView>
+
+                                    <!--  REVIEWS  -->
+                                    <ContentView x:Name="ReviewsStack" IsVisible="{Binding IsVisibleReviewStack}">
+                                        <controls:LearnerContentFrame>
+                                            <learner:LearningOpportunityReviewsCard EditCommentCommand="{Binding EditUserCommand}" Items="{Binding EditReview}" />
+                                        </controls:LearnerContentFrame>
+                                    </ContentView>
+
+                                    <!--  UNENROLL  -->
+                                    <!--  OP-8577 Must hide Stop Learning' link  -->
+                                    <!--<Frame
+                                        Padding="0"
+                                        CornerRadius="6"
+                                        HasShadow="False"
+                                        IsVisible="{Binding IsVisibleUnenroll}">
+                                        <StackLayout>
+                                            <Button
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding UnenrollCommand}"
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="{StaticResource BigSize}"
+                                                Text="Stop learning"
+                                                TextColor="#FF5151" />
+                                        </StackLayout>
+                                    </Frame>-->
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </RefreshView>
+            </StackLayout>
+            <ContentView BackgroundColor="White" IsVisible="{Binding IsRefreshing}">
+                <shimmer:LearnerShimmer
+                    HeightRequest="200"
+                    Type="Video"
+                    VerticalOptions="StartAndExpand" />
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

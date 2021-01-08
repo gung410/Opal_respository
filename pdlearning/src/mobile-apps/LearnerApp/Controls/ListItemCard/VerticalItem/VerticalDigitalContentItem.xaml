@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalItem.VerticalDigitalContentItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<Frame
+		Padding="10"
+		BorderColor="{StaticResource EntryLineColor}"
+		CornerRadius="6"
+		HasShadow="False"
+		IsClippedToBounds="True"
+		VerticalOptions="Start">
+		<StackLayout>
+			<StackLayout
+				HeightRequest="25"
+				HorizontalOptions="EndAndExpand"
+				IsVisible="{Binding IsVisibleBookmark}"
+				WidthRequest="50">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer
+						CommandParameter="{Binding .}"
+						NumberOfTapsRequired="1"
+						Tapped="OnBookmarkItem" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="25"
+					HorizontalOptions="End"
+					Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+					WidthRequest="25" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				<StackLayout WidthRequest="150">
+					<AbsoluteLayout>
+						<StackLayout Padding="0" AbsoluteLayout.LayoutBounds="0, 10, 140, 60">
+							<Frame
+								Padding="0"
+								BorderColor="LightGray"
+								CornerRadius="6"
+								HasShadow="False"
+								HeightRequest="60"
+								IsClippedToBounds="True">
+								<StackLayout HeightRequest="60">
+									<ffimagesvg:SvgCachedImage
+										Aspect="AspectFill"
+										CacheType="Disk"
+										DownsampleToViewSize="True"
+										HeightRequest="35"
+										HorizontalOptions="CenterAndExpand"
+										Source="{Binding ThumbnailUrl}"
+										VerticalOptions="CenterAndExpand"
+										WidthRequest="25" />
+								</StackLayout>
+							</Frame>
+						</StackLayout>
+						<StackLayout AbsoluteLayout.LayoutBounds="0.2, 0.05, 100, 20" AbsoluteLayout.LayoutFlags="XProportional, YProportional">
+							<Frame
+								Padding="6"
+								BackgroundColor="{Binding Status, Converter={StaticResource LabelColorConverter}}"
+								CornerRadius="4"
+								HasShadow="False">
+								<Label
+									FontFamily="{StaticResource RobotoBold}"
+									FontSize="10"
+									HorizontalOptions="CenterAndExpand"
+									Text="{Binding Status, Converter={StaticResource LabelStatusConverter}}"
+									TextColor="{StaticResource MainBodyTextColor}"
+									VerticalOptions="CenterAndExpand" />
+							</Frame>
+						</StackLayout>
+					</AbsoluteLayout>
+				</StackLayout>
+				<StackLayout HorizontalOptions="FillAndExpand">
+					<Label
+						Margin="0,10,0,0"
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource BaseFontSize}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding Name}"
+						TextColor="{StaticResource MainBodyTextColor}" />
+				</StackLayout>
+			</StackLayout>
+
+			<StackLayout Orientation="Horizontal">
+				<StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+					<controls:Ratingv2View
+						IsEnableRate="False"
+						Rate="{Binding Rating}"
+						StarSize="10"
+						StarSpacing="5" />
+					<Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+				</StackLayout>
+
+				<StackLayout VerticalOptions="CenterAndExpand">
+					<Label
+						FontSize="{StaticResource LittleSize}"
+						Text="{Binding ReviewsCount, Converter={StaticResource ReviewsCountConverter}}"
+						TextColor="{StaticResource SecondaryTextColor}" />
+				</StackLayout>
+
+				<StackLayout
+					IsVisible="{Binding DurationMinutes, Converter={StaticResource DurationVisibleConverter}}"
+					Orientation="Horizontal"
+					Spacing="4"
+					VerticalOptions="CenterAndExpand">
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="{StaticResource LittleSize}"
+						Source="clock.svg"
+						WidthRequest="{StaticResource LittleSize}" />
+					<Label FontSize="{StaticResource LittleSize}" Text="{Binding DurationMinutes, Converter={StaticResource DurationConverter}}" />
+				</StackLayout>
+
+			</StackLayout>
+
+			<StackLayout Spacing="0">
+				<Label
+					FontSize="11"
+					HorizontalOptions="CenterAndExpand"
+					Text="{Binding LectureName}" />
+				<Label
+					FontSize="11"
+					HorizontalOptions="CenterAndExpand"
+					Text="{Binding ProgressMeasure, StringFormat='{0}% completed'}" />
+			</StackLayout>
+
+			<controls:TagView
+				HorizontalOptions="FillAndExpand"
+				IsVisible="{Binding Tags, Converter={StaticResource TagViewVisibleConverter}}"
+				Items="{Binding Tags}" />
+		</StackLayout>
+	</Frame>
+</ContentView>

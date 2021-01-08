@@ -1,0 +1,95 @@
+<div class="import-form-dialog">
+  <div class="import-form-dialog__drop-file-area"
+       *ngIf="!importFile">
+    <kendo-dropdownlist class="import-form-dialog__import-select"
+                        [data]="importType"
+                        [(ngModel)]="formType"></kendo-dropdownlist>
+    <img class="import-form-dialog__add-file-icon"
+         src="assets/images/icons/microsoft-excel.svg"
+         alt="Excel image"
+         (click)="onIconSelectFileClick()">
+    <span class="import-form-dialog__title">{{"Click here to browse file" | translator}}</span>
+    <input class="hidden-input"
+           type="file"
+           #fileSelectEl
+           (change)="onFileSelect($event.target.files)">
+  </div>
+
+  <div class="import-form-dialog__file-indicator"
+       *ngIf="importFile">
+    <div class="import-form-dialog__file-info">
+      <span class="import-form-dialog__icon-close"
+            title="Remove file"
+            kendoTooltip
+            [tooltipClass]="'info-tooltip'"
+            (click)="resetImportProcess()">
+        <i class="k-icon k-i-close-circle"></i>
+      </span>
+      <span class="import-form-dialog__icon-file-type k-file-group k-icon k-i-excel"></span>
+      <div class="import-form-dialog__right-file-info">
+        <div class="card-upload__file-name">{{ importFile.name }}</div>
+        <span class="card-upload__file-size">{{ importFile.size | fileSizeDisplay }}</span>
+        <div class="import-progress">{{ importProgressTitle }}</div>
+      </div>
+      <div class="import-form-dialog__file-progressbar">
+        <div class="progress"
+             [style.width.%]="importPercentage"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="import-form-dialog__control">
+    <button class="import-form-dialog__link"
+            [look]="'flat'"
+            (click)="onDownloadTemplate()"
+            kendoButton>{{ getDownloadBtnTitle }}</button>
+    <div class="import-form-dialog__btn-group">
+      <button class="import-form-dialog__button"
+              (click)="onCancel()"
+              kendoButton>{{'Close' | globalTranslator }}</button>
+      <button class="import-form-dialog__button"
+              (click)="onClickUploadForm()"
+              [disabled]="!importParameter"
+              [primary]="true"
+              kendoButton>{{'Save' | globalTranslator }}</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorResultDialog="">
+  <div class="import-form-dialog__error-result">
+    <div class="dialog-header">
+      <div class="dialog-header__title">{{ 'Get some error while import data, please follow the list below:' | translator }}</div>
+    </div>
+
+    <div class="dialog-content">
+      <kendo-grid class="column flex opal-grid"
+                  #grid
+                  [autoSize]="true"
+                  [data]="errors">
+        <kendo-grid-column [width]="250"
+                           [title]="'Sheet Name' | translator">
+          <ng-template kendoGridCellTemplate
+                       let-dataItem
+                       let-rowIndex="rowIndex">
+            <span>{{dataItem.sheetName}}</span>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [title]="'Error Description' | translator">
+          <ng-template kendoGridCellTemplate
+                       let-dataItem
+                       let-rowIndex="rowIndex">
+            <span>{{dataItem.errorDescription}}</span>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid>
+    </div>
+
+    <div class="dialog-footer">
+      <button class="broken-link-report-dialog__announcement-btn"
+              kendoButton
+              (click)="onCloseErrorDialog()">{{ 'Close' | globalTranslator }}</button>
+    </div>
+  </div>
+</ng-template>

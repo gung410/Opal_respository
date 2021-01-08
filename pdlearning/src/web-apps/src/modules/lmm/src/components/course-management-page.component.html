@@ -1,0 +1,62 @@
+<div class="content-management-container">
+  <div class="content-management">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search in Learning Management' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"
+                     [settings]="courseFilterSettings"></data-filter>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #courseManagementStickyTabHeaderElement="stickyTabHeaderElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.CoursesTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Courses' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid [searchType]="SearchCourseType.LearningManagement"
+                            [filter]="filter"
+                            (viewCourse)="onViewCourse($event)"
+                            [(selectedItems)]="allCourseSelectedItems"
+                            [indexActionColumns]="[0]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true"></list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.PendingApprovalTab"
+                          [cssClass]="{'hidden': !canViewPendingApproval() }">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingApproval()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.ContentApprover)">
+            {{ 'Pending Approval' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingApproval()"
+                            [searchType]="SearchCourseType.ContentApprover"
+                            [filter]="filter"
+                            [contextMenuItems]="contextMenuItemsForPendingApproval"
+                            (viewCourse)="onViewCourseApproval($event)"
+                            [(selectedItems)]="pendingCourseSelectedItems"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true"></list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

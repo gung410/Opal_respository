@@ -1,0 +1,96 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <div class="management-toolbar course-of-planning-cycle__message-container"
+         *ngIf="showMessage">
+      <div class="management-toolbar__left-container course-of-planning-cycle__message">
+        <span class="alert -warning"
+              *ngIf="showNotStartedMessage()">{{"This course planning cycle hasn't started yet." | translator}}</span>
+        <span class="alert -warning"
+              *ngIf="showEndedMessage()">{{"This course planning cycle has already ended." | translator}}</span>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         [ngClass]="{'course-of-planning-cycle__no-message': !showMessage}">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search in Course Planning' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"></data-filter>
+
+      </div>
+
+      <div class="management-toolbar__right-container">
+        <kendo-dropdownbutton class="course-management-page__create-button-modes"
+                              *ngIf="canCreateCourse()"
+                              [icon]="'plus'"
+                              [data]="createCourseModes"
+                              [popupSettings]="{popupClass: 'cam-create-button-modes'}"
+                              [primary]="true"
+                              (itemClick)="onCreateCourse($event.id)">
+          {{ 'Create Course' | translator }}
+        </kendo-dropdownbutton>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #stickyCoursePlanningCycleManagementTabElement
+                    [stickyDependElement]="stickyDependElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.AllCoursesOfPlanningCycleTab">
+        <ng-template kendoTabTitle="">
+          {{ 'All Courses' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid [filter]="filter"
+                            [searchType]="SearchCourseType.CourseInCoursePlanningCycle"
+                            [coursePlanningCycleId]="coursePlanningCycleDetailPageInput.data.id"
+                            (viewCourse)="onViewCourse($event, SearchCourseType.CourseInCoursePlanningCycle,
+                            CAMTabConfiguration.AllCoursesOfPlanningCycleTab, CourseDetailMode.View)"
+                            [indexActionColumns]="[7]"
+                            [stickyDependElement]="stickyCoursePlanningCycleManagementTabElement"></list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewPendingApproval() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CoursePendingApprovalOfPlanningCycleTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingApproval()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.ApproverCoursePlanning)">
+            {{ 'Pending Approval' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingApproval()"
+                            [filter]="filter"
+                            [searchType]="SearchCourseType.ApproverCoursePlanning"
+                            [coursePlanningCycleId]="coursePlanningCycleDetailPageInput.data.id"
+                            (viewCourse)="onViewCourse($event, SearchCourseType.ApproverCoursePlanning,
+                            CAMTabConfiguration.CoursePendingApprovalOfPlanningCycleTab,
+                            CourseDetailMode.ForApprover)"
+                            [stickyDependElement]="stickyCoursePlanningCycleManagementTabElement"></list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewPendingVerify() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CoursePendingVerifyOfPlanningCycleTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingVerify()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.VerifyCoursePlanning)">
+            {{ 'Pending Confirmation' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingVerify()"
+                            [filter]="filter"
+                            [searchType]="SearchCourseType.VerifyCoursePlanning"
+                            [coursePlanningCycleId]="coursePlanningCycleDetailPageInput.data.id"
+                            (viewCourse)="onViewCourse($event, SearchCourseType.VerifyCoursePlanning, CAMTabConfiguration.CoursePendingVerifyOfPlanningCycleTab, CourseDetailMode.ForVerifier)"
+                            [stickyDependElement]="stickyCoursePlanningCycleManagementTabElement">
+          </list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

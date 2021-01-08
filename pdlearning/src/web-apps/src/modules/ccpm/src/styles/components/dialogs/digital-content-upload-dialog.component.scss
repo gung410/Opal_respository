@@ -1,0 +1,49 @@
+.digital-content-upload-dialog {
+  &__btn_close {
+    cursor: pointer;
+    padding: 2px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 3px;
+    background: white;
+    z-index: 2;
+    border-radius: 50%;
+    border: 1px solid;
+  }
+}
+
+opal-file-uploader {
+  &.digital-content-upload-dialog {
+    min-height: 406px;
+    min-width: 538px;
+
+    .opal-file-uploader__drop-file-area {
+      background: transparent;
+      border-radius: 0;
+
+      .add-file-icon__title {
+        display: block;
+        font-size: $font-h6;
+        font-family: $main-font;
+        color: $color-blue-dard;
+        margin-top: 15px;
+        @extend %smooth;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        @extend %smooth;
+      }
+    }
+  }
+}
+
+app-digital-content-upload-dialog {
+  min-width: 600px;
+
+  .basic-info-tab__thumbnail-uploader {
+    height: 150px;
+    width: 100%;
+  }
+}

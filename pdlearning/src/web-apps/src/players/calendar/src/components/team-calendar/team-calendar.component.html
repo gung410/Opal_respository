@@ -1,0 +1,46 @@
+<detail-content>
+  <detail-content-fragment class="flex detail-page f-detail-content-container"></detail-content-fragment>
+  <detail-content-left>
+    <div class="team-calendar-menu">
+      <ul class="team-calendar-menu__tabs">
+        <li class="calendar-title">
+          <span *ngIf="!isPersonalTeamCalendar" class="title-item">
+            <span class="k-icon icon-moe-team"></span>
+            {{ 'Team Calendar' | translator }}
+            <button class="icon-moe-down-arrow filter-btn"
+                    (click)="onOpenFilterPanel()"></button>
+          </span>
+          <span *ngIf="isPersonalTeamCalendar" class="title-item">
+            <kendo-dropdownlist class="shared-calendar-selector"
+                                [data]="sharedTeamList"
+                                [textField]="'ownerFullName'"
+                                [valueField]="'accessShareId'"
+                                [(ngModel)]="valueDropdownSharedTeam"
+                                (valueChange)="dropdownSharedTeamChange()"></kendo-dropdownlist>
+          </span>
+        </li>
+        <li class="tree">
+          <kendo-treeview [nodes]="learnerList"
+                          [textField]="'learnerName'"
+                          [checkBy]="'learnerId'"
+                          [(checkedKeys)]="selectedUserIds"
+                          (checkedKeysChange)="onSelectedLearnerChange()"
+                          kendoTreeViewCheckable>
+          </kendo-treeview>
+          <button class="filter-event-close"
+                  type="button"
+                  (click)="onCloseFilterPanel()"></button>
+        </li>
+      </ul>
+    </div>
+  </detail-content-left>
+  <detail-content-right>
+    <team-calendar-view-template [dropDownYearData]="dropDownYearData"
+                                 [activeViewType]="selectedViewType"
+                                 [activeYear]="selectedYear"
+                                 [teamMembersEvents]="resourceTeamCalendar"
+                                 (viewTypeChanged)="onChangeViewType($event)"
+                                 (detailLearnerExpanded)="onExpandDetailLearner($event)"
+                                 (yearChanged)="onChangeYear($event)"></team-calendar-view-template>
+  </detail-content-right>
+</detail-content>

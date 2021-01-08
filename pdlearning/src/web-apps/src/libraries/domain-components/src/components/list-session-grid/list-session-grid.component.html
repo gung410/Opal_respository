@@ -1,0 +1,146 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <!-- <kendo-grid-column [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column> -->
+
+  <kendo-grid-column *ngIf="showTitleColumn()"
+                     [width]="200"
+                     [field]="'sessionTitle'"
+                     [title]="'Session Title'">
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showCreatedDateColumn()"
+                     [title]="'Created Date'"
+                     [width]="130">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.createdDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showSessionDateColumn()"
+                     [width]="130"
+                     [title]="'Session Date'">
+    <!-- Cell template of owner field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="reschedule-date-info">
+        <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+          {{ dataItem.sessionDate | date: 'dd/MM/yyyy' }} </p>
+
+        <p class="reschedule-date-info__new-date"
+           *ngIf="isRescheduleMode"> <span class="k-icon k-i-arrow-right"></span>{{ dataItem.rescheduleStartDateTime | date: 'dd/MM/yyyy' }}
+        </p>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showLearningTimeColumn()"
+                     [width]="100"
+                     [title]="'Learning Time'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="reschedule-date-info">
+        <p [ngClass]="{'reschedule-date-info__previous-date' : isRescheduleMode}">
+          {{ dataItem.startTime | date:'shortTime' }} - {{ dataItem.endTime | date:'shortTime' }} </p>
+
+        <p class="reschedule-date-info__new-date"
+           *ngIf="isRescheduleMode">
+          <span class="k-icon k-i-arrow-right"></span>
+          {{ dataItem.rescheduleStartDateTime | date:'shortTime' }} - {{ dataItem.rescheduleEndDateTime | date:'shortTime' }}</p>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showSessionVenueColumn()"
+                     [field]="'venue'"
+                     [width]="150"
+                     [title]="'Session Venue'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <p *ngIf="dataItem.isLearningOnline()">{{'Webinar'| translator}}</p>
+      <p *ngIf="!dataItem.isLearningOnline()">{{dataItem.venue}}</p>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showLearningMethodColumn()"
+                     [field]="'learningMethod'"
+                     [width]="150"
+                     [title]="'Learning Method'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <opal-select class="form-control list-session-grid__learning-method"
+                   [ngModel]="dataItem.isLearningOnline()"
+                   [items]="learningMethodTypes"
+                   [valueField]="'value'"
+                   [labelField]="'label'"
+                   [searchable]="false"
+                   [disabled]="!canChangeLearningMethod(dataItem)"
+                   [changeConfirmationFn]="changeConfirmationFn(dataItem)"
+                   [minDropdownHeight]="50"></opal-select>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showWebinarColumn()"
+                     [field]="'webinar'"
+                     [width]="60"
+                     [title]="'Webinar'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <button kendoButton
+              [primary]="true"
+              [disabled]="disableChangeLearningMethod || !dataItem.canJoinWebinar(maxMinutesCanJoinWebinarEarly)"
+              (click)="joinWebinar(dataItem.id)">{{'Join'| translator}}
+      </button>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="showActionColumn()"
+                     [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60">
+    <!-- Cell template of actions field-->
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="getContextMenuBySession(dataItem).length !== 0">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="getContextMenuBySession(dataItem)"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

@@ -1,0 +1,87 @@
+<div class="form-assessment-indicator"
+     [formGroup]="form">
+  <div class="form-assessment-indicator__menu"
+       *ngIf="!readOnly && validContextMenuItems.length > 0">
+    <img class="form-assessment-indicator__context-menu icon action"
+         src="assets/images/icons/more.svg"
+         #contextMenu>
+    <kendo-contextmenu [target]="contextMenu"
+                       [alignToAnchor]="true"
+                       [items]="validContextMenuItems"
+                       (select)="onMenuItemClick($event)"
+                       [popupAlign]="contextMenuPopupAlign"
+                       [anchorAlign]="contextMenuAnchorAlign"
+                       showOn="click"></kendo-contextmenu>
+  </div>
+
+  <div class="form-assessment-indicator__item"
+       *ngIf="canShowTitle">
+    <div class="form-assessment-indicator__item-container">
+      <div class="form-assessment-indicator__item-title">{{ 'Title' | translator }} :</div>
+      <div class="form-assessment-indicator__input-area">
+        <textarea class="form-assessment-indicator__value-input"
+                  [ngClass]="{ '-readonly': readOnly }"
+                  [readonly]="readOnly"
+                  [maxlength]="255"
+                  [autoSize]="true"
+                  [ngModel]="data.questionTitle"
+                  (ngModelChange)="onTitleChange($event)"
+                  formControlName="title"
+                  kendoErrorTooltip
+                  position="top"
+                  placeholder="Title"
+                  kendoTextArea></textarea>
+      </div>
+    </div>
+    <div class="form-assessment-indicator__addtional-info">
+      <ng-content select="[titleAdditionalValidate]"></ng-content>
+    </div>
+  </div>
+
+  <div class="form-assessment-indicator__item"
+       *ngIf="canShowPercentage">
+    <div class="form-assessment-indicator__item-container">
+      <div class="form-assessment-indicator__item-title">{{ "Scale's Value" | translator }} :</div>
+      <div class="form-assessment-indicator__input-area">
+        <kendo-numerictextbox class="form-assessment-indicator__percentage-input"
+                              [ngClass]="{ '-readonly': readOnly }"
+                              formControlName="scaleValue"
+                              kendoErrorTooltip
+                              position="top"
+                              [max]="100"
+                              [min]="0"
+                              [readonly]="readOnly"
+                              [autoCorrect]="true"
+                              decimals="0"
+                              format="#"
+                              [ngModel]="data.score"
+                              (ngModelChange)="onScaleValueChange($event)"></kendo-numerictextbox>
+        <span class="k-icon k-i-percent"></span>
+      </div>
+    </div>
+    <div class="form-assessment-indicator__addtional-info">
+      <ng-content select="[scaleAdditionalValidate]"></ng-content>
+    </div>
+  </div>
+
+  <div class="form-assessment-indicator__item"
+       *ngIf="canShowDescription">
+    <div class="form-assessment-indicator__item-container">
+      <div class="form-assessment-indicator__item-title">{{ 'Description' | translator }} :</div>
+      <div class="form-assessment-indicator__input-area">
+        <textarea class="form-assessment-indicator__value-input"
+                  [ngClass]="{ '-readonly': readOnly }"
+                  [maxlength]="255"
+                  [autoSize]="true"
+                  [readonly]="readOnly"
+                  [ngModel]="data.description"
+                  (ngModelChange)="onDescriptionChange($event)"
+                  formControlName="description"
+                  kendoErrorTooltip
+                  position="top"
+                  placeholder="Description"
+                  kendoTextArea></textarea>
+      </div>
+    </div>
+  </div>
+</div>

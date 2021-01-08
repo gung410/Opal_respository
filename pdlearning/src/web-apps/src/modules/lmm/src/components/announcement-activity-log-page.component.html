@@ -1,0 +1,50 @@
+<div class="announcement-activity-log">
+  <form [formGroup]="form">
+    <div class="form-container announcement-activity-log__form-container">
+      <div class="form-controls-group announcement-activity-log__from-date">
+        <label for="ch2">{{ 'From Date' | translator }}</label>
+        <kendo-datepicker class="form-control"
+                          #fromCreatedDatePicker
+                          formControlName="fromCreatedDate"
+                          [(ngModel)]="announcementVm.fromCreatedDate"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          (focus)="fromCreatedDatePicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+
+      </div>
+      <div class="form-controls-group announcement-activity-log__to-date">
+        <label for="ch2">{{ 'To Date' | translator }}</label>
+        <kendo-datepicker class="form-control"
+                          #toCreatedDatePicker
+                          formControlName="toCreatedDate"
+                          [(ngModel)]="announcementVm.toCreatedDate"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          (focus)="toCreatedDatePicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+
+      </div>
+      <div class="announcement-activity-log__filter-button">
+        <button kendoButton
+                [primary]="true"
+                (click)="onApplyFilter()">{{'Apply' | translator}}
+        </button>
+      </div>
+    </div>
+    <div class="form-container announcement-activity-log__grid-container">
+      <div class="content-management-container -no-padding-margin">
+        <div class="content-management">
+          <list-announcement-grid [courseId]="courseId"
+                                  [classRunId]="classRunId"
+                                  [filter]="filter"
+                                  [indexActionColumn]="5"
+                                  (selectedContextMenu)="onGridContextMenuSelected($event)"
+                                  [stickyDependElement]="stickyDependElement"></list-announcement-grid>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

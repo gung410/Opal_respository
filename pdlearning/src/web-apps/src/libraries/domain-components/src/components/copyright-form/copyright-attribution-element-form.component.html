@@ -1,0 +1,85 @@
+<ng-container [formGroup]="form">
+  <div class="form-controls-group -horizontal -required">
+    <label>{{'Title' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ data.title || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="title"
+               kendoErrorTooltip
+               position="top"
+               autofocus
+               [(ngModel)]="data.title"
+               (ngModelChange)="emitDataChangeDebounce()">
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group -horizontal -required">
+    <label>{{'Author' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ data.author || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="author"
+               kendoErrorTooltip
+               position="top"
+               autofocus
+               [(ngModel)]="data.author"
+               (ngModelChange)="emitDataChangeDebounce()">
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group -horizontal  -required">
+    <label>{{'Source' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ data.source || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="source"
+               kendoErrorTooltip
+               position="top"
+               autofocus
+               [(ngModel)]="data.source"
+               (ngModelChange)="emitDataChangeDebounce()">
+      </ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group -horizontal -required">
+    <label>{{'Licence Type' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ licenseTypeItemsDic[data.licenseType] && licenseTypeItemsDic[data.licenseType].display || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <kendo-combobox class="form-control"
+                        formControlName="licenseType"
+                        [data]="licenseTypeSelectItems"
+                        [valueField]="'value'"
+                        [textField]="'display'"
+                        [virtual]="{itemHeight: 28}"
+                        [placeholder]="'Select' | globalTranslator"
+                        [valuePrimitive]="true"
+                        [suggest]="true"
+                        [(ngModel)]="data.licenseType"
+                        (ngModelChange)="emitDataChangeDebounce()"
+                        kendoErrorTooltip
+                        autofocus
+                        position="top">
+          <ng-template kendoComboBoxItemTemplate
+                       let-dataItem>
+            <span>{{ dataItem.display }}</span>
+          </ng-template>
+        </kendo-combobox>
+      </ng-template>
+    </editable>
+  </div>
+</ng-container>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.MyDigitalContentDetailsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:learner="clr-namespace:LearnerApp.Controls.Learner"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mylearning="clr-namespace:LearnerApp.Controls.MyLearning"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="Details"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:MyDigitalContentDetailsViewModel"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabBtn" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Padding" Value="5,10,5,10" />
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="HeightRequest" Value="45" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+            <Style x:Key="TabLineBtn" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="#1DCEC1" />
+                <Setter Property="HeightRequest" Value="4" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout IsVisible="{Binding IsRefreshing, Converter={StaticResource InverseBoolConverter}}" Spacing="0">
+                <!--  TABS CONTROL  -->
+                <StackLayout
+                    Padding="10,0,10,0"
+                    BackgroundColor="White"
+                    Orientation="Horizontal">
+                    <StackLayout Spacing="0">
+                        <Button
+                            Clicked="Information_Clicked"
+                            Style="{StaticResource TabBtn}"
+                            Text="INFORMATION"
+                            WidthRequest="150" />
+                        <BoxView
+                            x:Name="InformationTabLine"
+                            IsVisible="True"
+                            Style="{StaticResource TabLineBtn}" />
+                    </StackLayout>
+                    <StackLayout Spacing="0">
+                        <Button
+                            Clicked="Reviews_Clicked"
+                            Style="{StaticResource TabBtn}"
+                            Text="REVIEWS" />
+                        <BoxView
+                            x:Name="ReviewsTabLine"
+                            IsVisible="False"
+                            Style="{StaticResource TabLineBtn}" />
+                    </StackLayout>
+                </StackLayout>
+
+                <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshingForRefreshView}">
+                    <ScrollView
+                        x:Name="ScrollStack"
+                        VerticalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Never">
+                        <StackLayout>
+                            <AbsoluteLayout>
+                                <StackLayout
+                                    AbsoluteLayout.LayoutBounds="0,0,1,200"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                                    BackgroundColor="AliceBlue">
+                                    <ffimagesvg:SvgCachedImage
+                                        HeightRequest="80"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding FileExtension, Converter={StaticResource FileExtensionConverter}}"
+                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="60" />
+                                </StackLayout>
+                                <StackLayout
+                                    Margin="20,0,20,0"
+                                    AbsoluteLayout.LayoutBounds="0,0,1,60"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                                    Orientation="Horizontal">
+                                    <Frame
+                                        x:Name="Status"
+                                        Padding="10"
+                                        BorderColor="Transparent"
+                                        CornerRadius="6"
+                                        HasShadow="False"
+                                        IsVisible="{Binding IsVisibleDigitalContentStatus, Converter={StaticResource InverseBoolConverter}}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="140">
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="12"
+                                                Text="{Binding DigitalContentStatus, Converter={StaticResource LabelStatusConverter}}"
+                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="{Binding DigitalContentStatus, Converter={StaticResource LabelColorConverter}}"
+                                                CornerRadius="5"
+                                                HasShadow="False"
+                                                HeightRequest="10"
+                                                HorizontalOptions="EndAndExpand"
+                                                VerticalOptions="Center"
+                                                WidthRequest="10" />
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                            <StackLayout Margin="10,-30,10,10">
+                                <controls:LearnerContentFrame>
+                                    <StackLayout>
+                                        <Button
+                                            BackgroundColor="#303450"
+                                            Command="{Binding StartCommand}"
+                                            CornerRadius="6"
+                                            FontFamily="{StaticResource RobotoRegular}"
+                                            FontSize="24"
+                                            IsVisible="{Binding IsVisibleStart}"
+                                            Text="{Binding StartButtonLabel}"
+                                            TextColor="White" />
+                                        <!--  RATING  -->
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                            <controls:Ratingv2View
+                                                IsEnableRate="False"
+                                                Rate="{Binding Rating}"
+                                                StarSize="10"
+                                                StarSpacing="5" />
+                                            <Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating}" />
+                                        </StackLayout>
+
+                                        <!--  COURSE NAME  -->
+                                        <Label FontSize="{StaticResource BigSize}" Text="{Binding ContentTitle}" />
+
+                                        <!--  FILE EXTENSION  -->
+                                        <controls:TagView Items="{Binding Tags}" />
+
+                                        <StackLayout HeightRequest="40">
+                                            <BoxView
+                                                Margin="0,20,0,0"
+                                                BackgroundColor="#D8DCE6"
+                                                HeightRequest="1"
+                                                HorizontalOptions="FillAndExpand"
+                                                IsVisible="{Binding IsVisibleMore}" />
+                                        </StackLayout>
+
+                                        <StackLayout
+                                            Margin="0,0,0,10"
+                                            IsVisible="{Binding IsVisibleMore}"
+                                            Orientation="Horizontal"
+                                            VerticalOptions="Center">
+                                            <!--  LIKE  -->
+                                            <StackLayout IsVisible="{Binding IsVisibleLike}" Orientation="Horizontal">
+                                                <StackLayout VerticalOptions="Center">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding LikeCommand}" NumberOfTapsRequired="1" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <ffimagesvg:SvgCachedImage
+                                                        Margin="5,0,5,0"
+                                                        Aspect="AspectFit"
+                                                        HeightRequest="20"
+                                                        HorizontalOptions="Start"
+                                                        Source="{Binding MyLearningDigitalContentMetadataTransfer, Converter={StaticResource DigitalContentLikeIconSourceConverter}}"
+                                                        WidthRequest="20" />
+                                                </StackLayout>
+                                                <Label
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding MyLearningDigitalContentMetadataTransfer, Converter={StaticResource DigitalContentLikeStatusConverter}}"
+                                                    VerticalOptions="Center" />
+                                            </StackLayout>
+                                            <!--  COPY - SHARE - BOOKMARK  -->
+                                            <StackLayout HorizontalOptions="EndAndExpand">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding MoreCommand}" NumberOfTapsRequired="1" />
+                                                </StackLayout.GestureRecognizers>
+                                                <ffimagesvg:SvgCachedImage
+                                                    Aspect="AspectFit"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="End"
+                                                    Source="more_vertical.svg"
+                                                    WidthRequest="30" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </controls:LearnerContentFrame>
+
+                                <!--  METADATA  -->
+                                <controls:LearnerContentFrame x:Name="InformationGroup">
+                                    <mylearning:MyLearningDigitalContentMetadata Data="{Binding MyLearningDigitalContentMetadataTransfer}" />
+                                </controls:LearnerContentFrame>
+
+                                <!--  REVIEWS  -->
+                                <ContentView IsVisible="{Binding IsVisibleReviewGroup}">
+                                    <controls:LearnerContentFrame x:Name="ReviewsGroup">
+                                        <StackLayout>
+                                            <learner:LearningOpportunityReviewsCard EditCommentCommand="{Binding EditUserCommand}" Items="{Binding ReviewCollection}" />
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+                                </ContentView>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </RefreshView>
+            </StackLayout>
+            <ContentView BackgroundColor="White" IsVisible="{Binding IsRefreshing}">
+                <shimmer:LearnerShimmer
+                    HeightRequest="200"
+                    Type="Video"
+                    VerticalOptions="StartAndExpand" />
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

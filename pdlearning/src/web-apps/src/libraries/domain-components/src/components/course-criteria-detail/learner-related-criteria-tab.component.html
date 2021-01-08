@@ -1,0 +1,408 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Learner Related Criteria' | translator }}</label>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Account Type' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <span> {{courseCriteria.accountType ? courseCriteria.courseCriteriaAccountTypeDic[courseCriteria.accountType] : ' N/A'}}
+          </span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="courseCriteria.courseCriteriaAccountTypeSelectedItems"
+                       [(ngModel)]="courseCriteria.accountType"
+                       [valueField]="'value'"
+                       [labelField]="'label'"
+                       [multiple]="false"
+                       formControlName="accountType"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="!(asViewMode() && courseCriteria.courseCriteriaServiceSchemes.length > 0)">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <span *ngIf="courseCriteria.courseCriteriaServiceSchemeIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="courseCriteria.serviceSchemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="courseCriteria.courseCriteriaServiceSchemeIds"
+                       [multiple]="true"
+                       formControlName="serviceScheme"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="courseCriteria.courseCriteriaServiceSchemes.length > 0">
+      <label for="ch2">{{asViewMode() ? 'Service Schemes' : 'Maximum Participants For Selected Service Schemes' | translator }}</label>
+      <course-criteria-max-participant-select class="form-control"
+                                              [items]="courseCriteria.courseCriteriaServiceSchemes"
+                                              [itemsTypeTitle]="'Service Schemes'"
+                                              [labelFn]="courseCriteria.courseCriteriaServiceSchemeLabelFn"
+                                              [maxParticipantsField]="'maxParticipant'"
+                                              [readonly]="asViewMode()">
+      </course-criteria-max-participant-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Track' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedTracksTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.selectedTracksTree == null || courseCriteria.selectedTracksTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.tracksTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.tracksTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="tracksItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.tracksTree == null || courseCriteria.tracksTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Developmental Role' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedDevelopmentalRolesTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span
+                *ngIf="courseCriteria.selectedDevelopmentalRolesTree == null || courseCriteria.selectedDevelopmentalRolesTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.developmentalRolesTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.developmentalRolesTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="developmentalRolesItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.developmentalRolesTree == null || courseCriteria.developmentalRolesTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Teaching Level' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedTeachingLevelsTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.selectedTeachingLevelsTree == null || courseCriteria.selectedTeachingLevelsTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.teachingLevelsTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.teachingLevelsTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="teachingLevelsItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.teachingLevelsTree == null || courseCriteria.teachingLevelsTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Teaching Course Of Study' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedTeachingCourseStudysTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span
+                *ngIf="courseCriteria.selectedTeachingCourseStudysTree == null || courseCriteria.selectedTeachingCourseStudysTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.teachingCourseStudysTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.teachingCourseStudysTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="teachingCourseStudysItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.teachingCourseStudysTree == null || courseCriteria.teachingCourseStudysTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Job Family' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedJobFamilysTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.selectedJobFamilysTree == null || courseCriteria.selectedJobFamilysTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.jobFamilysTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.jobFamilysTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="jobFamilysItemIsCheckedFn">
+          </kendo-treeview>
+          <span *ngIf="courseCriteria.jobFamilysTree == null || courseCriteria.jobFamilysTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Co-curricular Activity' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let cocurricularActivityId of courseCriteria.coCurricularActivity">
+            <div class="metadata-tag-text">
+              {{ courseCriteria.metadataTagsDic[cocurricularActivityId].displayText }}
+            </div>
+          </ng-container>
+          <span *ngIf="courseCriteria.coCurricularActivity.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [multiple]="true"
+                       formControlName="coCurricularActivity"
+                       [(ngModel)]="courseCriteria.coCurricularActivity"
+                       [items]="courseCriteria.cocurricularActivitySelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="!courseCriteria.serviceSchemesContains(MetadataId.ExecutiveAndAdministrativeStaff)">
+      <label for="ch2">{{ 'EAS Substantive Grade Banding' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.selectedEasSubstantiveGradeBandingTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewExpandable>
+          </kendo-treeview>
+          <span
+                *ngIf="courseCriteria.selectedEasSubstantiveGradeBandingTree == null || courseCriteria.selectedEasSubstantiveGradeBandingTree.length === 0">-
+            N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <kendo-treeview class="form-control"
+                          [nodes]="courseCriteria.easSubstantiveGradeBandingTree"
+                          [children]="courseCriteria.getMetadataTagChilds"
+                          [hasChildren]="courseCriteria.isMetadataTagHasChilds"
+                          [textField]="'displayText'"
+                          kendoTreeViewCheckable
+                          kendoTreeViewExpandable
+                          metadataAutoCheckAllChilds
+                          metadataCustomSelectDeselectAll
+                          [(checkedKeys)]="courseCriteria.easSubstantiveGradeBandingTreeValues"
+                          [checkBy]="'tagId'"
+                          [isChecked]="easSubstantiveGradeBandingItemIsCheckedFn">
+          </kendo-treeview>
+          <span
+                *ngIf="courseCriteria.easSubstantiveGradeBandingTree == null || courseCriteria.easSubstantiveGradeBandingTree.length === 0">-
+            N/A</span>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="!(asViewMode() && courseCriteria.selectedPlaceOfWorkItems.length > 0)">
+      <label for="ch2">{{ 'Place of Work' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text">
+            {{ placeOfWorkTitleDic[courseCriteria.selectedPlaceOfWorkType] }}
+          </div>
+          <span *ngIf="courseCriteria.selectedPlaceOfWorkItems.length == 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group -horizontal">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="organisation"
+                     type="radio"
+                     (click)="courseCriteria.setPlaceOfWork(CourseCriteriaPlaceOfWorkType.DepartmentUnitTypes)"
+                     [checked]="courseCriteria.checkDepartmentUnitTypes()">
+              <label>{{ 'Organisation type' | translator }}</label>
+            </div>
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="organisation"
+                     type="radio"
+                     (click)="courseCriteria.setPlaceOfWork(CourseCriteriaPlaceOfWorkType.DepartmentLevelTypes)"
+                     [checked]="courseCriteria.checkDepartmentLevelTypes()">
+              <label>{{ 'Organisation level' | translator }}</label>
+            </div>
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     name="organisation"
+                     type="radio"
+                     (click)="courseCriteria.setPlaceOfWork(CourseCriteriaPlaceOfWorkType.SpecificDepartments)"
+                     [checked]="courseCriteria.checkDepartmentSpecificTypes()">
+              <label>{{ 'Specific organisation' | translator }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <div *ngIf="!asViewMode()">
+        <editable [modeView]="asViewMode()">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let depatmentUnitId of courseCriteria.placeOfWorkDepatmentUnitIds">
+              <div class="metadata-tag-text">
+                {{ courseCriteria.departmentsUnitDic[depatmentUnitId].displayText }}
+              </div>
+            </ng-container>
+            <span *ngIf="courseCriteria.placeOfWorkDepatmentUnitIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         *ngIf="courseCriteria.checkDepartmentUnitTypes()"
+                         [(items)]="courseCriteria.departmentsUnits"
+                         formControlName="deparmentUnitTypes"
+                         [placeholder]="'Organisation Type'"
+                         [(ngModel)]="courseCriteria.placeOfWorkDepatmentUnitIds"
+                         [fetchDataFn]="fetchOrganizationUnitSelectItemFn"
+                         [labelField]="'displayText'"
+                         [valueField]="'id'"
+                         [multiple]="true"
+                         [fetchNoPaging]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+        <editable [modeView]="asViewMode()">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let depatmentLevelId of courseCriteria.placeOfWorkDepatmentLevelIds">
+              <div class="metadata-tag-text">
+                {{ courseCriteria.departmentsLevelDic[depatmentLevelId].departmentLevelName }}
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         *ngIf="courseCriteria.checkDepartmentLevelTypes()"
+                         formControlName="deparmentLevelTypes"
+                         [(items)]="courseCriteria.departmentsLevels"
+                         [(ngModel)]="courseCriteria.placeOfWorkDepatmentLevelIds"
+                         [fetchDataFn]="fetchOrganizationLevelSelectItemFn"
+                         [placeholder]="'Organisation Level'"
+                         [labelField]="'departmentLevelName'"
+                         [fetchNoPaging]="true"
+                         [valueField]="'id'"
+                         [multiple]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+        <editable [modeView]="asViewMode()">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let departmentId of courseCriteria.placeOfWorkSpecificDepartmentsIds">
+              <div class="metadata-tag-text">
+                {{ courseCriteria.departmentsDic[departmentId].departmentName}}
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         *ngIf="courseCriteria.checkDepartmentSpecificTypes()"
+                         formControlName="specificDeparments"
+                         [(items)]="courseCriteria.departments"
+                         [(ngModel)]="courseCriteria.placeOfWorkSpecificDepartmentsIds"
+                         [fetchDataFn]="fetchDepartmentSelectItemFn"
+                         [fetchNoPaging]="true"
+                         [labelField]="'departmentName'"
+                         [valueField]="'id'"
+                         [placeholder]="'Specific Organisation'"
+                         [multiple]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="courseCriteria.selectedPlaceOfWorkItems.length > 0">
+      <label for="ch2">{{asViewMode() ? 'Place Of Work' : 'Maximum Participants For Selected Place Of Work' | translator }}</label>
+      <course-criteria-max-participant-select class="form-control"
+                                              [items]="courseCriteria.selectedPlaceOfWorkItems"
+                                              [itemsTypeTitle]="courseCriteria.placeOfWorkMaxParticipantsTitle | translator"
+                                              [labelFn]="courseCriteria.getSelectedPlaceOfWorkItemFn"
+                                              [maxParticipantsField]="'maxParticipant'"
+                                              [readonly]="asViewMode()"></course-criteria-max-participant-select>
+    </div>
+  </div>
+</form>

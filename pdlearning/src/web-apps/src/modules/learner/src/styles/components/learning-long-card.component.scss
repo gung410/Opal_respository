@@ -1,0 +1,284 @@
+.learning-long-card {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0;
+  border-bottom: 1px solid $color-gainsboro;
+  white-space: normal;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  @extend %smooth;
+
+  &.--disabled {
+    cursor: default;
+    background: $color-white;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    margin-right: 10px;
+  }
+
+  .course {
+    display: flex;
+
+    &:disabled,
+    &[disabled='true'] {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  .unpublished-message {
+    position: absolute;
+    align-self: center;
+    top: 50%;
+    font-size: $font-h4;
+    font-weight: bold;
+  }
+
+  .save-course {
+    display: flex;
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    padding: 4px;
+    background: $white;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .card-status {
+    position: absolute;
+    top: 0;
+    left: 37px;
+    padding: 10px 30px;
+    background: $yellow;
+    border-radius: 5px;
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    max-width: calc(100% - 74px);
+    box-sizing: border-box;
+
+    &.in-progress {
+      background: $yellow;
+    }
+
+    &.completed {
+      background: $color-turquoise;
+    }
+
+    &.expired {
+      background: #808080;
+    }
+
+    &.failed {
+      background: $color-coral;
+    }
+  }
+
+  .course-img-container {
+    cursor: pointer;
+    position: relative;
+    max-width: 320px;
+    width: 30%;
+    height: 162px;
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .two-line-truncate-text {
+    @include two-line-truncate-text;
+  }
+
+  .course-img {
+    width: 100%;
+    height: calc(100% - 28px);
+    background-image: url('../assets/images/course/thumb-img.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: auto 0px;
+    background-size: 16%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 10px #eeeeee;
+    border-radius: 5px;
+    overflow: hidden;
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  .progress-container {
+    @include flex-column-container;
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center;
+    font-family: Roboto;
+
+    .current-chapter {
+      font-weight: $font-weight-medium;
+      font-size: $font-h5;
+      line-height: 22px;
+      margin-bottom: 6px;
+    }
+
+    .progress-num {
+      font-size: $font-h6;
+      line-height: 19px;
+      margin-bottom: 19px;
+      text-transform: lowercase;
+    }
+  }
+
+  .card-progress {
+    height: 6px;
+    background: $light-green-200;
+    margin: 0 15px;
+
+    .progress-inner {
+      background: $light-green;
+      height: 100%;
+    }
+  }
+
+  .card-title {
+    margin-bottom: 10px;
+    max-width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: $font-h4;
+  }
+
+  .card-info {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px 5px 15px;
+    max-width: 377px;
+    width: 30%;
+    flex-shrink: 0;
+
+    &.-link {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .general-info {
+    font-size: $font-size-small;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 15px;
+
+    .clock {
+      margin-left: 5px;
+    }
+
+    .duration-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .upcoming-container {
+      display: flex;
+      margin-left: 5px;
+    }
+  }
+
+  .tags {
+    display: block;
+    margin-top: 10px;
+
+    .tag-item {
+      display: inline-block;
+      padding: 4px 6px;
+      font-size: $font-size-h4;
+      font-variant: small-caps;
+      border: 1px solid $color-gainsboro;
+      border-radius: 5px;
+      text-transform: uppercase;
+      margin-right: 5px;
+      margin-top: 5px;
+    }
+  }
+
+  .card-desc {
+    padding: 10px 0;
+
+    &-title {
+      font-size: $font-h6;
+      color: $color-blue-light;
+      text-transform: uppercase;
+    }
+
+    &-info {
+      font-size: $font-h6;
+      color: black;
+    }
+  }
+
+  .message-noti {
+    margin-top: 10px;
+  }
+
+  .message-count {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: $color-coral;
+    text-align: center;
+    color: #ffffff;
+    line-height: 18px;
+    font-size: 10px;
+  }
+
+  .message-text {
+    text-decoration: underline;
+    font-size: $font-h6;
+    list-style: 25px;
+  }
+
+  &.learning-community-card {
+    .general-info {
+      text-transform: uppercase;
+    }
+
+    .course-img {
+      background-image: none;
+
+      img {
+        max-width: 88px;
+      }
+    }
+  }
+
+  &__classrun-message {
+    display: flex;
+    width: 40%;
+  }
+}

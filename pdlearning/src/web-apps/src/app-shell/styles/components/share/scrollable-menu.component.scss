@@ -1,0 +1,81 @@
+scrollable-menu {
+  display: flex;
+}
+
+.scrollable-menu {
+  box-shadow: 0px 0px 10px $color-silver;
+  background: $color-white;
+  border-radius: 5px;
+  flex-grow: 1;
+
+  &__tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0px;
+  }
+
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+    padding: 15px 0px;
+    font-weight: 500;
+    font-size: $font-h6;
+    border-bottom: 1px solid $color-silver;
+    color: $color-blue-light;
+    margin-bottom: 10px;
+  }
+
+  &__tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: $font-h6;
+    color: $color-blue-dard;
+
+    &:hover {
+      font-weight: 500;
+    }
+
+    &.-active {
+      border-left: 7px solid #36a9dc;
+      font-weight: 500;
+      background: rgba(54, 169, 220, 0.1);
+      padding-left: 13px;
+    }
+  }
+}
+
+.scrollable-menu-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  position: relative;
+
+  &__tab-content {
+    background: $white;
+    box-shadow: 0px 0px 10px #eeeeee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+
+    > * {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      flex-grow: 1;
+    }
+
+    &:last-child {
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  .scrollable-menu__tab {
+    &:hover {
+      font-weight: 400;
+    }
+  }
+}

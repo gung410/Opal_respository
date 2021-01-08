@@ -1,0 +1,5 @@
+<button kendoButton
+        look="flat"
+        [imageUrl]="'assets/images/icons/copy.svg'"
+        (click)="onCopyShareableLearningPathLinkBtnClicked($event, learningPath)"
+        *ngIf="canShowCopyHyperLinkButton()"></button>

@@ -1,0 +1,32 @@
+rich-text-editor {
+  min-height: 450px !important;
+
+  .rich-text-editor {
+    width: 90vw;
+
+    &__drop-zone {
+      display: none;
+      position: absolute;
+      height: 70%;
+      width: 90vw;
+      z-index: 100;
+      margin-top: 60px;
+
+      &.-on-drop {
+        display: block;
+      }
+    }
+
+    .k-editor-content {
+      height: 330px;
+      margin-bottom: 15px;
+      overflow: auto;
+    }
+  }
+
+  .k-colorpicker .k-picker-wrap,
+  .k-dropdown .k-dropdown-wrap {
+    height: 48px;
+    padding: 4px 8px;
+  }
+}

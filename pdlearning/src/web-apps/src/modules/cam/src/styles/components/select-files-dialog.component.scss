@@ -1,0 +1,30 @@
+select-files-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 500px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-files-dialog {
+  &__dropdown-button {
+    padding: 5px;
+
+    .k-list .k-item {
+      padding-left: 77px;
+      padding-right: 77px;
+    }
+
+    .k-list .k-item.k-state-focused {
+      box-shadow: none;
+    }
+
+    .k-list .k-item:hover {
+      background: $color-light-gray;
+      color: $white;
+      border-radius: 5px;
+      @extend %smooth;
+    }
+  }
+}

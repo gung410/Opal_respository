@@ -1,0 +1,44 @@
+math-live-editor-dialog {
+  width: 70vw;
+  overflow: auto;
+
+  iframe {
+    width: 100%;
+    height: 50vh;
+    border-radius: 10px;
+    min-height: 400px;
+  }
+}
+
+.math-editor {
+  &__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+
+  &__close {
+    padding: 5px;
+    border: 1px solid $color-gainsboro;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__loading {
+    .loading-icon {
+      height: 40px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    button {
+      & + button {
+        margin-left: 10px;
+      }
+    }
+  }
+}

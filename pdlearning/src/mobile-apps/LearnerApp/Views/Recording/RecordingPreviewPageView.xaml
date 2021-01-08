@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<common:BaseLearnerContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:converters="clr-namespace:LearnerApp.Converters;assembly=LearnerApp"
+    xmlns:recording="clr-namespace:LearnerApp.ViewModels.Recording;assembly=LearnerApp"
+    xmlns:input="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+    Title="Preview"
+    base:ViewModelLocator.AutoWireViewModel="true"
+    x:Class="LearnerApp.Views.Recording.RecordingPreviewPageView"
+    x:DataType="recording:RecordingPreviewPageViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior
+            Command="{Binding CancelCommand}"
+            IsEnabled="True"
+            IconOverride="nav_back"/>
+    </Shell.BackButtonBehavior>
+    <common:BaseLearnerContentPage.Resources>
+        <converters:LocalVideoSourceConverter x:Key="LocalVideoSourceConverter" />
+    </common:BaseLearnerContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, 60">
+            <MediaElement
+                Source="{Binding VideoSource}"
+                AutoPlay="True"
+                KeepScreenOn="True"
+                Aspect="AspectFill"
+                ShowsPlaybackControls="True" />
+
+            <Grid Grid.Row="1" ColumnDefinitions="*,*" Padding="10,0,10,10" ColumnSpacing="10" BackgroundColor="White" >
+                <input:RadButton
+                    Margin="0, 10, 0, 0"
+                    BorderColor="{StaticResource MainBodyTextColor}"
+                    BackgroundColor="{StaticResource WhiteColor}"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="18"
+                    Opacity="0.5"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="{StaticResource MainBodyTextColor}"
+                    CornerRadius="6"
+                    Command="{Binding OnTakeAgainCommand}"
+                    Text="Record again" />
+
+                <input:RadButton
+                    Grid.Column="1"
+                    Margin="0, 10, 0, 0"
+                    BackgroundColor="{StaticResource MainBodyTextColor}"
+                    TextColor="White"
+                    CornerRadius="6"
+                    Command="{Binding OnSaveCommand}"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="18"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Save to gallery" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>
+

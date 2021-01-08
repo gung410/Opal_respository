@@ -1,0 +1,12 @@
+IF OBJECT_ID(N'opa.Raw_Forum', N'U') IS NULL
+BEGIN
+	CREATE TABLE opa.Raw_Forum(
+	id INT NOT NULL,
+	name NVARCHAR(MAX) NULL,
+	group_id VARCHAR(MAX) NULL,
+	parent__id VARCHAR(MAX) NULL,
+	owner__id VARCHAR(MAX) NULL,
+	ctime VARCHAR(MAX) NULL,
+	PRIMARY KEY (id)
+	)
+END

@@ -1,0 +1,54 @@
+<ng-container [formGroup]="form">
+  <label class="copyright-form__title">General Information</label>
+  <div class="form-section">
+    <div class="form-controls-group"
+         *ngIf="form.value.sqRatingType">
+      <label>
+        {{ 'SQ Rating Type' | translator }}
+      </label>
+      <opal-select class="form-control"
+                   formControlName="sqRatingType"
+                   [items]="sqRatingTypes"
+                   [readOnly]="mode !== StandaloneSurveyDetailMode.Edit || form.value.sqRatingType"
+                   [labelField]="'text'"
+                   [valueField]="'value'"
+                   [placeholder]="'Select' | globalTranslator"
+                   position="top"
+                   [staticMode]="true"></opal-select>
+    </div>
+    <label class="form-section-title">
+      {{ 'Validity period' | translator }}</label>
+    <div class="form-controls-group-inline">
+      <div class="form-controls-group">
+        <label>
+          {{ 'Start date' | translator }}
+        </label>
+        <kendo-datepicker class="form-control"
+                          formControlName="startDate"
+                          kendoErrorTooltip
+                          position="top"
+                          [(ngModel)]="formData.startDate"
+                          [placeholder]="'Select the from date (day/month/year)' | globalTranslator"
+                          [format]="'dd/MM/yyyy'"
+                          [disabledDates]="disableDatesBeforeToday.bind(this)"
+                          [disabled]="mode !== StandaloneSurveyDetailMode.Edit"
+                          #startDatePicker></kendo-datepicker>
+      </div>
+      <div class="form-controls-group">
+        <label>
+          {{ 'End date' | translator }}
+        </label>
+        <kendo-datepicker class="form-control"
+                          formControlName="endDate"
+                          kendoErrorTooltip
+                          position="top"
+                          [(ngModel)]="formData.endDate"
+                          [placeholder]="'Select the end date (day/month/year)' | globalTranslator"
+                          [format]="'dd/MM/yyyy'"
+                          [disabledDates]="disableDatesBeforeStartDate.bind(this)"
+                          [disabled]="mode !== StandaloneSurveyDetailMode.Edit"
+                          #endDatePicker></kendo-datepicker>
+      </div>
+    </div>
+  </div>
+</ng-container>

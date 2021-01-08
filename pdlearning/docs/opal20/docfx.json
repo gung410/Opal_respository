@@ -1,0 +1,81 @@
+{
+  "metadata": [
+    {
+      "globalMetadata": {
+        "_gitContribute": {
+          "branch": "master"
+        },
+        "_appFooter": "&#0169; 2019 Orient Software Development Corp.",
+        "_enableSearch": "true",
+        "_disableContribution": "false",
+        "_disableAffix":  "false"
+      },
+      "src": [
+        {
+          "src": "../src",
+          "files": [
+            "**.csproj"
+          ],
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**",
+            "**/Tests/**",
+            "**/Examples/**"
+          ]
+        }
+      ],
+      "dest": "api",
+      "filter": "filterConfig.yml",
+      "properties": {}
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "documentation/**.md",
+          "documentation/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ],
+        "exclude": [
+          "**/bin/**",
+          "**/obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "globalMetadata": {
+      "_appFooter": "&#0169; 2019 ToanNguyen"
+    },
+    "resource": [
+      {
+        "files": [
+          "**/*.png",
+          "**/*.jpg",
+          "**/*.gif",
+          "**/*.svg",
+          "**/*.pdf"
+        ],
+        "exclude": [
+          "**/bin/**",
+          "**/obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": [
+          "**/bin/**",
+          "**/obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "dest": "_site"
+  }
+}

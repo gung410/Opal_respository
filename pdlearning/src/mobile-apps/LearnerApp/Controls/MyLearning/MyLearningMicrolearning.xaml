@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.MyLearning.MyLearningMicrolearning"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:listitemcard="clr-namespace:LearnerApp.Controls.ListItemCard"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	BackgroundColor="{StaticResource ContentPageColor}"
+	mc:Ignorable="d">
+
+	<StackLayout Padding="10" Spacing="10">
+		<StackLayout Spacing="5">
+			<Frame
+				Padding="1"
+				BackgroundColor="{StaticResource WhiteColor}"
+				BorderColor="LightGray"
+				CornerRadius="4"
+				HasShadow="False"
+				HorizontalOptions="FillAndExpand"
+				IsClippedToBounds="True">
+				<StackLayout Padding="10,0,10,0" Orientation="Horizontal">
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="22"
+						Source="search.svg"
+						WidthRequest="22">
+						<ffimagesvg:SvgCachedImage.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding SearchMicrolearningCommand}" />
+						</ffimagesvg:SvgCachedImage.GestureRecognizers>
+					</ffimagesvg:SvgCachedImage>
+					<controls:CustomEntry
+						x:Name="KeywordSearchEntry"
+						Margin="{StaticResource BaseMarginTextbox}"
+						ClearButtonVisibility="WhileEditing"
+						FontSize="16"
+						HorizontalOptions="FillAndExpand"
+						Placeholder="Search Microlearning"
+						PlaceholderColor="LightGray"
+						ReturnCommand="{Binding SearchMicrolearningCommand}"
+						Text="{Binding SearchMicrolearningKeyword, Mode=TwoWay}" />
+				</StackLayout>
+			</Frame>
+			<Frame
+				Padding="10"
+				BorderColor="#D8DCE6"
+				CornerRadius="4"
+				HasShadow="False"
+				IsVisible="{Binding IsEnableMicrolearningSearch, Converter={StaticResource InverseBoolConverter}}">
+				<StackLayout Orientation="Horizontal">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding CourseStatusSelectedCommand}" NumberOfTapsRequired="1" />
+					</StackLayout.GestureRecognizers>
+					<Label
+						FontSize="16"
+						Text="{Binding CourseListStatus}"
+						TextColor="{StaticResource MainBodyTextColor}"
+						VerticalOptions="CenterAndExpand" />
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="10"
+						HorizontalOptions="EndAndExpand"
+						Source="participation_down.svg"
+						WidthRequest="10" />
+				</StackLayout>
+			</Frame>
+			<controls:SearchGroupFilter
+				BackCommand="{Binding BackSearchMicrolearningCommand}"
+				FilterCommand="{Binding SearchMicrolearningFilterCommand}"
+				FilterData="{Binding FilterData}"
+				IsVisible="{Binding IsEnableMicrolearningSearch}" />
+		</StackLayout>
+
+		<listitemcard:VerticalListView
+			IsVisible="{Binding IsEnableMicrolearningSearch, Converter={StaticResource InverseBoolConverter}}"
+			OnLoadmoreCommand="{Binding LoadMoreItemCommand}"
+			OnRefreshCommand="{Binding RefreshCommand}"
+			Source="{Binding MicrolearningCollection}"
+			TotalCount="{Binding TotalCount}"
+			VerticalOptions="FillAndExpand" />
+
+		<listitemcard:VerticalListView
+			IsVisible="{Binding IsEnableMicrolearningSearch}"
+			OnLoadmoreCommand="{Binding LoadMoreSearchMicrolearningFilterItemCommand}"
+			OnRefreshCommand="{Binding SearchMicrolearningFilterRefreshCommand}"
+			Source="{Binding MySearchMicrolearningFilterCollection}"
+			TotalCount="{Binding SearchMicrolearningFilterTotalCount}"
+			VerticalOptions="FillAndExpand" />
+	</StackLayout>
+</ContentView>

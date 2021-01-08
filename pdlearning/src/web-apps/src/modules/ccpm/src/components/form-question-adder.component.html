@@ -1,0 +1,26 @@
+<div class="form-question-adder"
+     [hidden]="mode === FormDetailMode.View"
+     #tooltip="kendoTooltip"
+     [ngClass]="{'-outline': !inlineAdd}"
+     [filter]="inlineAdd ? ('#form-question-adder__add-question-btn-' + id) : ('#form-question-adder-' + id)"
+     [id]="'form-question-adder-' + id"
+     [tooltipTemplate]="questionTemplateSelectorTemplate"
+     kendoTooltip
+     showOn="click">
+  <div class="form-question-adder__question-separator"
+       *ngIf="inlineAdd"></div>
+  <div class="form-question-adder__add-question-btn add-btn-icon"
+       [id]="'form-question-adder__add-question-btn-' + id"></div>
+  <div class="form-question-adder__add-title"
+       *ngIf="!inlineAdd"> {{ 'Add question' | translator }}
+
+  </div>
+</div>
+<ng-template #questionTemplateSelectorTemplate
+             let-anchor>
+  <form-question-template class="form-question-adder__form-question-template"
+                          [type]="type"
+                          (click)="tooltip.hide()"
+                          [priority]="priority"
+                          [minorPriority]="minorPriority"></form-question-template>
+</ng-template>

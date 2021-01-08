@@ -1,0 +1,12 @@
+$quiz-player-correct-answer-color: #39d4c9;
+$quiz-player-wrong-answer-color: red;
+$quiz-player-main-color: #303450;
+
+@import './main-quiz-player-page.component.scss';
+@import './form-answer-player.component.scss';
+@import './form-question-answer-player.component.scss';
+@import './form-question-answer-player-review.component.scss';
+@import './form-section-info.component.scss';
+@import './form-question-answer-review.component.scss';
+@import './question-answer-review.component.scss';
+@import './form-poll-results.component.scss';

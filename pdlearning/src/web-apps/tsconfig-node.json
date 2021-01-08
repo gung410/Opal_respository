@@ -1,0 +1,21 @@
+{
+  "extends": "./node_modules/@microsoft/rush-stack-compiler-3.5/includes/tsconfig-node.json",
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es5", "es2015.collection", "es2015.iterable", "es2015.promise"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es6",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"]
+  },
+  "include": ["src"]
+}

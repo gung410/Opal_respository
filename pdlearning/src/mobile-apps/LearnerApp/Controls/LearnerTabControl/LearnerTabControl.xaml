@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.LearnerTabControl.LearnerTabControl"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+	xmlns:learnerTabControl="clr-namespace:LearnerApp.Controls.LearnerTabControl;assembly=LearnerApp"
+	HeightRequest="50"
+	x:Name="Root">
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<Style x:Key="TabBtn" TargetType="Button">
+				<Setter Property="BackgroundColor" Value="Transparent" />
+				<Setter Property="Padding" Value="5,10,5,10" />
+				<Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="Black" />
+				<Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+			</Style>
+			<Style x:Key="TabLineBtn" TargetType="BoxView">
+				<Setter Property="BackgroundColor" Value="#1DCEC1" />
+				<Setter Property="HorizontalOptions" Value="FillAndExpand" />
+			</Style>
+		</ResourceDictionary>
+	</ContentView.Resources>
+	<ContentView.Content>
+		<ScrollView
+			x:Name="ScrollView"
+			HorizontalScrollBarVisibility="Never"
+			Orientation="Horizontal">
+			<controls:RepeatableStack
+				x:Name="RepeatableStack"
+				ItemsSource="{Binding Source={x:Reference Root}, Path=ItemSource}"
+				VerticalOptions="Start"
+				Orientation="Horizontal">
+				<controls:RepeatableStack.ItemTemplate>
+					<DataTemplate x:DataType="learnerTabControl:LearnerTabControlItemViewModel">
+						<Grid
+							IsVisible="{Binding IsVisible}"
+							RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="4"/>
+                            </Grid.RowDefinitions>
+                            <Button
+								Grid.Row="0"
+								Command="{Binding Source={x:Reference Root}, Path=InternalTabClickCommand}"
+								CommandParameter="{Binding .}"
+								Style="{StaticResource TabBtn}"
+								Text="{Binding Text}" />
+							<BoxView
+                                Grid.Row="1"
+                                IsVisible="{Binding IsSelected}"
+                                Style="{StaticResource TabLineBtn}" />
+						</Grid>
+					</DataTemplate>
+				</controls:RepeatableStack.ItemTemplate>
+			</controls:RepeatableStack>
+		</ScrollView>
+	</ContentView.Content>
+</ContentView>
+

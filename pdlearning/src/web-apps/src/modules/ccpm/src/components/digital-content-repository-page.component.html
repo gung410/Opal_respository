@@ -1,0 +1,97 @@
+<app-toolbar [customClass]="'digital-content-repository-page-toolbar'">
+  <toolbar-left>
+    <search-input [(ngModel)]="textSearch"
+                  [placeholder]="'Search in Digital Content Repository' | translator"
+                  (search)="onSubmitSearch()"></search-input>
+  </toolbar-left>
+  <toolbar-center class="flex row"></toolbar-center>
+  <toolbar-right>
+
+    <button *hasPermission="ccpmPermissions.CreateContent"
+            kendoButton
+            [primary]="true"
+            [icon]="'plus'"
+            (click)="openBatchUpload()">{{ 'Upload' | globalTranslator }}</button>
+
+    <button class="k-margin-left-10"
+            *hasPermission="ccpmPermissions.CreateContent"
+            kendoButton
+            [primary]="true"
+            [icon]="'plus'"
+            (click)="onCreateNewButtonClick()">{{ 'Create New' | globalTranslator }}</button>
+
+    <div [hidden]="!canShowFilterToolbar">
+      <div class="digital-content-repository-page-toolbar__filter">
+        <label>{{ 'Filter' | globalTranslator }}</label>
+        <opal-select class="digital-content-filter"
+                     [autoScrollToViewOnOpen]="false"
+                     [items]="filterItems"
+                     [valueField]="'value'"
+                     [labelField]="'text'"
+                     [(selectedValue)]="digitalContentFilterStatus"
+                     [placeholder]="'All' | globalTranslator"
+                     [searchable]="false"
+                     (focus)="onOpalSelectControlFocus()"></opal-select>
+      </div>
+    </div>
+  </toolbar-right>
+</app-toolbar>
+
+<div class="digital-content-repository-page-sub-toolbar">
+  <label class="digital-content-repository-page-sub-toolbar__sort-label">{{ 'Sort by' | translator }}</label>
+  <opal-select class="digital-content-repository-page-sub-toolbar__sort-select"
+               [autoScrollToViewOnOpen]="false"
+               [items]="digitalContentSortDisplayItems"
+               [valueField]="'id'"
+               [labelField]="'text' | translator"
+               [placeholder]="'Sort by' | translator"
+               [(selectedValue)]="searchTermService.digitalContentSortModeId"
+               [searchable]="false"
+               (focus)="onOpalSelectControlFocus()"></opal-select>
+</div>
+
+<kendo-tabstrip #digitalContentTabstrip
+                [animate]="false"
+                (tabSelect)="onDigitalContentTabSelect($event)">
+
+  <kendo-tabstrip-tab *hasPermission="ccpmPermissions.ViewListContent"
+                      [title]="digitalContentQueryModeLabel.get(digitalContentQueryMode.AllByCurrentUser) | translator"
+                      [selected]="searchTermService.queryMode === digitalContentQueryMode.AllByCurrentUser">
+    <ng-template kendoTabContent="">
+      <list-digital-content-page [search]="submitSearch"
+                                 [filterStatus]="digitalContentFilterStatus"
+                                 [sortModeId]="searchTermService.digitalContentSortModeId"
+                                 [queryMode]="queryModeAllByCurrentUser"
+                                 [contextMenuItems]="contextMenuItemsForFilesTab"
+                                 (selectedContextMenu)="digitalContentMenuItemSelected($event)"
+                                 (itemClicked)="onViewDigitalContent($event)"></list-digital-content-page>
+    </ng-template>
+  </kendo-tabstrip-tab>
+
+  <kendo-tabstrip-tab *hasPermission="ccpmPermissions.ViewListSubmittedContent"
+                      [title]="digitalContentQueryModeLabel.get(digitalContentQueryMode.PendingApproval) | translator"
+                      [selected]="searchTermService.queryMode === digitalContentQueryMode.PendingApproval">
+    <ng-template kendoTabContent="">
+      <list-digital-content-page [search]="submitSearch"
+                                 [queryMode]="queryModePendingApproval"
+                                 [sortModeId]="searchTermService.digitalContentSortModeId"
+                                 [contextMenuItems]="contextMenuItemsForApprovalTab"
+                                 (selectedContextMenu)="digitalContentMenuItemSelected($event)"
+                                 (itemClicked)="onViewPendingApproveContent($event)"></list-digital-content-page>
+    </ng-template>
+  </kendo-tabstrip-tab>
+
+  <kendo-tabstrip-tab *hasPermission="ccpmPermissions.ViewListArchivedForm"
+                      [title]="digitalContentQueryModeLabel.get(digitalContentQueryMode.Archived) | translator"
+                      [selected]="searchTermService.queryMode === digitalContentQueryMode.Archived">
+    <ng-template kendoTabContent="">
+      <list-digital-content-page [search]="submitSearch"
+                                 [queryMode]="queryModeArchived"
+                                 [sortModeId]="searchTermService.digitalContentSortModeId"
+                                 [contextMenuItems]="contextMenuItemsForArchivedTab"
+                                 [hiddenColumns]="['changedDate', 'expiresOn']"
+                                 (selectedContextMenu)="digitalContentMenuItemSelected($event)"
+                                 (itemClicked)="onViewDigitalContent($event)"></list-digital-content-page>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>

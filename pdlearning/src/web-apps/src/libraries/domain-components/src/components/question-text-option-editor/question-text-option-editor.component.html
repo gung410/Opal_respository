@@ -1,0 +1,25 @@
+<div class="question-text-option-editor">
+  <kendo-contextmenu [target]="target"
+                     showOn="click"
+                     [alignToAnchor]="true"
+                     [anchorAlign]="defaultContextMenuAnchorAlign"
+                     [popupAlign]="defaultContextMenuPopupAlign"
+                     (popupClose)="onPopupClose($event)"
+                     (popupOpen)="onPopupOpen($event)">
+    <ng-template kendoContextMenuTemplate="">
+      <div class="question-text-option-editor__title">{{ 'Add Text' | translator }}</div>
+      <div class="question-blank-option-editor__form">
+        <textarea kendoTextArea
+                  rows="4"
+                  cols="50"
+                  [placeholder]="'Add a text' | translator"
+                  [(value)]="value"></textarea>
+      </div>
+      <div class="question-blank-option-editor__actions">
+        <button kendoButton
+                [primary]="true"
+                (click)="onSubmitClicked()">{{ 'Submit' | globalTranslator }}</button>
+      </div>
+    </ng-template>
+  </kendo-contextmenu>
+</div>

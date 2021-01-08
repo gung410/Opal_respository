@@ -1,0 +1,20 @@
+<p class="breadcrumb"
+   kendoTooltip
+   [tooltipClass]="'info-tooltip'">
+  <span class="breadcrumb-item"
+        *ngFor="let item of items; index as i; last as isLast">
+    <ng-container *ngIf="(item.textFn && item.textFn()) || item.text">
+      <span class="breadcrumb-item__text"
+            [ngClass]="{ '-active': isLast, '-canSelect': item.navigationFn != null }"
+            (click)="onNavigateItem(item, isLast)"
+            [title]="item.textFn ? item.textFn() : item.text">
+        <i class="icon"
+           *ngIf="item.iconClass"
+           [ngClass]="[item.iconClass ? item.iconClass : '']"></i>
+        {{ item.textFn ? item.textFn() : item.text | translator }}
+      </span>
+      <span class="breadcrumb-item__icon k-icon k-i-arrow-60-right"
+            *ngIf="!isLast"></span>
+    </ng-container>
+  </span>
+</p>

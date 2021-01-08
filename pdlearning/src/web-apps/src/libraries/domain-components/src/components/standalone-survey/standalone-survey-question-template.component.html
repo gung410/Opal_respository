@@ -1,0 +1,140 @@
+<div class="standalone-survey-question-template">
+  <div>
+    <ng-container>
+      <div class="standalone-survey-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.ShortText)">
+        <div class="standalone-survey-question-template__type-container">
+          <div>{{'Free Text' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="standalone-survey-question-template__input-container">
+          <div class="standalone-survey-question-template__free-text-input --row">
+            <div class="standalone-survey-question-template__gray-placeholder"
+                 style="width: 50%;"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="standalone-survey-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.TrueFalse)">
+        <div class="standalone-survey-question-template__type-container">
+          <div>{{'True / False' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="standalone-survey-question-template__input-container --row">
+          <div class="standalone-survey-question-template__option-container">
+            <div class="standalone-survey-question-template__radio-checkbox"></div>
+            <div>{{'True' | translator}}</div>
+          </div>
+          <div class="standalone-survey-question-template__option-container">
+            <div class="standalone-survey-question-template__radio-checkbox"></div>
+            <div>{{'False' | translator}}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="standalone-survey-question-template__item"
+         (click)="onQuestionTemplateClick(questionTypeEnum.SingleChoice)">
+      <div class="standalone-survey-question-template__type-container">
+        <div>{{'Radio buttons' | translator}}</div>
+        <i class="icon sm add-revert"></i>
+      </div>
+      <div class="standalone-survey-question-template__input-container --column">
+        <div class="standalone-survey-question-template__option-container">
+          <div class="standalone-survey-question-template__radio-checkbox"></div>
+          <div class="standalone-survey-question-template__gray-placeholder"
+               style="width: 70%;"></div>
+        </div>
+        <div class="standalone-survey-question-template__option-container">
+          <div class="standalone-survey-question-template__radio-checkbox"></div>
+          <div class="standalone-survey-question-template__gray-placeholder"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="standalone-survey-question-template__item"
+         (click)="onQuestionTemplateClick(questionTypeEnum.MultipleChoice)">
+      <div class="standalone-survey-question-template__type-container">
+        <div>{{'Checkboxes' | translator}}</div>
+        <i class="icon sm add-revert"></i>
+      </div>
+      <div class="standalone-survey-question-template__input-container --column">
+        <div class="standalone-survey-question-template__option-container">
+          <div class="standalone-survey-question-template__rectangle-checkbox"></div>
+          <div class="standalone-survey-question-template__gray-placeholder"
+               style="width: 70%;"></div>
+        </div>
+        <div class="standalone-survey-question-template__option-container">
+          <div class="standalone-survey-question-template__rectangle-checkbox"></div>
+          <div class="standalone-survey-question-template__gray-placeholder"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </div>
+    <ng-container>
+      <div class="standalone-survey-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.DropDown)">
+        <div class="standalone-survey-question-template__type-container">
+          <div>{{'Drop down' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="standalone-survey-question-template__input-container">
+          <div class="standalone-survey-question-template__gray-placeholder k-icon k-i-arrow-60-down icon center"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="standalone-survey-question-template__item"
+           (click)="onDateQuestionTemplateClicked()">
+        <div class="standalone-survey-question-template__type-container">
+          <div>{{'Date Picker' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="standalone-survey-question-template__input-container">
+          <div class="standalone-survey-question-template__flex-line">
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+          </div>
+          <div class="standalone-survey-question-template__flex-line">
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+          </div>
+          <div class="standalone-survey-question-template__flex-line">
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__dark-gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+            <span class="standalone-survey-question-template__gray-date"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="standalone-survey-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.Structure)">
+        <div class="standalone-survey-question-template__type-container">
+          <div>{{'Section' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="standalone-survey-question-template__input-container">
+          <img class="section"
+               src="assets/images/others/section.png">
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

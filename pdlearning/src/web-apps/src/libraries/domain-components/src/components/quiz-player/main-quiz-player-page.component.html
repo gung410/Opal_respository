@@ -1,0 +1,168 @@
+<ng-container *ngIf="formData && formAnswersData">
+  <svg *ngIf="!currentPlayingFormAnswer"
+       width="282px"
+       height="174px"
+       viewBox="0 0 282 174"
+       version="1.1"
+       xmlns="http://www.w3.org/2000/svg"
+       xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1"
+       stroke="none"
+       stroke-width="1"
+       fill="none"
+       fill-rule="evenodd">
+      <g id="Group">
+        <circle id="Oval"
+                fill="#9DE0BD"
+                fill-rule="nonzero"
+                cx="126"
+                cy="87"
+                r="87"></circle>
+        <circle id="Oval"
+                fill="#303450"
+                fill-rule="nonzero"
+                cx="41.5"
+                cy="138.5"
+                r="14.5"></circle>
+        <rect id="Rectangle"
+              fill="#303450"
+              fill-rule="nonzero"
+              x="76"
+              y="125"
+              width="176"
+              height="28"
+              rx="5"></rect>
+        <circle id="Oval"
+                fill="#303450"
+                fill-rule="nonzero"
+                cx="71.5"
+                cy="87.5"
+                r="14.5"></circle>
+        <rect id="Rectangle"
+              fill="#303450"
+              fill-rule="nonzero"
+              x="106"
+              y="74"
+              width="176"
+              height="28"
+              rx="5"></rect>
+        <line id="Path"
+              x1="67"
+              y1="83"
+              x2="77"
+              y2="93"
+              stroke="#FFFFFF"
+              stroke-width="5"
+              stroke-linecap="round"></line>
+        <line id="Path"
+              x1="67"
+              y1="93"
+              x2="77"
+              y2="83"
+              stroke="#FFFFFF"
+              stroke-width="5"
+              stroke-linecap="round"></line>
+        <circle id="Oval"
+                fill="#303450"
+                fill-rule="nonzero"
+                cx="14.5"
+                cy="37.5"
+                r="14.5"></circle>
+        <rect id="Rectangle"
+              fill="#303450"
+              fill-rule="nonzero"
+              x="49"
+              y="24"
+              width="176"
+              height="28"
+              rx="5"></rect>
+        <polyline id="Path"
+                  stroke="#FFFFFF"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  points="9 38.3636 12.75 42 21 34"></polyline>
+        <polyline id="Path"
+                  stroke="#FFFFFF"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  points="36 139.364 39.75 143 48 135"></polyline>
+      </g>
+    </g>
+  </svg>
+
+  <h2 class="main-quiz-player-page__type"
+      *ngIf="!currentPlayingFormAnswer">{{ formData.form.type }}</h2>
+
+  <h2 class="main-quiz-player-page__title"
+      *ngIf="!currentPlayingFormAnswer">{{formData.form.title}}</h2>
+
+  <table class="main-quiz-player-page__form-answer-card"
+         *ngIf="formData.form.type === formType.Quiz && !currentPlayingFormAnswer && getLastAnswer()">
+    <caption>{{'Last Form Attempt' | globalTranslator: { formType: formLabelMultiLanguage } }}</caption>
+    <tr>
+      <th>{{'Answered' | globalTranslator}}</th>
+      <td>
+        {{'##questionNumber## of ##total## questions' | globalTranslator:answeredNumberDescTranslationParams(getLastAnswer()) }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'Correct Answers' | globalTranslator}}</th>
+      <td>
+        {{'##questionNumber## of ##total## questions' | globalTranslator:correctAnsweredNumberDescTranslationParams(getLastAnswer()) }}
+      </td>
+    </tr>
+    <tr>
+      <th>{{'Score' | globalTranslator}}</th>
+      <td>
+        {{ (getLastAnswer().scorePercentage ? getLastAnswer().scorePercentage : 0) +'%'}}
+      </td>
+    </tr>
+  </table>
+  <div class="main-quiz-player-page__form-answer-player-container"
+       *ngIf="currentPlayingFormAnswer && !canShowPollResults">
+    <form-answer-player #formAnswerPlayer
+                        [isFinished]="isFinished"
+                        [formData]="formData"
+                        [(formAnswer)]="currentPlayingFormAnswer"
+                        [justStartNew]="isCurrentPlayingFormAnswerJustStartNew"
+                        [isPassingMarkEnabled]="isPassingMarkEnabled"
+                        [formQuestionsData]="formQuestionsData"
+                        [reachNumberOfAttemptToShowReviewPage]="reachNumberOfAttemptToShowReviewPage"
+                        [isPreviewMode]="isPreviewMode"
+                        [reviewOnly]="reviewOnly"
+                        [myCourseId]="currentMyCourseId"
+                        [isStandalone]="isStandalone"
+                        [isDisplayPollResultToLearners]="canDisplayPollResultToLearners()"
+                        (exit)="exitQuiz()"
+                        (finish)="finishQuiz()"
+                        (retry)="retryQuiz()"
+                        (timeout)="onTimeout()"
+                        (submit)="onFormAnswerPlayerSubmitted($event)"></form-answer-player>
+  </div>
+
+  <ng-container *ngIf="!currentPlayingFormAnswer && !reviewOnly && !canShowPollResults">
+    <button class="main-quiz-player-page__action-btn"
+            *ngIf="canStartNew"
+            (click)="startNewFormAnswer()"
+            kendoButton>{{'START NEW FORM' | globalTranslator: { formType: formLabelMultiLanguage } | uppercase }}</button>
+    <ng-container *ngIf="!isPreviewMode">
+      <button class="main-quiz-player-page__action-btn"
+              *ngIf="canContinue"
+              kendoButton
+              (click)="continueLastNotCompletedFormAnswer()">{{'CONTINUE LAST FORM' | globalTranslator: { formType: formLabelMultiLanguage }  | uppercase }}</button>
+      <div *ngIf="!hasLastNotCompletedAvailableFormAnswer() && reachFormMaxAnswerAttempt()">
+        {{'You have reached the maximum number of attempt(s) for this form' | globalTranslator: { formType: formLabelMultiLanguage } }}
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="reviewOnly && showViewButton">
+    <button class="main-quiz-player-page__action-btn"
+            (click)="viewFormAnswer()"
+            kendoButton>{{'VIEW FORM' | globalTranslator: { formType: formLabelMultiLanguage } | uppercase }}</button>
+  </ng-container>
+  <!-- Show poll results for standalone when user completed -->
+  <form-poll-results *ngIf="canShowPollResults && (canDisplayPollResultToLearners() || isStandalone)"
+                     [questions]="formQuestionsData"
+                     [formAnswersData]="formAnswersData[0]"
+                     [formData]="formData"></form-poll-results>
+</ng-container>

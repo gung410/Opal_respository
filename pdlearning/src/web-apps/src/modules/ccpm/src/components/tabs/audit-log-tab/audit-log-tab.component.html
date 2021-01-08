@@ -1,0 +1,129 @@
+<div class="audit-log-tab__header">
+  <div class="audit-log-tab__header-right">
+    <button class="btn-revert"
+            *ngIf="canRevertVersion"
+            kendoButton
+            [primary]="false"
+            (click)="openModalRevertVersion()">
+      {{ 'Revert Version' | translator }}
+    </button>
+    <button class="btn-compare"
+            kendoButton
+            [disabled]="disabledComparisonBtn"
+            [primary]="false"
+            (click)="openCompareDialog()">
+      {{ 'Compare Versions' | translator }}
+    </button>
+  </div>
+</div>
+
+<div class="audit-log-tab__alert alert-danger"
+     role="alert"
+     *ngIf="revertResult && revertResult.isSuccess">
+  <div class="content">
+    {{ 'You have reverted to an older version of this content.' | translator}}
+    <a class="btn-undo"
+       href="javascript:;"
+       *ngIf="revertResult.undoVersionId && showUndoBtn"
+       (click)="undoRevert(revertResult.undoVersionId)">
+      {{ 'Undo' | translator }}
+    </a>
+  </div>
+  <div class="close">
+    <a class="no-underline btn-close"
+       href="javascript:;"
+       (click)="closeAlertRevertVersion()"><img src="assets/images/icons/close.svg"></a>
+  </div>
+</div>
+
+<kendo-grid class="column flex audit-log-grid opal-grid"
+            #grid
+            [data]="gridView"
+            [pageable]="true"
+            [pageSize]="pageSize"
+            [skip]="pageNumber"
+            (pageChange)="onPageChange($event)">
+  <kendo-grid-column [field]
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [disabled]="disabledComparisonCheck(dataItem)"
+             [checked]="comparisonChecked(dataItem)"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Name' | globalTranslator"
+                     field="changedByUser.fullName">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span *ngIf="dataItem.changedByUser;  else system">
+        {{ dataItem.changedByUser.fullName }}
+      </span>
+      <ng-template #system="">
+        <span *ngIf="!dataItem.changedByUser">
+          {{'System' | globalTranslator}}
+        </span>
+      </ng-template>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Version' | globalTranslator"
+                     field="versionString"> </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Action' | globalTranslator"
+                     field="comment"> </kendo-grid-column>
+
+  <kendo-grid-column [title]="'When' | globalTranslator"
+                     field="createdDate">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      {{ dataItem.createdDate | relativeTimespan: 'dd/MM/yyyy h:mm a' }}
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+
+<ng-template #revertDialogTemplate="">
+  <div class="audit-revert-dialog">
+    <div class="dialog-header">
+      <div class="dialog-header__title">{{ 'Revert version' | translator }}</div>
+      <div class="dialog-header__actions">
+        <span class="k-icon k-i-close"
+              (click)="dialogRef.close()"></span>
+      </div>
+    </div>
+    <div class="dialog-content">
+      <div class="dialog-content__information">{{ 'Current version' | translator }}
+        <span class="dialog-content__information-value"
+              *ngIf="activeVersion">{{ activeVersion.versionString }}</span>
+      </div>
+      <div class="form-controls-group">
+        <div class="form-title">{{ 'Select a version to revert to:' | translator }}</div>
+        <kendo-dropdownlist [data]="revertableVersions"
+                            [textField]="'versionString'"
+                            [valueField]="'id'"
+                            [itemDisabled]="itemDisabled"
+                            [(ngModel)]="selectedRevertVersion">
+        </kendo-dropdownlist>
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <button (click)="dialogRef.close()"
+              kendoButton>
+        {{ 'Cancel' | globalTranslator }}
+      </button>
+      <button [disabled]="(!selectedRevertVersion || (selectedRevertVersion && !selectedRevertVersion.id)) || isReverting"
+              kendoButton
+              (click)="onClickRevertVersion()"
+              [primary]="true">
+        {{ 'Accept' | globalTranslator }}
+      </button>
+    </div>
+  </div>
+</ng-template>

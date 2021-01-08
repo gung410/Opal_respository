@@ -1,0 +1,40 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ session.sessionTitle }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onClose()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="qr-dialog-container">
+    <div class="qr-dialog-left">
+      <div class="form-container">
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'QR Code' | translator }}</label>
+          <qrcode [qrdata]="sessionCode"
+                  [width]="128"></qrcode>
+        </div>
+      </div>
+    </div>
+    <div class="qr-dialog-right">
+      <div class="form-container">
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Code' | translator }}</label>
+          <span>{{ sessionCode }}</span>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Class' | translator }}</label>
+          <span>{{ classRun.classTitle }}</span>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Session Date' | translator }}</label>
+          <span>{{ session.sessionDate | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Close' | globalTranslator }}</button>
+</div>

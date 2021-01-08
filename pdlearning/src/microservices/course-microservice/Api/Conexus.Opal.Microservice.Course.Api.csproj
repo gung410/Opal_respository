@@ -1,0 +1,98 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <RootNamespace>Microservice.Course</RootNamespace>
+
+    <!--Trial version for Course-->
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <!--Nuget Package References-->
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="$(AWSSDKS3PackageVersion)" />
+    <PackageReference Include="cx.datahub.scheduling.jobs.shared" Version="$(CxDatahubSchedulingJobsSharedPackageVersion)" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="$(DocumentFormatOpenXmlPackageVersion)" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="$(FluentValidationAspNetCorePackageVersion)" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="$(HangfireAspNetCorePackageVersion)" />
+    <PackageReference Include="HangFire.Core" Version="$(HangFireCorePackageVersion)" />
+    <PackageReference Include="HangFire.SqlServer" Version="$(HangFireSqlServerPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(MicrosoftEntityFrameworkCoreDesignPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(MicrosoftEntityFrameworkCoreProxiesPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(MicrosoftEntityFrameworkCoreSqlServerPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(MicrosoftEntityFrameworkCoreRelationalPackageVersion)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleAspNetCorePackageVersion)" />
+    <PackageReference Include="Telerik.Reporting" Version="$(TelerikReportingPackageVersion)" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="$(IdentityServer4AccessTokenValidationPackageVersion)" />
+  </ItemGroup>
+
+  <!--Thunder Package References-->
+  <ItemGroup>
+    <Reference Include="Thunder.Platform.AspNetCore" />
+    <Reference Include="Thunder.Platform.Cqrs" />
+    <Reference Include="Thunder.Platform.Caching" />
+    <Reference Include="Thunder.Platform.EntityFrameworkCore" />
+    <Reference Include="Thunder.Platform.Core" />
+  </ItemGroup>
+
+  <!--Others-->
+  <ItemGroup>
+    <Reference Include="Conexus.Opal.Connector.RabbitMQ" />
+    <Reference Include="Conexus.Opal.AccessControl" />
+    <Reference Include="Conexus.Opal.OutboxPattern" />
+    <Reference Include="Conexus.Opal.BrokenLinkChecker" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\shared\sharedsettings.json" Link="sharedsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Application\RepositoryExtensions\**" />
+    <Content Remove="Application\RepositoryExtensions\**" />
+    <EmbeddedResource Remove="Application\RepositoryExtensions\**" />
+    <None Remove="Application\RepositoryExtensions\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\ThunderSwaggerMiddlewareExtensions.cs" Link="ThunderSwaggerMiddlewareExtensions.cs" />
+    <Compile Include="..\..\shared\ThunderSwaggerServiceCollectionExtensions.cs" Link="ThunderSwaggerServiceCollectionExtensions.cs" />
+    <Compile Include="..\..\shared\AuthorizationFilter.cs" Link="AuthorizationFilter.cs" />
+    <Compile Include="..\..\shared\ThunderAuthenticationMiddleware.cs" Link="ThunderAuthenticationMiddleware.cs" />
+    <Compile Include="..\..\shared\OpalMQEventHandler.cs" Link="OpalMQEventHandler.cs" />
+    <Compile Include="..\..\shared\Infrastructure\AuthenticationTokenService.cs" Link="Infrastructure/AuthenticationTokenService.cs" />
+    <Compile Include="..\..\shared\Infrastructure\IAuthenticationTokenService.cs" Link="Infrastructure/IAuthenticationTokenService.cs" />
+    <Compile Include="..\..\shared\Infrastructure\HttpService.cs" Link="Infrastructure/HttpService.cs" />
+    <Compile Include="..\..\shared\Infrastructure\BaseDataProvider.cs" Link="Infrastructure/BaseDataProvider.cs" />
+    <Compile Include="..\..\shared\Infrastructure\IDataProvider.cs" Link="Infrastructure/IDataProvider.cs" />
+    <Compile Include="..\..\shared\Metadata\DataSync\IMetadataSynchronizer.cs" Link="Metadata/DataSync/IMetadataSynchronizer.cs" />
+    <Compile Include="..\..\shared\Metadata\DataSync\MetadataSynchronizer.cs" Link="Metadata/DataSync/MetadataSynchronizer.cs" />
+    <Compile Include="..\..\shared\Metadata\DataSync\Dtos\MetadataTagSyncDto.cs" Link="Metadata/DataSync/Dtos/MetadataTagSyncDto.cs" />
+    <Compile Include="..\..\shared\Metadata\DataProviders\IMetadataDataProvider.cs" Link="Metadata/DataProviders/IMetadataDataProvider.cs" />
+    <Compile Include="..\..\shared\Metadata\DataProviders\MetadataDataProvider.cs" Link="Metadata/DataProviders/MetadataDataProvider.cs" />
+    <Compile Include="..\..\shared\Metadata\Constants\MetadataTagGroupCodes.cs" Link="Metadata/Constants/MetadataTagGroupCodes.cs" />
+    <Compile Include="..\..\shared\Metadata\Constants\ConfigurationKeys.cs" Link="Metadata/Constants/ConfigurationKeys.cs" />
+    <Compile Include="..\..\shared\Metadata\Entities\MetadataTag.cs" Link="Domain/Entities/MetadataTag.cs" />
+    <Compile Include="..\..\shared\Metadata\Common\ObjectHelper.cs" Link="DataSync/ObjectHelper.cs" />
+    <Compile Include="..\..\shared\Metadata\Common\SqlDataReaderHelper.cs" Link="DataSync/SqlDataReaderHelper.cs" />
+    <Compile Include="..\..\shared\Metadata\Common\SqlXmlDataTypeHelper.cs" Link="DataSync/SqlXmlDataTypeHelper.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\OutboxMessageConfiguration.cs" Link="Infrastructure\Configurations\OutboxMessageConfiguration.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\OutboxOpalMqEventHandler.cs" Link="Application\Events\OutboxOpalMqEventHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Infrastructure\ECertificateLayouts\\**\*.*" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+</Project>

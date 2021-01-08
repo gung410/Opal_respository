@@ -1,0 +1,79 @@
+<kendo-grid class="opal-grid -no-merge"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="availableBlockOutDates == null"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column *ngIf="canShowTitle()"
+                     [title]="'Title'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="flex-box">
+        <div class="text-box">{{dataItem.title}}</div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="canShowDescription()"
+                     [field]="'description'"
+                     [title]="'Description'"
+                     [width]="200">
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="canShowStartDateTime()"
+                     [title]="'Start Date'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.startDateTime | date: 'dd/MM/yyyy'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="canShowEndDateTime()"
+                     [title]="'End Date'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.endDateTime | date: 'dd/MM/yyyy'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="canShowServiceSchemes()"
+                     [field]="'serviceSchemesDisplayText'"
+                     [title]="'Applicable Service Schemes'"
+                     [width]="200">
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'status'"
+                     [title]="'Status'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="canShowAction()"
+                     [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60">
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="canShowActionContextMenu(dataItem)">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="getContextMenuByBlockoutDate(dataItem)"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

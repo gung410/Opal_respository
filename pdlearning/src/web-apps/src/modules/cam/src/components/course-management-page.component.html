@@ -1,0 +1,143 @@
+<div class="content-management-container">
+  <div class="content-management">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search in Course Administration' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"></data-filter>
+      </div>
+      <div class="management-toolbar__right-container">
+        <kendo-dropdownbutton class="course-management-page__create-button-modes"
+                              *ngIf="canCreateCourse()"
+                              [icon]="'plus'"
+                              [data]="createCourseModes"
+                              [popupSettings]="{popupClass: 'cam-create-button-modes'}"
+                              [primary]="true"
+                              (itemClick)="onCreateCourse($event.id)">
+          {{ 'Create Course' | translator }}
+        </kendo-dropdownbutton>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip"
+                    stickyTabHeaderElement
+                    #courseManagementStickyTabHeaderElement="stickyTabHeaderElement"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.CoursesTab"
+                          [cssClass]="{'hidden': !canViewCourses() }">
+        <ng-template kendoTabTitle="">
+          {{ 'Courses' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewCourses()"
+                            [filter]="filter"
+                            [searchType]="SearchCourseType.Owner"
+                            [contextMenuItems]="contextMenuItemsForCourses"
+                            (selectedContextMenu)="selectedContextMenuCourseList($event)"
+                            (viewCourse)="onViewCourse($event)"
+                            [(selectedItems)]="allCourseSelectedItems"
+                            [indexActionColumns]="[0, 8]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true"></list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.HasCoursePendingApprovalTab"
+                          [cssClass]="{'hidden': !canViewPendingApproval() }">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingApproval()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.Approver)">
+            {{ 'Pending Course Approval' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingApproval()"
+                            [searchType]="SearchCourseType.Approver"
+                            [filter]="filter"
+                            [contextMenuItems]="contextMenuItemsForPendingApproval"
+                            (viewCourse)="onViewCourseApproval($event, SearchCourseType.Approver)"
+                            [ignoreColumns]="[
+                              ListCourseGridDisplayColumns.archivedBy,
+                              ListCourseGridDisplayColumns.archivedDate,
+                              ListCourseGridDisplayColumns.status]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true">
+          </list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.HasPendingClassApprovalCourseTab"
+                          [cssClass]="{'hidden': !canViewPendingApproval() }">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingApproval()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.ClassApprover)">
+            {{ 'Pending Class Approval' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingApproval()"
+                            [searchType]="SearchCourseType.ClassApprover"
+                            [filter]="filter"
+                            [contextMenuItems]="contextMenuItemsForPendingApproval"
+                            (viewCourse)="onViewCourseApproval($event, SearchCourseType.ClassApprover)"
+                            [ignoreColumns]="[
+                              ListCourseGridDisplayColumns.archivedBy,
+                              ListCourseGridDisplayColumns.archivedDate,
+                              ListCourseGridDisplayColumns.status]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true">
+          </list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.HasPendingRegistrationApprovalCourseTab"
+                          [cssClass]="{'hidden': !canViewPendingRegistrationsApproval() }">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingRegistrationsApproval()"
+                                [checkHasDataFn]="checkSearchCourseHasDataFnCreator(SearchCourseType.RegistrationApprover)">
+            {{ 'Pending Registrations and Withdrawals' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewPendingRegistrationsApproval()"
+                            [searchType]="SearchCourseType.RegistrationApprover"
+                            [filter]="filter"
+                            [contextMenuItems]="contextMenuItemsForPendingApproval"
+                            (viewCourse)="onViewCourseApproval($event, SearchCourseType.RegistrationApprover)"
+                            [ignoreColumns]="[
+                              ListCourseGridDisplayColumns.archivedBy,
+                              ListCourseGridDisplayColumns.archivedDate,
+                              ListCourseGridDisplayColumns.status]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true">
+          </list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.ArchivalTab"
+                          [cssClass]="{'hidden': !canViewArchivalCourses() }">
+        <ng-template kendoTabTitle="">
+          {{ 'Archival' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-course-grid *ngIf="canViewArchivalCourses()"
+                            [searchType]="SearchCourseType.Archived"
+                            [filter]="filter"
+                            (viewCourse)="onViewArchivedCourse($event)"
+                            [ignoreColumns]="[
+                              ListCourseGridDisplayColumns.createdDate,
+                              ListCourseGridDisplayColumns.period,
+                              ListCourseGridDisplayColumns.status]"
+                            [stickyDependElement]="courseManagementStickyTabHeaderElement.headerElement"
+                            [mergeHeader]="true">
+          </list-course-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

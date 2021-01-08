@@ -1,0 +1,79 @@
+.content-creation-toolbar {
+  padding: 15px 50px 15px 50px;
+
+  @include flex-layout-media('tablet-horizontal') {
+    padding: 10px 50px 10px 50px;
+  }
+
+  .k-textbox {
+    min-width: 230px;
+  }
+toolbar-right {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__filter {
+    margin-left: 10px;
+
+    label {
+      font-weight: $font-weight-medium;
+    }
+
+    .opal-select.ng-select {
+      height: auto;
+    }
+  }
+
+  &__filter-select {
+    min-width: 175px;
+  }
+
+  &__import {
+    margin-left: 10px;
+  }
+
+  &.f-app-toolbar {
+    &.no-bottom {
+      .toolbar {
+        padding: 25px 20px 25px 0;
+
+        @include flex-layout-media('tablet-horizontal') {
+          padding: 5px 20px 5px 0;
+        }
+      }
+    }
+
+    .toolbar {
+      >div {
+        overflow: inherit;
+      }
+
+      &__left-container {
+
+        detail-title,
+        .title-group {
+          max-width: 100%;
+          overflow: hidden;
+
+          >div {
+            display: flex;
+            max-width: 100%;
+          }
+
+          .edit-icon {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .status-indicator__text {
+    font-size: 0.813rem !important;
+  }
+
+  opal-select ng-select ng-dropdown-panel {
+    min-height: unset !important;
+  }
+}

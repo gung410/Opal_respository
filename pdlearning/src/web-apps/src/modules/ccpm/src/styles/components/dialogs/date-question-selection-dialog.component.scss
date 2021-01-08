@@ -1,0 +1,40 @@
+.date-question-template {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+
+  &__close {
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+  }
+
+  &__title {
+    margin: 10px 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &-radio {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      margin-left: 10px;
+    }
+  }
+
+  &__action {
+    display: flex;
+    margin-left: auto;
+    margin-top: 10px;
+
+    .k-button {
+      margin-left: 10px;
+    }
+  }
+}

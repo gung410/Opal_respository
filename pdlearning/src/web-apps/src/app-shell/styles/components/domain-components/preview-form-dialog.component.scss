@@ -1,0 +1,20 @@
+preview-form-dialog {
+  display: flex;
+  overflow: auto;
+
+  .web-preview {
+    display: flex;
+    align-items: center;
+  }
+
+  .preview-form {
+    &__content {
+      padding: 30px;
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      justify-content: center;
+      flex-grow: 1;
+    }
+  }
+}

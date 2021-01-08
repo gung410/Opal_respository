@@ -1,0 +1,6 @@
+https_proxy: http://proxy.opal:3128
+DeveloperExceptionEnabled: false
+ProxyOptions_DefaultFallbackUrl: https://www.opal2.moe.edu.sg/app/common/webinar-error
+WebinarDomain: webinar.opal2.moe.edu.sg
+AuthenticationOptions_CheckSessionEndpoint: https://api.opal2.moe.edu.sg/check-session/
+

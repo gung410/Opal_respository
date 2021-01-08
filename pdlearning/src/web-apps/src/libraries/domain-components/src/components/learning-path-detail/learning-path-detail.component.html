@@ -1,0 +1,36 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <scrollable-menu [title]="'Information about the learning path'"
+                     [tabs]="tabs"
+                     stickyElement
+                     [stickyDependElement]="stickyDependElement"
+                     [stickySpacing]="stickySpacing"></scrollable-menu>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <div #basicInfoTabContainer="">
+          <learning-path-basic-info-tab [learningPathDetailVM]="learningPathDetailVM"
+                                        [form]="form"
+                                        [isViewMode]="asViewMode(mode)"></learning-path-basic-info-tab>
+        </div>
+        <div #pdOpportunitiesTabContainer="">
+          <learning-path-pd-opportunities [learningPathDetailVM]="learningPathDetailVM"
+                                          [fetchPublishedCoursesFn]="fetchPublishedCoursesFn"
+                                          [form]="form"
+                                          [openCoursePreviewDialogFn]="openCoursePreviewDialogFn"
+                                          [isViewMode]="asViewMode(mode)"></learning-path-pd-opportunities>
+        </div>
+        <div #metadataTabContainer="">
+          <learning-path-metadata-tab [learningPathDetailVM]="learningPathDetailVM"
+                                      [form]="form"
+                                      [isViewMode]="asViewMode(mode)"
+                                      [subjectAreaItemIsCheckedFn]="subjectAreaItemIsCheckedFn"
+                                      [learningFrameworkItemIsCheckedFn]="learningFrameworkItemIsCheckedFn"
+                                      [learningDimensionAreaItemIsCheckedFn]="learningDimensionAreaItemIsCheckedFn">
+          </learning-path-metadata-tab>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

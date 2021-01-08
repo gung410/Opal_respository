@@ -1,0 +1,128 @@
+<kendo-grid class="opal-grid"
+            #grid
+            [data]="gridView"
+            [pageable]="true"
+            [pageSize]="pageSize"
+            [skip]="skip"
+            (cellClick)="onFormItemClick($event)"
+            (pageChange)="pageChange($event)">
+
+  <kendo-grid-column class="description-col cursor-pointer"
+                     [title]="'Title' | translator"
+                     field="title"
+                     [width]="395">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <div class="form-repository-page__item-title">
+        <ng-container [ngSwitch]="dataItem.type">
+          <img class="grid-file-type"
+               src="assets/images/icons/sm/quiz.svg"
+               *ngSwitchCase="dataItem.type === formType.Survey">
+          <img class="grid-file-type"
+               src="assets/images/icons/sm/quiz.svg"
+               *ngSwitchCase="dataItem.type === formType.Poll">
+          <img class="grid-file-type"
+               src="assets/images/icons/sm/quiz.svg"
+               *ngSwitchDefault>
+        </ng-container>
+        <span title="{{dataItem.title}}">{{ dataItem.title }}</span>
+      </div>
+    </ng-template>
+    <ng-template let-column="column"
+                 let-dataItem="dataItem"
+                 let-formGroup="formGroup"
+                 let-isNew="isNew"
+                 let-rowIndex="rowIndex"
+                 kendoGridEditTemplate>
+      <div [formGroup]="formGroup">
+        <input class="k-textbox"
+               type="text"
+               kendoErrorTooltip
+               formControlName="title"
+               (focusout)="checkAndSaveInlineInput(dataItem, formGroup.get(column.field))"
+               (keydown)="onFormTitleInputKeydown($event, dataItem, formGroup.get(column.field))">
+      </div>
+
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'owner'"
+                     [title]="'Owner'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <span *ngIf="dataItem.owner">{{dataItem.owner.fullName}}</span>
+      <em *ngIf="!dataItem.owner">{{ 'Unknown User' | translator}}</em>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col cursor-pointer"
+                     [title]="'Type' | translator"
+                     field="type">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      {{ getFormTypeTitle(dataItem) | translator }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col"
+                     [title]="'Last Modified' | globalTranslator"
+                     field="modified"
+                     [hidden]="isHidden('modified')">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      {{ (dataItem.changedDate || dataItem.createdDate) | date: 'dd/MM/yyyy HH:mm' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col cursor-pointer"
+                     [title]="'Archived By ' | translator"
+                     field="archivedByUser"
+                     [hidden]="isHidden('archivedByUser')">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <span *ngIf="dataItem.archivedByUser">
+        {{ (dataItem.archivedByUser?.fullName) | translator }}
+      </span>
+      <span *ngIf="!dataItem.archivedByUser">
+        {{ 'System' | translator }}
+      </span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col"
+                     [title]="'Archived Date' | translator"
+                     field="archiveDate"
+                     [hidden]="isHidden('archiveDate')">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      {{ (dataItem.archiveDate) | relativeTimespan: 'dd/MM/yyyy h:mm a' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col"
+                     [title]="'Status' | translator"
+                     field="approval">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <status-indicator [mapping]="statusColorMap"
+                        [currentStatus]="dataItem.status"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="grid-action cursor-pointer"
+                     title
+                     field="Discontinued"
+                     width="60">
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <img class="icon action"
+           src="assets/images/icons/more.svg"
+           [ngClass]="{'active': rowIndex===focusRow, 'd-none': getContextMenuByForm(dataItem).length === 0}"
+           #more>
+      <kendo-contextmenu [target]="more"
+                         [alignToAnchor]="true"
+                         [popupAlign]="popupAlign"
+                         [items]="getContextMenuByForm(dataItem)"
+                         (select)="onItemOptionSelect($event, dataItem, rowIndex)"
+                         (popupClose)="onContextMenuChange(-1)"
+                         (popupOpen)="onContextMenuChange(rowIndex)"
+                         [anchorAlign]="defaultContextMenuAnchorAlign"
+                         showOn="click">
+      </kendo-contextmenu>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

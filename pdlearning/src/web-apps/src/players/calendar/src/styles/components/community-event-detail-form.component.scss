@@ -1,0 +1,53 @@
+personal-event-detail-form {
+  .community-select {
+    max-width: 100%;
+  }
+}
+
+community-event-detail-form {
+  .event-type-selector {
+    margin-bottom: 8px;
+
+    >label {
+      display: inline-block;
+      margin-left: 32px;
+      min-height: 24px;
+      line-height: 24px;
+      color: $color-blue-dard;
+      font-size: 1rem;
+      cursor: pointer;
+
+      >input {
+        margin-top: 2px;
+        vertical-align: top;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .event-time-selector {
+    margin-bottom: 24px;
+
+    >label {
+      display: inline-block;
+      margin-left: 32px;
+      min-height: 24px;
+      line-height: 24px;
+      color: $color-blue-dard;
+      font-size: 1rem;
+      cursor: pointer;
+
+      >input {
+        margin-top: 2px;
+        vertical-align: top;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

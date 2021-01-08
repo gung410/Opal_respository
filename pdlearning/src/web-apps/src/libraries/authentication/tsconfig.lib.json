@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@opal20/infrastructure": ["./libraries/infrastructure/lib"],
+      "@opal20/infrastructure/*": ["./libraries/infrastructure/lib/*"]
+    }
+  }
+}

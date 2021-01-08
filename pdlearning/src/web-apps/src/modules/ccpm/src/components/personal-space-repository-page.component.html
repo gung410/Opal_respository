@@ -1,0 +1,75 @@
+<app-toolbar [customClass]="'repository-page-toolbar'">
+  <toolbar-left>
+    <search-input [(ngModel)]="textSearch"
+                  [placeholder]="'Search in Personal Space Repository' | translator"
+                  (search)="onSubmitSearch()">
+    </search-input>
+  </toolbar-left>
+  <toolbar-center class="flex row"></toolbar-center>
+  <toolbar-right>
+    <button kendoButton
+            [primary]="true"
+            [icon]="'plus'"
+            (click)="openUploadDialog()">{{ 'Upload' | globalTranslator }}
+    </button>
+    <div>
+      <div class="repository-page-toolbar__filter">
+        <label class="repository-page-toolbar__label">{{ 'Filter' | globalTranslator }}</label>
+        <opal-select class="repository-page-toolbar__select"
+                     [minDropdownHeight]="'auto'"
+                     [autoScrollToViewOnOpen]="false"
+                     [items]="fileTypeItems"
+                     [valueField]="'value'"
+                     [labelField]="'text'"
+                     [(selectedValue)]="fileType"
+                     [placeholder]="'All' | globalTranslator"
+                     [searchable]="false">
+        </opal-select>
+      </div>
+    </div>
+  </toolbar-right>
+</app-toolbar>
+<div class="repository-page-sub-toolbar">
+  <label class="repository-page-sub-toolbar__sort-label">{{ 'Sort by' | translator }}</label>
+  <opal-select class="repository-page-sub-toolbar__sort-select"
+               [minDropdownHeight]="'auto'"
+               [autoScrollToViewOnOpen]="false"
+               [items]="sortItems"
+               [valueField]="'id'"
+               [labelField]="'text' | translator"
+               [placeholder]="'Sort by' | translator"
+               [searchable]="false"
+               [(selectedValue)]="searchTermService.sortModeId">
+  </opal-select>
+</div>
+<div class="personal-file-wrapper">
+  <div class="personal-file-wrapper__storage-limit"
+       *ngIf="personalSpaceVm">{{'Storage limit' | translator }}
+
+    <span class="personal-file-wrapper__data"
+          *ngIf="personalSpaceVm.isStorageUnlimited">
+      {{ personalSpaceVm.totalUsed | fileSizeDisplay }} /
+      {{ 'Unlimited' }}
+    </span>
+
+    <span class="personal-file-wrapper__data"
+          *ngIf="!personalSpaceVm.isStorageUnlimited">
+      {{ personalSpaceVm.totalUsed | fileSizeDisplay }} /
+      {{ personalSpaceVm.totalSpace | fileSizeDisplay }}
+    </span>
+  </div>
+  <kendo-tabstrip #personalSpaceTabstrip="">
+    <kendo-tabstrip-tab [title]="'ALL' | translator"
+                        [selected]="true">
+      <ng-template kendoTabContent="">
+        <personal-file-list #personalFileList
+                            [search]="submitSearch"
+                            [sortModeId]="searchTermService.sortModeId"
+                            [filterByType]="fileType"
+                            (viewFileMedia)="onViewFileMedia($event)"
+                            (deleteFile)="onDeleteFile($event)">
+        </personal-file-list>
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
+</div>

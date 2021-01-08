@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityClassRunCardView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+    <controls:RepeatableStack
+        x:Name="ClassRunCollection"
+        ItemsSource="{Binding ClassRunCollection}"
+        VerticalOptions="FillAndExpand">
+        <controls:RepeatableStack.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Spacing="15">
+                    <!--  HEADER  -->
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    CommandParameter="{Binding Id}"
+                                    NumberOfTapsRequired="1"
+                                    Tapped="ShowClassRunDetail_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="40"
+                                Source="{Binding IsExpand, Converter={StaticResource ClassRunExpandConverter}}"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="40" />
+                            <StackLayout>
+                                <Label
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="{Binding ClassTitle}"
+                                    TextColor="{StaticResource MainBodyTextColor}" />
+                                <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="{Binding Status, Converter={StaticResource ClassRunStatusConverter}}"
+                                        CornerRadius="5"
+                                        HasShadow="False"
+                                        HeightRequest="10"
+                                        HorizontalOptions="EndAndExpand"
+                                        VerticalOptions="Center"
+                                        WidthRequest="10" />
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="12"
+                                        Text="{Binding Status}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <!--  DATE TIME  -->
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout>
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="START DATE"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding StartDateTime, Converter={StaticResource ClassRunDateConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding PlanningStartTime, Converter={StaticResource ClassRunTimeConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="EndAndExpand">
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="END DATE"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding EndDateTime, Converter={StaticResource ClassRunDateConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding PlanningEndTime, Converter={StaticResource ClassRunTimeConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--  CURRENT CAPACITY  -->
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoRegular}"
+                            FontSize="15"
+                            Text="CURRENT CAPACITY"
+                            TextColor="{StaticResource SecondaryTextColor}" />
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding CurrentCapacity}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                    <Span
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="/"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                    <Span
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="{StaticResource BaseButtonFontSize}"
+                                        Text="{Binding MaxClassSize, Converter={StaticResource ParticipantConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+
+                    <!--  Line of class run  -->
+                    <StackLayout Padding="0,0,0,10" IsVisible="{Binding IsExpand, Converter={StaticResource InverseBoolConverter}}">
+                        <BoxView
+                            BackgroundColor="#D8DCE6"
+                            HeightRequest="1"
+                            IsVisible="{Binding IsLastItem, Converter={StaticResource InverseBoolConverter}}"
+                            VerticalOptions="FillAndExpand" />
+                        <StackLayout>
+                            <Label
+                                HorizontalOptions="CenterAndExpand"
+                                IsVisible="{Binding IsLastItem}"
+                                Text="SHOW MORE"
+                                TextColor="{StaticResource SecondaryTextColor}"
+                                VerticalOptions="CenterAndExpand" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowMoreButton_OnClicked" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--  Class run information  -->
+                    <StackLayout IsVisible="{Binding IsExpand}" Spacing="15">
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    CommandParameter="{Binding Id}"
+                                    NumberOfTapsRequired="1"
+                                    Tapped="ShowClassRunInformationDetail_Tapped" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="{Binding IsClassRunExpand, Converter={StaticResource ClassRunInformationExpandConverter}}"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="20" />
+
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="class_run_info.svg"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="20" />
+
+                            <Label
+                                FontSize="{StaticResource BaseButtonFontSize}"
+                                Text="Class Run information"
+                                TextColor="{StaticResource MainBodyTextColor}" />
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding IsClassRunExpand}">
+                            <!--  FACILITATOR'S NAME  -->
+                            <StackLayout>
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="FACILITATOR'S NAME"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="{Binding Facilitators}"
+                                    TextColor="{StaticResource MainBodyTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+
+                            <!--  CLASS SIZE  -->
+                            <StackLayout>
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="CLASS SIZE"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="{Binding MaxClassSize, Converter={StaticResource ClassRunSizeConverter}}"
+                                    TextColor="{StaticResource MainBodyTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+
+                            <!--  APPLICATION START DATE  -->
+                            <StackLayout>
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="APPLICATION START DATE"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="{Binding ApplicationStartDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+                                    TextColor="{StaticResource MainBodyTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+
+                            <!--  APPLICATION END DATE  -->
+                            <StackLayout>
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="APPLICATION END DATE"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="15"
+                                    Text="{Binding ApplicationEndDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+                                    TextColor="{StaticResource MainBodyTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+
+                            <StackLayout HorizontalOptions="StartAndExpand" IsVisible="{Binding IsVisibleCommunity}">
+                                <Label
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    FontSize="{StaticResource BaseButtonFontSize}"
+                                    Text="COMMUNITY"
+                                    TextColor="{StaticResource SecondaryTextColor}" />
+                                <StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            CommandParameter="{Binding Id}"
+                                            NumberOfTapsRequired="1"
+                                            Tapped="OpenClassCommunity" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="16"
+                                        Text="{Binding ClassTitle}"
+                                        TextColor="Blue"
+                                        TextDecorations="Underline" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <!--  SESSION  -->
+                        <StackLayout>
+                            <Label
+                                FontFamily="{StaticResource RobotoRegular}"
+                                FontSize="{StaticResource BaseButtonFontSize}"
+                                Text="SESSIONS"
+                                TextColor="{StaticResource SecondaryTextColor}" />
+                            <StackLayout Spacing="15">
+                                <Label
+                                    HorizontalOptions="StartAndExpand"
+                                    IsVisible="{Binding IsVisibleSessions}"
+                                    Text="There is no session." />
+                                <controls:RepeatableStack
+                                    ItemsSource="{Binding Sessions}"
+                                    Orientation="Vertical"
+                                    Spacing="10">
+                                    <controls:RepeatableStack.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <BoxView
+                                                    BackgroundColor="#D8DCE6"
+                                                    HeightRequest="1"
+                                                    IsVisible="{Binding IsLastItem, Converter={StaticResource InverseBoolConverter}}"
+                                                    VerticalOptions="FillAndExpand" />
+
+                                                <!--  SESSION TITLE  -->
+                                                <StackLayout>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            CommandParameter="{Binding Id}"
+                                                            NumberOfTapsRequired="1"
+                                                            Tapped="ShowSessionDetail_Tapped" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                                        <ffimagesvg:SvgCachedImage
+                                                            HeightRequest="15"
+                                                            Source="{Binding IsExpand, Converter={StaticResource ClassRunInformationExpandConverter}}"
+                                                            VerticalOptions="CenterAndExpand"
+                                                            WidthRequest="15" />
+
+                                                        <ffimagesvg:SvgCachedImage
+                                                            HeightRequest="15"
+                                                            Source="session.svg"
+                                                            VerticalOptions="CenterAndExpand"
+                                                            WidthRequest="15" />
+
+                                                        <Label
+                                                            FontFamily="{StaticResource RobotoRegular}"
+                                                            FontSize="15"
+                                                            Text="{Binding SessionTitle}"
+                                                            TextColor="{StaticResource MainBodyTextColor}" />
+                                                    </StackLayout>
+
+                                                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                                        <Frame
+                                                            Padding="0"
+                                                            BackgroundColor="{Binding Status, Converter={StaticResource SessionStatusConverter}}"
+                                                            CornerRadius="5"
+                                                            HasShadow="False"
+                                                            HeightRequest="10"
+                                                            HorizontalOptions="EndAndExpand"
+                                                            IsVisible="{Binding Status, Converter={StaticResource SessionFrameVisibleConverter}}"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="10" />
+                                                        <Label
+                                                            FontFamily="{StaticResource RobotoRegular}"
+                                                            FontSize="15"
+                                                            Text="{Binding Status}"
+                                                            TextColor="{StaticResource SecondaryTextColor}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+
+                                                <StackLayout IsVisible="{Binding IsExpand}">
+                                                    <!--  DATE  -->
+                                                    <StackLayout>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <ffimagesvg:SvgCachedImage
+                                                                HeightRequest="20"
+                                                                Source="clock.svg"
+                                                                VerticalOptions="CenterAndExpand"
+                                                                WidthRequest="20" />
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoRegular}"
+                                                                FontSize="{StaticResource BaseButtonFontSize}"
+                                                                Text="START TIME"
+                                                                TextColor="{StaticResource SecondaryTextColor}" />
+                                                        </StackLayout>
+                                                        <StackLayout>
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoRegular}"
+                                                                FontSize="15"
+                                                                Text="{Binding StartDateTime, Converter={StaticResource ClassRunTime12HourConverter}}"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                        </StackLayout>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <ffimagesvg:SvgCachedImage
+                                                                HeightRequest="20"
+                                                                Source="clock.svg"
+                                                                VerticalOptions="CenterAndExpand"
+                                                                WidthRequest="20" />
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoRegular}"
+                                                                FontSize="{StaticResource BaseButtonFontSize}"
+                                                                Text="END TIME"
+                                                                TextColor="{StaticResource SecondaryTextColor}" />
+                                                        </StackLayout>
+                                                        <StackLayout>
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoRegular}"
+                                                                FontSize="15"
+                                                                Text="{Binding EndDateTime, Converter={StaticResource ClassRunTime12HourConverter}}"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                        </StackLayout>
+                                                    </StackLayout>
+
+                                                    <!--  VENUE  -->
+                                                    <StackLayout>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <ffimagesvg:SvgCachedImage
+                                                                HeightRequest="20"
+                                                                Source="class_run_location.svg"
+                                                                VerticalOptions="CenterAndExpand"
+                                                                WidthRequest="20" />
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoRegular}"
+                                                                FontSize="{StaticResource BaseButtonFontSize}"
+                                                                Text="VENUE"
+                                                                TextColor="{StaticResource SecondaryTextColor}" />
+                                                        </StackLayout>
+                                                        <Label
+                                                            FontFamily="{StaticResource RobotoRegular}"
+                                                            FontSize="15"
+                                                            Text="{Binding ., Converter={StaticResource SessionVenueConverter}}"
+                                                            TextColor="{StaticResource MainBodyTextColor}" />
+                                                        <Label
+                                                            FontFamily="{StaticResource RobotoRegular}"
+                                                            FontSize="15"
+                                                            IsVisible="{Binding ., Converter={StaticResource WebinarExpiredConverter}}"
+                                                            Text="Webinar expired"
+                                                            TextColor="{StaticResource MainBodyTextColor}" />
+                                                    </StackLayout>
+
+                                                    <!--  Button  -->
+                                                    <Button
+                                                        BackgroundColor="{Binding ., Converter={StaticResource JoinWebinarButtonBackgroundColorConverter}}"
+                                                        Clicked="JoinWebinar_Clicked"
+                                                        CommandParameter="{Binding Id}"
+                                                        CornerRadius="6"
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="18"
+                                                        IsEnabled="{Binding ., Converter={StaticResource JoinWebinarButtonEnableConverter}}"
+                                                        IsVisible="{Binding ., Converter={StaticResource JoinWebinarButtonVisibleConverter}}"
+                                                        Text="Join Webinar"
+                                                        TextColor="White" />
+
+                                                    <Button
+                                                        BackgroundColor="{StaticResource MainBodyTextColor}"
+                                                        Clicked="Checkin_OnClicked"
+                                                        CornerRadius="6"
+                                                        FontFamily="{StaticResource RobotoRegular}"
+                                                        FontSize="18"
+                                                        IsVisible="{Binding CanCheckin}"
+                                                        Text="Check-in"
+                                                        TextColor="White" />
+
+                                                    <StackLayout IsVisible="{Binding CanAbsent}">
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                CommandParameter="{Binding Id}"
+                                                                NumberOfTapsRequired="1"
+                                                                Tapped="CannotParticipate_Tapped" />
+                                                        </StackLayout.GestureRecognizers>
+                                                        <Label
+                                                            FontSize="16"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            Text="Unable to participate?"
+                                                            TextColor="{StaticResource MainBodyTextColor}"
+                                                            TextDecorations="Underline" />
+                                                    </StackLayout>
+
+                                                    <StackLayout IsVisible="{Binding ShowAbsenceMessage}">
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                CommandParameter="{Binding Id}"
+                                                                NumberOfTapsRequired="1"
+                                                                Tapped="ShowAbsenceMessage_Tapped" />
+                                                        </StackLayout.GestureRecognizers>
+                                                        <Label
+                                                            FontSize="16"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            Text="Reason for Absence"
+                                                            TextColor="{StaticResource MainBodyTextColor}"
+                                                            TextDecorations="Underline" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </controls:RepeatableStack.ItemTemplate>
+                                </controls:RepeatableStack>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding IsVisibleWithdrawalMessage}">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    CommandParameter="{Binding Id}"
+                                    NumberOfTapsRequired="1"
+                                    Tapped="WithdrawalReason_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Withdrawal Reason"
+                                TextColor="{StaticResource MainBodyTextColor}"
+                                TextDecorations="Underline" />
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding IsVisibleClassRun}">
+                            <!--  APPLY  -->
+                            <Button
+                                BackgroundColor="{Binding CanApply, Converter={StaticResource ApplyBackgroundColorConverter}}"
+                                Clicked="ApplyButton_Clicked"
+                                CommandParameter="{Binding Id}"
+                                CornerRadius="4"
+                                FontFamily="{StaticResource RobotoBold}"
+                                FontSize="18"
+                                IsEnabled="{Binding CanApply}"
+                                IsVisible="{Binding IsVisibleApplyButton}"
+                                Text="{Binding ApplyText}"
+                                TextColor="White" />
+
+                            <!--  WITHDRAW  -->
+                            <Button
+                                BackgroundColor="{StaticResource MainBodyTextColor}"
+                                Clicked="WithdrawButton_Clicked"
+                                CommandParameter="{Binding Id}"
+                                CornerRadius="4"
+                                FontFamily="{StaticResource RobotoBold}"
+                                FontSize="18"
+                                IsVisible="{Binding IsVisibleWithdrawButton}"
+                                Text="{Binding WithdrawText}"
+                                TextColor="White" />
+
+                            <!--  CHANGE CLASS RUN  -->
+                            <Button
+                                BackgroundColor="White"
+                                BorderColor="#D8DCE6"
+                                BorderWidth="1.5"
+                                Clicked="ChangeClassRunButton_Clicked"
+                                CommandParameter="{Binding Id}"
+                                CornerRadius="4"
+                                FontFamily="{StaticResource RobotoBold}"
+                                FontSize="18"
+                                IsEnabled="{Binding CanChangeClassRun}"
+                                IsVisible="{Binding IsVisibleChangeClassRun}"
+                                Text="{Binding ChangeClassRunText}"
+                                TextColor="{StaticResource MainBodyTextColor}" />
+                        </StackLayout>
+
+                        <StackLayout Padding="0,0,0,10">
+                            <BoxView
+                                BackgroundColor="#D8DCE6"
+                                HeightRequest="1"
+                                IsVisible="{Binding IsLastItem, Converter={StaticResource InverseBoolConverter}}"
+                                VerticalOptions="FillAndExpand" />
+                            <StackLayout>
+                                <Label
+                                    HorizontalOptions="CenterAndExpand"
+                                    IsVisible="{Binding IsLastItem}"
+                                    Text="SHOW MORE"
+                                    TextColor="{StaticResource SecondaryTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ShowMoreButton_OnClicked" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+        </controls:RepeatableStack.ItemTemplate>
+    </controls:RepeatableStack>
+
+</ContentView>

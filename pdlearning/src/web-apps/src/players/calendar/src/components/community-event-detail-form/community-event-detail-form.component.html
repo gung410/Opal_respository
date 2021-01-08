@@ -1,0 +1,94 @@
+  <div class="event-detail-form {{isComponentMode ? '' : 'iframe-component'}}">
+    <div class="dialog-header">
+      <div class="dialog-header__title">{{title | translator}}</div>
+      <div class="dialog-header__actions"
+           *ngIf="isComponentMode"><span class="k-icon k-i-close"
+              (click)="onCancel()"></span></div>
+    </div>
+    <div class="dialog-content">
+      <div class="k-form-inline event-form-content">
+        <div class="form-controls-group">
+          <div class="form-title">{{'Event type' | translator}}</div>
+          <div class="form-control event-type-selector">
+            <label for="regular-cbx">
+              <input class="k-radio"
+                     id="regular-cbx"
+                     name="communityEventType"
+                     type="radio"
+                     [value]="eventSourceEnum.Community"
+                     #regular
+                     [disabled]="selectedEventId || !eventTypeSelectable"
+                     [(ngModel)]="selectedEventSource"
+                     (change)="subscribeFormValuesChange()"
+                     kendoRadioButton>
+              {{ 'Regular event' | translator }}</label>
+            <label for="webinar-cbx">
+              <input class="k-radio"
+                     id="webinar-cbx"
+                     name="communityEventType"
+                     type="radio"
+                     [value]="eventSourceEnum.Webinar"
+                     (change)="subscribeFormValuesChange()"
+                     #webinar
+                     [disabled]="selectedEventId || !eventTypeSelectable"
+                     [(ngModel)]="selectedEventSource"
+                     kendoRadioButton>
+              {{ 'Webinar' | translator }}</label>
+          </div>
+        </div>
+        <community-event-regular-template *ngIf="selectedEventSource === eventSourceEnum.Community"
+                                          #regularForm
+                                          [selectedEvent]="selectedEvent"
+                                          [selectedEventId]="selectedEventId"
+                                          [communitySelectable]="communitySelectable"
+                                          [communities]="communities"
+                                          [communityId]="communityId">
+        </community-event-regular-template>
+        <community-event-webinar-template *ngIf="selectedEventSource === eventSourceEnum.Webinar"
+                                          #webinarForm
+                                          [communityId]="communityId"
+                                          [selectedEvent]="selectedEvent"
+                                          [communitySelectable]="communitySelectable"
+                                          [communities]="communities"
+                                          [selectedEventId]="selectedEventId">
+
+        </community-event-webinar-template>
+        <div class="dialog-actions event-form-actions">
+          <div class="left-container">
+            <button type="button"
+                    [hidden]="!selectedEventId || !canUpdateEvent"
+                    kendoButton
+                    (click)="onDelete()"><span class="k-i-delete-event"></span>{{ 'Delete' | globalTranslator }}
+            </button>
+          </div>
+          <div class="right-container">
+            <button type="button"
+                    *ngIf="canUpdateEvent"
+                    kendoButton
+                    (click)="onCancel()">{{ 'Cancel' | globalTranslator }}
+            </button>
+            <button type="button"
+                    *ngIf="!canUpdateEvent"
+                    kendoButton
+                    (click)="onCancel()">{{ 'Close' | globalTranslator }}
+            </button>
+
+            <button *ngIf="!selectedEventId"
+                    kendoButton
+                    (click)="onCreate()"
+                    [primary]="true"
+                    [disabled]="isInvalidForm">
+              {{ 'Create' | globalTranslator }}
+            </button>
+            <button *ngIf="selectedEventId && canUpdateEvent"
+                    kendoButton
+                    (click)="onUpdate()"
+                    [primary]="true"
+                    [disabled]="isInvalidForm">
+              {{ 'Update' | globalTranslator }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,15 @@
+ecertificate-layout-selection {
+  .ecertificate-layout-selection {
+    &__layout-info {
+      margin-top: 10px;
+    }
+
+    &__description {
+      color: $color-gray;
+    }
+
+    &__background {
+      max-width: 100%;
+    }
+  }
+}

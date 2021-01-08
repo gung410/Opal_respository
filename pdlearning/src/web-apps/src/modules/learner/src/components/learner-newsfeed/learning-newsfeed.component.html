@@ -1,0 +1,41 @@
+<div class="newsfeed">
+  <div class="posted-by"
+       (click)="onPostClicked()">
+    <img class="small"
+         src="{{ postedUserAvatar }}">
+    <div class="newsfeed-heading csl">
+      <div class="title truncate-text">{{ postedByName }}</div>
+      <div class="duration-container sub">{{ newsfeed.createdDate | date: 'dd/MM/yyyy hh:mm a' }}</div>
+    </div>
+  </div>
+  <ng-container *ngIf="showWallInfo">
+    <div class="viaLink"></div>
+    <div class="wall"
+         (click)="onPostClicked()">
+      <img class="small"
+           src="{{ wallThumbnailUrl }}">
+      <div class="newsfeed-heading csl">
+        <div class="title truncate-text"> {{ wallName }}</div>
+        <div class="duration-container description sub"><span class="truncate-text">{{ wallDescription }}</span></div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="newsfeed-body"
+       #body>
+    <div class="content"
+         #content
+         [innerHTML]="newsfeed.postContent | safeHtml: 'html'">
+    </div>
+    <div class="newsfeed-body-fadeout"
+         *ngIf="content.offsetHeight > body.offsetHeight"></div>
+  </div>
+  <div class="newsfeed-readmore"
+       *ngIf="content.offsetHeight > body.offsetHeight"
+       (click)="body.style.maxHeight='none'">{{'Read more' | translator}}</div>
+  <div class="newsfeed-forward"
+       *ngIf="newsfeed.postForward">
+    <learning-newsfeed [newsfeed]="newsfeed.postForward"
+                       [users]="users"
+                       (newsFeedClick)="onNewsFeedClicked()"></learning-newsfeed>
+  </div>
+</div>

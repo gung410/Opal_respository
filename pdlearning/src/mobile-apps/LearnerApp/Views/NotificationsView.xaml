@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.NotificationsView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	Title="Notifications"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	mc:Ignorable="d">
+
+	<controls:CustomHybridWebView
+		x:Name="NotificationWebview"
+		HorizontalOptions="FillAndExpand"
+		OnNavigationCompleted="NotificationWebview_OnNavigationCompleted"
+		OnNavigationStarted="NotificationWebview_OnNavigationStarted"
+		Source="{Binding SourceUrl}"
+		VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

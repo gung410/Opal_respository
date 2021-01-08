@@ -1,0 +1,113 @@
+<div class="content-management-container -no-padding-margin content-detail-page">
+  <div class="content-management"
+       [ngClass]="{ '-loading': loadingTableOfContents }">
+    <div class="management-toolbar -margin-top"
+         *ngIf="showCannotEditContentForCourseAlert() || showCannotEditContentForClassRunAlert() || showInheritedAlert() || canCustomizeContentForClassRun()">
+      <div class="management-toolbar__left-container content-detail-page__message">
+        <div class="content-detail-page__message-container">
+          <span class="alert -info"
+                *ngIf="showInheritedAlert()">{{'There is no content for this classrun. These contents are inherited from course.' | translator}}</span>
+          <span class="alert -info"
+                *ngIf="showCannotEditContentForCourseAlert()">{{'You cannot edit content because this course is completed.' | translator}}</span>
+          <span class="alert -info"
+                *ngIf="showCannotEditContentForClassRunAlert()">{{'You cannot edit content because any learner is learning.' | translator}}</span>
+        </div>
+      </div>
+      <div class="management-toolbar__right-container">
+        <button class="save"
+                [primary]="true"
+                (click)="customizeData()"
+                *ngIf="canCustomizeContentForClassRun()"
+                kendoButton>{{ 'Customize' | globalTranslator }}</button>
+      </div>
+    </div>
+    <div class="preview-aria">
+      <div class="preview-aria__left-col">
+        <table-of-content #tableOfContent
+                          [course]="course"
+                          [readonly]="readonly()"
+                          [contentItems]="contentItems"
+                          [selectedItemId]="selectedContentItemId"
+                          (onActionMenuSelect)="onActionMenuSelect($event)"
+                          (onContentItemSelect)="onContentItemSelect($event)"
+                          (onCreationMenuSelect)="onCreationMenuSelect($event)"
+                          (onSearch)="onSearch($event)"
+                          (onSectionExpandChange)="onSectionExpandChange($event)">
+        </table-of-content>
+      </div>
+      <div class="preview-aria__main-col">
+        <div class="preview-aria__preview-button-container"
+             *ngIf="canShowPreviewButton()">
+          <kendo-dropdownbutton textField="text"
+                                [data]="dropdownItems"
+                                [popupSettings]="{popupClass: 'lmm-preview-button-modes'}"
+                                [primary]="false"
+                                (itemClick)="onPreviewClick($event.value)">
+            {{ 'Preview' | translator }}
+          </kendo-dropdownbutton>
+        </div>
+        <ng-template [ngIf]="!selectedAssignmentVm && selectedLecture && selectedLecture.type === 'Quiz'">
+          <kendo-tabstrip class="opal-tabstrip content-detail-page__main-content-tabs"
+                          [animate]="false"
+                          [tabAlignment]="'end'">
+            <kendo-tabstrip-tab [selected]="true">
+              <ng-template kendoTabTitle="">
+                {{ 'Detail' | translator }}
+              </ng-template>
+              <ng-template kendoTabContent="">
+                <lecture-content-editor class="content-detail-page__main-content-form"
+                                        [(lecture)]="selectedLecture"
+                                        (onSave)="onInlineLectureContentSaved($event)"
+                                        [readonly]="readonly()"
+                                        #lectureContentEditor></lecture-content-editor>
+              </ng-template>
+            </kendo-tabstrip-tab>
+            <kendo-tabstrip-tab *ngIf="showQuizStatistics()">
+              <ng-template kendoTabTitle="">
+                {{ 'Statistic' | translator }}
+              </ng-template>
+              <ng-template kendoTabContent="">
+                <opal-report [formId]="selectedLecture.resourceId"
+                             [courseId]="course.id"
+                             [classrunId]="classRun ? classRun.id : null"></opal-report>
+              </ng-template>
+            </kendo-tabstrip-tab>
+          </kendo-tabstrip>
+        </ng-template>
+        <ng-template [ngIf]="!selectedAssignmentVm && selectedLecture && selectedLecture.type === 'DigitalContent'">
+          <lecture-content-editor class="content-detail-page__main-content-form"
+                                  [(lecture)]="selectedLecture"
+                                  [readonly]="readonly()"
+                                  [isAllowDownload]="isAllowDownloadContent"
+                                  #lectureContentEditor></lecture-content-editor>
+        </ng-template>
+        <ng-template [ngIf]="selectedLecture && selectedLecture.type === 'InlineContent'">
+          <lecture-content-editor class="content-detail-page__main-content-form"
+                                  [(lecture)]="selectedLecture"
+                                  (onSave)="onInlineLectureContentSaved($event)"
+                                  [readonly]="readonly()"
+                                  #lectureContentEditor></lecture-content-editor>
+        </ng-template>
+        <ng-template [ngIf]="selectedAssignmentVm">
+          <kendo-tabstrip class="content-detail-page__main-content-tabs"
+                          [animate]="false"
+                          [tabAlignment]="'end'">
+            <kendo-tabstrip-tab [selected]="true">
+              <ng-template kendoTabTitle="">
+                {{ 'Detail' | translator }}
+              </ng-template>
+              <ng-template kendoTabContent="">
+                <assignment-form-editor class="content-detail-page__assignment-form-editor"
+                                        #assignmentFormEditor
+                                        [(assignmentVm)]="selectedAssignmentVm"
+                                        [mode]="readonly() ? AssignmentMode.View : AssignmentMode.Edit"
+                                        (onSave)="onSaveAssignment($event)"></assignment-form-editor>
+              </ng-template>
+            </kendo-tabstrip-tab>
+          </kendo-tabstrip>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>

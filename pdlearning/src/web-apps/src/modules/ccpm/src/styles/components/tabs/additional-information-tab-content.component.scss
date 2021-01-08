@@ -1,0 +1,19 @@
+.additional-information-tab-content {
+  padding: 20px;
+
+  &__state-control {
+    margin-left: auto;
+  }
+
+  &__title {
+    color: #2d3469;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  &__date-picker {
+    width: 440px;
+  }
+}

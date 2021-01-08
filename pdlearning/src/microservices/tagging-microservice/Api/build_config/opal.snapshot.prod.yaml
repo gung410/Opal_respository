@@ -1,0 +1,63 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-tagging-api-snapshot-build
+  development:
+    pipelines:
+      - cx-tagging-api-development
+  uat-next:
+    pipelines:
+      - cx-tagging-api-uat-next
+pipelines:
+  cx-tagging-api-snapshot-build:
+    group: cx-tagging-api-snapshot
+    label_template: "snapshot-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/tagging-microservice/Api/
+      SONAR_PROJECTKEY: cx-tagging-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-tagging-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/tagging-microservice/Api/**/*.*
+  cx-tagging-api-development:
+    group: cx-tagging-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-tagging-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-tagging-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-tagging-api
+    template: ansible-deploy-fetch-upstream
+  cx-tagging-api-uat-next:
+    group: cx-tagging-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-tagging-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-tagging-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-tagging-api
+    template: ansible-deploy-fetch-upstream

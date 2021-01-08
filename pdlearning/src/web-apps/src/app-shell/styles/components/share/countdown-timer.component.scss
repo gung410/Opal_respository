@@ -1,0 +1,9 @@
+countdown-timer {
+  display: flex;
+}
+
+.countdown-timer {
+  &__label {
+    margin-right: 5px;
+  }
+}

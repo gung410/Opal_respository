@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.MyLearning.MyDigitalContentLearningView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:controls="clr-namespace:LearnerApp.Controls.DigitalContentPlayer"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:learner="clr-namespace:LearnerApp.Controls.Learner"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:myLearning="clr-namespace:LearnerApp.ViewModels.MyLearning;assembly=LearnerApp"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	x:DataType="myLearning:MyDigitalContentLearningViewModel"
+	Shell.NavBarIsVisible="False"
+	mc:Ignorable="d">
+	<StackLayout
+		BackgroundColor="White"
+		HorizontalOptions="FillAndExpand"
+		Spacing="0"
+		VerticalOptions="FillAndExpand">
+		<!--  TITLE, PROGRESS BAR  -->
+		<StackLayout x:Name="HeaderSection">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="30" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="30" />
+				</Grid.ColumnDefinitions>
+				<!--  CLOSE BUTTON  -->
+				<ContentView Padding="5">
+					<ContentView.GestureRecognizers>
+						<TapGestureRecognizer Tapped="Closed_Tapped" />
+					</ContentView.GestureRecognizers>
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="20"
+						HorizontalOptions="Start"
+						Source="close.svg"
+						VerticalOptions="Center"
+						WidthRequest="20" />
+				</ContentView>
+				<StackLayout
+					Grid.Column="1"
+					HorizontalOptions="CenterAndExpand"
+					Orientation="Horizontal"
+					Spacing="5">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource LargerSize}"
+						HorizontalOptions="CenterAndExpand"
+						Text="{Binding ContentTitle}"
+						VerticalOptions="Center" />
+					<ffimagesvg:SvgCachedImage
+						Aspect="Fill"
+						HeightRequest="12"
+						HorizontalOptions="CenterAndExpand"
+						IsVisible="{Binding IsAllowDownload}"
+						Source="download.svg"
+						VerticalOptions="CenterAndExpand"
+						WidthRequest="12" />
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding DownloadCommand}" NumberOfTapsRequired="1" />
+					</StackLayout.GestureRecognizers>
+				</StackLayout>
+			</Grid>
+			<ProgressBar Progress="{Binding ProgressBarValue}" ProgressColor="#1DCEC1" />
+		</StackLayout>
+
+		<!--  CONTENT  -->
+		<StackLayout IsVisible="{Binding IsVisibleContent}" VerticalOptions="FillAndExpand">
+
+			<controls:DigitalContentPlayer
+				x:Name="DigitalContentPlayer"
+				BrokenLinkCommand="{Binding BrokenLinkReportCommand}"
+				Data="{Binding PlayerData}"
+				VerticalOptions="FillAndExpand" />
+
+			<ContentView x:Name="ProgressSection" HeightRequest="3">
+				<ProgressBar
+					Opacity="{Binding IsDownloading, Converter={StaticResource OpacityVisibleConverter}}"
+					Progress="{Binding ProgressBarDownload}"
+					ProgressColor="CornflowerBlue" />
+			</ContentView>
+
+			<Button
+				x:Name="CompleteButton"
+				Margin="10,0,10,0"
+				BackgroundColor="#303450"
+				Command="{Binding CompleteCommand}"
+				CornerRadius="6"
+				FontFamily="{StaticResource RobotoRegular}"
+				FontSize="18"
+				IsVisible="{Binding DisplayCompleteButton}"
+				Text="Complete"
+				TextColor="White" />
+		</StackLayout>
+
+		<!--  FEEDBACK REVIEW  -->
+		<learner:LearningOpportunityFeedbackCard
+			Data="{Binding FeedbackData}"
+			IsVisible="{Binding IsVisibleContent, Converter={StaticResource InverseBoolConverter}}"
+			VerticalOptions="FillAndExpand" />
+	</StackLayout>
+</common:BaseLearnerContentPage>

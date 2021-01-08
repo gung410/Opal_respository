@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <RootNamespace>Microservice.Content</RootNamespace>
+  </PropertyGroup>
+
+  <!--Nuget Package References-->
+  <ItemGroup>
+    <PackageReference Include="cx.datahub.scheduling.jobs.shared" Version="$(CxDatahubSchedulingJobsSharedPackageVersion)" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="$(HangfireAspNetCorePackageVersion)" />
+    <PackageReference Include="HangFire.Core" Version="$(HangFireCorePackageVersion)" />
+    <PackageReference Include="HangFire.SqlServer" Version="$(HangFireSqlServerPackageVersion)" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="$(FluentValidationAspNetCorePackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(MicrosoftEntityFrameworkCoreDesignPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(MicrosoftEntityFrameworkCoreProxiesPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(MicrosoftEntityFrameworkCoreSqlServerPackageVersion)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleAspNetCorePackageVersion)" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="$(IdentityServer4AccessTokenValidationPackageVersion)" />
+  </ItemGroup>
+
+  <!--Thunder Package References-->
+  <ItemGroup>
+    <Reference Include="Thunder.Platform.AspNetCore" />
+    <Reference Include="Thunder.Platform.Cqrs" />
+    <Reference Include="Thunder.Platform.Caching" />
+    <Reference Include="Thunder.Platform.EntityFrameworkCore" />
+    <Reference Include="Thunder.Platform.Core" />
+  </ItemGroup>
+
+  <!--Others-->
+  <ItemGroup>
+    <Reference Include="Conexus.Opal.Connector.RabbitMQ" />
+    <Reference Include="Conexus.Opal.AccessControl" />
+    <Reference Include="Conexus.Opal.OutboxPattern" />
+    <Reference Include="Conexus.Opal.BrokenLinkChecker" />
+    <Reference Include="Conexus.Opal.InboxPattern" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\shared\sharedsettings.json" Link="sharedsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+  <!-- Outbox Pattern -->
+  <ItemGroup>
+    <Compile Include="..\..\shared\OutboxPattern\OutboxQueueController.cs" Link="Controllers\OutboxQueueController.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\OutboxMessageConfiguration.cs" Link="Infrastructure\EntityConfigurations\OutboxMessageConfiguration.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\OutboxOpalMqEventHandler.cs" Link="Application\Events\OutboxOpalMqEventHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\ThunderSwaggerMiddlewareExtensions.cs" Link="ThunderSwaggerMiddlewareExtensions.cs" />
+    <Compile Include="..\..\shared\ThunderSwaggerServiceCollectionExtensions.cs" Link="ThunderSwaggerServiceCollectionExtensions.cs" />
+    <Compile Include="..\..\shared\AuthorizationFilter.cs" Link="AuthorizationFilter.cs" />
+    <Compile Include="..\..\shared\Attributes\PermissionRequiredAttribute.cs" Link="Infrastructure\Attributes\PermissionRequiredAttribute.cs" />
+    <Compile Include="..\..\shared\ThunderAuthenticationMiddleware.cs" Link="ThunderAuthenticationMiddleware.cs" />
+    <Compile Include="..\..\shared\OpalMQEventHandler.cs" Link="Application\Events\OpalMQEventHandler.cs" />
+    <Compile Include="..\..\shared\HangFireScheduleOption.cs" Link="Application\HangfireJob\ScheduleOption\HangFireScheduleOption.cs" />
+    <Compile Include="..\..\shared\NotifyTransferOwnership\NotifyTransferOwnershipPayload.cs" Link="Application\Events\Todos\NotifyTransferOwnership\NotifyTransferOwnershipPayload.cs" />
+
+    <Compile Include="..\..\shared\Infrastructure\HttpService.cs" Link="Infrastructure/HttpService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
+  
+</Project>

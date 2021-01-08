@@ -1,0 +1,31 @@
+<div class="form-answer-attachments">
+  <div class="form-answer-attachments__attachment-list">
+    <kendo-panelbar class="panelbar-files">
+      <kendo-panelbar-item class="panelbar-files__item"
+                           title
+                           *ngFor="let attachmentFile of formAnswerAttachmentsVm">
+        <ng-template kendoPanelBarItemTitle="">
+          <div class="form-answer-attachments__attachment-item">
+            <span class="form-answer-attachments__attachment-icon"><i class="k-icon k-i-attachment-45"></i></span>
+            <span class="form-answer-attachments__attachment-file-name">{{ attachmentFile.fileName }}</span>
+            <span class="form-answer-attachments__attachment-action"
+                  *ngIf="showRemovedBtn"
+                  (click)="removeAttachment(attachmentFile.fileLocation)">
+              <span class="icon-moe icon-moe-close"></span>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template kendoPanelBarContent="">
+          <div class="form-answer-attachments__media-container">
+            <preview-video-player *ngIf="canShowVideo(attachmentFile.fileExtension)"
+                                  [src]="getMediaUrl(attachmentFile.fileLocation)"
+                                  (videoLoadEvent)="handleImgError($event)"></preview-video-player>
+            <preview-audio-player *ngIf="canShowAudio(attachmentFile.fileExtension)"
+                                  [src]="getMediaUrl(attachmentFile.fileLocation)"
+                                  (audioLoadEvent)="handleImgError($event)"></preview-audio-player>
+          </div>
+        </ng-template>
+      </kendo-panelbar-item>
+    </kendo-panelbar>
+  </div>
+</div>

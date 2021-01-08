@@ -1,0 +1,60 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ 'Send Placement Letter' | translator }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+
+<div class="dialog-content"
+     [ngClass]="{ '-loading': loadingData }">
+  <div class="send-placement-letter-dialog">
+    <div class="send-placement-letter-dialog__editor"
+         [hidden]="isPreview">
+      <div class="send-placement-letter-dialog__left-container">
+        <div class="send-placement-letter-dialog__participant-list">
+          <p class="send-placement-letter-dialog__participant-title">{{ 'Participants' |translator }}</p>
+          <ng-container *ngFor="let registrationVm of registrationVms">
+            <div class="send-placement-letter-dialog__participant-info">
+              <owner-info *ngIf="registrationVm.register"
+                          [owner]="registrationVm.register"></owner-info>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="send-placement-letter-dialog__right-container"
+           *ngIf="dataLoaded">
+        <mail-editor [tags]="mailTags"
+                     [(mailContent)]="sendPlacementLetterVm.mailContent"></mail-editor>
+      </div>
+    </div>
+    <div class="send-placement-letter-dialog__preview"
+         *ngIf="isPreview"
+         externalLinkGuard
+         [innerHTML]="previewMessage">
+    </div>
+  </div>
+</div>
+
+<div class="dialog-actions">
+  <ng-container *ngIf="!isPreview">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+    <button kendoButton
+            (click)="onReset()">{{ 'Reset' | globalTranslator }}</button>
+    <button kendoButton
+            (click)="onPreview()"
+            [primary]="true">{{ 'Preview' | globalTranslator }}</button>
+    <button type="submit"
+            kendoButton
+            (click)="onSend()"
+            [primary]="true">{{ 'Send' | globalTranslator }}</button>
+  </ng-container>
+  <ng-container *ngIf="isPreview">
+    <button kendoButton
+            (click)="onBack()"
+            [primary]="true">{{ 'Back' | globalTranslator }}</button>
+  </ng-container>
+</div>

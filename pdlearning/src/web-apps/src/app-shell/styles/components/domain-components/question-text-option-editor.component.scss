@@ -1,0 +1,38 @@
+.question-text-option-editor {
+  background: $white;
+
+  &__title {
+    font-size: $font-h6;
+    color: black;
+    margin: 25px;
+  }
+
+  &__form {
+    margin: 0 25px 25px 25px;
+
+    textarea {
+      min-width: 333px;
+      min-height: 98px;
+      border-radius: $main-border-radius;
+      border: 1px solid $color-gainsboro;
+      padding: 10px 12px;
+      @extend %box-sizing;
+      font-size: $font-h6;
+
+      &::placeholder {
+        color: $color-dim-gray;
+      }
+    }
+  }
+
+  &__actions {
+    margin: 0 25px 25px 25px;
+    display: block;
+    text-align: right;
+
+    button {
+      width: fit-content;
+      text-transform: capitalize;
+    }
+  }
+}

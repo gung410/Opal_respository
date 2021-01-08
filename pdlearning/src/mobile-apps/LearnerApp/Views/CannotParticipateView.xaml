@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.CannotParticipateView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    Title="Unable to participate?"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <Frame
+            Margin="10"
+            Padding="10"
+            BackgroundColor="White"
+            CornerRadius="6"
+            HasShadow="False">
+            <StackLayout Spacing="30">
+                <Label
+                    Margin="0,30,0,0"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Please indicate the reason for your absence below."
+                    TextColor="{StaticResource MainBodyTextColor}" />
+
+                <Frame
+                    Padding="10"
+                    BorderColor="#D8DCE6"
+                    CornerRadius="4"
+                    HasShadow="False">
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectAbsenceReasonCommand}" NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
+                        <Label
+                            FontSize="16"
+                            Text="{Binding AbsenceReasonSelected}"
+                            TextColor="{StaticResource MainBodyTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="10"
+                            HorizontalOptions="EndAndExpand"
+                            Source="participation_down.svg"
+                            WidthRequest="10" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame
+                    Padding="7"
+                    BorderColor="{Binding AbsenceReasonBorderColor}"
+                    CornerRadius="4"
+                    HasShadow="False"
+                    IsVisible="{Binding IsVisibleAbsenceReason}">
+                    <controls:CustomEditor
+                        x:Name="Reason"
+                        BackgroundColor="Transparent"
+                        HeightRequest="100"
+                        Placeholder="Type here ..."
+                        Text="{Binding AbsenceReason, Mode=TwoWay}"
+                        TextChanged="InputView_OnTextChanged"
+                        VerticalOptions="FillAndExpand" />
+                </Frame>
+
+
+                <StackLayout Spacing="0">
+                    <StackLayout HeightRequest="40" Orientation="Horizontal">
+                        <StackLayout
+                            HorizontalOptions="FillAndExpand"
+                            IsEnabled="{Binding IsEnableAttachFile}"
+                            Orientation="Horizontal">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FilePickerCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="20"
+                                Source="attach_file.svg"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="20" />
+                            <Label
+                                FontSize="16"
+                                Text="{Binding AttachFile}"
+                                TextColor="{StaticResource MainBodyTextColor}"
+                                TextDecorations="Underline"
+                                VerticalOptions="CenterAndExpand" />
+                        </StackLayout>
+                        <StackLayout HeightRequest="40" WidthRequest="40">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding EnableUploadCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="20"
+                                HorizontalOptions="CenterAndExpand"
+                                IsVisible="{Binding IsEnableAttachFile, Converter={StaticResource InverseBoolConverter}}"
+                                Source="close.svg"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="20" />
+                        </StackLayout>
+                    </StackLayout>
+
+                    <Label
+                        FontSize="11"
+                        Text="Supported formats: docx, pdf, jpg, png."
+                        TextColor="{StaticResource TagColor}" />
+                    <Label
+                        FontSize="11"
+                        Text="Maximum uploads file size: 1MB."
+                        TextColor="{StaticResource TagColor}" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Button
+                        BackgroundColor="White"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Command="{Binding CancelCommand}"
+                        CornerRadius="4"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Close"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <Button
+                        x:Name="ConfirmBtn"
+                        BackgroundColor="{StaticResource DefaultTextColor}"
+                        BorderColor="{StaticResource DefaultTextColor}"
+                        BorderWidth="1"
+                        Command="{Binding ConfirmCommand}"
+                        CornerRadius="4"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Confirm"
+                        TextColor="White" />
+                </StackLayout>
+
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

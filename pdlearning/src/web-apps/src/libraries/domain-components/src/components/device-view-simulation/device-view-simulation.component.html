@@ -1,0 +1,10 @@
+<ng-template [ngIf]="previewMode === PreviewMode.Web">
+  <ng-template [ngTemplateOutlet]="webTemplateRef"></ng-template>
+</ng-template>
+<ng-template [ngIf]="previewMode === PreviewMode.Mobile">
+  <mobile-previewer>
+    <ng-template mobilePreviewerContent="">
+      <ng-template [ngTemplateOutlet]="mobileTemplateRef || webTemplateRef"></ng-template>
+    </ng-template>
+  </mobile-previewer>
+</ng-template>

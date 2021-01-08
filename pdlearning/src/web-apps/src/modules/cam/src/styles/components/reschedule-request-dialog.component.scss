@@ -1,0 +1,13 @@
+reschedule-request-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 700px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+
+  &.-loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}

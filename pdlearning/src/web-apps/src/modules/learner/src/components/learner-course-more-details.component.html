@@ -1,0 +1,397 @@
+<ng-container>
+  <div class="learner-course-detail__detail-header">{{"Metadata" | translator}}</div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Service Schemes" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.serviceSchemeIds">
+      <ng-container *ngFor="let serviceSchemeId of fullCourseDetail.serviceSchemeIds">
+        <span>
+          {{ courseMetadata[serviceSchemeId] ? courseMetadata[serviceSchemeId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.serviceSchemeIds.length === 0">N/A</span>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{'Subject/ Interest Area' | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.subjectAreaIds">
+      <ng-container *ngFor="let subjectAreaIds of fullCourseDetail.subjectAreaIds">
+        <span>
+          {{ courseMetadata[subjectAreaIds] ? courseMetadata[subjectAreaIds].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.subjectAreaIds.length === 0">N/A</span>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"PD Area / Theme" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.pdAreaThemeId">
+      <span>
+        {{ courseMetadata[fullCourseDetail.pdAreaThemeId] ? courseMetadata[fullCourseDetail.pdAreaThemeId].displayText : '' }}
+      </span>
+    </div>
+    <span *ngIf="!fullCourseDetail.pdAreaThemeId">N/A</span>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Course Level" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.courseLevel">
+      <span>
+        {{ courseMetadata[fullCourseDetail.courseLevel] ? courseMetadata[fullCourseDetail.courseLevel].displayText : '' }}
+      </span>
+    </div>
+    <span *ngIf="!fullCourseDetail.courseLevel">N/A</span>
+  </div>
+
+  <div class="learner-course-detail__detail-item"
+       *ngIf="showLinkCommunity">
+    <div class="learner-course-detail__detail-title">{{"Community" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         (click)="openCslWindow()">
+      <span class="link">
+        {{"Community for" | translator}} {{ fullCourseDetail.courseName }}
+      </span>
+    </div>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Learning Framework" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.learningFrameworkIds">
+      <ng-container *ngFor="let learningFrameworkId of fullCourseDetail.learningFrameworkIds">
+        <span>
+          {{ courseMetadata[learningFrameworkId] ? courseMetadata[learningFrameworkId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.learningFrameworkIds.length === 0">N/A</span>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Learning Dimension" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.learningDimensionIds">
+      <ng-container *ngFor="let learningDimensionId of fullCourseDetail.learningDimensionIds">
+        <span>
+          {{ courseMetadata[learningDimensionId] ? courseMetadata[learningDimensionId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.learningDimensionIds.length === 0">N/A</span>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Learning Area" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.learningAreaIds">
+      <ng-container *ngFor="let learningAreaId of fullCourseDetail.learningAreaIds">
+        <span>
+          {{ courseMetadata[learningAreaId] ? courseMetadata[learningAreaId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.learningAreaIds.length === 0">N/A</span>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Learning Sub-Area" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.learningSubAreaIds">
+      <ng-container *ngFor="let learningSubAreaId of fullCourseDetail.learningSubAreaIds">
+        <span>
+          {{ courseMetadata[learningSubAreaId] ? courseMetadata[learningSubAreaId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.learningSubAreaIds.length === 0">N/A</span>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Teacher Outcome" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.teacherOutcomeIds">
+      <ng-container *ngFor="let teacherOutcomeId of fullCourseDetail.teacherOutcomeIds">
+        <span>
+          {{ courseMetadata[teacherOutcomeId] ? courseMetadata[teacherOutcomeId].displayText : '' }}
+        </span>
+      </ng-container>
+    </div>
+    <span *ngIf="fullCourseDetail.teacherOutcomeIds.length === 0">N/A</span>
+  </div>
+</ng-container>
+<ng-container>
+  <div class="learner-course-detail__detail-header">{{"Copyrights" | translator}}</div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Licence Permissions and Terms of Use" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.allowPersonalDownload">
+      {{ 'Download for personal reference only' | translator }}
+    </div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.allowNonCommerInMOEReuseWithModification">
+      {{ 'Reuse without modification for non-commercial purpose in MOE schools / divisions only' | translator }}
+    </div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.allowNonCommerReuseWithModification">
+      {{ 'Reuse without modification for non-commercial purpose' | translator }}
+    </div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.allowNonCommerInMoeReuseWithoutModification">
+      {{ 'Reuse with modification for non-commercial purpose in MOE schools / divisions only' | translator }}
+    </div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.allowNonCommerReuseWithoutModification">
+      {{ 'Reuse with modification for non-commercial purpose' | translator }}
+    </div>
+  </div>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Copyright Owner" | translator}}</div>
+    <label class="learner-course-detail__detail-label">
+      {{ 'The name of the owner of the licence / main creator of item' | translator }}
+    </label>
+    <div class="learner-course-detail__detail-content">
+      <span>
+        {{fullCourseDetail?.copyrightOwner || 'N/A'}}
+      </span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Acknowledge and Credit" | translator}}</div>
+    <label class="learner-course-detail__detail-label">
+      {{ 'The names of all parties who have helped in one way or another in the creation of this item' | translator }}
+    </label>
+    <div class="learner-course-detail__detail-content">
+      <span>
+        {{fullCourseDetail?.acknowledgementAndCredit || 'N/A'}}
+      </span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Additional Remarks" | translator}}</div>
+    <label class="learner-course-detail__detail-label">
+      {{ 'Additional notes governing the proper use of this resource (if any)' | translator }}
+    </label>
+    <div class="learner-course-detail__detail-content">
+      <span>
+        {{fullCourseDetail?.remarks || 'N/A'}}
+      </span>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container>
+  <div class="learner-course-detail__detail-header">{{"Target Audience" | translator}}</div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Pre-Requisites" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.prerequisiteCourseIds">
+      <ng-container *ngFor="let prerequisiteCourseId of fullCourseDetail.prerequisiteCourseIds">
+        <span>{{prerequisiteCoursesDic[prerequisiteCourseId]
+          ? prerequisiteCoursesDic[prerequisiteCourseId].courseName : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.prerequisiteCourseIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <ng-container *ngIf="fullCourseDetail.placeOfWork === PlaceOfWorkType.ApplicableForUsersInSpecificOrganisation">
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Division" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="fullCourseDetail.applicableDivisionIds">
+        <ng-container *ngFor="let applicableDivisionId of fullCourseDetail.applicableDivisionIds">
+          <span>{{departmentsDic[applicableDivisionId]
+          ? departmentsDic[applicableDivisionId].departmentName : 'N/A'}}</span>
+        </ng-container>
+        <span *ngIf="fullCourseDetail.applicableDivisionIds.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Branch" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="fullCourseDetail.applicableBranchIds">
+        <ng-container *ngFor="let applicableBranchId of fullCourseDetail.applicableBranchIds">
+          <span>{{departmentsDic[applicableBranchId]
+          ? departmentsDic[applicableBranchId].departmentName : 'N/A'}}</span>
+        </ng-container>
+        <span *ngIf="fullCourseDetail.applicableBranchIds.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Zone" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="fullCourseDetail.applicableZoneIds">
+        <ng-container *ngFor="let applicableZoneId of fullCourseDetail.applicableZoneIds">
+          <span>{{departmentsDic[applicableZoneId]
+          ? departmentsDic[applicableZoneId].departmentName : 'N/A'}}</span>
+        </ng-container>
+        <span *ngIf="fullCourseDetail.applicableZoneIds.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Cluster" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="fullCourseDetail.applicableClusterIds">
+        <ng-container *ngFor="let applicableClusterId of fullCourseDetail.applicableClusterIds">
+          <span>{{departmentsDic[applicableClusterId]
+          ? departmentsDic[applicableClusterId].departmentName : 'N/A'}}</span>
+        </ng-container>
+        <span *ngIf="fullCourseDetail.applicableClusterIds.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"School" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="fullCourseDetail.applicableSchoolIds">
+        <ng-container *ngFor="let applicableSchoolId of fullCourseDetail.applicableSchoolIds">
+          <span>{{departmentsDic[applicableSchoolId]
+          ? departmentsDic[applicableSchoolId].departmentName : 'N/A'}}</span>
+        </ng-container>
+        <span *ngIf="fullCourseDetail.applicableSchoolIds.length === 0">N/A</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-subheader">{{"User Profile" | translator}}</div>
+    <div class="learner-course-detail__detail-title">{{"Track" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.trackIds">
+      <ng-container *ngFor="let trackId of fullCourseDetail.trackIds">
+        <span>{{courseMetadata[trackId]
+          ? courseMetadata[trackId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.trackIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Developmental Roles" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.developmentalRoleIds">
+      <ng-container *ngFor="let developmentalRoleId of fullCourseDetail.developmentalRoleIds">
+        <span>{{courseMetadata[developmentalRoleId]
+          ? courseMetadata[developmentalRoleId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.developmentalRoleIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Teaching Level" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.teachingLevels">
+      <ng-container *ngFor="let teachingLevel of fullCourseDetail.teachingLevels">
+        <span>{{courseMetadata[teachingLevel]
+          ? courseMetadata[teachingLevel].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.teachingLevels.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Teaching Subject" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.teachingSubjectIds">
+      <ng-container *ngFor="let teachingSubjectId of fullCourseDetail.teachingSubjectIds">
+        <span>{{courseMetadata[teachingSubjectId]
+          ? courseMetadata[teachingSubjectId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.teachingSubjectIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Job Family" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.jobFamily">
+      <ng-container *ngFor="let jobFamilyItem of fullCourseDetail.jobFamily">
+        <span>{{courseMetadata[jobFamilyItem]
+          ? courseMetadata[jobFamilyItem].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.jobFamily.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Teaching Course of Study" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.teachingCourseStudyIds">
+      <ng-container *ngFor="let teachingCourseStudyId of fullCourseDetail.teachingCourseStudyIds">
+        <span>{{courseMetadata[teachingCourseStudyId]
+          ? courseMetadata[teachingCourseStudyId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.teachingCourseStudyIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Co-curricularActivity" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.cocurricularActivityIds">
+      <ng-container *ngFor="let cocurricularActivityId of fullCourseDetail.cocurricularActivityIds">
+        <span>{{courseMetadata[cocurricularActivityId]
+          ? courseMetadata[cocurricularActivityId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.cocurricularActivityIds.length === 0">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"EAS Substantive Grade Banding" | translator}}</div>
+    <div class="learner-course-detail__detail-content"
+         *ngIf="fullCourseDetail.cocurricularActivityIds">
+      <ng-container *ngFor="let easSubstantiveGradeBandingId of fullCourseDetail.easSubstantiveGradeBandingIds">
+        <span>{{courseMetadata[easSubstantiveGradeBandingId]
+          ? courseMetadata[easSubstantiveGradeBandingId].displayText : 'N/A'}}</span>
+      </ng-container>
+      <span *ngIf="fullCourseDetail.easSubstantiveGradeBandingIds.length === 0">N/A</span>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container>
+  <div class="learner-course-detail__detail-header">{{"Course Planning" | translator}}</div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Total Number of Hours to Attend Within The Year" | translator}}</div>
+    <div class="learner-course-detail__detail-content">
+      <span>{{fullCourseDetail.totalHoursAttendWithinYear
+        ? fullCourseDetail.totalHoursAttendWithinYear : 'N/A'}}</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Minimum Participants Per Class" | translator}}</div>
+    <div class="learner-course-detail__detail-content">
+      <span>{{fullCourseDetail.minParticipantPerClass
+        ? fullCourseDetail.minParticipantPerClass : 'N/A'}}</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Maximum Participants Per Class" | translator}}</div>
+    <div class="learner-course-detail__detail-content">
+      <span>{{fullCourseDetail.maxParticipantPerClass
+        ? fullCourseDetail.maxParticipantPerClass : 'N/A'}}</span>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container>
+  <div class="learner-course-detail__detail-header">{{"Course Administration" | translator}}</div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title">{{"Course Administrator(1st)" | translator}}</div>
+    <div class="learner-course-detail__detail-content">
+      <div *ngIf="usersDic">
+        <ng-container *ngIf="fullCourseDetail.firstAdministratorId">
+          <owner-info [owner]="usersDic[fullCourseDetail.firstAdministratorId]"></owner-info>
+        </ng-container>
+      </div>
+      <span *ngIf="!fullCourseDetail.firstAdministratorId">N/A</span>
+    </div>
+  </div>
+  <div class="learner-course-detail__detail-item">
+    <div class="learner-course-detail__detail-title learner-course-detail__detail-title">{{"Course Administrator(2nd)" | translator}}
+    </div>
+    <div class="learner-course-detail__detail-content">
+      <div *ngIf="usersDic">
+        <ng-container *ngIf="fullCourseDetail.secondAdministratorId">
+          <owner-info [owner]="usersDic[fullCourseDetail.secondAdministratorId]"></owner-info>
+        </ng-container>
+      </div>
+      <span *ngIf="!fullCourseDetail.secondAdministratorId">N/A</span>
+    </div>
+  </div>
+</ng-container>

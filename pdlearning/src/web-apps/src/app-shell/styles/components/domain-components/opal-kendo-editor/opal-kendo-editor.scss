@@ -1,0 +1,213 @@
+opal-kendo-editor {
+  padding-left: 10px;
+
+  .k-editor-content > .ProseMirror {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    overflow: auto;
+  }
+
+  .k-iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  // To match style between built-in editor and content at runtime.
+  // We need to adjust style for the content.
+  // The stylesheet bellow was copied from Kendo-editor.
+
+  table {
+    margin: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    overflow: hidden;
+
+    td,
+    th {
+      min-width: 1em;
+      border: 1px solid #ddd;
+      padding: 3px 5px;
+      vertical-align: top;
+      box-sizing: border-box;
+      position: relative;
+      word-break: break-word;
+    }
+
+    th {
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .column-resize-handle {
+      position: absolute;
+      right: -2px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      z-index: 20;
+      background-color: #adf;
+      pointer-events: none;
+    }
+
+    &.resize-cursor {
+      cursor: ew-resize;
+      cursor: col-resize;
+    }
+
+    /* Give selected cells a blue overlay */
+    .selectedCell:after {
+      z-index: 2;
+      position: absolute;
+      content: '';
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(200, 200, 255, 0.4);
+      pointer-events: none;
+    }
+
+    // End default kendo-editor style
+
+    // Reset margin
+    p {
+      margin-block-start: initial;
+      margin-block-end: initial;
+    }
+  }
+
+  .opal-editor {
+    .k-editor > .k-toolbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -56px;
+    }
+  }
+
+  .k-toolbar,
+  .k-editor-toolbar {
+    background: $white;
+    border: none;
+
+    .k-button {
+      padding: 4px 8px;
+      width: 38px;
+
+      &:hover {
+        background: rgb(237, 237, 237);
+      }
+    }
+
+    .k-button-group {
+      .k-button:first-child {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+
+      .k-button:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+
+  .k-button.k-overflow-anchor {
+    height: 48px;
+    top: 8px;
+    right: 10px;
+    border-radius: 5px;
+  }
+
+  .k-button-group {
+    .k-button:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .k-button:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .k-button:focus,
+    .k-button:active,
+    .k-button.k-state-active {
+      background: $accent;
+      border-color: $accent;
+      color: $white;
+
+      &:hover {
+        background: $accent;
+      }
+    }
+  }
+
+  .k-editor {
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    box-shadow: inset 0 5px 5px -5px $gray100;
+
+    iframe.k-content {
+      height: 100%;
+      display: flex;
+      flex: 1;
+    }
+  }
+
+  .ProseMirror .tableWrapper {
+    overflow-x: auto;
+  }
+
+  .ProseMirror table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    overflow: hidden;
+    border-left: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+  }
+
+  .ProseMirror td,
+  .ProseMirror th {
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    border-top: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+  }
+
+  .ProseMirror .column-resize-handle {
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    z-index: 20;
+    background-color: #adf;
+    pointer-events: none;
+  }
+
+  .ProseMirror.resize-cursor {
+    cursor: ew-resize;
+    cursor: col-resize;
+  }
+
+  /* Give selected cells a blue overlay */
+  .ProseMirror .selectedCell:after {
+    z-index: 2;
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(200, 200, 255, 0.4);
+    pointer-events: none;
+  }
+}

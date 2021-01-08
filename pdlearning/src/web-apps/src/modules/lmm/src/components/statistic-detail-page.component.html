@@ -1,0 +1,29 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    stickyTabHeaderElement
+                    [stickyDependElement]="stickyDependElement">
+      <kendo-tabstrip-tab [cssClass]="{'hidden': hiddenPreCourseTab }"
+                          [selected]="activeTab === LMMTabConfiguration.PreCourseStatisticTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Pre-course evaluation' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <opal-report [formId]="course.preCourseEvaluationFormId"
+                       [courseId]="course.id"></opal-report>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': hiddenPostCourseTab }"
+                          [selected]="activeTab === LMMTabConfiguration.PostCourseStatisticTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Post-course evaluation' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <opal-report [formId]="course.postCourseEvaluationFormId"
+                       [courseId]="course.id"></opal-report>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

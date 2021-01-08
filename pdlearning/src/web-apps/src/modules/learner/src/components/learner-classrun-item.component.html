@@ -1,0 +1,266 @@
+<div class="learner-classrun"
+     *ngIf="item">
+  <div class="learner-classrun-item">
+
+    <div class="learner-classrun-item__icon"
+         [ngClass]="{'normal': !isExpanding, 'expanding': isExpanding}"
+         (click)="isExpanding = !isExpanding"></div>
+
+    <div class="learner-classrun-item__class-name">
+      {{item.classTitle}}
+      <status-indicator [currentStatus]="item.rescheduleStatus === rescheduleStatus.Approved
+                        && item.status !== ClassRunStatus.Cancelled
+                        ? item.rescheduleStatus
+                        : item.status"
+                        [mapping]="learnerClassRunStatusColorMap"></status-indicator>
+    </div>
+
+    <div class="learner-classrun-item__group-date">
+      <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+        <img src="assets/images/icons/time.svg">
+        {{ 'Start Date' | translator }}
+      </div>
+      <div class="learner-classrun-item__value">
+        {{
+          item.planningStartTime == null
+          ? (item.startDate | date: 'dd/MM/yyyy')
+          : (getDateTime(item.startDate, item.planningStartTime)  | date: 'dd/MM/yyyy - HH:mm')
+        }}
+      </div>
+    </div>
+
+    <div class="learner-classrun-item__group-date">
+      <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+        <img src="assets/images/icons/time.svg">
+        {{ 'End Date' | translator }}
+      </div>
+      <div class="learner-classrun-item__value">
+        {{
+          item.planningEndTime == null
+          ? (item.endDate | date: 'dd/MM/yyyy')
+          : (getDateTime(item.endDate, item.planningEndTime)  | date: 'dd/MM/yyyy - HH:mm')
+        }}
+      </div>
+    </div>
+    <div class="learner-classrun-item__group-date">
+      <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+        {{ 'Current Capacity' | translator }}
+      </div>
+      <div class="learner-classrun-item__value">
+        {{item.totalParticipant}}/{{item.maxClassSize}} {{item.totalParticipant > 1 ?  "Participants" : "Participant" | translator}}
+      </div>
+    </div>
+    <div class="learner-classrun-item__button">
+      <ng-container *ngIf="showActionButton">
+
+        <button kendoButton
+                *ngIf="applyClassRunState != null && !showApplyButton && !showChangeClassButton && !showWithdrawButton"
+                [primary]="true"
+                [disabled]="true">
+          {{ applyClassRunStateText | translator}}
+        </button>
+
+        <button class="learner-classrun-item__btn-link"
+                kendoButton
+                *ngIf="showWithdrawalReason"
+                [primary]="false"
+                (click)="onWithdrawalReasonClicked()">
+          {{ "Withdrawal Reason" | translator}}
+        </button>
+        <button kendoButton
+                *ngIf="showApplyButton"
+                [ngClass]="{'learner-classrun-item__btn-link': showApplyAgain}"
+                [primary]="true"
+                (click)="applyClicked()">
+          {{ (showApplyAgain ? "Apply Again" : "Apply") | translator}}
+        </button>
+        <button kendoButton
+                *ngIf="showChangeClassButton && !readyToLearn"
+                [primary]="false"
+                (click)="onChangeClassClicked()">
+          {{ "Change class run" | translator }}
+        </button>
+        <button kendoButton
+                *ngIf="showWithdrawButton && !readyToLearn"
+                [ngClass]="{'learner-classrun-item__btn-link': isWithdrawAgain}"
+                [primary]="false"
+                (click)="onWithdrawClicked()">
+          {{ (isWithdrawAgain ? "Withdraw Again" : "Withdraw") | translator}}
+        </button>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <div class="learner-classrun-item__expand"
+       [hidden]="!isExpanding">
+    <div class="learner-classrun-item__header">
+      <div class="learner-classrun-item__icon"
+           [ngClass]="{'normal': !isExpandingClassRun, 'expanding': isExpandingClassRun}"
+           (click)="isExpandingClassRun = !isExpandingClassRun"></div>
+      <img src="assets/images/icons/class-run.svg">
+      {{"Class Run information" | translator }}
+    </div>
+    <div class="learner-classrun-item__detail"
+         [hidden]="!isExpandingClassRun">
+      <div class="learner-classrun-item__information">
+        <div class="information-left">
+          <div class="learner-classrun-item__title">
+            {{"Class run code" | translator }}
+          </div>
+          <div class="learner-classrun-item__value learner-classrun-item__value--uppercase">
+            {{item.classRunCode}}
+          </div>
+        </div>
+      </div>
+      <div class="learner-classrun-item__information information-two-col">
+        <div class="information-left">
+          <div class="learner-classrun-item__title">
+            {{"Application Start Date" | translator }}
+          </div>
+          <div class="learner-classrun-item__value">
+            {{item.applicationStartDate | date: 'dd/MM/yyyy - HH:mm'}}
+          </div>
+        </div>
+        <div class="information-right">
+          <div class="learner-classrun-item__information">
+            <div class="learner-classrun-item__title">
+              {{"Application End Date" | translator }}
+            </div>
+            <div class="learner-classrun-item__value">
+              {{item.applicationEndDate | date: 'dd/MM/yyyy - HH:mm'}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="learner-classrun-item__information information-two-col">
+        <div class="information-left">
+          <div class="learner-classrun-item__title">
+            {{"Facilitator's Name" | translator }}
+          </div>
+          <ng-container *ngIf="item.facilitators && item.facilitators.length > 0">
+            <div class="learner-classrun-item__faciliatator"
+                 *ngFor="let facilitator of item.facilitators">
+              <owner-info [owner]="facilitator"></owner-info>
+            </div>
+          </ng-container>
+        </div>
+        <div class="information-left">
+          <div class="learner-classrun-item__title">
+            {{"Class size" | translator }}
+          </div>
+          <div class="learner-classrun-item__value">
+            {{item.maxClassSize}} {{"persons" | translator}}
+          </div>
+        </div>
+      </div>
+      <div class="learner-classrun-item__information"
+           *ngIf="showLinkCommunity">
+        <div class="information-left">
+          <div class="learner-classrun-item__title">
+            {{"Community" | translator }}
+          </div>
+          <div class="learner-classrun-item__value learner-classrun-item__value--link"
+               (click)="openCslWindow()">
+            {{ item.classTitle }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="learner-classrun-item__section">
+      <div class="learner-classrun-item__title section-title"> {{"Sessions" | translator }}</div>
+      <div class="learner-classrun-item__empty-session"
+           *ngIf="!item.sessions || !item.sessions.length">{{ "There is no session." | translator}}</div>
+      <ng-container *ngIf="item.sessions && item.sessions.length">
+        <div class="learner-classrun-item__session"
+             [ngClass]="{'learner-classrun-item__session--active':
+             expandingSessions[session.id] || (upcomingSession && session.id === upcomingSession.id)}"
+             *ngFor="let session of item.sessions">
+          <div class="learner-classrun-item__session-info">
+
+            <div class="learner-classrun-item__icon"
+                 [ngClass]="{'normal': !expandingSessions[session.id], 'expanding': expandingSessions[session.id]}"
+                 (click)="onToggleSession(session.id)"></div>
+
+            <div class="learner-classrun-item__session-info-title">
+              <img src="assets/images/icons/book-blue.svg">
+              {{ session.sessionTitle }}
+            </div>
+            <div class="learner-classrun-item__session-info-date">
+              <ng-template #startTimeTemplate="">
+                {{ session.startTime | date: 'dd/MM/yyyy' }}
+              </ng-template>
+              <status-indicator *ngIf="attendanceTrackingDict[session.id] &&
+                                (attendanceTrackingDict[session.id].status != null ||
+                                attendanceTrackingDict[session.id].isCodeScanned === true);
+                                else startTimeTemplate"
+                                [currentStatus]="currentStatusMapping(attendanceTrackingDict[session.id])"
+                                [mapping]="sessionMapping"></status-indicator>
+            </div>
+          </div>
+          <div class="learner-classrun-item__session-detail"
+               [hidden]="!expandingSessions[session.id]">
+            <div class="learner-classrun-item__session-item">
+              <div class="learner-classrun-item__group-date">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/time.svg">
+                  {{ 'Start Time' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{ session.startTime | date: 'HH:mm' }}
+                </div>
+              </div>
+              <div class="learner-classrun-item__group-date">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/time.svg">
+                  {{ 'End Time' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{ session.endTime | date: 'HH:mm' }}
+                </div>
+              </div>
+            </div>
+            <div class="learner-classrun-item__info">
+              <div class="learner-classrun-item__info-left">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/location.svg">
+                  {{ 'Venue' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">{{ getVenue(session) }}</div>
+              </div>
+              <div class="learner-classrun-item__info-button-check-in">
+                <button *hasPermission="[checkinPermissionKey, showCheckin(session)]"
+                        kendoButton
+                        (click)="onCheckinClicked(session)"
+                        [primary]="true">{{'Check-in' | translator}}</button>
+                <ng-container *ngIf="isAbsent(session)">
+                  <span class="learner-classrun-item__cant-participate"
+                        *ngIf="!hasAbsenceMessage(session)"
+                        (click)="onCantParticipate(session)">{{"Unable to participate?" | translator}}</span>
+                  <span class="learner-classrun-item__cant-participate"
+                        *ngIf="hasAbsenceMessage(session)"
+                        (click)="viewAbsenceMessage(session)">{{"Reason for Absence" | translator}}
+                  </span>
+                </ng-container>
+              </div>
+            </div>
+            <div class="learner-classrun-item__info"
+                 *ngIf="canShowWebinar(session)">
+              <button kendoButton
+                      *ngIf="!canShowExpiredWebinar(session.endDateTime)"
+                      (click)="onJoinWebinarClicked(session.id)"
+                      [disabled]="!canJoinWebinar(session)"
+                      [primary]="true">{{ 'Join Webinar' | translator}}</button>
+
+              <div class="learner-classrun-item__value"
+                   *ngIf="canShowExpiredWebinar(session.endDateTime)">
+                {{ 'Webinar expired' | translator }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

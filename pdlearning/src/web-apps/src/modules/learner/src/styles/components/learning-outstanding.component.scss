@@ -1,0 +1,185 @@
+learning-outstanding-list {
+  flex: 0 0 50%;
+  max-width: 50%;
+
+  &.full {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    .outstanding-list {
+      margin: 0 50px 18px 50px;
+    }
+  }
+}
+
+.outstanding-list {
+  background-color: $color-white;
+  box-shadow: 0px 0px 10px #eeeeee;
+  border-radius: 5px;
+  margin: 0 10px 18px 50px;
+  padding-top: 15px;
+
+  &--empty {
+    background: none;
+    box-shadow: none;
+  }
+
+  .outstanding-container {
+    height: 386px;
+    max-height: 386px;
+    overflow-y: auto;
+
+    &.height-2 {
+      max-height: 617px;
+      height: 617px;
+    }
+
+    &.height-3 {
+      max-height: 1308px;
+      height: 1308px;
+    }
+  }
+
+  .outstanding-showmore {
+    text-align: center;
+    color: $color-blue-light;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.125rem;
+    cursor: pointer;
+    padding-bottom: 15px;
+  }
+
+  .learning-outstanding-title {
+    font-size: 1.125rem;
+    margin: 0 15px 20px 15px;
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+    color: $color-blue-light;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .learning-outstanding-item {
+    padding: 15px 0;
+    margin: 0 15px;
+    border-bottom: 1px solid $color-gainsboro;
+
+    &.last {
+      border-bottom: none;
+    }
+  }
+
+  .container-table {
+    padding: 0 15px;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    font-size: $font-base;
+    font-weight: normal;
+
+    >thead th {
+      vertical-align: middle;
+      padding: 8px;
+      text-align: left;
+      font-weight: 500;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    >tbody td {
+      padding: 8px;
+      vertical-align: middle;
+      border-top: 1px solid $color-gainsboro;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &[colspan] {
+        padding-top: 0;
+        border-top: none;
+      }
+
+      &.outstanding-title {
+        font-weight: 500;
+
+        .title-group {
+          display: flex;
+          flex-direction: row;
+
+          .icon {
+            border-radius: 0;
+            margin-right: 5px;
+            padding-left: 0;
+            vertical-align: middle;
+          }
+
+          div {
+            display: inline-block;
+            line-height: 32px;
+          }
+        }
+      }
+
+      .container-button {
+        text-align: right;
+
+        button {
+          height: 40px;
+
+          &[disabled] {
+            pointer-events: auto;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #fff;
+              color: $color-light-gray;
+            }
+          }
+        }
+      }
+
+      .progress-container {
+        @include flex-column-container;
+        flex-grow: 1;
+        justify-content: center;
+        text-align: center;
+        font-family: Roboto;
+        margin-bottom: 15px;
+
+        .card-progress {
+          height: 6px;
+          background: $light-green-200;
+
+          .progress-inner {
+            background: $light-green;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+learning-outstanding-page {
+  width: 100%;
+  margin-bottom: 18px;
+
+  .outstanding-list {
+    margin: 0 40px;
+
+    .outstanding-container {
+      height: 100%;
+      max-height: none;
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<div class="form-assessment-rubric-editor">
+  <div class="form-assessment-rubric-editor__title">{{ type | uppercase }}</div>
+
+  <div *ngIf="type !== 'Rubric'"
+       cdkDropList
+       (cdkDropListDropped)="onAssessmentDataDropped($event)">
+    <div class="form-assessment-rubric-editor__drop-zone"
+         *ngFor="let assessmentData of editableData; let i = index; trackBy: assessmentRubricTrackByFn"
+         cdkDrag>
+      <div class="form-assessment-rubric-editor__drop-zone drop-handle"
+           [hidden]="readOnly"
+           cdkDragHandle>
+        <span class="k-icon k-i-move"> </span>
+      </div>
+      <form-assessment-indicator [data]="assessmentData"
+                                 [readOnly]="readOnly"
+                                 [canShowTitle]="canShowTitle"
+                                 [contextMenuItems]="contextMenuItems"
+                                 [canShowPercentage]="canShowPercentage"
+                                 [canShowDescription]="canShowDescription"
+                                 [currentPercentage]="currentPercentage"
+                                 [canDelete]="canDeleteAssessment()"
+                                 [canMoveUp]="canMoveUpAssessment(assessmentData.id)"
+                                 [canMoveDown]="canMoveDownAssessment(assessmentData.id)"
+                                 (onMenuItemSelect)="onMenuItemSelect($event, assessmentData.id)"
+                                 (onAssessmentDataChange)="updateAssessmentData($event)">
+
+        <div titleAdditionalValidate="">
+          <div class="form-question-editor__logic-validation-errors alert -danger"
+               *ngIf="rubricTitleValidationErrors.length != 0 && getTitleError(assessmentData.id)">
+            <div>{{ getTitleError(assessmentData.id) | translator}}</div>
+          </div>
+        </div>
+
+        <div scaleAdditionalValidate="">
+          <div class="form-question-editor__logic-validation-errors alert -danger"
+               *ngIf="rubricValueValidationErrors.length != 0 && getScaleError(assessmentData.id)">
+            <div>{{ getScaleError(assessmentData.id) | translator}}</div>
+          </div>
+        </div>
+
+      </form-assessment-indicator>
+    </div>
+  </div>
+
+  <div class="form-assessment-rubric-editor__rubric-edit-container"
+       *ngIf="type === 'Rubric'">
+    <div *ngFor="let scale of scaleData; let i = index; trackBy: assessmentRubricTrackByFn">
+      <div class="form-assessment-rubric-editor__rubric-scale-title"
+           [ngClass]="{ '-empty': !scale.questionTitle }">
+        {{ scale.questionTitle || '- N/A' }}
+      </div>
+      <div class="form-assessment-rubric-editor__option"
+           *ngFor="let criteria of criteriaData; let i = index; trackBy: assessmentRubricTrackByFn">
+        <div class="form-assessment-rubric-editor__rubric-criteria-title"
+             [ngClass]="{ '-empty': !criteria.questionTitle }">
+          {{ criteria.questionTitle || '- N/A' }}
+        </div>
+        <input class="form-assessment-rubric-editor__option-input"
+               [ngClass]="{ '-readonly': readOnly }"
+               [ngModel]="getRubricValue(scale.id, criteria.id)"
+               (ngModelChange)="onRubricValueChange($event, scale.id, criteria.id)"
+               [readonly]="readOnly"
+               placeholder="Value"
+               kendoTextBox>
+      </div>
+    </div>
+  </div>
+</div>

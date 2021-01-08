@@ -1,0 +1,58 @@
+<div class="learner-assignments">
+  <!--Loop items-->
+  <ng-container *ngIf="items && items.length > 0; else showingEmptyMsg">
+    <div class="learner-assignments-item"
+         *ngFor="let item of items">
+      <div class="learner-assignments-item__title">
+        <div class="learner-assignments-item__title-icon"><img src="assets/images/icons/assignments.svg"></div>
+        <div class="learner-assignments-item__title-label">
+          <span (click)="onAssignmentClicked(item)">{{item.assignment.title}}</span>
+          <div class="learner-assignments-item__title-status"
+               *ngIf="item.myAssignment.status !== MyAssignmentStatus.NotStarted">
+            <status-indicator [currentStatus]="item.myAssignment.status"
+                              [mapping]="statusColorMap"></status-indicator>
+            ({{'score'| translator }} {{item.score}}/{{item.totalScore}})
+          </div>
+        </div>
+      </div>
+
+      <div class="learner-assignments-item__start-date">
+        <div class="learner-assignments-item__start-date-title">
+          {{"Start Date" | translator}}
+        </div>
+        <div class="learner-assignments-item__start-date-content">
+          {{item.participantAssignmentTrack.startDate | date: 'dd/MM/yyyy - HH:mm'}}
+        </div>
+      </div>
+
+      <div class="learner-assignments-item__end-date">
+        <div class="learner-assignments-item__end-date-title">
+          {{"End Date" | translator}}
+        </div>
+        <div class="learner-assignments-item__end-date-content">
+          {{item.participantAssignmentTrack.endDate | date: 'dd/MM/yyyy - HH:mm'}}
+        </div>
+      </div>
+      <div class="learner-assignments-item__button">
+        <button kendoButton
+                [primary]="false"
+                (click)="onAssignmentClicked(item,true)">
+          <span class="learner-assignments__noti"
+                *ngIf="item.myAssignment?.commentNotSeenIds?.length > 0"></span>
+          {{getButtonText() | translator}}
+        </button>
+      </div>
+
+      <!--if button have comments, add class"-have-comments"-->
+      <!-- <div class="learner-assignments-item__button -have-comments">
+      <span>1</span>
+      <button kendoButton>
+        Comments
+      </button>
+    </div> -->
+    </div>
+  </ng-container>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator}}</span>
+  </ng-template>
+</div>

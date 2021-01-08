@@ -1,0 +1,21 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <ecertificate-layout-selection [form]="form"
+                                       [eCertificateTemplate]="eCertificateTemplate"
+                                       [mode]="mode"></ecertificate-layout-selection>
+      </div>
+    </div>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content">
+        <ecertificate-template-customise *ngIf="eCertificateTemplate.selectedLayout"
+                                         [form]="form"
+                                         [eCertificateTemplate]="eCertificateTemplate"
+                                         [mode]="mode"></ecertificate-template-customise>
+      </div>
+    </div>
+  </div>
+</div>

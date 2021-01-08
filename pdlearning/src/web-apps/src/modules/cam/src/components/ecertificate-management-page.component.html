@@ -1,0 +1,69 @@
+<div class="content-management-container">
+  <div class="content-management">
+    <div class="management-toolbar"
+         *ngIf="selectedTab === CAMTabConfiguration.AllECertificateTab">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchTextForECertificate"
+                        [placeholder]="'Search in e-certificate' | translator"
+                        (search)="onSubmitSearchForECertificate()"></search-input>
+        </div>
+      </div>
+      <div class="management-toolbar__right-container">
+        <button *ngIf="canCreateECertificate()"
+                kendoButton
+                [icon]="'plus'"
+                [primary]="true"
+                (click)="onCreateECertificate()">
+          {{ 'Create New' | translator }}
+        </button>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="selectedTab === CAMTabConfiguration.IssuanceTrackingTab">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchTextForIssuanceTracking"
+                        [placeholder]="'Search in learner, course' | translator"
+                        (search)="onSubmitSearchForIssuanceTracking()"></search-input>
+        </div>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    #coursePlanningStickyTabHeaderElement="stickyTabHeaderElement"
+                    stickyTabHeaderElement>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.AllECertificateTab">
+        <ng-template kendoTabTitle="">
+          {{ 'E-Certificate' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-ecertificate-grid [filter]="filterForECertificate"
+                                  [searchType]="SearchECertificateType.CustomECertificateTemplateManagement"
+                                  [stickyDependElement]="coursePlanningStickyTabHeaderElement.headerElement"
+                                  [mergeHeader]="true"
+                                  [contextMenuItems]="contextMenuItemsForECertificateTemplates"
+                                  (selectedContextMenu)="selectedContextMenuECertificateTemplateList($event)"
+                                  (viewECertificate)="onViewECertificateTemplate($event)"
+                                  [indexActionColumns]="[0, 4]"></list-ecertificate-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.IssuanceTrackingTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Issuance Tracking' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid [displayColumns]="displayColumnsIssuanceTracking"
+                                    [searchType]="SearchRegistrationsType.IssuanceTracking"
+                                    [filter]="filterForIssuanceTracking"
+                                    [stickyDependElement]="coursePlanningStickyTabHeaderElement.headerElement"
+                                    (viewRegistration)="onViewIssuanceTracking($event)">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

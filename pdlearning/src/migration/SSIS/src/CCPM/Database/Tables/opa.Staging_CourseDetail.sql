@@ -1,0 +1,35 @@
+IF OBJECT_ID(N'opa.Staging_CourseDetail', N'U') IS NULL
+BEGIN
+	CREATE TABLE opa.Staging_CourseDetail(
+	ID	INT NOT NULL,
+	code varchar(255) NULL,
+	course_code	varchar(255) NULL,
+	class_code	varchar(255) NULL,
+	coursetitle	nvarchar(255) NULL,
+	description	ntext NULL,
+	objective ntext NULL,
+	targetaudience nvarchar(max) NULL,
+	sdate date NULL,
+	edate	date NULL,
+	duration_hour Int NULL,
+	duration_minutes Int NULL,
+	end_of_reg	date NULL,
+	traisi_is_listed varchar(50) NULL,
+	traisi_course_type	varchar(255) NULL,
+	eduLevelPri	tinyint NULL,
+	eduLevelSec	tinyint NULL,
+	eduLevelPreU tinyint NULL,
+	keywords nvarchar(255) NULL,
+	trainingagency	nvarchar(255) NULL,
+	agg_Id	Int NULL,
+	creator__id	Int NULL,
+	owner__id Int NULL,
+	source	varchar(255) NULL,
+	status varchar(255) NULL,
+	is_approve	varchar(2) NULL,
+	ctime	datetime NULL,
+	publisher__id Int NULL,
+	publish_time datetime NULL,
+	PRIMARY KEY (ID)
+	)
+END

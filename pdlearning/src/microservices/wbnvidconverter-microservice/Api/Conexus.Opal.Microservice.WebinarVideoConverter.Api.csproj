@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <RootNamespace>Microservice.WebinarVideoConverter</RootNamespace>
+  </PropertyGroup>
+
+  <!--Nuget Package References-->
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.ECS" Version="$(AWSSDK_ECSVersion)" />
+    <PackageReference Include="AWSSDK.S3" Version="$(AWSSDKS3PackageVersion)" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="$(FluentValidationAspNetCorePackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(MicrosoftEntityFrameworkCoreDesignPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(MicrosoftEntityFrameworkCoreProxiesPackageVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(MicrosoftEntityFrameworkCoreSqlServerPackageVersion)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleAspNetCorePackageVersion)" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="$(IdentityServer4AccessTokenValidationPackageVersion)" />
+  </ItemGroup>
+
+  <!--Thunder Package References-->
+  <ItemGroup>
+    <Reference Include="Thunder.Platform.AspNetCore" />
+    <Reference Include="Thunder.Platform.Cqrs" />
+    <Reference Include="Thunder.Platform.Core" />
+    <Reference Include="Thunder.Platform.EntityFrameworkCore" />
+  </ItemGroup>
+
+  <!--Others-->
+  <ItemGroup>
+    <Reference Include="Conexus.Opal.AccessControl" />
+    <Reference Include="Conexus.Opal.Connector.RabbitMQ" />
+    <Reference Include="Conexus.Opal.OutboxPattern" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\shared\sharedsettings.json" Link="sharedsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\ThunderSwaggerMiddlewareExtensions.cs" Link="ThunderSwaggerMiddlewareExtensions.cs" />
+    <Compile Include="..\..\shared\ThunderSwaggerServiceCollectionExtensions.cs" Link="ThunderSwaggerServiceCollectionExtensions.cs" />
+    <Compile Include="..\..\shared\AuthorizationFilter.cs" Link="AuthorizationFilter.cs" />
+    <Compile Include="..\..\shared\ThunderAuthenticationMiddleware.cs" Link="ThunderAuthenticationMiddleware.cs" />
+
+    <Compile Include="..\..\shared\OutboxPattern\OutboxQueueController.cs" Link="Controllers\OutboxQueueController.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\OutboxMessageConfiguration.cs" Link="Infrastructure\EntityConfigurations\OutboxMessageConfiguration.cs" />
+    <Compile Include="..\..\shared\OutboxPattern\ScopedOutboxOpalMqEventHandler.cs" Link="Application\Events\ScopedOutboxOpalMqEventHandler.cs" />
+
+    <Compile Include="..\..\shared\Infrastructure\HttpService.cs" Link="Infrastructure/HttpService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
+
+</Project>

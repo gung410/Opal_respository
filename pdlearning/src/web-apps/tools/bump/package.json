@@ -1,0 +1,49 @@
+{
+  "name": "@thunder/bump",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://dev.azure.com/orientsoftwaredevelopment/_git/ThunderPlatform"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "bump": "./bin/bump.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc -w --preserveWatchOutput",
+    "test": "jest",
+    "test-watch": "jest --watch"
+  },
+  "dependencies": {
+    "fs-extra": "8.0.1",
+    "git-url-parse": "11.1.2",
+    "glob": "7.1.4",
+    "prompts": "2.1.0",
+    "semver": "6.1.1",
+    "yargs-parser": "13.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "8.0.0",
+    "@types/git-url-parse": "9.0.0",
+    "@types/glob": "7.1.1",
+    "@types/jest": "24.0.17",
+    "@types/minimatch": "3.0.3",
+    "@types/node": "8.10.51",
+    "@types/prompts": "2.0.0",
+    "@types/semver": "6.0.0",
+    "@types/tmp": "0.1.0",
+    "@types/yargs-parser": "13.0.0",
+    "find-free-port": "2.0.0",
+    "jest": "24.8.0",
+    "remark-parse": "7.0.1",
+    "tmp": "0.1.0",
+    "ts-jest": "24.0.2",
+    "typescript": "3.5.1",
+    "verdaccio": "4.2.2",
+    "verdaccio-memory": "8.0.0",
+    "unified": "8.3.2",
+    "unist-util-select": "2.0.2"
+  }
+}

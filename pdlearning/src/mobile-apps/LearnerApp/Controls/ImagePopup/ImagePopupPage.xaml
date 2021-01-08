@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:imagePopup="clr-namespace:LearnerApp.Controls.ImagePopup;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    xmlns:forms1="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    x:Class="LearnerApp.Controls.ImagePopup.ImagePopupPage"
+    x:DataType="imagePopup:ImagePopupViewModel">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <ContentView
+        x:Name="RootView"
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+        <controls:LearnerContentFrame
+            Padding="20">
+            <Grid RowDefinitions="*, 2" RowSpacing="2">
+                <AbsoluteLayout
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+                    <forms:CachedImage
+                        AbsoluteLayout.LayoutBounds="1,1,1,1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Aspect="AspectFit"
+                        CacheType="Disk"
+                        Source="{Binding ImageUrl}"
+                        HeightRequest="{Binding Path=Height, Source={x:Reference RootView}}"
+                        WidthRequest="{Binding Path=Width, Source={x:Reference RootView}}" />
+
+                    <controls:LearnerContentFrame
+                        AbsoluteLayout.LayoutBounds="1, 0"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" >
+
+                        <Grid>
+                            <StackLayout Orientation="Horizontal"  IsVisible="{Binding IsDownloading, Converter={StaticResource InverseBoolConverter}}">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding DownloadFileCommand}"/>
+                                </StackLayout.GestureRecognizers>
+
+                                <forms1:SvgCachedImage
+                                    Aspect="AspectFit"
+                                    HeightRequest="12"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding IsDownloadButtonVisible}"
+                                    Source="download.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="12" />
+
+                                <Label Text="Download" />
+                            </StackLayout>
+
+                            <ActivityIndicator
+                                HeightRequest="15"
+                                WidthRequest="15"
+                                IsRunning="True"
+                                IsVisible="{Binding IsDownloading}"/>
+                        </Grid>
+                    </controls:LearnerContentFrame>
+                </AbsoluteLayout>
+
+                <ProgressBar
+                    Grid.Row="1"
+                    IsVisible="{Binding IsDownloading}"
+                    Progress="{Binding ProgressBarDownload}"
+                    ProgressColor="{StaticResource TabSelected}" />
+            </Grid>
+
+        </controls:LearnerContentFrame>
+    </ContentView>
+</pages:PopupPage>

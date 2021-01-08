@@ -1,0 +1,66 @@
+<div class="assessment-rubric-compare-indicator">
+  <div class="assessment-rubric-compare-indicator__title">{{ type | uppercase }}</div>
+
+  <div *ngIf="type !== 'Rubric'">
+    <div class="assessment-rubric-compare-indicator__main-container"
+         *ngFor="let assessmentData of editableData; let i = index;"
+         [ngClass]="{
+            '--blank': checkAssessmentDataBlankArea(assessmentData.changeType),
+            '--remove': assessmentData.changeType === ITEMCHANGETYPE.Removed,
+            '--add-new': assessmentData.changeType === ITEMCHANGETYPE.AddNew
+          }">
+
+      <div class="assessment-rubric-compare-indicator__item-container">
+        <div class="assessment-rubric-compare-indicator__item-title">{{ 'Title' | translator }} :</div>
+        <div class="assessment-rubric-compare-indicator__input-area"
+             *ngIf="assessmentData?.formQuestions[0]?.questionTitle"
+             [innerHTML]="assessmentData?.formQuestions[0]?.questionTitle | safeHtml:'html'">
+        </div>
+      </div>
+
+      <div class="assessment-rubric-compare-indicator__item-container"
+           *ngIf="canShowScaleValue">
+        <div class="assessment-rubric-compare-indicator__item-title">{{ "Scale's Value" | translator }} :</div>
+        <div class="assessment-rubric-compare-indicator__input-area"
+             *ngIf="assessmentData?.formQuestions[0]?.score"
+             [innerHTML]="assessmentData?.formQuestions[0]?.score | safeHtml:'html'">
+        </div>
+      </div>
+
+      <div class="assessment-rubric-compare-indicator__item-container"
+           *ngIf="canShowDescripton">
+        <div class="assessment-rubric-compare-indicator__item-title">{{ 'Description' | translator }} :</div>
+        <div class="assessment-rubric-compare-indicator__input-area"
+             *ngIf="assessmentData?.formQuestions[0]?.description"
+             [innerHTML]="assessmentData?.formQuestions[0]?.description | safeHtml:'html'">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="assessment-rubric-compare-indicator__rubric-edit-containerr"
+       *ngIf="type === 'Rubric'">
+    <div *ngFor="let scale of scaleData; let i = index;">
+      <div class="assessment-rubric-compare-indicator__rubric-scale-title"
+           *ngIf="!scale.questionTitle"
+           [ngClass]="{ '-empty': !scale.questionTitle }"> {{ '- N/A' }} </div>
+      <div class="assessment-rubric-compare-indicator__rubric-scale-title"
+           *ngIf="scale.questionTitle"
+           [innerHTML]="scale?.questionTitle | safeHtml:'html'">
+      </div>
+      <div class="assessment-rubric-compare-indicator__option"
+           *ngFor="let criteria of criteriaData; let i = index;">
+        <div class="assessment-rubric-compare-indicator__rubric-scale-title"
+             *ngIf="!criteria.questionTitle"
+             [ngClass]="{ '-empty': !criteria.questionTitle }"> {{ '- N/A' }} </div>
+        <div class="assessment-rubric-compare-indicator__rubric-scale-title"
+             *ngIf="criteria.questionTitle"
+             [innerHTML]="criteria?.questionTitle | safeHtml:'html'">
+        </div>
+        <div class="assessment-rubric-compare-indicator__rubric-criteria-value"
+             [innerHTML]="getRubricValue(scale.id, criteria.id) | safeHtml:'html'">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

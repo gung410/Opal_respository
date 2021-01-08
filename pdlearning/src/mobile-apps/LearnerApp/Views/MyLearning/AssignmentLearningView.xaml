@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.MyLearning.AssignmentLearningView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:digitalContentPlayer="clr-namespace:LearnerApp.Controls.DigitalContentPlayer;assembly=LearnerApp"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:myLearning="clr-namespace:LearnerApp.ViewModels.MyLearning;assembly=LearnerApp"
+	xmlns:viewModel="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	ios:Page.UseSafeArea="False"
+	viewModel:ViewModelLocator.AutoWireViewModel="true"
+	x:DataType="myLearning:AssignmentLearningViewModel"
+	BackgroundColor="White"
+	Shell.NavBarIsVisible="False">
+
+	<StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+		<Grid x:Name="ContentMetadataView">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="30" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="30" />
+			</Grid.ColumnDefinitions>
+			<ContentView Padding="5">
+				<ContentView.GestureRecognizers>
+					<TapGestureRecognizer Tapped="OnClose_Tapped" />
+				</ContentView.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="20"
+					HorizontalOptions="Start"
+					Source="close.svg"
+					VerticalOptions="Center"
+					WidthRequest="20" />
+			</ContentView>
+			<Label
+				Grid.Column="1"
+				FontFamily="{StaticResource RobotoRegular}"
+				FontSize="20"
+				HorizontalOptions="Center"
+				Text="{Binding PageTitle}"
+				TextColor="#313552"
+				VerticalOptions="CenterAndExpand" />
+		</Grid>
+		<digitalContentPlayer:DigitalContentPlayer
+			x:Name="AssignmentPlayer"
+			Data="{Binding DigitalContentPlayerData}"
+			HorizontalOptions="FillAndExpand"
+			VerticalOptions="FillAndExpand" />
+	</StackLayout>
+</common:BaseLearnerContentPage>

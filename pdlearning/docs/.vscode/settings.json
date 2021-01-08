@@ -1,0 +1,9 @@
+{
+    "omnisharp.autoStart": false,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+    "cSpell.words": [
+        "docfx"
+    ],
+}

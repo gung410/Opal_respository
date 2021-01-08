@@ -1,0 +1,99 @@
+<div class="personal-file-preview-dialog ccpm-dialog">
+  <kendo-panelbar class="panelbar-custom">
+    <kendo-panelbar-item class="panelbar-custom__item"
+                         title
+                         [icon]="'arrow-60-right'"
+                         [iconClass]="'panelbar-custom__icon-collapse'">
+      <ng-template kendoPanelBarItemTitle="">
+        <div class="panelbar-custom__title">{{'FILE INFORMATION' | translator}}
+          <span class="mini-title"
+                *ngIf="personalFileVm.fileName">
+            (<span class="sub-title"
+                  title="{{personalFileVm.fileName}}">{{ personalFileVm.fileName }}</span>)
+          </span>
+        </div>
+      </ng-template>
+      <ng-template kendoPanelBarContent="">
+        <div class="personal-file-indicator">
+          <div class="personal-file-info">
+            <div class="personal-file-info__file-name">{{'File Name' | translator}}: </div>
+            <div class="personal-file-info__file-size">{{ personalFileVm.fileName }}</div>
+          </div>
+
+          <div class="personal-file-info">
+            <div class="personal-file-info__file-name">{{'File Size' | translator}}: </div>
+            <div class="personal-file-info__file-size">{{ personalFileVm.fileSize | fileSizeDisplay }}</div>
+          </div>
+
+          <div class="personal-file-info">
+            <div class="personal-file-info__file-name">{{'File Type' | translator}}: </div>
+            <div class="personal-file-info__file-size">{{ getFileTypeDisplay(personalFileVm.fileType) }}</div>
+          </div>
+
+          <div class="personal-file-info">
+            <div class="personal-file-info__file-name">{{'File Extension' | translator}}: </div>
+            <div class="personal-file-info__file-size">{{ personalFileVm.fileExtension | uppercase }}</div>
+          </div>
+
+          <div class="personal-file-info">
+            <div class="personal-file-info__file-name">{{'Upload Time' | translator}}: </div>
+            <div class="personal-file-info__file-size">{{ personalFileVm.createdDate | relativeTimespan: 'dd/MM/yyyy h:mm a' }}</div>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-panelbar-item>
+  </kendo-panelbar>
+  <div class="dialog-body">
+    <div class="personal-file-preview">
+      <ng-container *ngIf="contentUrl || canShowScorm">
+        <div class="personal-file-preview__error description-label"
+             *ngIf="isShowMessagePreventCookie">
+          It seems that your browser is blocking 3rd party <span style="color: blue;">session cookies</span>,
+          which are required for the application.
+          To resolve this issue, please update your settings to allow for 3rd party cookies.
+          <p>Please follow these steps: Settings → Safari app → scroll down to Privacy & Security → uncheck Prevent
+            Cross-Site Tracking and Block All Cookies → restart your browser.</p>
+          <p>If this does not resolve the issue, please use a desktop version of the application.</p>
+        </div>
+        <ng-container *ngIf="!isShowMessagePreventCookie">
+          <div class="personal-file-preview__container --document"
+               *ngIf="canShowDocument">
+            <preview-document-player viewer="office"
+                                     [url]="contentUrl">
+            </preview-document-player>
+          </div>
+
+          <div class="personal-file-preview__container"
+               *ngIf="canShowVideo || canShowAudio">
+            <preview-video-player *ngIf="canShowVideo"
+                                  [src]="contentUrl"
+                                  (videoLoadEvent)="handleImgError($event)"></preview-video-player>
+            <preview-audio-player *ngIf="canShowAudio"
+                                  [src]="contentUrl"
+                                  (audioLoadEvent)="handleImgError($event)"></preview-audio-player>
+          </div>
+
+          <div class="personal-file-preview__container --scorm"
+               *ngIf="canShowScorm">
+            <scorm-player class="personal-file-preview__scorm-player"
+                          [digitalContentId]="personalFileVm.id"
+                          [fileLocation]="contentUrl"></scorm-player>
+          </div>
+
+          <div class="personal-file-preview__container --image"
+               *ngIf="canShowImage">
+            <img title="{{personalFileVm.fileName | translator}}"
+                 [src]="contentUrl"
+                 (error)="handleImgError($event)">
+          </div>
+        </ng-container>
+
+      </ng-container>
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button class="personal-file-preview__button"
+            (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+  </div>
+</div>

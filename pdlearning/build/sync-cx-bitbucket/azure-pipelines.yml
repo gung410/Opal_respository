@@ -1,0 +1,27 @@
+name: $(Date:yyyyMMdd)$(rev:.r)
+
+trigger:
+- master
+
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight sync
+  branches:
+    include:
+    - master
+    - releases/*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: mirror-git-repository-vsts-task@1
+  continueOnError: true
+  inputs:
+    sourceGitRepositoryUri: 'https://dev.azure.com/orientsoftwaredevelopment/OPAL20/_git/opal20-platform'
+    sourceGitRepositoryPersonalAccessToken: '3snogskdjys2jwperl37waoq3bciutzvx2yqdawnby2oib6mbceq'
+    destinationGitRepositoryUri: 'https://orient-toannm:pH4XmjEKjV2snfcEjuXx@bitbucket.org/cxdev/cx-opal20-platform'
+    destinationGitRepositoryPersonalAccessToken: ''

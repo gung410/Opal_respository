@@ -1,0 +1,53 @@
+<div class="digital-content-upload-dialog__header">
+  <div class="digital-content-upload-dialog__actions d-flex">
+    <span class="digital-content-upload-dialog__btn_close k-icon k-i-close"
+          (click)="closeDialog()"></span>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>{{'Embed URL' | globalTranslator}}</label>
+  <input kendoTextBox
+         (change)="updateEmbedIframe()"
+         [(ngModel)]="embedUrl">
+  <p class="text-warning">{{'Only support youtube links' | globalTranslator}}</p>
+</div>
+<ng-container>
+  <div class="form-group">
+    <div class="d-inline">
+      <label>{{'Width (px)' | globalTranslator}}</label>
+      <input class="k-textbox"
+             type="number"
+             (change)="updateEmbedIframe()"
+             opalNumeric
+             [(ngModel)]="width"
+             min="0">
+
+    </div>
+    <div class="d-inline">
+      <label>{{'Height (px)' | globalTranslator}}</label>
+      <input class="k-textbox"
+             type="number"
+             (change)="updateEmbedIframe()"
+             [(ngModel)]="height"
+             min="0">
+    </div>
+  </div>
+  <div class="form-group"
+       externalLinkGuard
+       [innerHTML]="preview">
+
+  </div>
+  <div class="actions row">
+    <div class="flex"></div>
+    <button (click)="insertEmbedHtml()"
+            [disabled]="!embedHtml"
+            kendoButton>
+      {{ 'OK' | globalTranslator }}
+    </button>
+    <button (click)="closeDialog()"
+            kendoButton>
+      {{ 'Cancel' | globalTranslator }}
+    </button>
+  </div>
+</ng-container>

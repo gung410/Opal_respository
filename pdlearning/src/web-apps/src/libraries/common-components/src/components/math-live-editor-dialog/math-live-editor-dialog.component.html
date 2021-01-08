@@ -1,0 +1,39 @@
+<div class="math-editor">
+  <div class="math-editor__header">
+    <span class="math-editor__close k-icon k-i-close"
+          (click)="closeDialog()"></span>
+  </div>
+
+  <div class="math-editor__body">
+    <iframe class="math-editor__iframe"
+            id="mathLiveIframe"
+            allowfullscreen="true"
+            webkitallowfullscreen="true"
+            mozallowfullscreen="true"
+            crossorigin="anonymous"
+            [src]="safeUrl"
+            (load)="onLoad()"
+            scrolling="no"
+            frameborder="0"
+            allowTransparency="true"
+            allow="encrypted-media"></iframe>
+    <div class="math-editor__actions">
+      <div class="math-editor__loading"
+           *ngIf="isSubmiting">
+        <img class="loading-icon"
+             src="assets/images/loading.gif"
+             alt="Loading">
+      </div>
+      <button [disabled]="canShowSubmitBtn() || isSubmiting"
+              (click)="insertEmbedHtml()"
+              kendoButton
+              [primary]="true">
+        {{ 'OK' | globalTranslator }}
+      </button>
+      <button (click)="closeDialog()"
+              kendoButton>
+        {{ 'Cancel' | globalTranslator }}
+      </button>
+    </div>
+  </div>
+</div>

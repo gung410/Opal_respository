@@ -1,0 +1,15 @@
+.video-annotation-player {
+  &__actions {
+    display: flex;
+    margin-left: auto;
+    background-color: $color-white;
+    padding-top: 8px;
+    border-top: 1px solid $color-gainsboro;
+  }
+  &__cancel {
+    margin-left: auto;
+  }
+  &__save {
+    margin-left: 8px;
+  }
+}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+	x:Class="LearnerApp.Controls.MyLearning.MyLearningPathsAddCourse"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:local="clr-namespace:LearnerApp.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+	BackgroundColor="{StaticResource ContentPageColor}"
+	mc:Ignorable="d">
+
+	<pages:PopupPage.Animation>
+		<animations:ScaleAnimation
+			DurationIn="300"
+			DurationOut="300"
+			EasingIn="SinOut"
+			EasingOut="SinIn"
+			HasBackgroundAnimation="True"
+			PositionIn="Center"
+			PositionOut="Center"
+			ScaleIn="1.2"
+			ScaleOut="0.8" />
+	</pages:PopupPage.Animation>
+
+	<StackLayout
+		Padding="10"
+		HorizontalOptions="FillAndExpand"
+		Spacing="10"
+		VerticalOptions="FillAndExpand">
+		<Frame
+			Padding="1"
+			BackgroundColor="White"
+			BorderColor="LightGray"
+			CornerRadius="4"
+			HasShadow="False"
+			HorizontalOptions="FillAndExpand"
+			IsClippedToBounds="True">
+			<StackLayout Padding="10,5,10,5" Orientation="Horizontal">
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="22"
+					Source="search.svg"
+					WidthRequest="22">
+					<ffimagesvg:SvgCachedImage.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding SearchCommand}" />
+					</ffimagesvg:SvgCachedImage.GestureRecognizers>
+				</ffimagesvg:SvgCachedImage>
+				<local:CustomEntry
+					ClearButtonVisibility="WhileEditing"
+					HorizontalOptions="FillAndExpand"
+					Placeholder="Search"
+					PlaceholderColor="LightGray"
+					ReturnCommand="{Binding SearchCommand}"
+					Text="{Binding TextSearch}" />
+			</StackLayout>
+		</Frame>
+
+		<StackLayout HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleSearchResult}">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding DismissSearchCommand}" />
+			</StackLayout.GestureRecognizers>
+			<StackLayout Orientation="Horizontal">
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="22"
+					Source="arrow_left.svg"
+					WidthRequest="22" />
+				<Label
+					FontSize="20"
+					HorizontalOptions="FillAndExpand"
+					MaxLines="1"
+					Text="{Binding TextSearched}"
+					TextType="Html" />
+			</StackLayout>
+		</StackLayout>
+
+		<CollectionView
+			x:Name="SourceList"
+			ItemsSource="{Binding CourseCollection}"
+			Scrolled="SourceList_Scrolled"
+			SelectedItem="{Binding ItemSelected}"
+			SelectionMode="Single"
+			VerticalOptions="FillAndExpand"
+			VerticalScrollBarVisibility="Never">
+			<CollectionView.EmptyView>
+				<StackLayout>
+					<Label HorizontalOptions="CenterAndExpand" Text="{Binding EmptyListStatus}" />
+				</StackLayout>
+			</CollectionView.EmptyView>
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Frame
+						Padding="10"
+						BorderColor="LightGray"
+						CornerRadius="4"
+						HasShadow="False"
+						HorizontalOptions="FillAndExpand"
+						IsClippedToBounds="True">
+						<StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+							<Frame
+								Padding="0"
+								BorderColor="LightGray"
+								CornerRadius="6"
+								HasShadow="False"
+								HeightRequest="60"
+								IsClippedToBounds="True"
+								VerticalOptions="Start">
+								<ffimagesvg:SvgCachedImage
+									Aspect="AspectFill"
+									DownsampleToViewSize="True"
+									Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='Card'}"
+									VerticalOptions="FillAndExpand"
+									WidthRequest="120" />
+							</Frame>
+							<Label
+								LineBreakMode="TailTruncation"
+								MaxLines="2"
+								Text="{Binding Name}"
+								VerticalOptions="CenterAndExpand" />
+						</StackLayout>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+
+		<StackLayout Orientation="Horizontal">
+			<Button
+				Padding="0"
+				BackgroundColor="White"
+				BorderColor="#D8DCE6"
+				BorderWidth="1"
+				Clicked="Cancel_Clicked"
+				CornerRadius="4"
+				FontSize="16"
+				HeightRequest="40"
+				HorizontalOptions="FillAndExpand"
+				Text="Cancel"
+				TextColor="{StaticResource MainBodyTextColor}" />
+			<Button
+				Padding="0"
+				BackgroundColor="{StaticResource MainBodyTextColor}"
+				Clicked="Done_Clicked"
+				CornerRadius="4"
+				FontSize="16"
+				HeightRequest="40"
+				HorizontalOptions="FillAndExpand"
+				Text="Done"
+				TextColor="White" />
+		</StackLayout>
+	</StackLayout>
+</pages:PopupPage>

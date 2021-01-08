@@ -1,0 +1,2540 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/24/2019 8:29:07 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HCM-NGUYETTT"
+  DTS:CreatorName="ORIENTSOFTWARE\nguyet.tran"
+  DTS:DTSID="{B5D4DABC-2CDE-4A7E-A40B-C8B4DA2BD6E8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1301.433"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CSL_4 1_ImportWallPost"
+  DTS:PackageType="5"
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{66D1BFC0-B469-4A17-8540-085308F70ED3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Wall Post]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{A2A235A4-30A6-4D40-B148-82D32383CFAB}"
+      DTS:ObjectName="Flat File Wall Post">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x0022_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="C:\NguyetTran\SSIS\OPAL1 - UAT data\Wall\group_wall_posts-[20191216-152026].csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ID"
+              DTS:DTSID="{D16A6F8C-0152-46BF-A77E-15299F421F90}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="aggregate__id"
+              DTS:DTSID="{F78FAED4-75B1-451B-9172-B63AAD427F30}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="title"
+              DTS:DTSID="{5AA92984-DE87-47C8-9D32-FED85055B7ED}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="isHL"
+              DTS:DTSID="{99B06A35-C515-4BF0-9248-482C7ED676B3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="302"
+              DTS:TextQualified="True"
+              DTS:ObjectName="content"
+              DTS:DTSID="{2DC07B8D-03EA-4AD2-B403-3B4F703516F9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="type"
+              DTS:DTSID="{A6430963-D9B1-42D8-BCA1-6BF68D37FD3A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="url"
+              DTS:DTSID="{0754F7F2-8C8D-4C39-9284-DF53A350E6D7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="res_slot"
+              DTS:DTSID="{5E117267-416C-4B48-8756-74A74D463117}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="res_label"
+              DTS:DTSID="{2C3254C4-0C37-4C21-B295-8B8FE2C2B2F9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="owner__id"
+              DTS:DTSID="{0DE42592-C1E0-41B1-A11B-D079C9A377B5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000A_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ctime"
+              DTS:DTSID="{F0638382-CABC-4AED-B745-2906677940D9}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLE DB Migration Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CB5290FB-D425-4DDD-9A5E-AFFA7C686B6F}"
+      DTS:ObjectName="OLE DB Migration Database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HCM-NGUYETTT;Initial Catalog=migration-intermediate-opal2-ccpm-learner;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Import_WallPost"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F92456F4-594D-4567-84C5-1907887985DE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Import_WallPost"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Import_WallPost\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_Import_WallPost\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\Derived Column.Inputs[Derived Column Input].Columns[content]"
+                      cachedCodepage="65001"
+                      cachedDataType="text"
+                      cachedName="content"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[content]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT_Import_WallPost\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Output].Columns[content]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Output].Columns[content]"
+                      name="content"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_NTEXT)#{Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[content]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_NTEXT)content</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT_Import_WallPost\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import_WallPost\FF_SRC_WallPost"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="FF_SRC_WallPost"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Wall Post]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Wall Post]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ID]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[ID]"
+                      length="50"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[aggregate__id]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[aggregate__id]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[aggregate__id]"
+                      name="aggregate__id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[title]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[title]"
+                      name="title"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[isHL]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[isHL]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[isHL]"
+                      name="isHL"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[content]"
+                      codePage="65001"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[content]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[content]"
+                      name="content"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[type]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[type]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[type]"
+                      name="type"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[url]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[url]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[url]"
+                      name="url"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_slot]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[res_slot]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_slot]"
+                      name="res_slot"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_label]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[res_label]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_label]"
+                      name="res_label"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[owner__id]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[owner__id]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[owner__id]"
+                      name="owner__id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ctime]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[ctime]"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ctime]"
+                      name="ctime"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[ID]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[aggregate__id]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="aggregate__id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[title]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[isHL]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="isHL" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[content]"
+                      codePage="65001"
+                      dataType="text"
+                      name="content" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[type]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[url]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="url" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[res_slot]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="res_slot" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[res_label]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="res_label" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[owner__id]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="owner__id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].ExternalColumns[ctime]"
+                      codePage="65001"
+                      dataType="str"
+                      length="4000"
+                      name="ctime" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE_DST_InvalidRecords_WallPost"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[mig].[ErrorLog]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[OLE DB Migration Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[OLE DB Migration Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[ErrorDescription]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="ErrorDescription"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDescription]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorDescription]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[ErrorColumnName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="ErrorColumnName"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumnName]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorColumnName]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[PackageName]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="PackageName"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[PackageName]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[PackageName]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[TaskName]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="TaskName"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[TaskName]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[TaskName]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[FileName]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="FileName"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[FileName]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[ErrorLogDate]"
+                      cachedDataType="date"
+                      cachedName="ErrorLogDate"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[Created]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorLogDate]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].Columns[IdNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="IdNumber"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorRecordId]"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[IdNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[PackageName]"
+                      dataType="wstr"
+                      length="256"
+                      name="PackageName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[TaskName]"
+                      dataType="wstr"
+                      length="256"
+                      name="TaskName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[FileName]"
+                      dataType="wstr"
+                      length="256"
+                      name="FileName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDescription]"
+                      codePage="1252"
+                      dataType="text"
+                      name="ErrorDescription" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[Created]"
+                      dataType="dbTimeStamp"
+                      name="Created" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorRecordId]"
+                      codePage="1252"
+                      dataType="text"
+                      name="ErrorRecordId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorRecordData]"
+                      dataType="nText"
+                      name="ErrorRecordData" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumnName]"
+                      codePage="1252"
+                      dataType="text"
+                      name="ErrorColumnName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE_DST_Raw_WallPost"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[opa].[Raw_WallPost]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">65001</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[OLE DB Migration Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[OLE DB Migration Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[ID]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ID"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[title]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="title"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[title]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[title]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[isHL]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="isHL"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[isHL]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[isHL]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[type]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="type"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[type]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[type]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[url]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="url"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[url]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[url]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[res_slot]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="res_slot"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[res_slot]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_slot]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[res_label]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="res_label"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[res_label]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[res_label]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[owner__id]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="owner__id"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[owner__id]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[owner__id]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[ctime]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="ctime"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ctime]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ctime]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[aggregate__id]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="4000"
+                      cachedName="aggregate__id"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[group_id]"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[aggregate__id]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].Columns[content]"
+                      cachedDataType="nText"
+                      cachedName="content"
+                      externalMetadataColumnId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[content]"
+                      lineageId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Output].Columns[content]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[group_id]"
+                      codePage="65001"
+                      dataType="text"
+                      name="group_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[title]"
+                      dataType="nText"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[isHL]"
+                      codePage="65001"
+                      dataType="text"
+                      name="isHL" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[content]"
+                      dataType="nText"
+                      name="content" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[type]"
+                      codePage="65001"
+                      dataType="text"
+                      name="type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[url]"
+                      dataType="nText"
+                      name="url" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[res_slot]"
+                      dataType="nText"
+                      name="res_slot" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[res_label]"
+                      dataType="nText"
+                      name="res_label" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[owner__id]"
+                      codePage="65001"
+                      dataType="text"
+                      name="owner__id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input].ExternalColumns[ctime]"
+                      codePage="65001"
+                      dataType="text"
+                      name="ctime" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;11"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="SCR_GetErrorDetails_WallPost"
+              version="11">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="30">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public override void ProcessInput(int InputID, string InputName, PipelineBuffer Buffer, OutputNameMap OutputMap)
+    {
+
+        if (InputName.Equals(@"Input 0", StringComparison.Ordinal))
+        {
+            Input0_ProcessInput(new Input0Buffer(Buffer, GetColumnIndexes(InputID), OutputMap));
+        }
+
+    }
+
+    public virtual void Input0_ProcessInput(Input0Buffer Buffer)
+    {
+        while (Buffer.NextRow())
+        {
+            Input0_ProcessInputRow(Buffer);
+        }
+    }
+
+    public virtual void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+    public IDTSConnectionManager100 Connection
+    {
+        get
+        {
+            return ParentComponent.ComponentMetaData.RuntimeConnectionCollection.GetRuntimeConnectionByName(@"Connection").ConnectionManager;
+        }
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+    /// <summary>
+    /// This method is called once, before rows begin to be processed in the data flow.
+    ///
+    /// You can remove this method if you don't need to do anything here.
+    /// </summary>
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called after all the rows have passed through this component.
+    ///
+    /// You can delete this method if you don't need to do anything here.
+    /// </summary>
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called once for every row that passes through the component from Input0.
+    ///
+    /// Example of reading a value from a column in the the row:
+    ///  string zipCode = Row.ZipCode
+    ///
+    /// Example of writing a value to a column in the row:
+    ///  Row.ZipCode = zipCode
+    /// </summary>
+    /// <param name="Row">The row that is currently passing through the component</param>
+    public override void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+        try
+        {
+            Row.IdNumber = Row.ID;
+            Row.ErrorDescription = this.ComponentMetaData.GetErrorDescription(Row.ErrorCode);
+            Row.ErrorLogDate = DateTime.Now;
+            Row.PackageName = "CSL_ImportWallPost";
+            Row.TaskName = "DFT_Import_WallPost";
+            Row.FileName = "Wall Post";
+            if (Row.ErrorColumn == 0)
+            {
+                Row.ErrorColumnName = "An error that affects the entire row";
+            }
+            else
+            {
+                var componentMetaData130 = this.ComponentMetaData as IDTSComponentMetaData130;
+                if (componentMetaData130 != null)
+                {
+                    Row.ErrorColumnName = componentMetaData130.GetIdentificationStringByID(Row.ErrorColumn).Replace("Customer Target.Inputs[OLE DB Destination Input].Columns[", "").Replace("]", "");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Row.ErrorColumnName = "Unable to get Error Column Name";
+        }
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class Input0Buffer: ScriptBuffer
+
+{
+    public Input0Buffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String ID
+    {
+        get
+        {
+            return Buffer.GetString(BufferColumnIndexes[0]);
+        }
+    }
+    public bool ID_IsNull
+    {
+        get
+        {
+            return IsNull(0);
+        }
+    }
+
+    public Int32 ErrorCode
+    {
+        get
+        {
+            return Buffer.GetInt32(BufferColumnIndexes[1]);
+        }
+    }
+    public bool ErrorCode_IsNull
+    {
+        get
+        {
+            return IsNull(1);
+        }
+    }
+
+    public Int32 ErrorColumn
+    {
+        get
+        {
+            return Buffer.GetInt32(BufferColumnIndexes[2]);
+        }
+    }
+    public bool ErrorColumn_IsNull
+    {
+        get
+        {
+            return IsNull(2);
+        }
+    }
+
+    public String ErrorDescription
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool ErrorDescription_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ErrorColumnName
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool ErrorColumnName_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public DateTime ErrorLogDate
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool ErrorLogDate_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String IdNumber
+    {
+        set
+        {
+            this[6] = value;
+        }
+    }
+    public bool IdNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(6);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String PackageName
+    {
+        set
+        {
+            this[7] = value;
+        }
+    }
+    public bool PackageName_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(7);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TaskName
+    {
+        set
+        {
+            this[8] = value;
+        }
+    }
+    public bool TaskName_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(8);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String FileName
+    {
+        set
+        {
+            this[9] = value;
+        }
+    }
+    public bool FileName_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(9);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public bool NextRow()
+    {
+        return base.NextRow();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_c99164399a4843fdaccc70feb8a200b6.Properties.Settings.get_Default():SC_c99164399a4843fdaccc70feb8a200b6.Properties.Sett" +
+    "ings")]
+
+namespace SC_c99164399a4843fdaccc70feb8a200b6.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_c99164399a4843fdaccc70feb8a200b6.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ec70cd8c-54d3-4086-b718-c61968d01a0d}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_c99164399a4843fdaccc70feb8a200b6</RootNamespace>
+    <AssemblyName>SC_c99164399a4843fdaccc70feb8a200b6</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="ScriptComponent" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoExeName="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" />
+        <Host Name="ScriptComponent" GeneratedNamespace="SC_c99164399a4843fdaccc70feb8a200b6" IconIndex="0"></Host>
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC140</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_c99164399a4843fdaccc70feb8a200b6</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_c99164399a4843fdaccc70feb8a200b6</msb:DisplayName>
+    <msb:ProjectId>{ABF37DBD-F9D3-4576-8380-BDD06561862F}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_c99164399a4843fdaccc70feb8a200b6.csproj" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="main.cs" />
+    <msb:File Include="BufferWrapper.cs" />
+    <msb:File Include="ComponentWrapper.cs" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_c99164399a4843fdaccc70feb8a200b6")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_c99164399a4843fdaccc70feb8a200b6")]
+[assembly: AssemblyCopyright("Copyright @  2019")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.0.0")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_c99164399a4843fdaccc70feb8a200b6.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_c99164399a4843fdaccc70feb8a200b6.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_c99164399a4843fdaccc70feb8a200b6.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_c99164399a4843fdaccc70feb8a200b6.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_c99164399a4843fdaccc70feb8a200b6.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_c99164399a4843fdaccc70feb8a200b6.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAMltAV4AAAAAAAAAAOAAIiALATAAABwAAAAIAAAAAAAA6joA
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAJg6AABPAAAAAEAAAEgEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA8BoAAAAgAAAAHAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAEgEAAAAQAAAAAYAAAAeAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAJAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAADM
+OgAAAAAAAEgAAAACAAUAlCMAAEwWAAABAAAAAAAAAOA5AAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4CKBAAAAoqHgIoEQAACiobMAQAtAAAAAEAABEDA28GAAAG
+bxIAAAYDAigSAAAKA28IAAAGbxMAAApvDAAABgMoFAAACm8QAAAGA3IBAABwbxQAAAYDcicAAHBv
+FgAABgNyTwAAcG8YAAAGA28KAAAGLQ0DcmMAAHBvDgAABis/AigSAAAKdQ4AAAEKBiwwAwYDbwoA
+AAZvFQAACnKtAABwciEBAHBvFgAACnIjAQBwciEBAHBvFgAACm8OAAAG3g4mA3InAQBwbw4AAAbe
+ACoBEAAAAAAAAKWlAA4PAAABHgIoHAAABioqAgMEBSgXAAAKKlICexgAAAoCexkAAAoWlG8aAAAK
+KiICFigbAAAKKlICexgAAAoCexkAAAoXlG8cAAAKKiICFygbAAAKKlICexgAAAoCexkAAAoYlG8c
+AAAKKiICGCgbAAAKKiYCGQMoHQAACipaAywIAhkoHgAACipyZwEAcHMfAAAKeiYCGgMoHQAACipa
+AywIAhooHgAACipyZwEAcHMfAAAKejoCGwOMEwAAASgdAAAKKloDLAgCGygeAAAKKnJnAQBwcx8A
+AAp6JgIcAygdAAAKKloDLAgCHCgeAAAKKnJnAQBwcx8AAAp6JgIdAygdAAAKKloDLAgCHSgeAAAK
+KnJnAQBwcx8AAAp6JgIeAygdAAAKKloDLAgCHigeAAAKKnJnAQBwcx8AAAp6KgIfCQMoHQAACipe
+AywJAh8JKB4AAAoqcmcBAHBzHwAACnoeAiggAAAKKh4CKCEAAAoqfgIoIgAACgICcyAAAAZ9AQAA
+BAICcyIAAAZ9AgAABCqSBHIEAgBwGm8jAAAKLBUCBQIDKCQAAAoOBHMFAAAGbx4AAAYqSisHAgNv
+HwAABgNvGgAABi3xKgYqOgIoJQAACgIDfQMAAAQqggJ7AwAABG8SAAAKbyYAAApyFAIAcG8nAAAK
+bygAAAoqOgIoJQAACgIDfQQAAAQqHgIoJQAACiqufgUAAAQtHnIqAgBw0AcAAAIoKQAACm8qAAAK
+cysAAAqABQAABH4FAAAEKhp+BgAABCoeAoAGAAAEKhp+BwAABCoeAigsAAAKKi5zKAAABoAHAAAE
+KgAAQlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAA+AcAACN+AABkCAAAUAkAACNT
+dHJpbmdzAAAAALQRAACcAgAAI1VTAFAUAAAQAAAAI0dVSUQAAABgFAAA7AEAACNCbG9iAAAAAAAA
+AAIAAAFXFaIBCQEAAAD6ATMAFgAAAQAAACYAAAAIAAAABwAAACkAAAAbAAAALAAAABAAAAABAAAA
+BAAAABgAAAAZAAAAAQAAAAYAAAABAAAAAAA/BAEAAAAAAAYANgN9BwYAygN9BwYAggJqBw8A8QcA
+AAYArwKsBQYAGQOsBQYA+gKsBQYAsQOsBQYAVgOsBQYAbwOsBQYAxgKsBQYA4QIFBAoAigO+AQ4A
+bwA0BwYA/QVUBQoA1Qa+ARIAxga+AQoATQa+AQYAtQFUBQoAtwi+AQYAeghUBRYAVgAMBwYAZQJq
+BwYA5gadBwYAQQaXBRoANQIpBBoAlgIpBBoADAKCBQYASgJ9Bw4AAQA0BwYAIgRUBQYA7QVUBQYA
+MAZUBQ4AGgA0Bw4APQA0BwYA3wFUBQYALgFUBQYARAmsBQAAAAC1AAAAAAABAAEAAQAQAGcFAAAQ
+AAEAAQABABAAuQYAAEEAAQAFAAEAEACZCAAAUQABABwAAQAQAG4IAABVAAMAIAABABAALwgAAFUA
+BAAiAAAAEACkBwAIVQAFACMAAAEQAF4IAAhxAAcAJwAGAG4IpAAGAC8IqAABAKcIrAABAKcIrAAR
+AFsFsAARAPwBtAARABABuABQIAAAAADGAOgDBgABAFggAAAAAMYA8wMGAAEAYCAAAAAAxgAhCbwA
+AQAwIQAAAACGGF0HBgACADghAAAAAIYYXQc1AAIAQyEAAAAAhgi+AMIABQBYIQAAAACGCGcEVwAF
+AGEhAAAAAIYIIAHGAAUAdiEAAAAAhgh1BFcABQB/IQAAAACGCHIFxgAFAJQhAAAAAIYI/ARXAAUA
+nSEAAAAAhggHBhAABQCnIQAAAACGCBMFygAGAL4hAAAAAIYIfAEQAAcAyCEAAAAAhgjJBMoACADf
+IQAAAACGCCQCzwAJAO4hAAAAAIYI5ATKAAoABSIAAAAAhgisBhAACwAPIgAAAACGCC8FygAMACYi
+AAAAAIYIUgEQAA0AMCIAAAAAhgiKBMoADgBHIgAAAACGCG8BEAAPAFEiAAAAAIYItQTKABAAaCIA
+AAAAhghiARAAEQBzIgAAAACGCKEEygASAIsiAAAAAIYAOAlXABMAkyIAAAAAhgCBCFcAEwCbIgAA
+AACGGF0HBgATALsiAAAAAMYADAnVABMA4CIAAAAAxgEFCbwAFwDzIgAAAADGASEJvAAYAPUiAAAA
+AIYYXQffABkABCMAAAAAhgjeBXYAGgAlIwAAAACGGF0H3wAaADQjAAAAAIMYXQcGABsAPCMAAAAA
+kwjiBuUAGwBoIwAAAACTCOQB6gAbAG8jAAAAAJMI8AHvABsAdyMAAAAAlgiNCPUAHAB+IwAAAACG
+GF0HBgAcAIYjAAAAAJEYYwf6ABwAAAABADwJAAABANsGAAACADkIAAADAFsGAAABAP8DAAABAP8D
+AAABAP8DAAABAP8DAAABAP8DAAABAP8DAAABAP8DAAABAP8DAAABAP8DAAABAP8DAAABAP8DAAAB
+AP8DAAABAP8DAAABAP8DAAABAMUAAAACAJABAAADANsGAAAEAFsGAAABANsGAAABADwJAAABAL0I
+AAABAL0IAAABAP8DCQBdBwEAEQBdBwYAGQBdBwoAKQBdBxAAMQBdBxAAOQBdBxAAQQBdBxAASQBd
+BxAAUQBdBxAAWQBdBxAAYQBdBxAAaQBdBwYAuQBdBwYA2QBdBxUA6QBdBwYAoQDoAwYAoQDzAwYA
+oQDpACAA8QAcBiUAmQAZCSoAcQDNACUA+QAIAS8AgQBdBzUAgQDbBj8AgQA5CEMAiQAfBCUAgQA8
+BUcAiQCIAEwAgQBLBVEAgQBDBQEAAQFdBxAAgQA4CVcAgQCBCFcAoQBdBwYA+QBnCFsAoQBNCGMA
+qQBdBwYA8QC+BWkAEQGaAW8AGQH2BnYAIQFAAXsAIQFACYQAwQBdB4oA4QBdBwYALgALACMBLgAT
+ACwBLgAbAEsBLgAjAFQBLgArAH0BLgAzAH0BLgA7AH0BLgBDAFQBLgBLAIMBLgBTAH0BLgBbAJoB
+QwBjAOQB4QB7AOQB4wBrAOQByQJzAEsB6QJzAEsBGwADAAEABQAVAAcAFgAIABgAAADmAP4AAABr
+BAIBAAAkAQYBAAB5BAIBAAB2BQYBAAAABQIBAAAfBv4AAAAXBQIBAACAAf4AAADNBAIBAAAoAgoB
+AADoBAIBAACwBv4AAAAzBQIBAABWAf4AAACOBAIBAABzAf4AAAC5BAIBAABmAf4AAAClBAIBAADi
+BQ8BAADmBhQBAAAEAhkBAACRCB4BAgAGAAMAAgAHAAUAAgAIAAcAAgAJAAkAAgAKAAsAAgALAA0A
+AQAMAA8AAQANABEAAQAOABMAAQAPABUAAQAQABcAAQARABkAAQASABsAAQATAB0AAQAUAB8AAQAV
+ACEAAQAWACMAAQAXACUAAQAYACcAAQAZACkAAgAhACsAAgAkAC0AAgAlAC8AAQAmAC8AAgAnADEA
+BIAAAAEAAAAAAAAAAAAAAAAAkQAAAAQAAAAAAAAAAAAAAJIA/wAAAAAADgAAAAAAAAAAAAAAmwDH
+CAAAAAAOAAAAAAAAAAAAAACbAIgGAAAAAA4AAAAAAAAAAAAAAJsA5AgAAAAADgAAAAAAAAAAAAAA
+mwBlBgAAAAAEAAAAAAAAAAAAAACSAFQFAAAAAAAAAAABAAAArgcAAAAAAElEVFNDb21wb25lbnRN
+ZXRhRGF0YTEwMABJRFRTUnVudGltZUNvbm5lY3Rpb25Db2xsZWN0aW9uMTAwAElEVFNSdW50aW1l
+Q29ubmVjdGlvbjEwMABJRFRTQ29ubmVjdGlvbk1hbmFnZXIxMDAASURUU0NvbXBvbmVudE1ldGFE
+YXRhMTMwAEdldEludDMyAFNDX2M5OTE2NDM5OWE0ODQzZmRhY2NjNzBmZWI4YTIwMGI2ADxNb2R1
+bGU+AGdldF9JRABJbnB1dElEAEdldElkZW50aWZpY2F0aW9uU3RyaW5nQnlJRABnZXRfQ29tcG9u
+ZW50TWV0YURhdGEAbXNjb3JsaWIAUmVwbGFjZQBkZWZhdWx0SW5zdGFuY2UAZ2V0X0Vycm9yQ29k
+ZQBSdW50aW1lVHlwZUhhbmRsZQBHZXRUeXBlRnJvbUhhbmRsZQBzZXRfUGFja2FnZU5hbWUAc2V0
+X0ZpbGVOYW1lAHNldF9UYXNrTmFtZQBzZXRfRXJyb3JDb2x1bW5OYW1lAElucHV0TmFtZQBHZXRS
+dW50aW1lQ29ubmVjdGlvbkJ5TmFtZQBEYXRlVGltZQBNaWNyb3NvZnQuU3FsU2VydmVyLkR0cy5Q
+aXBlbGluZQBUeXBlAGdldF9DdWx0dXJlAHNldF9DdWx0dXJlAHJlc291cmNlQ3VsdHVyZQBBcHBs
+aWNhdGlvblNldHRpbmdzQmFzZQBzZXRfRXJyb3JMb2dEYXRlAEVkaXRvckJyb3dzYWJsZVN0YXRl
+AENvbXBpbGVyR2VuZXJhdGVkQXR0cmlidXRlAERlYnVnZ2VyTm9uVXNlckNvZGVBdHRyaWJ1dGUA
+RGVidWdnYWJsZUF0dHJpYnV0ZQBFZGl0b3JCcm93c2FibGVBdHRyaWJ1dGUAQXNzZW1ibHlUaXRs
+ZUF0dHJpYnV0ZQBBc3NlbWJseVRyYWRlbWFya0F0dHJpYnV0ZQBUYXJnZXRGcmFtZXdvcmtBdHRy
+aWJ1dGUAQXNzZW1ibHlDb25maWd1cmF0aW9uQXR0cmlidXRlAEFzc2VtYmx5RGVzY3JpcHRpb25B
+dHRyaWJ1dGUAQ29tcGlsYXRpb25SZWxheGF0aW9uc0F0dHJpYnV0ZQBBc3NlbWJseVByb2R1Y3RB
+dHRyaWJ1dGUAQXNzZW1ibHlDb3B5cmlnaHRBdHRyaWJ1dGUAU1NJU1NjcmlwdENvbXBvbmVudEVu
+dHJ5UG9pbnRBdHRyaWJ1dGUAQXNzZW1ibHlDb21wYW55QXR0cmlidXRlAFJ1bnRpbWVDb21wYXRp
+YmlsaXR5QXR0cmlidXRlAFByZUV4ZWN1dGUAUG9zdEV4ZWN1dGUAdmFsdWUAU3lzdGVtLlJ1bnRp
+bWUuVmVyc2lvbmluZwBHZXRTdHJpbmcAU3lzdGVtLkNvbXBvbmVudE1vZGVsAFNDX2M5OTE2NDM5
+OWE0ODQzZmRhY2NjNzBmZWI4YTIwMGI2LmRsbABnZXRfSURfSXNOdWxsAGdldF9FcnJvckNvZGVf
+SXNOdWxsAHNldF9QYWNrYWdlTmFtZV9Jc051bGwAc2V0X0ZpbGVOYW1lX0lzTnVsbABzZXRfVGFz
+a05hbWVfSXNOdWxsAHNldF9FcnJvckNvbHVtbk5hbWVfSXNOdWxsAHNldF9FcnJvckxvZ0RhdGVf
+SXNOdWxsAGdldF9FcnJvckNvbHVtbl9Jc051bGwAc2V0X0Vycm9yRGVzY3JpcHRpb25fSXNOdWxs
+AHNldF9JZE51bWJlcl9Jc051bGwAU2V0TnVsbABzZXRfSXRlbQBTeXN0ZW0AcmVzb3VyY2VNYW4A
+U2NyaXB0TWFpbgBnZXRfRXJyb3JDb2x1bW4AU3lzdGVtLkNvbmZpZ3VyYXRpb24AU3lzdGVtLkds
+b2JhbGl6YXRpb24AU3lzdGVtLlJlZmxlY3Rpb24AZ2V0X1J1bnRpbWVDb25uZWN0aW9uQ29sbGVj
+dGlvbgBnZXRfQ29ubmVjdGlvbgBJbnZhbGlkT3BlcmF0aW9uRXhjZXB0aW9uAHNldF9FcnJvckRl
+c2NyaXB0aW9uAEdldEVycm9yRGVzY3JpcHRpb24AU3RyaW5nQ29tcGFyaXNvbgBDdWx0dXJlSW5m
+bwBPdXRwdXROYW1lTWFwAE91dHB1dE1hcABNaWNyb3NvZnQuU3FsU2VydmVyLkRUU1J1bnRpbWVX
+cmFwAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRFRTUGlwZWxpbmVXcmFwAHNldF9JZE51bWJlcgBJbnB1
+dDBCdWZmZXIAUGlwZWxpbmVCdWZmZXIAU2NyaXB0QnVmZmVyAGdldF9SZXNvdXJjZU1hbmFnZXIA
+Z2V0X0Nvbm5lY3Rpb25NYW5hZ2VyAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlJ1bnRpbWUuV3Jh
+cHBlcgBNaWNyb3NvZnQuU3FsU2VydmVyLkR0cy5QaXBlbGluZS5XcmFwcGVyAC5jdG9yAC5jY3Rv
+cgBTeXN0ZW0uRGlhZ25vc3RpY3MAU3lzdGVtLlJ1bnRpbWUuQ29tcGlsZXJTZXJ2aWNlcwBTeXN0
+ZW0uUmVzb3VyY2VzAFNDX2M5OTE2NDM5OWE0ODQzZmRhY2NjNzBmZWI4YTIwMGI2LlByb3BlcnRp
+ZXMuUmVzb3VyY2VzLnJlc291cmNlcwBEZWJ1Z2dpbmdNb2RlcwBTQ19jOTkxNjQzOTlhNDg0M2Zk
+YWNjYzcwZmViOGEyMDBiNi5Qcm9wZXJ0aWVzAFZhcmlhYmxlcwBCdWZmZXJDb2x1bW5JbmRleGVz
+AEdldENvbHVtbkluZGV4ZXMAU2V0dGluZ3MARXF1YWxzAENvbm5lY3Rpb25zAE9iamVjdABFbmRP
+ZlJvd3NldABnZXRfRGVmYXVsdABVc2VyQ29tcG9uZW50AFBhcmVudENvbXBvbmVudABTY3JpcHRD
+b21wb25lbnQATWljcm9zb2Z0LlNxbFNlcnZlci5UeFNjcmlwdABNaWNyb3NvZnQuU3FsU2VydmVy
+LlBpcGVsaW5lSG9zdABJbnB1dDBfUHJvY2Vzc0lucHV0AGdldF9Ob3cASW5wdXQwX1Byb2Nlc3NJ
+bnB1dFJvdwBOZXh0Um93AGdldF9Bc3NlbWJseQAAAAAAJUMAUwBMAF8ASQBtAHAAbwByAHQAVwBh
+AGwAbABQAG8AcwB0AAAnRABGAFQAXwBJAG0AcABvAHIAdABfAFcAYQBsAGwAUABvAHMAdAAAE1cA
+YQBsAGwAIABQAG8AcwB0AABJQQBuACAAZQByAHIAbwByACAAdABoAGEAdAAgAGEAZgBmAGUAYwB0
+AHMAIAB0AGgAZQAgAGUAbgB0AGkAcgBlACAAcgBvAHcAAHNDAHUAcwB0AG8AbQBlAHIAIABUAGEA
+cgBnAGUAdAAuAEkAbgBwAHUAdABzAFsATwBMAEUAIABEAEIAIABEAGUAcwB0AGkAbgBhAHQAaQBv
+AG4AIABJAG4AcAB1AHQAXQAuAEMAbwBsAHUAbQBuAHMAWwAAAQADXQAAP1UAbgBhAGIAbABlACAA
+dABvACAAZwBlAHQAIABFAHIAcgBvAHIAIABDAG8AbAB1AG0AbgAgAE4AYQBtAGUAAICbSQBzAE4A
+dQBsAGwAIABwAHIAbwBwAGUAcgB0AHkAIABjAGEAbgBuAG8AdAAgAGIAZQAgAHMAZQB0ACAAdABv
+ACAARgBhAGwAcwBlAC4AIABBAHMAcwBpAGcAbgAgAGEAIAB2AGEAbAB1AGUAIAB0AG8AIAB0AGgA
+ZQAgAGMAbwBsAHUAbQBuACAAaQBuAHMAdABlAGEAZAAuAAAPSQBuAHAAdQB0ACAAMAAAFUMAbwBu
+AG4AZQBjAHQAaQBvAG4AAHFTAEMAXwBjADkAOQAxADYANAAzADkAOQBhADQAOAA0ADMAZgBkAGEA
+YwBjAGMANwAwAGYAZQBiADgAYQAyADAAMABiADYALgBQAHIAbwBwAGUAcgB0AGkAZQBzAC4AUgBl
+AHMAbwB1AHIAYwBlAHMAAHW8+ciOQHpAgjFXs2HfDTcABCABAQgDIAABBSABARERBCABAQ4FIAEB
+EWkEBwESOQQgABJ5BCABDggEAAARTQUgAg4ODgkgAwESRR0IEkkDBhJFAwYdCAQgAQIIBCABCAgF
+IAIBCBwDIAACByACAg4RgIUFIAEdCAgFIAASgIkGIAESgI0OBCAAElkIAAESgJERgJUFIAASgJkH
+IAIBDhKAmQi3elxWGTTgiQiJhF3NgIDMkQMGEhQDBhIYAwYSUQMGEmEDBhJlAwYSIAUgAQESDAMg
+AA4DIAAIBCABAQIFIAEBEU0JIAQBCA4SRRJJBSABARJRBAAAEmEEAAASZQUAAQESZQQAABIgAwAA
+AQMoAA4DKAACAygACAQoABFNBCgAElkECAASYQQIABJlBAgAEiAIAQAIAAAAAAAeAQABAFQCFldy
+YXBOb25FeGNlcHRpb25UaHJvd3MBCAEAAgAAAAAAKAEAI1NDX2M5OTE2NDM5OWE0ODQzZmRhY2Nj
+NzBmZWI4YTIwMGI2AAAFAQAAAAAWAQARQ29weXJpZ2h0IEAgIDIwMTkAAEkBABouTkVURnJhbWV3
+b3JrLFZlcnNpb249djQuNQEAVA4URnJhbWV3b3JrRGlzcGxheU5hbWUSLk5FVCBGcmFtZXdvcmsg
+NC41BAEAAAAAAAC0AAAAzsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFk
+ZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5
+VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNl
+dAIAAAAAAAAAAAAAAFBBRFBBRFC0AAAAwDoAAAAAAAAAAAAA2joAAAAgAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAMw6AAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACAAEAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB
+ABAAAAAYAACAAAAAAAAAAAAAAAAAAAABAAEAAAAwAACAAAAAAAAAAAAAAAAAAAABAAAAAABIAAAA
+WEAAAOwDAAAAAAAAAAAAAOwDNAAAAFYAUwBfAFYARQBSAFMASQBPAE4AXwBJAE4ARgBPAAAAAAC9
+BO/+AAABAAAAAQAAAAAAAAABAAAAAAA/AAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAARAAAAAEA
+VgBhAHIARgBpAGwAZQBJAG4AZgBvAAAAAAAkAAQAAABUAHIAYQBuAHMAbABhAHQAaQBvAG4AAAAA
+AAAAsARMAwAAAQBTAHQAcgBpAG4AZwBGAGkAbABlAEkAbgBmAG8AAAAoAwAAAQAwADAAMAAwADAA
+NABiADAAAAAaAAEAAQBDAG8AbQBtAGUAbgB0AHMAAAAAAAAAIgABAAEAQwBvAG0AcABhAG4AeQBO
+AGEAbQBlAAAAAAAAAAAAcAAkAAEARgBpAGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4AAAAAAFMA
+QwBfAGMAOQA5ADEANgA0ADMAOQA5AGEANAA4ADQAMwBmAGQAYQBjAGMAYwA3ADAAZgBlAGIAOABh
+ADIAMAAwAGIANgAAADAACAABAEYAaQBsAGUAVgBlAHIAcwBpAG8AbgAAAAAAMQAuADAALgAwAC4A
+MAAAAHAAKAABAEkAbgB0AGUAcgBuAGEAbABOAGEAbQBlAAAAUwBDAF8AYwA5ADkAMQA2ADQAMwA5
+ADkAYQA0ADgANAAzAGYAZABhAGMAYwBjADcAMABmAGUAYgA4AGEAMgAwADAAYgA2AC4AZABsAGwA
+AABIABIAAQBMAGUAZwBhAGwAQwBvAHAAeQByAGkAZwBoAHQAAABDAG8AcAB5AHIAaQBnAGgAdAAg
+AEAAIAAgADIAMAAxADkAAAAqAAEAAQBMAGUAZwBhAGwAVAByAGEAZABlAG0AYQByAGsAcwAAAAAA
+AAAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABGAGkAbABlAG4AYQBtAGUAAABTAEMAXwBjADkAOQAx
+ADYANAAzADkAOQBhADQAOAA0ADMAZgBkAGEAYwBjAGMANwAwAGYAZQBiADgAYQAyADAAMABiADYA
+LgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBjAHQATgBhAG0AZQAAAAAAUwBDAF8AYwA5ADkAMQA2
+ADQAMwA5ADkAYQA0ADgANAAzAGYAZABhAGMAYwBjADcAMABmAGUAYgA4AGEAMgAwADAAYgA2AAAA
+NAAIAAEAUAByAG8AZAB1AGMAdABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgAwAC4AMAAAADgACAAB
+AEEAcwBzAGUAbQBiAGwAeQAgAFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADAALgAwAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAwAAADsOgAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_c99164399a4843fdaccc70feb8a200b6</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">29</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Connections[Connection]"
+                  connectionManagerID="Package.ConnectionManagers[OLE DB Migration Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[OLE DB Migration Database]"
+                  name="Connection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0]"
+                  hasSideEffects="true"
+                  name="Input 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0].Columns[ID]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ID"
+                      lineageId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      lineageId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0]"
+                  name="Output 0"
+                  synchronousInputId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorDescription]"
+                      name="ErrorDescription" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorColumnName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4000"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorColumnName]"
+                      name="ErrorColumnName" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorLogDate]"
+                      dataType="date"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[ErrorLogDate]"
+                      name="ErrorLogDate" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[IdNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[IdNumber]"
+                      name="IdNumber" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[PackageName]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[PackageName]"
+                      name="PackageName" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[TaskName]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[TaskName]"
+                      name="TaskName" />
+                    <outputColumn
+                      refId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[FileName]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0].Columns[FileName]"
+                      name="FileName" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Import_WallPost.Paths[Derived Column Output]"
+              endId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT_Import_WallPost\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT_Import_WallPost.Paths[Flat File Source Output]"
+              endId="Package\DFT_Import_WallPost\Derived Column.Inputs[Derived Column Input]"
+              name="Flat File Source Output"
+              startId="Package\DFT_Import_WallPost\FF_SRC_WallPost.Outputs[Flat File Source Output]" />
+            <path
+              refId="Package\DFT_Import_WallPost.Paths[OLE DB Destination Error Output]"
+              endId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Inputs[Input 0]"
+              name="OLE DB Destination Error Output"
+              startId="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost.Outputs[OLE DB Destination Error Output]" />
+            <path
+              refId="Package\DFT_Import_WallPost.Paths[Output 0]"
+              endId="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost.Inputs[OLE DB Destination Input]"
+              name="Output 0"
+              startId="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost.Outputs[Output 0]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Insert_MigrationReport"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{27170dca-5580-4684-a804-f4652cd3b0cd}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Insert_MigrationReport"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CB5290FB-D425-4DDD-9A5E-AFFA7C686B6F}"
+          SQLTask:SqlStatementSource="INSERT INTO mig.GenerateMigrationReport(Folder, Name, Type, TotalRecords, StartTime, EndTime, TimeTaken)&#xA;VALUES('CSL','CSL_4.1_ImportWallPost','Package',NULL,GETDATE(),NULL,NULL)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Update_MigrationReport"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7615c770-f55e-4bf2-bbc2-57057ca1ff7f}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Update_MigrationReport"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CB5290FB-D425-4DDD-9A5E-AFFA7C686B6F}"
+          SQLTask:SqlStatementSource="UPDATE mig.GenerateMigrationReport &#xA;SET EndTime = GETDATE(),&#xA;        TimeTaken = DATEDIFF(SECOND, StartTime, GETDATE())&#xA;WHERE Folder = 'CSL' AND Name = 'CSL_4.1_ImportWallPost' AND Type = 'Package'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{754BCF43-597E-44C9-BF4F-F4426A7D8588}"
+      DTS:From="Package\SQL_Insert_MigrationReport"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT_Import_WallPost" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{20184269-4949-4B0D-A5A0-3978E918E8D7}"
+      DTS:From="Package\DFT_Import_WallPost"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL_Update_MigrationReport" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="182,42"
+          Id="Package\DFT_Import_WallPost"
+          TopLeft="430,296" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\SQL_Insert_MigrationReport"
+          TopLeft="419,185" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\SQL_Update_MigrationReport"
+          TopLeft="408,396" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="523,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,69"
+              Start="0,0"
+              End="0,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="519,338">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Import_WallPost">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="244,42"
+          Id="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost"
+          TopLeft="506,447" />
+        <NodeLayout
+          Size="221,42"
+          Id="Package\DFT_Import_WallPost\SCR_GetErrorDetails_WallPost"
+          TopLeft="514,357" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\DFT_Import_WallPost\FF_SRC_WallPost"
+          TopLeft="543,72" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost"
+          TopLeft="525,252" />
+        <EdgeLayout
+          Id="Package\DFT_Import_WallPost.Paths[Output 0]"
+          TopLeft="626.25,399">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Import_WallPost.Paths[OLE DB Destination Error Output]"
+          TopLeft="623.5,294">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-73.20890625,22.033203125,146.4178125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT_Import_WallPost\Derived Column"
+          TopLeft="545,156" />
+        <EdgeLayout
+          Id="Package\DFT_Import_WallPost.Paths[Flat File Source Output]"
+          TopLeft="622.75,114">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Import_WallPost.Paths[Derived Column Output]"
+          TopLeft="622.25,198">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54"
+              Start="0,0"
+              End="0,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Import_WallPost\OLE_DST_Raw_WallPost">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Import_WallPost\OLE_DST_InvalidRecords_WallPost">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

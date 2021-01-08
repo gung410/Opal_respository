@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.CommunityView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    Title="Community"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <controls:CustomHybridWebView
+        x:Name="Community"
+        ContentType="Internet"
+        HorizontalOptions="FillAndExpand"
+        OnContentLoaded="Community_OnContentLoaded"
+        Source="{Binding SourceUrl}"
+        VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

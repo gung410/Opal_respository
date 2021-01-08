@@ -1,0 +1,78 @@
+.learning-path-selected-courses {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .pd-opportunities-dialog & {
+    height: 320px;
+  }
+
+  .pd-opportunities-container & {
+    margin: 40px 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 0 15px 0 7px;
+    box-sizing: border-box;
+    color: $color-blue-dard;
+
+    .pd-opportunities-dialog &:hover {
+      background-color: $color-gainsboro;
+    }
+
+    & + .learning-path-selected-courses__item {
+      .pd-opportunities-container & {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  &__number {
+    display: flex;
+    flex-shrink: 0;
+    width: 20px;
+    padding-right: 15px;
+    color: $color-blue-light;
+  }
+
+  &__thumnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    width: 50px;
+
+    img {
+      display: inline-block;
+      vertical-align: top;
+      max-width: 100%;
+    }
+  }
+
+  &__description {
+    display: flex;
+    max-width: calc(100% - 80px);
+
+    .pd-opportunities-container & {
+      max-width: calc(100% - 150px);
+    }
+  }
+
+  &__control {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__option-remove {
+    color: $color-coral;
+  }
+}

@@ -1,0 +1,164 @@
+<div class="content-management-container"
+     *ngIf="dataLoadedOnce">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #courseDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <p class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </p>
+            <p class="toolbar__left-group__title-group__sub-title"
+               *ngIf="subTitle"> {{ subTitle }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="course.status ? course.status : CourseStatus.Draft"
+                              [mapping]="courseStatusColorMap"
+                              [prefix]="course.courseData.isResubmit() ? '(Resubmit)' : ''"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    stickyTabHeaderElement
+                    #courseDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="courseDetailStickyToolbarElement.element"
+                    (tabSelect)="onTabSelected($event)"
+                    [animate]="false">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.CourseInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <course-detail [form]="form"
+                         [course]="course"
+                         [mode]="detailPageInput.data.mode"
+                         [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"
+                         [stickySpacing]="stickySpacing"></course-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewClassRuns() }"
+                          [selected]="selectedTab === CAMTabConfiguration.ClassRunsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Class Runs' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <classrun-management-page *ngIf="detailPageInput.data.id && canViewClassRuns()"
+                                    [courseDetailMode]="detailPageInput.data.mode"
+                                    [courseDetailPageInput]="detailPageInput"
+                                    [course]="course.courseData"
+                                    [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"></classrun-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewComment() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CourseCommentTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewComment()"
+                                [checkHasDataFn]="checkCommentsHasDataFnCreator()">
+            {{ 'Comments' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <comment-tab *ngIf="canViewComment()"
+                       [input]="commentTabInput">
+          </comment-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewStatisticalReport() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CourseStatisticTab">
+        <ng-template kendoTabTitle="">
+          {{ reportName | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <opal-report-dynamic *ngIf="paramsReportDynamic"
+                               [paramsReportDynamic]="paramsReportDynamic"></opal-report-dynamic>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewAddingParticipant() }"
+                          [selected]="selectedTab === CAMTabConfiguration.AddingParticipantTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Adding Participant' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <adding-participant-page *ngIf="canViewAddingParticipant()"
+                                   [courseDetailPageInput]="detailPageInput"
+                                   [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"></adding-participant-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewSendCoursePublicity() }"
+                          [selected]="selectedTab === CAMTabConfiguration.SendCoursePublicityTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Send Course Publicity' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <send-course-publicity-page *ngIf="canViewSendCoursePublicity()"
+                                      [courseId]="this.detailPageInput.data.id"
+                                      [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"
+                                      [stickySpacing]="stickySpacing"></send-course-publicity-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewSendCourseNominationAnnouncement() }"
+                          [selected]="selectedTab === CAMTabConfiguration.SendCourseNominationTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Nomination Announcement' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <send-course-nomination-announcement-page *ngIf="canViewSendCourseNominationAnnouncement()"
+                                                    [courseId]="this.detailPageInput.data.id"
+                                                    [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"
+                                                    [stickySpacing]="stickySpacing">
+          </send-course-nomination-announcement-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewCourseCriteria() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CourseCriteriaTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Criteria Setup' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <course-criteria-detail-page *ngIf="canViewCourseCriteria()"
+                                       [mode]="detailPageInput.data.courseCriteriaMode"
+                                       [courseCriteriaId]="detailPageInput.data.id"
+                                       [course]="course.courseData"
+                                       [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"
+                                       [stickySpacing]="stickySpacing">
+          </course-criteria-detail-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewOrderRefreshment() }"
+                          [selected]="selectedTab === CAMTabConfiguration.SendOrderRefreshmentTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Order Refreshment' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <send-order-refreshment-page *ngIf="canViewOrderRefreshment()"
+                                       [courseId]="detailPageInput.data.id"
+                                       [course]="course.courseData"
+                                       [stickyDependElement]="courseDetailStickyTabHeaderElement.headerElement"
+                                       [stickySpacing]="stickySpacing"></send-order-refreshment-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

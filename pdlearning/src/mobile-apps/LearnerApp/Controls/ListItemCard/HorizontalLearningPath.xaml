@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.ListItemCard.HorizontalLearningPath"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+    mc:Ignorable="d">
+    <StackLayout Spacing="10">
+        <!--  Title  -->
+        <StackLayout Orientation="Horizontal">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Navigation_Tapped" />
+            </StackLayout.GestureRecognizers>
+
+            <Label x:Name="TitleLbl" FontSize="{StaticResource LargeSize}" />
+        </StackLayout>
+
+        <!--  Empty list message  -->
+        <Label
+            x:Name="EmpltListLbl"
+            HorizontalOptions="CenterAndExpand"
+            Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+
+        <CollectionView
+            x:Name="LearningPathCollectionView"
+            Footer="{Binding .}"
+            HeightRequest="340"
+            HorizontalScrollBarVisibility="Never"
+            IsVisible="False">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout HorizontalItemSpacing="5" Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView Padding="0,0,5,5">
+                        <Frame
+                            Padding="0"
+                            android:VisualElement.Elevation="5"
+                            ios:VisualElement.IsShadowEnabled="true"
+                            ios:VisualElement.ShadowColor="Black"
+                            ios:VisualElement.ShadowOpacity="0.3"
+                            ios:VisualElement.ShadowRadius="2.5"
+                            BackgroundColor="White"
+                            CornerRadius="6"
+                            HasShadow="False"
+                            IsClippedToBounds="True"
+                            VerticalOptions="Fill"
+                            WidthRequest="300">
+                            <ios:VisualElement.ShadowOffset>
+                                <Size>
+                                    <x:Arguments>
+                                        <x:Double>2.5</x:Double>
+                                        <x:Double>2.5</x:Double>
+                                    </x:Arguments>
+                                </Size>
+                            </ios:VisualElement.ShadowOffset>
+                            <!--  item tapped  -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnItemSelected_Tapped" />
+                            </Frame.GestureRecognizers>
+                            <Grid RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150" />
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <AbsoluteLayout Grid.Row="0">
+                                    <!--  main image  -->
+                                    <ffimagesvg:SvgCachedImage
+                                        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                        AbsoluteLayout.LayoutFlags="All"
+                                        Aspect="AspectFill"
+                                        DownsampleToViewSize="True"
+                                        ErrorPlaceholder="learning_path_thumbnail.png"
+                                        HeightRequest="150"
+                                        Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='LearningPath'}" />
+
+                                    <!--  bookmark icon  -->
+                                    <Frame
+                                        Padding="0"
+                                        AbsoluteLayout.LayoutBounds="0.97, 0.05, 40, 40"
+                                        AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                                        BorderColor="{StaticResource TintColor}"
+                                        CornerRadius="20"
+                                        HasShadow="False"
+                                        IsClippedToBounds="True"
+                                        IsVisible="{Binding IsVisibleBookmark}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnItemBookmark_Tapped" />
+                                        </Frame.GestureRecognizers>
+                                        <ffimagesvg:SvgCachedImage
+                                            Aspect="AspectFit"
+                                            HeightRequest="15"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                                            VerticalOptions="CenterAndExpand"
+                                            WidthRequest="15" />
+                                    </Frame>
+                                </AbsoluteLayout>
+                                <BoxView
+                                    Grid.Row="1"
+                                    BackgroundColor="{StaticResource EntryLineColor}"
+                                    HeightRequest="1"
+                                    HorizontalOptions="FillAndExpand" />
+                                <StackLayout
+                                    Grid.Row="2"
+                                    Padding="10"
+                                    HeightRequest="80">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontFamily="{StaticResource RobotoRegular}"
+                                            FontSize="12"
+                                            Text="Learning Path"
+                                            TextColor="#8799BA" />
+                                        <Label
+                                            FontFamily="{StaticResource RobotoRegular}"
+                                            FontSize="12"
+                                            Text="{Binding Courses, Converter={StaticResource LearningPathsTotalItemsConverter}}"
+                                            TextColor="#8799BA" />
+                                    </StackLayout>
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="16"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="2"
+                                        Text="{Binding Title}"
+                                        TextColor="{StaticResource MainBodyTextColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.FooterTemplate>
+                <DataTemplate>
+                    <!--  Show all button  -->
+                    <ContentView Padding="0,0,5,5">
+                        <Frame
+                            Padding="1"
+                            android:VisualElement.Elevation="5"
+                            ios:VisualElement.IsShadowEnabled="true"
+                            ios:VisualElement.ShadowColor="Black"
+                            ios:VisualElement.ShadowOpacity="0.3"
+                            ios:VisualElement.ShadowRadius="2.5"
+                            BackgroundColor="{StaticResource WhiteColor}"
+                            BorderColor="LightGray"
+                            CornerRadius="4"
+                            HasShadow="False"
+                            IsClippedToBounds="True">
+                            <ios:VisualElement.ShadowOffset>
+                                <Size>
+                                    <x:Arguments>
+                                        <x:Double>2.5</x:Double>
+                                        <x:Double>2.5</x:Double>
+                                    </x:Arguments>
+                                </Size>
+                            </ios:VisualElement.ShadowOffset>
+                            <StackLayout>
+                                <Label
+                                    Margin="10"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="SHOW ALL"
+                                    VerticalOptions="CenterAndExpand" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Navigation_Tapped" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.FooterTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentView>

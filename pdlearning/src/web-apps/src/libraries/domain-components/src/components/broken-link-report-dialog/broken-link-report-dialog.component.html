@@ -1,0 +1,59 @@
+<div class="broken-link-report-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title broken-link-report-dialog__title">{{ 'Report Broken Link/Image' |  translator }}</div>
+    <div class="dialog-header__actions">
+      <span class="broken-link-report-dialog__icon k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content broken-link-report-dialog__content">
+    <form *ngIf="!isSubmit"
+          [formGroup]="form">
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Select the link' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="urlData"
+                     formControlName="url"
+                     [(ngModel)]="url"
+                     [clearable]="true"
+                     [placeholder]="'Select from the list' | translator"
+                     [labelField]="'text'"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Description' | translator }}</label>
+        <textarea class="form-control"
+                  formControlName="description"
+                  [(ngModel)]="description"
+                  [placeholder]="'Add description ...' | translator"
+                  kendoTextArea
+                  [autoSize]="true"
+                  rows="5"
+                  kendoErrorTooltip
+                  position="top"></textarea>
+      </div>
+    </form>
+    <div class="broken-link-report-dialog__announcement"
+         *ngIf="isSubmit">
+      <div class="broken-link-report-dialog__announcement-img">
+        <img class="broken-link-report-dialog__announcement-icon"
+             src="assets/images/icons/icon-accept.svg"
+             alt>
+      </div>
+      <div>{{ 'Thank you very much for reporting the broken link.' | globalTranslator }}</div>
+      <div>{{ 'It is very helpful to us.' | globalTranslator }}</div>
+      <button class="broken-link-report-dialog__announcement-btn"
+              kendoButton
+              (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+    </div>
+  </div>
+  <div class="dialog-actions"
+       *ngIf="!isSubmit">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button kendoButton
+            [primary]="true"
+            (click)="onProceed()">{{ 'Submit' | globalTranslator }}</button>
+  </div>
+</div>

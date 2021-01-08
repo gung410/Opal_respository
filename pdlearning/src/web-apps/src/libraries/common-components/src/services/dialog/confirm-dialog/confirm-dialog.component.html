@@ -1,0 +1,59 @@
+<div class="opal-confirm-dialog">
+  <div class="dialog-header opal-confirm-dialog__header">
+    <div class="dialog-header__title">{{ confirmTitle | translator: confirmTitleParams }}</div>
+    <div class="dialog-header__actions">
+      <span class="opal-confirm-dialog__close-btn k-icon k-i-close"
+            *ngIf="showCloseBtn || confirmRequestSucceeded"
+            [ngClass]="[closeIconClass == null ? 'k-icon k-i-close' : closeIconClass]"
+            (click)="onCloseBtnClicked($event)"></span>
+    </div>
+  </div>
+  <div class="dialog-content opal-confirm-dialog__body">
+    <div *ngIf="confirmRequestResultTemplate != null && (confirmRequestSucceeded || errors != null)">
+      <ng-template [ngTemplateOutlet]="confirmRequestResultTemplate"
+                   [ngTemplateOutletContext]="{data: confirmRequestData, errors: errors}">
+      </ng-template>
+    </div>
+    <div class="opal-confirm-dialog__body-confirm-request-success-msg"
+         *ngIf="confirmRequestResultTemplate == undefined &&
+         confirmRequestSucceeded &&
+         confirmRequestSuccessMsg != null &&
+         !confirmRequestNotShowSuccessMsg">
+      {{ confirmRequestSuccessMsg | translator: confirmRequestSuccessMsgParams }}
+    </div>
+    <div class="opal-confirm-dialog__body-confirm-request-failed-msg"
+         *ngIf="confirmRequestResultTemplate == undefined && errors != null && !confirmRequestNotShowFailedMsg"
+         [innerHTML]="getErrorsAsHtml(errors)">
+    </div>
+    <ng-container *ngIf="(!confirmRequestSucceeded || confirmRequestNotShowSuccessMsg) &&
+                  (errors == undefined || confirmRequestNotShowFailedMsg)">
+      <div class="opal-confirm-dialog__body-confirm-msg"
+           *ngIf="confirmMsgHtml == undefined && confirmMsg != null && confirmMsg != ''">
+        {{ confirmMsg | translator: confirmMsgParams }}
+      </div>
+      <div class="opal-confirm-dialog__body-confirm-msg"
+           *ngIf="confirmMsgHtml != null && confirmMsgHtml != ''"
+           [innerHTML]="confirmMsgHtml">
+      </div>
+      <ng-container *ngIf="bodyTemplate != null"
+                    [ngTemplateOutlet]="bodyTemplate">
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="dialog-actions opal-confirm-dialog__footer"
+       [hidden]="(hideNoBtn && hideYesBtn) || confirmRequestSucceeded">
+    <button class="opal-confirm-dialog__btn"
+            kendoButton
+            [hidden]="hideNoBtn"
+            [primary]="false"
+            [disabled]="isNoBtnDisabled()"
+            (click)="onNoBtnClicked($event)">{{ noBtnText | translator }}</button>
+    <button class="opal-confirm-dialog__btn"
+            kendoButton
+            #yesBtn="kendoButton"
+            [hidden]="hideYesBtn"
+            [primary]="true"
+            [disabled]="isYesBtnDisabled()"
+            (click)="onYesBtnClicked($event)">{{ yesBtnText | translator }}</button>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="learner-course-detail__section-title">
+  {{totalReviews > 1 ?
+    ("reviews" | translator) :
+    ("review" | translator)}}
+  <span> ({{ totalReviews }})</span>
+</div>
+<div class="learner-course-detail__rating-container">
+  <div class="learner-course-detail__stars-average-num-container"
+       *ngIf="showRating">
+    <div class="learner-course-detail__rating-stars">
+      <i class="icon sm {{ averageRating < 1 ? 'star-outline' : 'star' }}"></i>
+      <i class="icon sm {{ averageRating >= 2 ? 'star' : 'star-outline' }}"></i>
+      <i class="icon sm {{ averageRating === 3 ? 'star' : 'star-outline' }}"></i>
+    </div>
+    <div class="learner-course-detail__rating-number">({{(averageRating | number: '1.0-1' )}})</div>
+  </div>
+
+  <div class="learner-course-detail__rating-count">
+    {{totalReviews}} {{(totalReviews > 1 ?
+      "reviews" :
+      "review")| translator }}
+  </div>
+</div>
+<review-item class="learner-course-detail__review-item"
+             *ngFor="let review of reviews"
+             [hasRating]="showRating"
+             [review]="review"
+             [canEdit]="feedbackConfig.allowToEdit && review.isMine"
+             (edit)="onEditClicked($event)"></review-item>
+<div class="learner-course-detail__show-more"
+     *ngIf="pageNumber * showReviews < totalReviews"
+     (click)="showMoreReviews()">{{"Show more" | translator}}</div>
+<div class="learner-course-detail__show-more"
+     *ngIf="pageNumber * showReviews >= totalReviews && totalReviews > 3"
+     (click)="showLessReviews()">{{"Show less" | translator}}</div>
+
+<ng-template #reviewEditingTemplate="">
+  <learner-review-editing-dialog [review]="editingReview"
+                                 [configuration]="feedbackConfig"></learner-review-editing-dialog>
+</ng-template>

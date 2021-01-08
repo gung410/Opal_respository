@@ -1,0 +1,14 @@
+<div class="group-action-buttons">
+  <ng-container *ngFor="let button of buttons">
+    <button kendoButton
+            [icon]="button.icon"
+            [disabled]="disableButton(button)"
+            *ngIf="showButton(button)"
+            (click)="onClick(button)">
+      {{ button.text }}
+    </button>
+  </ng-container>
+  <button kendoButton
+          *ngIf="showMoreButton"
+          [icon]="'more-vertical'"></button>
+</div>

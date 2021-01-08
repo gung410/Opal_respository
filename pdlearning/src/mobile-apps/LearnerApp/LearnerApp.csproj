@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <IsProjectReferenceProvider>false</IsProjectReferenceProvider>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LibVLCSharp" Version="3.4.9" />
+    <PackageReference Include="LibVLCSharp.Forms" Version="3.4.9" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
+    <PackageReference Include="Plugin.DeviceOrientation" Version="1.0.7" />
+    <PackageReference Include="Plugin.HybridWebView" Version="1.0.0.1" />
+    <PackageReference Include="Plugin.Toast" Version="2.2.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.7" />
+    <PackageReference Include="Telerik.UI.for.Xamarin" Version="2020.2.624.1" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="refit" Version="5.2.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />
+    <PackageReference Include="ZXing.Net" Version="0.16.5" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+  <EmbeddedResource Update="Resources\Texts\TextsResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TextsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Texts\TextsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TextsResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

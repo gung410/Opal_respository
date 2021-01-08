@@ -1,0 +1,152 @@
+.import-form-dialog {
+  min-width: 500px;
+  box-sizing: border-box;
+
+  &__content {
+    padding: 1rem;
+  }
+
+  &__drop-file-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 200px;
+    position: relative;
+  }
+
+  &__title {
+    margin-top: 1rem;
+  }
+
+  &__control {
+    margin-top: 2rem;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__btn-group {
+    display: flex;
+    align-items: center;
+
+    > .k-button {
+      margin-left: 10px;
+    }
+  }
+
+  &__import-select {
+    z-index: 1000;
+  }
+
+  &__add-file-icon {
+    z-index: 1000;
+
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+
+  &__button {
+    line-height: 2rem;
+    height: 2rem;
+  }
+
+  &__error-result {
+    width: 50vw;
+
+    & * .k-grid {
+      height: 600px !important;
+    }
+
+    > .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__file-indicator {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  &__file-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    width: 250px;
+    margin: 2rem 0;
+    padding: 1rem;
+    border: 1px solid #d8dce6;
+    border-bottom-color: transparent;
+    border-radius: 7px 0 7px 7px;
+    box-shadow: 1px 5px 10px -5px rgba(0, 0, 0, 0.75);
+  }
+
+  &__right-file-info {
+    margin-left: 15px;
+
+    .import-progress {
+      font-size: 0.75em;
+      color: $color-turquoise;
+    }
+  }
+
+  &__icon-file-type {
+    font-size: 70px;
+  }
+
+  &__icon-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: $color-white;
+    border-radius: 50%;
+
+    .k-icon {
+      font-size: 1.2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+  }
+
+  &__file-progressbar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $color-gainsboro;
+    border-radius: 0 0 7px 7px;
+
+    .progress {
+      height: 4px;
+      background-color: $color-turquoise;
+      border-radius: 0 0 7px 7px;
+    }
+  }
+
+  &__link {
+    padding: 0;
+    color: $color-turquoise;
+
+    &,
+    &:hover {
+      background-color: transparent;
+
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+learner-withdrawal-reason-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 500px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+
+  .dialog-content.comment-tab {
+    display: flex;
+    flex-direction: initial;
+  }
+}

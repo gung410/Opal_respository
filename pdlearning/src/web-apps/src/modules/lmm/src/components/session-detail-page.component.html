@@ -1,0 +1,56 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #sessionDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <p class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #sessionDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="sessionDetailStickyToolbarElement.element">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.SessionInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <session-detail [form]="form"
+                          [session]="session"
+                          [mode]="detailPageInput.data.mode"
+                          [classRunSearchType]="detailPageInput.data.classRunSearchType"
+                          [stickyDependElement]="sessionDetailStickyTabHeaderElement.headerElement"
+                          [stickySpacing]="stickySpacing"
+                          [forModule]="'lmm'"
+                          (preRecordClipChange)="updatePreRecordClip($event)"
+                          (usePreRecordClipChange)="updateUsePreRecordClip($event)"></session-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

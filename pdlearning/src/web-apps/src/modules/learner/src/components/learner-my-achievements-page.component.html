@@ -1,0 +1,18 @@
+<div class="learner-my-achievements-page">
+  <ng-container *ngIf="!showingECertificates && !showingDigitalBadges">
+    <learning-ecertificates-list [isShowMore]="true"
+                                 (onShowMoreECertificatesClick)="onShowMoreECertificatesClicked()">
+    </learning-ecertificates-list>
+    <!-- <learning-digital-badges-list [isShowMore]="true"
+                                  (onShowMoreDigitalBadgesClick)="onShowMoreDigitalBadgesClicked()">
+    </learning-digital-badges-list> -->
+  </ng-container>
+
+  <learning-ecertificates-page *ngIf="showingECertificates"
+                               (onECertificatesBackClick)="onECertificatesBack()">
+  </learning-ecertificates-page>
+
+  <!-- <learning-digital-badges-page *ngIf="showingDigitalBadges"
+                                (onDigitalBadgesBackClick)="onDigitalBadgesBack()">
+  </learning-digital-badges-page> -->
+</div>

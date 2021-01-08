@@ -1,0 +1,52 @@
+<div class="learning-path-form">
+  <detail-content>
+    <learner-toolbar [title]="formTitle"
+                     [toolbarCustomClass]="'--no-spacing'"
+                     [hasBackButton]="true"
+                     [showTitle]="true"
+                     (backButtonClick)="onBackClick()">
+      <div class="learner-toolbar-extension">
+        <div class="learning-path-form__btn-group">
+          <button class="learning-path-form__main-btn --del-btn"
+                  *ngIf="isEditMode"
+                  kendoButton
+                  [icon]="'trash'"
+                  [disabled]="asViewMode(mode)"
+                  (click)="onDeleteClicked()">{{ 'Delete' | translator }}</button>
+          <button class="learning-path-form__main-btn"
+                  kendoButton
+                  [primary]="true"
+                  [disabled]="isDisabledYesBtn || asViewMode(mode)"
+                  (click)="onHandleActionForm()">{{( isEditMode ? 'Save' : 'Create') | translator}}</button>
+        </div>
+      </div>
+    </learner-toolbar>
+    <detail-content-fragment class="flex detail-page f-detail-content-container"></detail-content-fragment>
+    <detail-content-left>
+      <scrollable-menu [title]="'Information about the learning path'"
+                       [tabs]="tabs"></scrollable-menu>
+    </detail-content-left>
+    <detail-content-right>
+      <div class="scrollable-menu-content">
+        <div class="scrollable-menu-content__tab-content">
+          <div #basicInfoTabContainer="">
+            <learning-path-basic-info-tab [learningPathDetailVM]="learningPathDetailVM"
+                                          [form]="form"
+                                          [isViewMode]="asViewMode(mode)"></learning-path-basic-info-tab>
+          </div>
+          <div #pdOpportunitiesTabContainer="">
+            <learning-path-pd-opportunities [learningPathDetailVM]="learningPathDetailVM"
+                                            [fetchPublishedCoursesFn]="fetchPublishedCoursesFn"
+                                            [form]="form"
+                                            [isViewMode]="asViewMode(mode)"></learning-path-pd-opportunities>
+          </div>
+          <div #sharingTabContainer="">
+            <learning-path-sharing [fetchUsersFn]="fetchUsersFn"
+                                   [selectedUsers]="sharedUsers"
+                                   [isViewMode]="asViewMode(mode)"></learning-path-sharing>
+          </div>
+        </div>
+      </div>
+    </detail-content-right>
+  </detail-content>
+</div>

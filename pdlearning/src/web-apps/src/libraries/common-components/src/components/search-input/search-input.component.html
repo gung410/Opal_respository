@@ -1,0 +1,17 @@
+<span class="search-input"
+      [ngClass]="{'search-input--disabled': disabled }">
+
+  <input class="search-input__input"
+         type="text"
+         #searchInput
+         [ngModel]="searchTerm"
+         (ngModelChange)="onNgModelChanged($event)"
+         (keydown.enter)="onSearch($event)"
+         [disabled]="disabled"
+         [placeholder]="placeholder | translator">
+  <i class="icon close search-input__icon clear-search"
+     *ngIf="isShowClearText"
+     (click)="onClearSearch()"></i>
+  <i class="icon search search-input__icon"
+     (click)="onSearch($event)"></i>
+</span>

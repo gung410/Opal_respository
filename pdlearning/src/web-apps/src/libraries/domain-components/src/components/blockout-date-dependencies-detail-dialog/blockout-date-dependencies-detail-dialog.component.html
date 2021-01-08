@@ -1,0 +1,15 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">Block out dates</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onClose()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <list-blockout-date-grid [displayColumns]="displayColumns"
+                           [availableBlockOutDates]="availableBlockOutDates"></list-blockout-date-grid>
+</div>
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Close' | globalTranslator }}</button>
+</div>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+	x:Class="LearnerApp.Controls.MyLearning.MyLearningPathsSelectUser"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+	xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:local="clr-namespace:LearnerApp.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+	BackgroundColor="{StaticResource ContentPageColor}"
+	mc:Ignorable="d">
+
+	<pages:PopupPage.Animation>
+		<animations:ScaleAnimation
+			DurationIn="300"
+			DurationOut="300"
+			EasingIn="SinOut"
+			EasingOut="SinIn"
+			HasBackgroundAnimation="True"
+			PositionIn="Center"
+			PositionOut="Center"
+			ScaleIn="1.2"
+			ScaleOut="0.8" />
+	</pages:PopupPage.Animation>
+
+	<StackLayout
+		Padding="10"
+		HorizontalOptions="FillAndExpand"
+		Spacing="10"
+		VerticalOptions="FillAndExpand">
+		<Frame
+			Padding="1"
+			BackgroundColor="White"
+			BorderColor="LightGray"
+			CornerRadius="4"
+			HasShadow="False"
+			HorizontalOptions="FillAndExpand"
+			IsClippedToBounds="True">
+			<StackLayout Padding="10,5,10,5" Orientation="Horizontal">
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="30"
+					Source="search.svg"
+					WidthRequest="30">
+					<ffimagesvg:SvgCachedImage.GestureRecognizers>
+						<TapGestureRecognizer Tapped="OnSearch" />
+					</ffimagesvg:SvgCachedImage.GestureRecognizers>
+				</ffimagesvg:SvgCachedImage>
+				<local:CustomEntry
+					x:Name="SearchEntry"
+					ClearButtonVisibility="WhileEditing"
+					Completed="OnSearch"
+					HorizontalOptions="FillAndExpand"
+					PlaceholderColor="LightGray"
+					Text="{Binding TextSearch}" />
+			</StackLayout>
+		</Frame>
+
+		<StackLayout HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleSearchResult}">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding DismissSearchCommand}" />
+			</StackLayout.GestureRecognizers>
+			<StackLayout Orientation="Horizontal">
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="22"
+					Source="arrow_left.svg"
+					WidthRequest="22" />
+				<Label
+					x:Name="ResultSearchLbl"
+					FontSize="20"
+					HorizontalOptions="FillAndExpand"
+					MaxLines="1"
+					Text="{Binding TextSearched}"
+					TextType="Html" />
+			</StackLayout>
+		</StackLayout>
+
+		<RefreshView IsRefreshing="{Binding IsRefreshing}" Refreshing="RefreshView_Refreshing">
+			<CollectionView
+				x:Name="CourseSourse"
+				ItemsSource="{Binding UserCollection}"
+				Scrolled="CourseSourse_Scrolled"
+				SelectionChanged="CourseSourse_SelectionChanged"
+				SelectionMode="Single"
+				VerticalOptions="FillAndExpand"
+				VerticalScrollBarVisibility="Never">
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<StackLayout
+							Padding="10"
+							BackgroundColor="White"
+							Orientation="Horizontal">
+							<forms:CachedImage
+								DownsampleToViewSize="true"
+								HeightRequest="60"
+								HorizontalOptions="Center"
+								Source="{Binding AvatarUrl, Converter={StaticResource AvatarUrlConverter}}"
+								VerticalOptions="Center"
+								WidthRequest="60">
+								<forms:CachedImage.Transformations>
+									<fftransformations:CircleTransformation BorderHexColor="#E5E5E5" BorderSize="1" />
+								</forms:CachedImage.Transformations>
+							</forms:CachedImage>
+							<StackLayout Spacing="0">
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="16"
+									LineBreakMode="TailTruncation"
+									Text="{Binding FullName}"
+									VerticalOptions="CenterAndExpand" />
+								<Label
+									FontFamily="{StaticResource RobotoRegular}"
+									FontSize="14"
+									LineBreakMode="TailTruncation"
+									Text="{Binding EmailAddress}"
+									TextColor="#8799BA"
+									VerticalOptions="CenterAndExpand" />
+							</StackLayout>
+						</StackLayout>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+				<CollectionView.EmptyView>
+					<StackLayout>
+						<Label
+							x:Name="EmptyViewMessage"
+							HorizontalOptions="CenterAndExpand"
+							Text="{Binding EmptyListMessage}" />
+					</StackLayout>
+				</CollectionView.EmptyView>
+			</CollectionView>
+		</RefreshView>
+
+		<StackLayout Orientation="Horizontal">
+			<Button
+				Padding="0"
+				BackgroundColor="White"
+				BorderColor="#D8DCE6"
+				BorderWidth="1"
+				Clicked="Cancel_Clicked"
+				CornerRadius="4"
+				FontSize="16"
+				HeightRequest="40"
+				HorizontalOptions="FillAndExpand"
+				Text="Cancel"
+				TextColor="{StaticResource MainBodyTextColor}" />
+			<Button
+				Padding="0"
+				BackgroundColor="{StaticResource MainBodyTextColor}"
+				Clicked="OnDone"
+				CornerRadius="4"
+				FontSize="16"
+				HeightRequest="40"
+				HorizontalOptions="FillAndExpand"
+				Text="Done"
+				TextColor="White" />
+		</StackLayout>
+	</StackLayout>
+</pages:PopupPage>

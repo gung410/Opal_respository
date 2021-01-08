@@ -1,0 +1,233 @@
+<div class="section-title">{{ 'Table of content' | translator }}</div>
+<div class="search-field">
+  <search-input [(ngModel)]="searchText"
+                [placeholder]="'Search in Content title...' | translator"
+                (search)="onSearchInputKeydown()"></search-input>
+</div>
+<div class="contents-list column">
+  <div *ngFor="let item of contentItems; let outerIndex = index; last as isLast">
+    <div class="unit"
+         *ngIf="item.type === 'Section'"
+         [ngClass]="{'expanded': item.expanded && item.items.length > 0}">
+      <div class="unit-content table-of-content__content-item">
+        <div class="add-item-before"
+             *ngIf="canCreateCourseContent()">
+          <i class="icon add-item">
+            <kendo-menu [items]="creationMenu"
+                        [openOnClick]="{ toggle: 'click' }"
+                        (select)="onTocCreationMenuSelect($event, CreationPosition.Before, item )"></kendo-menu>
+          </i>
+        </div>
+        <div class="unit-title-wrapper">
+          <div class="unit-title"
+               (click)="onTocSectionExpandChange(item)">
+            <span class="arrow-down">▼</span>
+            <span>{{item.title}}
+              <b *ngIf="item.isMine">{{ '(Mine)' | globalTranslator }}</b>
+            </span>
+          </div>
+          <div class="action-button creation-menu"
+               *ngIf="canCreateCourseContent()">
+            <i class="icon-moe-plus">
+              <kendo-menu [items]="childCreationMenu"
+                          [openOnClick]="{ toggle: 'click' }"
+                          (select)="onTocCreationMenuSelect($event, CreationPosition.Include, null ,item)"></kendo-menu>
+            </i>
+          </div>
+          <div class="action-button"
+               *ngIf="canEditDeleteMineCourseContent() || canEditDeleteOthersCourseContent()">
+            <img class="icon action"
+                 src="assets/images/icons/more.svg">
+            <kendo-menu [openOnClick]="{ toggle: 'click' }"
+                        (click)="onTocActionMenuClick($event)"
+                        (select)="onTocActionMenuSelect($event, item)">
+              <kendo-menu-item>
+                <kendo-menu-item *ngFor="let action of actionMenu[0].items"
+                                 [text]="action.text"
+                                 [data]="action.value"
+                                 [disabled]="(action.value === contentItemAction.MoveUp && outerIndex === 0) ||
+                                             (action.value === contentItemAction.MoveDown && outerIndex === (contentItems.length - 1))">
+                </kendo-menu-item>
+              </kendo-menu-item>
+            </kendo-menu>
+          </div>
+        </div>
+      </div>
+
+      <div class="items-wrapper"
+           *ngIf="item.expanded">
+        <div class="menu-item table-of-content__content-item"
+             *ngFor="let childItem of item.items; let i = index"
+             [ngClass]="{'active': childItem.id === selectedItemId}">
+          <div class="add-item-before"
+               *ngIf="canCreateCourseContent()">
+            <i class="icon add-item">
+              <kendo-menu [items]="childCreationMenu"
+                          [openOnClick]="{ toggle: 'click' }"
+                          (select)="onTocCreationMenuSelect($event, CreationPosition.Before, childItem, item)"></kendo-menu>
+            </i>
+          </div>
+          <div class="menu-item-content"
+               (click)="onTocContentItemSelect(childItem)">
+            <i class="icon content-type {{ getLectureIcon(childItem.icon) }}"></i>
+            <div class="flex">
+              <span>{{childItem.title}}
+                <b *ngIf="childItem.isMine">{{ '(Mine)' | globalTranslator }}</b></span>
+            </div>
+            <div class="action-button"
+                 *ngIf="canCreateCourseContent()">
+              <img class="icon action"
+                   src="assets/images/icons/more.svg">
+              <kendo-menu [openOnClick]="{ toggle: 'click' }"
+                          (click)="onTocActionMenuClick($event)"
+                          (select)="onTocActionMenuSelect($event, childItem, item)">
+                <kendo-menu-item>
+                  <ng-container *ngFor="let action of actionMenu[0].items">
+                    <kendo-menu-item *ngIf="!(!childItem.isSection() && action.value === contentItemAction.Edit)"
+                                     [text]="action.text"
+                                     [data]="action.value"
+                                     [disabled]="(action.value === contentItemAction.MoveUp && i === 0) ||
+                               (action.value === contentItemAction.MoveDown && i === (item.items.length - 1)) ||
+                               !childItem.isSection() && action.value === contentItemAction.Edit">
+                    </kendo-menu-item>
+                  </ng-container>
+                </kendo-menu-item>
+              </kendo-menu>
+            </div>
+          </div>
+          <div class="add-item-after"
+               *ngIf="i === item.items.length - 1 && canCreateCourseContent()">
+            <i class="icon add-item">
+              <kendo-menu [items]="childCreationMenu"
+                          [openOnClick]="{ toggle: 'click' }"
+                          (select)="onTocCreationMenuSelect($event, CreationPosition.After, childItem, item)"></kendo-menu>
+            </i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="item.type === 'Lecture'">
+      <div class="menu-item table-of-content__content-item"
+           [ngClass]="{'active': item.id === selectedItemId}">
+        <div class="add-item-before"
+             *ngIf="canCreateCourseContent()">
+          <i class="icon add-item">
+            <kendo-menu [items]="creationMenu"
+                        [openOnClick]="{ toggle: 'click' }"
+                        (select)="onTocCreationMenuSelect($event, CreationPosition.Before, item)"></kendo-menu>
+          </i>
+        </div>
+        <div class="menu-item-content"
+             (click)="onTocContentItemSelect(item)">
+          <i class="icon content-type {{ getLectureIcon(item.icon) }}"></i>
+          <div class="flex">
+            <span>{{item.title}}
+              <b *ngIf="item.isMine">{{ '(Mine)' | globalTranslator }}</b>
+            </span>
+          </div>
+          <div class="action-button"
+               *ngIf="canCreateCourseContent()">
+            <img class="icon action"
+                 src="assets/images/icons/more.svg">
+            <kendo-menu [openOnClick]="{ toggle: 'click' }"
+                        (click)="onTocActionMenuClick($event)"
+                        (select)="onTocActionMenuSelect($event, item)">
+              <kendo-menu-item>
+                <ng-container *ngFor="let action of actionMenu[0].items">
+                  <kendo-menu-item *ngIf="!(!item.isSection() && action.value === contentItemAction.Edit)"
+                                   [text]="action.text"
+                                   [data]="action.value"
+                                   [disabled]="(action.value === contentItemAction.MoveUp && outerIndex === 0) ||
+                                            (action.value === contentItemAction.MoveDown && outerIndex === (contentItems.length - 1)) ||
+                                            !item.isSection() && action.value === contentItemAction.Edit">
+                  </kendo-menu-item>
+                </ng-container>
+              </kendo-menu-item>
+            </kendo-menu>
+          </div>
+        </div>
+        <div class="add-item-after"
+             *ngIf="!isLast && canCreateCourseContent()">
+          <i class="icon add-item">
+            <kendo-menu [items]="creationMenu"
+                        [openOnClick]="{ toggle: 'click' }"
+                        (select)="onTocCreationMenuSelect($event, CreationPosition.After, item)"></kendo-menu>
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="add-first-item-container"
+     *ngIf="canCreateCourseContent()">
+  <div class="add-first-item"
+       #addButton>
+    <i class="icon-moe-plus"></i> {{'Add new' | translator }}
+  </div>
+  <kendo-contextmenu [items]="creationMenu[0].items"
+                     [target]="addButton"
+                     (select)="onTocCreationMenuSelect($event, CreationPosition.Last)"
+                     [alignToAnchor]="true"
+                     [anchorAlign]="defaultContextMenuAnchorAlign"
+                     [popupAlign]="defaultContextMenuPopupAlign"
+                     showOn="click"></kendo-contextmenu>
+</div>
+
+<div class="group-title">
+  {{ 'Assignments' | translator }}
+</div>
+
+<div class="contents-list column">
+  <div *ngFor="let item of contentItems; let outerIndex = index; last as isLast">
+    <div *ngIf="item.type === 'Assignment'">
+      <div class="menu-item table-of-content__content-item"
+           [ngClass]="{'active': item.id === selectedItemId}">
+        <div class="add-item-before"
+             *ngIf="canCreateCourseContent()">
+          <i class="icon add-item">
+            <kendo-menu [items]="creationMenu"
+                        [openOnClick]="{ toggle: 'click' }"
+                        (select)="onTocCreationMenuSelect($event, CreationPosition.Before, item)"></kendo-menu>
+          </i>
+        </div>
+        <div class="menu-item-content"
+             (click)="onTocContentItemSelect(item)">
+          <i class="icon content-type {{ getLectureIcon(item.icon) }}"></i>
+          <div class="flex">
+            <span>{{item.title}}
+              <b *ngIf="item.isMine">{{ '(Mine)' | globalTranslator }}</b>
+            </span>
+          </div>
+          <div class="action-button"
+               *ngIf="canCreateCourseContent()">
+            <img class="icon action"
+                 src="assets/images/icons/more.svg">
+            <kendo-menu [openOnClick]="{ toggle: 'click' }"
+                        (click)="onTocActionMenuClick($event)"
+                        (select)="onTocActionMenuSelect($event, item)">
+              <kendo-menu-item>
+                <ng-container *ngFor="let action of actionMenu[0].items">
+                  <kendo-menu-item *ngIf="(action.value !== contentItemAction.Edit) &&
+                                          (action.value !== contentItemAction.MoveUp) &&
+                                          (action.value !== contentItemAction.MoveDown)"
+                                   [text]="action.text"
+                                   [data]="action.value">
+                  </kendo-menu-item>
+                </ng-container>
+              </kendo-menu-item>
+            </kendo-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="add-first-item-container"
+     *ngIf="canCreateAssignment()">
+  <div class="add-first-item"
+       (click)="onCreateNewAssignmentClick()">
+    <i class="icon-moe-plus"></i>{{ 'Create new assignment' | translator }}
+  </div>
+</div>

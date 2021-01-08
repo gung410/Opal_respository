@@ -1,0 +1,216 @@
+{
+  "prefix": "opal20",
+  "manifestPath": "app-shell/assets/manifest.json",
+  "modulesPath": "app-shell/assets/packages",
+  "modulesUrl": "./assets/packages",
+  "moduleRegistration": {
+    "path": "app-shell/bootstrapers",
+    "template": "registration-modules.tstpl"
+  },
+  "coreDependencies": {
+    "tslib": "tslib",
+    "rxjs": "rxjs",
+    "rxjs/operators": "rxjs/operators",
+    "lodash-es": "lodash-es",
+    "@angular/core": "@angular/core",
+    "@angular/animations": "@angular/animations",
+    "@angular/platform-browser": "@angular/platform-browser",
+    "@angular/platform-browser/animations": "@angular/platform-browser/animations",
+    "@angular/common": "@angular/common",
+    "@angular/common/http": "@angular/common/http",
+    "@angular/forms": "@angular/forms",
+    "@angular/router": "@angular/router",
+    "@ngx-translate/core": "@ngx-translate/core",
+    "@progress/kendo-angular-buttons": "@progress/kendo-angular-buttons",
+    "@progress/kendo-angular-common": "@progress/kendo-angular-common",
+    "@progress/kendo-angular-dateinputs": "@progress/kendo-angular-dateinputs",
+    "@progress/kendo-angular-dialog": "@progress/kendo-angular-dialog",
+    "@progress/kendo-angular-dropdowns": "@progress/kendo-angular-dropdowns",
+    "@progress/kendo-angular-editor": "@progress/kendo-angular-editor",
+    "@progress/kendo-angular-excel-export": "@progress/kendo-angular-excel-export",
+    "@progress/kendo-angular-grid": "@progress/kendo-angular-grid",
+    "@progress/kendo-angular-inputs": "@progress/kendo-angular-inputs",
+    "@progress/kendo-angular-intl": "@progress/kendo-angular-intl",
+    "@progress/kendo-angular-l10n": "@progress/kendo-angular-l10n",
+    "@progress/kendo-angular-menu": "@progress/kendo-angular-menu",
+    "@progress/kendo-angular-pdf-export": "@progress/kendo-angular-pdf-export",
+    "@progress/kendo-angular-notification": "@progress/kendo-angular-notification",
+    "@progress/kendo-angular-popup": "@progress/kendo-angular-popup",
+    "@progress/kendo-angular-tooltip": "@progress/kendo-angular-tooltip",
+    "@progress/kendo-angular-toolbar": "@progress/kendo-angular-toolbar",
+    "@progress/kendo-data-query": "@progress/kendo-data-query",
+    "@progress/kendo-drawing": "@progress/kendo-drawing",
+    "@ng-select/ng-select": "@ng-select/ng-select",
+    "angularx-qrcode": "angularx-qrcode"
+  },
+  "modules": {
+    "infrastructure": {
+      "description": "This is Infrastructure library which shares modules and services.",
+      "path": "@opal20/infrastructure",
+      "physicalPath": "libraries/infrastructure",
+      "type": "library"
+    },
+    "authentication": {
+      "description": "OPAL 2.0 Authentication",
+      "path": "@opal20/authentication",
+      "physicalPath": "libraries/authentication",
+      "type": "library",
+      "dependencies": ["infrastructure"]
+    },
+    "common-components": {
+      "description": "This is common-components package.",
+      "path": "@opal20/common-components",
+      "physicalPath": "libraries/common-components",
+      "type": "library",
+      "dependencies": ["infrastructure"]
+    },
+    "domain-api": {
+      "description": "This is domain-api package.",
+      "path": "@opal20/domain-api",
+      "physicalPath": "libraries/domain-api",
+      "type": "library",
+      "dependencies": ["infrastructure"]
+    },
+    "domain-components": {
+      "description": "This is domain-components package.",
+      "path": "@opal20/domain-components",
+      "physicalPath": "libraries/domain-components",
+      "type": "library",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api"]
+    },
+    "appshell": {
+      "description": "This is AppShell module which contains application modules and services.",
+      "path": "../app-shell/src",
+      "module": "app.module#AppModule",
+      "type": "shell",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "dashboard": {
+      "name": "OPAL 2.0 Dashboard",
+      "shortName": "Dashboard",
+      "description": "This is OPAL 2.0 Dashboard.",
+      "path": "./dashboard/src",
+      "module": "dashboard.module#DashboardModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "ccpm": {
+      "name": "Content Creation & Publishing",
+      "shortName": "CCPM",
+      "description": "This is Content Creation & Publishing module",
+      "path": "./ccpm/src",
+      "module": "ccpm.module#CCPMModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "lmm": {
+      "name": "Learning Management",
+      "shortName": "LMM",
+      "description": "This is Learning Management module",
+      "path": "./lmm/src",
+      "module": "lmm.module#LMMModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "learner": {
+      "name": "Learner",
+      "shortName": "Learner",
+      "description": "This is Learner module",
+      "path": "./learner/src",
+      "module": "learner.module#LearnerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "quiz-player": {
+      "name": "Quiz Player",
+      "shortName": "Quiz Player",
+      "description": "This is Quiz Player module",
+      "path": "../players/quiz-player/src",
+      "module": "quiz-player.module#QuizPlayerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "scorm-player": {
+      "name": "Scorm Player",
+      "shortName": "Scorm Player",
+      "description": "This is Scorm Player module",
+      "path": "../players/scorm-player-integrator/src",
+      "module": "scorm-player-integrator.module#ScormPlayerIntegratorModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "digital-content-player": {
+      "name": "Digital Content Player",
+      "shortName": "Digital Content ",
+      "description": "This is Digital Content module",
+      "path": "../players/digital-content-player/src",
+      "module": "digital-content-player.module#DigitalContentPlayerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "poc": {
+      "name": "Framework Examples",
+      "shortName": "POC",
+      "description": "This is Proof of Concept module",
+      "path": "./poc/src",
+      "module": "poc.module#POCModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"],
+      "development": true
+    },
+    "cam": {
+      "name": "Course Admin Management",
+      "shortName": "CAM",
+      "description": "This is Course Admin Management module",
+      "path": "./cam/src",
+      "module": "cam.module#CAMModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "common": {
+      "name": "Common",
+      "shortName": "Common",
+      "description": "This is Common module",
+      "path": "./common/src",
+      "module": "common.module#OpalCommonModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "assignment-player": {
+      "name": "Assignment Player",
+      "shortName": "Assignment Player",
+      "description": "This is Assignment Player module",
+      "path": "../players/assignment-player/src",
+      "module": "assignment-player.module#AssignmentPlayerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "video-annotation-player": {
+      "name": "Video Annotation Player",
+      "shortName": "Video Annotation ",
+      "description": "This is Video Annotation module",
+      "path": "../players/video-annotation-player/src",
+      "module": "digital-content-player.module#VideoAnnotationPlayerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "assessment-player": {
+      "name": "Assessment Player",
+      "shortName": "Assessment Player",
+      "description": "This is Assessment Player module",
+      "path": "../players/assessment-player/src",
+      "module": "assessment-player.module#AssessmentPlayerModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    },
+    "standalone-survey": {
+      "name": "Standalone Survey",
+      "shortName": "Standalone Survey",
+      "description": "This is Standalone Survey module",
+      "path": "../players/standalone-survey/src",
+      "module": "standalone-survey.module#StandaloneSurveyModule",
+      "type": "module",
+      "dependencies": ["infrastructure", "authentication", "common-components", "domain-api", "domain-components"]
+    }
+  }
+}

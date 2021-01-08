@@ -1,0 +1,46 @@
+.k-checkbox {
+  border-color: black;
+  border-width: 1.5px;
+
+  &:checked {
+    border-color: black;
+    background-color: $white;
+
+    &::before {
+      color: black;
+    }
+
+    &:focus {
+      border-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  &+.k-checkbox-label {
+    margin-left: 0;
+    padding-left: 10px;
+  }
+
+  &:indeterminate::before {
+    background-color: $accent;
+  }
+}
+
+.k-checkbox-label {
+  &+.k-checkbox {
+    margin-left: 10px;
+  }
+
+  &.-readonly {
+    cursor: default;
+  }
+}
+
+.k-checkbox-container {
+  display: flex;
+  align-items: center;
+
+  >*+* {
+    margin-left: 5px;
+  }
+}

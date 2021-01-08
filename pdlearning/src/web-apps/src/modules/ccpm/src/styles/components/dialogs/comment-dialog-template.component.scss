@@ -1,0 +1,15 @@
+comment-dialog-template {
+  .dialog-header {
+    &__title {
+      font-size: $font-h3;
+      color: $color-blue-dard;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+  }
+
+  .no-resize {
+    resize: vertical;
+  }
+
+}

@@ -1,0 +1,373 @@
+kendo-grid {
+  .k-grid-header {
+    border-bottom: none;
+  }
+
+  &.k-grid {
+    kendo-grid-list {
+      table {
+        tbody {
+          tr:hover {
+            background-color: unset;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+.k-grid-header,
+.k-grid-toolbar,
+.k-grouping-header,
+.k-grid-add-row,
+.k-grid-footer {
+  background: $white;
+}
+
+.k-grid-header {
+  color: $text;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.grid-file-type {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.k-grid {
+  th {
+    border: none;
+    white-space: normal;
+  }
+
+  td {
+    border-width: 0 0 1px 0;
+    border-color: $border-color;
+    overflow: visible;
+  }
+
+  .grid-action {
+    text-align: center;
+    vertical-align: middle;
+    z-index: $z-index-level-3;
+
+    .icon {
+      opacity: 0;
+      vertical-align: middle;
+
+      &.active {
+        opacity: 1;
+      }
+
+      @include flex-layout-media('lt-lg') {
+        opacity: 1;
+      }
+    }
+  }
+
+  .description-col {
+    color: $color-blue-dard;
+    font-size: $font-h6;
+  }
+
+  tr:hover .grid-action .icon {
+    opacity: 1;
+  }
+
+  tr.k-alt {
+    background: transparent;
+  }
+}
+
+// Box-shadow does not work on tr element
+// .k-grid tbody tr:hover,
+// .k-grid tbody tr.k-state-hover {
+//   box-shadow: 0 2px 6px $gray100;
+// }
+
+// Paging
+.k-pager-numbers {
+  .k-link.k-state-selected {
+    color: $white;
+    background: $accent;
+  }
+
+  .k-link {
+    color: $text;
+
+    &.k-state-hover,
+    &:hover {
+      color: $white;
+      background: $accent;
+    }
+  }
+}
+
+.k-pager-wrap {
+  background: $white;
+  color: $text;
+  border-top: $border;
+
+  .k-pager-info {
+    color: $description;
+    font-size: 0.875rem;
+  }
+}
+
+.k-pager-nav:hover {
+  color: $accent;
+}
+
+.base-opal-grid {
+  max-width: 100%;
+}
+
+kendo-grid.opal-grid.k-grid {
+  border: none;
+  background: transparent;
+  height: 100%;
+  max-width: 100%;
+
+  &.-no-merge {
+    .k-grid-header .k-header {
+      border-top: 1px solid $color-gainsboro;
+    }
+
+    .k-grid-header .k-header:first-child {
+      border-top-left-radius: 5px;
+    }
+
+    .k-grid-header .k-header:last-child {
+      border-top-right-radius: 5px;
+    }
+  }
+
+  .main-title {
+    margin: 2px 0 !important;
+    overflow: auto;
+  }
+
+  .main-title-selected {
+    font-weight: bold;
+  }
+
+  .sub-title {
+    margin: 2px 0 !important;
+    font-size: $font-size-small;
+    color: $color-blue-light;
+  }
+
+  .k-grid-content {
+    overflow-y: initial;
+    background-color: $color-white-smoke;
+  }
+
+  .k-grid-header {
+    padding: 0 !important;
+  }
+
+  .k-grid-header-wrap {
+    border-width: 0;
+  }
+
+  .k-header {
+    vertical-align: middle !important;
+    text-overflow: unset;
+  }
+
+  .k-grid-header .k-header {
+    border-bottom: 2px solid $color-gainsboro;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    padding: 16px 16px;
+  }
+
+  @include flex-layout-media('lt-lg') {
+    .k-grid-header .k-header {
+      padding: 8px 8px;
+    }
+  }
+
+  .k-grid-header .k-header:first-child {
+    border-left: 1px solid $color-gainsboro;
+    border-bottom-left-radius: 5px;
+  }
+
+  .k-grid-header .k-header:last-child {
+    border-right: 1px solid $color-gainsboro;
+    border-bottom-right-radius: 5px;
+  }
+
+  tr {
+    font-size: 0.875rem;
+    background: $color-white !important;
+    cursor: pointer;
+  }
+
+  tr .align-center {
+    text-align: center;
+  }
+
+  tr .align-right {
+    text-align: right;
+  }
+
+  tr td {
+    border-top: 1px solid $color-gainsboro !important;
+    border-bottom: 1px solid $color-gainsboro !important;
+    box-sizing: border-box;
+    color: #303450;
+    position: relative;
+    padding: 16px 12px;
+
+    @include flex-layout-media('lt-lg') {
+      padding: 8px 12px;
+    }
+
+    input {
+      vertical-align: middle;
+    }
+  }
+
+  td.k-state-focused,
+  th.k-state-focused {
+    box-shadow: none !important;
+  }
+
+  tr.selected {
+    background: #f5f6f6 !important;
+  }
+
+  tr.selected td:first-child:before {
+    content: '';
+    background-color: #1dcec1;
+    display: flex;
+    width: 10px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  tr td:first-child {
+    border-left: 1px solid $color-gainsboro;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  tr td:last-child {
+    border-right: 1px solid $color-gainsboro;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .k-grid-content table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    background: $color-white-smoke;
+  }
+
+  kendo-grid-list table tbody tr:hover {
+    box-shadow: none !important;
+    background: $color-silver !important;
+  }
+
+  .k-pager-wrap {
+    border: none;
+    background: transparent;
+    border-radius: $main-border-radius;
+    justify-content: center;
+    text-align: center;
+
+    kendo-pager-prev-buttons {
+      background: $white;
+      border-top-left-radius: $main-border-radius;
+      border-bottom-left-radius: $main-border-radius;
+    }
+
+    kendo-pager-numeric-buttons {
+      background: $white;
+    }
+
+    kendo-pager-next-buttons {
+      background: $white;
+      border-top-right-radius: $main-border-radius;
+      border-bottom-right-radius: $main-border-radius;
+    }
+
+    .k-pager-info {
+      position: absolute;
+      right: 20px;
+      margin-right: 0;
+      font-size: $font-h6;
+      color: $color-blue-light;
+    }
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  kendo-grid {
+    &.k-grid {
+      .k-pager-wrap {
+        position: relative;
+        padding-bottom: 50px;
+        padding-left: 0;
+        padding-right: 0;
+
+        .k-pager-info {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          margin: 0;
+          right: 0;
+          text-align: center;
+          font-size: 1rem;
+          display: block;
+          bottom: 14px;
+          color: $color-blue-light;
+        }
+
+        kendo-pager-prev-buttons {
+          position: absolute;
+          left: 0;
+          bottom: 8px;
+          border-right: 1px solid #D8DCE6;
+        }
+
+        kendo-pager-next-buttons {
+          position: absolute;
+          right: 0;
+          bottom: 8px;
+          border-left: 1px solid #D8DCE6;
+        }
+
+        kendo-pager-numeric-buttons {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  kendo-grid {
+    &.k-grid {
+      .k-pager-wrap {
+        kendo-pager-numeric-buttons {
+          max-width: 100%;
+          overflow-x: auto;
+
+          .k-pager-numbers {
+            .k-link {
+              min-width: 31px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

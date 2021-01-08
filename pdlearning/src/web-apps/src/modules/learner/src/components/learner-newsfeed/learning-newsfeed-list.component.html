@@ -1,0 +1,36 @@
+<div class="newsfeed-list"
+     [ngClass]="{'newsfeed-list--empty': isEmpty}">
+  <div class="learning-newsfeed-title"
+       (click)="loadMoreClicked()">{{ 'News Feed' | translator }} ({{totalNewsfeed}}) ></div>
+  <div class="newsfeed-container"
+       *ngIf="!isEmpty; else showingEmptyMsg">
+    <div class="learning-newsfeed-item"
+         [ngClass]="{
+        last: isLast
+      }"
+         *ngFor="let item of newsfeedData$ | async | slice:0:10; index as i; last as isLast; trackBy: trackByFn">
+      <ng-container [ngSwitch]="item.type">
+        <learning-newsfeed *ngSwitchCase="NewsfeedType.Post"
+                           [newsfeed]="item"
+                           [users]="users$ | async"
+                           (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed>
+        <learning-newsfeed *ngSwitchCase="NewsfeedType.CommunityPost"
+                           [newsfeed]="item"
+                           [users]="users$ | async"
+                           (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed>
+        <learning-newsfeed-course *ngSwitchCase="NewsfeedType.Course"
+                                  [newsfeed]="item"
+                                  (newsFeedClick)="onNewsFeedClicked($event)">
+        </learning-newsfeed-course>
+      </ng-container>
+    </div>
+    <div class="newsfeed-showmore"
+         *ngIf="isShowMore && totalNewsfeed > newsfeedLength"
+         (click)="loadMoreClicked()">{{"Load more" | translator}}</div>
+  </div>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator }}</span>
+  </ng-template>
+</div>

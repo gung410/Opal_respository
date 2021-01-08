@@ -1,0 +1,27 @@
+<div class="assignment-question-adder"
+     [hidden]="mode !== AssignmentMode.Edit"
+     #tooltip="kendoTooltip"
+     [ngClass]="{'-outline': !inlineAdd}"
+     [filter]="inlineAdd ? ('#assignment-question-adder__add-question-btn-' + id) : ('#assignment-question-adder-' + id)"
+     [id]="'assignment-question-adder-' + id"
+     [tooltipTemplate]="questionTemplateSelectorTemplate"
+     [tooltipClass]="'assignment-question-adder__assignment-question-template-popup'"
+     kendoTooltip
+     showOn="click"
+     position="bottom">
+  <div class="assignment-question-adder__question-separator"
+       *ngIf="inlineAdd"></div>
+  <div class="assignment-question-adder__add-question-btn add-btn-icon"
+       [id]="'assignment-question-adder__add-question-btn-' + id"></div>
+  <div class="assignment-question-adder__add-title"
+       *ngIf="!inlineAdd"> {{ 'Add question' | translator }}
+
+  </div>
+</div>
+<ng-template #questionTemplateSelectorTemplate
+             let-anchor>
+  <assignment-question-template class="assignment-question-adder__assignment-question-template"
+                                [type]="type"
+                                (click)="tooltip.hide()"
+                                [priority]="priority"></assignment-question-template>
+</ng-template>

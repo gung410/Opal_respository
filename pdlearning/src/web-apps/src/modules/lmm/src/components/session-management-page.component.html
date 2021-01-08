@@ -1,0 +1,20 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+      </div>
+    </div>
+    <list-session-grid [classRun]="classRun"
+                       [course]="course"
+                       [searchType]="SearchSessionType.Owner"
+                       [classRunSearchType]="classRunSearchType"
+                       [classRunId]="classRunDetailPageInput.data.id"
+                       [filter]="filter"
+                       (viewSession)="onViewSession($event)"
+                       (loadedData)="loadedDataGrid($event)"
+                       [stickyDependElement]="stickyDependElement"
+                       [displayColumns]="allClassRunDisplayColumns"
+                       [indexActionColumns]="[5, 6]"></list-session-grid>
+  </div>
+</div>

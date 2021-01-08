@@ -1,0 +1,71 @@
+<div class="assignment-player__container">
+  <div class="assignment-player__tool-bar">
+    <div class="assignment-player__tool-bar-left">
+      <button class="assignment-player__back-button"
+              *ngIf="!forPreview"
+              kendoButton
+              [icon]="'arrow-chevron-left'"
+              [look]="'flat'"
+              (click)="showBackConfirmationDialog()">
+        {{ 'Back' | translator }}
+      </button>
+      <div class="assignment-player__assignment-title-container">
+        <span class="assignment-player__assignment-title">{{ assignmentVm.title }}</span>
+        <span class="assignment-player__assignment-date">
+          {{ participantAssignmentTrackVm.participantAssignmentTrack.startDate | date: 'dd/MM/yyyy' }} -
+          {{ participantAssignmentTrackVm.participantAssignmentTrack.endDate | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+    </div>
+    <div class="assignment-player__tool-bar-right">
+      <div class="assignment-player__right-group-buttons">
+        <div class="assignment-player__right-group-buttons__status">
+          <status-indicator [currentStatus]="myAssignment.status"
+                            [mapping]="statusColorMap"></status-indicator>
+          <p class="participant-assignment-track-page__submit-date"
+             *ngIf="participantAssignmentTrackVm.submittedDate != null">
+            {{ 'Submit Date:' | translator }}
+            {{ participantAssignmentTrackVm.submittedDate | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="assignment-player__questions">
+    <div class="assignment-player__question-container"
+         *ngFor="let question of participantAssignmentTrackVm.assignmentVm.questions; let i = index; trackBy: assignmentQuestionsDataTrackByFn">
+      <assignment-question-editor class="assignment-player__question-item"
+                                  [data]="question"
+                                  [mode]="AssignmentMode.LearnerAnswer"
+                                  [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                  [positionInAssignment]="i+1"
+                                  [totalQuestion]="participantAssignmentTrackVm.assignmentVm.totalQuestion"
+                                  [assignmentType]="participantAssignmentTrackVm.assignmentVm.type"
+                                  [assignmentAnswerTrack]="participantAssignmentTrackVm.assignmentAnswerTrackDic[question.id]"
+                                  (dataChange)="onQuestionChanged($event)">
+      </assignment-question-editor>
+    </div>
+  </div>
+  <div class="assignment-player__submit-container">
+    <ng-container *ngIf="!forPreview && participantAssignmentTrackVm.canSaveOrSubmit">
+      <button class="assignment-player__submit-btn"
+              kendoButton
+              [primary]="true"
+              (click)="onSave()">
+        {{ 'Save' | translator }}
+      </button>
+      <button class="assignment-player__submit-btn"
+              [disabled]="disableSubmitButton"
+              kendoButton
+              [primary]="true"
+              (click)="onSubmit()">
+        {{ 'Submit' | translator }}
+      </button>
+    </ng-container>
+    <a class="assignment-player__report-broken-link-btn"
+       *ngIf="canShowReportBrokenLinkBtn()"
+       (click)="openReportBrokenLinkDialog()">
+      {{ 'Report broken link' | translator }}
+    </a>
+  </div>
+</div>

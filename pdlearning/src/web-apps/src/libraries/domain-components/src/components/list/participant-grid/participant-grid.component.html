@@ -1,0 +1,78 @@
+<kendo-grid class="column flex standalone-form-grid opal-grid"
+            #grid
+            [data]="gridData"
+            [pageable]="true"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)">
+
+  <kendo-grid-column [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [disabled]="isAllParticipantCompleted"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [disabled]="dataItem.status === FORM_PARTICIPANT_STATUS.Completed"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Name' | translator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <div class="owner-container">
+        <div class="owner-container__avatar">
+          <img class="avatar-img"
+               src="{{ dataItem?.participant?.avatarUrl ? dataItem.participant.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+        </div>
+        <div class="user-info">
+          <p class="main-title">
+            {{ dataItem?.participant?.fullName }}
+          </p>
+          <p class="sub-title"
+             *ngIf="dataItem?.participant?.emailAddress">{{ dataItem.participant.emailAddress }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Place of work' | translator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span>{{dataItem.participant.departmentName}}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Attendance' | globalTranslator">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <span>{{dataItem.attendance}}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Status' | translator"
+                     field="createdDate">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      {{ displayStatus(dataItem.status) }}
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

@@ -1,0 +1,19 @@
+<quick-status-fiter *ngIf="!isSearchingWithText"
+                    [statusFilter]="statusFilter"
+                    [currentStatusFilter]="currentStatusFilter"
+                    (handleFilter)="onQuickStatusFilterChanged($event)">
+</quick-status-fiter>
+
+<learner-search-filter-result *ngIf="isSearchingWithText"
+                              [placeholderText]="'Search communities' | translator"
+                              [searchText]="searchingText"
+                              [filterByType]="filterByType"
+                              [showLongCard]="true"
+                              [getPagedSearchFilterCallBack]="getPagedSearchFilterCallBack.bind(this)"
+                              (learningCardClick)="onLearningCardClick($event)">
+</learner-search-filter-result>
+
+<learning-card-list #comminityList
+                    *ngIf="!isSearchingWithText"
+                    [getPagedLearningItemsCallback]="getComminityCallBack.bind(this)"
+                    [showLongCard]="true"></learning-card-list>

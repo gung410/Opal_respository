@@ -1,0 +1,50 @@
+.cat-tree {
+  li {
+    padding-top: 10px;
+  }
+
+  ul {
+    list-style-type: circle;
+    padding-left: 20px;
+
+    .first-level {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        height: 1px;
+        background: $color-blue-light;
+        width: 25px;
+        left: -33px;
+        top: 20px;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background: $color-blue-light;
+        top: 0;
+        left: -33px;
+      }
+
+      &:last-child {
+        &:after {
+          height: 20px;
+          top: 0;
+        }
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+
+      ul {
+        list-style-type: square;
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="funding-and-subsidy__item"
+     *ngFor="let data of dataFundingAndSubsidy; let i = index">
+  <div class="funding-and-subsidy__item-title">{{data.title}}
+  </div>
+  <div class="funding-and-subsidy__item-content">
+    {{data.content}}
+  </div>
+  <span class="funding-and-subsidy__item-showLink"
+        *ngIf="i !== 0"
+        (click)="toggleReadMore(data)"> Read more</span>
+  <div class="funding-and-subsidy__item-references-container"
+       *ngIf="selecteds[data.id]">
+    <div class="funding-and-subsidy__item-reference"
+         *ngFor="let dataOfContent of data.references">
+      <div class="funding-and-subsidy__item-reference-title">
+        {{dataOfContent.title}}
+      </div>
+      <div class="funding-and-subsidy__item-reference-link">
+        <a href=" {{dataOfContent.link}}"> {{dataOfContent.link}}</a>
+      </div>
+    </div>
+  </div>
+</div>

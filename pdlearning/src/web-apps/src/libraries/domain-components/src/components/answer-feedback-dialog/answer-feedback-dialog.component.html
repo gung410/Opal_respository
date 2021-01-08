@@ -1,0 +1,53 @@
+<div class="feedback-dialog">
+  <div class="dialog-content">
+    <form [formGroup]="form">
+      <div class="form-controls-group"
+           *ngIf="allowConfigureFeedback || isViewMode">
+        <label for="ch2">{{ 'Feedback on selected answer' | translator }}</label>
+        <textarea class="form-control"
+                  formControlName="feedback"
+                  [placeholder]="'Explain selected answer' | translator"
+                  kendoTextArea
+                  [(ngModel)]="feedback"
+                  [autoSize]="true"
+                  [attr.disabled]="isViewMode ? true : null"
+                  rows="5"
+                  kendoTextArea
+                  kendoErrorTooltip
+                  position="top"></textarea>
+      </div>
+      <div class="form-controls-group --feedback-dialog"
+           *ngIf="allowConfigureBranching">
+        <label for="ch2">
+          {{ 'Connected question' | translator }}
+          <span class="explanation-icon"
+                (mouseenter)="toggleShowExplaination()"
+                (mouseleave)="toggleShowExplaination()"><img src="assets/images/icons/question-mark.svg"
+                 alt="icon"></span>
+        </label>
+        <opal-select class="form-control"
+                     [items]="branchingOptions"
+                     [valueField]="'value'"
+                     [placeholder]="'Select connected question' | translator"
+                     [labelField]="'text'"
+                     [staticMode]="true"
+                     [(ngModel)]="nextQuestionId"
+                     formControlName="nextQuestionId"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+        <div class="explanation-text"
+             *ngIf="isShowExplanation">{{ 'Connected question will be displayed as next if this option will be selected.' | translator}}
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="feedback-dialog__action dialog-actions --button-right">
+    <button class="feedback-dialog__btn --default"
+            kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button *ngIf="!isViewMode"
+            kendoButton
+            [primary]="true"
+            (click)="onSubmit()">{{ 'Submit' | globalTranslator }}</button>
+  </div>
+</div>

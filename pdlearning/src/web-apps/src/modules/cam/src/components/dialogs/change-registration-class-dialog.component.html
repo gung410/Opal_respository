@@ -1,0 +1,45 @@
+<ng-container *ngIf="dataInitiated">
+  <div class="dialog-header">
+    <div class="dialog-header__title">
+      {{ 'Change Class' | translator }}
+    </div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+
+  <div class="dialog-content"
+       [ngClass]="{ '-loading': loading }">
+    <form [formGroup]="form">
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Current Class' | translator }}</label>
+        <div><strong>{{vm.currentClass.classTitle}}</strong></div>
+      </div>
+      <div class="form-controls-group  -required">
+        <label for="ch2">{{ 'Change To' | translator }}</label>
+        <opal-select class="form-control"
+                     [fetchDataFn]="fetchDestinationClassRunSelectItemFn"
+                     [ignoreItemFn]="ignoreDestinationClassItemFn"
+                     [(ngModel)]="vm.changeToClassId"
+                     [labelField]="'classTitle'"
+                     [valueField]="'id'"
+                     [searchFields]="['classTitle','classRunCode']"
+                     [placeholder]="'Select the destination class' | translator"
+                     [dropdownBoundary]="'.dialog-content'"
+                     formControlName="changeToClassId">
+        </opal-select>
+      </div>
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button type="submit"
+            kendoButton
+            (click)="onProceed()"
+            [primary]="true">{{ 'Proceed' | globalTranslator }}</button>
+  </div>
+
+</ng-container>

@@ -1,0 +1,14 @@
+<div class="scorm-player">
+  <iframe class="scorm-player__iframe"
+          id="{{iframeId}}"
+          allowfullscreen="true"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          crossorigin="anonymous"
+          [src]="safeUrl"
+          (load)="onLearningPackageLoaded()"
+          scrolling="no"
+          frameborder="0"
+          allowTransparency="true"
+          allow="encrypted-media"></iframe>
+</div>

@@ -1,0 +1,38 @@
+namespace Microservice.Course.Domain.Enums
+{
+    public enum CourseInternalValueType
+    {
+        CourseFacilitatorIds,
+        CourseCoFacilitatorIds,
+        CollaborativeContentCreatorIds,
+        OwnerDivisionIds,
+        OwnerBranchIds,
+        PartnerOrganisationIds,
+        TrainingAgency,
+        OtherTrainingAgencyReason,
+        NieAcademicGroups,
+        PrerequisiteCourseIds,
+        ApplicableDivisionIds,
+        ApplicableBranchIds,
+        ApplicableZoneIds,
+        ApplicableClusterIds,
+        ApplicableSchoolIds,
+        DevelopmentalRoleIds,
+        EasSubstantiveGradeBandingIds,
+        ServiceSchemeIds,
+        SubjectAreaIds,
+        LearningFrameworkIds,
+        LearningDimensionIds,
+        LearningAreaIds,
+        LearningSubAreaIds,
+        TeacherOutcomeIds,
+        TrackIds,
+        CategoryIds,
+        JobFamily,
+        TeachingCourseStudyIds,
+        TeachingLevels,
+        TeachingSubjectIds,
+        CocurricularActivityIds,
+        PdActivityPeriods
+    }
+}

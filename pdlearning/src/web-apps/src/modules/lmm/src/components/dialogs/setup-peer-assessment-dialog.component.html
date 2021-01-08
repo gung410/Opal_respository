@@ -1,0 +1,29 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ 'Automatic Peer Assessor' | translator }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="form-controls-group">
+    <span class="alert -info">
+      {{' If you want to setup manually, please go to detail learner - peer assessment' | translator}}</span>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Number of peer assessors:' | translator }}</label>
+    <opal-select class="form-control"
+                 [items]="peerAssessorOptions"
+                 [(ngModel)]="selectedPeerAssessorOption"
+                 [dropdownBoundary]="'.dialog-content'">
+    </opal-select>
+  </div>
+</div>
+<div class="dialog-actions">
+  <button [look]="'outline'"
+          (click)="onCancel()"
+          kendoButton>{{ 'Cancel' | translator }}</button>
+  <button (click)="onAssign()"
+          [primary]="true"
+          kendoButton>{{ 'Assign' | translator }}</button>
+</div>

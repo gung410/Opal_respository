@@ -1,0 +1,47 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [field]="'title'"
+                     [title]="'Title'"
+                     [width]="200">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="flex-box">
+        <div class="text-box">{{dataItem.title}}</div>
+        <copy-learning-path-hyperlink [learningPath]="dataItem"></copy-learning-path-hyperlink>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'createdDate'"
+                     [title]="'Created Date'"
+                     [width]="150">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div>{{dataItem.createdDate | date: 'dd/MM/yyyy'}}</div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'bookmarkNumber'"
+                     [title]="'Number of Bookmarks'"
+                     [width]="200"> </kendo-grid-column>
+  <kendo-grid-column [field]="'status'"
+                     [title]="'Status'"
+                     [width]="150">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

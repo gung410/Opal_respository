@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icons/switch-module</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/switch-module" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M5,15 L5,20 L0,20 L0,15 L5,15 Z M12.5,15 L12.5,20 L7.5,20 L7.5,15 L12.5,15 Z M20,15 L20,20 L15,20 L15,15 L20,15 Z M5,7.5 L5,12.5 L0,12.5 L0,7.5 L5,7.5 Z M12.5,7 L12.5,12 L7.5,12 L7.5,7 L12.5,7 Z M20,7 L20,12 L15,12 L15,7 L20,7 Z M5,0 L5,5 L0,5 L0,0 L5,0 Z M12.5,0 L12.5,5 L7.5,5 L7.5,0 L12.5,0 Z M20,0 L20,5 L15,5 L15,0 L20,0 Z" id="Combined-Shape" fill="#3F5785" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -1,0 +1,30 @@
+digital-learning-content-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 820px;
+  height: 620px;
+  display: flex;
+  flex-direction: column;
+
+  .sub-title {
+    font-weight: $font-weight-medium;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin: 0 0 10px 0;
+
+    > label {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 24px;
+      color: #9eaebe;
+    }
+
+    > .input-control {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+version: '2.4'
+
+services:
+  cloudfront-api:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    volumes:
+      - /opt/ssl/${PROJECT_NAME}-${ENVIRONMENT_NAME}/cloudfront/{{ cloudfront_private_file }}:/app/{{ cloudfront_private_file }}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+      - BuildVersion=${GO_PIPELINE_LABEL}
+      - VIRTUAL_HOST=${ENVIRONMENT_NAME}-learnapp-${PROJECT_NAME}-api-cloudfront.${DOMAIN_POSTFIX}${PUBLIC_DNS}
+      - DeveloperExceptionEnabled={{ DeveloperExceptionEnabled }}
+      - OpalAuthorityInternalUrl=${IDM_INTERNAL_URL}
+      - AuthSettings:AuthorityUrl=${IDM_PUBLIC_URL}
+      - CloudFrontSettings:CloudFrontKeyPairId={{ cloudfront_key_id }}
+      - CloudFrontSettings:CloudFrontUrl={{ CloudFrontSettings_CloudFrontUrl }}
+      - Logging:LogLevel:Default=${APPLICATION_LOG_LEVEL}
+      - Logging:LogLevel:Microsoft=${FRAMEWORK_LOG_LEVEL}
+      - GetAccessRightsUrl={{GetAccessRightsUrl}}
+{% if https_proxy is defined %}
+      - HTTPS_PROXY={{ https_proxy }}
+{% endif %}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

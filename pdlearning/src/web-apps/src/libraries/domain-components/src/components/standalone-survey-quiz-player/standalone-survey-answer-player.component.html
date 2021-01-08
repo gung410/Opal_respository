@@ -1,0 +1,258 @@
+<div class="standalone-survey-answer-player__header-container -mobile">
+  <ng-container *ngTemplateOutlet="closeBtnGroupTemplate"></ng-container>
+  <app-countdown-timer *ngIf="formAnswer.endDate != null"
+                       [end]="formAnswer.endDate"
+                       [duration]="justStartNew ? formAnswer.durationInMiliseconds() : undefined"
+                       [label]="'Remaining Time' | globalTranslator"
+                       (zeroTrigger)="onQuizTimeOut()"></app-countdown-timer>
+</div>
+<h3 class="standalone-survey-answer-player__form-title">
+  <span class="standalone-survey-answer-player__form-title-value">{{formData.form.title}}</span>
+</h3>
+<h5 class="standalone-survey-answer-player__question-index-desc"
+    *ngIf="currentQuestionIndex >= 0 && !reviewOnly">
+  <span>{{'##questionNumber## of ##total## questions' | globalTranslator:currentQuestionNumberDescTranslateParams }}</span>
+</h5>
+<div class="standalone-survey-answer-player__questions-container"
+     [ngClass]="{'-finished': showingFinishResult}">
+  <ng-container *ngIf="canDoOnFormPlayer">
+    <div class="standalone-survey-answer-player__header-container">
+      <ng-container *ngTemplateOutlet="closeBtnGroupTemplate"></ng-container>
+      <app-countdown-timer *ngIf="formAnswer.endDate != null"
+                           [end]="formAnswer.endDate"
+                           [duration]="justStartNew ? formAnswer.durationInMiliseconds() : undefined"
+                           [label]="'Remaining Time' | globalTranslator"
+                           (zeroTrigger)="onQuizTimeOut()"></app-countdown-timer>
+    </div>
+    <form-section-info [formSectionVm]="currentSection"></form-section-info>
+    <standalone-survey-question-answer-player class="standalone-survey-answer-player__form-question-answer-player"
+                                              #formQuestionAnswerPlayer
+                                              [question]="currentQuestion"
+                                              [questionAnswer]="currentQuestionAnswer"
+                                              [positionInForm]="generateCurrentQuestionNumber"
+                                              [formData]="formData"
+                                              [optionCodeOrderList]="formQuestionIdToOptionCodeOrderListDic[currentQuestion.id]"
+                                              (questionAnswerChange)="currentQuestionAnswerChanged($event)">
+    </standalone-survey-question-answer-player>
+    <div class="standalone-survey-answer-player__action-btn-container">
+      <button class="standalone-survey-answer-player__hint-btn k-button"
+              #hintAnchor
+              [disabled]="!currentQuestion"
+              (click)="openHintPopup()">{{ 'Hint' | globalTranslator }}</button>
+      <kendo-popup [anchor]="getHintAnchor()"
+                   *ngIf="showHintPopup"
+                   [popupAlign]="popupAlign">
+        <div class="question-hint-popup-container">
+          <div class="question-hint-popup-container__header">
+            <span class="question-hint-popup-container__header-title">{{ 'Hint' | globalTranslator }}</span>
+            <span class="k-icon k-i-close question-hint-popup-container__close-icon"
+                  (click)="onHintPopupClose()">
+            </span>
+          </div>
+        </div>
+      </kendo-popup>
+      <button class="standalone-survey-answer-player__main-action-btn"
+              *ngIf="canShowSubmitBtn()"
+              kendoButton
+              [disabled]="isDisabledSubmitAnswer()"
+              (click)="submitAnswer()">{{'Submit' | globalTranslator | uppercase}}</button>
+      <button class="standalone-survey-answer-player__main-action-btn"
+              *ngIf="canShowNextBtn()"
+              kendoButton
+              (click)="goToNextQuestion()">{{'Next' | globalTranslator}}</button>
+      <button class="standalone-survey-answer-player__main-action-btn"
+              *ngIf="canShowFinishBtn()"
+              kendoButton
+              (click)="finishTheFormAnswer()">{{'Finish' | globalTranslator}}</button>
+      <div class="standalone-survey-answer-player__broken-link-report"
+           *ngIf="canShowBrokenLinkReportBtn()">
+        <span class="digital-content-player__link"
+              (click)="openReportBrokenLinkDialog()">{{ 'Report broken link/image' | translator }} </span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="showingFinishResult || currentQuestionIndex == -1">
+    <form-question-answer-player-review *ngIf="canShowReviewForm"
+                                        [formQuestion]="formQuestionsData"
+                                        [sectionsQuestion]="sectionsQuestion"
+                                        (exit)="exitPlayer()"
+                                        [formAnswer]="formAnswer"></form-question-answer-player-review>
+    <ng-container *ngIf="canShowFinishScore">
+      <svg class="standalone-survey-answer-player__finish-result-icon"
+           width="325"
+           height="175"
+           viewBox="0 0 325 175"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <circle cx="41.5"
+                cy="139.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="76"
+              y="126"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <circle cx="71.5"
+                cy="88.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="106"
+              y="75"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <path d="M67 84L77 94"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <path d="M67 94L77 84"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <circle cx="14.5"
+                cy="38.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="49"
+              y="25"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <path d="M9 39.3636L12.75 43L21 35"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <path d="M36 140.364L39.75 144L48 136"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <circle cx="238"
+                cy="88"
+                r="87"
+                fill="#9DE0BD"></circle>
+        <circle cx="238"
+                cy="87"
+                r="87"
+                fill="#57D596"></circle>
+        <path d="M202 95.9278L224.372 118.3L279.472 69"
+              stroke="white"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+      </svg>
+
+      <svg class="standalone-survey-answer-player__finish-result-icon"
+           width="329"
+           height="179"
+           viewBox="0 0 329 179"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <circle cx="41.5"
+                cy="143.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="76"
+              y="130"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <circle cx="71.5"
+                cy="92.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="106"
+              y="79"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <path d="M67 88L77 98"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <path d="M67 98L77 88"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <circle cx="14.5"
+                cy="42.5"
+                r="14.5"
+                fill="#303450"></circle>
+        <rect x="49"
+              y="29"
+              width="176"
+              height="28"
+              rx="5"
+              fill="#303450"></rect>
+        <path d="M9 43.3636L12.75 47L21 39"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <path d="M36 144.364L39.75 148L48 140"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"></path>
+        <circle cx="238"
+                cy="92"
+                r="87"
+                fill="#9DE0BD"></circle>
+        <circle cx="238"
+                cy="91"
+                r="87"
+                fill="#57D596"></circle>
+        <path d="M202 99.9278L224.372 122.3L279.472 73"
+              stroke="white"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+        <circle cx="239.5"
+                cy="89.5"
+                r="89.5"
+                fill="#FF6262"></circle>
+        <path d="M211.538 114.07C211.468 111.915 212.129 110.143 213.522 108.753C214.946 107.362 216.752 106.631 218.938 106.56C221.156 106.487 223.005 107.099 224.485 108.396C225.997 109.691 226.788 111.416 226.858 113.571C226.927 115.695 226.265 117.452 224.872 118.842C223.478 120.2 221.657 120.916 219.408 120.989C217.191 121.062 215.342 120.465 213.863 119.2C212.382 117.904 211.607 116.194 211.538 114.07ZM210.288 75.6999C210.217 73.5448 210.879 71.7723 212.272 70.3825C213.696 68.9916 215.501 68.2606 217.688 68.1893C219.905 68.1171 221.754 68.729 223.235 70.0253C224.747 71.3205 225.537 73.0456 225.608 75.2007C225.677 77.3246 225.015 79.0815 223.622 80.4713C222.228 81.8299 220.407 82.5459 218.158 82.6192C215.94 82.6914 214.092 82.095 212.612 80.8301C211.132 79.5338 210.357 77.8238 210.288 75.6999ZM246.377 125.457L236.304 125.785L259.002 50.8971L269.075 50.5689L246.377 125.457Z"
+              fill="white"></path>
+      </svg>
+
+      <table class="standalone-survey-answer-player__correct-answers-info-card">
+        <tr>
+          <th>{{'Correct Answers' | globalTranslator}}</th>
+          <td>
+            {{'##questionNumber## of ##total## questions' | globalTranslator:correctAnswersInfoTranslationParams }}
+          </td>
+        </tr>
+        <tr>
+          <th>{{'Score' | globalTranslator}}</th>
+          <td>
+            {{ formAnswerScoreInfoDisplay() }}
+          </td>
+        </tr>
+      </table>
+    </ng-container>
+    <ng-container *ngIf="showingPollResults">
+      <form-poll-results [questions]="formQuestionsData"
+                         [formData]="formData"
+                         [formAnswersData]="formAnswer"></form-poll-results>
+    </ng-container>
+    <ng-container *ngIf="!reviewOnly">
+      <button class="standalone-survey-answer-player__main-action-btn"
+              kendoButton
+              (click)="finishTheFormAnswer()">{{'Finish' | globalTranslator}}</button>
+      <button class="standalone-survey-answer-player__main-action-btn"
+              kendoButton
+              (click)="retryTheFormAnswer()">{{'Try again' | globalTranslator}}</button>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #closeBtnGroupTemplate="">
+  <div class="standalone-survey-answer-player__close-btn-group">
+    <span class="standalone-survey-answer-player__close-btn k-icon k-i-close"
+          (click)="exitPlayer()"></span>&nbsp;
+    <span class="standalone-survey-answer-player__close-btn-group-text">{{'Exit' | globalTranslator}}</span>
+  </div>
+</ng-template>

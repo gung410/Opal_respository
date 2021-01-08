@@ -1,0 +1,16 @@
+https_proxy: http://proxy.opal:3128
+mssql_username: DLDBS110
+mssql_password: uu6Qw7Mb3n96eQx9
+mssql_host: mssql.opal
+GetAccessRightsUrl: http://uat-competence-opal-api-portal.opal/me/accessRights
+Logging_LogLevel_Default: Error
+DeveloperExceptionEnabled: true
+RabbitMQOptions_QueueName: uat-microservice-opal-queue-analytics
+RabbitMQOptions_ExchangeName: uat-datahub-opal-topic-event
+RabbitMQOptions_RetryCount: 2
+RabbitMQOptions_RetryPolicyInSeconds: 5
+RabbitMQOptions_DefaultCommandExchange: uat-datahub-opal-topic-command
+RabbitMQOptions_DefaultEventExchange: uat-datahub-opal-topic-event
+RabbitMQOptions_DefaultActivityExchange: uat-datahub-opal-topic-activity
+RabbitMQOptions_DefaultAuditLogExchange: uat-opal-topic-auditlog
+RabbitMQOptions_DefaultIntegrationExchange: uat-opal-topic-integration

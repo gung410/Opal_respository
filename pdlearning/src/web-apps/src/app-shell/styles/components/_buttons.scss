@@ -1,0 +1,183 @@
+.k-button.k-outline,
+.k-button {
+  @include default-variables-input;
+  color: $color-light-gray;
+  background: $white;
+  border-color: $color-gainsboro;
+  @extend %smooth;
+
+  &:hover {
+    background: $color-light-gray;
+    color: $white;
+    @extend %smooth;
+  }
+
+  &:active {
+    background: $color-blue-jay;
+    color: $white;
+    @extend %smooth;
+  }
+
+  &[disabled] {
+    color: $color-light-gray;
+  }
+}
+
+.k-dialog-button-layout-stretched {
+  .k-button {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.k-button {
+
+  &.save {
+    min-width: 80px;
+  }
+
+  &.k-primary {
+    background: $color-light-gray;
+    color: $white;
+    border: none;
+
+    &:hover {
+      background: $color-indigo;
+      @extend %smooth;
+    }
+
+    &:active {
+      background: $color-blue-jay;
+      @extend %smooth;
+    }
+
+    &[disabled] {
+      background: $color-light-gray;
+      opacity: 0.2;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &.-small {
+    height: $main-small-control-height;
+    line-height: $main-small-control-height;
+  }
+}
+
+.k-button.danger {
+  background: $red;
+  border: $red;
+  color: $white;
+  min-width: 80px;
+
+  &:hover {
+    background: $red-hover;
+    color: $white;
+    @extend %smooth;
+  }
+
+  &:active {
+    background: $red-active;
+    color: $white;
+    @extend %smooth;
+  }
+}
+
+.k-button.k-outline {
+  border: $border;
+
+  &:hover {
+    border: $accent-border;
+  }
+}
+
+.k-toolbar {
+  .k-button {
+    background: $white;
+    border: $border;
+    color: $text;
+  }
+
+  .k-button.k-outline {
+    border: $border;
+
+    &:hover {
+      border: $accent-border;
+    }
+  }
+}
+
+.k-button.-icon-right {
+  display: inline-flex;
+  flex-direction: row-reverse;
+
+  >.k-icon {
+    margin-left: 4px;
+    margin-right: 0;
+  }
+}
+
+.k-button-close-preview {
+  border: none;
+  font-size: $font-h5;
+  color: $color-blue-dard;
+  background: transparent;
+  cursor: pointer;
+  left: 10px;
+  top: 24px;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .k-icon {
+    font-weight: $font-weight-bold;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.secondary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 168px;
+  min-height: 50px;
+  width: fit-content;
+  padding: 10px;
+  font-size: $font-h5;
+  text-align: center;
+  line-height: 117%;
+  font-weight: $font-weight-medium;
+  color: $color-light-gray;
+  background-color: white;
+  border: 1px solid $color-gainsboro;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: $color-light-gray;
+    border: none;
+  }
+
+  &:active {
+    color: white;
+    background-color: $color-blue-jay;
+    border: none;
+  }
+
+  &.--disabled {
+    pointer-events: none;
+    color: $color-light-gray;
+    background-color: white;
+    opacity: 0.4;
+  }
+}

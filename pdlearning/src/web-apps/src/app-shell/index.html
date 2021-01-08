@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>OPAL2.0 - One Portal All Learners</title>
+  <base href="/">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <link type="image/x-icon"
+        href="favicon.ico"
+        rel="icon">
+  <style>
+    .show-spinner::after {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0
+    }
+
+    body.show-spinner::after {
+      z-index: 100002
+    }
+
+    body.show-spinner .spinner {
+      display: flex;
+      z-index: 100003
+    }
+
+    .show-spinner {
+      overflow: hidden
+    }
+
+    .show-spinner::after {
+      content: "";
+      position: absolute;
+      background: rgba(255, 255, 255, .6);
+      z-index: 100001
+    }
+
+    .spinner {
+      display: none;
+      justify-content: center;
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      min-height: 64px;
+      white-space: initial
+    }
+
+    .spinner__container {
+      position: relative;
+      width: 64px;
+      height: 64px
+    }
+
+    .spinner__part {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .spinner__part .hightlight {
+      width: 50%;
+      height: 50%;
+      border-radius: 30%;
+      position: absolute
+    }
+
+    .spinner .animation {
+      width: 100%;
+      height: 100%;
+      animation-duration: 2.68s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear
+    }
+
+    .spinner .part-1 .hightlight {
+      background: #373794;
+      border-bottom-right-radius: 0
+    }
+
+    .spinner .part-1.scale {
+      animation-name: scale-part-1
+    }
+
+    .spinner .part-1 .rotate {
+      animation-name: rotate-part-1
+    }
+
+    .spinner .part-2 .hightlight {
+      background: #1dcec1;
+      top: 0;
+      right: 0;
+      border-bottom-left-radius: 0
+    }
+
+    .spinner .part-2.scale {
+      animation-name: scale-part-2
+    }
+
+    .spinner .part-2 .rotate {
+      animation-name: rotate-part-2
+    }
+
+    .spinner .part-3 .hightlight {
+      background: #02adee;
+      right: 0;
+      bottom: 0;
+      border-top-left-radius: 0
+    }
+
+    .spinner .part-3.scale {
+      animation-name: scale-part-3
+    }
+
+    .spinner .part-3 .rotate {
+      animation-name: rotate-part-3
+    }
+
+    .spinner .part-4 .hightlight {
+      background: #4167b0;
+      top: 50%;
+      left: 0;
+      border-top-right-radius: 0
+    }
+
+    .spinner .part-4.scale {
+      animation-name: scale-part-4
+    }
+
+    .spinner .part-4 .rotate {
+      animation-name: rotate-part-4
+    }
+
+    @keyframes rotate-part-1 {
+      0% {
+        transform: rotate(0)
+      }
+
+      4% {
+        transform: rotate(0)
+      }
+
+      15% {
+        transform: rotate(90deg)
+      }
+
+      29% {
+        transform: rotate(90deg)
+      }
+
+      42% {
+        transform: rotate(180deg)
+      }
+
+      53% {
+        transform: rotate(180deg)
+      }
+
+      66% {
+        transform: rotate(270deg)
+      }
+
+      79% {
+        transform: rotate(270deg)
+      }
+
+      91% {
+        transform: rotate(360deg)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes scale-part-1 {
+      0% {
+        transform: scale(1)
+      }
+
+      3% {
+        transform: scale(1)
+      }
+
+      16% {
+        transform: scale(.97)
+      }
+
+      23% {
+        transform: scale(.9)
+      }
+
+      42% {
+        transform: scale(.9)
+      }
+
+      52% {
+        transform: scale(1)
+      }
+
+      54% {
+        transform: scale(.93)
+      }
+
+      66% {
+        transform: scale(.93)
+      }
+
+      91% {
+        transform: scale(.93)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes scale-part-2 {
+      0% {
+        transform: scale(1)
+      }
+
+      14% {
+        transform: scale(.96)
+      }
+
+      27% {
+        transform: scale(.9)
+      }
+
+      40% {
+        transform: scale(.9)
+      }
+
+      52% {
+        transform: scale(1)
+      }
+
+      64% {
+        transform: scale(.98)
+      }
+
+      77% {
+        transform: scale(.9)
+      }
+
+      89% {
+        transform: scale(.93)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes scale-part-3 {
+      0% {
+        transform: scale(1)
+      }
+
+      4% {
+        transform: scale(.96)
+      }
+
+      15% {
+        transform: scale(.96)
+      }
+
+      23% {
+        transform: scale(.9)
+      }
+
+      31% {
+        transform: scale(.93)
+      }
+
+      39% {
+        transform: scale(.93)
+      }
+
+      45% {
+        transform: scale(1)
+      }
+
+      56% {
+        transform: scale(1)
+      }
+
+      65% {
+        transform: scale(.94)
+      }
+
+      71% {
+        transform: scale(.9)
+      }
+
+      78% {
+        transform: scale(.94)
+      }
+
+      96% {
+        transform: scale(1)
+      }
+
+      100% {
+        transform: scale(.98)
+      }
+    }
+
+    @keyframes scale-part-4 {
+      0% {
+        transform: scale(1)
+      }
+
+      12% {
+        transform: scale(.97)
+      }
+
+      23% {
+        transform: scale(.9)
+      }
+
+      39% {
+        transform: scale(.9)
+      }
+
+      52% {
+        transform: scale(1)
+      }
+
+      64% {
+        transform: scale(.98)
+      }
+
+      74% {
+        transform: scale(.9)
+      }
+
+      86% {
+        transform: scale(1)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes rotate-part-2 {
+      0% {
+        transform: rotate(0)
+      }
+
+      2% {
+        transform: rotate(0)
+      }
+
+      14% {
+        transform: rotate(90deg)
+      }
+
+      27% {
+        transform: rotate(90deg)
+      }
+
+      39% {
+        transform: rotate(180deg)
+      }
+
+      52% {
+        transform: rotate(180deg)
+      }
+
+      64% {
+        transform: rotate(270deg)
+      }
+
+      77% {
+        transform: rotate(270deg)
+      }
+
+      89% {
+        transform: rotate(360deg)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes rotate-part-3 {
+      0% {
+        transform: rotate(0)
+      }
+
+      5% {
+        transform: rotate(0)
+      }
+
+      13% {
+        transform: rotate(80deg)
+      }
+
+      14% {
+        transform: rotate(90deg)
+      }
+
+      28% {
+        transform: rotate(90deg)
+      }
+
+      41% {
+        transform: rotate(180deg)
+      }
+
+      52% {
+        transform: rotate(180deg)
+      }
+
+      65% {
+        transform: rotate(270deg)
+      }
+
+      78% {
+        transform: rotate(270deg)
+      }
+
+      90% {
+        transform: rotate(360deg)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes rotate-part-4 {
+      0% {
+        transform: rotate(0)
+      }
+
+      5% {
+        transform: rotate(23deg)
+      }
+
+      8% {
+        transform: rotate(63deg)
+      }
+
+      10% {
+        transform: rotate(84deg)
+      }
+
+      14% {
+        transform: rotate(90deg)
+      }
+
+      26% {
+        transform: rotate(90deg)
+      }
+
+      38% {
+        transform: rotate(180deg)
+      }
+
+      51% {
+        transform: rotate(180deg)
+      }
+
+      60% {
+        transform: rotate(255deg)
+      }
+
+      64% {
+        transform: rotate(270deg)
+      }
+
+      76% {
+        transform: rotate(270deg)
+      }
+
+      89% {
+        transform: rotate(360deg)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+  </style>
+
+  <script>
+    (function() {
+      var _scriptElm = document.createElement('script');
+      _scriptElm.src = location.host == 'www.opal2.moe.edu.sg' ?
+        'https://assets.wogaa.sg/scripts/wogaa.js' :
+        'https://assets.dcube.cloud/scripts/wogaa.js';
+      document.getElementsByTagName('HEAD')[0].appendChild(_scriptElm);
+    })()
+  </script>
+  <link rel="manifest"
+        href="manifest.webmanifest">
+  <meta name="theme-color"
+        content="#2196f3">
+</head>
+
+<body class="show-spinner">
+  <div class="spinner"
+       id="app-loader">
+    <div class="spinner__container">
+      <div class="spinner__part part-1 animation scale">
+        <div class="animation rotate">
+          <div class="hightlight"></div>
+        </div>
+      </div>
+      <div class="spinner__part part-2 animation scale">
+        <div class="animation rotate">
+          <div class="hightlight"></div>
+        </div>
+      </div>
+      <div class="spinner__part part-4 animation scale">
+        <div class="animation rotate">
+          <div class="hightlight"></div>
+        </div>
+      </div>
+      <div class="spinner__part part-3 animation scale">
+        <div class="animation rotate">
+          <div class="hightlight"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-root></app-root>
+  <script>
+    window.addEventListener('load', function() {
+      document.body.classList.remove('show-spinner')
+      document.getElementById('app-loader').remove()
+    });
+  </script>
+
+  <form id="cloudfront-form"
+        method="POST"
+        action>
+    <input id="token"
+           name="AccessToken"
+           type="text"
+           style="visibility: hidden;"><br>
+  </form>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<form [formGroup]="form">
+  <div class="form-container"
+       [hidden]="course.isMicrolearning">
+    <label class="form-title">{{ 'Evaluation & E-Certificate' | translator }}</label>
+    <!-- <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Pre-Course Evaluation Form' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.preCourseEvaluationFormId">
+            {{ course.preCourseFormsDic[course.preCourseEvaluationFormId] ? course.preCourseFormsDic[course.preCourseEvaluationFormId].title : '' }}
+          </div>
+          <span *ngIf="!course.preCourseEvaluationFormId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="preCourseEvaluationFormId"
+                       [(ngModel)]="course.preCourseEvaluationFormId"
+                       [items]="course.preCourseFormItems"
+                       [valueField]="'id'"
+                       [labelField]="'title'"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div> -->
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Post Course Evaluation Form' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('postCourseEvaluationFormId', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="form-controls-group__row">
+            <div class="metadata-tag-text"
+                 *ngIf="course.postCourseEvaluationFormId">
+              {{ course.postCourseFormsDic[course.postCourseEvaluationFormId] ? course.postCourseFormsDic[course.postCourseEvaluationFormId].title : '' }}
+            </div>
+            <span class="evaluation-certificate-tab__can-preview-select-item-btn"
+                  *ngIf="displayPreviewForm()"
+                  (click)="onPostCourseFormSelectItemPreviewBtnClicked($event, course.postCourseEvaluationFormId)">{{ 'Preview' | translator}}</span>
+          </div>
+          <span *ngIf="!course.postCourseEvaluationFormId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="postCourseEvaluationFormId"
+                       [(ngModel)]="course.postCourseEvaluationFormId"
+                       [items]="course.postCourseFormItems"
+                       [valueField]="'id'"
+                       [labelField]="'title'"
+                       kendoErrorTooltip
+                       position="top"
+                       [notCloseDropdownOnFocusOut]="showPreviewPostForm"
+                       [notClearSearchTextOnFocusOut]="showPreviewPostForm">
+            <ng-template opalOptionTmp
+                         let-item="item"
+                         let-item$="item$"
+                         let-index="index">
+              <div class="evaluation-certificate-tab__can-preview-select-item"
+                   kendoTooltip
+                   [tooltipClass]="'info-tooltip'">
+                <span class="evaluation-certificate-tab__can-preview-select-item-title"
+                      [title]="item.title"> {{ item.title }}</span>
+                <span class="evaluation-certificate-tab__can-preview-select-item-btn"
+                      (click)="onPostCourseFormSelectItemPreviewBtnClicked($event, item.id)">{{ 'Preview' | translator}}</span>
+              </div>
+            </ng-template>
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'E-Certificate Template' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('eCertificateTemplateId', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="form-controls-group__row">
+            <div class="metadata-tag-text"
+                 *ngIf="course.eCertificateTemplateId">
+              {{ course.selectedECertificateTemplate ? course.selectedECertificateTemplate.title : 'N/A'}}
+            </div>
+            <span class="evaluation-certificate-tab__can-preview-select-item-btn"
+                  *ngIf="displayPreviewEcertificate()"
+                  (click)="onEcertificateSelectItemPreviewBtnClicked($event, course.eCertificateTemplateId)">{{ 'Preview' | translator}}</span>
+          </div>
+          <span *ngIf="!course.eCertificateTemplateId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="eCertificateTemplateId"
+                       [(ngModel)]="course.eCertificateTemplateId"
+                       [(items)]="course.eCertificateTemplateItems"
+                       [valueField]="'id'"
+                       [labelField]="'title'"
+                       [clearable]="true"
+                       kendoErrorTooltip
+                       position="top"
+                       [fetchDataFn]="fetchEcertificateTemplatesFn"
+                       [notCloseDropdownOnFocusOut]="showPreviewEcertificate"
+                       [notClearSearchTextOnFocusOut]="showPreviewEcertificate">
+            <ng-template opalOptionTmp
+                         let-item="item"
+                         let-item$="item$"
+                         let-index="index">
+              <div class="evaluation-certificate-tab__can-preview-select-item">
+                <span class="evaluation-certificate-tab__can-preview-select-item-title"> {{ item.title }}</span>
+                <span class="evaluation-certificate-tab__can-preview-select-item-btn"
+                      (click)="onEcertificateSelectItemPreviewBtnClicked($event, item.id)">{{ 'Preview' | translator}}</span>
+              </div>
+            </ng-template>
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group"
+         [hidden]="!course.eCertificateTemplateId">
+      <label for="ch2">{{ 'Course Name in E-Certificate' | translator }}</label>
+      <div class="evaluation-certificate-tab__course-name-in-ecertificate-warning">If data in this field is null, 100 first characters of
+        course name will be treated as course name in ecertificate</div>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">{{course.courseNameInECertificate}}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="course.courseNameInECertificate"
+                 formControlName="courseNameInECertificate"
+                 kendoErrorTooltip
+                 position="top"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Prerequisite to Receive E-Certificate' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('eCertificatePrerequisite', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.eCertificatePrerequisite">
+            {{ course.prerequisiteCertificateDic[course.eCertificatePrerequisite] ? course.prerequisiteCertificateDic[course.eCertificatePrerequisite].label : '' }}
+          </div>
+          <span *ngIf="!course.eCertificatePrerequisite">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="eCertificatePrerequisite"
+                       [(ngModel)]="course.eCertificatePrerequisite"
+                       [items]="course.prerequisiteCertificates"
+                       [valueField]="'value'"
+                       [labelField]="'label'"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

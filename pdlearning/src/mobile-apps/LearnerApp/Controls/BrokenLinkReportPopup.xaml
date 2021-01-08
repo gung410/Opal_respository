@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+	x:Class="LearnerApp.Controls.BrokenLinkReportPopup"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
+
+	<pages:PopupPage.Animation>
+		<animations:ScaleAnimation
+			DurationIn="300"
+			DurationOut="300"
+			EasingIn="SinOut"
+			EasingOut="SinIn"
+			HasBackgroundAnimation="True"
+			PositionIn="Center"
+			PositionOut="Center"
+			ScaleIn="1.2"
+			ScaleOut="0.8" />
+	</pages:PopupPage.Animation>
+
+	<StackLayout
+		BackgroundColor="White"
+		HorizontalOptions="FillAndExpand"
+		VerticalOptions="FillAndExpand">
+		<StackLayout
+			Padding="10"
+			BackgroundColor="{StaticResource ContentPageColor}"
+			Orientation="Horizontal">
+			<Label
+				FontFamily="{StaticResource RobotoBold}"
+				FontSize="20"
+				Text="Report Broken Link"
+				VerticalOptions="CenterAndExpand" />
+			<StackLayout
+				HeightRequest="30"
+				HorizontalOptions="EndAndExpand"
+				WidthRequest="30">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer Tapped="OnClosed_Clicked" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="30"
+					HorizontalOptions="Start"
+					Source="close.svg"
+					WidthRequest="30" />
+			</StackLayout>
+		</StackLayout>
+
+		<StackLayout
+			x:Name="CollectionStack"
+			IsVisible="false"
+			VerticalOptions="FillAndExpand">
+			<StackLayout
+				HeightRequest="30"
+				Orientation="Horizontal"
+				Spacing="0">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer Tapped="BackButton_Tapped" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="20"
+					Source="arrow_left.svg"
+					VerticalOptions="CenterAndExpand"
+					WidthRequest="20" />
+				<Label
+					FontSize="15"
+					Text="Back"
+					VerticalOptions="CenterAndExpand" />
+			</StackLayout>
+			<ListView
+				x:Name="LinkCollection"
+				HasUnevenRows="True"
+				ItemSelected="LinkCollection_ItemSelected"
+				VerticalOptions="FillAndExpand">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextCell Text="{Binding .}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+
+		<StackLayout
+			x:Name="DataStack"
+			Padding="10"
+			Spacing="20"
+			VerticalOptions="FillAndExpand">
+			<StackLayout>
+				<Label Text="Select the link" TextColor="{Binding SecondaryTextColor}" />
+				<Frame
+					x:Name="SelectTheLinkFrame"
+					Padding="5"
+					BorderColor="LightGray"
+					CornerRadius="4"
+					HasShadow="False">
+					<StackLayout
+						Margin="10"
+						Orientation="Horizontal"
+						Spacing="10">
+						<StackLayout.GestureRecognizers>
+							<TapGestureRecognizer Tapped="BrokenLinkSelect_Tapped" />
+						</StackLayout.GestureRecognizers>
+
+						<Label
+							x:Name="LinkSelectedLbl"
+							FontSize="16"
+							HorizontalOptions="FillAndExpand"
+							Text="Select from the list"
+							TextColor="LightGray" />
+
+						<ffimagesvg:SvgCachedImage
+							HeightRequest="10"
+							Source="participation_down.svg"
+							VerticalOptions="CenterAndExpand"
+							WidthRequest="10" />
+					</StackLayout>
+				</Frame>
+			</StackLayout>
+
+			<StackLayout Spacing="5">
+				<Label Text="Description" TextColor="{Binding SecondaryTextColor}" />
+				<Frame
+					x:Name="BrokenLinkFrame"
+					Padding="7"
+					BorderColor="LightGray"
+					CornerRadius="4"
+					HasShadow="False"
+					VerticalOptions="FillAndExpand">
+					<controls:CustomEditor
+						x:Name="BrokenLinkDescription"
+						BackgroundColor="Transparent"
+						FontSize="16"
+						HeightRequest="150"
+						Placeholder="Add description"
+						PlaceholderColor="LightGray"
+						VerticalOptions="FillAndExpand" />
+				</Frame>
+			</StackLayout>
+
+			<StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+				<Button
+					Padding="0"
+					BackgroundColor="White"
+					BorderColor="#D8DCE6"
+					BorderWidth="1"
+					Clicked="OnClosed_Clicked"
+					CornerRadius="6"
+					FontFamily="{StaticResource RobotoRegular}"
+					FontSize="18"
+					HeightRequest="40"
+					HorizontalOptions="FillAndExpand"
+					Text="Cancel"
+					TextColor="{StaticResource MainBodyTextColor}" />
+				<Button
+					Padding="0"
+					BackgroundColor="{StaticResource MainBodyTextColor}"
+					Clicked="OnConfirmed_Clicked"
+					CornerRadius="6"
+					FontFamily="{StaticResource RobotoRegular}"
+					FontSize="18"
+					HeightRequest="40"
+					HorizontalOptions="FillAndExpand"
+					Text="Submit"
+					TextColor="White" />
+			</StackLayout>
+		</StackLayout>
+	</StackLayout>
+</pages:PopupPage>

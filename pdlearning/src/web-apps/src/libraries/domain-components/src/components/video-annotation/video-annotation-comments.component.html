@@ -1,0 +1,84 @@
+<div class="video-annotation-comments">
+  <label class="video-annotation__title">{{"comments" | globalTranslator | uppercase}}</label>
+  <label class="video-annotation__sub-title">{{"Sort by" | globalTranslator}}</label>
+  <opal-select class="form-control annotation-comments__sort"
+               [items]="sortingList"
+               [valueField]="'value'"
+               [labelField]="'displayText'"
+               [(ngModel)]="currentSorting"></opal-select>
+  <div class="annotation-comments__view-more"
+       *ngIf="comments.length < totalCount"
+       (click)="onViewOlderCommentsClicked()">{{"View 10 older comments" | globalTranslator}}</div>
+  <div class="annotation-comments__list"
+       #commentList>
+    <div class="annotation-comments__item"
+         *ngFor="let comment of comments; let i = index">
+      <div class="owner-container">
+        <div class="owner-container__avatar">
+          <img class="avatar-img"
+               src="{{ userDict[comment.userId]?.avatarUrl ? userDict[comment.userId].avatarUrl : 'assets/images/others/default-avatar.png'}}">
+        </div>
+        <div class="user-info">
+          <p class="main-title">
+            {{ userDict[comment.userId] ? userDict[comment.userId].fullName : '' }}
+            <b *ngIf="isMine(comment)">{{ '(you)' | globalTranslator }}</b>
+          </p>
+          <p class="sub-title">{{ comment.createdDate | date: 'dd/MM/yyyy hh:mm a' }}
+            {{comment.changedDate && comment.changedDate.getTime() != comment.createdDate.getTime() ? '(Edited)' : ''}}</p>
+        </div>
+      </div>
+      <ng-container *ngIf="editingCommentIndex == null || i !== editingCommentIndex; else commentEditing">
+        <div class="annotation-comments__video-timestamp"
+             (click)="onVideoTimestampClicked(comment)">{{ comment.videoTime | secondToTimeFormat }}
+          <img *ngIf="isLearnMode && isMine(comment)"
+               class="annotation-comments__edit-btn"
+               src="assets/images/icons/edit.svg"
+               (click)="onEditClicked(comment, i)">
+        </div>
+        <div class="annotation-comments__content">{{ comment.content }}</div>
+      </ng-container>
+      <ng-template #commentEditing="">
+        <div class="annotation-comments__editing">
+          <kendo-timepicker class="form-control annotation-comments__timepicker"
+                            *ngIf="videoMinLengthAsDate && videoMaxLengthAsDate"
+                            #startTimePicker
+                            format="mm:ss"
+                            [min]="videoMinLengthAsDate"
+                            [max]="videoMaxLengthAsDate"
+                            [(ngModel)]="editingTimestamp"
+                            position="top"></kendo-timepicker>
+          <textarea class="annotation-comments__textbox"
+                    [(ngModel)]="editingComment.content"></textarea>
+          <div class="annotation-comments__editing-action">
+            <div class="annotation-comments__delete-btn"
+                 (click)="onDeleteClicked()">{{"Delete" | globalTranslator}}</div>
+            <div class="annotation-comments__cancel-btn"
+                 (click)="onCancelClicked()">{{"Cancel" | globalTranslator}}</div>
+            <button class="annotation-comments__save-btn"
+                    [primary]="true"
+                    [disabled]="isTextEmpty(editingComment.content)"
+                    kendoButton
+                    (click)="onSaveClicked()">{{"Save" | globalTranslator}}</button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="annotation-comments__submit-box"
+       *ngIf="isLearnMode">
+    <div class="annotation-comments__submit-info">
+      <div class="owner-container__avatar">
+        <img class="avatar-img"
+             src="{{ userDict[currentUserId]?.avatarUrl ? userDict[currentUserId].avatarUrl : 'assets/images/others/default-avatar.png'}}">
+      </div>
+      <textarea class="annotation-comments__textbox"
+                [placeholder]="'Type here' | globalTranslator"
+                #textbox></textarea>
+    </div>
+    <button class="annotation-comments__submit-btn"
+            kendoButton
+            [primary]="true"
+            [disabled]="isTextEmpty(textbox.value)"
+            (click)="onSubmit(textbox)">{{"Submit" | globalTranslator}}</button>
+  </div>
+</div>

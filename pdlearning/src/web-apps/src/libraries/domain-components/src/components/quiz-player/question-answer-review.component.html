@@ -1,0 +1,309 @@
+<div class="question-answer-review">
+  <div class="question-answer-review__heading"
+       *ngIf="question.questionType !== QUESTIONTYPE.FillInTheBlanks">
+    <span class="question-answer-review__number"
+          *ngIf="question.formSectionId; else noSection">{{priority}}.{{minorPriority}}.</span>
+    <ng-template #noSection="">
+      <span class="question-answer-review__number">{{priority}}.</span>
+    </ng-template>
+    <span class="question-answer-review__title"
+          externalLinkGuard
+          [innerHTML]="question.questionTitleSafeHtml"></span>
+  </div>
+  <div class="question-answer-review__result">
+    <div class="question-answer-review__score-section"
+         *ngIf="isQuiz">
+      <div class="question-answer-review__score-container">
+        <kendo-numerictextbox class="question-answer-review__numeric-textbox"
+                              *ngIf="canEditScore(); else showScore"
+                              [min]="0"
+                              [max]="questionAnswer.maxScore"
+                              autoCorrect="true"
+                              decimals="0"
+                              format="#"
+                              [value]="questionAnswer.score"
+                              (valueChange)="onScoreChange($event)"></kendo-numerictextbox>
+        <ng-template #showScore="">
+          <span class="question-answer-review__main-score">{{questionAnswer.score}}</span>
+        </ng-template>
+        <span class="question-answer-review__score-symbol">/</span>
+        <span class="question-answer-review__max-score">{{questionAnswer.maxScore}}</span>
+      </div>
+      <div class="question-answer-review__score-label">{{'score' | translator}}</div>
+    </div>
+    <div class="question-answer-review__content">
+      <!-- Multiple choice / Signle choice / True/False -->
+      <ng-container
+                    *ngIf="question.questionType === QUESTIONTYPE.MultipleChoice || question.questionType === QUESTIONTYPE.SingleChoice || question.questionType === QUESTIONTYPE.TrueFalse">
+        <div class="question-answer-review__option"
+             *ngFor="let questionOption of question.questionOptions; let i = index;">
+          <!-- Multiple Choice -->
+          <div class="question-answer-review__option-content"
+               *ngIf="question.questionType === QUESTIONTYPE.MultipleChoice"
+               [ngClass]="{'--checked': isMultipleChoiceAnswerMatch(questionOption.value),
+                            '--correct': isCheckOptionValueCorrect(question, questionOption.value) || isMultipleChoiceAnswerMatch(questionOption.value) && !isQuiz,
+                            '--wrong': isCheckOptionValueCorrect(question, questionOption.value) == false}">
+            <span class="question-answer-review__option-icon">
+              <img src="assets/images/icons/completed-mark-blue.svg"
+                   alt="icon"
+                   *ngIf="isCheckOptionValueCorrect(question, questionOption.value)"
+                   [ngClass]="{'-hidden': !isMultipleChoiceAnswerMatch(questionOption.value)}">
+              <img src="assets/images/icons/rejected-outline.svg"
+                   alt="icon"
+                   *ngIf="isCheckOptionValueCorrect(question, questionOption.value) == false"
+                   [ngClass]="{'-hidden': !isMultipleChoiceAnswerMatch(questionOption.value)}">
+            </span>
+            <input class="k-checkbox question-answer-review__form-control"
+                   type="checkbox"
+                   [disabled]="true"
+                   [checked]="isMultipleChoiceAnswerMatch(questionOption.value)">
+            <span class="question-answer-review__option-label"
+                  *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}</span>
+          </div>
+          <!-- End Multiple Choice -->
+
+          <!-- Single Choice -->
+          <div class="question-answer-review__option-content"
+               *ngIf="question.questionType === QUESTIONTYPE.SingleChoice"
+               [ngClass]="{ '--correct': isCheckAnswerCorrect(question.questionCorrectAnswer) || isHasAnswerValue(questionOption.value.toString()),
+                            '--wrong': isCheckAnswerCorrect(question.questionCorrectAnswer) === false}">
+            <span class="question-answer-review__option-icon">
+              <img src="assets/images/icons/completed-mark-blue.svg"
+                   alt="icon"
+                   *ngIf="isCheckAnswerCorrect(question.questionCorrectAnswer)"
+                   [ngClass]="{'-hidden': questionOption.value !== questionAnswer.answerValue.toString()}">
+              <img src="assets/images/icons/rejected-outline.svg"
+                   alt="icon"
+                   *ngIf="isCheckAnswerCorrect(question.questionCorrectAnswer) === false"
+                   [ngClass]="{'-hidden': questionOption.value !== questionAnswer.answerValue.toString()}">
+            </span>
+            <input class="k-radio question-answer-review__form-control"
+                   type="checkbox"
+                   [checked]="questionOption.value === questionAnswer.answerValue.toString()"
+                   [disabled]="true">
+            <span class="question-answer-review__option-label"
+                  *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}</span>
+          </div>
+          <!-- End Single Choice -->
+
+          <!-- True/False -->
+          <div class="question-answer-review__option-content"
+               *ngIf="question.questionType === QUESTIONTYPE.TrueFalse"
+               [ngClass]="{'--correct': isCheckOptionValueCorrect(question, question.questionOptions[i].value) || isHasAnswerValue(question.questionOptions[i].value.toString()),
+                            '--wrong': isCheckOptionValueCorrect(question, question.questionOptions[i].value) === false}">
+            <span class="question-answer-review__option-icon">
+              <img src="assets/images/icons/completed-mark-blue.svg"
+                   alt="icon"
+                   *ngIf="isCheckOptionValueCorrect(question, question.questionOptions[i].value)"
+                   [ngClass]="{'-hidden': questionAnswer.answerValue.toString() !== question.questionOptions[i].value.toString()}">
+              <img src="assets/images/icons/rejected-outline.svg"
+                   alt="icon"
+                   *ngIf="isCheckOptionValueCorrect(question, question.questionOptions[i].value) === false"
+                   [ngClass]="{'-hidden': questionAnswer.answerValue.toString() !== question.questionOptions[i].value.toString()}">
+            </span>
+            <input class="k-radio question-answer-review__form-control"
+                   type="checkbox"
+                   [checked]="questionAnswer.answerValue.toString() == question.questionOptions[i].value.toString()"
+                   [disabled]="true">
+            <span
+                  class="question-answer-review__option-label">{{getTrueFalseQuestionOptionLabel(question.questionOptions[i].value) | globalTranslator}}</span>
+          </div>
+          <!-- End True/False -->
+
+          <div class="question-answer-review__option-media"
+               *ngIf="question.questionType !== QUESTIONTYPE.TrueFalse">
+            <img class="image"
+                 src="{{getMediaUrl(questionOption.imageUrl)}}"
+                 *ngIf="questionOption.imageUrl">
+            <video class="video"
+                   *ngIf="questionOption.videoUrl"
+                   width="100%"
+                   height="100%"
+                   style="max-width:100%"
+                   #videoElement
+                   controls
+                   controlsList="nodownload">
+              <source [src]="getMediaUrl(questionOption.videoUrl)"
+                      controls>
+              <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download
+                  the
+                  video</a> instead.</p>
+            </video>
+          </div>
+        </div>
+      </ng-container>
+      <!-- End Multiple choice / Signle choice / True/False -->
+
+      <!-- ShortText -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.ShortText">
+        <div class="question-answer-review__option-content"
+             [ngClass]="{'--correct': isCheckAnswerCorrect(question.questionCorrectAnswer) || questionAnswer.answerValue.toString() && !isQuiz,
+                              '--wrong': isCheckAnswerCorrect(question.questionCorrectAnswer) === false}">
+          <span class="question-answer-review__option-icon">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerCorrect(question.questionCorrectAnswer)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckAnswerCorrect(question.questionCorrectAnswer) === false">
+          </span>
+          <input class="k-textbox question-answer-review__form-control --textbox"
+                 type="true"
+                 [disabled]="true"
+                 [placeholder]="questionAnswer.answerValue.toString()">
+        </div>
+      </ng-container>
+      <!-- End ShortText -->
+
+      <!-- Free Response -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.FreeResponse">
+        <div class="question-answer-review__option-content"
+             *ngIf="questionAnswer.answerValue.toString()">
+          <input class="k-textbox question-answer-review__form-control --textbox"
+                 type="true"
+                 [disabled]="true"
+                 [placeholder]="questionAnswer.answerValue.toString()">
+        </div>
+        <form-answer-attachments [formAnswerAttachmentsVm]="questionAnswer.formAnswerAttachments"
+                                 [showRemovedBtn]="false"></form-answer-attachments>
+      </ng-container>
+      <!-- Free Response -->
+
+      <!-- DropDown -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.DropDown">
+        <div class="question-answer-review__option-content"
+             [ngClass]="{'--correct': isCheckSingleOptionAnswerCorrect(question),
+                          '--wrong': isCheckSingleOptionAnswerCorrect(question) === false}">
+          <span class="question-answer-review__option-icon">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question) === false">
+          </span>
+          <opal-select class="question-answer-review__form-control --dropdown"
+                       [items]="question.questionOptions"
+                       [ngModel]="questionAnswer.answerValue.toString()"
+                       [labelField]="'value'"
+                       [valueField]="'value'"
+                       [disabled]="true">
+          </opal-select>
+        </div>
+      </ng-container>
+      <!-- End DropDown -->
+
+      <!-- Fill In The Blank -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.FillInTheBlanks">
+        <div class="question-answer-review__option-content --fill-in-the-blank"
+             *ngIf="question.questionType === QUESTIONTYPE.FillInTheBlanks">
+          <span class="question-answer-review__number"
+                *ngIf="question.formSectionId; else noSection">{{priority}}.{{minorPriority}}.</span>
+          <ng-template #noSection="">
+            <span class="question-answer-review__number">{{priority}}.</span>
+          </ng-template>
+          <ng-container *ngFor="let questionOption of question.questionOptions; let i = index;">
+            <ng-container *ngIf="questionOption.type === QUESTIONOPTIONTYPEENUM.Text">
+              {{ questionOption.value }}
+            </ng-container>
+            <ng-container *ngIf="questionOption.type === QUESTIONOPTIONTYPEENUM.Blank">
+              <span class="blank-answer">
+                <img class="blank-answer__icon"
+                     src="assets/images/icons/completed-mark-blue.svg"
+                     alt="icon"
+                     *ngIf="isMultipleChoiceAnswerMatch(questionOption.value)">
+                <img class="blank-answer__icon"
+                     src="assets/images/icons/rejected-outline.svg"
+                     alt="icon"
+                     *ngIf="!isMultipleChoiceAnswerMatch(questionOption.value)">
+                <span class="blank-answer__text"
+                      [ngClass]="{'-correct': isMultipleChoiceAnswerMatch(questionOption.value) ||questionOption.value && !isQuiz,
+                                  '-wrong': !isMultipleChoiceAnswerMatch(questionOption.value)}">
+                  {{questionOption.value}}
+                </span>
+              </span>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </ng-container>
+      <!-- End Fill In The Blank -->
+
+      <!-- Date Picker -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.DatePicker">
+        <div class="question-answer-review__option-content"
+             *ngIf="question.questionType === QUESTIONTYPE.DatePicker"
+             [ngClass]="{'--correct': isCheckSingleOptionAnswerCorrect(question),
+                          '--wrong': isCheckSingleOptionAnswerCorrect(question) === false}">
+          <span class="question-answer-review__option-icon">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question) === false">
+          </span>
+          <kendo-datepicker class="question-answer-review__form-control --textbox"
+                            [value]="getDatePickerAnswer()"
+                            position="top"
+                            [format]="'dd/MM/yyyy'"
+                            [disabled]="true"></kendo-datepicker>
+        </div>
+        <div class="question-answer-review__correct-answer"
+             *ngIf="isQuiz">{{'Correct answer: ' | translator}} <span
+                class="question-answer-review__answer">{{questionAnswer.answerValue.toString() | translator}}</span>
+        </div>
+      </ng-container>
+      <!-- End Date Picker -->
+
+      <!-- Date Range Picker -->
+      <ng-container *ngIf="question.questionType === QUESTIONTYPE.DateRangePicker">
+        <div class="question-answer-review__option-content"
+             [ngClass]="{'--correct': isCheckSingleOptionAnswerCorrect(question),
+                          '--wrong': isCheckSingleOptionAnswerCorrect(question) === false}">
+          <span class="question-answer-review__option-icon">
+            <img src="assets/images/icons/completed-mark-blue.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question)">
+            <img src="assets/images/icons/rejected-outline.svg"
+                 alt="icon"
+                 *ngIf="isCheckSingleOptionAnswerCorrect(question) === false">
+          </span>
+          <div class="question-answer-review__date-group">
+            <kendo-datepicker class="question-answer-review__form-control --textbox"
+                              [value]="getDateRangePickerAnswer(0)"
+                              position="top"
+                              [format]="'dd/MM/yyyy'"
+                              [disabled]="true"></kendo-datepicker>
+            <kendo-datepicker class="question-answer-review__form-control --textbox"
+                              [value]="getDateRangePickerAnswer(1)"
+                              position="top"
+                              [format]="'dd/MM/yyyy'"
+                              [disabled]="true"></kendo-datepicker>
+          </div>
+        </div>
+        <div class="question-answer-review__correct-answer"
+             *ngIf="isQuiz">{{'Correct answer: ' | translator}} <span
+                class="question-answer-review__answer">{{questionAnswer.answerValue.toString() | translator}}</span>
+        </div>
+      </ng-container>
+      <!-- End Date Range Picker -->
+      <div class="question-answer-review__explanation"
+           *ngIf="isQuiz">
+        <span class="question-answer-review__explanation-item">
+          <img class="question-answer-review__explanation-icon"
+               src="assets/images/icons/completed-mark-blue.svg"
+               alt="icon">
+          <span class="question-answer-review__explanation-label">{{'Correct answer' | translator}}</span>
+        </span>
+        <span class="question-answer-review__explanation-item">
+          <img class="question-answer-review__explanation-icon"
+               src="assets/images/icons/rejected-outline.svg"
+               alt="icon">
+          <span class="question-answer-review__explanation-label">{{'Incorrect answer' | translator}}</span>
+
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+detail-content-fragment {
+  width: 100%;
+
+  opal-file-uploader .spinner {
+    &__container {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .opal-file-uploader__upload-progress .description.central {
+    top: 70%;
+  }
+}

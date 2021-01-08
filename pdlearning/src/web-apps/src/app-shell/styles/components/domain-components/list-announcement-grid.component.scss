@@ -1,0 +1,11 @@
+list-announcement-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-announcement-grid {
+  &__announcement-title {
+    color: #1d91cf;
+    text-decoration-line: underline;
+  }
+}

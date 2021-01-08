@@ -1,0 +1,86 @@
+<div class="pd-opportunities-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">{{ 'Add PD Opportunities' | globalTranslator}}</div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group -required pd-opportunities-search">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode=""></ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control pd-opportunities-search__select search"
+                       [fetchDataFn]="fetchPublishedCoursesFn"
+                       [labelField]="'courseName'"
+                       [placeholder]="'Search for PD Opportunities' | globalTranslator"
+                       [valueField]="'id'"
+                       [virtualScroll]="true"
+                       [searchFn]="selectSearchFn"
+                       [maxDropdownHeight]="220"
+                       (selectedItemChange)="onSelectedItemChanged()"
+                       kendoErrorTooltip
+                       [clearable]="true"
+                       [closeOnSelect]="false"
+                       [notCloseDropdownOnFocusOut]="showingPreviewCourseDialog"
+                       [notClearSearchTextOnFocusOut]="showingPreviewCourseDialog"
+                       position="top">
+            <ng-template opalOptionTmp
+                         let-item="item"
+                         let-item$="item$"
+                         let-index="index">
+              <div class="pd-opportunities-search__item">
+                <span class="pd-opportunities-search__name">
+                  {{ item.courseName }}
+                </span>
+                <span class="pd-opportunities-search__icon --accept"
+                      *ngIf="isCourseExit(item)">
+                  <img src="assets/images/icons/icon-accept.svg"
+                       alt>
+                </span>
+                <span>
+                  <button class="pd-opportunities-search__btn --preview"
+                          kendoButton
+                          *ngIf="canPreviewCourse(item)"
+                          (click)="openCoursePreview(item)">
+                    {{'Preview' | globalTranslator }}</button>
+                  <button class="pd-opportunities-search__btn"
+                          kendoButton
+                          *ngIf="!isCourseExit(item)"
+                          (click)="onClickAddPDOpportunities(item)">
+                    {{'Add' | globalTranslator }}</button>
+                  <button class="pd-opportunities-search__btn"
+                          kendoButton
+                          *ngIf="isCourseExit(item)"
+                          (click)="removeCourseSelected(item)">
+                    <img class="pd-opportunities-search__icon --reject"
+                         src="assets/images/icons/icon-reject.svg"
+                         alt>
+                    {{'Delete' | globalTranslator }}</button>
+                </span>
+              </div>
+            </ng-template>
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <learning-path-selected-courses [learningPathDetailVM]="learningPathDetailVM"
+                                    [isViewMode]="isViewMode"></learning-path-selected-courses>
+    <div class="learning-path-selected-courses-total"
+         *ngIf="learningPathDetailVM.learningPathCourseVMs && learningPathDetailVM.learningPathCourseVMs.length">
+      <span *ngIf="learningPathDetailVM.learningPathCourseVMs && learningPathDetailVM.learningPathCourseVMs.length">
+        {{ learningPathDetailVM.learningPathCourseVMs.length }}
+      </span>
+      {{ learningPathDetailVM.learningPathCourseVMs.length == 1 ? 'item' : 'items' | globalTranslator }}
+    </div>
+  </div>
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+    <button kendoButton
+            (click)="onSubmit()"
+            [disabled]="learningPathDetailVM.learningPathCourseVMs && learningPathDetailVM.learningPathCourseVMs.length < 1"
+            [primary]="true">{{'Save' | globalTranslator }}</button>
+  </div>
+</div>

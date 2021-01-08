@@ -1,0 +1,185 @@
+<div class="add-participant-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">
+      {{ 'Invite members' | translator }}
+    </div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (mousedown)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group -radio-horizontal">
+      <label class="form-control">
+        <input class="k-radio"
+               name="userType"
+               type="radio"
+               value="byUser"
+               [checked]="userOpt === PARTICIPANTOPTION.ByUser"
+               [(ngModel)]="userOpt"
+               kendoRadioButton>
+        {{ 'Add by user' | translator }}
+      </label>
+      <label class="form-control">
+        <input class="k-radio"
+               name="userType"
+               type="radio"
+               value="byCommunity"
+               [checked]="userOpt === PARTICIPANTOPTION.ByCommunity"
+               [(ngModel)]="userOpt"
+               kendoRadioButton>
+        {{ 'Add by community' | translator }}
+      </label>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="userOpt === PARTICIPANTOPTION.ByUser">
+      <label class="form-label"
+             for>{{'Search for the users' | globalTranslator}}</label>
+      <opal-select class="form-control add-participant-dialog__dropdown"
+                   kendoErrorTooltip
+                   [staticMode]="true"
+                   [hasMoreDataToFetch]="true"
+                   [fetchDataFn]="fetchUserSelectItemFn"
+                   [labelField]="'fullName'"
+                   [valueField]="'id'"
+                   [closeOnSelect]="false"
+                   [maxDropdownHeight]="140"
+                   [searchFn]="filterUserFn"
+                   [placeholder]="'Search user' | translator"
+                   (selectedItemChange)="onSelectedUserItemChanged()"
+                   position="top">
+        <ng-template opalOptionTmp
+                     let-item="item"
+                     let-item$="item$"
+                     let-index="index">
+          <div class="owner-container"
+               *ngIf="item"
+               (click)="userItemChange(item)"
+               [ngClass]="{'--selected' : isUserSelected(item)}">
+            <div class="owner-container__avatar">
+              <img class="avatar-img"
+                   src="{{ item.avatarUrl ? item.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+            </div>
+            <div class="user-info">
+              <p class="main-title">
+                {{ item.fullName }}
+              </p>
+              <p class="sub-title"
+                 *ngIf="item.departmentName">{{ item.departmentName }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </opal-select>
+    </div>
+    <div class="form-controls-group add-participant-dialog__users-list"
+         *ngIf="userOpt === PARTICIPANTOPTION.ByUser">
+      <label class="form-label"
+             for>{{'Added Users' | globalTranslator}}</label>
+      <div class="add-participant-dialog__users-selected"
+           *ngIf="participantSelectedUsers?.length">
+        <div class="owner-container"
+             *ngFor="let user of participantSelectedUsers">
+          <div class="owner-container__avatar">
+            <img class="avatar-img"
+                 src="{{ user.avatarUrl ? user.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+          </div>
+          <div class="user-info">
+            <p class="main-title">
+              {{ user.fullName }}
+            </p>
+            <p class="sub-title"
+               *ngIf="user.departmentName">{{ user.departmentName }}</p>
+            <p class="sub-title"
+               *ngIf="user.emailAddress">{{ user.emailAddress }}</p>
+          </div>
+          <div class="owner-container__action">
+            <span class="owner-container__remove-buttom k-icon k-i-close"
+                  (click)="removeUser(user)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-controls-group"
+         *ngIf="userOpt === PARTICIPANTOPTION.ByCommunity">
+      <label class="form-label"
+             for>{{'Search for the users in community' | globalTranslator}}</label>
+      <opal-select class="form-control add-participant-dialog__dropdown"
+                   kendoErrorTooltip
+                   [staticMode]="true"
+                   [hasMoreDataToFetch]="true"
+                   [fetchDataFn]="fetchCommunitySelectItemFn"
+                   [labelField]="'name'"
+                   [valueField]="'guid'"
+                   [closeOnSelect]="false"
+                   [minDropdownHeight]="140"
+                   [maxDropdownHeight]="140"
+                   [searchFn]="filterCommunityFn"
+                   [placeholder]="'Search community' | translator"
+                   (selectedItemChange)="onSelectedCommunityItemChanged()"
+                   position="top">
+        <ng-template opalOptionTmp
+                     let-item="item"
+                     let-item$="item$"
+                     let-index="index">
+          <div class="owner-container"
+               *ngIf="item"
+               (click)="communityItemChange(item)"
+               [ngClass]="{'--selected' : isCommunitySelected(item)}">
+            <div class="owner-container__avatar">
+              <img class="avatar-img"
+                   src="{{ item.avatarUrl ? item.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+            </div>
+            <div class="user-info">
+              <p class="main-title">
+                {{ item.name }}
+              </p>
+              <p class="sub-title"
+                 *ngIf="item.description">{{ item.description }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </opal-select>
+    </div>
+
+    <div class="form-controls-group add-participant-dialog__users-list"
+         *ngIf="userOpt === PARTICIPANTOPTION.ByCommunity">
+      <label class="form-label"
+             for>{{'Added Communities' | globalTranslator}}</label>
+      <div class="add-participant-dialog__users-selected"
+           *ngIf="participantSelectedCommunities?.length">
+        <div class="owner-container"
+             *ngFor="let community of participantSelectedCommunities">
+          <div class="owner-container__avatar">
+            <img class="avatar-img"
+                 src="{{ community.avatarUrl ? community.avatarUrl : 'assets/images/others/default-avatar.png'}}">
+          </div>
+          <div class="user-info">
+            <p class="main-title">
+              {{ community.name }}
+            </p>
+            <p class="sub-title"
+               *ngIf="community.description">{{ community.description }}</p>
+          </div>
+          <div class="owner-container__action">
+            <span class="owner-container__remove-buttom k-icon k-i-close"
+                  (click)="removeCommunity(community)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button kendoButton
+            [disabled]="!canProceed"
+            [primary]="true"
+            (mousedown)="onProceed()">{{ 'Accept' | globalTranslator }}</button>
+    <button kendoButton
+            [primary]="true"
+            (mousedown)="onCancel()">
+      {{ 'Cancel' | translator }}
+    </button>
+  </div>
+
+</div>

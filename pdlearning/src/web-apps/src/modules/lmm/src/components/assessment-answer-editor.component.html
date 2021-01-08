@@ -1,0 +1,43 @@
+<div class="assessment-player">
+  <div class="assessment-player__message-info"
+       *ngIf="showWarningMessage">
+    <span class="alert -warning">{{"There is no submission received from learner." | translator}}</span>
+  </div>
+  <ng-container *ngIf="!showWarningMessage">
+    <div class="assessment-player__user-modify"
+         *ngIf="isAssessentForFacilitator">
+      <div class="assessment-player__user-modify-text">{{ 'Last modified:' | translator}}</div>
+      <owner-info *ngIf="assessmentAnswerVm.modifyUser"
+                  [owner]="assessmentAnswerVm.modifyUser"></owner-info>
+      <div class="assessment-player__user-modify-date"
+           *ngIf="assessmentAnswerVm.changedDate">
+        {{ 'Date: ' | translator}} {{ assessmentAnswerVm.changedDate | date: 'dd/MM/yyyy' }}
+      </div>
+    </div>
+    <div class="assessment-player__criteria">
+      <assessment-criteria *ngFor="let criteria of assessmentAnswerVm.criteria"
+                           [criteria]="criteria"
+                           [scales]="assessmentAnswerVm.scales"
+                           [viewMode]="!isAssessentForFacilitator"
+                           [assessmentAnswerVm]="assessmentAnswerVm"></assessment-criteria>
+    </div>
+    <div class="assessment-player__submit-container">
+      <ng-container *ngIf="isAssessentForFacilitator">
+        <button class="assessment-player__submit-btn"
+                *ngIf="assessmentAnswerVm.submittedDate == null"
+                kendoButton
+                [primary]="true"
+                (click)="onSave()">
+          {{ 'Save' | translator }}
+        </button>
+        <button class="assessment-player__submit-btn"
+                kendoButton
+                [disabled]="disableSubmitButton"
+                [primary]="true"
+                (click)="onSubmit()">
+          {{ 'Submit' | translator }}
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

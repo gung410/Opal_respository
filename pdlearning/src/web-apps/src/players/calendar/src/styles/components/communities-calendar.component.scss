@@ -1,0 +1,834 @@
+communities-calendar {
+  background-color: #ffffff;
+  color: #303450;
+
+  .community-calendar {
+    &-menu__tabs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .calendar-title {
+        border-color: $color-gainsboro;
+      }
+
+      .actions-section {
+        .create-event-btn {
+          height: 48px;
+          margin: 32px auto;
+
+          .k-i-add-event {
+            background: url('../assets/images/icons/add-event.svg') no-repeat center;
+            width: 16px;
+            height: 16px;
+            padding: 0 8px;
+          }
+
+          .k-i-expanded {
+            padding: 0 8px;
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+
+      .event-action {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+        border-top: 1px solid $color-gainsboro;
+
+        .create-event-btn {
+          margin-top: 20px;
+          margin-bottom: 20px;
+          height: 48px;
+
+          > button {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .community-tree {
+    flex-grow: 1;
+    max-height: calc(100vh - 146px);
+    overflow-y: auto;
+
+    .k-treeview {
+      color: #303450;
+      background-color: #fff;
+      overflow-y: auto;
+
+      &-item {
+        .k-mid {
+          position: relative;
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+      }
+
+      &-lines {
+        padding-left: 0;
+
+        > li {
+          padding-left: 16px;
+        }
+      }
+
+      .k-item {
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f9f9f9;
+        }
+      }
+
+      .k-in {
+        width: 100%;
+        padding: 4px 6px;
+
+        &:hover {
+          background: #f9f9f9;
+          color: inherit;
+        }
+      }
+
+      .k-in.k-state-selected {
+        color: inherit;
+        background-color: inherit;
+      }
+
+      .k-in.k-state-focused {
+        box-shadow: none;
+      }
+
+      .k-checkbox-wrapper {
+        margin-top: 2px;
+        margin-right: 10px;
+        align-self: self-start;
+      }
+
+      font-weight: 400 !important;
+      font-size: 1rem !important;
+
+      .k-in {
+        color: #303450;
+        padding: 0;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        user-select: none;
+        white-space: pre-line;
+
+        &:hover {
+          color: #303450;
+        }
+      }
+
+      .k-state-focused {
+        box-shadow: none;
+      }
+
+      .k-icon {
+        &.k-i-collapse {
+          font-family: 'moe';
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          font-size: 5px;
+          color: #303450;
+          position: absolute;
+          left: 0;
+          align-self: self-start;
+          margin-top: 4px;
+
+          &::before {
+            content: '\e923';
+          }
+        }
+
+        &.k-i-expand {
+          font-family: 'moe';
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          font-size: 5px;
+          transform: rotate(-90deg);
+          color: #303450;
+          position: absolute;
+          left: 0;
+          align-self: self-start;
+          margin-top: 4px;
+
+          &::before {
+            content: '\e923';
+          }
+        }
+      }
+    }
+
+    .k-widget {
+      border: none;
+    }
+
+    .k-panelbar {
+      color: #303450;
+      background-color: inherit;
+      border-style: none;
+      border-bottom: 1px solid $color-gainsboro;
+      background-clip: border-box;
+
+      .k-group .k-item {
+        padding: 8px 18px;
+
+        .k-in {
+          &:hover {
+            background: #f9f9f9;
+          }
+        }
+
+        &:hover {
+          background: #f9f9f9;
+        }
+      }
+
+      .k-item {
+        border: unset;
+
+        .k-link {
+          color: #303450 !important;
+          background-color: #ffffff !important;
+
+          &.k-header {
+            font-weight: 500;
+            padding-left: 42px;
+            cursor: pointer;
+          }
+
+          &:hover {
+            color: #303450;
+          }
+
+          &.k-state-focused {
+            box-shadow: none;
+          }
+
+          .k-icon {
+            color: #303450;
+          }
+
+          .my-event-icon {
+            width: 16px;
+            height: 16px;
+            background-color: $color-gainsboro;
+            border-radius: 5px;
+            margin-right: 8px;
+          }
+
+          .community-event-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #f2f3b5;
+            border-radius: 5px;
+            margin-right: 8px;
+          }
+
+          .learning-event-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #c9f3b5;
+            border-radius: 5px;
+            margin-right: 8px;
+          }
+        }
+      }
+
+      &-collapse {
+        font-family: 'moe';
+        margin: 0 !important;
+        width: 10px;
+        height: 5px;
+        font-size: 5px;
+        left: 24px;
+        top: 16px !important;
+        color: #303450 !important;
+
+        &::before {
+          content: '\e923';
+        }
+      }
+
+      &-expand {
+        font-family: 'moe';
+        margin: 0 !important;
+        width: 10px;
+        height: 5px;
+        font-size: 5px;
+        transform: rotate(-90deg);
+        left: 24px;
+        top: 16px !important;
+        color: #303450 !important;
+
+        &::before {
+          content: '\e923';
+        }
+      }
+
+      .k-treeview-lines {
+        background-color: #fff;
+      }
+    }
+  }
+
+  .detail-content {
+    color: #303450;
+    background-color: $color-white;
+
+    &__left-container {
+      position: relative;
+      min-width: 267px;
+      width: -webkit-fill-available;
+      margin-right: 0;
+
+      detail-content-left {
+        box-shadow: unset;
+      }
+    }
+
+    &__right-container {
+      border-left: 1px solid $color-gainsboro;
+      border-right: 1px solid $color-gainsboro;
+
+      .k-widget {
+        &::selection {
+          background-color: #8799ba;
+        }
+      }
+
+      .k-scheduler {
+        border: 0;
+
+        &-toolbar {
+          height: 56px;
+          background-clip: padding-box;
+          background: #fff;
+          padding: 0 16px;
+
+          .k-header {
+            height: 32px;
+          }
+        }
+
+        &-dayview,
+        &-weekview {
+          .k-scheduler-pane {
+            .k-scheduler-header-wrap div {
+              border-color: inherit;
+              overflow-y: overlay;
+              max-height: 100px;
+            }
+
+            &:first-child {
+              tr:first-child {
+                th {
+                  height: 40px !important;
+                  vertical-align: middle;
+                }
+
+                .k-scheduler-times-all-day {
+                  height: 80px;
+                  vertical-align: top;
+                }
+              }
+            }
+
+            &:nth-child(2) {
+              tr {
+                height: 30px !important;
+              }
+
+              th {
+                padding: 0px 8px;
+                height: 12px !important;
+              }
+
+              td {
+                height: 12px !important;
+              }
+            }
+          }
+
+          th {
+            font-weight: 500;
+            color: #8799ba;
+            text-align: center;
+            align-items: center;
+
+            strong {
+              font-weight: 500;
+            }
+          }
+
+          .k-event {
+            box-sizing: border-box !important;
+          }
+        }
+
+        &-monthview {
+          th {
+            font-weight: 500;
+            color: #8799ba;
+            text-align: center;
+            align-items: center;
+          }
+
+          td {
+            height: 96px !important;
+
+            span {
+              padding: 15px 7px;
+              text-align: center;
+            }
+
+            .k-more-events {
+              height: 18px;
+
+              > .k-icon {
+                padding: 0;
+                margin: 0;
+              }
+            }
+          }
+
+          .today {
+            .k-nav-day {
+              background: url('../assets/images/icons/today.svg') no-repeat center;
+              color: #ffffff;
+              border-radius: 20px;
+            }
+          }
+        }
+
+        &-navigation {
+          li {
+            border: none;
+
+            a {
+              border: 1px solid rgba(0, 0, 0, 0.08);
+              height: 32px;
+              background-color: #ffffff;
+              color: #303450 !important;
+
+              .k-icon.k-i-calendar {
+                display: none;
+              }
+            }
+          }
+
+          .k-nav {
+            color: #303450 !important;
+
+            &-today a {
+              width: 84px;
+              height: 32px;
+              border-radius: 4px 0px 0px 4px;
+            }
+
+            &-prev a {
+              width: 24px !important;
+              height: 32px !important;
+            }
+
+            &-next a {
+              width: 24px !important;
+              height: 32px !important;
+              border-radius: 0px 4px 4px 0px;
+            }
+
+            &-current a {
+              height: 32px !important;
+              border: none;
+            }
+          }
+        }
+
+        &-views {
+          li {
+            width: 75px;
+            background: #fff;
+            font-size: 1rem;
+            font-weight: 400;
+
+            &:first-child {
+              + {
+                li {
+                  border-radius: 4px 0 0 4px;
+                }
+              }
+            }
+
+            &:last-child {
+              border-radius: 0 4px 4px 0;
+            }
+
+            span {
+              height: 32px;
+              color: #303450 !important;
+            }
+
+            &.k-state-selected {
+              font-weight: 500;
+            }
+          }
+
+          .k-state-selected {
+            background: #8799ba;
+
+            span {
+              color: #ffffff !important;
+            }
+          }
+        }
+
+        .k-scheduler-toolbar {
+          border-color: $color-gainsboro;
+
+          .k-scheduler-views {
+            li {
+              .k-link {
+                padding: 0 16px;
+              }
+            }
+
+            li.k-state-selected {
+              background-color: #8799ba;
+            }
+
+            li:nth-child(2) {
+              border-radius: 5px 0 0 5px;
+            }
+
+            li:last-child {
+              border-radius: 0 5px 5px 0;
+            }
+          }
+        }
+
+        &-table {
+          td,
+          th {
+            border-color: $color-gainsboro;
+          }
+        }
+      }
+    }
+  }
+
+  .k-event {
+    background-color: #8799ba;
+
+    > div {
+      padding-left: 7px;
+    }
+  }
+
+  .k-i-add-event {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/add-event.svg') no-repeat center;
+  }
+
+  .calendar-btn,
+  .create-event-btn {
+    min-width: 185px;
+    width: auto !important;
+    text-align: left;
+    align-items: center;
+  }
+
+  .filter-event-close {
+    display: none;
+    border: none;
+    height: 56px;
+    line-height: 56px;
+    text-align: center;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-bottom-left-radius: $main-border-radius;
+    border-bottom-right-radius: $main-border-radius;
+    border-top: 1px solid $color-gainsboro;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::before {
+      content: '\e92b';
+      font-family: 'moe';
+    }
+  }
+
+  .filter-btn {
+    display: none;
+    border: 0;
+    background: transparent;
+    font-size: 5px;
+    vertical-align: top;
+    padding-top: 9px;
+
+    &::before {
+      color: $color-blue-dard;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.community-body {
+  .k-calendar .k-state-selected .k-link {
+    border-color: #8799ba;
+    background-color: #8799ba;
+  }
+
+  .k-calendar .k-footer .k-nav-today:hover,
+  .k-calendar .k-footer .k-nav-today:focus,
+  .k-calendar .k-calendar-header .k-today:hover,
+  .k-calendar .k-calendar-header .k-today:focus,
+  .k-calendar .k-calendar-navigation li:hover,
+  .k-calendar .k-content .k-today,
+  .k-calendar .k-calendar-header .k-today {
+    color: #8799ba;
+  }
+
+  kendo-popup {
+    .create-popup {
+      width: 185px;
+    }
+
+    .k-state-focused {
+      box-shadow: none !important;
+    }
+  }
+}
+
+@include flex-layout-media('lt-lg') {
+  communities-calendar {
+    .detail-content {
+      &__left-container {
+        min-width: 250px;
+      }
+    }
+  }
+}
+
+@include flex-layout-media('tablet-portrait') {
+  communities-calendar {
+    .k-scheduler-views {
+      right: 12px;
+      top: 10px;
+      flex-direction: row;
+
+      .k-current-view {
+        display: none;
+      }
+
+      li {
+        display: block;
+      }
+    }
+
+    .detail-content {
+      flex-direction: column;
+    }
+
+    .community-calendar-menu {
+      &__tabs {
+        position: relative;
+
+        .calendar-title {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          height: 64px;
+          z-index: $z-index-level-2 + 1;
+          border-top-left-radius: $main-border-radius;
+          border-top-right-radius: $main-border-radius;
+          background: #fff;
+        }
+
+        .community-tree {
+          position: fixed;
+          top: 65px;
+          width: 100%;
+          z-index: $z-index-level-2 + 1;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          display: none;
+          max-height: none;
+          overflow-y: hidden;
+        }
+
+        .event-action,
+        .actions-section {
+          position: fixed;
+          right: $main-grid-unit * 2;
+          top: 12px;
+          border: none;
+          z-index: $z-index-level-2 + 1;
+
+          .calendar-btn,
+          .create-event-btn {
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 40px;
+          }
+        }
+      }
+    }
+
+    .k-scheduler-toolbar {
+      margin-top: 64px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .k-scheduler {
+      &-layout {
+        > .k-scheduler-pane {
+          &:last-child {
+            height: calc(100vh - 218px);
+            overflow-y: auto;
+
+            > .k-scheduler-times,
+            > .k-scheduler-content {
+              height: auto !important;
+            }
+          }
+        }
+      }
+
+      &-monthview {
+        > .k-scheduler-pane {
+          &:last-child {
+            height: calc(100vh - 162px);
+          }
+        }
+      }
+
+      &-weekview {
+        overflow-x: auto;
+
+        > .k-scheduler-pane {
+          min-width: 800px;
+        }
+      }
+    }
+
+    .filter-event-close {
+      display: block;
+    }
+
+    .k-panelbar {
+      overflow-y: auto !important;
+      max-height: calc(100vh - 188px);
+    }
+
+    .filter-btn {
+      display: inline-block;
+    }
+  }
+
+  .opened-calendar-selector {
+    .community-tree {
+      display: block !important;
+    }
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  communities-calendar {
+    .detail-content {
+      &__right-container {
+        margin-top: 0;
+      }
+
+      .calendar-btn,
+      .create-event-btn {
+        width: 40px !important;
+        height: 40px;
+        min-width: auto;
+        border-radius: 50%;
+        color: transparent;
+        position: relative;
+        padding: 0;
+
+        .k-i-add-event {
+          position: absolute;
+          left: 8px;
+          top: 7px;
+          margin: 0;
+        }
+
+        &:hover {
+          color: transparent;
+        }
+      }
+
+      .create-event-btn {
+        &::before {
+          display: none;
+        }
+
+        > button {
+          padding: 0;
+          border-radius: 50%;
+          color: transparent;
+
+          &:hover {
+            color: transparent;
+          }
+        }
+      }
+    }
+
+    .k-scheduler-views {
+      right: 12px;
+      flex-direction: column;
+
+      .k-current-view {
+        display: block;
+      }
+
+      li {
+        display: none;
+      }
+    }
+
+    .k-scheduler-navigation {
+      .k-nav-current {
+        display: none;
+      }
+    }
+
+    .k-scheduler {
+      &-monthview {
+        overflow-x: auto;
+
+        > .k-scheduler-pane {
+          min-width: 700px;
+        }
+      }
+    }
+  }
+}

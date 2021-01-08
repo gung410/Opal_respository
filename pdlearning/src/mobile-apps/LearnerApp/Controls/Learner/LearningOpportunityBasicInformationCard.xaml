@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityBasicInformationCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:effects="clr-namespace:LearnerApp.Effects;assembly=LearnerApp"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="15">
+        <!--  INFORMATION  -->
+        <StackLayout>
+            <Label Style="{StaticResource TitleGroup}" Text="INFORMATION" />
+            <!--  Type Of PD Activity  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Type Of PD Activity"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="TypeOfPDActivity" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Mode of Learning  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Mode of Learning"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="ModeOfLearning" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Category  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Category"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="Category" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Course Code  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Course Code"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="CourseCode" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  TRAISI Course Code  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Traisi Course Code"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="TraisiCourseCode" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Cost  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Cost"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <StackLayout
+                    x:Name="CostStack"
+                    HorizontalOptions="StartAndExpand"
+                    Orientation="Horizontal">
+                    <Label x:Name="Cost" />
+                    <forms:SvgCachedImage
+                        x:Name="ToolTip"
+                        effects:TooltipEffect.BackgroundColor="#8799ba"
+                        effects:TooltipEffect.HasTooltip="True"
+                        effects:TooltipEffect.Position="Right"
+                        effects:TooltipEffect.Text="This is a notional cost chargeable for Non-MOE staff"
+                        effects:TooltipEffect.TextColor="#FCFDFD"
+                        HeightRequest="12"
+                        Source="question_mark.svg"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="12" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Course Outline & Structure  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Course Outline &amp; Structure"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="CourseOutlineStructure" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <!--  Objectives/Outcomes  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Objectives/Outcomes"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="ObjectivesOutcomes" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Number of views"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="NumberOfViews" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Number of shares"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="NumberOfShares" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout x:Name="CommunityStack" Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Community"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label
+                    x:Name="Community"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    TextColor="Blue"
+                    TextDecorations="Underline" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

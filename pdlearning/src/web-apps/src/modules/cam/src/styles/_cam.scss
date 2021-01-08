@@ -1,0 +1,82 @@
+@import 'components/select-files-dialog.component.scss';
+@import 'components/classrun-detail-page.component.scss';
+@import 'components/cancellation-request-dialog.component.scss';
+@import 'components/reschedule-request-dialog.component.scss';
+@import 'components/course-of-planning-cycle-management-page.component.scss';
+@import 'components/adding-participant-page.component.scss';
+@import 'components/course-detail-page.component.scss';
+@import 'components/send-course-publicity-page.component.scss';
+@import 'components/send-course-nomination-announcement-page.component.scss';
+@import 'components/change-registration-class-dialog.component.scss';
+@import 'components/export-participants-dialog.component.scss';
+@import 'components/course-criteria-detail-page.component.scss';
+@import 'components/classrun-management-page.component.scss';
+@import 'components/course-management-page.component.scss';
+@import 'components/send-placement-letter-dialog.component.scss';
+@import 'components/registration-ecertificate-dialog.component.scss';
+@import 'components/send-order-refreshment-page.component.scss';
+
+cam-app {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: calc(100vh - 200px);
+}
+
+cam-outlet {
+  height: 100%;
+  max-height: 100%;
+
+  >.match-parent.column {
+    max-height: 100%;
+    height: 100%;
+  }
+
+  .detail-content {
+    &__right-container {
+      .scrollable-menu-content {
+        display: block;
+
+        &__tab-content {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &.outlet-container {
+    display: block;
+
+    .match-parent {
+      display: block;
+    }
+
+    .page-content {
+      display: block;
+
+      >div {
+        display: block;
+      }
+    }
+  }
+}
+
+.cam-create-button-modes {
+  padding: 5px;
+
+  .k-list .k-item {
+    padding-left: 38px;
+    padding-right: 38px;
+  }
+
+  .k-list .k-item.k-state-focused {
+    box-shadow: none;
+  }
+
+  .k-list .k-item:hover {
+    background: $color-light-gray;
+    color: $white;
+    border-radius: 5px;
+    @extend %smooth;
+  }
+}

@@ -1,0 +1,97 @@
+copyright-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+
+  .form-controls-group {
+    position: relative;
+  }
+
+  .copyrigh-form {
+    &__allow-download {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+
+      .k-switch {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+copyright-attribution-element-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .form-controls-group {
+    > label {
+      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 130px;
+    }
+
+    > .form-control {
+      flex-grow: 1;
+    }
+  }
+}
+
+.copyright-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+
+  &__title {
+    color: #2d3469;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  &__form-group-title {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: $font-size-h3;
+    line-height: 150%;
+    font-weight: $font-weight-medium;
+    color: $color-light-gray;
+  }
+
+  &__date-picker {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: $font-weight-medium;
+    font-size: 27px;
+    margin-top: 0;
+    flex-grow: 1;
+  }
+
+  &__attribution-element-form-container-item {
+    display: flex;
+    border: 1px solid $border-color;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    > copyright-attribution-element-form {
+      margin-right: 10px;
+    }
+  }
+
+  &__attribution-elements-label {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

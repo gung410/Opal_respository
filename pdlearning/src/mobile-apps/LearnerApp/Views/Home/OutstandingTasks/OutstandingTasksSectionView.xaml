@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Home.OutstandingTasks.OutstandingTasksSectionView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:learnerCustomRepeatableStackView="clr-namespace:LearnerApp.Controls.LearnerCustomRepeatableStackView;assembly=LearnerApp"
+	xmlns:outstandingTasks="clr-namespace:LearnerApp.Views.Home.OutstandingTasks;assembly=LearnerApp"
+	xmlns:outstandingTasks1="clr-namespace:LearnerApp.ViewModels.Home.OutstandingTasks;assembly=LearnerApp"
+	xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+	x:DataType="outstandingTasks1:OutstandingTasksSectionViewModel"
+	IsVisible="{Binding IsShowOutstandingSection}">
+	<ContentView.Content>
+		<StackLayout Orientation="Vertical" Spacing="20">
+			<StackLayout>
+				<StackLayout Orientation="Horizontal">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding ShowAllOutstandingTasks}" />
+					</StackLayout.GestureRecognizers>
+					<Label
+						FontSize="{StaticResource LargeSize}"
+						HorizontalOptions="StartAndExpand"
+						Text="{Binding TotalCount, StringFormat='Outstanding Tasks ({0}) >'}" />
+					<Label
+						FontSize="{StaticResource MidMediumSize}"
+						IsVisible="{Binding TotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+						Text="see more"
+						TextColor="{StaticResource SecondaryTextColor}"
+						VerticalOptions="CenterAndExpand" />
+				</StackLayout>
+
+				<learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView
+					x:Name="List"
+					IsVisible="{Binding IsShowList}"
+					RealItemsSource="{Binding OutstandingTasks}"
+					Spacing="10">
+					<BindableLayout.ItemTemplateSelector>
+						<outstandingTasks:OutstandingTaskDataTemplateSelector />
+					</BindableLayout.ItemTemplateSelector>
+				</learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView>
+
+				<StackLayout IsVisible="{Binding Source={x:Reference List}, Path=IsVisible, Converter={StaticResource InverseBoolConverter}}">
+					<Label HorizontalOptions="CenterAndExpand" Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+				</StackLayout>
+			</StackLayout>
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

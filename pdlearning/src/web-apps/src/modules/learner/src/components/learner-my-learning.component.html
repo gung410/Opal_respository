@@ -1,0 +1,78 @@
+<div class="learner-my-learning"
+     [hidden]="isShowLearningPathActionForm">
+  <div>
+    <div class="welcome-msg">
+      {{'What will you learn today?' | translator}}
+    </div>
+  </div>
+
+  <div *ngIf="myLearningTabs.length; else showingEmptyMsg"
+       class="main-content">
+    <div class="tabs-menu">
+      <div class="tab"
+           *ngFor="let tab of myLearningTabs"
+           [ngClass]="{active: tab === activeTab}"
+           (click)="onTabClicked(tab)">{{myLearningTabNames.get(tab) | translator}}</div>
+    </div>
+
+    <div class="tab-content"
+         [ngSwitch]="activeTab">
+      <div class="search-bar"
+           [hidden]="!isShowSearchBar"
+           *ngIf="activeTab !== myLearningTab.Bookmarks">
+        <search-input [(ngModel)]="searchText"
+                      [placeholder]="'Search ' + myLearningPlaceholder.get(activeTab) | translator"
+                      (search)="onSubmitSearch()"></search-input>
+        <button class="search-filter-result__search-field--clear"
+                kendoButton
+                *ngIf="isSearchingWithText"
+                (click)="onClearSearch()">{{"Clear" | translator}}</button>
+      </div>
+
+      <ng-container *ngSwitchCase="myLearningTab.Courses">
+        <learning-courses #myCourses
+                          [searchingText]="currentSearchText"
+                          [isSearchingWithText]="isSearchingWithText"
+                          (learningCardClick)="onLearningCardClick($event)"></learning-courses>
+      </ng-container>
+      <ng-container *ngSwitchCase="myLearningTab.Microlearning">
+        <learning-microlearning #myMicrolearnings
+                                [searchingText]="currentSearchText"
+                                [isSearchingWithText]="isSearchingWithText"
+                                (learningCardClick)="onLearningCardClick($event)">
+        </learning-microlearning>
+      </ng-container>
+      <ng-container *ngSwitchCase="myLearningTab.DigitalContent">
+        <learning-digital-content #myDigitalContents
+                                  [searchingText]="currentSearchText"
+                                  [isSearchingWithText]="isSearchingWithText"
+                                  (learningCardClick)="onLearningCardClick($event)">
+        </learning-digital-content>
+      </ng-container>
+      <ng-container *ngSwitchCase="myLearningTab.Bookmarks">
+        <learning-bookmarks #learningBookmarks
+                            (learningCardClick)="onLearningCardClick($event)"></learning-bookmarks>
+      </ng-container>
+      <ng-container *ngSwitchCase="myLearningTab.LearningPaths">
+        <learning-path-list #learningPathList
+                            [searchingText]="currentSearchText"
+                            [isSearchingWithText]="isSearchingWithText"
+                            (showLearningPathItem)="onLearningPathDetailShown($event)"
+                            (learningCardClick)="onLearningCardClick($event)"
+                            (learningPathFormAction)="onLearningPathFormAction($event)"></learning-path-list>
+      </ng-container>
+      <ng-container *ngSwitchCase="myLearningTab.Community">
+        <learning-communities [searchingText]="currentSearchText"
+                              [isSearchingWithText]="isSearchingWithText"></learning-communities>
+      </ng-container>
+    </div>
+  </div>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator}}</span>
+  </ng-template>
+</div>
+<learner-learning-path-form *ngIf="isShowLearningPathActionForm"
+                            [learningPathDetailVM]="myLearningPath"
+                            [mode]="mode"
+                            (backClick)="onBackClick()"
+                            (handleActionForm)="onHandleActionForm()"></learner-learning-path-form>

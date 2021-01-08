@@ -1,0 +1,75 @@
+<div class="personal-file-body">
+  <div class="flex personal-file-list"
+       [ngClass]="{'--border-top': mode === personalFileMode.Import}">
+    <kendo-grid class="opal-grid"
+                #grid
+                [data]="gridData"
+                [pageSize]="pageSize"
+                [skip]="skip"
+                [pageable]="true"
+                (pageChange)="onPageChange($event)"
+                (cellClick)="onItemClick($event)">
+      <kendo-grid-column *ngIf="mode === personalFileMode.Import"
+                         [field]
+                         [width]="60"
+                         [headerStyle]="{ 'text-align': 'center' }"
+                         [class]="{ 'align-center': true }">
+        <ng-template kendoGridCellTemplate
+                     let-dataItem>
+          <input class="k-checkbox"
+                 type="checkbox"
+                 [checked]="checkChecked(dataItem)"
+                 [disabled]="disabledItem(dataItem)"
+                 (click)="onCheckItem($event.target.checked, dataItem)">
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column class="description-col cursor-pointer"
+                         [title]="'Title' | translator"
+                         field="fileName"
+                         [width]="395">
+        <ng-template let-dataItem
+                     kendoGridCellTemplate>
+          <div class="personal-file-list__item-title">
+            <span>{{ dataItem.fileName }}</span>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [field]="'fileType'"
+                         [title]="'Types'">
+        <ng-template kendoGridCellTemplate
+                     let-dataItem>
+          {{getFileTypeDisplay(dataItem.fileType)}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [field]="'fileSize'"
+                         [title]="'File size'">
+        <ng-template let-dataItem
+                     kendoGridCellTemplate>
+          <span>{{dataItem.fileSize | fileSizeDisplay}}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column [field]="'createdDate'"
+                         [title]="'Upload time'">
+        <ng-template kendoGridCellTemplate
+                     let-dataItem>
+          {{dataItem.createdDate | relativeTimespan: 'dd/MM/yyyy h:mm a'}}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column *ngIf="mode === personalFileMode.View"
+                         [field]="'Action'"
+                         [class]="'grid-action'"
+                         [title]="''"
+                         [width]="100">
+        <ng-template let-dataItem
+                     let-rowIndex="rowIndex"
+                     kendoGridCellTemplate>
+          <span class="personal-file-list__action-button">
+            <span class="k-icon k-i-delete"
+                  (click)="onDeleteFile(dataItem)"></span>
+          </span>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="form-assessment-adder">
+  <div class="form-assessment-adder__question-separator"></div>
+  <div class="form-assessment-adder__add-question-btn"
+       [ngClass]="{'-readonly': disabled}"
+       (click)="onAddNewAssessment()">{{ title | translator}}</div>
+</div>

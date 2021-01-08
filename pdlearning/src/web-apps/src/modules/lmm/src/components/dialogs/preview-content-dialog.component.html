@@ -1,0 +1,52 @@
+<div class="column flex web-preview preview-content-container">
+  <button class="k-button-close-preview"
+          (click)="closePreview()"><span class="k-icon k-i-arrow-chevron-left"></span><span>Close Preview</span></button>
+  <kendo-dropdownlist class="preview-content__preview-mode-select"
+                      [data]="previewOptions"
+                      [(ngModel)]="previewMode">
+  </kendo-dropdownlist>
+  <div class="preview-content__content">
+    <ng-container *ngIf="playerType === 'Lecture'">
+      <ng-container *ngIf="lectureVm.isQuiz()">
+        <device-view-simulation [previewMode]="previewMode">
+          <ng-template webTemplate="">
+            <main-quiz-player-page [formQuestionsData]="FormQuestionModel.removeUnsupportedQuestionTypes(formQuestionsData)"
+                                   [isPreviewMode]="true">
+            </main-quiz-player-page>
+          </ng-template>
+        </device-view-simulation>
+      </ng-container>
+      <ng-container *ngIf="lectureVm.isDigitalContent()">
+        <device-view-simulation [previewMode]="previewMode">
+          <ng-template webTemplate="">
+            <digital-content-player [resourceId]="resourceId"
+                                    displayMode="preview"></digital-content-player>
+          </ng-template>
+        </device-view-simulation>
+      </ng-container>
+      <ng-container *ngIf="lectureVm.isInline()">
+        <device-view-simulation [previewMode]="previewMode">
+          <ng-template webTemplate="">
+            <div externalLinkGuard
+                 [innerHTML]="lectureVm.value | safeHtml:'html'">
+            </div>
+          </ng-template>
+        </device-view-simulation>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="playerType === 'Assignment'">
+      <device-view-simulation [previewMode]="previewMode">
+        <ng-template webTemplate="">
+          <main-assignment-player [assignmentData]="assignmentData"
+                                  [isMobileMode]="false"
+                                  [forPreview]="true"></main-assignment-player>
+        </ng-template>
+        <ng-template mobileTemplate="">
+          <main-assignment-player [assignmentData]="assignmentData"
+                                  [isMobileMode]="true"
+                                  [forPreview]="true"></main-assignment-player>
+        </ng-template>
+      </device-view-simulation>
+    </ng-container>
+  </div>
+</div>

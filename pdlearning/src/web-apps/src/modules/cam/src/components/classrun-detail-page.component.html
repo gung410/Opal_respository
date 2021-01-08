@@ -1,0 +1,239 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #classRunDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <p class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </p>
+            <p class="toolbar__left-group__title-group__sub-title"
+               *ngIf="subTitle"> {{ subTitle }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="classRunVm.status ? classRunVm.status : ClassRunStatus.Unpublished"
+                              [mapping]="classRunStatusColorMap"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+    <div class="management-toolbar -margin-top"
+         [hidden]="!canFilterRegistration">
+      <div class="management-toolbar__left-container">
+        <div class="search-field">
+          <search-input [(ngModel)]="searchText"
+                        [placeholder]="'Search for learner' | translator"
+                        (search)="onSubmitSearch()"></search-input>
+        </div>
+        <data-filter [component]="filterPopupContent"
+                     [applyFn]="onApplyFilter.bind(this)"></data-filter>
+      </div>
+    </div>
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup || hasParticipantActionPermission()">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+      <div class="management-toolbar__right-container">
+        <button kendoButton
+                *ngIf="hasParticipantActionPermission()"
+                [icon]="'bell'"
+                [primary]="true"
+                (click)="sendPlacementLetter()"
+                [disabled]="isDisableSendPlacementBtn()">
+          {{ 'Send Placement Letter' | translator }}
+        </button>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    stickyTabHeaderElement
+                    #classRunDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="classRunDetailStickyToolbarElement.element"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.ClassRunInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <classrun-detail [form]="form"
+                           [classRun]="classRunVm"
+                           [mode]="detailPageInput.data.mode"
+                           [searchType]="detailPageInput.data.searchType"
+                           [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"
+                           [stickySpacing]="stickySpacing"
+                           [isRescheduleMode]="isRescheduleMode"></classrun-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewSessions() }"
+                          [selected]="selectedTab === CAMTabConfiguration.SessionsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Sessions' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <session-management-page *ngIf="canViewSessions()"
+                                   [course]="course"
+                                   [classRun]="classRunVm.data"
+                                   [classRunSearchType]="detailPageInput.data.searchType"
+                                   [classRunDetailPageInput]="detailPageInput"
+                                   [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"
+                                   [isRescheduleMode]="isRescheduleMode"></session-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewRegistration() }"
+                          [selected]="selectedTab === CAMTabConfiguration.RegistrationsTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewRegistration()"
+                                [checkHasDataFn]="checkSearchRegistrationHasDataFnCreator(SearchRegistrationsType.ClassRunRegistration)">
+            {{ 'Registrations' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid *ngIf="canViewRegistration()"
+                                    [searchType]="SearchRegistrationsType.ClassRunRegistration"
+                                    [filter]="filter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    (selectedContextMenu)="selectedContextMenuRegistrationList($event)"
+                                    (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.RegistrationsTab, SearchLearnerProfileType.ClassRunRegistration)"
+                                    [(selectedItems)]="registrationSelectedItems"
+                                    [displayColumns]="displayColumnsRegistrations"
+                                    [indexActionColumns]="[0, 11]"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement"
+                                    [mergeHeader]="true">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewParticipant() }"
+                          [selected]="selectedTab === CAMTabConfiguration.ParticipantsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Participants' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid *ngIf="canViewParticipant()"
+                                    [searchType]="SearchRegistrationsType.Participant"
+                                    [filter]="filter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    (selectedContextMenu)="selectedContextMenuParticipantList($event)"
+                                    [displayColumns]="displayColumnsParticipants"
+                                    [(selectedItems)]="participantSelectedItems"
+                                    (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.ParticipantsTab, SearchLearnerProfileType.Participant)"
+                                    [indexActionColumns]="[0, 10]"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewWaitlist() }"
+                          [selected]="selectedTab === CAMTabConfiguration.WaitlistTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Waitlist' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid *ngIf="canViewWaitlist()"
+                                    [searchType]="SearchRegistrationsType.Waitlist"
+                                    [filter]="filter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    (selectedContextMenu)="selectedContextMenuWaitlistList($event)"
+                                    (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.WaitlistTab, SearchLearnerProfileType.Waitlist)"
+                                    [(selectedItems)]="waitlistSelectedItems"
+                                    [displayColumns]="displayColumnsWaitlist"
+                                    [indexActionColumns]="[0, 12]"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewWithdrawalRequest() }"
+                          [selected]="selectedTab === CAMTabConfiguration.WithdrawalRequestsTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewWithdrawalRequest()"
+                                [checkHasDataFn]="checkSearchRegistrationHasDataFnCreator(SearchRegistrationsType.Withdrawal)">
+            {{ 'Withdrawal Requests' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid *ngIf="canViewWithdrawalRequest()"
+                                    [searchType]="SearchRegistrationsType.Withdrawal"
+                                    [displayColumns]="displayColumnsWithdrawal"
+                                    [filter]="filter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    (selectedContextMenu)="selectedContextMenuWithdrawList($event)"
+                                    (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.WithdrawalRequestsTab, SearchLearnerProfileType.Withdrawal)"
+                                    [(selectedItems)]="withdrawalRequestSelectedItems"
+                                    [indexActionColumns]="[0, 11]"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewChangeClassRunRequest() }"
+                          [selected]="selectedTab === CAMTabConfiguration.ChangeClassRunRequestsTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewChangeClassRunRequest()"
+                                [checkHasDataFn]="checkSearchRegistrationHasDataFnCreator(SearchRegistrationsType.ChangeClassRun)">
+            {{ 'Change Class Requests' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <div class="grid-container">
+            <list-registration-grid *ngIf="canViewChangeClassRunRequest()"
+                                    [searchType]="SearchRegistrationsType.ChangeClassRun"
+                                    [displayColumns]="displayColumnsChangeClassRun"
+                                    [filter]="filter"
+                                    [courseId]="detailPageInput.data.courseId"
+                                    [classRunId]="detailPageInput.data.id"
+                                    (selectedContextMenu)="selectedContextMenuChangeClassRunList($event)"
+                                    (viewRegistration)="onViewRegistration($event, CAMTabConfiguration.ChangeClassRunRequestsTab, SearchLearnerProfileType.ChangeClassRun)"
+                                    [(selectedItems)]="changeClassRequestSelectedItems"
+                                    [indexActionColumns]="[0, 7]"
+                                    [stickyDependElement]="classRunDetailStickyTabHeaderElement.headerElement">
+            </list-registration-grid>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewComment() }"
+                          [selected]="selectedTab === CAMTabConfiguration.ClassRunCommentTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewComment()"
+                                [checkHasDataFn]="checkCommentsHasDataFnCreator()">
+            {{ 'Comments' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <comment-tab *ngIf="canViewComment()"
+                       [input]="commentTabInput">
+          </comment-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="learning-card"
+     [ngClass]="{ 'display-only': displayOnlyMode}">
+  <div>
+    <div class="info-container"
+         [ngClass]="{'disabled': learningCardItem.isExpiredCourse || learningCardItem.isArchivedCourse }"
+         (click)="onLearningCardClick()">
+      <!-- TODO: Need to improve the status tag in the card item -->
+      <span class="card-status"
+            *ngIf="canShowStatus"
+            [ngClass]="{
+           'expired': learningCardItem.isExpiredCourse || learningCardItem.isArchivedCourse,
+           'in-progress': learningCardItem.showInProgress,
+           'completed': learningCardItem.showCompleted,
+           'failed': learningCardItem.showIncomplete }">
+        {{ learningCardItem.learningStatusText | translator}}
+      </span>
+      <div class="course-img">
+        <img src="{{ learningCardItem.imageUrl }}"
+             *ngIf="learningCardItem.imageUrl">
+      </div>
+      <div class="card-progress"
+           *ngIf="canShowProgressBar">
+        <div class="progress-inner"
+             [style.width]="learningCardItem.progress + '%'"></div>
+      </div>
+      <div class="card-info">
+        <span class="general-info">
+          <div class="rating-stars-container">
+            <ng-container *ngIf="learningCardItem.isMicrolearning">
+              <i class="icon tiny {{ learningCardItem.rating < 1 ? 'star-outline' : 'star' }}"></i>
+              <i class="icon tiny {{ learningCardItem.rating >= 2 ? 'star' : 'star-outline' }}"></i>
+              <i class="icon tiny {{ learningCardItem.rating === 3 ? 'star' : 'star-outline' }}"></i>
+              <div>{{ learningCardItem.rating }}&nbsp;</div>
+            </ng-container>
+            <span class="reviews-text">
+              ({{ learningCardItem.reviewsCount }}
+              {{(learningCardItem.reviewsCount > 1 ? "reviews" : "review") | translator}})
+            </span>
+          </div>
+          <div class="duration-container"
+               *ngIf="learningCardItem.duration">
+            <i class="icon tiny clock"></i>
+            <span class="truncate-text"
+                  [title]="learningCardItem.duration | durationInHAndM">
+              {{ learningCardItem.duration | durationInHAndM }}&nbsp;
+            </span>
+          </div>
+          <div class="upcoming-container"
+               *ngIf="showUpcomingSession && learningCardItem.upcomingSessionDate">
+            <i class="icon tiny upcoming"></i>
+            <span class="truncate-text">
+              {{ learningCardItem.upcomingSessionDate | date: 'dd.MM.yyyy'}}
+            </span>
+          </div>
+        </span>
+        <div class="card-title"
+             [title]="learningCardItem.title">{{ learningCardItem.title }}</div>
+        <div class="tags two-line-truncate-text"
+             *ngIf="(courseMetadata$ | async) != null">
+          <ng-container *ngFor="let tagId of learningCardItem.tagIds">
+            <span class="tag-item"
+                  *ngIf="getTagName((courseMetadata$ | async), tagId)">
+              {{ getTagName((courseMetadata$ | async), tagId) }}</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-course"
+       *ngIf="showBookmark"
+       (click)="onBookmarkChange()">
+    <i class="icon {{ learningCardItem.isBookmark ? 'save' : 'save-outline' }}"></i>
+  </div>
+</div>

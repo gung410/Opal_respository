@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.MyLearning.MyLearningBookmarkGroup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackLayout Padding="10" Spacing="10">
+        <Frame
+            BackgroundColor="White"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            IsEnabled="{Binding IsEnableCouresBookmarkGroup}">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+                    CommandParameter="Course"
+                    NumberOfTapsRequired="1"
+                    Tapped="TapGestureRecognizer_Tapped" />
+            </Frame.GestureRecognizers>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="15"
+                    Source="bookmark.svg"
+                    WidthRequest="15" />
+                <Label Text="{Binding CourseBookmarkCount}" VerticalOptions="CenterAndExpand" />
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="7"
+                    HorizontalOptions="EndAndExpand"
+                    Source="arrow_right.svg"
+                    WidthRequest="7" />
+            </StackLayout>
+        </Frame>
+
+        <Frame
+            BackgroundColor="White"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            IsEnabled="{Binding IsEnableMicrolearningBookmarkGroup}">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+                    CommandParameter="Microlearning"
+                    NumberOfTapsRequired="1"
+                    Tapped="TapGestureRecognizer_Tapped" />
+            </Frame.GestureRecognizers>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="15"
+                    Source="bookmark.svg"
+                    WidthRequest="15" />
+                <Label Text="{Binding MicroLearningBookmarkCount}" VerticalOptions="CenterAndExpand" />
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="7"
+                    HorizontalOptions="EndAndExpand"
+                    Source="arrow_right.svg"
+                    WidthRequest="7" />
+            </StackLayout>
+        </Frame>
+
+        <Frame
+            BackgroundColor="White"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            IsEnabled="{Binding IsEnablDigitalContentBookmarkGroup}">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+                    CommandParameter="DigitalContent"
+                    NumberOfTapsRequired="1"
+                    Tapped="TapGestureRecognizer_Tapped" />
+            </Frame.GestureRecognizers>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="15"
+                    Source="bookmark.svg"
+                    WidthRequest="15" />
+                <Label Text="{Binding DigitalContentBookmarkCount}" VerticalOptions="CenterAndExpand" />
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="7"
+                    HorizontalOptions="EndAndExpand"
+                    Source="arrow_right.svg"
+                    WidthRequest="7" />
+            </StackLayout>
+        </Frame>
+
+        <Frame
+            BackgroundColor="White"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            IsEnabled="{Binding IsEnableLearningPathsBookmarkGroup}">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+                    CommandParameter="LearningPath"
+                    NumberOfTapsRequired="1"
+                    Tapped="TapGestureRecognizer_Tapped" />
+            </Frame.GestureRecognizers>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="15"
+                    Source="bookmark.svg"
+                    WidthRequest="15" />
+                <Label Text="{Binding LearningPathBookmarkCount}" VerticalOptions="CenterAndExpand" />
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="7"
+                    HorizontalOptions="EndAndExpand"
+                    Source="arrow_right.svg"
+                    WidthRequest="7" />
+            </StackLayout>
+        </Frame>
+
+        <Frame
+            BackgroundColor="White"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            IsEnabled="{Binding IsEnableCommunityBookmarkGroup}">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+                    CommandParameter="Community"
+                    NumberOfTapsRequired="1"
+                    Tapped="TapGestureRecognizer_Tapped" />
+            </Frame.GestureRecognizers>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="15"
+                    Source="bookmark.svg"
+                    WidthRequest="15" />
+                <Label Text="{Binding CommunityBookmarkCount}" VerticalOptions="CenterAndExpand" />
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="7"
+                    HorizontalOptions="EndAndExpand"
+                    Source="arrow_right.svg"
+                    WidthRequest="7" />
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentView>

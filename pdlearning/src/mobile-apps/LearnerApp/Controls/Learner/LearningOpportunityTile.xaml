@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<controls:LearningOpportunityView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityTile"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.Learner"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:learner="clr-namespace:LearnerApp.Controls"
+    x:Name="this">
+
+    <ContentView.Content>
+        <Frame
+            Padding="10"
+            BorderColor="{StaticResource EntryLineColor}"
+            CornerRadius="6"
+            HasShadow="False"
+            VerticalOptions="Start">
+            <StackLayout>
+                <Label IsVisible="False" Text="{Binding Source={x:Reference this}, Path=CourseId}" />
+                <Label IsVisible="False" Text="{Binding Source={x:Reference this}, Path=ViewId}" />
+                <Label IsVisible="False" Text="{Binding Source={x:Reference this}, Path=Status}" />
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <StackLayout HorizontalOptions="Start" WidthRequest="150">
+                        <AbsoluteLayout>
+                            <StackLayout Padding="0" AbsoluteLayout.LayoutBounds="0, 10, 140, 60">
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="6"
+                                    IsClippedToBounds="True">
+                                    <ffimagesvg:SvgCachedImage
+                                        Aspect="AspectFill"
+                                        BackgroundColor="{StaticResource EntryLineColor}"
+                                        HeightRequest="60"
+                                        Source="{Binding Source={x:Reference this}, Path=ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='Tile'}" />
+                                </Frame>
+                            </StackLayout>
+                            <StackLayout AbsoluteLayout.LayoutBounds="0.2, 0.05, 100, 20" AbsoluteLayout.LayoutFlags="XProportional, YProportional">
+                                <Frame
+                                    Padding="6"
+                                    BackgroundColor="{Binding Source={x:Reference this}, Path=Status, Converter={StaticResource LabelColorConverter}}"
+                                    CornerRadius="4"
+                                    HasShadow="False">
+                                    <Label
+                                        FontFamily="{StaticResource RobotoBold}"
+                                        FontSize="10"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding Source={x:Reference this}, Path=Status, Converter={StaticResource LabelStatusConverter}}"
+                                        TextColor="{StaticResource MainBodyTextColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </Frame>
+                            </StackLayout>
+                        </AbsoluteLayout>
+                    </StackLayout>
+                    <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
+                        <Label
+                            FontFamily="{StaticResource RobotoRegular}"
+                            FontSize="{StaticResource BaseFontSize}"
+                            Text="{Binding Source={x:Reference this}, Path=CourseName}"
+                            TextColor="{StaticResource MainBodyTextColor}" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="End" WidthRequest="15">
+                        <ffimagesvg:SvgCachedImage Source="{Binding Source={x:Reference this}, Path=HasBookmark, Converter={StaticResource BookmarkConverter}}" WidthRequest="15" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnBookmarkTapped" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout HeightRequest="20" Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <learner:RatingView RatingNumber="{Binding Source={x:Reference this}, Path=RatingNumber, Converter={StaticResource RatingConverter}}" />
+                        <Label FontSize="{StaticResource LittleSize}" Text="{Binding Source={x:Reference this}, Path=RatingNumber, Converter={StaticResource RatingConverter}}" />
+                    </StackLayout>
+
+                    <StackLayout VerticalOptions="CenterAndExpand">
+                        <Label
+                            FontSize="{StaticResource LittleSize}"
+                            Text="{Binding Source={x:Reference this}, Path=ReviewsCount, Converter={StaticResource ReviewsCountConverter}}"
+                            TextColor="{StaticResource SecondaryTextColor}" />
+                    </StackLayout>
+
+                    <StackLayout
+                        IsVisible="{Binding DurationMinutes, Converter={StaticResource DurationVisibleConverter}}"
+                        Orientation="Horizontal"
+                        Spacing="4"
+                        VerticalOptions="CenterAndExpand">
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="{StaticResource LittleSize}"
+                            Source="clock.svg"
+                            WidthRequest="{StaticResource LittleSize}" />
+                        <Label FontSize="{StaticResource LittleSize}" Text="{Binding DurationMinutes, Converter={StaticResource DurationConverter}}" />
+                    </StackLayout>
+
+                </StackLayout>
+                <ProgressBar Progress="{Binding Source={x:Reference this}, Path=ProgressMeasure, Converter={StaticResource ProgressBarConverter}}" ProgressColor="{StaticResource TabSelected}" />
+                <learner:TagView Padding="0" Items="{Binding Source={x:Reference this}, Path=Tags}" />
+            </StackLayout>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemTapped" />
+            </Frame.GestureRecognizers>
+        </Frame>
+    </ContentView.Content>
+</controls:LearningOpportunityView>

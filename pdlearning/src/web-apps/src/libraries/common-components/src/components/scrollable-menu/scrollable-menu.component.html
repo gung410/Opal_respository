@@ -1,0 +1,12 @@
+<div class="scrollable-menu">
+  <ul class="scrollable-menu__tabs">
+    <li class="scrollable-menu__title">{{ title }}</li>
+    <li class="scrollable-menu__tab"
+        *ngFor="let tab of tabs; let i = index"
+        [ngClass]="{'-active' : tab.id === activeTabId}"
+        [hidden]="isHidden(tab)"
+        (click)="onSelectTab(tab)">
+      {{ tab.title }}
+    </li>
+  </ul>
+</div>

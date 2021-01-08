@@ -1,0 +1,15 @@
+<div class="assessment-scale">
+  <div class="assessment-scale__radio-container">
+    <input class="k-radio"
+           type="checkbox"
+           (click)="onCheckboxClicked($event)"
+           [checked]="checked"
+           [disabled]="viewMode">
+  </div>
+  <div class="assessment-scale__content-container">
+    <span class="assessment-scale__title">{{ scale.name }}
+      <span class="assessment-scale__value">( {{scale.value}} )</span>
+    </span>
+    <span class="assessment-scale__content">{{ criteriaScale.content }}</span>
+  </div>
+</div>

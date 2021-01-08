@@ -1,0 +1,102 @@
+.video-annotation {
+  display: flex;
+  background: white;
+  color: $color-blue-dard;
+  font-size: 1rem;
+  max-height: 100vh;
+
+  @mixin video_annotation__side-section {
+    margin: 24px 0;
+    width: 20%;
+    min-width: 300px;
+  }
+
+  &__left {
+    @include video_annotation__side-section;
+    margin-left: 0;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    margin: 24px;
+    flex-grow: 1;
+    width: 60%;
+  }
+
+  &__right {
+    @include video_annotation__side-section;
+    margin-right: 8px;
+    background: white;
+  }
+
+  &__chapters {
+  }
+
+  &__player {
+  }
+
+  &__chapter-detail {
+    margin-top: 24px;
+    overflow-y: auto;
+  }
+
+  &__comments {
+    height: 100%;
+  }
+
+  &__introduction {
+    @extend .video-annotation__title;
+    margin-top: 16px;
+  }
+
+  &__title {
+    font-weight: 500;
+    text-transform: uppercase;
+    color: $color-blue-light;
+    margin-bottom: 16px;
+  }
+
+  &__sub-title {
+    font-weight: $font-weight-medium;
+  }
+}
+
+@mixin mobile-layout {
+  flex-direction: column;
+  max-height: unset;
+
+  &__left {
+    order: 1;
+    width: unset;
+    margin: 16px 16px 0;
+  }
+
+  &__center {
+    order: 0;
+    width: unset;
+    margin: 16px 16px 0;
+  }
+
+  &__right {
+    order: 2;
+    width: unset;
+    margin: 16px 16px 0;
+  }
+
+  .video-chapter-list {
+    padding: 0;
+  }
+}
+
+.video-annotation {
+  $mobile-size: 'lt-md';
+
+  @include flex-layout-media($mobile-size) {
+    @include mobile-layout;
+  }
+}
+
+mobile-previewer .video-annotation {
+  @include mobile-layout;
+}

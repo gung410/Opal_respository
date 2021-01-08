@@ -1,0 +1,88 @@
+access-right-tab {
+  display: flex;
+  flex-direction: column;
+
+  .access-right-tab {
+    &__header {
+      padding: 25px 0;
+    }
+
+    &__header-right {
+      text-align: right;
+    }
+  }
+
+  .access-right-grid {
+    &.opal-grid {
+      .k-grid-header .k-header {
+        border-top: 1px solid $color-gainsboro;
+
+        &:first-child {
+          border-top-left-radius: $main-border-radius;
+          border-bottom-left-radius: $main-border-radius;
+        }
+
+        &:last-child {
+          border-top-right-radius: $main-border-radius;
+          border-bottom-right-radius: $main-border-radius;
+        }
+      }
+    }
+
+    tr {
+      .k-i-close {
+        display: none;
+      }
+
+      &:hover {
+        .k-i-close {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .k-grid-content {
+    min-height: 40vh;
+  }
+}
+
+.add-collaborator-dialog {
+  display: flex;
+  flex-direction: column;
+
+  .dialog-header {
+    &__title {
+      font-size: $font-h3;
+      color: $color-blue-dard;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+  }
+
+  .dialog-content {
+    min-height: 28vh;
+    overflow: hidden;
+
+    .form-title {
+      margin-bottom: 10px;
+      font-size: $font-size-normal;
+    }
+
+    .loading-users-img {
+      width: 30px;
+    }
+
+    .loading-container {
+      text-align: center;
+    }
+
+    .form-controls-group {
+
+      .loading-container,
+      opal-select {
+        width: 640px;
+      }
+    }
+  }
+}

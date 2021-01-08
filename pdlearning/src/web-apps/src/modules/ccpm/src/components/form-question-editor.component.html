@@ -1,0 +1,463 @@
+<div class="form-question-editor__form"
+     [formGroup]="form">
+  <div class="form-question-editor__title-container">
+    <div class="form-question-editor__index-in-form"
+         [ngClass]="{'section-question':data.minorPriority!=null}"
+         [hidden]="isHideIndexInForm()">{{indexInform}}</div>
+    <ng-container [ngSwitch]="data.questionType">
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.DropDown">
+        {{'Drop down' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.MultipleChoice">
+        {{'Checkboxes' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.SingleChoice">
+        {{'Radio buttons' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.TrueFalse">
+        {{'True / False' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.ShortText">
+        {{'Free Text' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.DatePicker">
+        {{'DATE PICKER: ONE DATE' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.DateRangePicker">
+        {{'DATE PICKER: DATE RANGE' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.Smatrix">
+        {{'Smatrix' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.Section">
+        {{'QUESTION SECTION' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.Note">
+        {{'Note' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.Qset">
+        {{'Qset' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.FillInTheBlanks">
+        {{'Fill in The Blanks' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchCase="questionType.FreeResponse">
+        {{'Free Response' | translator}}
+      </div>
+      <div class="form-question-editor__question-type"
+           *ngSwitchDefault>
+        {{'Unknown' | translator}}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="canEditQuestion()">
+      <img class="form-question-editor__context-menu icon action"
+           src="assets/images/icons/more.svg"
+           [ngClass]="{'-visible': selected}"
+           #contextMenu>
+      <kendo-contextmenu [target]="contextMenu"
+                         [alignToAnchor]="true"
+                         [anchorAlign]="defaultContextMenuAnchorAlign"
+                         [popupAlign]="defaultContextMenuPopupAlign"
+                         showOn="click"
+                         (select)="onContextMenuItemSelect($event.item.data)">
+        <kendo-menu-item [text]="'Move up' | globalTranslator"
+                         [data]="{ id: 'MoveUp' }"
+                         [disabled]="isDisableMoveUp"></kendo-menu-item>
+        <kendo-menu-item [text]="'Move down' | globalTranslator"
+                         [data]="{ id: 'MoveDown' }"
+                         [disabled]="isDisableMoveDown"></kendo-menu-item>
+        <kendo-menu-item [text]="'Move to bank' | globalTranslator"
+                         [data]="{ id: 'MoveToBank' }"></kendo-menu-item>
+        <kendo-menu-item [text]="'Delete' | globalTranslator"
+                         [data]="{ id: 'Delete' }"
+                         [cssClass]="'form-question-editor__delete-context-menu-item'"
+                         [disabled]="isDisabledQuestionDeleteBtn()"></kendo-menu-item>
+      </kendo-contextmenu>
+    </ng-container>
+  </div>
+  <question-title-editor *ngIf="canShowQuestionTitle()"
+                         formControlName="title"
+                         errorHightLight
+                         kendoErrorTooltip
+                         position="bottom"
+                         autofocus
+                         [isEditable]="canEditQuestion() && data.questionType !== questionType.Smatrix"
+                         [isRequired]="true"
+                         [placeholder]="'Input question title'"
+                         [enableDragAndDropFile]="true"
+                         [html]="originalQuestionTitle"
+                         (htmlChange)="onQuestionTitleChanged($event)"
+                         [brokenLinkReportType]="brokenLinkReportTypeForm"></question-title-editor>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.Qset">
+    <div [innerHtml]="data.questionTitle"></div>
+  </div>
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.Section">
+    <div [innerHtml]="data.questionTitle"></div>
+    <div [innerHtml]="data.questionOptions[0] ? data.questionOptions[0].value : ''"></div>
+  </div>
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.Note">
+    <div [innerHtml]="data.questionTitle"></div>
+  </div>
+
+  <div class="form-question-editor__question-title"
+       *ngIf="data.questionType === questionType.FillInTheBlanks">
+    <ng-container *ngFor="let questionOption of data.questionOptions; let questionOptionindex = index">
+      <ng-container *ngIf="questionOption.type === questionOptionType.Text">
+        <span class="form-question-editor__question-option-label fill-in-the-blank-question__text-label"
+              #textLabel>
+          {{ questionOption.value}}
+        </span>
+        <question-text-option-editor *ngIf="canEditQuestion()"
+                                     [target]="textLabel"
+                                     [value]="questionOption.value"
+                                     (submit)="onUpdateOrRemoveTextOption($event, questionOptionindex)"></question-text-option-editor>
+      </ng-container>
+      <ng-container *ngIf="questionOption.type === questionOptionType.Blank">
+        <span class="form-question-editor__question-option-label fill-in-the-blank-question__blank-label"
+              #blankLabel>
+          <span>{{ questionOption.value}}</span>
+        </span>
+        <question-blank-option-editor *ngIf="canEditQuestion()"
+                                      [target]="blankLabel"
+                                      [value]="questionOption.value"
+                                      (submit)="onUpdateOrRemoveBlankOption($event, questionOptionindex)"></question-blank-option-editor>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.ShortText">
+    <div class="form-question-editor__body-question-container">
+      <div class="form-question-editor__correct-answer-textbox-container"
+           *ngIf="formType === formTypeEnum.Quiz"
+           [ngClass]="{'-has-value': !data.questionCorrectAnswer && formType === formTypeEnum.Quiz}">
+        <input class="form-question-editor__correct-answer-textbox"
+               inlineDisplayTextbox
+               formControlName="shortTextCorrectAnswer"
+               kendoTextBox
+               autoTrim
+               kendoErrorTooltip
+               position="bottom"
+               autofocus
+               placeholder="{{'Input correct answer here' | translator}}"
+               [ngModel]="data.questionCorrectAnswer"
+               [readOnly]="!canEditQuestion()"
+               (keyup)="onShortTextQuestionCorrectAnswerChanged($event.target.value)">
+      </div>
+    </div>
+  </div>
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.DatePicker">
+    <div class="form-question-editor__body-question-container date-picker">
+      <div class="form-question-editor__correct-answer-textbox-container"
+           [ngClass]="{'-has-value': !data.questionCorrectAnswer && formType === formTypeEnum.Quiz}">
+        <kendo-datepicker class="form-control"
+                          formControlName="datePickerCorrectAnswer"
+                          kendoErrorTooltip
+                          position="top"
+                          [format]="'dd/MM/yyyy'"
+                          [ngModel]="data.questionCorrectAnswer"
+                          [placeholder]="data.questionCorrectAnswer
+                          ? formatToKendoDate(data.questionCorrectAnswer)
+                          : 'Select the correct date (day/month/year)' | globalTranslator"
+                          [disabled]="formType !== formTypeEnum.Quiz"
+                          [readonly]="mode === FormDetailMode.View"
+                          (valueChange)="onDatePickerQuestionCorrectAnswerChanged($event)"
+                          #datePickerElement></kendo-datepicker>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.DateRangePicker">
+    <div class="form-question-editor__body-question-container date-range-picker">
+      <div class="form-question-editor__correct-answer-textbox-container"
+           [ngClass]="{'-has-value': !data.questionCorrectAnswer && formType === formTypeEnum.Quiz}">
+        <kendo-datepicker class="form-control"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="data.questionCorrectAnswer
+                          && data.questionCorrectAnswer[0]
+                          ? formatToKendoDate(data.questionCorrectAnswer[0])
+                          : 'Select the from date (day/month/year)' | globalTranslator"
+                          [disabled]="formType !== formTypeEnum.Quiz"
+                          [readonly]="mode === FormDetailMode.View"
+                          (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, true)"
+                          #datePickerFromElement></kendo-datepicker>
+        <kendo-datepicker class="form-control"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="data.questionCorrectAnswer
+                          && data.questionCorrectAnswer[1]
+                          ? formatToKendoDate(data.questionCorrectAnswer[1])
+                          : 'Select the end date (day/month/year)' | globalTranslator"
+                          [disabled]="formType !== formTypeEnum.Quiz"
+                          [readonly]="mode === FormDetailMode.View"
+                          (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, false)"
+                          #datePickerEndElement></kendo-datepicker>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType === questionType.TrueFalse">
+    <div class="form-question-editor__body-question-container">
+      <form-question-option-editor type="radio"
+                                   [formType]="formType"
+                                   [disableSetCorrectAnswer]="canEditQuestion() ? disableSetCorrectAnswer : true"
+                                   [checked]="data.questionOptions[0].value == data.questionCorrectAnswer"
+                                   [value]="getTrueFalseQuestionOptionLabel(data.questionOptions[0].value) | translator"
+                                   [readonly]="true"
+                                   [noRemove]="true"
+                                   [allowConfigureBranching]="formType === formTypeEnum.Survey && canEditQuestion() && data.minorPriority==null"
+                                   [allowConfigureFeedback]="formType === formTypeEnum.Quiz && canEditQuestion()"
+                                   [isViewMode]="isViewMode"
+                                   [allowConfigureImage]="false"
+                                   [questionType]="data.questionType"
+                                   [visibleOptionActions]="hovering"
+                                   (checkedChange)="onTrueFalseQuestionOptionCheckedChange($event, data.questionOptions[0].value)"
+                                   [feedback]="data.feedbackCorrectAnswer"
+                                   [nextQuestionId]="data.questionOptions[0].nextQuestionId"
+                                   [branchingOptions]="getBranchingOptions()"
+                                   (nextQuestionOptionChange)="onNextQuestionOptionChange($event, 0)"
+                                   (feedbackChange)="onFeedbackCorrectChange($event)">
+      </form-question-option-editor>
+      <form-question-option-editor type="radio"
+                                   [formType]="formType"
+                                   [disableSetCorrectAnswer]="canEditQuestion() ? disableSetCorrectAnswer : true"
+                                   [checked]="data.questionOptions[1].value == data.questionCorrectAnswer"
+                                   [value]="getTrueFalseQuestionOptionLabel(data.questionOptions[1].value) | translator"
+                                   [readonly]="true"
+                                   [noRemove]="true"
+                                   [allowConfigureImage]="false"
+                                   [allowConfigureBranching]="formType === formTypeEnum.Survey && canEditQuestion() && data.minorPriority==null"
+                                   [allowConfigureFeedback]="formType === formTypeEnum.Quiz && canEditQuestion()"
+                                   [isViewMode]="isViewMode"
+                                   [questionType]="data.questionType"
+                                   [visibleOptionActions]="hovering"
+                                   (checkedChange)="onTrueFalseQuestionOptionCheckedChange($event, data.questionOptions[1].value)"
+                                   [feedback]="data.feedbackWrongAnswer"
+                                   (nextQuestionOptionChange)="onNextQuestionOptionChange($event, 1)"
+                                   [branchingOptions]="getBranchingOptions()"
+                                   [nextQuestionId]="data.questionOptions[1].nextQuestionId"
+                                   (feedbackChange)="onFeedbackWrongChange($event)">
+      </form-question-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.SingleChoice">
+    <div class="form-question-editor__body-question-container">
+      <form-question-option-editor type="radio"
+                                   [disableSetCorrectAnswer]="canEditQuestion() ? disableSetCorrectAnswer : true"
+                                   *ngFor="let questionOption of data.questionOptions; let i = index; trackBy: questionOptionTrackByFn"
+                                   [checked]="questionOption.value == data.questionCorrectAnswer"
+                                   [value]="questionOption.value"
+                                   [questionOption]="questionOption"
+                                   [visibleOptionActions]="hovering"
+                                   (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                   [formType]="formType"
+                                   [readonly]="!canEditQuestion()"
+                                   [noRemove]="!canEditQuestion()"
+                                   [allowConfigureBranching]="formType === formTypeEnum.Survey && canEditQuestion() && data.minorPriority==null"
+                                   [allowConfigureFeedback]="formType === formTypeEnum.Quiz && canEditQuestion()"
+                                   [isViewMode]="isViewMode"
+                                   [allowConfigureImage]="canEditQuestion()"
+                                   (checkedChange)="onSingleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                   (remove)="onRemoveOptionClicked($event, i)"
+                                   (optionMediaChange)="onOptionMediaChange($event,i)"
+                                   [feedback]="questionOption.feedback"
+                                   [branchingOptions]="getBranchingOptions()"
+                                   (nextQuestionOptionChange)="onNextQuestionOptionChange($event, i)"
+                                   [nextQuestionId]="questionOption.nextQuestionId"
+                                   (feedbackChange)="onOptionFeedbackChange($event, i)"
+                                   (updateStateWithoutValue)="onUpdateStateWithoutValue($event, i)"
+                                   (optionMediaChangeWithoutValue)="onOptionMediaChangeWithoutValue($event, i)">
+      </form-question-option-editor>
+      <form-question-option-editor class="-addNewOption"
+                                   type="radio"
+                                   *ngIf="canEditQuestion()"
+                                   [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                   #addNewOptionEditor
+                                   [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                   [visibleOptionActions]="false"
+                                   [notRequired]="true"
+                                   [valueInputPlaceholder]="'Add new option' | translator"
+                                   [formType]="formType"
+                                   (valueInputFocusOut)="processAddNewQuestionOption($event)"
+                                   (optionMediaChange)="optionMediaInsertEvent($event)"></form-question-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.Smatrix">
+    <div class="form-question-editor__body-question-container">
+      <form-question-option-editor type="radio"
+                                   [disableSetCorrectAnswer]="true"
+                                   *ngFor="let questionOption of data.questionOptions; let i = index; trackBy: questionOptionTrackByFn"
+                                   [checked]="questionOption.value == data.questionCorrectAnswer"
+                                   [value]="questionOption.value"
+                                   [visibleOptionActions]="hovering"
+                                   (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                   [formType]="formType"
+                                   [readonly]="true"
+                                   [noRemove]="true"
+                                   (checkedChange)="onSingleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                   (remove)="onRemoveOptionClicked($event, i)">
+      </form-question-option-editor>
+      <form-question-option-editor class="-addNewOption"
+                                   type="radio"
+                                   *ngIf="canEditQuestion()"
+                                   [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                   #addNewOptionEditor
+                                   [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                   [visibleOptionActions]="hovering"
+                                   [noRemove]="true"
+                                   [notRequired]="true"
+                                   [valueInputPlaceholder]="'Add new option' | translator"
+                                   [formType]="formType"
+                                   (valueInputFocusOut)="processAddNewQuestionOption($event)"></form-question-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.MultipleChoice">
+    <div class="form-question-editor__body-question-container">
+      <form-question-option-editor type="checkbox"
+                                   [disableSetCorrectAnswer]="canEditQuestion() ? disableSetCorrectAnswer : true"
+                                   *ngFor="let questionOption of data.questionOptions; let i = index; trackBy: questionOptionTrackByFn"
+                                   [checked]="isChecked(data, questionOption, i)"
+                                   [value]="questionOption.value"
+                                   [questionOption]="questionOption"
+                                   [visibleOptionActions]="hovering"
+                                   (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                   [formType]="formType"
+                                   [allowConfigureImage]="canEditQuestion()"
+                                   [allowConfigureBranching]="false"
+                                   [allowConfigureFeedback]="false"
+                                   [questionType]="data.questionType"
+                                   [readonly]="!canEditQuestion()"
+                                   [noRemove]="!canEditQuestion()"
+                                   (checkedChange)="onMultipleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                   (remove)="onRemoveOptionClicked($event, i)"
+                                   (optionMediaChange)="onOptionMediaChange($event,i)"
+                                   (removeCorrectAnswerWithEmptyValue)="onRemoveCorrectAnswerWithEmptyValue($event, questionOption.code, questionOption.value)"
+                                   (updateStateWithoutValue)="onUpdateStateWithoutValue($event, i)"
+                                   (optionMediaChangeWithoutValue)="onOptionMediaChangeWithoutValue($event, i)">
+      </form-question-option-editor>
+      <form-question-option-editor class="-addNewOption"
+                                   type="checkbox"
+                                   *ngIf="canEditQuestion()"
+                                   [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                   #addNewOptionEditor
+                                   [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                   [visibleOptionActions]="false"
+                                   [notRequired]="true"
+                                   [valueInputPlaceholder]="'Add new option' | translator"
+                                   [formType]="formType"
+                                   (valueInputFocusOut)="processAddNewQuestionOption($event)"
+                                   (optionMediaChange)="optionMediaInsertEvent($event)"></form-question-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.DropDown">
+    <div class="form-question-editor__body-question-container">
+      <form-question-option-editor type="radio"
+                                   [disableSetCorrectAnswer]="canEditQuestion() ? disableSetCorrectAnswer : true"
+                                   *ngFor="let questionOption of data.questionOptions; let i = index; trackBy: questionOptionTrackByFn"
+                                   [checked]="questionOption.value == data.questionCorrectAnswer"
+                                   [value]="questionOption.value"
+                                   [visibleOptionActions]="hovering"
+                                   [formType]="formType"
+                                   [readonly]="!canEditQuestion()"
+                                   [noRemove]="!canEditQuestion()"
+                                   [allowConfigureImage]="false"
+                                   [allowConfigureBranching]="formType === formTypeEnum.Survey && canEditQuestion() && data.minorPriority==null"
+                                   [allowConfigureFeedback]="formType === formTypeEnum.Quiz && canEditQuestion()"
+                                   [isViewMode]="isViewMode"
+                                   (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                   (checkedChange)="onSingleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                   (remove)="onRemoveOptionClicked($event, i)"
+                                   [feedback]="questionOption.feedback"
+                                   [branchingOptions]="getBranchingOptions()"
+                                   [nextQuestionId]="questionOption.nextQuestionId"
+                                   (nextQuestionOptionChange)="onNextQuestionOptionChange($event, i)"
+                                   (feedbackChange)="onOptionFeedbackChange($event, i)">
+      </form-question-option-editor>
+      <form-question-option-editor class="-addNewOption"
+                                   type="radio"
+                                   *ngIf="canEditQuestion()"
+                                   [allowConfigureImage]="false"
+                                   [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                   #addNewOptionEditor
+                                   [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                   [visibleOptionActions]="false"
+                                   [notRequired]="true"
+                                   [valueInputPlaceholder]="'Add new option' | translator"
+                                   [formType]="formType"
+                                   (valueInputFocusOut)="processAddNewQuestionOption($event)"></form-question-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__body-container"
+       *ngIf="data.questionType == questionType.FillInTheBlanks">
+    <div class="form-question-editor__body-question-container fill-in-the-blank-question__add-option-controls">
+      <div class="fill-in-the-blank-question__option-control"
+           #addTextBtn>
+        <span class="k-icon k-i-plus-outline"></span>
+        <span class="">{{ 'Add new text' | translator }}</span>
+      </div>
+      <question-text-option-editor [target]="addTextBtn"
+                                   *ngIf="canEditQuestion()"
+                                   (submit)="onAddNewTextOptionSubmit($event)"></question-text-option-editor>
+      <div class="fill-in-the-blank-question__option-control"
+           #addBlankBtn>
+        <span class="k-icon k-i-plus-outline"></span>
+        <span class="fill-in-the-blank-question__add-blank-title">{{ 'Add new blank' | translator }}</span>
+      </div>
+      <question-blank-option-editor [target]="addBlankBtn"
+                                    *ngIf="canEditQuestion()"
+                                    (submit)="onAddNewBlankOptionSubmit($event)"></question-blank-option-editor>
+    </div>
+  </div>
+
+  <div class="form-question-editor__logic-validation-errors alert -danger"
+       *ngIf="logicValidationErrors">
+    <div *ngFor="let key of logicValidationErrorKeys">{{ logicValidationErrors[key] | translator}}</div>
+  </div>
+
+</div>
+
+<div class="form-question-editor__next-question-configuration"
+     *ngIf="formType === formTypeEnum.Survey && data.minorPriority==null">
+  <div class="next-question-configuration">
+    <span class="next-question-configuration__label">After question: </span>
+    <opal-select class="form-control next-question-configuration__dropdown"
+                 [items]="getBranchingOptions()"
+                 [valueField]="'value'"
+                 [placeholder]="'Continue to next question' | translator"
+                 [autoScrollToViewOnOpen]="false"
+                 [labelField]="'text'"
+                 [readOnly]="!canEditQuestion()"
+                 (selectedValueChange)="onChooseNextQuestion($event)"
+                 [(ngModel)]="data.nextQuestionId">
+    </opal-select>
+  </div>
+
+</div>

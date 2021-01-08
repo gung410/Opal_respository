@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityUpcomingSessionCardView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    mc:Ignorable="d">
+
+    <controls:LearnerContentFrame>
+        <StackLayout Spacing="15">
+            <Label
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="{StaticResource BaseButtonFontSize}"
+                Text="UPCOMING SESSION"
+                TextColor="{StaticResource SecondaryTextColor}" />
+            <Label
+                x:Name="Title"
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="16"
+                TextColor="{StaticResource MainBodyTextColor}" />
+
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <ffimagesvg:SvgCachedImage
+                        HeightRequest="20"
+                        Source="clock.svg"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="20" />
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource BaseButtonFontSize}"
+                        Text="Start date"
+                        TextColor="{StaticResource SecondaryTextColor}" />
+                </StackLayout>
+                <Label
+                    x:Name="StartDate"
+                    Margin="26,0,0,0"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+            </StackLayout>
+
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <ffimagesvg:SvgCachedImage
+                        HeightRequest="20"
+                        Source="clock.svg"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="20" />
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource BaseButtonFontSize}"
+                        Text="End date"
+                        TextColor="{StaticResource SecondaryTextColor}" />
+                </StackLayout>
+                <Label
+                    x:Name="EndDate"
+                    Margin="26,0,0,0"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+            </StackLayout>
+
+            <BoxView
+                BackgroundColor="#D8DCE6"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand" />
+
+            <Label
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="{StaticResource BaseButtonFontSize}"
+                Text="VENUE"
+                TextColor="{StaticResource SecondaryTextColor}" />
+            <StackLayout Orientation="Horizontal">
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="20"
+                    Source="class_run_location.svg"
+                    VerticalOptions="CenterAndExpand"
+                    WidthRequest="20" />
+                <Label
+                    x:Name="Venue"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+            </StackLayout>
+
+            <Button
+                x:Name="Checkin"
+                BackgroundColor="{StaticResource MainBodyTextColor}"
+                Clicked="Checkin_OnClicked"
+                CornerRadius="6"
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="18"
+                Text="Check-in"
+                TextColor="White" />
+
+            <StackLayout x:Name="CannotParticipateBtn">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CannotParticipate_Tapped" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Unable to participate?"
+                    TextColor="{StaticResource MainBodyTextColor}"
+                    TextDecorations="Underline" />
+            </StackLayout>
+        </StackLayout>
+    </controls:LearnerContentFrame>
+</ContentView>

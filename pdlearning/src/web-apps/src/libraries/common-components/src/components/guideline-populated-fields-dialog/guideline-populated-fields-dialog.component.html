@@ -1,0 +1,37 @@
+<div class="guideline-populated-cointainer"
+     style="width: 45vw">
+  <div class="digital-content-upload-dialog__header">
+    <div class="digital-content-upload-dialog__actions d-flex">
+      <span class="digital-content-upload-dialog__btn_close k-icon k-i-close"
+            (click)="closeDialog()"></span>
+    </div>
+  </div>
+  <h3 style="margin: 10px;">{{'Auto populated field guideline' | globalTranslator}}</h3>
+  <kendo-grid class="column flex access-right-grid opal-grid"
+              #grid
+              [data]="guideLineItem">
+    <kendo-grid-column [width]="200"
+                       [title]="'Short code' | translator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <strong>{{dataItem.shortCode}}</strong>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [title]="'Description' | translator">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span>{{dataItem.description}}</span>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+  <div style="margin: 10px;">
+    <span><strong>{{'Note' | globalTranslator}}:</strong>
+      {{'In case you need to display the word which are the same as short code, please use the format' | globalTranslator}}
+      <strong>/[shortcode]/.</strong>
+    </span>
+    <br>
+    <span><strong>{{'An example' | globalTranslator}}: </strong>{{'/[name]/ which will be displayed as [name]' | globalTranslator}}</span>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">Assign</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <form [formGroup]="form">
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Select a time for the assignment' | translator }}</label>
+      <div class="form-controls-group -horizontal">
+        <label for="ch2">{{ 'From' | translator }}</label>
+        <kendo-datepicker class="form-control"
+                          #startDatePicker
+                          formControlName="startDate"
+                          [(ngModel)]="startDate"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="'day/month/year'"
+                          (focus)="startDatePicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"
+                          [min]="this.classRun.startDateTime"
+                          [max]="this.classRun.endDateTime"></kendo-datepicker>
+        <label class="assign-assignment-dialog__to-title"
+               for="ch2">{{ 'To' | translator }}</label>
+        <kendo-datepicker class="form-control"
+                          #endDatePicker
+                          formControlName="endDate"
+                          [(ngModel)]="endDate"
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="'day/month/year'"
+                          (focus)="endDatePicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"
+                          [min]="this.classRun.startDateTime"
+                          [max]="this.classRun.endDateTime"></kendo-datepicker>
+      </div>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Choose Participants:' | translator }}</label>
+      <opal-select class="form-control"
+                   formControlName="participants"
+                   [items]="participantsInfo"
+                   [(ngModel)]="selectedParticipants"
+                   [labelField]="'fullName'"
+                   [valueField]="'extId'"
+                   kendoErrorTooltip
+                   position="top"
+                   [multiple]="true"
+                   [clearable]="true">
+      </opal-select>
+    </div>
+  </form>
+</div>
+<div class="dialog-actions">
+  <button [look]="'outline'"
+          (click)="onCancel()"
+          kendoButton>{{ 'Cancel' | translator }}</button>
+  <button (click)="onAssign()"
+          [primary]="true"
+          kendoButton>{{ 'Assign' | translator }}</button>
+</div>

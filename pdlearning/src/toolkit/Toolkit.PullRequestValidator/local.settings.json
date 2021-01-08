@@ -1,0 +1,7 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=thunderst;AccountKey=OauUiGkcMPeJjaEAKoMVHfOwdpkwkD5RvCDZKEK0oD9/IzkbIMGBd1CU10tc+8Ny+NROhpVV2d4R+AHidsVyJw==;BlobEndpoint=https://thunderst.blob.core.windows.net/;TableEndpoint=https://thunderst.table.core.windows.net/;QueueEndpoint=https://thunderst.queue.core.windows.net/;FileEndpoint=https://thunderst.file.core.windows.net/",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    }
+}

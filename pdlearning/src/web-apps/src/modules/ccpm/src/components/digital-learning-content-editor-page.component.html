@@ -1,0 +1,96 @@
+<ng-container [formGroup]="form">
+  <div class="editor-toolbar"
+       #editorToolbar>
+  </div>
+  <div class="learning-content-drop-zone"
+       [ngClass]="{'-on-drop': isFileDragOver}">
+    <drop-file-uploader (onFileDropped)="onFileDropped($event)"
+                        (onTextDropped)="onTextDropped($event)"
+                        (onFileDragOver)="onFileDragOver()"
+                        (onFileDragLeave)="onFileDragLeave()"
+                        [settings]="dropFileUploaderSettings">
+    </drop-file-uploader>
+  </div>
+  <div class="edit-aria flex column">
+    <input type="hidden"
+           formControlName="editor"
+           [ngModel]="outputHtml">
+    <opal-kendo-editor class="column flex"
+                       #kendoEditor
+                       [iframe]="false"
+                       [draggable]="false"
+                       (valueChange)="onValueChanged($event)"
+                       [updateInterval]="500"
+                       [ngClass]="{'readonly':mode === DigitalContentDetailMode.View}"
+                       kendoErrorTooltip>
+      <div class="flex"
+           #kendoToolbar>
+        <kendo-toolbar class="flex"
+                       [ngStyle]="{'display': mode === DigitalContentDetailMode.View ? 'none' : 'inherit'}"
+                       [popupSettings]="{ popupClass: 'digital-content-popup-editor-controls' }"
+                       [overflow]="true">
+          <kendo-toolbar-dropdownlist kendoEditorFormat=""></kendo-toolbar-dropdownlist>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorBoldButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorItalicButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorUnderlineButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorAlignLeftButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAlignCenterButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAlignRightButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAlignJustifyButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorInsertUnorderedListButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorInsertOrderedListButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorIndentButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorOutdentButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoBatchUploadFilesButton
+                                  icon="assets/images/icons/files/file-upload-big.svg"></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorCustomInsertIframeButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorCustomInsertMathLiveButtonDirective
+                                  (click)="loadSelected()"></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorCreateLinkButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorUnlinkButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-editor-insert-table-button></kendo-editor-insert-table-button>
+          <kendo-toolbar-dropdownlist kendoEditorFontSize=""></kendo-toolbar-dropdownlist>
+          <kendo-toolbar-dropdownlist kendoEditorFontFamily=""></kendo-toolbar-dropdownlist>
+          <kendo-toolbar-colorpicker kendoEditorForeColor
+                                     [paletteSettings]="paletteSettings"></kendo-toolbar-colorpicker>
+          <kendo-toolbar-colorpicker kendoEditorBackColor
+                                     [paletteSettings]="paletteSettings"></kendo-toolbar-colorpicker>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button #subscriptButton
+                                  kendoEditorSubscriptButton
+                                  (click)="removeSuperscript()"></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button #superscriptButton
+                                  kendoEditorSuperscriptButton
+                                  (click)="removeSubscript()"></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorBrokenLinkScannerButton
+                                  [serviceType]="brokenLinkReportTypeDigitalContent"></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorAddColumnBeforeButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAddColumnAfterButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAddRowBeforeButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorAddRowAfterButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-buttongroup>
+            <kendo-toolbar-button kendoEditorDeleteColumnButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorDeleteRowButton=""></kendo-toolbar-button>
+            <kendo-toolbar-button kendoEditorDeleteTableButton=""></kendo-toolbar-button>
+          </kendo-toolbar-buttongroup>
+          <kendo-toolbar-button kendoEditorViewSourceButton=""></kendo-toolbar-button>
+        </kendo-toolbar>
+      </div>
+    </opal-kendo-editor>
+  </div>
+</ng-container>

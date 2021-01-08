@@ -1,0 +1,20 @@
+<div class="column flex web-preview preview-content-container">
+  <button class="k-button-close-preview"
+          (click)="close()">
+    <span class="k-icon k-i-arrow-chevron-left"></span>
+    <span>{{'Close' | translator}}</span>
+  </button>
+  <div class="preview-content__content">
+    <img class="preview-content__image"
+         *ngIf="!loading"
+         [style.width.px]="vm.registrationECertificate.width"
+         [style.height.px]="vm.registrationECertificate.height"
+         [src]="'data:image/jpeg;base64, ' + vm.registrationECertificate.base64Image | safeHtml:'resourceUrl'">
+  </div>
+  <div class="registration-ecertificate-dialog__download-btn-container">
+    <button class="registration-ecertificate-dialog__download-btn"
+            kendoButton
+            [primary]="true"
+            (click)="downloadCertificate()">{{ 'Download' | globalTranslator }}</button>
+  </div>
+</div>

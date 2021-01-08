@@ -1,0 +1,48 @@
+<div class="video-annotation">
+  <div class="video-annotation__left">
+    <video-chapter-list class="video-annotation__chapters"
+                        [hidden]="!showAnnotation"
+                        [mode]="mode"
+                        [chapters]="chapters"
+                        [contentOwner]="contentOwner"
+                        [currentChapter]="currentChapter"
+                        (chapterClicked)="onChapterClicked($event)"
+                        (addChapter)="onAddChapter()">
+    </video-chapter-list>
+  </div>
+  <div class="video-annotation__center">
+    <videojs-player class="video-annotation__player"
+                    *ngIf="videojsOption"
+                    [extension]="fileExtension"
+                    [disableFullscreen]="disableFullscreen"
+                    [fullscreenCallback]="fullscreenCallback"
+                    [options]="videojsOption"
+                    (videoErrorEvent)="onVideoError($event)"
+                    (duration)="onDurationLoaded($event)"
+                    (videojsReady)="onVideojsReady($event)"
+                    (videoTimeUpdate)="onVideoTimeUpdate($event)">
+    </videojs-player>
+    <ng-container *ngFor="let chapter of chapterDetailList">
+      <video-chapter-detail [hidden]="!showAnnotation || chapter !== currentChapter"
+                            class="video-annotation__chapter-detail"
+                            [mode]="mode"
+                            [videoDuration]="fileDuration"
+                            [currentChapter]="chapter"
+                            (deleteChapter)="onDeleteChapter()"
+                            (updateChapter)="onUpdateChapter()"
+                            (uploadingFile)="onUploadingFile($event)">
+      </video-chapter-detail>
+    </ng-container>
+  </div>
+  <div class="video-annotation__right">
+    <video-annotation-comments class="video-annotation__comments"
+                               [hidden]="!showAnnotation"
+                               [mode]="mode"
+                               [commentInfo]="commentInfo"
+                               [currentVideoTime]="currentVideoTime"
+                               [videoDuration]="fileDuration"
+                               [videoId]="videoId"
+                               (timestampClick)="onTimestampClicked($event)">
+    </video-annotation-comments>
+  </div>
+</div>

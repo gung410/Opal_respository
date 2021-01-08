@@ -1,0 +1,294 @@
+<ng-container [formGroup]="form">
+  <label class="copyright-form__title">Rights</label>
+
+  <!-- section 1: Ownership -->
+  <div class="form-controls-group -required">
+    <label>{{'Ownership' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.ownershipItemsDic[formData.ownership] && formData.ownershipItemsDic[formData.ownership].display || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="form-control"
+                     formControlName="ownership"
+                     [items]="ownershipSelectItems"
+                     [valueField]="'value'"
+                     [labelField]="'display'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [(ngModel)]="formData.ownership"
+                     kendoErrorTooltip
+                     autofocus
+                     (selectedValueChange)="onOwnershipChanged($event)"
+                     position="top">
+        </opal-select>
+
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 2: Licence Type -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowLicenseType">
+    <label>{{'Licence Type' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.licenseTypeItemsDic[formData.licenseType] && formData.licenseTypeItemsDic[formData.licenseType].display || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="form-control"
+                     formControlName="licenseType"
+                     [items]="licenseTypeSelectItems"
+                     [valueField]="'value'"
+                     [labelField]="'display'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [(ngModel)]="formData.licenseType"
+                     (selectedValueChange)="onLicenseTypeChanged($event)"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top">
+        </opal-select>
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 3: Start Date -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowStartAndExpiryDate">
+    <label>{{'Start Date' | globalTranslator}}</label>
+    <div class="form-controls-group -horizontal">
+      <kendo-datepicker class="input-control copyright-form__date-picker"
+                        #startDatePicker
+                        [disabled]="formData.startDateNotApplicableChecked || mode === DigitalContentDetailMode.View"
+                        formControlName="startDate"
+                        [format]="'dd/MM/yyyy'"
+                        [placeholder]="'day/month/year'"
+                        [disabledDates]="disabledStartDate.bind(this)"
+                        (focus)="startDatePicker.toggle(true)"
+                        [(ngModel)]="formData.startDate"
+                        kendoErrorTooltip
+                        position="top"
+                        autofocus></kendo-datepicker>
+      <div class="k-checkbox-container">
+        <input class="k-checkbox"
+               type="checkbox"
+               formControlName="startDateNotApplicableChecked"
+               [attr.disabled]="formData.forcedStartDateNotApplicable || mode === DigitalContentDetailMode.View ? '' : null"
+               [(ngModel)]="formData.startDateNotApplicableChecked">
+        <label class="k-checkbox-label"
+               (click)="formData.startDateNotApplicableChecked=!formData.startDateNotApplicableChecked">{{'Not Applicable' | globalTranslator}}</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- section 3: Expiry Date -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowStartAndExpiryDate">
+    <label>{{'Expiry Date' | globalTranslator}}</label>
+    <div class="form-controls-group -horizontal">
+      <kendo-datepicker class="input-control copyright-form__date-picker"
+                        #expiryDatePicker
+                        [disabled]="formData.expiryDateNotApplicableChecked || mode === DigitalContentDetailMode.View"
+                        formControlName="expiryDate"
+                        [format]="'dd/MM/yyyy'"
+                        [placeholder]="'day/month/year'"
+                        [disabledDates]="disabledExpiryDate.bind(this)"
+                        (focus)="expiryDatePicker.toggle(true)"
+                        [(ngModel)]="formData.expiredDate"
+                        kendoErrorTooltip
+                        position="top"
+                        autofocus></kendo-datepicker>
+      <div class="k-checkbox-container">
+        <input class="k-checkbox"
+               type="checkbox"
+               formControlName="expiryDateNotApplicableChecked"
+               [attr.disabled]="formData.forcedExpiredDateNotApplicable || mode === DigitalContentDetailMode.View ? '' : null"
+               [(ngModel)]="formData.expiryDateNotApplicableChecked">
+        <label class="k-checkbox-label"
+               (click)="formData.expiryDateNotApplicableChecked=!formData.expiryDateNotApplicableChecked">{{'Not Applicable' | globalTranslator}}</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- section 3: Period of Use -->
+  <div class="form-controls-group"
+       *ngIf="formData.canShowStartAndExpiryDate">
+    <label>{{'Period of Use' | globalTranslator}}</label>
+    <div *ngIf="formData.licenseDuration != null">
+      {{formData.licenseDuration}} {{(formData.licenseDuration === 1
+        ? "day" : "days") | globalTranslator}}
+    </div>
+    <div *ngIf="formData.licenseDuration == null">
+      {{'Not Applicable' | globalTranslator}}
+    </div>
+  </div>
+
+  <!-- section 4: Licence Territory -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowLicenseTerritory">
+    <label>{{'Licence Territory' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.licenseTerritoryUseItemsDic[formData.licenseTerritory] && formData.licenseTerritoryUseItemsDic[formData.licenseTerritory].display || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="form-control"
+                     formControlName="licenseTerritory"
+                     [items]="licenseTerritoryUseSelectItems"
+                     [valueField]="'value'"
+                     [labelField]="'display'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [(ngModel)]="formData.licenseTerritory"
+                     kendoErrorTooltip
+                     (selectedValueChange)="onLicenseTerritoryChanged($event)"
+                     autofocus
+                     position="top">
+        </opal-select>
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 5: Type of Creative Commons License (Terms of use) -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowCommonTermsOfUse">
+    <label>{{'Terms of use' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        <span>
+          {{ formData.commonTermsOfUseItemsDic[formData.termsOfUse] && formData.commonTermsOfUseItemsDic[formData.termsOfUse].display || '- N/A'  }}
+        </span>
+        <span>
+          {{formData.termsOfUse}}
+        </span>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <opal-select class="form-control"
+                     formControlName="termsOfUse"
+                     [dropdownItemLabelWrap]="true"
+                     [items]="formData.commonTermsOfUseSelectItems"
+                     [valueField]="'value'"
+                     [labelField]="'display'"
+                     [placeholder]="'Select' | globalTranslator"
+                     [(ngModel)]="formData.termsOfUse"
+                     kendoErrorTooltip
+                     autofocus
+                     position="top">
+        </opal-select>
+
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 6: Copyright Owner/Publisher -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowCopyrightOwnerAndAcknowledgement">
+    <label>{{'Copyright Owner/Publisher' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.publisher || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="publisher"
+               kendoErrorTooltip
+               position="top"
+               autofocus
+               [placeholder]="'Enter the name of the owner of the license / main creator of this item.' | globalTranslator"
+               [(ngModel)]="formData.publisher">
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 7: License Permissions and Terms of Use -->
+  <div class="form-controls-group -required"
+       *ngIf="formData.canShowLicensePermission">
+    <div class="copyrigh-form__allow-download">
+      <label>{{'Allow to download' | globalTranslator}}</label>
+      <kendo-switch class="k-switch"
+                    formControlName="isAllowDownload"
+                    [(ngModel)]="formData.isAllowDownload"
+                    (valueChange)="onAllowDownloadToggle($event)"
+                    [readonly]="mode === DigitalContentDetailMode.View"
+                    [onLabel]="' '"
+                    [offLabel]="' '"></kendo-switch>
+    </div>
+    <label>{{'License Permissions and Terms of Use' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View"
+              *ngIf="formData.canSelectLicensePermission">
+      <ng-template editableViewMode="">
+        <span>
+          {{ formData.termsOfUse || '- N/A'  }}
+        </span>
+      </ng-template>
+      <ng-template editableEditMode="">
+        <div class="form-controls-group">
+          <div class="k-checkbox-container"
+               *ngFor="let term of licensePermissions; let i = index">
+            <label class="form-control">
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="termsOfUse"
+                     value="{{term}}"
+                     [(ngModel)]="formData.termsOfUse"
+                     kendoErrorTooltip
+                     position="top"
+                     *ngIf="i === 0"
+                     kendoRadioButton>
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="termsOfUse"
+                     *ngIf="i > 0"
+                     value="{{term}}"
+                     [(ngModel)]="formData.termsOfUse"
+                     position="top"
+                     kendoRadioButton>
+              {{term}}
+            </label>
+          </div>
+        </div>
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 8: Acknowledgement and Credit -->
+  <div class="form-controls-group"
+       *ngIf="formData.canShowCopyrightOwnerAndAcknowledgement">
+    <label>{{'Acknowledgement and Credit' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.acknowledgementAndCredit || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="acknowledgementAndCredit"
+               kendoErrorTooltip
+               position="top"
+               [placeholder]="'Enter the names of all parties who have helped in one way or another in the creation of this item.' | globalTranslator"
+               autofocus
+               [(ngModel)]="formData.acknowledgementAndCredit">
+      </ng-template>
+    </editable>
+  </div>
+
+  <!-- section 9: Additional Remarks -->
+  <div class="form-controls-group"
+       *ngIf="formData.canShowRemarks">
+    <label>{{'Additional Remarks' | globalTranslator}}</label>
+    <editable [modeView]="mode === DigitalContentDetailMode.View">
+      <ng-template editableViewMode="">
+        {{ formData.remarks || '- N/A'  }}
+      </ng-template>
+      <ng-template editableEditMode="">
+        <input class="form-control"
+               kendoTextBox
+               formControlName="remarks"
+               kendoErrorTooltip
+               [placeholder]="'Additional notes governing the proper use of this resource (if any).' | globalTranslator"
+               position="top"
+               autofocus
+               [(ngModel)]="formData.remarks">
+      </ng-template>
+    </editable>
+  </div>
+</ng-container>

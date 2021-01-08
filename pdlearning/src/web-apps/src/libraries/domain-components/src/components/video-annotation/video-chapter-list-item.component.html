@@ -1,0 +1,27 @@
+<div class="video-chapter-list__item"
+     [formGroup]="form"
+     [ngClass]="{'video-chapter-list__item--selected': isSelected}"
+     (click)="onChapterClicked()">
+  <i class="icon save video-chapter-list__icon"></i>
+  <div class="video-chapter-list__name">
+    <div>{{ index+1 }}. {{ chapter.title }}</div>
+    <div>{{ chapter.timeStart | secondToTimeFormat }} - {{ chapter.timeEnd | secondToTimeFormat }}</div>
+  </div>
+
+  <!-- Those inputs are just for validation -->
+  <input #input
+         [(ngModel)]="chapter.title"
+         formControlName="title"
+         kendoErrorTooltip
+         position="top">
+  <input #input
+         [(ngModel)]="chapter.timeStart"
+         formControlName="timeStart"
+         kendoErrorTooltip
+         position="top">
+  <input #input
+         [(ngModel)]="chapter.timeEnd"
+         formControlName="timeEnd"
+         kendoErrorTooltip
+         position="top">
+</div>

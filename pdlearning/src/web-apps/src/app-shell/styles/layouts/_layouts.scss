@@ -1,0 +1,51 @@
+.flex {
+  @extend %flex;
+  @extend %box-sizing;
+}
+
+.row {
+  @extend %row;
+  @extend %box-sizing;
+}
+
+.column {
+  @extend %column;
+  @extend %box-sizing;
+}
+
+.align-center-center {
+  @extend %center-center;
+}
+
+.row>.flex {
+  min-width: 0;
+}
+
+.column>.flex {
+  min-height: 0;
+}
+
+.card {
+  background: $white;
+  border: 1px solid transparent;
+  padding: 20px;
+  border-radius: 10px;
+
+  &.quiz {
+
+    &.active,
+    &:hover {
+      border: 1px solid $accent;
+    }
+
+    &.placeholder {
+      border: $border;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+        border: 1px solid $accent;
+      }
+    }
+  }
+}

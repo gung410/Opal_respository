@@ -1,0 +1,24 @@
+list-registration-grid {
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.list-registration-grid {
+  &__show-course-criteria-registration-violation-detail-link {
+    text-decoration: underline;
+    font-weight: bold !important;
+    position: relative;
+    padding-left: 20px;
+    display: block;
+
+    >img {
+      height: 16px;
+      position: absolute;
+      top: 2px;
+      left: 0;
+    }
+  }
+}

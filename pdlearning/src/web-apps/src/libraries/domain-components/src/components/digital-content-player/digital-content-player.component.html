@@ -1,0 +1,116 @@
+<div class="digital-content-player">
+  <div class="digital-content-player__main-content-container">
+    <div class="digital-content-player__learning-content-container"
+         *ngIf="type === contentType.LearningContent">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownloadHtmlContent()"></span></div>
+      <div class="digital-content-player__learning-content"
+           *ngIf="htmlContent"
+           externalLinkGuard
+           [innerHTML]="htmlContent | safeHtml:'html'"></div>
+    </div>
+
+    <div class="digital-content-player__document-player-container"
+         *ngIf="canShowDocument">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownload()"></span>
+      </div>
+
+      <document-player class="digital-content-player__document-player"
+                       *ngIf="contentUrl"
+                       [ngStyle]="{'height': maxMainContentHeight}"
+                       [url]="contentUrl"
+                       viewer="office">
+      </document-player>
+    </div>
+
+    <div class="digital-content-player__video-player-container"
+         *ngIf="canShowVideo">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownload()"></span>
+      </div>
+      <video-annotation *ngIf="contentUrl"
+                        [mode]="videoAnnotationMode"
+                        [src]="contentUrl"
+                        [disableFullscreen]="disableFullscreen"
+                        [fullscreenCallback]="fullscreenCallback"
+                        [chapterInfo]="videoAnnotationChapterInfo"
+                        [commentInfo]="videoAnnotationCommentInfo"
+                        [chapters]="digitalContent.chapters"
+                        [fileDuration]="digitalContent.fileDuration"
+                        [fileType]="digitalContent.fileType"
+                        [fileExtension]="digitalContent.fileExtension"
+                        [description]="digitalContent.description"
+                        [ownerId]="digitalContent.ownerId"
+                        [videoId]="videoId"></video-annotation>
+    </div>
+
+    <div class="digital-content-player__audio-player-container"
+         *ngIf="canShowAudio">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownload()"></span>
+      </div>
+      <audio-player *ngIf="contentUrl"
+                    [src]="contentUrl"
+                    [extension]="fileExtension"></audio-player>
+    </div>
+
+    <div class="digital-content-player__img-container"
+         *ngIf="canShowImage">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownload()"></span>
+      </div>
+      <img class="digital-content-player__img"
+           alt="Content image"
+           *ngIf="contentUrl"
+           [src]="contentUrl">
+    </div>
+
+    <div class="digital-content-player__scorm-player-container"
+         *ngIf="canShowScorm">
+      <div class="digital-content-player__content-title"
+           *ngIf="title">{{title}}
+        <span class="k-icon k-i-download"
+              *ngIf="canDownloadContent"
+              (click)="onDownload()"></span>
+      </div>
+      <scorm-player class="digital-content-player__scorm-player"
+                    [isLectureNextButtonClicked]="this.isLectureNextButtonClicked"
+                    [displayMode]="displayMode === 'preview' ? 'local' : displayMode"
+                    [ngStyle]="{'height': maxMainContentHeight !== undefined ? maxMainContentHeight : '100%'}"
+                    [digitalContentId]="resourceId"
+                    [myDigitalContentId]="myDigitalContentId"
+                    [myLectureId]="myLectureId"
+                    [onScormFinishCallback]="onScormFinishCallback"></scorm-player>
+    </div>
+  </div>
+
+  <div class="digital-content-player__description-container"
+       *ngIf="description">
+    <div class="digital-content-player__description-title">{{ 'Description' | translator }}</div>
+    <div class="digital-content-player__description"
+         [innerHTML]="description | safeHtml:'html'"
+         externalLinkGuard>
+    </div>
+  </div>
+  <div class="digital-content-player__broken-link-report"
+       *ngIf="canShowReportBrokenLinkBtn()">
+    <span class="digital-content-player__link"
+          (click)="openReportBrokenLinkDialog()">{{ 'Report broken link/image' | translator }}</span>
+  </div>
+</div>

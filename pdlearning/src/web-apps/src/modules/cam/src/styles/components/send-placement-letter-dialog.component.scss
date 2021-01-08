@@ -1,0 +1,44 @@
+send-placement-letter-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 75vw;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+
+  .send-placement-letter-dialog {
+    display: flex;
+    flex-grow: 1;
+    max-width: 100%;
+
+    &__left-container {
+      width: 300px !important;
+      margin-right: 20px;
+    }
+
+    &__right-container {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    &__editor {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    &__participant-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px 0px;
+    }
+
+    &__participant-info {
+      margin-bottom: 10px;
+    }
+
+    &__preview {
+      font-size: 1rem;
+      white-space: normal;
+    }
+  }
+}

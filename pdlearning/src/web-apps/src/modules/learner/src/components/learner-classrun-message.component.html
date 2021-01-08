@@ -1,0 +1,74 @@
+<div class="learner-course__card-message"
+     *ngIf="currentClassRun && classRunDetail">
+  <div class="learner-course__card-message-container"
+       *ngIf="canConfirm || canReadRegistrationComment">
+    <div class="learner-course__card-message-icon">
+      <i class="icon learner-course__icon"
+         [ngClass]="{'rejected': canReadRegistrationComment, 'course-complete-circle': canConfirm}"></i>
+    </div>
+    <div class="learner-course__card-message-info">{{ registrationMessageTitle | translator }}
+      <span class="learner-course__classrun-name">{{classRunDetail.classTitle}}</span>
+    </div>
+    <div class="learner-course__card-message-action">
+      <div class="secondary-btn learner-course__card-message-cancel-btn"
+           *ngIf="canConfirm"
+           (click)="onCardMessageCancel()">
+        {{ 'Decline' | translator }}
+      </div>
+      <div class="learner-primary-btn learner-course__card-message-confirm-btn"
+           *ngIf="canConfirm"
+           (click)="onCardMessageConfirm()">
+        {{ 'Accept' | translator }}
+      </div>
+      <div class="secondary-btn learner-course__card-message-read-comment"
+           *ngIf="canReadRegistrationComment"
+           (click)="onCardMessageReadComment()">
+        {{ 'Read comment' | translator }}
+      </div>
+    </div>
+  </div>
+  <div class="learner-course__card-message-container"
+       *ngIf="canReadWithdrawlComment">
+    <div class="
+       learner-course__card-message-icon">
+      <i class="icon learner-course__icon"
+         [ngClass]="{'rejected': canReadWithdrawlComment, 'course-complete-circle': canConfirm}"></i>
+    </div>
+    <div class="learner-course__card-message-info">{{ withdrawlMessageTitle | translator }}
+      <span class="learner-course__classrun-name">{{classRunDetail.classTitle}}</span>
+    </div>
+    <div class="learner-course__card-message-action">
+      <div class="secondary-btn learner-course__card-message-read-comment"
+           *ngIf="canReadWithdrawlComment"
+           (click)="onCardMessageReadComment()">
+        {{ 'Read comment' | translator }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #commentTemplate="">
+  <div class="learner-course-message__comment"
+       *ngIf="commentUserInfo">
+    <div class="learner-course-message__avatar"
+         *ngIf="commentUserInfo && commentUserInfo.avatarUrl">
+      <img src="{{ commentUserInfo.avatarUrl }}">
+    </div>
+    <div class="learner-course-message__content">
+      <div class="learner-course-message__user-info">
+        <div class="learner-course-message__user-name">
+          {{ commentUserInfo.fullName }}
+        </div>
+        <div class="learner-course-message__user-role">
+          {{ getCommentRole() }}
+        </div>
+        <div class="learner-course-message__user-comment-date">
+          {{ currentClassRun.changedDate  | date: 'dd/MM/yyyy'}}
+        </div>
+      </div>
+      <div class="learner-course-message__message">
+        {{ currentClassRun.comment }}
+      </div>
+    </div>
+  </div>
+</ng-template>

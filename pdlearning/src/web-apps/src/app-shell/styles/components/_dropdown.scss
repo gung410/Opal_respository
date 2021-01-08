@@ -1,0 +1,126 @@
+.k-list-container {
+  padding: 10px 0;
+  border: 1px solid $color-gainsboro;
+  border-radius: none;
+  overflow-y: auto;
+  max-height: 200px;
+  background: $color-white;
+}
+
+.k-list {
+  .k-item {
+    color: $color-light-gray;
+
+    &.k-state-selected,
+    &.k-state-selected:hover {
+      background: $color-blue-dard;
+      color: $white;
+    }
+  }
+
+  .k-item:hover,
+  .k-item.k-state-hover {
+    background: none;
+    color: $color-light-gray;
+    border: none;
+  }
+}
+
+.scroll-inner {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  @extend %hide-scrollbar;
+}
+
+.k-combobox,
+.k-dropdown {
+
+  .k-dropdown-wrap {
+    border: 1px solid $color-gainsboro;
+    border-radius: 5px;
+    background: none;
+
+    &:hover {
+      border: 1px solid $color-blue-light;
+      background: none;
+    }
+
+    &.k-state-focused {
+      border-color: $color-blue-light;
+    }
+
+    .k-input {
+      color: $color-light-gray;
+      font-size: $font-h6;
+
+      &::placeholder {
+        color: $color-light-gray;
+      }
+    }
+
+    .k-select {
+      background: none;
+      color: $color-blue-light;
+    }
+
+    .k-clear-value {
+      right: calc(1.4285714286em + 14px);
+    }
+
+  }
+
+  &.ng-valid {
+    .k-dropdown-wrap {
+      border: 1px solid $color-blue-light;
+    }
+  }
+
+}
+
+.k-dropdown {
+  .k-dropdown-wrap {
+    .k-input {
+      height: $main-input-height;
+    }
+
+    &[aria-expanded='true'] {
+      border-radius: 5px 5px 0 0;
+    }
+  }
+}
+
+.k-animation-container {
+  >.k-popup {
+    box-shadow: none;
+    border-radius: 0 0 5px 5px;
+    border-color: $color-blue-light;
+  }
+
+  >.k-list-container {
+    margin-top: -1px;
+  }
+}
+
+/*override dropdown button*/
+.k-dropdown-button {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 2.5px);
+    right: 20px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid $white;
+  }
+
+  .k-button {
+    padding-right: 40px;
+  }
+
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@opal20/platform",
+  "version": "1.0.0",
+  "description": "Opal 2.0 Platform",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "node ./scripts/preinstall.js",
+    "postinstall": "node ./scripts/postinstall.js",
+    "prettier": "gulp prettier --git",
+    "prettier:project": "gulp prettier --project",
+    "prettier:all": "gulp prettier --all",
+    "tslint": "gulp tslint --git",
+    "tslint:project": "gulp tslint --project",
+    "tslint:all": "gulp tslint --all"
+  },
+  "devDependencies": {
+    "@microsoft/rush-stack-compiler-3.5": "0.3.5",
+    "lerna": "3.18.4",
+    "lint-staged": "9.4.2",
+    "prettier": "1.18.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,scss,html,md}": [
+      "node ./node_modules/@thunder/build-system/bin/prettier-staged.js",
+      "git add -f",
+      "node ./node_modules/@thunder/build-system/bin/tslint-staged.js"
+    ]
+  },
+  "importSort": {
+    ".js,.jsx,.ts,.tsx": {
+      "parser": "typescript",
+      "style": "eslint"
+    }
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "tools/*",
+      "src"
+    ]
+  },
+  "resolutions": {
+    "prosemirror-model": "1.11.0"
+  }
+}

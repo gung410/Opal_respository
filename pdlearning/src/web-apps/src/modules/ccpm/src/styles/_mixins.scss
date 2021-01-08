@@ -1,0 +1,15 @@
+@mixin correct-question-answer-sign {
+  content: '';
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  display: inline-block;
+  left: #{-16px - 5px};
+  background: url('../assets/images/icons/completed-mark-black.svg') no-repeat center;
+}
+
+@mixin no-border {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}

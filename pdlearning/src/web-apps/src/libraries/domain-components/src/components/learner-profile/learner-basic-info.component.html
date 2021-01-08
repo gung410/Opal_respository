@@ -1,0 +1,26 @@
+<div class="form-container">
+  <div class="avatar-container">
+    <div class="avatar-container__avatar">
+      <img src="{{ learnerVm.user.avatarUrl ? learnerVm.user.avatarUrl : 'assets/images/others/default-avatar.png' }}">
+    </div>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Name' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">{{ learnerVm.user.fullName || 'N/A' }}</ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Email Address' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">{{ learnerVm.user.emailAddress || 'N/A' }}</ng-template>
+    </editable>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Last Login' | translator }}</label>
+    <editable [modeView]="true">
+      <ng-template editableViewMode="">
+        {{ learnerVm.user.lastLoginDate != null ? (learnerVm.user.lastLoginDate | date: 'dd/MM/yyyy HH:mm')  : 'N/A' }}</ng-template>
+    </editable>
+  </div>
+</div>

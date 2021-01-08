@@ -1,0 +1,15 @@
+{
+  "extends": ["../../tslint.json"],
+  "rules": {
+    "export-name": false,
+    "typedef": false,
+    "prefer-const": false,
+    "trailing-comma": false,
+    "interface-name": false,
+    "no-trailing-whitespace": false,
+    "triple-equals": false,
+    "missing-optional-annotation": false,
+    "no-any": false,
+    "no-floating-promises": false
+  }
+}

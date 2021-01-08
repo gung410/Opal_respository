@@ -1,0 +1,46 @@
+<div class="calendar-event-tooltip"
+     [ngClass]="{'webinar': eventSource === eventSourceEnum.Webinar }">
+  <div class="title">{{ title }}</div>
+
+  <div>
+    <span class="k-icon calendar-icon"></span>
+    {{ startTime | date:'dd/MM/yyyy'}}
+    <span *ngIf="isSameDate === false"> - {{ endTime | date:'dd/MM/yyyy'}}</span>
+  </div>
+
+  <div *ngIf="checkEventWebinarIsLive() === true">
+    <span class="k-icon clock-icon"></span>
+    <span class="webinar-live"> {{'LIVE' | globalTranslator}} </span>
+  </div>
+  <div *ngIf="checkEventWebinarIsLive() === false && isAllDay === true">
+    <span class="k-icon clock-icon"></span>
+    {{'All day' | globalTranslator}}
+  </div>
+  <div *ngIf="checkEventWebinarIsLive() === false && isAllDay === false">
+    <span class="k-icon clock-icon"></span>
+    {{ startTime | date:'hh:mm a'}} - {{ endTime | date:'hh:mm a'}}
+  </div>
+
+  <div class="description"
+       *ngIf="eventSource !== eventSourceEnum.Webinar; else webinar">
+    <p> {{ description }} </p>
+  </div>
+
+  <div class="join-link-btn"
+       *ngIf="eventSource === eventSourceEnum.Webinar">
+    <button class="create-event-btn"
+            kendoButton
+            [disabled]="!isAbleToJoinMeeting"
+            (click)="onJoinWebinarClick()"
+            [primary]="true"><span class="k-i-add-event"></span>
+      {{"Join Now"| globalTranslator}}
+    </button>
+  </div>
+</div>
+
+<ng-template #webinar="">
+  <div>
+    <span class="k-icon clock-icon"></span>
+    <span> {{'Community' | globalTranslator}}: {{communityTitle}}</span>
+  </div>
+</ng-template>

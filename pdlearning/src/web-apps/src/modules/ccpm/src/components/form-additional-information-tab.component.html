@@ -1,0 +1,38 @@
+<detail-content>
+  <detail-content-left>
+    <scrollable-menu [title]="'Additional Information'"
+                     [tabs]="tabs"></scrollable-menu>
+  </detail-content-left>
+  <detail-content-right>
+    <div class="tab-menu-container">
+      <div class="tab-menu-container__tab-content"
+           #generalTab>
+        <form-general-tab [form]="form"
+                          [formData]="formData"></form-general-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #archivalTab>
+        <archival-tab [form]="form"
+                      [date]="formData.archiveDate"
+                      [readOnly]="disableMode"
+                      (onDateChange)="onArchiveDateInputChange($event)"></archival-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           *ngIf="formData.type === FORM_TYPE.Quiz"
+           #dueDateTab>
+        <due-date-tab [form]="form"
+                      [formRemindDueDate]="formData.formRemindDueDate"
+                      [remindBeforeDays]="formData.remindBeforeDays"
+                      [isSendNotification]="formData.isSendNotification"
+                      [readonly]="disableMode"
+                      (dueDateDataChange)="eventDueDateDataChange($event)"></due-date-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #metadataTab>
+        <form-metadata [form]="form"
+                       [mode]="mode"
+                       [resource]="resource"></form-metadata>
+      </div>
+    </div>
+  </detail-content-right>
+</detail-content>

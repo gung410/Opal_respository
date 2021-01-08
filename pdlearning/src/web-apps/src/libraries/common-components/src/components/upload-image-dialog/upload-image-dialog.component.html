@@ -1,0 +1,33 @@
+<div class="upload-content">
+  <div class="drop-file-area column align-center-center"
+       [ngClass]="{ show: !parameters }">
+    <img class="add-file-icon"
+         src="assets/images/icons/image-browse.svg">
+    <input class="hidden-input"
+           type="file"
+           #inputRef
+           (change)="onFileSelect($event.target.files)">
+  </div>
+  <div class="upload-progress column align-center-center"
+       *ngIf="!thumbnailUrl"
+       [ngClass]="{ show: parameters }">
+    <canvas #progressCanvas
+            width="160"
+            height="160"></canvas>
+    <span class="description central">Uploading {{ percentage }}%</span>
+  </div>
+  <div class="preview-img"
+       *ngIf="thumbnailUrl">
+    <img src="{{ thumbnailUrl }}">
+  </div>
+</div>
+<div class="actions row">
+  <div class="flex"></div>
+  <button *ngIf="thumbnailUrl"
+          (click)="addImage()"
+          style="margin-right: 10px;"
+          kendoButton>Insert</button>
+  <button [look]="'outline'"
+          (click)="performCancel()"
+          kendoButton>Cancel</button>
+</div>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<common:BaseLearnerContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView;assembly=LearnerApp"
+    xmlns:home="clr-namespace:LearnerApp.Views.Sharing.Home;assembly=LearnerApp"
+    xmlns:home1="clr-namespace:LearnerApp.ViewModels.Sharing.Home;assembly=LearnerApp"
+    Title="Shared by others"
+    x:Class="LearnerApp.Views.Sharing.Home.SharingListPageView"
+    base:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="home1:SharingListPageViewModel">
+    <ContentPage.Content>
+        <RefreshView
+            x:Name="RefreshView"
+            IsRefreshing="{Binding IsRefreshingForRefreshView}"
+            Command="{Binding RefreshCommand}"
+            VerticalOptions="FillAndExpand">
+            <learnerCustomCollectionView:LearnerCustomCollectionView
+                Margin="10,10,10,0"
+                IsLoading="{Binding IsLoading}"
+                RealItemsSource="{Binding SharingSource}"
+                RemainingItemsThreshold="{Binding ShouldLoadMore, Converter={StaticResource RemainingItemThresholdLoadMoreSkeletonVisibleConverter}}"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                x:Name="List">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <home:SharingContentItemDataTemplateSelector />
+                </CollectionView.ItemTemplate>
+                <learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+                    <DataTemplate>
+                        <ContentView
+                            Padding="0, 10, 0,0">
+                            <Frame
+                                Margin="1,1,1,1"
+                                Padding="10"
+                                BackgroundColor="White"
+                                BorderColor="LightGray"
+                                CornerRadius="6"
+                                HasShadow="False">
+                                <shimmer:LearnerShimmer
+                                    HeightRequest="200"
+                                    Type="Feed"
+                                />
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+            </learnerCustomCollectionView:LearnerCustomCollectionView>
+        </RefreshView>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>
+

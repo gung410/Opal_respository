@@ -1,0 +1,22 @@
+<detail-content>
+  <detail-content-left>
+    <scrollable-menu [title]="'Additional Information'"
+                     [tabs]="tabs"></scrollable-menu>
+  </detail-content-left>
+  <detail-content-right>
+    <div class="tab-menu-container">
+      <div class="tab-menu-container__tab-content"
+           #generalTab>
+        <standalone-survey-general-tab [form]="form"
+                                       [formData]="formData"></standalone-survey-general-tab>
+      </div>
+      <!-- <div class="scrollable-menu-content__tab-content"
+           #archivalTab>
+        <archival-tab [form]="form"
+                      [date]="formData.archiveDate"
+                      [readOnly]="disableMode"
+                      (onDateChange)="onArchiveDateInputChange($event)"></archival-tab>
+      </div> -->
+    </div>
+  </detail-content-right>
+</detail-content>

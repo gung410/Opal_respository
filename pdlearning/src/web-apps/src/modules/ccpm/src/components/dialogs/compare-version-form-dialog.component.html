@@ -1,0 +1,46 @@
+<compare-version-dialog title="{{ 'Form Comparison' | globalTranslator}}">
+  <div class="compare-version-section">
+    <div class="compare-version-section__wrap --title">
+      <div class="compare-version-section__item">
+        <label class="title"> {{ getVersionString(oldVersionTrackingVm.versionString) }}</label>
+      </div>
+      <div class="compare-version-section__item">
+        <label class="title"> {{ getVersionString(newVersionTrackingVm.versionString) }} </label>
+      </div>
+    </div>
+    <div class="compare-version-section__wrap"
+         *ngIf="isFinishCompareProcess && !nothingToCompare">
+      <div class="compare-version-section__item --body">
+        <form-comparison *ngIf="canShowQuestionComparison()"
+                         [comparisonFormData]="compareParameter.oldComparisonFormViewModels"
+                         [side]="compareSide.Left"></form-comparison>
+
+        <assessment-rubric-comparison *ngIf="!canShowQuestionComparison()"
+                                      [type]="type"
+                                      [side]="compareSide.Left"
+                                      [comparisonData]="compareParameter.oldComparisonFormViewModels">
+        </assessment-rubric-comparison>
+      </div>
+      <div class="compare-version-section__item --body">
+        <form-comparison *ngIf="canShowQuestionComparison()"
+                         [comparisonFormData]="compareParameter.newComparisonFormViewModels"
+                         [side]="compareSide.Right"></form-comparison>
+
+        <assessment-rubric-comparison *ngIf="!canShowQuestionComparison()"
+                                      [type]="type"
+                                      [side]="compareSide.Right"
+                                      [comparisonData]="compareParameter.newComparisonFormViewModels">
+        </assessment-rubric-comparison>
+      </div>
+    </div>
+    <div class="compare-version-section__wrap"
+         *ngIf="isFinishCompareProcess && nothingToCompare">
+      <div class="compare-version-section__item --body">
+        <span>No questions to compare</span>
+      </div>
+      <div class="compare-version-section__item --body">
+        <span>No questions to compare</span>
+      </div>
+    </div>
+  </div>
+</compare-version-dialog>

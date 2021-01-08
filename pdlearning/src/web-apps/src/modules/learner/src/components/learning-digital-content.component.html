@@ -1,0 +1,33 @@
+<ng-container *ngIf="!isSearchingWithText">
+  <div class="quick-status-filter">
+    <div class="status-label mb-20">
+      {{'Status:' | translator}}
+    </div>
+    <div class="quick-status-list"
+         *ngFor="let stt of allStatusFilters"
+         (click)="onQuickStatusFilterChanged(stt.value)">
+      <input class="k-radio"
+             id="{{stt.status}}"
+             name="statusFilter"
+             type="radio"
+             [value]="stt.value"
+             [checked]="selectedFilterStatus == stt.value">
+      <label class="k-radio-label"
+             for="{{stt.value}}">{{stt.displayText | translator}}</label>
+    </div>
+  </div>
+</ng-container>
+
+<learner-search-filter-result *ngIf="isSearchingWithText"
+                              [placeholderText]="'Search course' | translator"
+                              [searchText]="searchingText"
+                              [filterByType]="filterByType"
+                              [getPagedSearchFilterCallBack]="getPagedSearchFilterCallBack.bind(this)"
+                              (learningCardClick)="onLearningCardClick($event)">
+</learner-search-filter-result>
+
+<learning-card-list #myDigitalContentList
+                    *ngIf="!isSearchingWithText"
+                    [getPagedLearningItemsCallback]="getMyDigitalContentsCallBack.bind(this)"
+                    (learningCardClick)="onLearningCardClick($event)"
+                    showLongCard="true"></learning-card-list>

@@ -1,0 +1,87 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [width]="250"
+                     [field]="'title'"
+                     [title]="'Announcement Title'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <span class="list-announcement-grid__announcement-title"
+            (click)="onViewAnnouncement(dataItem)">{{ dataItem.title }}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Owner'"
+                     [width]="250">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.owner"
+                  [owner]="dataItem.owner"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Recipients'"
+                     [width]="100">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.participants != null ? dataItem.participants.length : 0 }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Schedule Date'"
+                     [width]="130">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.scheduleDate | date: 'dd/MM/yyyy hh:mm a' }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Created Date'"
+                     [width]="130">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.createdDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [title]="'Status'"
+                     [width]="100">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60">
+    <!-- Cell template of actions field-->
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="canShowActionColumn(dataItem)">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="contextMenuItemsForAnnouncement"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

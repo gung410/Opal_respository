@@ -1,0 +1,52 @@
+form-editor-config {
+  @include flex-column-container;
+  border-radius: $main-border-radius;
+  background: $white;
+}
+
+.form-editor-config {
+  @include flex-column-container;
+  padding: 20px;
+
+  &__title {
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    position: relative;
+
+    &::before {
+      content: '';
+      width: calc(100% + 40px);
+      border-bottom: 1px solid $color-silver;
+      position: absolute;
+      left: -20px;
+      bottom: -20px;
+    }
+  }
+
+  &__item {
+    margin-bottom: 20px;
+
+    &-title {
+      color: black;
+      margin-bottom: 10px;
+      font-size: $font-h6;
+      font-weight: normal;
+    }
+
+    .k-numerictextbox {
+      width: 100%;
+    }
+  }
+
+  &__dropdown {
+    width: 100%;
+
+    &.k-dropdown .k-dropdown-wrap,
+    .k-dropdown.k-state-border-down .k-dropdown-wrap.k-state-border-down {
+      border-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.Learner.LearningOpportunityContentsCard"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+	<StackLayout>
+		<controls:RepeatableStack x:Name="Source" Orientation="Vertical">
+			<controls:RepeatableStack.ItemTemplate>
+				<DataTemplate>
+					<StackLayout>
+						<!--  Hide for click item in selection  -->
+						<!--<StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                CommandParameter="{Binding Id}"
+                                NumberOfTapsRequired="1"
+                                Tapped="OnItem_Tapped" />
+                        </StackLayout.GestureRecognizers>-->
+						<StackLayout Orientation="Horizontal">
+							<StackLayout VerticalOptions="CenterAndExpand">
+								<Frame
+									Padding="0"
+									BackgroundColor="{Binding LectureCompletedColor}"
+									BorderColor="{Binding LectureCompletedBorderColor}"
+									CornerRadius="15"
+									HasShadow="False"
+									HeightRequest="30"
+									IsClippedToBounds="True">
+									<Label
+										HorizontalTextAlignment="Center"
+										Text="{Binding Order}"
+										TextColor="{Binding LectureCompletedTextColor}"
+										VerticalTextAlignment="Center"
+										WidthRequest="30" />
+								</Frame>
+							</StackLayout>
+							<Label Text="{Binding Title}" VerticalOptions="CenterAndExpand" />
+						</StackLayout>
+						<controls:RepeatableStack ItemsSource="{Binding Items}" Orientation="Vertical">
+							<controls:RepeatableStack.ItemTemplate>
+								<DataTemplate>
+									<StackLayout>
+										<!--  Hide for click item in selection  -->
+										<!--<StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                CommandParameter="{Binding Id}"
+                                                NumberOfTapsRequired="1"
+                                                Tapped="OnItem_Tapped" />
+                                        </StackLayout.GestureRecognizers>-->
+										<Label Margin="36,0,0,0" Text="{Binding Title, StringFormat='● {0}'}" />
+									</StackLayout>
+								</DataTemplate>
+							</controls:RepeatableStack.ItemTemplate>
+						</controls:RepeatableStack>
+					</StackLayout>
+				</DataTemplate>
+			</controls:RepeatableStack.ItemTemplate>
+		</controls:RepeatableStack>
+	</StackLayout>
+</ContentView>

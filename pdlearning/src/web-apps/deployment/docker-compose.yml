@@ -1,0 +1,20 @@
+version: '2'
+services:
+  opal-platform-web-apps:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+      - PROJECT_NAME=${PROJECT_NAME}
+      - VIRTUAL_HOST=app.${DOMAIN_POSTFIX}
+    restart: always
+    container_name: ${ENVIRONMENT_NAME}-${DOCKER_IMAGE_REPO}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

@@ -1,0 +1,66 @@
+.learner-course {
+  &__card-message {
+  }
+
+  &__card-message-container {
+    display: flex;
+  }
+
+  &__card-message-info {
+    width: 65%;
+  }
+
+  &__icon {
+    background-size: contain;
+    width: 30px;
+    height: 15px;
+  }
+
+  &__classrun-name {
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  &__card-message-action {
+    margin-left: 30px;
+  }
+
+  &__card-message-cancel-btn,
+  &__card-message-confirm-btn {
+    margin-bottom: 10px;
+  }
+}
+
+.learner-course-message {
+  &__avatar {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  &__comment {
+    display: flex;
+    width: 600px;
+  }
+
+  &__user-name {
+    font-weight: bold;
+  }
+
+  &__user-role {
+    color: #8799ba;
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  &__message {
+    margin-top: 15px;
+  }
+}

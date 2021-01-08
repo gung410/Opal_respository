@@ -1,0 +1,47 @@
+<ng-container [formGroup]="form">
+  <div class="additional-information-tab-content">
+    <div class="additional-information-tab-content__heading">
+      <label class="additional-information-tab-content__title">{{'Due Date' | translator }}</label>
+    </div>
+    <div class="form-controls-group">
+      <label>{{'Due date' | globalTranslator}}</label>
+      <kendo-datepicker class="additional-information-tab-content__date-picker"
+                        formControlName="formRemindDueDate"
+                        kendoErrorTooltip
+                        position="top"
+                        [placeholder]="'Select the due date' | globalTranslator"
+                        [format]="'dd/MM/yyyy'"
+                        [disabledDates]="disabledDatesInThePast"
+                        [disabledDatesValidation]="false"
+                        [disabled]="readonly"
+                        [(ngModel)]="formRemindDueDate"
+                        (ngModelChange)="onDueDateDataChange()"></kendo-datepicker>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="formRemindDueDate">
+      <label>{{'Remind before day' | translator }}</label>
+      <kendo-numerictextbox formControlName="remindBeforeDays"
+                            placeholder="0"
+                            [min]="0"
+                            [max]="maximumDatesRemind"
+                            autoCorrect="true"
+                            decimals="0"
+                            format="#"
+                            [disabled]="readonly"
+                            [(ngModel)]="remindBeforeDays"
+                            kendoErrorTooltip
+                            (ngModelChange)="onDueDateDataChange()"></kendo-numerictextbox>
+    </div>
+    <div class="form-controls-group">
+      <div class="k-checkbox-container">
+        <input class="k-checkbox"
+               type="checkbox"
+               formControlName="isSendNotification"
+               [attr.disabled]="readonly ? true : null"
+               [(ngModel)]="isSendNotification"
+               (ngModelChange)="onDueDateDataChange()">
+        <label class="k-checkbox-label">{{ 'Send Notification' | translator }}</label>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,12 @@
+<compare-version-dialog title="{{ 'Digital Content Comparison' | globalTranslator}}">
+  <div class="compare-version-section__wrap --title">
+    <div class="compare-version-section__item">
+      <label class="title"> {{ getVersionString(oldVersionTrackingVm.versionString) }}</label>
+    </div>
+    <div class="compare-version-section__item">
+      <label class="title"> {{ getVersionString(newVersionTrackingVm.versionString) }} </label>
+    </div>
+  </div>
+  <digital-content-comparison [oldVersionTrackingId]="oldVersionTrackingVm.id"
+                              [newVersionTrackingId]="newVersionTrackingVm.id"></digital-content-comparison>
+</compare-version-dialog>

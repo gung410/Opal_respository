@@ -1,0 +1,62 @@
+import { ClassRun, IClassRunCompletionRateInfo } from './models/classrun.model';
+
+import { Announcement } from './models/announcement.model';
+import { AnnouncementTemplate } from './models/announcement-template.model';
+import { AssessmentAnswer } from './models/assessment-answer.model';
+import { Assignment } from './models/assignment.model';
+import { AttendanceRatioOfPresentInfo } from './models/attendance-ratio-of-present-info.model';
+import { AttendanceTracking } from './models/attendance-tracking.model';
+import { BaseRepositoryContext } from '@opal20/infrastructure';
+import { BehaviorSubject } from 'rxjs';
+import { BlockoutDateModel } from './models/blockout-date.model';
+import { Course } from './models/course.model';
+import { CourseContentItemModel } from './models/course-content-item.model';
+import { CourseCriteria } from './models/course-criteria.model';
+import { CoursePlanningCycle } from './models/course-planning-cycle.model';
+import { CourseUser } from './models/course-user.model';
+import { ECertificateLayoutModel } from './models/ecertificate-layout.model';
+import { ECertificateTemplateModel } from './models/ecertificate-template.model';
+import { Injectable } from '@angular/core';
+import { LearningPathModel } from './models/learning-path.model';
+import { LectureIdMapNameModel } from './models/lecture-id-map-name.model';
+import { LectureModel } from './models/lecture.model';
+import { NoOfAssessmentDoneInfo } from './models/no-of-assessment-done-info.model';
+import { NoOfAssignmentDoneInfo } from './models/no-of-assignment-done-info.model';
+import { ParticipantAssignmentTrack } from './models/participant-assignment-track.model';
+import { Registration } from './models/registrations.model';
+import { SectionModel } from './models/section.model';
+import { SendAnnouncemmentEmailTemplateModel } from './models/send-announcement-email-template.model';
+import { Session } from './models/session.model';
+import { UpcomingSession } from './models/upcoming-session.model';
+
+@Injectable()
+export class CourseRepositoryContext extends BaseRepositoryContext {
+  public attendanceRatioOfPresentInfoTrackingSubject: BehaviorSubject<Dictionary<AttendanceRatioOfPresentInfo>> = new BehaviorSubject({});
+  public classRunSubject: BehaviorSubject<Dictionary<ClassRun>> = new BehaviorSubject({});
+  public classRunCompletionRateInfoSubject: BehaviorSubject<Dictionary<IClassRunCompletionRateInfo>> = new BehaviorSubject({});
+  public coursesSubject: BehaviorSubject<Dictionary<Course>> = new BehaviorSubject({});
+  public courseCriteriaSubject: BehaviorSubject<Dictionary<CourseCriteria>> = new BehaviorSubject({});
+  public courseUsersSubject: BehaviorSubject<Dictionary<CourseUser>> = new BehaviorSubject({});
+  public coursesContentSubject: BehaviorSubject<Dictionary<CourseContentItemModel>> = new BehaviorSubject({});
+  public lectureSubject: BehaviorSubject<Dictionary<LectureModel>> = new BehaviorSubject({});
+  public sectionSubject: BehaviorSubject<Dictionary<SectionModel>> = new BehaviorSubject({});
+  public assignmentSubject: BehaviorSubject<Dictionary<Assignment>> = new BehaviorSubject({});
+  public learningPathsSubject: BehaviorSubject<Dictionary<LearningPathModel>> = new BehaviorSubject({});
+  public participantAssignmentTrackSubject: BehaviorSubject<Dictionary<ParticipantAssignmentTrack>> = new BehaviorSubject({});
+  public registrationSubject: BehaviorSubject<Dictionary<Registration>> = new BehaviorSubject({});
+  public sessionSubject: BehaviorSubject<Dictionary<Session>> = new BehaviorSubject({});
+  public upcomingSessionSubject: BehaviorSubject<Dictionary<UpcomingSession>> = new BehaviorSubject({});
+  public attendaceTrackingSubject: BehaviorSubject<Dictionary<AttendanceTracking>> = new BehaviorSubject({});
+  public noOfAssignmentDoneInfoTrackingSubject: BehaviorSubject<Dictionary<NoOfAssignmentDoneInfo>> = new BehaviorSubject({});
+  public coursePlanningCycleSubject: BehaviorSubject<Dictionary<CoursePlanningCycle>> = new BehaviorSubject({});
+  public eCertificateTemplateSubject: BehaviorSubject<Dictionary<ECertificateTemplateModel>> = new BehaviorSubject({});
+  public eCertificateLayoutSubject: BehaviorSubject<Dictionary<ECertificateLayoutModel>> = new BehaviorSubject({});
+  public emailTemplateSubject: BehaviorSubject<Dictionary<SendAnnouncemmentEmailTemplateModel>> = new BehaviorSubject({});
+  public announcementSubject: BehaviorSubject<Dictionary<Announcement>> = new BehaviorSubject({});
+  public announcementTemplateSubject: BehaviorSubject<Dictionary<AnnouncementTemplate>> = new BehaviorSubject({});
+  public lectureIdMapNameSubject: BehaviorSubject<Dictionary<LectureIdMapNameModel>> = new BehaviorSubject({});
+  public blockoutDateSubject: BehaviorSubject<Dictionary<BlockoutDateModel>> = new BehaviorSubject({});
+  public appSettingsSubject: BehaviorSubject<Dictionary<unknown>> = new BehaviorSubject({});
+  public assessmentAnswerSubject: BehaviorSubject<Dictionary<AssessmentAnswer>> = new BehaviorSubject({});
+  public noOfAssessmentDoneInfoTrackingSubject: BehaviorSubject<Dictionary<NoOfAssessmentDoneInfo>> = new BehaviorSubject({});
+}

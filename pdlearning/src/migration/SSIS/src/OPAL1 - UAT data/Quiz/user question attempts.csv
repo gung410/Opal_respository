@@ -1,0 +1,5 @@
+id,equiz id,attemp id,response,is_correct,mark,max_mark,ori_mark,score,progress,total_duration,last_attempted
+1062356,22643,119004,NULL,unknown,,,0,0.67,1,101,
+1062357,22644,119004,A,yes,1,1,1,1,1,26,2/11/2019 19:22
+1062358,22645,119004,D,no,0,1,0,0,1,59,2/11/2019 19:23
+1062359,22646,119004,A,yes,1,1,1,1,1,16,2/11/2019 19:24

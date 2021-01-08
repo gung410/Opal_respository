@@ -1,0 +1,163 @@
+using System;
+using cx.datahub.scheduling.jobs.shared;
+using FluentValidation.AspNetCore;
+using Hangfire;
+using Hangfire.SqlServer;
+using IdentityModel.Client;
+using IdentityServer4.AccessTokenValidation;
+using Microservice.Content.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Thunder.Platform.AspNetCore;
+using Thunder.Platform.AspNetCore.Cors;
+using Thunder.Platform.Core.Domain.UnitOfWork.Abstractions;
+using Thunder.Platform.Core.Helpers;
+using Thunder.Platform.EntityFrameworkCore;
+using Thunder.Service.Authentication;
+using Thunder.Service.HangfireOption;
+
+namespace Microservice.Content
+{
+    public class Startup
+    {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public string ApiName { get; } = "OPAL2.0 - Content API";
+
+        public string HangFireQueueName { get; } = "content_api";
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services
+                .AddMvc(options =>
+                {
+                    options.Filters.Add<AuthorizationFilter>();
+                })
+                .AddFluentValidation()
+                .AddControllersAsServices()
+                .AddThunderJsonOptions()
+                .SetCompatibilityVersion(CompatibilityVersion.Latest)
+                .Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    var authority = _configuration["AuthSettings:AuthorityUrl"];
+
+                    // Note: internal url required https cause issue. Temporary comment out it
+                    var internalUrl = _configuration["OpalAuthorityInternalUrl"];
+
+                    // var internalUrl = string.Empty;
+                    if (string.IsNullOrEmpty(internalUrl))
+                    {
+                        internalUrl = authority;
+                    }
+
+                    options.RequireHttpsMetadata = false;
+                    options.Authority = internalUrl;
+                    options.IntrospectionDiscoveryPolicy = new DiscoveryPolicy
+                    {
+                        Authority = internalUrl,
+                        ValidateIssuerName = false
+                    };
+                    options.ApiName = _configuration["AuthSettings:IdmClientId"];
+                    options.ApiSecret = _configuration["AuthSettings:IdmClientSecret"];
+                    options.SupportedTokens = SupportedTokens.Both;
+                    options.EnableCaching = true;
+                    options.CacheDuration = TimeSpan.FromMinutes(10);
+                })
+                .Services
+                .AddThunderCors()
+                .AddThunderSwagger(ApiName, "v1");
+
+            services.Configure<MvcOptions>(mvcOptions =>
+            {
+                mvcOptions.AddThunderMvcOptions();
+            });
+
+            services.AddHangfire(configuration => configuration
+              .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+              .UseSimpleAssemblyNameTypeSerializer()
+              .UseRecommendedSerializerSettings()
+              .UseSqlServerStorage(_configuration.GetConnectionString("HangfireDb"), new SqlServerStorageOptions
+              {
+                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                  SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                  QueuePollInterval = TimeSpan.FromSeconds(15),
+                  UseRecommendedIsolationLevel = true,
+                  UsePageLocksOnDequeue = true,
+                  DisableGlobalLocks = true
+              }));
+
+            services.AddHangfireServer(options =>
+            {
+                options.ServerName = string.Format("{0}.{1}", Environment.MachineName, Guid.NewGuid().ToString());
+                options.Queues = new[] { HangFireQueueName };
+            });
+        }
+
+        public void Configure(
+            IApplicationBuilder app,
+            IDbContextResolver dbContextResolver,
+            IConnectionStringResolver connectionStringResolver)
+        {
+            dbContextResolver.InitDatabase<ContentDbContext>(
+                connectionStringResolver.GetNameOrConnectionString(new ConnectionStringResolveArgs()));
+
+            app.UseThunderExceptionHandler();
+            app.UserThunderRequestIdGenerator();
+            app.UserThunderSecurityHeaders();
+
+            app.UseMiddleware<ThunderAuthenticationMiddleware>();
+            app.UseRouting();
+            app.UseThunderCors();
+            app.UseThunderUnitOfWork();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            app.UseThunderSwagger(ApiName, "v1");
+            RegisterHangfireJobs();
+        }
+
+        private void RegisterHangfireJobs()
+        {
+            var dailyCheckingJobOption = _configuration.GetSection("DailyCheckingJobScheduleOption").Get<HangfireScheduleOption>();
+            var weeklyCheckingJobScheduleOption = _configuration.GetSection("WeeklyCheckingJobScheduleOption").Get<HangfireScheduleOption>();
+
+            TimeZoneInfo systemTimeZone = DateTimeHelper.GetSystemTimeZone(dailyCheckingJobOption.WindowTimezone, dailyCheckingJobOption.LinuxTimezone);
+
+            RecurringJob.AddOrUpdate<IDigitalContentDailyCheckingJob>(
+                t => t.ExecuteTask(null),
+                dailyCheckingJobOption.ScanSchedule,
+                queue: HangFireQueueName,
+                timeZone: systemTimeZone);
+
+            RecurringJob.AddOrUpdate<IDigitalContentWeeklyCheckingJob>(
+                t => t.ExecuteTask(null),
+                weeklyCheckingJobScheduleOption.ScanSchedule,
+                queue: HangFireQueueName,
+                timeZone: systemTimeZone);
+
+            RecurringJob.AddOrUpdate<INotifyContentByExpiredDateScanner>(
+                t => t.ExecuteTask(null),
+                dailyCheckingJobOption.ScanSchedule,
+                queue: HangFireQueueName,
+                timeZone: systemTimeZone);
+        }
+    }
+}

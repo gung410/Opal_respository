@@ -1,0 +1,392 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Provider Information' | translator }}</label>
+    <div class="form-section">
+      <div class="form-section-title-group">
+        <label class="form-section-title -required">
+          {{ 'Training Agency' | translator }}
+        </label>
+        <opal-select class="form-control -virtual"
+                     [multiple]="true"
+                     formControlName="trainingAgency"
+                     [(ngModel)]="course.trainingAgency"
+                     kendoErrorTooltip
+                     position="top"
+                     [readOnly]="asViewMode() || asViewModeForCompletingCourseForPlanning()">
+        </opal-select>
+      </div>
+      <editable [modeView]="course.isViewOnlyForField('trainingAgency', asViewMode())">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let trainingAgency of course.trainingAgency">
+            <div class="metadata-tag-text"
+                 *ngIf="trainingAgency">
+              {{ trainingAgency }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.trainingAgency.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.trainingAgencyContains(TrainingAgencyType.MOE)"
+                     (change)="course.onTrainingAgencyCheckedChange($event.target.checked, TrainingAgencyType.MOE)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'MOE' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.trainingAgencyContains(TrainingAgencyType.NIE)"
+                     (change)="course.onTrainingAgencyCheckedChange($event.target.checked, TrainingAgencyType.NIE)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'NIE' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.trainingAgencyContains(TrainingAgencyType.CSC)"
+                     (change)="course.onTrainingAgencyCheckedChange($event.target.checked, TrainingAgencyType.CSC)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'CSC' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.trainingAgencyContains(TrainingAgencyType.SEAB)"
+                     (change)="course.onTrainingAgencyCheckedChange($event.target.checked, TrainingAgencyType.SEAB)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'SEAB' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group -horizontal">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [(ngModel)]="course.checkTrainingAgencyOther"
+                     [ngModelOptions]="{ standalone: true }">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Other' | translator }}</label>
+            </div>
+            <input class="provider-info-tab__training-agency-input"
+                   type="text"
+                   [readOnly]="!course.checkTrainingAgencyOther"
+                   [(ngModel)]="course.trainingAgencyOther"
+                   [ngModelOptions]="{ standalone: true }">
+          </div>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-section"
+         [hidden]="!course.trainingAgencyContains(TrainingAgencyType.NIE)">
+      <div class="form-controls-group -required">
+        <label for="ch2">{{ 'NIE Academic Groups' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('nieAcademicGroups', asViewMode())">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let nieAcademicGroup of course.nieAcademicGroups">
+              <div class="metadata-tag-text"
+                   *ngIf="nieAcademicGroup">
+                {{ course.nieAcademicGroupsDic[nieAcademicGroup] ? course.nieAcademicGroupsDic[nieAcademicGroup].label : '' }}
+              </div>
+              <span *ngIf="course.nieAcademicGroups.length === 0">- N/A</span>
+            </ng-container>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [multiple]="true"
+                         formControlName="nieAcademicGroups"
+                         [(ngModel)]="course.nieAcademicGroups"
+                         [items]="course.nieAcademicGroupItems"
+                         [valueField]="'value'"
+                         [labelField]="'label'"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section"
+         [hidden]="course.isMicrolearning || course.trainingAgencyContains(TrainingAgencyType.MOE)">
+      <div class="form-section-title-group">
+        <label class="form-section-title -required"> {{ 'Reason for Training Agency other than MOE' | translator }}</label>
+        <opal-select class="form-control -virtual"
+                     [multiple]="true"
+                     formControlName="otherTrainingAgencyReason"
+                     [(ngModel)]="course.otherTrainingAgencyReason"
+                     kendoErrorTooltip
+                     position="top"
+                     [readOnly]="asViewMode() || asViewModeForCompletingCourseForPlanning()">
+        </opal-select>
+      </div>
+      <editable [modeView]="course.isViewOnlyForField('otherTrainingAgencyReason', asViewMode())">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let otherTrainingAgencyReason of course.otherTrainingAgencyReason">
+            <div class="metadata-tag-text"
+                 *ngIf="otherTrainingAgencyReason">
+              {{ otherTrainingAgencyReasonDic[otherTrainingAgencyReason] || otherTrainingAgencyReason }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.otherTrainingAgencyReason.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.hasCheckOtherTrainingAgencyReason(OtherTrainingAgencyReasonType.Bandwidth)"
+                     (change)="course.onChangeOtherTrainingAgencyReason($event.target.checked, OtherTrainingAgencyReasonType.Bandwidth)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Bandwidth (i.e.insufficient manpower)' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.hasCheckOtherTrainingAgencyReason(OtherTrainingAgencyReasonType.Capacity)"
+                     (change)="course.onChangeOtherTrainingAgencyReason($event.target.checked, OtherTrainingAgencyReasonType.Capacity)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Capacity (expertise does not reside within the branch)' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.hasCheckOtherTrainingAgencyReason(OtherTrainingAgencyReasonType.PhysicalResources)"
+                     (change)="course.onChangeOtherTrainingAgencyReason($event.target.checked, OtherTrainingAgencyReasonType.PhysicalResources)">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Physical resources (lack of equipment or venue)' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [checked]="course.hasCheckOtherTrainingAgencyReason(OtherTrainingAgencyReasonType.OwnerDivisionAcademy)"
+                     (change)="
+                  course.onChangeOtherTrainingAgencyReason($event.target.checked, OtherTrainingAgencyReasonType.OwnerDivisionAcademy)
+                ">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Owner Divison/ Academy' | translator }}</label>
+            </div>
+          </div>
+          <div class="form-controls-group -horizontal">
+            <div class="k-checkbox-container">
+              <input class="k-checkbox"
+                     type="checkbox"
+                     [(ngModel)]="course.checkOtherTrainingAgencyReasonOther"
+                     [ngModelOptions]="{ standalone: true }">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Other' | translator }}</label>
+            </div>
+            <input class="provider-info-tab__training-agency-input"
+                   type="text"
+                   [(ngModel)]="course.otherTrainingAgencyReasonOther"
+                   [ngModelOptions]="{ standalone: true }"
+                   [readOnly]="!course.checkOtherTrainingAgencyReasonOther">
+          </div>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-section">
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Owner Division/ Academy' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('ownerDivisionIds', asViewMode())">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let ownerDivisionId of course.ownerDivisionIds">
+              <div class="metadata-tag-text"
+                   *ngIf="ownerDivisionId">
+                {{ course.departmentsDic[ownerDivisionId] ? course.departmentsDic[ownerDivisionId].departmentName : '' }}
+              </div>
+            </ng-container>
+            <span *ngIf="course.ownerDivisionIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [fetchDataFn]="fetchOwnerDivisionFn"
+                         [multiple]="true"
+                         formControlName="ownerDivisionIds"
+                         [(ngModel)]="course.ownerDivisionIds"
+                         [items]="course.ownerDivisionSelectItems"
+                         [valueField]="'id'"
+                         [labelField]="'departmentName'"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Owner Branch/ Unit' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('ownerBranchIds', asViewMode())">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let ownerBranchId of course.ownerBranchIds">
+              <div class="metadata-tag-text"
+                   *ngIf="ownerBranchId">
+                {{ course.departmentsDic[ownerBranchId] ? course.departmentsDic[ownerBranchId].departmentName : '' }}
+              </div>
+            </ng-container>
+            <span *ngIf="course.ownerBranchIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [multiple]="true"
+                         formControlName="ownerBranchIds"
+                         [fetchDataLogicDependenciesInput]="[course.ownerDivisionIds]"
+                         [fetchDataFn]="fetchOwnerBranchFn"
+                         [(ngModel)]="course.ownerBranchIds"
+                         [items]="course.ownerBranchSelectItems"
+                         [valueField]="'id'"
+                         [labelField]="'departmentName'"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Partnering Organisation' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('partnerOrganisationIds', asViewMode())">
+          <ng-template editableViewMode="">
+            <ng-container *ngFor="let partnerOrganisationId of course.partnerOrganisationIds">
+              <div class="metadata-tag-text"
+                   *ngIf="partnerOrganisationId">
+                {{ course.departmentsDic[partnerOrganisationId] ? course.departmentsDic[partnerOrganisationId].departmentName : '' }}
+              </div>
+            </ng-container>
+            <span *ngIf="course.partnerOrganisationIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [multiple]="true"
+                         [fetchDataFn]="fetchPartnerOrganizationFn"
+                         formControlName="partnerOrganisationIds"
+                         [(ngModel)]="course.partnerOrganisationIds"
+                         [items]="course.partneringSelectItems"
+                         [valueField]="'id'"
+                         [labelField]="'departmentName'"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group -required"
+           [hidden]="course.isMicrolearning">
+        <label for="ch2">{{ 'Name of MOE officer (Owner division)' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('moeOfficerId', asViewMode())">
+          <ng-template editableViewMode="">
+            <div class="metadata-tag-text">
+              {{ course.usersDic[course.moeOfficerId] ? course.usersDic[course.moeOfficerId].fullName : '' }}
+            </div>
+            <span *ngIf="!course.moeOfficerId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="moeOfficerId"
+                         [(ngModel)]="course.moeOfficerId"
+                         [(items)]="course.moeOfficerItems"
+                         [fetchDataFn]="fetchMOEOfficersFn"
+                         [fetchDataLogicDependenciesInput]="course.ownerDivisionIds"
+                         [valueField]="'extId'"
+                         [labelField]="'fullName'"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group"
+           [hidden]="course.isMicrolearning">
+        <label for="ch2">{{ 'Phone Number of MOE officer (Owner division)' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('moeOfficerPhoneNumber', asViewMode())">
+          <ng-template editableViewMode="">
+            {{ course.moeOfficerPhoneNumber || '- N/A' }}
+          </ng-template>
+          <ng-template editableEditMode="">
+            <input class="form-control"
+                   type="text"
+                   formControlName="moeOfficerPhoneNumber"
+                   [(ngModel)]="course.moeOfficerPhoneNumber"
+                   kendoErrorTooltip
+                   position="top">
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group -required"
+           [hidden]="course.isMicrolearning">
+        <label for="ch2">{{ 'Email of MOE officer (Owner division)' | translator }}</label>
+        <editable [modeView]="course.isViewOnlyForField('moeOfficerEmail', asViewMode())">
+          <ng-template editableViewMode="">
+            {{ course.originCourseData.moeOfficerEmail || '- N/A' }}
+          </ng-template>
+          <ng-template editableEditMode="">
+            <input class="form-control"
+                   type="text"
+                   formControlName="moeOfficerEmail"
+                   [(ngModel)]="course.moeOfficerEmail"
+                   kendoErrorTooltip
+                   position="top">
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group -required"
+           [hidden]="isPlanningVerificationRequired()">
+        <label for="ch2">{{ 'Notional Cost: (For MOE learner)' | translator }}</label>
+        <span class="alert -warning"
+              *ngIf="this.course.notionalCost > 0">
+          {{' If Notional Cost is greater than 0, Course Fee will equals 0' | translator}}</span>
+        <editable [modeView]="course.isViewOnlyForField('notionalCost', asViewMode())">
+          <ng-template editableViewMode="">
+            {{ course.notionalCost || '0' }}
+          </ng-template>
+          <ng-template editableEditMode="">
+            <kendo-numerictextbox class="form-control"
+                                  type="number"
+                                  [min]="0"
+                                  [decimals]="2"
+                                  [format]="'n2'"
+                                  autoCorrect="true"
+                                  formControlName="notionalCost"
+                                  [(ngModel)]="course.notionalCost"
+                                  kendoErrorTooltip
+                                  position="top"></kendo-numerictextbox>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group -required"
+           [hidden]="isPlanningVerificationRequired()">
+        <label for="ch2">{{ 'Course Fee per pax: (For non-MOE learner)' | translator }}</label>
+        <span class="alert -warning"
+              *ngIf="this.course.courseFee > 0">
+          {{' If Course Fee is greater than 0, Notional Cost will equals 0' | translator}}</span>
+        <editable [modeView]="asViewMode()">
+          <ng-template editableViewMode="">
+            {{ course.courseFee || '0' }}
+          </ng-template>
+          <ng-template editableEditMode="">
+            <kendo-numerictextbox class="form-control"
+                                  type="number"
+                                  [min]="0"
+                                  [decimals]="2"
+                                  [format]="'n2'"
+                                  autoCorrect="true"
+                                  formControlName="courseFee"
+                                  [(ngModel)]="course.courseFee"
+                                  kendoErrorTooltip
+                                  position="top"></kendo-numerictextbox>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+  </div>
+</form>

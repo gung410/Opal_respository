@@ -1,0 +1,53 @@
+<div class="common-filter"
+     [formGroup]="form">
+  <div class="common-filter__header">
+    <div class="common-filter__title">
+      <span>{{ 'Filter' | translator}}</span>
+    </div>
+    <div class="common-filter__group-buttons">
+      <button class="button-white-bg"
+              kendoButton
+              (click)="onClear()">{{ 'Clear' | translator }}</button>
+      <button [disabled]="actionFn == null || actionFn.applyFn == null || !hasDataChange"
+              [primary]="true"
+              kendoButton
+              (click)="onApply()">{{ 'Apply' | translator }}</button>
+    </div>
+  </div>
+  <div class="common-filter__content">
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Range of Block out Dates' | translator }}</label>
+      <div class="common-filter__date-group">
+        <kendo-datepicker class="form-control"
+                          #createdDateFromPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="createdDateFrom"
+                          [(ngModel)]="blockoutDateFilterVm.data.createdDateFrom"
+                          (focus)="createdDateFromPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+        <span class="common-filter__date-range-symbol">-</span>
+        <kendo-datepicker class="form-control"
+                          #createdDateToPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="createdDateTo"
+                          [(ngModel)]="blockoutDateFilterVm.data.createdDateTo"
+                          (focus)="createdDateToPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+      </div>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="blockoutDateFilterVm.serviceSchemeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="blockoutDateFilterVm.data.serviceSchemes"
+                   formControlName="serviceSchemes"></opal-select>
+    </div>
+  </div>
+</div>

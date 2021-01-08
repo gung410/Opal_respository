@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.AssignmentDetailView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:course="clr-namespace:LearnerApp.Models.Course;assembly=LearnerApp"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="{Binding Title}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:AssignmentDetailViewModel"
+    BackgroundColor="#E5E5E5"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabBtn" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Padding" Value="5,10,5,10" />
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="HeightRequest" Value="42" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+            <Style x:Key="TabLineBtn" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="#1DCEC1" />
+                <Setter Property="HeightRequest" Value="8" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout IsVisible="{Binding IsRefreshing, Converter={StaticResource InverseBoolConverter}}" Spacing="0">
+                <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                    <!--  TABS CONTROL  -->
+                    <StackLayout
+                        BackgroundColor="White"
+                        Orientation="Horizontal"
+                        Spacing="0">
+                        <StackLayout x:Name="InformationTab" Spacing="0">
+                            <Button
+                                Clicked="InformationTab_Clicked"
+                                Style="{StaticResource TabBtn}"
+                                Text="INFORMATION" />
+                            <BoxView
+                                x:Name="InformationTabLine"
+                                IsVisible="True"
+                                Style="{StaticResource TabLineBtn}" />
+                        </StackLayout>
+                        <StackLayout x:Name="CommentTab" Spacing="0">
+                            <Button
+                                Clicked="Comment_Clicked"
+                                Style="{StaticResource TabBtn}"
+                                Text="COMMENTS" />
+                            <BoxView
+                                x:Name="CommentTabLine"
+                                IsVisible="False"
+                                Style="{StaticResource TabLineBtn}" />
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+                <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshingForRefreshView}">
+                    <ScrollView x:Name="ScrollStack" VerticalOptions="FillAndExpand">
+                        <StackLayout x:Name="LearningInformationArea" VerticalOptions="FillAndExpand">
+                            <AbsoluteLayout BackgroundColor="AliceBlue">
+                                <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,200" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
+                                    <ffimagesvg:SvgCachedImage
+                                        Aspect="AspectFit"
+                                        HeightRequest="80"
+                                        HorizontalOptions="Center"
+                                        Source="assignments.svg"
+                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="60" />
+                                </StackLayout>
+                                <StackLayout
+                                    AbsoluteLayout.LayoutBounds="0,0,1,60"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                                    Orientation="Horizontal">
+                                    <Frame
+                                        x:Name="Status"
+                                        Margin="20,0,0,0"
+                                        Padding="10"
+                                        BorderColor="Transparent"
+                                        CornerRadius="6"
+                                        HasShadow="False"
+                                        VerticalOptions="Center"
+                                        WidthRequest="120">
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="12"
+                                                Text="{Binding Status, Converter={StaticResource AssignmentStatusConverter}}"
+                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="{Binding Status, Converter={StaticResource AssignmentStatusBackgroundColorConverter}}"
+                                                CornerRadius="5"
+                                                HasShadow="False"
+                                                HeightRequest="10"
+                                                HorizontalOptions="EndAndExpand"
+                                                VerticalOptions="Center"
+                                                WidthRequest="10" />
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </AbsoluteLayout>
+                            <StackLayout Margin="10,-30,10,10">
+                                <StackLayout Spacing="10">
+                                    <!--  ENROLL  -->
+                                    <controls:LearnerContentFrame>
+                                        <StackLayout>
+                                            <!--  LEARNING STATUS  -->
+                                            <StackLayout>
+                                                <Button
+                                                    BackgroundColor="{StaticResource MainBodyTextColor}"
+                                                    Command="{Binding PlayAssignmentCommand}"
+                                                    CornerRadius="6"
+                                                    FontFamily="{StaticResource RobotoRegular}"
+                                                    FontSize="24"
+                                                    IsVisible="{Binding IsVisibleDoAssignment}"
+                                                    Text="{Binding AssignmentDetail, Converter={StaticResource AssignmentLearningStatusConverter}}"
+                                                    TextColor="White" />
+                                            </StackLayout>
+
+                                            <!--  ASSIGNMENT NAME  -->
+                                            <Label FontSize="{StaticResource BigSize}" Text="{Binding Title}" />
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  INFORMATION  -->
+                                    <controls:LearnerContentFrame x:Name="InformationStack">
+                                        <StackLayout Spacing="15">
+                                            <StackLayout>
+                                                <StackLayout Spacing="15">
+
+                                                    <!--  INFORMATION  -->
+                                                    <StackLayout>
+                                                        <Label Style="{StaticResource TitleGroup}" Text="INFORMATION" />
+
+                                                        <!--  Title  -->
+                                                        <StackLayout Spacing="0">
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoBold}"
+                                                                FontSize="{StaticResource BaseFontSize}"
+                                                                Text="Title"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                            <Label LineBreakMode="TailTruncation" Text="{Binding Title}" />
+                                                            <BoxView
+                                                                Margin="0,10,0,0"
+                                                                BackgroundColor="#D8DCE6"
+                                                                HeightRequest="1"
+                                                                HorizontalOptions="FillAndExpand" />
+                                                        </StackLayout>
+
+                                                        <!--  Start Date  -->
+                                                        <StackLayout Spacing="0">
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoBold}"
+                                                                FontSize="{StaticResource BaseFontSize}"
+                                                                Text="Start date"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                            <Label LineBreakMode="TailTruncation" Text="{Binding StartDate, Converter={StaticResource ClassRunDateTimeConverter}}" />
+                                                            <BoxView
+                                                                Margin="0,10,0,0"
+                                                                BackgroundColor="#D8DCE6"
+                                                                HeightRequest="1"
+                                                                HorizontalOptions="FillAndExpand" />
+                                                        </StackLayout>
+
+                                                        <!--  Due Date  -->
+                                                        <StackLayout Spacing="0">
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoBold}"
+                                                                FontSize="{StaticResource BaseFontSize}"
+                                                                Text="End date"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                            <Label LineBreakMode="TailTruncation" Text="{Binding EndDate, Converter={StaticResource ClassRunDateTimeConverter}}" />
+                                                            <BoxView
+                                                                Margin="0,10,0,0"
+                                                                BackgroundColor="#D8DCE6"
+                                                                HeightRequest="1"
+                                                                HorizontalOptions="FillAndExpand" />
+                                                        </StackLayout>
+
+                                                        <!--  Score  -->
+                                                        <StackLayout Spacing="0">
+                                                            <Label
+                                                                FontFamily="{StaticResource RobotoBold}"
+                                                                FontSize="{StaticResource BaseFontSize}"
+                                                                Text="Score"
+                                                                TextColor="{StaticResource MainBodyTextColor}" />
+                                                            <Label LineBreakMode="TailTruncation" Text="{Binding QuizAnswer, Converter={StaticResource AssignmentScoreConverter}}" />
+                                                            <BoxView
+                                                                Margin="0,10,0,0"
+                                                                BackgroundColor="#D8DCE6"
+                                                                HeightRequest="1"
+                                                                HorizontalOptions="FillAndExpand" />
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+
+                                    <!--  SHOW  LIST COMMENTS  -->
+                                    <controls:LearnerContentFrame x:Name="CommentStack">
+                                        <StackLayout>
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="{StaticResource BaseButtonFontSize}"
+                                                Text="{Binding TotalComment}"
+                                                TextColor="{StaticResource SecondaryTextColor}" />
+
+                                            <StackLayout Spacing="10">
+                                                <Frame
+                                                    Padding="5"
+                                                    BorderColor="LightGray"
+                                                    CornerRadius="4"
+                                                    HasShadow="False"
+                                                    IsClippedToBounds="true">
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Frame
+                                                            Padding="0"
+                                                            CornerRadius="20"
+                                                            HasShadow="False"
+                                                            IsClippedToBounds="True">
+                                                            <forms:CachedImage
+                                                                Aspect="AspectFill"
+                                                                CacheDuration="0"
+                                                                CacheType="None"
+                                                                HeightRequest="40"
+                                                                Source="{Binding Avatar}"
+                                                                WidthRequest="40" />
+                                                        </Frame>
+
+                                                        <controls:CustomEntry
+                                                            HorizontalOptions="FillAndExpand"
+                                                            Placeholder="Add comment"
+                                                            PlaceholderColor="LightGray"
+                                                            Text="{Binding Comment, Mode=TwoWay}" />
+                                                        <StackLayout WidthRequest="40">
+                                                            <StackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer Command="{Binding AddCommentCommand}" />
+                                                            </StackLayout.GestureRecognizers>
+                                                            <ffimagesvg:SvgCachedImage
+                                                                HeightRequest="30"
+                                                                Source="send.svg"
+                                                                VerticalOptions="CenterAndExpand"
+                                                                WidthRequest="30" />
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </StackLayout>
+
+                                            <controls:RepeatableStack
+                                                BackgroundColor="LightGray"
+                                                IsVisible="{Binding IsVisibleListComment}"
+                                                ItemsSource="{Binding CommentCollection}"
+                                                Orientation="Vertical"
+                                                Spacing="1">
+                                                <controls:RepeatableStack.ItemTemplate>
+                                                    <DataTemplate x:DataType="course:Comment">
+                                                        <StackLayout Padding="10" BackgroundColor="White">
+                                                            <StackLayout Orientation="Horizontal">
+                                                                <StackLayout Margin="1">
+                                                                    <Frame
+                                                                        Padding="0"
+                                                                        BorderColor="#D8D8D8"
+                                                                        CornerRadius="25"
+                                                                        HasShadow="False"
+                                                                        HeightRequest="50"
+                                                                        IsClippedToBounds="True">
+                                                                        <Image
+                                                                            Aspect="AspectFill"
+                                                                            Source="{Binding AvatarUrl, Converter={StaticResource AvatarUrlConverter}}"
+                                                                            WidthRequest="50" />
+                                                                    </Frame>
+                                                                </StackLayout>
+                                                                <StackLayout Spacing="0">
+                                                                    <StackLayout Spacing="0">
+                                                                        <Label
+                                                                            FontFamily="{StaticResource RobotoBold}"
+                                                                            FontSize="16"
+                                                                            Text="{Binding FullName}"
+                                                                            TextColor="{StaticResource MainBodyTextColor}" />
+                                                                        <Label
+                                                                            FontSize="{StaticResource LittleSize}"
+                                                                            Text="{Binding DepartmentName}"
+                                                                            TextColor="#8799BA" />
+                                                                        <Label
+                                                                            FontSize="{StaticResource LittleSize}"
+                                                                            Text="{Binding CreatedDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+                                                                            TextColor="#8799BA" />
+                                                                    </StackLayout>
+                                                                </StackLayout>
+                                                            </StackLayout>
+                                                            <Label Text="{Binding Content}" />
+                                                        </StackLayout>
+                                                    </DataTemplate>
+                                                </controls:RepeatableStack.ItemTemplate>
+                                            </controls:RepeatableStack>
+                                        </StackLayout>
+                                    </controls:LearnerContentFrame>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </RefreshView>
+            </StackLayout>
+            <ContentView BackgroundColor="White" IsVisible="{Binding IsRefreshing}">
+                <shimmer:LearnerShimmer
+                    HeightRequest="200"
+                    Type="Video"
+                    VerticalOptions="StartAndExpand" />
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

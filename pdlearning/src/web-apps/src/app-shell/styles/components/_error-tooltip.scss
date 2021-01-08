@@ -1,0 +1,11 @@
+.error-tooltip {
+  .k-tooltip-content {
+    @extend %alert;
+    @extend %alert-danger;
+    border: 0;
+  }
+
+  .k-callout {
+    color: $red;
+  }
+}

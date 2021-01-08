@@ -1,0 +1,77 @@
+<div class="learning-bookmarks"
+     *ngIf="!isShowBookmarkDetail && !isShowBookmarkDetailItems">
+  <div class="course-bookmark">
+    <div>
+      <i class="icon save-outline"></i>
+    </div>
+    <div class="bookmark-info"
+         (click)="onViewCoursesBookMark()">
+      <span class="title">{{'Courses' | translator}}</span>
+      <span class="amount">({{totalCoursesBookmark}})</span>
+    </div>
+  </div>
+  <div class="course-bookmark">
+    <div>
+      <i class="icon save-outline"></i>
+    </div>
+    <div class="bookmark-info"
+         (click)="onViewCoursesMicrolearningBookMark()">
+      <span class="title">{{'Microlearning' | translator}}</span>
+      <span class="amount">({{totalCoursesMicrolearningBookmark}})</span>
+    </div>
+  </div>
+  <div class="digital-content-bookmark">
+    <div>
+      <i class="icon save-outline"></i>
+    </div>
+    <div class="bookmark-info"
+         (click)="onViewDigitalContentsBookMark()">
+      <span class="title">{{'Digital Content'  | translator}}</span>
+      <span class="amount">({{totalDigitalContentsBookmark}})</span>
+    </div>
+  </div>
+  <div class="learning-paths-bookmark">
+    <div>
+      <i class="icon save-outline"></i>
+    </div>
+    <div class="bookmark-info"
+         (click)="onViewLearningPathsBookMark()">
+      <span class="title">{{'Learning Paths' | translator}}</span>
+      <span class="amount">({{totalLearningPathsBookmark}})</span>
+    </div>
+  </div>
+  <div class="learning-paths-bookmark">
+    <div>
+      <i class="icon save-outline"></i>
+    </div>
+    <div class="bookmark-info"
+         (click)="onViewCommunitiesBookMark()">
+      <span class="title">{{'Communities' | translator}}</span>
+      <span class="amount">({{totalCommunitiesBookmark}})</span>
+    </div>
+  </div>
+</div>
+
+<learning-card-list #bookmarkList
+                    *ngIf="isShowBookmarkDetail && !isShowBookmarkDetailItems"
+                    totalTextClass="hidden"
+                    [title]="bookmarkDetailTitle | translator"
+                    [hasBackButton]="true"
+                    [showTitle]="true"
+                    [showLongCard]="currentBookmarkType!==learningType.LearningPath"
+                    [getPagedLearningItemsCallback]="getPagedBookmarkItemsCallback.bind(this)"
+                    (backButtonClick)="onBackBookmarkDetail($event)"
+                    (learningCardClick)="onLearningCardClick($event)"></learning-card-list>
+
+
+<learning-card-list [title]="currentLearningPath.title"
+                    #learningPathItemsList
+                    *ngIf="currentLearningPath && isShowBookmarkDetailItems"
+                    totalTextClass="hidden"
+                    [hasBackButton]="true"
+                    [showTitle]="true"
+                    [showLongCard]="true"
+                    [getPagedLearningItemsCallback]="getPagedLearningPathItemsCallback.bind(this)"
+                    (backButtonClick)="onLearningPathItemsBackClick($event)"
+                    (learningCardClick)="onLearningPathDetailItemClick($event)">
+</learning-card-list>

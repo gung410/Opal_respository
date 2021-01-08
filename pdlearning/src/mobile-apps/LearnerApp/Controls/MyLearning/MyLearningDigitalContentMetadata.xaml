@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.MyLearning.MyLearningDigitalContentMetadata"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:LearnerApp.Models;assembly=LearnerApp"
+    xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:telerikTreeView="clr-namespace:Telerik.XamarinForms.DataControls.TreeView;assembly=Telerik.XamarinForms.DataControls"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <telerikTreeView:LevelToMarginConverter x:Key="levelToMarginConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="20">
+        <!--  INFORMATION  -->
+        <StackLayout Spacing="10">
+            <Label
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="16"
+                Text="INFORMATION"
+                TextColor="#8799BA" />
+
+            <!--  Title  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Title"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="TitleValue" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Description  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Description"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="DescriptionValue" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Type  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Type"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <StackLayout Orientation="Horizontal">
+                    <ffimagesvg:SvgCachedImage
+                        x:Name="TypeImageValue"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="15" />
+                    <Label x:Name="TypeValue" LineBreakMode="TailTruncation" />
+                </StackLayout>
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Upload date  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Upload Date"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="UploadDateValue" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Number Of views  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Number of views"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="NumberOfViews" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Number Of downloads  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Number of downloads"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="NumberOfDownloads" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+            <!--  Number Of shares  -->
+            <StackLayout Spacing="0">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="{StaticResource BaseFontSize}"
+                    Text="Number of shares"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label x:Name="NumberOfShares" LineBreakMode="TailTruncation" />
+                <BoxView
+                    Margin="0,10,0,0"
+                    BackgroundColor="#D8DCE6"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+        </StackLayout>
+
+        <StackLayout
+            x:Name="HiddenInformationStack"
+            IsVisible="False"
+            Spacing="20">
+            <!--  METADATA  -->
+            <StackLayout Spacing="10">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="16"
+                    Text="Metadata" />
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="PD Opportunity Type"
+                        TextColor="#8799BA" />
+                    <Label x:Name="PdOpportunityTypeValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Service Schemes"
+                        TextColor="#8799BA" />
+                    <Label x:Name="ServiceSchemesValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Main Subject Area"
+                        TextColor="#8799BA" />
+                    <Label x:Name="MainSubjectAreaValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Course Levels"
+                        TextColor="#8799BA" />
+                    <Label x:Name="CourseLevelValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+            </StackLayout>
+
+            <!--  TARGET AUDIENCE  -->
+            <StackLayout Spacing="10">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="16"
+                    Text="Target Audience" />
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Developmental Roles"
+                        TextColor="#8799BA" />
+                    <telerikDataControls:RadTreeView
+                        x:Name="DevRoleTreeTags"
+                        ItemCollapsed="RadTreeView_ItemCollapsed"
+                        ItemExpanded="RadTreeView_ItemExpanded"
+                        VerticalOptions="Start">
+                        <telerikDataControls:TreeViewDescriptor
+                            DisplayMemberPath="Name"
+                            ItemsSourcePath="Children"
+                            TargetType="{x:Type model:MetadataTag}">
+                            <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout
+                                        Margin="{Binding Path=Level, Converter={StaticResource levelToMarginConverter}}"
+                                        Padding="5"
+                                        Orientation="Horizontal">
+                                        <telerikTreeView:ExpandCollapseIndicator
+                                            FontSize="Medium"
+                                            IsExpanded="{Binding Path=IsExpanded}"
+                                            IsLeaf="{Binding Path=IsLeaf}"
+                                            IsLoadOnDemandEnabled="{Binding Path=IsLoadOnDemandEnabled}"
+                                            IsLoading="{Binding Path=IsLoading}"
+                                            VerticalTextAlignment="Center" />
+                                        <telerikTreeView:ItemText Text="{Binding Item.Name}" VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                        </telerikDataControls:TreeViewDescriptor>
+                    </telerikDataControls:RadTreeView>
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Pre Requisites"
+                        TextColor="#8799BA" />
+                    <Label x:Name="PreRequisitesValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+            </StackLayout>
+
+            <!--  CONTENT RELATED  -->
+            <StackLayout Spacing="10">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="16"
+                    Text="Content is related to" />
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Subject Areas and General Keywords"
+                        TextColor="#8799BA" />
+                    <telerikDataControls:RadTreeView
+                        x:Name="MainSubjectAreaTreeTags"
+                        ItemCollapsed="RadTreeView_ItemCollapsed"
+                        ItemExpanded="RadTreeView_ItemExpanded"
+                        VerticalOptions="Start">
+                        <telerikDataControls:TreeViewDescriptor
+                            DisplayMemberPath="Name"
+                            ItemsSourcePath="Children"
+                            TargetType="{x:Type model:MetadataTag}">
+                            <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout
+                                        Margin="{Binding Path=Level, Converter={StaticResource levelToMarginConverter}}"
+                                        Padding="5"
+                                        Orientation="Horizontal">
+                                        <telerikTreeView:ExpandCollapseIndicator
+                                            FontSize="Medium"
+                                            IsExpanded="{Binding Path=IsExpanded}"
+                                            IsLeaf="{Binding Path=IsLeaf}"
+                                            IsLoadOnDemandEnabled="{Binding Path=IsLoadOnDemandEnabled}"
+                                            IsLoading="{Binding Path=IsLoading}"
+                                            VerticalTextAlignment="Center" />
+                                        <telerikTreeView:ItemText Text="{Binding Item.Name}" VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                        </telerikDataControls:TreeViewDescriptor>
+                    </telerikDataControls:RadTreeView>
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Learning Frameworks"
+                        TextColor="#8799BA" />
+                    <Label x:Name="LearningframeworkValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Dimensions and Learning Areas"
+                        TextColor="#8799BA" />
+                    <telerikDataControls:RadTreeView
+                        x:Name="DimensionsLearningAreaTreeTags"
+                        ItemCollapsed="RadTreeView_ItemCollapsed"
+                        ItemExpanded="RadTreeView_ItemExpanded"
+                        VerticalOptions="Start">
+                        <telerikDataControls:TreeViewDescriptor
+                            DisplayMemberPath="Name"
+                            ItemsSourcePath="Children"
+                            TargetType="{x:Type model:MetadataTag}">
+                            <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout
+                                        Margin="{Binding Path=Level, Converter={StaticResource levelToMarginConverter}}"
+                                        Padding="5"
+                                        Orientation="Horizontal">
+                                        <telerikTreeView:ExpandCollapseIndicator
+                                            FontSize="Medium"
+                                            IsExpanded="{Binding Path=IsExpanded}"
+                                            IsLeaf="{Binding Path=IsLeaf}"
+                                            IsLoadOnDemandEnabled="{Binding Path=IsLoadOnDemandEnabled}"
+                                            IsLoading="{Binding Path=IsLoading}"
+                                            VerticalTextAlignment="Center" />
+                                        <telerikTreeView:ItemText Text="{Binding Item.Name}" VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                        </telerikDataControls:TreeViewDescriptor>
+                    </telerikDataControls:RadTreeView>
+                </StackLayout>
+
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Objectives/Outcomes"
+                        TextColor="#8799BA" />
+                    <Label x:Name="ObjectivesOutcomesValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+            </StackLayout>
+
+            <!--  RIGHTS  -->
+            <StackLayout Spacing="10">
+                <Label
+                    FontFamily="{StaticResource RobotoBold}"
+                    FontSize="16"
+                    Text="Rights" />
+
+                <!--  Ownership  -->
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Ownership"
+                        TextColor="#8799BA" />
+                    <Label x:Name="OwnershipValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <!--  License Type  -->
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="License Type"
+                        TextColor="#8799BA" />
+                    <Label x:Name="LicenseTypeValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <!--  Permissions/Terms of Use  -->
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Permissions/Term of Use"
+                        TextColor="#8799BA" />
+                    <Label x:Name="PermissionsValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <!--  License Territory  -->
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="License Territory"
+                        TextColor="#8799BA" />
+                    <Label x:Name="LicenseTerritoryValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+
+                <!--  Copyright Owner/Publisher  -->
+                <StackLayout Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Text="Copyright Owner/Publisher"
+                        TextColor="#8799BA" />
+                    <Label x:Name="CopyrightOwnerValue" FontFamily="{StaticResource RobotoRegular}" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+
+        <!--  SHOW MORE  -->
+        <StackLayout>
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ShowMoreInformation_Tapped" />
+            </StackLayout.GestureRecognizers>
+            <Label
+                x:Name="ShowMoreLabel"
+                FontFamily="{StaticResource RobotoBold}"
+                FontSize="14"
+                HorizontalOptions="CenterAndExpand"
+                Text="SHOW MORE"
+                TextColor="{StaticResource MainBodyTextColor}"
+                TextDecorations="Underline" />
+        </StackLayout>
+
+    </StackLayout>
+</ContentView>

@@ -1,0 +1,9 @@
+{
+  "builders": {
+    "browser": {
+      "implementation": "./lib/browser",
+      "schema": "./lib/browser/schema.json",
+      "description": "Build browser app extended with custom webpack config"
+    }
+  }
+}

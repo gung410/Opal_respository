@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <div class="overal"
+       *ngIf="reviews?.totalCount>0">
+    Overal rate
+    <div class="review-item__rating-stars">
+      <i class="icon tiny {{ math.round(overalRate) < 1 ? 'star-outline' : 'star' }}"></i>
+      <i class="icon tiny {{ math.round(overalRate) >= 2 ? 'star' : 'star-outline' }}"></i>
+      <i class="icon tiny {{ math.round(overalRate) === 3 ? 'star' : 'star-outline' }}"></i>
+    </div>
+    <div class="rate">
+      {{overalRate|number:'1.1-1'}}
+    </div>
+    <div class="vote">
+      ({{reviews?.totalCount}} votes)
+    </div>
+  </div>
+</div>
+
+<kendo-grid class="column flex"
+            #grid
+            [hideHeader]="true"
+            [data]="gridView"
+            [pageable]="true"
+            [pageSize]="pageSize"
+            [skip]="pageNumber"
+            (pageChange)="onPageChange($event)">
+  <kendo-grid-column [title]="''"
+                     field="content">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <div class="comment-item">
+        <div class="comment-item__avatar circle"
+             [ngClass]="{'has-img': dataItem.user.avatarUrl}"
+             [ngStyle]="{ 'background-image': 'url(' + dataItem.user.avatarUrl + ')'}">
+          <span class="name">{{dataItem.user.firstName[0] + (dataItem.user.lastName? dataItem.user.lastName[0] : '') }}</span>
+        </div>
+        <div class="comment-item__data">
+          <div class="comment-item__data__header">
+            <div class="name">
+              <strong>{{ dataItem.user.fullName }}</strong></div>
+            <div class="review-item__rating-container">
+              <div class="review-item__rating-stars">
+                <i class="icon tiny {{ dataItem.rate < 1 ? 'star-outline' : 'star' }}"></i>
+                <i class="icon tiny {{ dataItem.rate >= 2 ? 'star' : 'star-outline' }}"></i>
+                <i class="icon tiny {{ dataItem.rate === 3 ? 'star' : 'star-outline' }}"></i>
+              </div>
+              <div>
+                {{dataItem.rate}}
+              </div>
+              <div class="review-item__date">
+                {{ dataItem.createdDate | date:'dd/MM/yyyy HH:mm'}}
+              </div>
+            </div>
+          </div>
+          <div class="comment-item__data__content">
+            <read-more [content]="dataItem.commentContent"
+                       [maxDisplayChar]="210"></read-more>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

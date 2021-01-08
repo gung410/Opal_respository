@@ -1,0 +1,12 @@
+<div class="question-bank-preview-dialog ccpm-dialog">
+  <div class="dialog-body">
+    <form-question-editor class="form-editor__question-item"
+                          [data]="question"
+                          [isViewMode]="true"></form-question-editor>
+  </div>
+  <div class="dialog-footer">
+    <button class="personal-file-preview__button"
+            (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+  </div>
+</div>

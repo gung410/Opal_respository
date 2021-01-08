@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The entry path. E.g., @angular/core, ./app/main",
+      "default": ""
+    },
+    "ngmodule": {
+      "type": "string",
+      "description": "The angular module path like loadChildren. E.g., app.module#AppModule",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "description": "The plugin name. E.g., ng.core",
+      "default": ""
+    }
+  }
+}

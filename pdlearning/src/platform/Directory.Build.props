@@ -1,0 +1,23 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <Product>Thunder Platform</Product>
+
+    <Authors>Toan Nguyen</Authors>
+    <Copyright>© 2019-2020 Toan Nguyen. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <!-- Source code settings -->
+  <PropertyGroup>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+    <RepositoryUrl>https://github.com/thunder-platform/core</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <LangVersion>8.0</LangVersion>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\ThunderPlatform.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.LearningContentView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:LearnerApp.Controls"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.Learner"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:digitalContentPlayer="clr-namespace:LearnerApp.Controls.DigitalContentPlayer;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Shell.NavBarIsVisible="False"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    ios:Page.UseSafeArea="False"
+    x:DataType="viewModels:LearningContentViewModel"
+    BackgroundColor="White">
+
+    <StackLayout
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <StackLayout Spacing="0" x:Name="HeaderSection" Padding="10,10,10,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout
+                    Grid.Column="0"
+                    HeightRequest="30"
+                    VerticalOptions="Center"
+                    WidthRequest="30">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CloseCommand}" Tapped="Closed_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <ffimagesvg:SvgCachedImage
+                        Margin="0,5,0,5"
+                        HeightRequest="20"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Source="close.svg"
+                        WidthRequest="20" />
+                </StackLayout>
+                <StackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="5">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource LargerSize}"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding CurrentLectureTitle}"
+                        TextColor="#313552"
+                        VerticalOptions="CenterAndExpand" />
+                    <ffimagesvg:SvgCachedImage
+                        Aspect="Fill"
+                        HeightRequest="12"
+                        HorizontalOptions="CenterAndExpand"
+                        IsVisible="{Binding IsVisibleDownload}"
+                        Source="download.svg"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="12" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DownloadCommand}" NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Grid>
+            <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                <StackLayout WidthRequest="100">
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding BackCommand}"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource LargeSize}"
+                        HeightRequest="40"
+                        IsEnabled="{Binding IsEnableBackBtn}"
+                        IsVisible="{Binding IsVisibleBackBtn}"
+                        Text="Prev"
+                        TextColor="{StaticResource MainBodyTextColor}"
+                        WidthRequest="100" />
+                </StackLayout>
+                <StackLayout
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsVisibleNextBtn}"
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LectureSelectionCommand}" NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource MediumSize}"
+                        Text="{Binding LectureIndexLbl}"
+                        VerticalOptions="CenterAndExpand" />
+                    <ffimagesvg:SvgCachedImage
+                        HeightRequest="10"
+                        Source="participation_down.svg"
+                        WidthRequest="15" />
+                </StackLayout>
+                <StackLayout WidthRequest="100">
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding NextCommand}"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="{StaticResource LargeSize}"
+                        HeightRequest="40"
+                        IsEnabled="{Binding IsEnableNextBtn}"
+                        IsVisible="{Binding IsVisibleNextBtn}"
+                        Text="{Binding NextLectureBtnText}"
+                        TextColor="{StaticResource MainBodyTextColor}"
+                        WidthRequest="100" />
+                </StackLayout>
+            </StackLayout>
+            <ProgressBar Progress="{Binding ProgressValue}" ProgressColor="#1DCEC1" />
+        </StackLayout>
+
+        <StackLayout
+            IsVisible="{Binding IsVisibleLearningContentSelection, Converter={StaticResource InverseBoolConverter}}"
+            VerticalOptions="FillAndExpand">
+            <digitalContentPlayer:DigitalContentPlayer
+                x:Name="DigitalContentPlayer"
+                BrokenLinkCommand="{Binding BrokenLinkReportCommand}"
+                Data="{Binding PlayerData}"
+                IsVisible="{Binding IsVisibleWebviewCard}"
+                VerticalOptions="FillAndExpand" />
+
+            <ContentView HeightRequest="3" x:Name="ProgressBarSection">
+                <ProgressBar
+                    Opacity="{Binding IsDownloading, Converter={StaticResource OpacityVisibleConverter}}"
+                    Progress="{Binding ProgressBarDownload}"
+                    ProgressColor="CornflowerBlue" />
+            </ContentView>
+
+            <controls:LearningOpportunityFeedbackCard
+                Data="{Binding LearningOpportunityFeedbackTransfer}"
+                IsVisible="{Binding IsVisibleWebviewCard, Converter={StaticResource InverseBoolConverter}}"
+                VerticalOptions="FillAndExpand" />
+        </StackLayout>
+
+        <controls:LearningContentSelectionLectureCard
+            x:Name="LearningContentSelectionLectureStack"
+            IsVisible="{Binding IsVisibleLearningContentSelection}"
+            LectureItems="{Binding Lectures}"
+            MyLecturesInfoItems="{Binding MyLecturesInfo}"
+            VerticalOptions="FillAndExpand" />
+    </StackLayout>
+</common:BaseLearnerContentPage>

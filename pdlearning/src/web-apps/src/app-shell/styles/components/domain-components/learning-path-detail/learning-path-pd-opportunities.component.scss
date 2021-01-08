@@ -1,0 +1,16 @@
+learning-path-pd-opportunities {
+  .learning-path-basic-info-tab {
+    &__pd-opportunities-select {
+      max-width: 85%;
+      margin-right: 15px;
+    }
+  }
+}
+
+.pd-opportunities-container {
+  &__add-pd-button {
+    display: inline-block;
+    width: fit-content;
+    min-width: 240px;
+  }
+}

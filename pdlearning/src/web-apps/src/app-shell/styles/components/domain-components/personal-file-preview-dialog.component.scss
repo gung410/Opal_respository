@@ -1,0 +1,83 @@
+.personal-file-preview-dialog {
+  width: 90vw;
+  min-height: 90vh;
+  box-sizing: border-box;
+  max-width: 100%;
+
+  &__file-name {
+    display: inline-block;
+    max-width: 80%;
+    padding: 0 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+
+.personal-file-preview {
+  display: flex;
+  justify-content: center;
+  background-color: $color-white-smoke;
+  padding: 1rem;
+
+  &,
+  &__container {
+    width: 100%;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+
+    &.--document,
+    &.--scorm {
+      display: block;
+      height: auto;
+    }
+
+    &.--image {
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__scorm-player {
+    width: 100%;
+  }
+
+  & * {
+    white-space: normal;
+  }
+}
+
+.personal-file-indicator {
+  padding: 30px;
+}
+
+.personal-file-info {
+  display: flex;
+  align-items: center;
+  margin-left: 2.5rem;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-border;
+
+  &__file-name {
+    flex-shrink: 0;
+    width: 200px;
+  }
+
+  &__file-size {
+    font-weight: bold;
+    word-break: break-word;
+  }
+}

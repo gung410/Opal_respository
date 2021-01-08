@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  webinar-recorder:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    container_name: ${ENVIRONMENT_NAME}-webinar-playback-recorder-${PROJECT_NAME}
+    restart: always
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: awslogs-webinar
+        awslogs-region: ap-southeast-1
+        awslogs-stream-prefix: webinar-recorder
+    ports:
+      - 80:80
+    volumes:
+      - webinar-efs-volume:/data/
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default
+volumes:
+  webinar-efs-volume:

@@ -1,0 +1,185 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Copyrights' | translator }}</label>
+    <div class="form-section">
+      <label class="form-section-title"> {{ 'Licence Permissions and Terms of Use' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('allowPersonalDownload', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.allowPersonalDownload">
+            {{ 'Download for personal reference only' | translator }}
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="allowPersonalDownload"
+                     [checked]="course.allowPersonalDownload"
+                     (change)="course.setAllowPersonalDownload($event.target.checked)"
+                     kendoErrorTooltip
+                     position="top">
+              <label class="k-checkbox-label"
+                     for="ch2">{{ 'Download for personal reference only' | translator }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <editable [modeView]="course.isViewOnlyForField('allowNonCommerInMOEReuseWithModification', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.allowNonCommerInMOEReuseWithModification">
+            {{ 'Reuse without modification for non-commercial purpose in MOE schools / divisions only' | translator }}
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="allowNonCommerInMOEReuseWithModification"
+                     [checked]="course.allowNonCommerInMOEReuseWithModification"
+                     (change)="course.setAllowNonCommerInMOEReuseWithModification($event.target.checked)"
+                     kendoErrorTooltip
+                     position="top">
+              <label for="ch2">{{
+                'Reuse without modification for non-commercial purpose in MOE schools / divisions only' | translator
+              }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <editable [modeView]="course.isViewOnlyForField('allowNonCommerReuseWithModification', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.allowNonCommerReuseWithModification">
+            {{ 'Reuse without modification for non-commercial purpose' | translator }}
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="allowNonCommerReuseWithModification"
+                     [checked]="course.allowNonCommerReuseWithModification"
+                     (change)="course.setAllowNonCommerReuseWithModification($event.target.checked)"
+                     kendoErrorTooltip
+                     position="top">
+              <label for="ch2">{{ 'Reuse without modification for non-commercial purpose' | translator }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <editable [modeView]="course.isViewOnlyForField('allowNonCommerInMoeReuseWithoutModification', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.allowNonCommerInMoeReuseWithoutModification">
+            {{ 'Reuse with modification for non-commercial purpose in MOE schools / divisions only' | translator }}
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     type="radio"
+                     [checked]="course.allowNonCommerInMoeReuseWithoutModification"
+                     (change)="course.setAllowNonCommerInMoeReuseWithoutModification($event.target.checked)"
+                     formControlName="allowNonCommerInMoeReuseWithoutModification"
+                     kendoErrorTooltip
+                     position="top">
+              <label for="ch2">{{
+                'Reuse with modification for non-commercial purpose in MOE schools / divisions only' | translator
+              }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <editable [modeView]="course.isViewOnlyForField('allowNonCommerReuseWithoutModification', asViewMode())">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.allowNonCommerReuseWithoutModification">
+            {{ 'Reuse with modification for non-commercial purpose' | translator }}
+          </div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <div class="form-controls-group">
+            <div class="k-checkbox-container">
+              <input class="k-radio"
+                     type="radio"
+                     formControlName="allowNonCommerReuseWithoutModification"
+                     [checked]="course.allowNonCommerReuseWithoutModification"
+                     (change)="course.setAllowNonCommerReuseWithoutModification($event.target.checked)"
+                     kendoErrorTooltip
+                     position="top">
+              <label for="ch2">{{ 'Reuse with modification for non-commercial purpose' | translator }}</label>
+            </div>
+          </div>
+        </ng-template>
+      </editable>
+      <span
+            *ngIf="!course.allowPersonalDownload && !course.allowNonCommerInMOEReuseWithModification && !course.allowNonCommerReuseWithModification && !course.allowNonCommerInMoeReuseWithoutModification && !course.allowNonCommerReuseWithoutModification && (asViewMode())">-
+        N/A</span>
+    </div>
+    <div class="form-section">
+      <label class="form-section-title">{{ 'Copyright Owner' | translator }}</label>
+      <div class="form-controls-group -required">
+        <label>
+          {{ 'Enter the name of the owner of the licence / main creator of item' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('copyrightOwner', asViewMode())">
+          <ng-template editableViewMode="">{{ course.copyrightOwner || '- N/A' }}</ng-template>
+          <ng-template editableEditMode="">
+            <input class="form-control"
+                   type="text"
+                   formControlName="copyrightOwner"
+                   [(ngModel)]="course.copyrightOwner"
+                   kendoErrorTooltip
+                   position="top">
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section">
+      <label class="form-section-title">{{ 'Acknowledgement and Credit' | translator }}</label>
+      <div class="form-controls-group">
+        <label class="">
+          {{ 'Enter the names of all parties who have helped in one way or another in the creation of this item' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('acknowledgementAndCredit', asViewMode())">
+          <ng-template editableViewMode="">{{ course.acknowledgementAndCredit || '- N/A' }}</ng-template>
+          <ng-template editableEditMode="">
+            <input class="form-control"
+                   type="text"
+                   formControlName="acknowledgementAndCredit"
+                   [(ngModel)]="course.acknowledgementAndCredit"
+                   kendoErrorTooltip
+                   position="top">
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section">
+      <label class="form-section-title">{{ 'Additional Remarks' | translator }}</label>
+      <div class="form-controls-group">
+        <label>
+          {{ 'Additional notes governing the proper use of this resource (if any)' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('remarks', asViewMode())">
+          <ng-template editableViewMode="">{{ course.remarks || '- N/A' }}</ng-template>
+          <ng-template editableEditMode="">
+            <textarea class="form-control"
+                      formControlName="remarks"
+                      rows="5"
+                      kendoTextArea
+                      [autoSize]="true"
+                      [(ngModel)]="course.remarks"
+                      kendoErrorTooltip
+                      position="top"></textarea>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+  </div>
+</form>

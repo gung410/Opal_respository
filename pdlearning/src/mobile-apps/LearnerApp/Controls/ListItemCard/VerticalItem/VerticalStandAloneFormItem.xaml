@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalItem.VerticalStandAloneFormItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+	<Frame
+		Padding="10"
+		BorderColor="{StaticResource EntryLineColor}"
+		CornerRadius="6"
+		HasShadow="False"
+		IsClippedToBounds="True"
+		VerticalOptions="Start">
+		<StackLayout Orientation="Horizontal" Spacing="10">
+			<Frame
+				Padding="0"
+				BorderColor="LightGray"
+				CornerRadius="6"
+				HasShadow="False"
+				HeightRequest="70"
+				IsClippedToBounds="True"
+				WidthRequest="140">
+				<ffimagesvg:SvgCachedImage
+					Aspect="AspectFill"
+					CacheType="Disk"
+					DownsampleToViewSize="True"
+					HeightRequest="35"
+					HorizontalOptions="CenterAndExpand"
+					Source="standalone_form_quiz.svg"
+					VerticalOptions="CenterAndExpand"
+					WidthRequest="25" />
+			</Frame>
+			<StackLayout HorizontalOptions="FillAndExpand">
+				<Label
+					Margin="0,10,0,0"
+					FontFamily="{StaticResource RobotoRegular}"
+					FontSize="{StaticResource BaseFontSize}"
+					LineBreakMode="TailTruncation"
+					MaxLines="2"
+					Text="{Binding Name}"
+					TextColor="{StaticResource MainBodyTextColor}" />
+				<controls:TagView x:Name="TagView" />
+			</StackLayout>
+		</StackLayout>
+	</Frame>
+</ContentView>

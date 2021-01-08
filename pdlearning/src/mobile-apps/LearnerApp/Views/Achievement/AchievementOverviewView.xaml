@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<common:BaseLearnerContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:achievement="clr-namespace:LearnerApp.Views.Achievement;assembly=LearnerApp"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:achievement1="clr-namespace:LearnerApp.ViewModels.Achievement;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    x:Class="LearnerApp.Views.Achievement.AchievementOverviewView"
+    x:DataType="achievement1:AchievementOverviewViewModel"
+    Padding="10,0,10,0"
+    BackgroundColor="#F9F9F9"
+    Title="Achievement"
+    base:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Content>
+      	<RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshingForRefreshView}">
+		<ScrollView VerticalScrollBarVisibility="Never">
+			<StackLayout Padding="0,0,0,10" BackgroundColor="#F9F9F9" Spacing="20">
+				<achievement:AchievementECertificateOverviewView
+                    Margin="0,10,0,0"
+                    BindingContext="{Binding ECertificateViewModel}" />
+				<achievement:AchievementBadgeOverviewView BindingContext="{Binding BadgeOverviewViewModel}"/>
+			</StackLayout>
+		</ScrollView>
+	</RefreshView>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

@@ -1,0 +1,49 @@
+version: '2.4'
+
+services:
+  webinarproxy-api:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+      - BuildVersion=${GO_PIPELINE_LABEL}
+      - VIRTUAL_HOST={{ WebinarDomain }},${ENVIRONMENT_NAME}-learnapp-${PROJECT_NAME}-api-webinarproxy.${DOMAIN_POSTFIX}
+      # Logging
+      - DeveloperExceptionEnabled={{ DeveloperExceptionEnabled }}
+      - Logging:LogLevel:Default=${APPLICATION_LOG_LEVEL}
+      - Logging:LogLevel:Microsoft=${FRAMEWORK_LOG_LEVEL}
+
+      # Proxy
+      - ProxyOptions:DefaultFallbackUrl={{ ProxyOptions_DefaultFallbackUrl }}
+
+      # Authentication
+      - AuthenticationOptions:IdmInternalUrl=${IDM_INTERNAL_URL}
+      - AuthenticationOptions:IdmPublicUrl=${IDM_PUBLIC_URL}
+      - AuthenticationOptions:LoadBalancerDomainName=https://{{ WebinarDomain }}
+      - AuthenticationOptions:CheckSessionEndpoint={{AuthenticationOptions_CheckSessionEndpoint}}
+      - AuthenticationOptions:SecureCookieAlways=true
+      - AuthenticationOptions:LoginRedirectUrl=https://{{ WebinarDomain }}/session/signin-oidc
+      - AuthenticationOptions:LogoutRedirectUrl=https://{{ WebinarDomain }}/session/signout-callback-oidc
+
+      # BigBlueButton
+      - BigBlueButtonOptions:WebinarAddress=https://{{ WebinarDomain }}
+
+      # Redis
+      - ThunderRedisCacheOptions:RedisConnectionString=${REDIS_CACHE_HOST}
+{% if https_proxy is defined %}
+      - HTTPS_PROXY={{ https_proxy }}
+      - HTTP_PROXY={{ https_proxy }}
+      - NO_PROXY=localhost,.opal
+{% endif %}
+    container_name: ${ENVIRONMENT_NAME}-webinarproxy-${PROJECT_NAME}-api
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

@@ -1,0 +1,51 @@
+breadcrumb {
+  display: flex;
+
+  .breadcrumb {
+    display: flex;
+    margin-bottom: 3px;
+    margin: 0;
+    white-space: nowrap;
+    max-width: 100%;
+
+    .breadcrumb-item {
+      display: flex;
+      flex-shrink: 1;
+      overflow: hidden;
+
+      &__text {
+        font-size: $font-size-small;
+        color: $color-blue-dard;
+        font-weight: $font-weight-medium;
+        text-transform: uppercase;
+        text-overflow: ellipsis;
+        max-width: 300px;
+        overflow: hidden;
+
+        &:hover {
+          color: $color-blue-jay;
+          font-weight: bold;
+        }
+
+        i {
+          padding: 0 !important;
+          height: 12px !important;
+          width: 12px !important;
+        }
+
+        &.-active {
+          color: $color-blue-jay;
+          font-weight: bold;
+        }
+
+        &.-canSelect {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+upload-file-dialog {
+  .actions {
+    margin-top: 20px;
+
+    button {
+      margin: 0px 0px 0px 10px;
+    }
+  }
+
+  .form-group {
+    margin: 0px;
+
+    .d-inline {
+      display: inline-block;
+      margin: 10px 10px 10px 0px;
+    }
+
+    .d-inline:last-child {
+      margin-right: 0;
+    }
+
+    .file-preview {
+      max-width: 40vw;
+      text-align: center;
+      overflow: hidden;
+
+      img {
+        max-height: 60vh;
+      }
+    }
+  }
+
+  .text-warning {
+    text-align: center;
+    color: #1dcec1;
+  }
+}

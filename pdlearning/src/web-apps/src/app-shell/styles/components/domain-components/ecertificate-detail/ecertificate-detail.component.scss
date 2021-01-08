@@ -1,0 +1,10 @@
+ecertificate-detail {
+  display: flex;
+  flex-grow: 1;
+
+  .detail-content {
+    &__left-container {
+      width: 50%;
+    }
+  }
+}

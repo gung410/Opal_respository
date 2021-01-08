@@ -1,0 +1,97 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-course-api-build
+      - cx-course-api-systemtest
+  uat:
+    pipelines:
+      - cx-course-api-uat
+  pre-production:
+    pipelines:
+      - cx-course-api-pre-production
+  production:
+    pipelines:
+      - cx-course-api-production
+pipelines:
+  cx-course-api-build:
+    group: cx-course-api
+    label_template: "release-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/course-microservice/Api/
+      SONAR_PROJECTKEY: cx-course-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-course-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/course-microservice/Api/**/*.*
+  cx-course-api-systemtest:
+    group: cx-course-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-course-api-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-course-api-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-course-api
+    template: ansible-deploy-fetch-upstream
+  cx-course-api-uat:
+    group: cx-course-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-course-api-systemtest
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-course-api-systemtest
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-course-api
+    template: ansible-deploy-fetch-upstream
+  cx-course-api-pre-production:
+    group: cx-course-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-course-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-course-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-course-api
+    template: ansible-deploy-fetch-upstream
+  cx-course-api-production:
+    group: cx-course-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-course-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-course-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-course-api
+    template: ansible-deploy-fetch-upstream

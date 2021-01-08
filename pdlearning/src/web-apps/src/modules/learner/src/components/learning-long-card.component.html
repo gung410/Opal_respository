@@ -1,0 +1,100 @@
+<div class="learning-long-card"
+     [ngClass]="{'--disabled': learningCardItem.isExpiredCourse || learningCardItem.isUnPublishedCourse }">
+  <div class="container">
+    <div class="course"
+         [attr.disabled]="learningCardItem.isUnPublishedCourse || learningCardItem.isArchivedCourse">
+      <div class="course-img-container"
+           (click)="onLearningCardClick()">
+        <div class="course-img">
+          <img src="{{ learningCardItem.imageUrl }}"
+               *ngIf="learningCardItem.imageUrl">
+        </div>
+        <!-- TODO: Need to improve the status tag in the card item -->
+        <span class="card-status"
+              *ngIf="canShowStatus"
+              [ngClass]="{
+       'expired': learningCardItem.isExpiredCourse || learningCardItem.isArchivedCourse,
+       'in-progress': learningCardItem.showInProgress,
+       'completed': learningCardItem.showCompleted,
+       'failed': learningCardItem.showIncomplete}">
+          {{ learningCardItem.learningStatusText | translator}}
+        </span>
+      </div>
+      <div class="card-info"
+           (click)="onLearningCardClick()">
+        <div class="card-title two-line-truncate-text"
+             title="{{ learningCardItem.title }}">{{ learningCardItem.title }}</div>
+        <span class="general-info">
+          <ng-container *ngIf="learningCardItem.isMicrolearning">
+            <i class="icon tiny {{ learningCardItem.rating < 1 ? 'star-outline' : 'star' }}"></i>
+            <i class="icon tiny {{ learningCardItem.rating >= 2 ? 'star' : 'star-outline' }}"></i>
+            <i class="icon tiny {{ learningCardItem.rating === 3 ? 'star' : 'star-outline' }}"></i>
+            <div>{{ learningCardItem.rating }} |&nbsp;</div>
+          </ng-container>
+          <div class="duration-container"
+               *ngIf="learningCardItem.duration">
+            <i class="icon tiny clock"></i>
+            {{ learningCardItem.duration | durationInHoursAndMinutes }} |&nbsp;
+          </div>
+          <div *ngIf="learningCardItem.code">{{ learningCardItem.code }}</div>
+
+          <div class="upcoming-container"
+               *ngIf="showUpcomingSession && learningCardItem.upcomingSessionDate">
+            <i class="icon tiny upcoming"></i>
+            <span class="truncate-text">
+              {{ learningCardItem.upcomingSessionDate | date: 'dd.MM.yyyy'}}
+            </span>
+          </div>
+        </span>
+
+        <div class="tags"
+             *ngIf="(courseMetadata$ | async) != null">
+          <ng-container *ngFor="let tagId of learningCardItem.tagIds">
+            <span class="tag-item"
+                  *ngIf="getTagName((courseMetadata$ | async),tagId)">
+              {{ getTagName((courseMetadata$ | async),tagId) }}</span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="progress-container"
+           *ngIf="canShowProgressBar">
+        <span class="current-chapter">
+          <ng-container *ngIf="learningCardItem.learningStatus !== myCourseStatus.Completed; else complete_Template">
+            {{learningCardItem.latestCompletedLectureName }}
+          </ng-container>
+        </span>
+        <ng-template #complete_Template="">
+          {{ "Completed" | translator }} {{getCompletedDate()}}
+        </ng-template>
+        <span class="progress-num"
+              *ngIf="learningCardItem.learningStatus !== myCourseStatus.Completed">
+          {{learningCardItem.progress}}% {{"Completed" | translator}}
+        </span>
+        <div class="card-progress"
+             *ngIf="learningCardItem.learningStatus !== myCourseStatus.Completed">
+          <div class="progress-inner"
+               [style.width]="learningCardItem.progress + '%'"></div>
+        </div>
+
+      </div>
+
+      <div class="learning-long-card__classrun-message"
+           *ngIf="learningCardItem.learningStatus === myCourseStatus.NotStarted">
+        <learner-classrun-message [learningCardItem]="learningCardItem"
+                                  (classRunChanged)="onClassRunChanged($event)"></learner-classrun-message>
+      </div>
+    </div>
+
+    <div class="unpublished-message"
+         *ngIf="learningCardItem.isArchivedCourse">The course was archived</div>
+
+    <div class="unpublished-message"
+         *ngIf="learningCardItem.isUnPublishedCourse && !learningCardItem.isArchivedCourse">The course was unpublished</div>
+  </div>
+
+  <div class="save-course"
+       *ngIf="showBookmark"
+       (click)="onBookmarkChange()">
+    <i class="icon {{ learningCardItem.isBookmark ? 'save' : 'save-outline' }}"></i>
+  </div>
+</div>

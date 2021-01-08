@@ -1,0 +1,38 @@
+<detail-content>
+  <detail-content-left>
+    <scrollable-menu [title]="'Additional Information'"
+                     [tabs]="tabs"></scrollable-menu>
+  </detail-content-left>
+  <detail-content-right>
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content"
+           #generalTab>
+        <digital-content-general-tab [form]="form"
+                                     [contentViewModel]="contentViewModel"
+                                     [mode]="mode"></digital-content-general-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #archivalTab>
+        <archival-tab [form]="form"
+                      [date]="contentViewModel.archiveDate"
+                      [readOnly]="mode === DigitalContentDetailMode.View || mode === DigitalContentDetailMode.ForApprover"
+                      (onDateChange)="onArchiveDateInputChange($event)"></archival-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content --metadata"
+           #metadataTab>
+        <button class="copy-btn"
+                *ngIf="mode === DigitalContentDetailMode.Edit || mode === DigitalContentDetailMode.Create"
+                kendoButton
+                [primary]="true"
+                (click)="displaySearchCourseDialog()">Copy Data</button>
+        <metadata-editor [mode]="mode"
+                         [isFromDigitalContent]="true"></metadata-editor>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #rightsTab>
+        <copyright-form [data]="contentViewModel.data"
+                        [mode]="mode"></copyright-form>
+      </div>
+    </div>
+  </detail-content-right>
+</detail-content>

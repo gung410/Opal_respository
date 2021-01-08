@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.CoursesView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:listitemcard="clr-namespace:LearnerApp.Controls.ListItemCard"
+	xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	Title="{Binding ScreenTitle}"
+	viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+	BackgroundColor="{StaticResource ContentPageColor}">
+
+	<ContentView Padding="10">
+		<listitemcard:VerticalListView
+			OnLoadmoreCommand="{Binding LoadMoreItemCommand}"
+			OnRefreshCommand="{Binding RefreshCommand}"
+			Source="{Binding CourseCollection}"
+			TotalCount="{Binding TotalCount}"
+			VerticalOptions="FillAndExpand" />
+	</ContentView>
+</common:BaseLearnerContentPage>

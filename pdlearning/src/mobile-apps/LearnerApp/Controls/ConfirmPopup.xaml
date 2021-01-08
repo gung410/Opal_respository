@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Controls.ConfirmPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <Frame
+        Margin="40,0,40,0"
+        Padding="20"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Center">
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <Label
+                x:Name="MessageLbl"
+                Margin="0,20,0,20"
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="20"
+                HorizontalTextAlignment="Center" />
+            <StackLayout Orientation="Horizontal">
+                <Button
+                    x:Name="CancelBtn"
+                    BackgroundColor="White"
+                    BorderColor="#D8D8D8"
+                    BorderWidth="1"
+                    Clicked="Closed_Tapped"
+                    CornerRadius="4"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Button
+                    x:Name="ConfirmBtn"
+                    BackgroundColor="White"
+                    BorderColor="#FF6262"
+                    BorderWidth="1"
+                    Clicked="Confirmed_Tapped"
+                    CornerRadius="4"
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="#FF6262" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

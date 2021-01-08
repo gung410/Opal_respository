@@ -1,0 +1,329 @@
+.learner-classrun {
+  width: 100%;
+  border-bottom: 1px solid $color-gainsboro;
+  padding: 30px 0 15px;
+  box-sizing: border-box;
+
+  &-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 0 30px;
+    box-sizing: border-box;
+
+    &__icon {
+      width: 39px;
+      height: 39px;
+      border: 1px solid $color-gainsboro;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-right: 15px;
+      flex-shrink: 0;
+
+      &.expanding {
+        background: url('../assets/images/icons/arrow-down.svg') no-repeat center;
+      }
+
+      &.normal {
+        background: url('../assets/images/icons/arrow-right.svg') no-repeat center;
+      }
+    }
+
+    &__class-name {
+      width: calc(20% - 10px);
+    }
+
+    &__group-date {
+      width: 20%;
+      min-width: 100px;
+      position: relative;
+
+      @include flex-layout-media('lt-lg') {
+        width: 30%;
+      }
+
+      @include flex-layout-media('lt-lg') {
+        .learner-classrun & {
+          width: 20%;
+        }
+      }
+    }
+
+    &__expand {
+      display: flex;
+      border-left: 1px solid $color-gainsboro;
+      margin-left: 20px;
+      flex-direction: column;
+    }
+
+    &__detail {
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px 20px 20px;
+      box-sizing: border-box;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+
+      &-button-check-in {
+        display: flex;
+        margin-left: auto;
+      }
+    }
+
+    &__information {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0 0 20px;
+      width: 100%;
+
+      &.information-two-col {
+        flex-direction: row;
+
+        .information-left {
+          width: 40%;
+
+          @include flex-layout-media('lt-lg') {
+            width: 50%;
+          }
+        }
+
+        .learner-classrun-item__information {
+          padding: 0;
+        }
+      }
+    }
+
+    &__faciliatator {
+      margin-top: 10px;
+    }
+
+    &__value {
+      color: $color-blue-dard;
+      font-size: $font-h6;
+      margin-top: 5px;
+      box-sizing: border-box;
+
+      &--uppercase {
+        text-transform: uppercase;
+      }
+
+      &--link {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    &__title {
+      text-transform: uppercase;
+      font-size: $font-h6;
+      color: $color-blue-light;
+      font-weight: $font-weight-medium;
+      position: relative;
+      display: flex;
+
+      &.section-title {
+        padding: 0px 20px;
+      }
+
+      img {
+        margin-right: 10px;
+        display: none;
+      }
+    }
+
+    &__button {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-left: auto;
+
+      button {
+        width: fit-content;
+      }
+    }
+
+    &__btn-link {
+      border: none;
+      font-weight: normal;
+      padding: 0;
+      text-decoration: underline !important;
+      background: none !important;
+      color: #313552 !important;
+      box-shadow: none !important;
+    }
+
+    &__cant-participate {
+      text-decoration: underline;
+      color: $color-blue-dard;
+      font-size: $font-h6;
+      cursor: pointer;
+    }
+
+    &__section {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+
+    &__session {
+      display: flex;
+      flex-grow: 1;
+      border: 1px solid $color-gainsboro;
+      border-left: none;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+
+      .learner-classrun-item__title img {
+        display: block;
+      }
+
+      .learner-classrun-item__value {
+        padding-left: 27px;
+      }
+
+      &:hover,
+      &--active {
+        background-color: $area-active;
+      }
+    }
+
+    &__check-in-completed {
+      color: $color-blue-dard;
+      font-size: $font-h6;
+      font-weight: $font-weight-medium;
+      display: flex;
+      align-items: center;
+
+      > img {
+        margin-right: 8px;
+        width: 23px;
+      }
+    }
+
+    &__session--upcoming {
+      border: none;
+      background: none !important;
+      position: relative;
+
+      .learner-classrun-item__session-info-title {
+        color: $color-blue-dard;
+        font-size: $font-h6;
+        font-weight: $font-weight-medium;
+      }
+
+      .learner-classrun-item__session-detail {
+        border-left: 1px solid $color-gainsboro;
+        padding-top: 0;
+        margin-top: 20px;
+      }
+
+      .learner-classrun-item__info {
+        border-top: 1px solid $color-gainsboro;
+        padding-top: 10px;
+      }
+
+      .learner-classrun-item__info-button-check-in {
+        right: 20px;
+        top: 20px;
+        position: absolute;
+      }
+    }
+
+    &__session-item {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    &__session-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+          margin-right: 10px;
+        }
+      }
+
+      &-date {
+        margin-left: auto;
+        font-size: $font-h6;
+      }
+
+      .learner-classrun-item__icon {
+        border: none;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+    }
+
+    &__session-detail {
+      flex-grow: 1;
+      padding: 20px 0 0 30px;
+    }
+
+    &__empty-session {
+      margin-top: 10px;
+      padding: 0 20px;
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 20px 0 0 20px;
+      box-sizing: border-box;
+
+      img {
+        margin-right: 10px;
+        height: 16px;
+        width: 16px;
+      }
+
+      .learner-classrun-item {
+        &__icon {
+          border: none;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  &-item-explain {
+    display: flex;
+    flex-direction: row;
+    margin-left: 57px;
+    position: relative;
+  }
+}
+
+.learner-withdraw-confirmation {
+  margin-right: 50px;
+  min-width: 400px;
+  margin-top: 10px;
+
+  &__input {
+    border: 1px solid $color-gainsboro;
+    border-radius: 5px;
+    width: 100%;
+    padding: 20px;
+    min-height: 120px;
+    font-size: $font-h6;
+  }
+}

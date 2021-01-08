@@ -1,0 +1,114 @@
+.pd-opportunities-dialog {
+  width: 730px;
+  max-width: 100%;
+  padding: 10px;
+
+  .dialog-header {
+    margin-bottom: 30px;
+
+    &__title {
+      font-size: $font-h3;
+      color: $color-blue-dard;
+    }
+  }
+
+  .dialog-content {
+    min-height: 450px;
+    overflow-y: hidden;
+  }
+}
+
+.pd-opportunities-search,
+.user-sharing-search {
+  margin-bottom: 25px;
+
+  &__select {
+    background-image: url('../assets/images/icons/search-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 15px center;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .pd-opportunities-search__btn {
+      margin-left: auto;
+      cursor: pointer !important;
+
+      &.--preview {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  &__name {
+    max-width: calc(100% - 200px);
+    color: $color-blue-dard;
+    font-weight: $font-weight-medium;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__icon {
+    display: inline-block;
+
+    &.--accept {
+      margin-left: 10px;
+    }
+
+    &.--reject {
+      margin-right: 10px;
+    }
+  }
+
+  &__btn {
+    min-width: 137px;
+  }
+
+  .opal-select.ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+    background-color: transparent;
+    color: $color-blue-dard;
+  }
+
+  .opal-select__item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .ng-select-container {
+    padding-left: 40px;
+  }
+
+  .opal-select.ng-select {
+    background-color: transparent;
+  }
+
+  .ng-dropdown-panel {
+    padding: 10px 0 20px 0;
+  }
+
+  .ng-dropdown-panel .ng-dropdown-panel-items .ng-option,
+  .opal-select * {
+    cursor: default;
+  }
+
+  .shared-label {
+    color: $color-blue-dard;
+    font-weight: 500;
+    text-transform: unset;
+  }
+}
+
+.learning-path-selected-courses-total {
+  margin-top: 25px;
+  text-align: right;
+  color: $color-blue-dard;
+}
+
+@include flex-layout-media('lt-sm') {
+  .pd-opportunities-dialog {
+    padding: 0;
+  }
+}

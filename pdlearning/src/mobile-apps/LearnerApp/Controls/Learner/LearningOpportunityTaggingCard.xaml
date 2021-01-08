@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityTaggingCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.Learner"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackLayout Spacing="10">
+        <controls:LearningOpportunityMetadataCard x:Name="LearningOpportunityMetadataCard" />
+        <controls:LearningOpportunityCopyrightCard x:Name="LearningOpportunityCopyrightCard" />
+        <controls:LearningOpportunityTargetAudienceCard x:Name="LearningOpportunityTargetAudienceCard" />
+        <controls:LearningOpportunityCoursePlanningCard x:Name="LearningOpportunityCoursePlanningCard" />
+    </StackLayout>
+</ContentView>

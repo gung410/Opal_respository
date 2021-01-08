@@ -1,0 +1,25 @@
+evaluation-ecertificate-tab {
+  .evaluation-certificate-tab {
+    &__can-preview-select-item {
+      display: flex;
+    }
+
+    &__can-preview-select-item-title {
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__can-preview-select-item-btn {
+      cursor: pointer;
+      text-decoration: underline;
+      margin: 2px 20px;
+    }
+
+    &__course-name-in-ecertificate-warning {
+      color: #8799ba;
+      font-style: italic;
+      font-size: 0.875rem;
+    }
+  }
+}

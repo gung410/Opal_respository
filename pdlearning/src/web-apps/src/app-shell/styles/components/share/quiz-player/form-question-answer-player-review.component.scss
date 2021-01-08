@@ -1,0 +1,322 @@
+form-question-answer-player-review {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+  background: #fff;
+  border: 1px solid #d8dce6;
+  border-radius: 5px;
+  padding: 50px 20px 50px 20px;
+  margin-bottom: 10px;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.form-question-answer-player-review {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 350px;
+
+  .icon-container {
+    min-width: 25px;
+
+    img.-hidden {
+      visibility: hidden;
+    }
+  }
+
+  &__question-container {
+    padding-bottom: 50px;
+    margin-top: 30px;
+    border-bottom: 2px solid #f0eded;
+  }
+
+  &__title-container {
+    display: flex;
+    align-items: flex-start;
+    font-size: $font-h5;
+    font-weight: $font-weight-medium;
+    margin-bottom: 30px;
+  }
+
+  &__index-in-form {
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  &__question-title {
+    flex-grow: 1;
+    font-weight: bold;
+    word-break: break-word;
+    max-width: 100%;
+    margin-left: 15px;
+
+    * {
+      margin-top: 0;
+    }
+
+    &> {
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.1;
+      }
+    }
+  }
+
+  &__body-container {
+    display: flex;
+  }
+
+  &__body-question-container {
+    padding-left: 20px;
+    max-width: 100%;
+    flex-direction: column;
+    flex-grow: 1;
+
+    &-withrow {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-left: 20px;
+    }
+  }
+
+  &__answer-textbox {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+    font-size: $font-h5;
+    min-width: 353px;
+
+    @include flex-layout-media('lt-md') {
+      min-width: auto;
+    }
+
+    &::placeholder {
+      font-size: $font-h5;
+      color: $color-dim-gray;
+    }
+
+    &.-correct {
+      border-bottom: 2px solid $quiz-player-correct-answer-color;
+
+      &::placeholder {
+        color: $quiz-player-correct-answer-color;
+      }
+    }
+
+    &.-wrong {
+      border-bottom: 2px solid $quiz-player-wrong-answer-color;
+
+      &::placeholder {
+        color: $quiz-player-wrong-answer-color;
+      }
+    }
+  }
+
+  &__answer-dropdown {
+    margin: 0 auto;
+    width: 450px;
+
+    @include flex-layout-media('lt-md') {
+      width: 100%;
+    }
+
+    &.-correct {
+      border-color: $quiz-player-correct-answer-color;
+    }
+
+    &.-wrong {
+      border-color: $quiz-player-wrong-answer-color;
+    }
+  }
+
+  &__question-option-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-direction: column;
+
+    >.k-radio,
+    .k-checkbox {
+      flex-shrink: 0;
+    }
+
+    &.-submitted {
+      pointer-events: none;
+    }
+
+    .option-image {
+      max-height: 200px;
+      max-width: 98%;
+      margin-top: 5px;
+      margin-left: 25px;
+
+      .image {
+        min-width: 100px;
+        max-height: inherit;
+        max-width: inherit;
+      }
+
+      .video {
+        width: 200px;
+        max-width: 98%;
+      }
+    }
+
+    .question-option {
+      display: flex;
+      align-items: flex-start;
+
+      &.-correct {
+        .k-checkbox {
+          border-color: $quiz-player-correct-answer-color;
+
+          &:checked {
+            background-color: #fff;
+
+            &::before {
+              color: $quiz-player-correct-answer-color;
+            }
+          }
+        }
+
+        .k-radio {
+          border-color: $quiz-player-correct-answer-color;
+
+          &:checked {
+            background-color: #fff;
+
+            &::before {
+              background-color: $quiz-player-correct-answer-color;
+            }
+          }
+        }
+      }
+
+      &.-wrong {
+        .k-checkbox {
+          border-color: $quiz-player-wrong-answer-color;
+
+          &:checked {
+            background-color: #fff;
+
+            &::before {
+              color: $quiz-player-wrong-answer-color;
+            }
+          }
+        }
+
+        .k-radio {
+          border-color: $quiz-player-wrong-answer-color;
+
+          &:checked {
+            background-color: #fff;
+
+            &::before {
+              background-color: $quiz-player-wrong-answer-color;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__question-option-value {
+    margin-left: 5px;
+    word-break: break-word;
+    cursor: pointer;
+  }
+
+  &__explanation-note-container {
+    margin-top: 10px;
+    border: 1px solid $color-gainsboro;
+    border-radius: 5px;
+    padding: 20px;
+    background: $color-silver;
+    font-size: $font-h5;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  &__explanation-note-title {
+    text-transform: uppercase;
+    font-size: $font-normal;
+    color: #9eaebe;
+    font-weight: medium;
+    margin-bottom: 20px;
+  }
+
+  &__explanation-note-content {
+    max-width: 100%;
+    margin: 0;
+    word-break: break-word;
+  }
+
+  &__close-btn-group {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  &__close-btn {
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  &__close-btn-group-text {
+    @include flex-layout-media('lt-sm') {
+      display: none;
+    }
+  }
+}
+
+.FillInTheBlanksReview {
+  align-items: baseline;
+  padding-bottom: 50px;
+  margin-top: 30px;
+  border-bottom: 2px solid #f0eded;
+
+  .form-question-answer-player-review {
+    &__body-question-container-in-blank {
+      line-height: 2.3;
+      margin-left: 15px;
+      word-break: break-word;
+
+      .blank-answer {
+        position: relative;
+        margin: 0 5px;
+
+        &__text {
+          border: none;
+          border-bottom: 2px solid black;
+          border-radius: 0;
+          font-size: $font-h5;
+
+          &.-correct {
+            color: $quiz-player-correct-answer-color;
+            border-bottom: 2px solid $quiz-player-correct-answer-color;
+          }
+
+          &.-wrong {
+            color: $quiz-player-wrong-answer-color;
+            border-bottom: 2px solid $quiz-player-wrong-answer-color;
+          }
+        }
+
+        &__icon {
+          position: absolute;
+          top: -20px;
+          left: 0;
+        }
+      }
+    }
+  }
+}

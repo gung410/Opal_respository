@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalItem.VerticalCourseItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<Frame
+		Padding="10"
+		BorderColor="{StaticResource EntryLineColor}"
+		CornerRadius="6"
+		HasShadow="False"
+		IsClippedToBounds="True"
+		VerticalOptions="Start">
+		<StackLayout>
+			<StackLayout
+				HeightRequest="25"
+				HorizontalOptions="EndAndExpand"
+				IsVisible="{Binding IsVisibleBookmark}"
+				WidthRequest="50">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnBookmarkItem" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="25"
+					HorizontalOptions="End"
+					Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+					WidthRequest="25" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				<StackLayout WidthRequest="150">
+					<AbsoluteLayout>
+						<StackLayout Padding="0" AbsoluteLayout.LayoutBounds="0, 10, 140, 60">
+							<Frame
+								Padding="0"
+								BorderColor="LightGray"
+								CornerRadius="6"
+								HasShadow="False"
+								HeightRequest="60"
+								IsClippedToBounds="True">
+								<ffimagesvg:SvgCachedImage
+									Aspect="AspectFill"
+									DownsampleToViewSize="True"
+									ErrorPlaceholder="image_place_holder_h150.png"
+									HeightRequest="60"
+									Source="{Binding ThumbnailUrl}" />
+							</Frame>
+						</StackLayout>
+						<StackLayout AbsoluteLayout.LayoutBounds="0.2, 0.05, 100, 20" AbsoluteLayout.LayoutFlags="XProportional, YProportional">
+							<Frame
+								Padding="6"
+								BackgroundColor="{Binding Status, Converter={StaticResource LabelColorConverter}}"
+								CornerRadius="4"
+								HasShadow="False">
+								<Label
+									FontFamily="{StaticResource RobotoBold}"
+									FontSize="10"
+									HorizontalOptions="CenterAndExpand"
+									Text="{Binding Status, Converter={StaticResource LabelStatusConverter}}"
+									TextColor="{StaticResource MainBodyTextColor}"
+									VerticalOptions="CenterAndExpand" />
+							</Frame>
+						</StackLayout>
+					</AbsoluteLayout>
+				</StackLayout>
+				<StackLayout HorizontalOptions="FillAndExpand">
+					<Label
+						Margin="0,10,0,0"
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource BaseFontSize}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding Name}"
+						TextColor="{StaticResource MainBodyTextColor}" />
+				</StackLayout>
+			</StackLayout>
+
+			<StackLayout Orientation="Horizontal">
+				<StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+					<controls:Ratingv2View
+						IsEnableRate="False"
+						Rate="{Binding Rating}"
+						StarSize="10"
+						StarSpacing="5" />
+					<Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+				</StackLayout>
+
+				<StackLayout VerticalOptions="CenterAndExpand">
+					<Label
+						FontSize="{StaticResource LittleSize}"
+						Text="{Binding ReviewsCount, Converter={StaticResource ReviewsCountConverter}}"
+						TextColor="{StaticResource SecondaryTextColor}" />
+				</StackLayout>
+
+				<StackLayout
+					IsVisible="{Binding DurationMinutes, Converter={StaticResource DurationVisibleConverter}}"
+					Orientation="Horizontal"
+					Spacing="4"
+					VerticalOptions="CenterAndExpand">
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="{StaticResource LittleSize}"
+						Source="clock.svg"
+						WidthRequest="{StaticResource LittleSize}" />
+					<Label FontSize="{StaticResource LittleSize}" Text="{Binding DurationMinutes, Converter={StaticResource DurationConverter}}" />
+				</StackLayout>
+
+			</StackLayout>
+
+			<StackLayout Spacing="0">
+				<Label
+					FontSize="11"
+					HorizontalOptions="CenterAndExpand"
+					Text="{Binding LectureName}" />
+				<Label
+					FontSize="11"
+					HorizontalOptions="CenterAndExpand"
+					Text="{Binding ProgressMeasure, StringFormat='{0}% completed'}" />
+				<ProgressBar Progress="{Binding ProgressMeasure, Converter={StaticResource ProgressBarConverter}}" ProgressColor="{StaticResource TabSelected}" />
+			</StackLayout>
+
+			<controls:TagView
+				HorizontalOptions="FillAndExpand"
+				IsVisible="{Binding Tags, Converter={StaticResource TagViewVisibleConverter}}"
+				Items="{Binding Tags}" />
+
+			<!--  CLASS RUN CONFIRM MESSAGE  -->
+			<StackLayout IsVisible="{Binding IsShowClassRunConfirm}" Spacing="10">
+				<StackLayout Orientation="Horizontal">
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="20"
+						Source="class_run_confirm.svg"
+						WidthRequest="20" />
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						Text="{Binding MyClassRunConfirmMessage}" />
+				</StackLayout>
+				<StackLayout Orientation="Horizontal" Spacing="10">
+					<Button
+						Padding="0"
+						BackgroundColor="White"
+						BorderColor="#D8DCE6"
+						BorderWidth="1"
+						Clicked="DeclineOffer_Clicked"
+						CommandParameter="{Binding .}"
+						CornerRadius="4"
+						FontSize="16"
+						HeightRequest="30"
+						HorizontalOptions="FillAndExpand"
+						Text="Decline"
+						TextColor="{StaticResource MainBodyTextColor}" />
+					<Button
+						Padding="0"
+						BackgroundColor="{StaticResource MainBodyTextColor}"
+						Clicked="AccessOffer_Clicked"
+						CommandParameter="{Binding .}"
+						CornerRadius="4"
+						FontSize="16"
+						HeightRequest="30"
+						HorizontalOptions="FillAndExpand"
+						Text="Accept"
+						TextColor="White" />
+				</StackLayout>
+			</StackLayout>
+
+			<!--  CLASS RUN REJECT MESSAGE  -->
+			<StackLayout IsVisible="{Binding IsShowClassRunReject}" Spacing="10">
+				<StackLayout Orientation="Horizontal">
+					<ffimagesvg:SvgCachedImage
+						HeightRequest="20"
+						Source="class_run_decline.svg"
+						WidthRequest="20" />
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="16"
+						Text="{Binding MyClassRunRejectMessage}" />
+				</StackLayout>
+
+				<Button
+					Padding="0"
+					BackgroundColor="White"
+					BorderColor="#D8DCE6"
+					BorderWidth="1"
+					Clicked="ShowRejectComment_Clicked"
+					CommandParameter="{Binding .}"
+					CornerRadius="4"
+					FontSize="16"
+					HeightRequest="30"
+					HorizontalOptions="Start"
+					IsVisible="{Binding IsVisibleMyClassRunRejectReasonButton}"
+					Text="Read comment"
+					TextColor="{StaticResource MainBodyTextColor}"
+					WidthRequest="200" />
+			</StackLayout>
+		</StackLayout>
+	</Frame>
+</ContentView>

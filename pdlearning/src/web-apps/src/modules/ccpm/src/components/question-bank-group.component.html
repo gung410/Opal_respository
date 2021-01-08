@@ -1,0 +1,21 @@
+<opal-select class="question-bank-select"
+             #groupSelect
+             [(ngModel)]="questionGroupName"
+             [fetchDataFn]="fetchQuestionGroupsFn"
+             [addTag]="customQuestionGroupAddedFn"
+             [valueField]="'name'"
+             [labelField]="'name'"
+             [placeholder]="'Select Question Group' | globalTranslator"
+             [clearable]="true"
+             [maxDropdownHeight]="200"
+             [minDropdownHeight]="'auto'"
+             [clearSearchOnAdd]="true"
+             [disableSelectAll]="true"
+             [multiple]="multiple"
+             [fetchOnOpen]="true"
+             [searchable]="displayMode === questionGroupDisplayMode.ComboBox"
+             [dropdownPosition]="dropdownPosition"
+             (selectedItemChange)="onQuestionGroupChange($event)"
+             kendoErrorTooltip
+             autofocus
+             position="top"></opal-select>

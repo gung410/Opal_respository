@@ -1,0 +1,78 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ 'Badge Configuration' | translator }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="setting-active-contributor-badge-criteria-dialog__note">
+    {{ '*These configuration below are the conditions where learnes are qualified for both Active Contributors and Life-long Learners badges' | translator }}
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Level of Collaborative Learners Badge' | translator }}</label>
+    <opal-select class="form-control"
+                 [items]="badgeLevelItems"
+                 [(ngModel)]="badge.criteria.levelOfCollaborativeLearnersBadge"
+                 kendoErrorTooltip
+                 position="top"
+                 [ngModelOptions]="{standalone: true}">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Level of Digital Learners Badge' | translator }}</label>
+    <opal-select class="form-control"
+                 [items]="badgeLevelItems"
+                 [(ngModel)]="badge.criteria.levelOfDigitalLearnersBadge"
+                 kendoErrorTooltip
+                 position="top"
+                 [ngModelOptions]="{standalone: true}">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Level of Reflective Learners Badge' | translator }}</label>
+    <opal-select class="form-control"
+                 [items]="badgeLevelItems"
+                 [(ngModel)]="badge.criteria.levelOfReflectiveLearnersBadge"
+                 kendoErrorTooltip
+                 position="top"
+                 [ngModelOptions]="{standalone: true}">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Communitity Builders barge(s) earned' | translator }}</label>
+    <opal-select class="form-control"
+                 [items]="communityBadgesItems"
+                 [(ngModel)]="badge.criteria.communityBadgesIds"
+                 kendoErrorTooltip
+                 position="top"
+                 [multiple]="true"
+                 [clearable]="true"
+                 [valueField]="'id'"
+                 [labelField]="'name'"
+                 [ngModelOptions]="{standalone: true}">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Last month of the badge cycle (yearly basis)' | translator }}</label>
+    <kendo-numerictextbox class="form-control"
+                          type="number"
+                          [min]="1"
+                          [max]="12"
+                          [decimals]="0"
+                          [format]="'n0'"
+                          autoCorrect="true"
+                          [(ngModel)]="badge.criteria.executeMonth"
+                          kendoErrorTooltip
+                          position="top"
+                          [ngModelOptions]="{standalone: true}"></kendo-numerictextbox>
+  </div>
+</div>
+<div class="dialog-actions">
+  <button [look]="'outline'"
+          (click)="onCancel()"
+          kendoButton>{{ 'Cancel' | translator }}</button>
+  <button (click)="onSetup()"
+          [primary]="true"
+          kendoButton>{{ 'Setup' | translator }}</button>
+</div>

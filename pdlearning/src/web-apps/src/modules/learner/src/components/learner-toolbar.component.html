@@ -1,0 +1,39 @@
+<div class="learner-toolbar {{toolbarCustomClass}}">
+  <div class="learner-toolbar__left">
+    <div class="learner-toolbar__navigation"
+         *ngIf="hasBackButton">
+      <button class="back-button"
+              kendoButton
+              [icon]="'arrow-chevron-left'"
+              [look]="'flat'"
+              (click)="this.backButtonClick.emit()">
+        {{ 'Back' | translator }}
+      </button>
+    </div>
+    <div class="learner-toolbar__heading"
+         *ngIf="showTitle">
+      <div>
+        <div class="learner-toolbar__title"
+             *ngIf="title && !titleHtml">
+          {{title}}
+          <permalink-icon *ngIf="showCopyPermalink && detailUrl"
+                          [detailUrl]="detailUrl"
+                          (iconPermalinkClick)="iconPermalinkClick.emit($event)"></permalink-icon>
+          <bookmark-icon *ngIf="showBookmark"
+                         [isBookmark]="isBookmark"
+                         (iconBookmarkClick)="iconBookmarkClick.emit()"></bookmark-icon>
+        </div>
+        <div *ngIf="titleHtml"
+             externalLinkGuard
+             [innerHTML]="titleHtml"></div>
+        <small *ngIf="total"
+               [ngClass]="totalTextClass ? totalTextClass : ''">
+          {{ "##temsCount## items found" | translator: { itemsCount: total } }}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="learner-toolbar__right">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="share-btn">
+  <action-bar [buttons]="actionBtnGroup"
+              [selectedItems]="selectedItems"></action-bar>
+</div>
+
+<div>
+  <kendo-grid class="opal-grid"
+              #grid
+              [data]="gridData"
+              [pageable]="true"
+              [skip]="state.skip"
+              [pageSize]="state.take"
+              (pageChange)="onPageChange($event)">
+
+    <kendo-grid-column [field]="'selected'"
+                       [width]="60"
+                       [headerStyle]="{ 'text-align': 'center' }"
+                       [class]="{ 'align-center': true }">
+      <ng-template kendoGridHeaderTemplate
+                   let-column>
+        <input class="k-checkbox"
+               type="checkbox"
+               [(ngModel)]="checkAll"
+               (click)="onCheckAll($event.target.checked)">
+      </ng-template>
+
+      <ng-template kendoGridCellTemplate
+                   let-dataItem>
+        <input class="k-checkbox"
+               type="checkbox"
+               [(ngModel)]="dataItem.selected"
+               (click)="onCheckItem($event.target.checked, dataItem)">
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column [title]="'Name' | translator"
+                       [width]="200">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <div class="user-info-grid">
+          <div class="user-info-grid__avatar">
+            <img class="avatar-img"
+                 src="{{ dataItem.avatarUrl ? dataItem.avatarUrl : 'assets/images/others/default-avatar.png' }}">
+          </div>
+          <div class="user-info">
+            <p class="main-title"> {{ dataItem.fullName }} </p>
+            <p class="sub-title"> {{ dataItem.email }} </p>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column [title]="'Service Scheme' | translator"
+                       [width]="200">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span>{{ dataItem.serviceScheme }}</span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column [title]="'Place of Work' | translator"
+                       [width]="200">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span>{{ dataItem.placeOfWork }}</span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column [title]="'Developmental Role' | translator"
+                       [width]="200">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <span>{{ dataItem.developmentRole }}</span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column [title]="'Sharing' | translator"
+                       [width]="100">
+      <ng-template kendoGridCellTemplate
+                   let-dataItem
+                   let-rowIndex="rowIndex">
+        <status-indicator [currentStatus]="getStatusSharing(dataItem.shared)"
+                          [mapping]="getStatusSharingColorMap"></status-indicator>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+</div>

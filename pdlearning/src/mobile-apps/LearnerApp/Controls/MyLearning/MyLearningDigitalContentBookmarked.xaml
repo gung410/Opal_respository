@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.MyLearning.MyLearningDigitalContentBookmarked"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentView.Content>
+        <StackLayout Margin="10" VerticalOptions="FillAndExpand">
+            <StackLayout
+                x:Name="BackBtn"
+                HeightRequest="30"
+                Orientation="Horizontal"
+                Spacing="0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Tapped" />
+                </StackLayout.GestureRecognizers>
+                <ffimagesvg:SvgCachedImage
+                    HeightRequest="20"
+                    Source="arrow_left.svg"
+                    VerticalOptions="CenterAndExpand"
+                    WidthRequest="20" />
+                <Label
+                    FontSize="15"
+                    Text="Back"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <RefreshView
+                x:Name="RefreshView"
+                Refreshing="RefreshView_Refreshing"
+                VerticalOptions="FillAndExpand">
+                <CollectionView
+                    x:Name="DataList"
+                    Scrolled="DataList_LoadMore"
+                    SelectionChanged="DataList_ItemSelected"
+                    SelectionMode="Single"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="0,0,0,10">
+                                <Frame
+                                    Padding="10"
+                                    BorderColor="#D8DCE6"
+                                    CornerRadius="4"
+                                    HasShadow="False"
+                                    VerticalOptions="Start">
+                                    <StackLayout HorizontalOptions="FillAndExpand" Spacing="0">
+                                        <StackLayout
+                                            HeightRequest="25"
+                                            HorizontalOptions="EndAndExpand"
+                                            IsVisible="{Binding IsVisibleBookmark}"
+                                            WidthRequest="50">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    CommandParameter="{Binding .}"
+                                                    NumberOfTapsRequired="1"
+                                                    Tapped="UnBookmark_Tapped" />
+                                            </StackLayout.GestureRecognizers>
+                                            <ffimagesvg:SvgCachedImage
+                                                HeightRequest="25"
+                                                HorizontalOptions="EndAndExpand"
+                                                Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                                                WidthRequest="25" />
+                                        </StackLayout>
+                                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                            <AbsoluteLayout>
+                                                <StackLayout AbsoluteLayout.LayoutBounds="0, 10, 130, 75">
+                                                    <Frame
+                                                        Padding="40,25,40,10"
+                                                        BorderColor="#D8DCE6"
+                                                        CornerRadius="4"
+                                                        HasShadow="False">
+                                                        <ffimagesvg:SvgCachedImage
+                                                            HeightRequest="40"
+                                                            Source="{Binding ThumbnailUrl}"
+                                                            WidthRequest="25" />
+                                                    </Frame>
+                                                </StackLayout>
+                                                <StackLayout AbsoluteLayout.LayoutBounds="0.2, 0.05, 100, 20" AbsoluteLayout.LayoutFlags="XProportional, YProportional">
+                                                    <Frame
+                                                        Padding="6"
+                                                        BackgroundColor="{Binding Status, Converter={StaticResource LabelColorConverter}}"
+                                                        CornerRadius="4"
+                                                        HasShadow="False">
+                                                        <Label
+                                                            FontFamily="{StaticResource RobotoBold}"
+                                                            FontSize="10"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            Text="{Binding Status, Converter={StaticResource LabelStatusConverter}}"
+                                                            TextColor="{StaticResource MainBodyTextColor}"
+                                                            VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+                                                </StackLayout>
+                                            </AbsoluteLayout>
+                                            <Label
+                                                FontFamily="{StaticResource RobotoRegular}"
+                                                FontSize="16"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Text="{Binding Name}"
+                                                TextColor="{StaticResource MainBodyTextColor}"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                            <controls:Ratingv2View
+                                                IsEnableRate="False"
+                                                Rate="{Binding Rating}"
+                                                StarSize="10"
+                                                StarSpacing="5" />
+                                            <Label FontSize="{StaticResource LittleSize}" Text="{Binding Rating, Converter={StaticResource RatingConverter}}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout>
+                            <Label
+                                x:Name="EmptyViewMessage"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

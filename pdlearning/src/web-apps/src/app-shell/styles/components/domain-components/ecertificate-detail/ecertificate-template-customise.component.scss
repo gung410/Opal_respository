@@ -1,0 +1,46 @@
+ecertificate-template-customise {
+  .ecertificate-template-customise {
+    &__image-uploader {
+      width: 320px;
+      height: 150px;
+      border: 1px solid $color-gainsboro;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    &__preview-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &__preview-button {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &__description {
+      color: $color-gray;
+    }
+  }
+
+  .opal-file-uploader__drop-file-area {
+    &:not(.-has-file) {
+      .add-file-icon__title {
+        display: inline-block;
+        color: $color-dim-gray;
+      }
+    }
+  }
+
+  .opal-file-uploader__drop-file-area,
+  .opal-file-uploader__upload-progress {
+    background-color: transparent;
+  }
+}

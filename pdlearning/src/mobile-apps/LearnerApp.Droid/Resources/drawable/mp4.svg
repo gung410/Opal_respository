@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icons/sm/video</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/sm/video" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4.99993896,0 L14,0 C15.1045695,-2.02906125e-16 16,0.8954305 16,2 L16,16 C16,17.1045695 15.1045695,18 14,18 L4,18 C2.8954305,18 2,17.1045695 2,16 L2,3.00028992 L2,3.00028992 L4.99993896,0 Z" id="Rectangle" fill="#FFB1B1"></path>
+        <path d="M5.00079346,-8.8817842e-16 L5.00079346,1.00028992 C5.00079346,2.10485942 4.10536296,3.00028992 3.00079346,3.00028992 L2,3.00028992 L2,3.00028992 L5.00079346,-8.8817842e-16 Z" id="Rectangle-Copy" fill="#F99292"></path>
+        <path d="M5,13 L5,14 L4,14 L4,13 L5,13 Z M8,13 L8,14 L7,14 L7,13 L8,13 Z M11,13 L11,14 L10,14 L10,13 L11,13 Z M14,13 L14,14 L13,14 L13,13 L14,13 Z M14,7 L14,12 L4,12 L4,7 L14,7 Z M5,5 L5,6 L4,6 L4,5 L5,5 Z M8,5 L8,6 L7,6 L7,5 L8,5 Z M11,5 L11,6 L10,6 L10,5 L11,5 Z M14,5 L14,6 L13,6 L13,5 L14,5 Z" id="Combined-Shape" fill="#ED6464"></path>
+        <polygon id="Triangle" fill="#FFB1B1" fill-rule="nonzero" transform="translate(9.000000, 9.500000) rotate(90.000000) translate(-9.000000, -9.500000) " points="9 8.5 10.5 10.5 7.5 10.5"></polygon>
+    </g>
+</svg>

@@ -1,0 +1,13 @@
+list-session-grid {
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.list-session-grid {
+  &__learning-method {
+    width: 70%;
+  }
+}

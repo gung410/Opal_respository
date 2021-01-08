@@ -1,0 +1,53 @@
+<div class="assessment-player">
+  <div class="assessment-player__tool-bar">
+    <div class="assessment-player__tool-bar-left">
+      <button class="assessment-player__back-button"
+              *ngIf="!forPreview"
+              kendoButton
+              [icon]="'arrow-chevron-left'"
+              [look]="'flat'"
+              (click)="showBackConfirmationDialog()">
+        {{ 'Back' | translator }}
+      </button>
+      <div class="assessment-player__assessment-title-container">
+        <span class="assessment-player__assessment-title">{{ assessment.name }}</span>
+      </div>
+    </div>
+    <div class="assessment-player__tool-bar-right">
+      <div class="assessment-player__right-group-buttons">
+        <div class="assessment-player__right-group-buttons__status">
+          <p class="assessment-player__submit-date"
+             *ngIf="assessmentAnswerVm.submittedDate != null">
+            {{ 'Submit Date:' | translator }}
+            {{ assessmentAnswerVm.submittedDate | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="assessment-player__criteria">
+    <assessment-criteria *ngFor="let criteria of assessmentAnswerVm.criteria"
+                         [criteria]="criteria"
+                         [scales]="assessmentAnswerVm.scales"
+                         [viewMode]="viewMode"
+                         [assessmentAnswerVm]="assessmentAnswerVm"></assessment-criteria>
+  </div>
+  <div class="assessment-player__submit-container">
+    <ng-container *ngIf="!forPreview && !viewMode">
+      <button class="assessment-player__submit-btn"
+              *ngIf="assessmentAnswerVm.submittedDate == null"
+              kendoButton
+              [primary]="true"
+              (click)="onSave()">
+        {{ 'Save' | translator }}
+      </button>
+      <button class="assessment-player__submit-btn"
+              kendoButton
+              [disabled]="disableSubmitButton"
+              [primary]="true"
+              (click)="onSubmit()">
+        {{ 'Submit' | translator }}
+      </button>
+    </ng-container>
+  </div>
+</div>

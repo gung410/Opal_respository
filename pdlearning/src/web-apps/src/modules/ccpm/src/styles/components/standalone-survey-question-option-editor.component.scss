@@ -1,0 +1,238 @@
+standalone-survey-question-option-editor {
+  display: flex;
+  flex-direction: column;
+
+  &.-addNewOption {
+    .standalone-survey-question-option-editor {
+      @extend %smooth;
+
+      .k-checkbox,
+      .k-radio {
+        border-radius: 50%;
+        width: 21px;
+        height: 21px;
+        line-height: 21px;
+        background: white;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid $color-blue-light;
+        pointer-events: none;
+
+        &::after {
+          content: '+';
+          color: $color-blue-light;
+        }
+
+        &:disabled {
+          pointer-events: none;
+        }
+      }
+
+      &__value {
+        &::placeholder {
+          color: $color-blue-light;
+        }
+      }
+
+      &:hover {
+        @extend %smooth;
+
+        .k-checkbox,
+        .k-radio {
+          background: $color-blue-light;
+
+          &::after {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.standalone-survey-question-option-editor {
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 5px;
+  position: relative;
+  margin-left: -1.5em;
+
+  &+& {
+    margin-top: 5px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &.-correct::before {
+    @include correct-question-answer-sign();
+  }
+
+  &__container-left-col {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    flex-shrink: 1;
+  }
+
+  &__container-right-col {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__value {
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-grow: 1;
+    color: $color-blue-dard;
+    font-size: $font-h6;
+    width: 90%;
+
+    &.-readonly,
+    &.-readonly:hover {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      cursor: default;
+    }
+
+    &.-hidden-value {
+      color: transparent;
+    }
+  }
+
+  &__disabled-answer {
+    border-color: rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  &__icon {
+    flex-direction: row;
+    align-items: center;
+    display: none;
+
+    &.-show {
+      display: flex;
+    }
+
+    &.-has-media {
+      display: flex;
+
+      .standalone-survey-question-option-editor {
+
+        &__icon-remove,
+        &__icon-setup {
+          display: none;
+
+          &.-show {
+            display: flex;
+          }
+        }
+      }
+    }
+
+    &-setup,
+    &-picture,
+    &-remove {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      height: 32px;
+      border-left: 1px solid $color-gainsboro;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    &-remove {
+      .remove-btn-icon.k-icon.k-i-minus-circle {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.option-image {
+  max-height: 200px;
+  max-width: 98%;
+  display: flex;
+
+  .image {
+    max-height: inherit;
+    max-width: inherit;
+  }
+
+  .delete-btn {
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid;
+    margin-left: 4px;
+  }
+}
+
+.option-video {
+  display: flex;
+  align-items: flex-start;
+
+  .video {
+    width: 200px;
+    max-width: 98%;
+  }
+
+  .delete-btn {
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid;
+    margin-left: 4px;
+  }
+}
+
+.next-question-configuration {
+  margin-top: 20px;
+
+  &__dropdown {
+    width: auto;
+    max-width: 35%;
+    background: transparent;
+    border-color: transparent;
+
+    &:focus {
+      outline: none;
+      border-color: transparent;
+    }
+
+    .ng-select-container {
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    .ng-placehoder {
+      color: $color-blue-light;
+    }
+
+    .opal-select .ng-arrow {
+      border-color: $color-gray transparent transparent !important;
+    }
+
+    .opal-select.ng-select-opened .ng-arrow {
+      border-color: transparent transparent $color-gray !important;
+    }
+
+    .ng-dropdown-panel {
+      box-shadow: 0 2px 2px $color-gainsboro;
+      min-width: 220px !important;
+    }
+  }
+}

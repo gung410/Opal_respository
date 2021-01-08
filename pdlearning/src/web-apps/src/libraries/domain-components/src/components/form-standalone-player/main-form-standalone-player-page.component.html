@@ -1,0 +1,11 @@
+<ng-container *ngIf="formId">
+  <main-quiz-player-page *ngIf="playerType && playerType === 'form'"
+                         [formQuestionsData]="defaultFormQuestionsData"
+                         [isFinished]="isFinished"
+                         [isStandalone]="true"
+                         (onQuizFinished)="onQuizFinished($event)"></main-quiz-player-page>
+  <standalone-survey-quiz-player-page *ngIf="playerType && playerType === 'lnaform'"
+                                      [isStandalone]="true"
+                                      [formQuestionsData]="lnaFormQuestionsData"
+                                      (onQuizFinished)="onQuizFinished($event)"></standalone-survey-quiz-player-page>
+</ng-container>

@@ -1,0 +1,19 @@
+form-question-indicator {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-question-indicator {
+  &__indicator-btn.k-button {
+    border-radius: 50%;
+    min-width: calc(1.42857em + 12px);
+    margin-bottom: 10px;
+    margin-right: 10px;
+    background-color: whitesmoke;
+
+    &.-active,
+    &:hover {
+      background-color: $accent;
+    }
+  }
+}

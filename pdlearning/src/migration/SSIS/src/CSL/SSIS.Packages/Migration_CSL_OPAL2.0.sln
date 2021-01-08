@@ -1,0 +1,108 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Migration_CSL_OPAL2.0", "Migration_CSL_OPAL2.0.dtproj", "{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Database", "01.Database", "{D82C5510-3557-4985-8B15-4606960101F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.SSIS", "02.SSIS", "{98BFE92A-7FB0-47FF-A749-5F140F2C11FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{B3BE4071-7743-4C04-9C93-7244ABEA6CAD}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\Schemas\mig.sql = ..\Database\Schemas\mig.sql
+		..\Database\Schemas\opa.sql = ..\Database\Schemas\opa.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoreProcedures", "StoreProcedures", "{AD2ACC49-767E-422B-9E91-6941A21535F1}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_Insert.sql = ..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_Insert.sql
+		..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecord_CSV_Update.sql = ..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecord_CSV_Update.sql
+		..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Update.sql = ..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Update.sql
+		..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecordsAfterMig_DBTable_Update.sql = ..\Database\StoreProcedures\mig.prc_CSL_Generate_Migration_Report_TotalRecordsAfterMig_DBTable_Update.sql
+		..\Database\StoreProcedures\mig.prc_CSL_Raw_Table_create.sql = ..\Database\StoreProcedures\mig.prc_CSL_Raw_Table_create.sql
+		..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_ErrorLog_Get.sql = ..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_ErrorLog_Get.sql
+		..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_Get.sql = ..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_Get.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_Forum_Insert.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_Forum_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromAggregateAndBog_Insert.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromAggregateAndBog_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromBlogEntry_Insert.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromBlogEntry_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromWallPost_Insert.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_PostFromWallPost_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_Space_Insert.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_Space_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Migration_Table_create.sql = ..\Database\StoreProcedures\opa.prc_CSL_Migration_Table_create.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Staging_Table_create.sql = ..\Database\StoreProcedures\opa.prc_CSL_Staging_Table_create.sql
+		..\Database\StoreProcedures\opa.prc_CSL_Staging_WallPost_UpDate.sql = ..\Database\StoreProcedures\opa.prc_CSL_Staging_WallPost_UpDate.sql
+		..\Database\StoreProcedures\prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Get.sql = ..\Database\StoreProcedures\prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Get.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{E8690A56-3468-4BF7-B986-661E02CA04B9}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\Tables\mig.CSL_ObjectMapping.sql = ..\Database\Tables\mig.CSL_ObjectMapping.sql
+		..\Database\Tables\opa.CSL_Migration_activity.sql = ..\Database\Tables\opa.CSL_Migration_activity.sql
+		..\Database\Tables\opa.CSL_Migration_comment.sql = ..\Database\Tables\opa.CSL_Migration_comment.sql
+		..\Database\Tables\opa.CSL_Migration_content.sql = ..\Database\Tables\opa.CSL_Migration_content.sql
+		..\Database\Tables\opa.CSL_Migration_content_tag.sql = ..\Database\Tables\opa.CSL_Migration_content_tag.sql
+		..\Database\Tables\opa.CSL_Migration_content_tag_relation.sql = ..\Database\Tables\opa.CSL_Migration_content_tag_relation.sql
+		..\Database\Tables\opa.CSL_Migration_contentcontainer.sql = ..\Database\Tables\opa.CSL_Migration_contentcontainer.sql
+		..\Database\Tables\opa.CSL_Migration_file.sql = ..\Database\Tables\opa.CSL_Migration_file.sql
+		..\Database\Tables\opa.CSL_Migration_forum_thread.sql = ..\Database\Tables\opa.CSL_Migration_forum_thread.sql
+		..\Database\Tables\opa.CSL_Migration_forum_thread_revision.sql = ..\Database\Tables\opa.CSL_Migration_forum_thread_revision.sql
+		..\Database\Tables\opa.CSL_Migration_live.sql = ..\Database\Tables\opa.CSL_Migration_live.sql
+		..\Database\Tables\opa.CSL_Migration_post.sql = ..\Database\Tables\opa.CSL_Migration_post.sql
+		..\Database\Tables\opa.CSL_Migration_space.sql = ..\Database\Tables\opa.CSL_Migration_space.sql
+		..\Database\Tables\opa.CSL_Migration_space_membership.sql = ..\Database\Tables\opa.CSL_Migration_space_membership.sql
+		..\Database\Tables\opa.CSL_Migration_space_type.sql = ..\Database\Tables\opa.CSL_Migration_space_type.sql
+		..\Database\Tables\opa.CSL_Migration_user_follow.sql = ..\Database\Tables\opa.CSL_Migration_user_follow.sql
+		..\Database\Tables\opa.Raw_Aggregate.sql = ..\Database\Tables\opa.Raw_Aggregate.sql
+		..\Database\Tables\opa.Raw_Blog.sql = ..\Database\Tables\opa.Raw_Blog.sql
+		..\Database\Tables\opa.Raw_BlogComments.sql = ..\Database\Tables\opa.Raw_BlogComments.sql
+		..\Database\Tables\opa.Raw_BlogEntry.sql = ..\Database\Tables\opa.Raw_BlogEntry.sql
+		..\Database\Tables\opa.Raw_CourseAndGroupParticipants.sql = ..\Database\Tables\opa.Raw_CourseAndGroupParticipants.sql
+		..\Database\Tables\opa.Raw_Forum.sql = ..\Database\Tables\opa.Raw_Forum.sql
+		..\Database\Tables\opa.Raw_ForumPost.sql = ..\Database\Tables\opa.Raw_ForumPost.sql
+		..\Database\Tables\opa.Raw_ForumThread.sql = ..\Database\Tables\opa.Raw_ForumThread.sql
+		..\Database\Tables\opa.Raw_ForumThreadCategory.sql = ..\Database\Tables\opa.Raw_ForumThreadCategory.sql
+		..\Database\Tables\opa.Raw_WallPost.sql = ..\Database\Tables\opa.Raw_WallPost.sql
+		..\Database\Tables\opa.Staging_Aggregate.sql = ..\Database\Tables\opa.Staging_Aggregate.sql
+		..\Database\Tables\opa.Staging_Blog.sql = ..\Database\Tables\opa.Staging_Blog.sql
+		..\Database\Tables\opa.Staging_BlogComments.sql = ..\Database\Tables\opa.Staging_BlogComments.sql
+		..\Database\Tables\opa.Staging_BlogEntry.sql = ..\Database\Tables\opa.Staging_BlogEntry.sql
+		..\Database\Tables\opa.Staging_CourseAndGroupParticipants.sql = ..\Database\Tables\opa.Staging_CourseAndGroupParticipants.sql
+		..\Database\Tables\opa.Staging_Forum.sql = ..\Database\Tables\opa.Staging_Forum.sql
+		..\Database\Tables\opa.Staging_ForumPost.sql = ..\Database\Tables\opa.Staging_ForumPost.sql
+		..\Database\Tables\opa.Staging_ForumThread.sql = ..\Database\Tables\opa.Staging_ForumThread.sql
+		..\Database\Tables\opa.Staging_ForumThreadCategory.sql = ..\Database\Tables\opa.Staging_ForumThreadCategory.sql
+		..\Database\Tables\opa.Staging_WallPost.sql = ..\Database\Tables\opa.Staging_WallPost.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{BE079FB6-4ED9-4469-906F-DDD4B49B49FD}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\Scripts\Script run HTML to Markdown.sql = ..\Database\Scripts\Script run HTML to Markdown.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}.Development|Default.ActiveCfg = Development
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C} = {98BFE92A-7FB0-47FF-A749-5F140F2C11FC}
+		{D82C5510-3557-4985-8B15-4606960101F6} = {1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}
+		{98BFE92A-7FB0-47FF-A749-5F140F2C11FC} = {1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}
+		{B3BE4071-7743-4C04-9C93-7244ABEA6CAD} = {D82C5510-3557-4985-8B15-4606960101F6}
+		{AD2ACC49-767E-422B-9E91-6941A21535F1} = {D82C5510-3557-4985-8B15-4606960101F6}
+		{E8690A56-3468-4BF7-B986-661E02CA04B9} = {D82C5510-3557-4985-8B15-4606960101F6}
+		{BE079FB6-4ED9-4469-906F-DDD4B49B49FD} = {D82C5510-3557-4985-8B15-4606960101F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7EB8593A-089C-4697-8B9B-048213CD45EE}
+	EndGlobalSection
+EndGlobal

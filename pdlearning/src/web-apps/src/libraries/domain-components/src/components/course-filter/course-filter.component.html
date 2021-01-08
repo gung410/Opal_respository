@@ -1,0 +1,224 @@
+<div class="common-filter"
+     [formGroup]="form">
+  <div class="common-filter__header">
+    <div class="common-filter__title">
+      <span>{{ 'Filter' | translator}}</span>
+    </div>
+    <div class="common-filter__group-buttons">
+      <button class="button-white-bg"
+              kendoButton
+              (click)="onClear()">{{ 'Clear' | translator }}</button>
+      <button [disabled]="actionFn == null || actionFn.applyFn == null || !hasDataChange"
+              [primary]="true"
+              kendoButton
+              (click)="onApply()">{{ 'Apply' | translator }}</button>
+    </div>
+  </div>
+  <div class="common-filter__content">
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Own by' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.ownSelectItems"
+                   [valueField]="'value'"
+                   [labelField]="'label'"
+                   [(ngModel)]="courseFilterVm.data.ownBy"
+                   formControlName="ownBy"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Created by organisation' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.departmentSelectItems"
+                   [valueField]="'id'"
+                   [labelField]="'departmentName'"
+                   [fetchDataFn]="fetchDepartmentFn"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.fromOrganisation"
+                   formControlName="fromOrganisation"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Created date' | translator }}</label>
+      <div class="common-filter__date-group">
+        <kendo-datepicker class="form-control"
+                          #createdDateFromPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="createdDateFrom"
+                          [(ngModel)]="courseFilterVm.data.createdDateFrom"
+                          (focus)="createdDateFromPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+        <span class="common-filter__date-range-symbol">-</span>
+        <kendo-datepicker class="form-control"
+                          #createdDateToPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="createdDateTo"
+                          [(ngModel)]="courseFilterVm.data.createdDateTo"
+                          (focus)="createdDateToPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+      </div>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Last modified date' | translator }}</label>
+      <div class="common-filter__date-group">
+        <kendo-datepicker class="form-control"
+                          #changedDateFromPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="changedDateFrom"
+                          [(ngModel)]="courseFilterVm.data.changedDateFrom"
+                          (focus)="changedDateFromPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+        <span class="common-filter__date-range-symbol">-</span>
+        <kendo-datepicker class="form-control"
+                          #changedDateToPicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          formControlName="changedDateTo"
+                          [(ngModel)]="courseFilterVm.data.changedDateTo"
+                          (focus)="changedDateToPicker.toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-datepicker>
+      </div>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Course status' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.statusSelectItems"
+                   [valueField]="'value'"
+                   [labelField]="'label'"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.status"
+                   formControlName="status"></opal-select>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="courseFilterVm.contentStatusSelectItems == null || courseFilterVm.contentStatusSelectItems.length == 0">
+      <label for="ch2">{{ 'Content status' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.contentStatusSelectItems"
+                   [valueField]="'value'"
+                   [labelField]="'label'"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.contentStatus"
+                   formControlName="contentStatus"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Type of PD Activity' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.pdTypeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.pdType"
+                   formControlName="pdType"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Category' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.categorySelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.category"
+                   formControlName="category"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="courseFilterVm.serviceSchemeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="courseFilterVm.data.serviceScheme"
+                   formControlName="serviceScheme"></opal-select>
+    </div>
+    <div [hidden]="!showMore">
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Developmental Role' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.developmentalRoleSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.developmentalRole"
+                     formControlName="developmentalRole"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Teaching Level' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.teachingLevelsSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.teachingLevel"
+                     formControlName="teachingLevel"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Course Level' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.courseLevelSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.courseLevel"
+                     formControlName="courseLevel"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Subject Area' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.subjectSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.subject"
+                     formControlName="subject"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.learningFrameworksSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.learningFrameworks"
+                     formControlName="learningFrameworks"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Learning Dimension' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.learningDimensionSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.learningDimension"
+                     formControlName="learningDimension"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Learning Area' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.learningAreaSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.learningArea"
+                     formControlName="learningArea"></opal-select>
+      </div>
+      <div class="form-controls-group">
+        <label for="ch2">{{ 'Learning Sub-Area' | translator }}</label>
+        <opal-select class="form-control"
+                     [items]="courseFilterVm.learningSubAreaSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     [(ngModel)]="courseFilterVm.data.learningSubArea"
+                     formControlName="learningSubArea"></opal-select>
+      </div>
+    </div>
+    <div class="common-filter__show-all-container">
+      <span class="common-filter__show-all-text"
+            (click)="onChangeShow()">{{ !this.showMore ? ( 'Advanced filter' | translator) : ( 'Show Less' | translator)}}</span>
+    </div>
+  </div>
+</div>

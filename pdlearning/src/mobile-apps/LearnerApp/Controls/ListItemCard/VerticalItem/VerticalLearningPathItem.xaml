@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalItem.VerticalLearningPathItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<Frame
+		Padding="10"
+		BorderColor="{StaticResource EntryLineColor}"
+		CornerRadius="6"
+		HasShadow="False"
+		IsClippedToBounds="True"
+		VerticalOptions="Start">
+		<StackLayout>
+			<StackLayout
+				HeightRequest="25"
+				HorizontalOptions="EndAndExpand"
+				IsVisible="{Binding IsVisibleBookmark}"
+				WidthRequest="50">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnBookmarkItem" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="25"
+					HorizontalOptions="End"
+					Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+					WidthRequest="25" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				<StackLayout WidthRequest="140">
+					<Frame
+						Padding="0"
+						BorderColor="{StaticResource ContentPageColor}"
+						CornerRadius="6"
+						HasShadow="False"
+						IsClippedToBounds="True">
+						<ffimagesvg:SvgCachedImage
+							Aspect="AspectFill"
+							DownsampleToViewSize="True"
+							ErrorPlaceholder="learning_path_thumbnail.png"
+							HeightRequest="70"
+							Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='LearningPath'}" />
+					</Frame>
+				</StackLayout>
+				<StackLayout HorizontalOptions="FillAndExpand">
+					<Label
+						Margin="0,10,0,0"
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource BaseFontSize}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding Name}"
+						TextColor="{StaticResource MainBodyTextColor}" />
+				</StackLayout>
+			</StackLayout>
+			<Label
+				FontFamily="{StaticResource RobotoRegular}"
+				FontSize="12"
+				Text="{Binding MemberCount, StringFormat='Learning Path | {0} item(s)'}"
+				TextColor="#8799BA" />
+		</StackLayout>
+	</Frame>
+</ContentView>

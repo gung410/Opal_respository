@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.ListItemCard.VerticleLearningPath"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <RefreshView
+        x:Name="LearningPathsRefreshView"
+        Refreshing="RefreshView_Refreshing"
+        VerticalOptions="FillAndExpand">
+        <CollectionView
+            x:Name="LearningPathsCollectionView"
+            Scrolled="CourseSourse_LoadMore"
+            SelectionChanged="CourseSourse_ItemSelected"
+            SelectionMode="Single"
+            VerticalOptions="FillAndExpand"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView Padding="0,0,0,5">
+                        <Frame
+                            Padding="10"
+                            android:VisualElement.Elevation="5"
+                            ios:VisualElement.IsShadowEnabled="true"
+                            ios:VisualElement.ShadowColor="Black"
+                            ios:VisualElement.ShadowOpacity="0.3"
+                            ios:VisualElement.ShadowRadius="2.5"
+                            BorderColor="{StaticResource EntryLineColor}"
+                            CornerRadius="6"
+                            HasShadow="False"
+                            IsClippedToBounds="True"
+                            VerticalOptions="Start">
+                            <ios:VisualElement.ShadowOffset>
+                                <Size>
+                                    <x:Arguments>
+                                        <x:Double>0</x:Double>
+                                        <x:Double>1.5</x:Double>
+                                    </x:Arguments>
+                                </Size>
+                            </ios:VisualElement.ShadowOffset>
+                            <StackLayout>
+                                <StackLayout
+                                    HeightRequest="25"
+                                    HorizontalOptions="EndAndExpand"
+                                    IsVisible="{Binding IsVisibleBookmark}"
+                                    WidthRequest="50">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnBookmark_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <ffimagesvg:SvgCachedImage
+                                        HeightRequest="25"
+                                        HorizontalOptions="End"
+                                        Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                                        WidthRequest="25" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Spacing="10">
+                                    <StackLayout WidthRequest="140">
+                                        <Frame
+                                            Padding="0"
+                                            BorderColor="{StaticResource ContentPageColor}"
+                                            CornerRadius="6"
+                                            HasShadow="False"
+                                            IsClippedToBounds="True">
+                                            <ffimagesvg:SvgCachedImage
+                                                Aspect="AspectFill"
+                                                DownsampleToViewSize="True"
+                                                ErrorPlaceholder="learning_path_thumbnail.png"
+                                                HeightRequest="70"
+                                                Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='LearningPath'}" />
+                                        </Frame>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="FillAndExpand">
+                                        <Label
+                                            Margin="0,10,0,0"
+                                            FontFamily="{StaticResource RobotoRegular}"
+                                            FontSize="{StaticResource BaseFontSize}"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="2"
+                                            Text="{Binding Title}"
+                                            TextColor="{StaticResource MainBodyTextColor}" />
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="12"
+                                        Text="Learning Path"
+                                        TextColor="#8799BA" />
+                                    <Label
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        FontSize="12"
+                                        Text="{Binding Courses, Converter={StaticResource LearningPathsTotalItemsConverter}}"
+                                        TextColor="#8799BA" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <StackLayout>
+                    <Label
+                        x:Name="EmptyViewMessage"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Loading..." />
+                </StackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </RefreshView>
+</ContentView>

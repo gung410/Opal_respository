@@ -1,0 +1,110 @@
+.navigation-menu {
+  display: block;
+  font-size: $font-h5;
+  background: $white;
+  box-shadow: 0 0 5px $gray200;
+  position: relative;
+  z-index: 3;
+  padding: 0 50px;
+  cursor: default;
+
+  @include flex-layout-media('tablet-horizontal-small') {
+    display: none;
+  }
+
+  .nav-item {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    padding: 10px 0;
+    margin: 0 32px;
+    border-bottom: 6px solid transparent;
+    cursor: pointer;
+    @extend %smooth;
+
+    .item-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #2c2c2c;
+      white-space: nowrap;
+      line-height: 44px;
+      width: 100%;
+    }
+
+    &.active {
+      .item-text {
+        color: $text;
+        font-weight: $font-weight-medium;
+        cursor: default;
+      }
+
+      border-bottom: 6px solid $light-green;
+    }
+
+    &:hover {
+      @extend %smooth;
+
+      .item-text {
+        color: $text;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.f-sub-navigation-menu {
+  box-shadow: none;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 0;
+
+  .nav-item {
+    padding-top: 15px;
+    text-align: center;
+    min-width: 120px;
+    padding: 10px 25px;
+    margin: 0;
+  }
+
+  .nav-item.active {
+    border-bottom: 6px solid $color-black !important;
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  .navigation-menu {
+    display: block;
+    padding-left: 3 * $main-grid-unit;
+    padding-right: 3 * $main-grid-unit;
+    white-space: nowrap;
+    overflow-x: auto;
+
+    .nav-item {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: $main-grid-unit;
+      margin-right: $main-grid-unit;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  .navigation-menu {
+    padding-left: 2 * $main-grid-unit;
+    padding-right: 2 * $main-grid-unit;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+}

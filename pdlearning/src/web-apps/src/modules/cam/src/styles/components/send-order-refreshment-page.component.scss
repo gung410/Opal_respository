@@ -1,0 +1,38 @@
+send-order-refreshment-page {
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.send-order-refreshment-page {
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &__center-container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+
+    .scrollable-menu-content__tab-content {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row;
+
+      .form-controls-group {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  &__group-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}

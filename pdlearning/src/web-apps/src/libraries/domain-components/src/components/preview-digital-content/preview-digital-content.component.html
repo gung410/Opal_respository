@@ -1,0 +1,59 @@
+<ng-container *ngIf="contentUrl || canShowScorm">
+  <div class="preview-digital-content__img-content description-label"
+       *ngIf="isShowMessagePreventCookie">
+    It seems that your browser is blocking 3rd party <span style="color: blue;">session cookies</span>,
+    which are required for the application.
+    To resolve this issue, please update your settings to allow for 3rd party cookies.
+    <p>Please follow these steps: Settings → Safari app → scroll down to Privacy & Security → uncheck Prevent
+      Cross-Site Tracking and Block All Cookies → restart your browser.</p>
+    <p>If this does not resolve the issue, please use a desktop version of the application.</p>
+  </div>
+  <ng-container *ngIf="!isShowMessagePreventCookie">
+    <div class="preview-digital-content__document-container"
+         *ngIf="canShowDocument">
+      <preview-document-player viewer="office"
+                               [showSpinner]="showSpinner"
+                               [url]="contentUrl">
+      </preview-document-player>
+    </div>
+
+    <div class="preview-digital-content__video-audio-container"
+         *ngIf="canShowVideo || canShowAudio">
+      <video-annotation *ngIf="canShowVideo"
+                        [mode]="viewAnnotationMode"
+                        [src]="contentUrl"
+                        [videoId]="videoId"
+                        [chapters]="digitalContent.chapters"
+                        [fileDuration]="digitalContent.fileDuration"
+                        [fileType]="digitalContent.fileType"
+                        [fileExtension]="digitalContent.fileExtension"
+                        [description]="digitalContent.description"
+                        [ownerId]="digitalContent.ownerId"
+                        [chapterInfo]="videoAnnotationChapterInfo"
+                        [commentInfo]="videoAnnotationCommentInfo"
+                        (videoErrorEvent)="handleImgError($event)"></video-annotation>
+      <preview-audio-player *ngIf="canShowAudio"
+                            [src]="contentUrl"
+                            (audioLoadEvent)="handleImgError($event)"></preview-audio-player>
+    </div>
+
+    <div class="preview-digital-content__scorm-container"
+         *ngIf="canShowScorm">
+      <scorm-player [myLectureId]="lectureId"
+                    [digitalContentId]="resourceId"></scorm-player>
+    </div>
+
+    <img class="preview-digital-content__img-content"
+         *ngIf="canShowImage"
+         [src]="contentUrl"
+         (error)="handleImgError($event)">
+  </ng-container>
+
+</ng-container>
+
+<ng-container *ngIf="htmlContent">
+  <div class="preview-digital-content__learning-content"
+       externalLinkGuard
+       [innerHTML]="htmlContent | safeHtml:'html'">
+  </div>
+</ng-container>

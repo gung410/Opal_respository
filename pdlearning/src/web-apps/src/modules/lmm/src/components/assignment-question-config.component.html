@@ -1,0 +1,70 @@
+<div class="assignment-question-config">
+  <div class="form-container">
+    <div class="form-controls-group">
+      <label>{{'Score' | translator}}</label>
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">{{ assignmentQuestion.maxScore != null ? assignmentQuestion.maxScore : 0 }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                [min]="1"
+                                [max]="10000"
+                                autoCorrect="true"
+                                decimals="0"
+                                format="#"
+                                [(ngModel)]="assignmentQuestion.maxScore"
+                                [ngModelOptions]="{ standalone: true }"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="isShowExplationNote">
+      <label>{{'Explanation note' | translator}}</label>
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">{{ assignmentQuestion.question_AnswerExplanatoryNote || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="3"
+                    [placeholder]="'Write to explain for the question' | translator"
+                    [(ngModel)]="assignmentQuestion.question_AnswerExplanatoryNote"
+                    [ngModelOptions]="{ standalone: true }"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label>{{'Hint' | translator}}</label>
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">{{ assignmentQuestion.question_Hint || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="3"
+                    [placeholder]="'Write to hint for the correct answer' | translator"
+                    [(ngModel)]="assignmentQuestion.question_Hint"
+                    [ngModelOptions]="{ standalone: true }"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="isShowRandomizeOption">
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">
+          <label for="ch2">{{ 'Randomize question options: ' | translator }}</label>
+          <img class="assignment-question-config__randomize-image"
+               alt
+               [src]="assignmentQuestion.randomizedOptions ? 'assets/images/icons/icon-accept.svg'  :'assets/images/icons/icon-reject.svg'">
+        </ng-template>
+        <ng-template editableEditMode="">
+          <input class="k-checkbox assignment-question-config__randomize-checkbox"
+                 id="assignment-question-config__randomize-checkbox"
+                 type="checkbox"
+                 [(ngModel)]="assignmentQuestion.randomizedOptions"
+                 [ngModelOptions]="{ standalone: true }">
+          <label for="ch2">{{ 'Randomize question options' | translator }}</label>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</div>

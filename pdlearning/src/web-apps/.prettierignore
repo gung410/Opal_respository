@@ -1,0 +1,16 @@
+CHANGELOG.*
+*.d.ts
+*.api.md
+*.scss.ts
+_*.scss
+lib
+lib-amd
+lib-esm
+lib-commonjs
+dist
+node_modules
+changes
+tools/bump/src
+src/app-shell/assets
+apps/bbb-playback
+src/app-shell/bootstrapers/registration-modules.ts

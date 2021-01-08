@@ -1,0 +1,40 @@
+.opal-confirm-dialog {
+  .learner-withdraw-confirmation {
+    margin-right: 50px;
+    min-width: 400px;
+    margin-top: 10px;
+
+    &__input {
+      font-family: $main-font;
+      border: 1px solid $color-gainsboro;
+      border-radius: 5px;
+      width: 100%;
+      padding: 20px;
+      min-height: 120px;
+      font-size: $font-h6;
+    }
+  }
+
+  .dialog-header__title {
+    font-size: 28px;
+    color: $color-blue-dard;
+    font-weight: normal;
+  }
+
+  .learner-warning-confirmation {
+    background-color: #8799ba;
+    border-radius: 5px;
+    color: white;
+    padding: 16px;
+    margin-top: 15px;
+  }
+
+  .learner-warning-confirmation img {
+    vertical-align: middle;
+  }
+
+  .learner-warning-body {
+    margin-top: 24px;
+    color: $color-blue-dard;
+  }
+}

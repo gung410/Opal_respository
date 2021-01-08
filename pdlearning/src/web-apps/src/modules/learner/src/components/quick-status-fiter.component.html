@@ -1,0 +1,18 @@
+<div class="quick-status-filter">
+  <div class="status-label mb-20">
+    {{'Status:' | translator}}
+  </div>
+  <div class="quick-status-list"
+       *ngFor="let stt of statusFilter"
+       (click)="handleFilter.emit(stt.status)">
+    <input class="k-radio"
+           id="{{stt.status}}"
+           name="statusFilter"
+           type="radio"
+           [value]="stt.status"
+           [checked]="currentStatusFilter === stt.status"
+           (click)="handleFilter.emit(stt.status)">
+    <label class="k-radio-label"
+           for="{{stt.status}}">{{stt.displayText}}</label>
+  </div>
+</div>

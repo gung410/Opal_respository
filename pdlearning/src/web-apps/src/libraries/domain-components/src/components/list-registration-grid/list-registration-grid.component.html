@@ -1,0 +1,257 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="getValidatedGridData()"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column *ngIf="displayCheckboxColumn()"
+                     [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column *ngIf="displayNameColumn()"
+                     [width]="250"
+                     [title]="'Name'">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.register"
+                  [owner]="dataItem.register"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayOrganisationColumn()"
+                     [width]="150"
+                     [title]="'Place of Work'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.register ? dataItem.register.departmentName : '' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayAccountTypeColumn()"
+                     [width]="150"
+                     [title]="'Account Type'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.accountTypeDisplayText }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displaySignedUpColumn()"
+                     [width]="150"
+                     [title]="'Signed up'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.registrationDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayDesignationColumn()"
+                     [width]="200"
+                     [title]="'Designation'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.designationDisplayText }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayTeachingLevelColumn()"
+                     [width]="200"
+                     [title]="'Teaching Level'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingLevelDisplayText }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayTeachingSubjectJobFamilyColumn()"
+                     [width]="250"
+                     [title]="'Teaching Subject / Job Family'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingSubjectsDisplayText }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayRequestDateColumn()"
+                     [width]="150"
+                     [title]="'Request Date'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ displayRequestDate(dataItem) | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayRegistrationTypeColumn()"
+                     [width]="200"
+                     [title]="'Registration Type'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ registrationTypeMap[dataItem.registrationType] ? registrationTypeMap[dataItem.registrationType].text : '' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayCourseCriteriaColumn()"
+                     [width]="150"
+                     [title]="'Course Criteria'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <ng-container>
+        <img src="assets/images/icons/icon-accept.svg"
+             *ngIf="!dataItem.isRegistrationViolatedCourseCriteria()">
+        <a class="list-registration-grid__show-course-criteria-registration-violation-detail-link"
+           *ngIf="dataItem.isRegistrationViolatedCourseCriteria()"
+           (click)="showCourseCriteriaRegistrationViolationDetailDialog($event, dataItem)">
+          <img src="assets/images/icons/rejected.svg">{{'Did not meet course criteria' | translator}}</a>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayLearningContentProgressColumn()"
+                     [width]="170"
+                     [title]="'Learning Content Progress'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.learningContentProgress == null ? '' : dataItem.learningContentProgress +'%'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayNoOfAssignmentDoneColumn()"
+                     [width]="170"
+                     [title]="'Assignment Completion'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.noOfAssignmentDone.displayAsText()}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayAttendanceRatioOfPresentColumn()"
+                     [width]="150"
+                     [title]="'Attendance Summary'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.attendanceRatioOfPresent.displayAsText()}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayDevelopmentalRole()"
+                     [width]="150"
+                     [title]="'Developmental Role'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.developmentalRolesDisplayText ? dataItem.developmentalRolesDisplayText : 'N/A'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayServiceSchemeColumn()"
+                     [width]="150"
+                     [title]="'Service Scheme'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.serviceChemeDisplayText ? dataItem.serviceChemeDisplayText  : 'N/A'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayPostCourseSurveyCompleted()"
+                     [width]="150"
+                     [title]="'Post Course Survey'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <img src="assets/images/icons/icon-accept.svg"
+           *ngIf="dataItem.postCourseEvaluationFormCompleted">
+      <img src="assets/images/icons/rejected.svg"
+           *ngIf="!dataItem.postCourseEvaluationFormCompleted">
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayReasonColumn()"
+                     [width]="200"
+                     [title]="'Withdrawal Reason'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.reason == '' ? '' : dataItem.reason}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayChangeToColumn()"
+                     [title]="'Change to'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.classRunChangeId && classRunsDict[dataItem.classRunChangeId] ? classRunsDict[dataItem.classRunChangeId].classTitle : '' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayAddedToClassColumn()"
+                     [width]="150"
+                     [title]="'Added To Class'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.classRunId == '' ? 'N/A' : classRunsDict[dataItem.classRunId].classTitle}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayAddedDateColumn()"
+                     [width]="150"
+                     [title]="'Added Date'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.createdDate | date: 'dd/MM/yyyy'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayStatusColumn()"
+                     [width]="200"
+                     [title]="'Status'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="displayStatus(dataItem)"
+                        [mapping]="statusColorMap(dataItem)"
+                        [prefix]="displayPrefixStatus(dataItem)"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayCourseJoinedColumn()"
+                     [width]="150"
+                     [title]="'Course Joined'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.courseNameDisplayText }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="displayECertificateIssuanceColumn()"
+                     [width]="250"
+                     [title]="'E-Certificate Issuance Date'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.learningCompletedDate | date: 'dd/MM/yyyy'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60">
+    <!-- Cell template of actions field-->
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="showContextMenu(dataItem)">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="getContextMenuByRegistration(dataItem)"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

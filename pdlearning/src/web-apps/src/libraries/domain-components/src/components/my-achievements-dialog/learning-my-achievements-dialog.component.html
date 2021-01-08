@@ -1,0 +1,25 @@
+<div class="pd-opportunities-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title"></div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-content">
+    <div class="form-controls-group">
+      <div class="ecertificate-thumbnail"
+           [hidden]="!safeUrl">
+        <img [src]="safeUrl">
+      </div>
+      <button kendoButton
+              (click)="onDownload()"
+              [icon]="'download'"
+              [primary]="true">{{'Download' | globalTranslator }}</button>
+    </div>
+  </div>
+  <div class="dialog-actions">
+    <button kendoButton
+            (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+  </div>
+</div>

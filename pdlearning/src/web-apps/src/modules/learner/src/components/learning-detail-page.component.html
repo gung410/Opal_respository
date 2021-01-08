@@ -1,0 +1,30 @@
+<ng-container *ngIf="learningId && learningType">
+  <ng-container [ngSwitch]="learningType">
+    <ng-container *ngSwitchCase="LearningType.Course">
+      <learner-course-detail [courseId]="learningId"
+                             [canStartTask]="canStartTask"
+                             [canContinueTask]="canContinueTask"
+                             (backClick)="onBack()"></learner-course-detail>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="LearningType.DigitalContent">
+      <learner-digital-content-detail [digitalContentId]="learningId"
+                                      [canStartTask]="canStartTask"
+                                      [canContinueTask]="canContinueTask"
+                                      (backClick)="onBack()"></learner-digital-content-detail>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="LearningType.StandaloneForm">
+      <div class="lecture-player">
+        <div class="lecture-player__course-title-container">
+          <div class="lecture-player__back"
+               (click)="onBack()">
+            <i class="icon back"></i>
+            {{"Back" | globalTranslator}}
+          </div>
+        </div>
+        <main-form-standalone-player-page class="lecture-player__player-content"></main-form-standalone-player-page>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,48 @@
+<div class="dialog-title"
+     *ngIf="title != '' && title != null">{{ title }}</div>
+<div class="tabs">
+  <div class="tab-item"
+       *ngFor="let tab of tabs; let i = index"
+       [ngClass]="{
+         'active': tab === activeTab,
+         'has-error': isTabHasError(tab),
+         '-highlight-error-tab' : highlightErrorTab && tabs.length > 1}"
+       (click)="selectTab(tab)">{{ ('share.contentDialog.' + tab) | globalTranslator }}</div>
+</div>
+<div class="tab-content"
+     *ngIf="generalTabTemplate != null && displayGeneralTab"
+     [hidden]="activeTab !== tabType.General">
+  <ng-container [ngTemplateOutlet]="generalTabTemplate"></ng-container>
+</div>
+<div class="tab-content"
+     *ngIf="metaDataTabTemplate != null && displayMetaDataTab"
+     [hidden]="activeTab !== tabType.MetaData">
+  <ng-container [ngTemplateOutlet]="metaDataTabTemplate"></ng-container>
+</div>
+<div class="tab-content"
+     *ngIf="digitalRightTabTemplate != null && displayDigitalRightTab"
+     [hidden]="activeTab !== tabType.DigitalRight">
+  <ng-container [ngTemplateOutlet]="digitalRightTabTemplate"></ng-container>
+</div>
+
+
+<div class="actions row">
+  <button *ngIf="displaySaveBtn"
+          (click)="saveEvent.emit($event)"
+          kendoButton>{{ 'Save' | globalTranslator }}
+  </button>
+  <button *ngIf="displayCreateBtn"
+          (click)="saveEvent.emit($event)"
+          kendoButton>{{ 'Create' | globalTranslator }}
+  </button>
+  <button class="danger"
+          *ngIf="displayStopBtn"
+          (click)="stopEvent.emit($event)"
+          kendoButton>{{ 'Stop' | globalTranslator }}
+  </button>
+  <button *ngIf="displayCancelBtn"
+          [look]="'outline'"
+          (click)="cancelEvent.emit($event)"
+          kendoButton>{{ 'Cancel' | globalTranslator }}
+  </button>
+</div>

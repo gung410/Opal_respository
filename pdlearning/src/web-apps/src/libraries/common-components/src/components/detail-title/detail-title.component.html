@@ -1,0 +1,48 @@
+<button class="back-button"
+        kendoButton
+        [icon]="'arrow-chevron-left'"
+        [look]="'flat'"
+        (click)="onBackClicked()">
+  {{ 'Back' | translator }}
+</button>
+<div class="title-group">
+  <span class="sub-title"
+        *ngIf="subTitle && settings && settings.subTitlePosition === subTitlePosition.Top">{{subTitle}}</span>
+  <div *ngIf="!settings.editModeEnabled">
+    <span class="title"
+          [title]="title">{{title}}</span>
+    <span class="edit-icon k-icon k-i-pencil"
+          *ngIf="allowEditTitle"
+          [ngClass]="{
+            'edit-icon--disabled': !settings.editIconButtonEnabled
+          }"
+          (click)="enableEditTitle()"></span>
+  </div>
+  <div *ngIf="settings.editModeEnabled">
+    <form [formGroup]="form">
+      <input #titleInput
+             inlineDisplayTextbox
+             kendoTextBox
+             position="bottom"
+             formControlName="title"
+             kendoErrorTooltip
+             autofocus
+             autoTrim
+             [maxLength]="maxLength"
+             [placeholder]="'Input form title here' | translator"
+             [ngModel]="title"
+             (ngModelChange)="onTitleChanged($event)"
+             (keyup.enter)="disableEditMode()"
+             (focusout)="disableEditMode()">
+    </form>
+
+  </div>
+  <span class="sub-title"
+        *ngIf="subTitle && settings && settings.subTitlePosition === subTitlePosition.Bottom">
+    <!-- Optional for form detail -->
+    <img class="sub-icon"
+         alt
+         [src]="urlSubIcon">
+    {{subTitle}}
+  </span>
+</div>

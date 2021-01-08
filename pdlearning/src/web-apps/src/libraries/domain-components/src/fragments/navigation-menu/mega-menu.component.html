@@ -1,0 +1,58 @@
+<div class="mega-menu">
+  <div class="mega-menu__container">
+    <div class="mega-menu__nav-primary">
+      <div class="mega-menu__navigation">
+        <ul class="mega-menu__navigation-list">
+          <li class="mega-menu__navigation-item"
+              *ngFor="let category of subMenu"
+              (click)="onNodeClick(category)">
+            <a class="mega-menu__navigation-link"
+               title="{{category.name}}">
+              {{category.name}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="mega-menu__nav-secondary">
+      <div class="mega-menu__navigation">
+        <div class="mega-menu__navigation-title">{{'Service Scheme' | globalTranslator}}</div>
+        <div class="mega-menu__navigation-search d-none">
+          <div class="search-input">
+            <span class="search-input__icon search-input__button"
+                  (click)="onSearch()">
+              <i class="icon lg search cursor-pointer"></i>
+            </span>
+            <input class="search-input__input"
+                   type="text"
+                   #searchInput
+                   [(ngModel)]="searchText"
+                   [placeholder]="'Search for Service Schemes' | translator"
+                   (keydown)="onSearchInputKeydown($event)">
+            <span class="search-input__icon search-input__icon-remove"
+                  *ngIf="searchText"
+                  (click)="removeSearchKey()">
+              <i class="icon close clear-search ng-star-inserted"></i>
+            </span>
+          </div>
+          <div class="mega-menu__navigation-text-result"
+               *ngIf="searchText && isSearching">
+            {{'Search results:' | translator}}
+            <span>({{totalSearchResult}})</span>
+          </div>
+        </div>
+        <div class="mega-menu__navigation-primary">
+          <kendo-treeview [nodes]="serviceSchemesResult"
+                          [ngClass]="'tree-view-custom'"
+                          textField="name"
+                          kendoTreeViewExpandable
+                          kendoTreeViewHierarchyBinding
+                          childrenField="data"
+                          [(expandedKeys)]="expandedKeys"
+                          (selectionChange)="onChildNodeClick($event)">
+          </kendo-treeview>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

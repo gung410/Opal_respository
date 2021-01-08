@@ -1,0 +1,31 @@
+<div class="learning-card"
+     [ngClass]="{ 'display-only': displayOnlyMode}">
+  <div>
+    <div class="info-container"
+         (click)="onLearningCardClick()">
+      <div class="learning-path-img">
+        <img src="{{ learningCardItem.imageUrl }}"
+             *ngIf="learningCardItem.imageUrl">
+      </div>
+      <div class="card-info">
+        <div class="learning-path-info">
+          <div class="card-type">
+            {{ 'learning path' | translator }}
+          </div>
+          <div class="card-childs-length">
+            {{ learningCardItem.courses ? learningCardItem.courses.length : 0 }}
+            {{ (learningCardItem.courses && learningCardItem.courses.length === 1 ? 'item' : 'items') | translator}}
+          </div>
+        </div>
+        <div class="card-title"
+             [title]="learningCardItem.title">{{ learningCardItem.title }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-course"
+       *ngIf="showBookmark"
+       (click)="onBookmarkChange()">
+    <i class="icon {{ learningCardItem.isBookmark ? 'save' : 'save-outline' }}"></i>
+  </div>
+</div>

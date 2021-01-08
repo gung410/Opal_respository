@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+  <div class="form-container pd-opportunities-container">
+    <div class="form-heading">
+      <label class="form-title">{{ 'PD Opportunities' | globalTranslator }}</label>
+      <div class="form-sub-title">{{ '* mandatory' | globalTranslator }}</div>
+    </div>
+    <button class="pd-opportunities-container__add-pd-button"
+            kendoButton
+            *ngIf="!isViewMode"
+            (click)="openPdOpportunities()">{{ 'Add PD Opportunities' | globalTranslator }}</button>
+    <learning-path-selected-courses [learningPathDetailVM]="learningPathDetailVM"
+                                    [hasThumbnail]="true"
+                                    [isViewMode]="isViewMode"></learning-path-selected-courses>
+  </div>
+</form>

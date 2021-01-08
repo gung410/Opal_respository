@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shared:HybridWebViewControl xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:shared="clr-namespace:Plugin.HybridWebView.Shared;assembly=Plugin.HybridWebView"
+                      x:Class="LearnerApp.Controls.WebViewVideoPlayer">
+</shared:HybridWebViewControl>

@@ -1,0 +1,33 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [field]="'title'"
+                     [title]="'Title'"
+                     [width]="200"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'yearCycle'"
+                     [title]="'Period'"
+                     [width]="150"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'numberOfCourses'"
+                     [title]="'Number of Courses'"
+                     [width]="150"
+                     *ngIf="canShowNumberOfCourses()"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'status'"
+                     [title]="'Status'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

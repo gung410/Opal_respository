@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.TermsOfUseView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:shared="clr-namespace:Plugin.HybridWebView.Shared;assembly=Plugin.HybridWebView"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    Title="Terms Of Use"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+
+    <shared:HybridWebViewControl Source="{Binding SourceUrl}" VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

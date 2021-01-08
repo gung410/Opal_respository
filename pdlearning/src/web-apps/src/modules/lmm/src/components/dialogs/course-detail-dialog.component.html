@@ -1,0 +1,64 @@
+<div class="content-management-container course-detail-dialog">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingCourseVmData }">
+    <div class="toolbar"
+         stickyElement
+         #courseDetailDialogStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClose()">
+            {{ 'Close Preview' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <span class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </span>
+            <p class="toolbar__left-group__title-group__sub-title"
+               *ngIf="subTitle"> {{ subTitle }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip detail-page__content-tabs top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #courseDetailDialogStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="courseDetailDialogStickyToolbarElement.element">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.CourseInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <course-detail [form]="form"
+                         [course]="course"
+                         [mode]="mode"
+                         [stickyDependElement]="courseDetailDialogStickyTabHeaderElement.headerElement"
+                         [stickySpacing]="stickySpacing"></course-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.CourseContentTab"
+                          [cssClass]="{'hidden': !canViewContent() }">
+        <ng-template kendoTabTitle="">
+          {{ 'Content' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <content-detail-page *ngIf="course && canViewContent()"
+                               [course]="course.courseData"
+                               [isPreviewMode]="true"
+                               [courseId]="courseId"></content-detail-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

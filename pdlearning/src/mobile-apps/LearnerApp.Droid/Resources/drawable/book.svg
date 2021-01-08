@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icons/sm/book</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/sm/book" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M5,0 L14,0 C15.1045695,-2.02906125e-16 16,0.8954305 16,2 L16,16 C16,17.1045695 15.1045695,18 14,18 L4,18 C2.8954305,18 2,17.1045695 2,16 L2,3.0199585 L2,3.0199585 L5,0 Z" id="Rectangle" fill="#BFDCFF"></path>
+        <path d="M5.00939941,0 L5.00939941,1.0199585 C5.00939941,2.124528 4.11396891,3.0199585 3.00939941,3.0199585 L2,3.0199585 L2,3.0199585 L5.00939941,0 Z" id="Rectangle-Copy" fill="#96BDEC"></path>
+        <path d="M13,14 L13,15 L5,15 L5,14 L13,14 Z M13,11 L13,12 L5,12 L5,11 L13,11 Z M13,8 L13,9 L5,9 L5,8 L13,8 Z M11,4 L11,6 L5,6 L5,4 L11,4 Z" id="Combined-Shape" fill="#5E8EC9"></path>
+    </g>
+</svg>

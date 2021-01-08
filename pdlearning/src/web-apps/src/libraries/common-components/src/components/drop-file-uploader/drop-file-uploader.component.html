@@ -1,0 +1,16 @@
+<div class="drop-file-uploader">
+  <div class="drop-file-uploader__banner">
+
+    <img class="drop-file-uploader__banner--icon"
+         src="assets/images/loading.gif"
+         *ngIf="onValidatingFile">
+    <img class="drop-file-uploader__banner--icon"
+         src="assets/images/icons/files/drop-file-upload.svg"
+         *ngIf="!onValidatingFile">
+
+    <span class="drop-file-uploader__banner--label">
+      {{onValidatingFile ? 'Please wait, file is uploading . .' : 'Drop files here to upload'}}
+    </span>
+
+  </div>
+</div>

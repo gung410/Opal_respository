@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.CheckInView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    Title="Check-in"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+        <Frame
+            Margin="10"
+            Padding="10,40,10,10"
+            BackgroundColor="White"
+            CornerRadius="6"
+            HasShadow="False">
+            <StackLayout Spacing="30">
+                <StackLayout>
+                    <Frame
+                        Padding="0"
+                        BorderColor="LightGray"
+                        CornerRadius="50"
+                        HasShadow="False"
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        IsClippedToBounds="True"
+                        VerticalOptions="Center"
+                        WidthRequest="100">
+                        <StackLayout VerticalOptions="CenterAndExpand">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimagesvg:SvgCachedImage
+                                HeightRequest="40"
+                                HorizontalOptions="CenterAndExpand"
+                                Source="qr_code.svg"
+                                WidthRequest="40" />
+                            <Label
+                                FontSize="10"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="QR" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Check-in for Session"
+                        TextColor="{StaticResource SecondaryTextColor}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <BoxView
+                        BackgroundColor="{StaticResource SecondaryTextColor}"
+                        HeightRequest="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="or"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        VerticalOptions="CenterAndExpand" />
+                    <BoxView
+                        BackgroundColor="{StaticResource SecondaryTextColor}"
+                        HeightRequest="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center" />
+                </StackLayout>
+
+                <Label
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Please type Class Identification code"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Frame
+                    Padding="7"
+                    BorderColor="LightGray"
+                    CornerRadius="4"
+                    HasShadow="False">
+                    <controls:CustomEditor
+                        x:Name="SessionCode"
+                        BackgroundColor="Transparent"
+                        HeightRequest="35"
+                        Placeholder="___-______-__-___"
+                        Text="{Binding SessionCode}"
+                        VerticalOptions="FillAndExpand" />
+                </Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Button
+                        BackgroundColor="White"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Command="{Binding CancelCommand}"
+                        CornerRadius="4"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Cancel"
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                    <Button
+                        BackgroundColor="{StaticResource DefaultTextColor}"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Command="{Binding ConfirmCommand}"
+                        CornerRadius="4"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Confirm"
+                        TextColor="White" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

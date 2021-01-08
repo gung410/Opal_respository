@@ -1,0 +1,12 @@
+<div class="learner-my-learning-page"
+     [ngClass]="{'hidden': currentLearningItem}">
+  <learner-my-learning #myLearning
+                       [defaultTab]="defaultTab"
+                       (learningCardClick)="onLearningCardClick($event)">
+  </learner-my-learning>
+</div>
+<learning-detail-page *ngIf="currentLearningItem"
+                      [learningId]="currentLearningItem.id"
+                      [learningType]="currentLearningItem.type"
+                      (back)="onCourseDetailBackClick()">
+</learning-detail-page>

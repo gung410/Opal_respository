@@ -1,0 +1,45 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingBlockoutDates}">
+    <div class="toolbar"
+         stickyElement
+         #learningPathDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <span class="toolbar__left-group__title-group__title">
+              <span class="text-box"
+                    [title]="title"> {{ title }} </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="blockoutDateDetailVM.data.status ? blockoutDateDetailVM.data.status : BlockoutDateStatus.Draft"
+                              [mapping]="blockoutDateStatusColorMap"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+    <blockout-date-detail [mode]="detailPageInput.data.mode"
+                          [blockoutDateDetailVM]="blockoutDateDetailVM"
+                          [form]="form">
+    </blockout-date-detail>
+  </div>
+</div>

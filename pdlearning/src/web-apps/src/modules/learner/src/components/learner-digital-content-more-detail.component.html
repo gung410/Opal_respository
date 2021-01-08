@@ -1,0 +1,173 @@
+<div *ngIf="metadataDigitalContent">
+  <ng-container *ngIf="metadataDigitalContent.metadataTagsDic">
+    <div class="learner-course-detail__detail-header">{{"Metadata" | translator}}</div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"PD OPPORTUNITY TYPE" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        {{ metadataDigitalContent.metadataTagsDic[metadataDigitalContent.pdOpportunityType] ? metadataDigitalContent.metadataTagsDic[metadataDigitalContent.pdOpportunityType].displayText : 'N/A'  }}
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Service Schemes" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="metadataDigitalContent.serviceSchemes">
+        <ng-container *ngFor="let serviceSchemeId of metadataDigitalContent.serviceSchemes">
+          <span>
+            {{ metadataDigitalContent.metadataTagsDic[serviceSchemeId].displayText }}
+          </span>
+        </ng-container>
+        <span *ngIf="metadataDigitalContent.serviceSchemes.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Main Subject Area" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        {{ metadataDigitalContent.metadataTagsDic[metadataDigitalContent.mainSubjectArea] ? metadataDigitalContent.metadataTagsDic[metadataDigitalContent.mainSubjectArea].displayText : 'N/A'  }}
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Course Levels" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="metadataDigitalContent.courseLevels">
+        <ng-container *ngFor="let courseLevelId of metadataDigitalContent.courseLevels">
+          <span>
+            {{ metadataDigitalContent.metadataTagsDic[courseLevelId].displayText }}
+          </span>
+        </ng-container>
+        <span *ngIf="metadataDigitalContent.courseLevels.length === 0">N/A</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <div class="learner-course-detail__detail-header">{{"Target Audience" | translator}}</div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Developmental Roles" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="metadataDigitalContent.developmentalRolesTree">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="metadataDigitalContent.developmentalRolesTree"
+                        [children]="metadataDigitalContent.getMetadataTagChilds"
+                        [hasChildren]="metadataDigitalContent.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="developmentalRolesItemIsCheckedFn">
+        </kendo-treeview>
+        <div class="metadata-editor__form-control"
+             *ngIf="metadataDigitalContent.developmentalRolesTree.length == 0">N/A</div>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Prerequisites" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <span> {{ metadataDigitalContent?.resource?.preRequisties || 'N/A'  }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <div class="learner-course-detail__detail-header">{{"Content is related to" | translator}}</div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Subject Areas and General Keywords" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <kendo-treeview class="metadata-editor__form-control"
+                        [nodes]="metadataDigitalContent.subjectAreasAndKeywordsTree"
+                        [children]="metadataDigitalContent.getMetadataTagChilds"
+                        [hasChildren]="metadataDigitalContent.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="subjectAreasAndKeywordsItemIsCheckedFn">
+        </kendo-treeview>
+        <div class="metadata-editor__form-control"
+             *ngIf="metadataDigitalContent.subjectAreasAndKeywordsTree.length == 0">N/A</div>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Learning Frameworks" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="metadataDigitalContent.learningFrameworks">
+        <ng-container *ngFor="let learningFrameworkId of metadataDigitalContent.learningFrameworks">
+          <span>
+            {{ metadataDigitalContent.metadataTagsDic[learningFrameworkId].displayText }}
+          </span>
+        </ng-container>
+        <span *ngIf="metadataDigitalContent.learningFrameworks.length === 0">N/A</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Dimensions and Learning Areas" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <kendo-treeview class="metadata-editor__form-control"
+                        *ngIf="metadataDigitalContent.dimensionsAndAreasTree.length > 0"
+                        [nodes]="metadataDigitalContent.dimensionsAndAreasTree"
+                        [children]="metadataDigitalContent.getMetadataTagChilds"
+                        [hasChildren]="metadataDigitalContent.isMetadataTagHasChilds"
+                        [textField]="'displayText'"
+                        kendoTreeViewCheckable
+                        kendoTreeViewExpandable
+                        [checkBy]="'tagId'"
+                        [isChecked]="dimensionsAndAreasItemIsCheckedFn">
+        </kendo-treeview>
+        <div class="metadata-editor__form-control"
+             *ngIf="metadataDigitalContent.dimensionsAndAreasTree.length == 0">N/A</div>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Objectives/Outcomes" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <span> {{ metadataDigitalContent?.resource?.objectivesOutCome || 'N/A'  }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <div class="learner-course-detail__detail-header">{{"Rights" | translator}}</div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Ownership" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="copyrightDigitalContent.ownershipItemsDic">
+        <span>{{ copyrightDigitalContent.ownershipItemsDic[copyrightDigitalContent.ownership]
+          && copyrightDigitalContent.ownershipItemsDic[copyrightDigitalContent.ownership].display || 'N/A'  }}</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Licence Type" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="copyrightDigitalContent.licenseTypeItemsDic">
+        <span>{{ copyrightDigitalContent.licenseTypeItemsDic[copyrightDigitalContent.licenseType]
+          && copyrightDigitalContent.licenseTypeItemsDic[copyrightDigitalContent.licenseType].display || 'N/A'  }}</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Permissions/Terms of Use" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <span *ngIf="copyrightDigitalContent.canShowCommonTermsOfUse">
+          {{ copyrightDigitalContent.commonTermsOfUseItemsDic[copyrightDigitalContent.termsOfUse] && copyrightDigitalContent.commonTermsOfUseItemsDic[copyrightDigitalContent.termsOfUse].display || 'N/A'  }}
+        </span>
+        <span *ngIf="!copyrightDigitalContent.canShowCommonTermsOfUse">
+          {{copyrightDigitalContent.termsOfUse}}
+        </span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Licence Territory" | translator}}</div>
+      <div class="learner-course-detail__detail-content"
+           *ngIf="copyrightDigitalContent.licenseTerritoryUseItemsDic">
+        <span>{{ copyrightDigitalContent.licenseTerritoryUseItemsDic[copyrightDigitalContent.licenseTerritory]
+          && copyrightDigitalContent.licenseTerritoryUseItemsDic[copyrightDigitalContent.licenseTerritory].display || 'N/A'  }}</span>
+      </div>
+    </div>
+    <div class="learner-course-detail__detail-item">
+      <div class="learner-course-detail__detail-title">{{"Copyright Owner/Publisher" | translator}}</div>
+      <div class="learner-course-detail__detail-content">
+        <span>{{ copyrightDigitalContent?.publisher || 'N/A'  }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+
+</div>

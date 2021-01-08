@@ -1,0 +1,143 @@
+<div class="video-chapter-detail"
+     [formGroup]="form">
+  <label class="video-annotation__title">{{"chapter information" | globalTranslator | uppercase}}</label>
+  <div class="video-chapter-detail__info"
+       *ngIf="currentChapter; else emptyChapter">
+    <label class="video-annotation__sub-title">{{"Time Range" | globalTranslator}}</label>
+    <div class="video-chapter-detail__range"
+         [ngClass]="{'video-chapter-detail__range--edit-mode' : !isViewMode}">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <span>
+            {{"From" | globalTranslator}}
+          </span>
+          <span class="video-chapter-detail__time">{{ currentChapter.timeStart | secondToTimeFormat }}</span>
+          <span class="video-chapter-detail__time-to">
+            {{"To" | globalTranslator}}
+          </span>
+          <span class="video-chapter-detail__time">{{ currentChapter.timeEnd | secondToTimeFormat }}</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <span>
+            {{"From" | globalTranslator}}
+          </span>
+          <kendo-timepicker class="form-control"
+                            *ngIf="videoMinLengthAsDate && videoMaxLengthAsDate"
+                            #startTimePicker
+                            format="mm:ss"
+                            [min]="videoMinLengthAsDate"
+                            [max]="videoMaxLengthAsDate"
+                            formControlName="timeStart"
+                            [(ngModel)]="timeStart"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+          <span class="video-chapter-detail__time-to">
+            {{"To" | globalTranslator}}
+          </span>
+          <kendo-timepicker class="form-control"
+                            *ngIf="videoMinLengthAsDate && videoMaxLengthAsDate"
+                            #endTimePicker
+                            format="mm:ss"
+                            [min]="videoMinLengthAsDate"
+                            [max]="videoMaxLengthAsDate"
+                            formControlName="timeEnd"
+                            [(ngModel)]="timeEnd"
+                            kendoErrorTooltip
+                            position="top"></kendo-timepicker>
+        </ng-template>
+      </editable>
+    </div>
+    <label class="video-annotation__sub-title">{{"Chapter name" | globalTranslator}}</label>
+    <div class="video-chapter-detail__title">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <div>{{ currentChapter.title }}</div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 kendoTextBox
+                 formControlName="title"
+                 kendoErrorTooltip
+                 [(ngModel)]="chapterName">
+        </ng-template>
+      </editable>
+    </div>
+    <label class="video-annotation__sub-title">{{"Description" | globalTranslator}}</label>
+    <div class="video-chapter-detail__description">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <div>{{ currentChapter.description }}</div>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    kendoTextArea
+                    rows="10"
+                    formControlName="description"
+                    kendoErrorTooltip
+                    [(ngModel)]="currentChapter.description"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <label class="video-annotation__sub-title">{{"Attachments" | globalTranslator}}</label>
+    <div class="video-chapter-detail__attachments">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+          <ng-container *ngIf="currentChapter.attachments.length; else attachmentEmpty">
+            <div class="video-chapter-detail__attachment-group"
+                 *ngFor="let item of currentChapter.attachments; let i = index">
+              <div class="video-chapter-detail__attachment">
+                <span class="k-icon k-i-attachment video-chapter-detail__attachment-icon"></span>
+                {{i+1}}.
+                <a class="video-chapter-detail__attachment-file-name"
+                   (click)="onAttachmentClicked(item.fileLocation)">{{ item.fileName }}</a>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #attachmentEmpty="">
+            <div class="video-chapter-detail__attachment-empty">{{"There are no attachments" | globalTranslator}}</div>
+          </ng-template>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <ng-container *ngIf="currentChapter.attachments.length; else attachmentEmpty">
+            <div class="video-chapter-detail__attachment-group"
+                 *ngFor="let item of currentChapter.attachments; let i = index">
+              <div class="video-chapter-detail__attachment">
+                <span class="k-icon k-i-attachment video-chapter-detail__attachment-icon"></span>
+                {{i+1}}.
+                <a class="video-chapter-detail__attachment-file-name"
+                   (click)="onAttachmentClicked(item.fileLocation)">{{ item.fileName }}</a>
+              </div>
+              <i class="k-icon k-i-close cursor-pointer"
+                 (click)="removeAttachment(i)"></i>
+            </div>
+          </ng-container>
+          <ng-template #attachmentEmpty="">
+            <div class="video-chapter-detail__attachment-empty">{{"There are no attachments" | globalTranslator}}</div>
+          </ng-template>
+          <opal-file-uploader class="video-chapter-detail__uploader"
+                              [(ngModel)]="uploaderUrl"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="uploadFolder"
+                              (uploaderProgressChange)="onUploaderChanged($event)"
+                              formControlName="uploader"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="video-chapter-detail__toolbar">
+      <editable [modeView]="isViewMode">
+        <ng-template editableViewMode="">
+        </ng-template>
+        <ng-template editableEditMode="">
+          <button kendoButton
+                  [primary]="false"
+                  (click)="onDeleteChapter()">{{"Delete" | globalTranslator}}</button>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+  <ng-template #emptyChapter="">
+    <div class="video-chapter-detail__empty-chapter">{{"Add description" | globalTranslator}}</div>
+  </ng-template>
+</div>

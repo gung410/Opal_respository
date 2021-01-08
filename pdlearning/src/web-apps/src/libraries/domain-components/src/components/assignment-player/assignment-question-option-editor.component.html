@@ -1,0 +1,73 @@
+<div class="assignment-question-option-editor"
+     [formGroup]="form"
+     [ngClass]="{'-is-edit': !viewMode }"
+     (click)="valueInput.focus()">
+  <div class="assignment-question-option-editor__container-left-col">
+    <input type="checkbox"
+           [ngClass]="['k-' + type, (disableSetCorrectAnswer ? 'assignment-question-option-editor__disabled-answer': '')]"
+           formControlName="checked"
+           [ngModel]="checked"
+           [disabled]="disableSetCorrectAnswer"
+           (click)="onCheckboxClicked($event)">
+
+    <span class="assignment-question-option-editor__text"
+          [hidden]="!viewMode">{{value}}</span>
+    <input class="assignment-question-option-editor__value"
+           #valueInput
+           formControlName="value"
+           kendoTextBox
+           kendoErrorTooltip
+           position="bottom"
+           [hidden]="viewMode"
+           [placeholder]="valueInputPlaceholder"
+           [ngModel]="value"
+           (ngModelChange)="onValueChanged($event)"
+           (focus)="onValueInputFocus($event)"
+           (focusout)="onValueInputFocusOut($event.target.value)"
+           (keyup.enter)="onValueInputEnter()">
+
+  </div>
+  <div class="assignment-question-option-editor__container-right-col"
+       *ngIf="!viewMode">
+    <div class="assignment-question-option-editor__icon"
+         [ngClass]="{'-show': visibleOptionActions }">
+      <span class="assignment-question-option-editor__icon-picture"
+            *ngIf="allowConfigureImage"
+            (click)="insertImage()"><img src="assets/images/icons/picture.svg"></span>
+      <span class="assignment-question-option-editor__icon-setup"
+            *ngIf="allowConfigureFeedback"
+            (click)="openQuestionConfigurationPopup()"><img src="assets/images/icons/setup.svg"></span>
+      <span class="assignment-question-option-editor__remove-btn"
+            *ngIf="!noRemove"
+            [ngClass]="{'-show': !noRemove }"
+            (click)="onRemoveClicked($event)">
+        <i class="remove-btn-icon k-icon k-i-minus-circle"></i>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="option-image"
+     *ngIf="mediaUrl && mediaType === MediaType.Image">
+  <img class="image"
+       [src]="mediaSource">
+  <div class="delete-btn k-icon k-i-close"
+       *ngIf="!viewMode"
+       (click)="deleteImage()"></div>
+</div>
+<div class="option-video"
+     *ngIf="mediaUrl && mediaType === MediaType.Video">
+  <video class="video"
+         width="100%"
+         height="100%"
+         style="max-width:100%"
+         #videoElement
+         controls
+         controlsList="nodownload">
+    <source [src]="mediaSource"
+            controls>
+    <p>Your browser doesn't support HTML5 video. Here is a <a [href]="mediaSource">link to download the video</a> instead.</p>
+  </video>
+  <div class="delete-btn k-icon k-i-close"
+       *ngIf="!viewMode"
+       (click)="deleteImage()"></div>
+</div>

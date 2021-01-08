@@ -1,0 +1,111 @@
+<div class="form-editor">
+  <form-question-adder class="form-editor__first-question-adder"
+                       *ngIf="orderedFormQuestionsData.length == 0"
+                       [type]="formData.type"
+                       [inlineAdd]="false"
+                       [priority]="0"
+                       (selectQuestion)="onQuestionTemplateSelect($event)"
+                       (importQuestions)="onQuestionImported($event)"></form-question-adder>
+  <div class="form-editor__question-container"
+       [ngClass]="{'-selected': selectedQuestionId == question.id}"
+       *ngFor="let question of orderedFormQuestionsData; let i = index; trackBy: formQuestionsDataTrackByFn">
+    <form-section-editor *ngIf="question.questionType == QuestionType.Structure ; else noSection"
+                         [formSection]="formSectionDic[question.formSectionId]"
+                         [formType]="formData.type"
+                         [branchingOptionQuestions]="branchingOptionQuestions"
+                         [disableMoveUp]="i === uneditableFormQuestionsLength"
+                         (formSectionChange)="onSectionChanged($event)"
+                         (move)="onSectionMove($event)"
+                         (delete)="onSectionDelete($event)">
+      <form-question-adder class="form-editor__first-question-adder"
+                           *ngIf="!questionsDicByFormSection[question.formSectionId]"
+                           [type]="formData.type"
+                           [inlineAdd]="false"
+                           [priority]="i"
+                           [minorPriority]="0"
+                           (selectQuestion)="onQuestionTemplateSelect($event,question.formSectionId)"
+                           (importQuestions)="onQuestionImported($event,question.formSectionId)"></form-question-adder>
+      <ng-container
+                    *ngFor="let sectionQuestion of getOrderedQuestionsBySection(question.formSectionId); let j = index; trackBy: formQuestionsDataTrackByFn">
+        <!-- because question inside section not have branching so use branchingOptionQuestions for disable move up and move down question -->
+        <div class="form-editor__question-container"
+             [ngClass]="{'-selected': selectedQuestionId == sectionQuestion.id}">
+          <form-question-editor class="form-editor__question-item"
+                                [ngClass]="{'-selected': selectedQuestionId == sectionQuestion.id}"
+                                [data]="sectionQuestion"
+                                [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                [selected]="selectedQuestionId == sectionQuestion.id"
+                                [formType]="formData.type"
+                                [branchingOptionQuestions]="getOrderedQuestionsBySection(question.formSectionId)"
+                                (dataChange)="onSectionQuestionDataChange($event)"
+                                (delete)="onSectionQuestionDelete($event)"
+                                (moveUp)="onSectionQuestionMove($event,-1)"
+                                (moveDown)="onSectionQuestionMove($event,1)"
+                                (click)="selectQuestion(sectionQuestion)">
+          </form-question-editor>
+          <form-question-adder *ngIf="formData.type !== FormType.Poll"
+                               [inlineAdd]="(questionsDicByFormSection[question.formSectionId].length - 1) != j"
+                               [type]="formData.type"
+                               [priority]="i"
+                               [minorPriority]="j + 1"
+                               (selectQuestion)="onQuestionTemplateSelect($event,question.formSectionId)"
+                               (importQuestions)="onQuestionImported($event,question.formSectionId)"></form-question-adder>
+        </div>
+      </ng-container>
+    </form-section-editor>
+    <ng-template #noSection="">
+      <form-question-editor class="form-editor__question-item"
+                            [ngClass]="{'-selected': selectedQuestionId == question.id}"
+                            [data]="question"
+                            [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                            [selected]="selectedQuestionId == question.id"
+                            [formType]="formData.type"
+                            [disableMoveUp]="i === uneditableFormQuestionsLength"
+                            [branchingOptionQuestions]="branchingOptionQuestions"
+                            (dataChange)="onQuestionChanged($event)"
+                            (delete)="onQuestionDelete($event)"
+                            (moveUp)="onQuestionMoveUp($event)"
+                            (moveDown)="onQuestionMoveDown($event)"
+                            (click)="selectQuestion(question)"></form-question-editor>
+    </ng-template>
+    <form-question-adder *ngIf="formData.type !== FormType.Poll && i >= uneditableFormQuestionsLength - 1"
+                         [inlineAdd]="(orderedFormQuestionsData.length - 1) != i"
+                         [type]="formData.type"
+                         [priority]="i + 1"
+                         (selectQuestion)="onQuestionTemplateSelect($event)"
+                         (importQuestions)="onQuestionImported($event)"></form-question-adder>
+    <div class="form-editor__freetext-question-config"
+         *ngIf="formData.type === FormType.Poll && i == 0">
+      <div class="k-checkbox-container">
+        <input class="k-checkbox"
+               type="checkbox"
+               [(ngModel)]="isAddQuestionFreeTextInPoll"
+               [checked]="isAddQuestionFreeTextInPoll"
+               [disabled]="mode != 'edit'">
+        <label class="k-checkbox-label"
+               (click)="toggleFreeTextQuestionInPoll()">
+          {{'Enable free text option' | translator}}
+          <span class="form-editor__freetext-question-config--explanation-icon"
+                (mouseover)="showExplanationNote()"
+                (mouseout)="showExplanationNote()">
+            <img src="assets/images/icons/question-mark.svg"
+                 alt="icon">
+          </span>
+        </label>
+      </div>
+      <div class="k-checkbox-container show-poll-result-area">
+        <input class="k-checkbox"
+               type="checkbox"
+               [(ngModel)]="formData.isAllowedDisplayPollResult"
+               [disabled]="mode != 'edit'">
+        <label class="k-checkbox-label">
+          {{'Display Poll result for learner' | translator}}
+        </label>
+      </div>
+      <div class="form-editor__freetext-question-config--explanation-text"
+           *ngIf="isShowExplanationNote">
+        {{'This additional free text question is for you to gather additional comments and queries from the participants of your poll; it is optional and you may turn it off by uncheck the checkbox beside the question' | translator}}
+      </div>
+    </div>
+  </div>
+</div>

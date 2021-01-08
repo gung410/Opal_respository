@@ -1,0 +1,15 @@
+{
+  "SingleForm": [
+    {
+      "id": "GetData",
+      "response": {
+        "controlA": 1,
+        "controlB": 2
+      }
+    },
+    {
+      "id": "UpdateData",
+      "response": true
+    }
+  ]
+}

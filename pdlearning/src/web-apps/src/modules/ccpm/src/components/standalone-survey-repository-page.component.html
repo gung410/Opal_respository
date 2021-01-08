@@ -1,0 +1,54 @@
+<div class="content-creation-repository-page --form">
+  <app-toolbar [customClass]="'content-creation-toolbar'">
+    <toolbar-left>
+      <search-input [(ngModel)]="searchText"
+                    [placeholder]="'Search in LNA Form' | translator"
+                    (search)="onSearch()"></search-input>
+    </toolbar-left>
+    <toolbar-center class="flex row"></toolbar-center>
+    <toolbar-right>
+      <button class="content-creation-toolbar__import"
+              kendoButton
+              primary="true"
+              [icon]="'plus'"
+              (click)="onAddNewButtonClick()">
+        {{ 'Add New' | globalTranslator }}
+      </button>
+      <div [hidden]="!canShowFilterBtn">
+        <div class="content-creation-toolbar__filter">
+          <label>{{ 'Filter' | globalTranslator }}</label>
+          <opal-select class="content-creation-toolbar__filter-select"
+                       [autoScrollToViewOnOpen]="false"
+                       [items]="filterItems"
+                       [valueField]="'value'"
+                       [labelField]="'text'"
+                       [(selectedValue)]="filterStatus"
+                       [placeholder]="'All' | globalTranslator"
+                       kendoErrorTooltip
+                       [searchable]="false"></opal-select>
+        </div>
+      </div>
+    </toolbar-right>
+  </app-toolbar>
+
+  <kendo-tabstrip [animate]="false"
+                  #kendoTabstrip
+                  (tabSelect)="onLnaSurveysTabSelect($event)">
+    <kendo-tabstrip-tab [selected]="searchTermService.queryMode === SurveyQueryModeEnum.All"
+                        [title]="lnaFormQueryMode.get(SurveyQueryModeEnum.All) | translator">
+      <ng-template kendoTabContent="">
+        <standalone-survey-list [filterStatus]="filterStatus"
+                                [searchTerm]="searchTerm"
+                                [contextMenuItems]="contextMenuItemsForFormsTab"
+                                [queryMode]="SurveyQueryModeEnum.All"></standalone-survey-list>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab [selected]="searchTermService.queryMode === SurveyQueryModeEnum.Archived"
+                        [title]="lnaFormQueryMode.get(SurveyQueryModeEnum.Archived) | translator">
+      <ng-template kendoTabContent="">
+        <standalone-survey-list [hiddenColumns]="['modified']"
+                                [contextMenuItems]="contextMenuItemsForArchivedTab"></standalone-survey-list>
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
+</div>

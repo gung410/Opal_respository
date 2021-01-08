@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="LearnerApp.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:assignment="clr-namespace:LearnerApp.Converters.Assignment;assembly=LearnerApp"
+    xmlns:converters="clr-namespace:LearnerApp.Converters;assembly=LearnerApp">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--  COLORS  -->
+            <Color x:Key="MainColor">#4E7EFF</Color>
+            <Color x:Key="MainLogoColor">#3C6DF2</Color>
+            <Color x:Key="TintColor">#8A8A8A</Color>
+            <Color x:Key="SelectedColor">#4174FF</Color>
+            <Color x:Key="HoverColor">#4174FF</Color>
+            <Color x:Key="OnClickColor">#4671E5</Color>
+            <Color x:Key="TagColor">#79B3EE</Color>
+            <Color x:Key="PendingStatusColor">#ECE5A6</Color>
+            <Color x:Key="WaitingStatusColor">#ECE5A6</Color>
+            <Color x:Key="CompletedStatusColor">#9DE0BD</Color>
+            <Color x:Key="SuccessfulStatusColor">#9DE0BD</Color>
+            <Color x:Key="MainBodyTextColor">#303450</Color>
+            <Color x:Key="SecondaryTextColor">#8799BA</Color>
+            <Color x:Key="AlertNotifications">#FFB8B8</Color>
+            <Color x:Key="StrokeForNotification">#FFB4B4</Color>
+            <Color x:Key="DefaultTextColor">#313552</Color>
+            <Color x:Key="EntryPlaceholderColor">#323653</Color>
+            <Color x:Key="EntryLineColor">#D8DCE6</Color>
+            <Color x:Key="ErrorColor">#FF7575</Color>
+            <Color x:Key="WhiteColor">#FFFFFF</Color>
+            <Color x:Key="InProgress">#EFDC33</Color>
+            <Color x:Key="Completed">#1DCEC1</Color>
+            <Color x:Key="TabSelected">#1DCEC1</Color>
+            <Color x:Key="BackgroundColor">#F9F9F9</Color>
+            <Color x:Key="ContentPageColor">#E5E5E5</Color>
+            <Color x:Key="ExpiredColor">#808080</Color>
+            <Color x:Key="UnpublishedColor">#FF6262</Color>
+            <Color x:Key="RegisteredColor">#D6D6DC</Color>
+            <Color x:Key="AppliedColor">#CFD1DC</Color>
+            <Color x:Key="PublishedColor">#0E409F</Color>
+            <Color x:Key="PublishedClassRunColor">#3BDC87</Color>
+            <Color x:Key="CancelledColor">#FFB4B4</Color>
+            <Color x:Key="DraftColor">#D8DCE6</Color>
+            <Color x:Key="LateInSubmission">#58A8F7</Color>
+
+            <OnPlatform x:Key="ActivityIndicatorColor" x:TypeArguments="Color">
+                <On Platform="iOS" Value="{StaticResource SecondaryTextColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassBackgroundColor" x:TypeArguments="Color">
+                <On Platform="iOS, Android" Value="{StaticResource MainColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassBorderColor" x:TypeArguments="Color">
+                <On Platform="iOS, Android" Value="{StaticResource MainColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="DefaultButtonClassTextColor" x:TypeArguments="Color">
+                <On Platform="iOS, Android" Value="{StaticResource WhiteColor}" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="EntryBackgroundColor" x:TypeArguments="Color">
+                <On Platform="iOS, Android" Value="{StaticResource WhiteColor}" />
+            </OnPlatform>
+
+            <!--  SIZES  -->
+            <OnPlatform x:Key="BaseButtonBorderRadius" x:TypeArguments="x:Int32">
+                <On Platform="iOS, Android" Value="5" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonBorderWidth" x:TypeArguments="x:Double">
+                <On Platform="iOS, Android" Value="0" />
+            </OnPlatform>
+
+            <!--  Padding  -->
+            <OnPlatform x:Key="PaddingLearningContent" x:TypeArguments="Thickness">
+                <On Platform="iOS" Value="10,50,10,0" />
+                <On Platform="Android" Value="10,10,10,0" />
+            </OnPlatform>
+
+            <!--  MARGINS  -->
+            <OnPlatform x:Key="BaseMarginTextbox" x:TypeArguments="Thickness">
+                <On Platform="iOS" Value="0,10,0,10" />
+                <On Platform="Android" Value="0,5,0,5" />
+            </OnPlatform>
+
+            <!--  FONTS  -->
+            <OnPlatform x:Key="RobotoRegular" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto-Regular" />
+                <On Platform="Android" Value="Roboto-Regular.ttf#Roboto" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="RobotoBold" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto-Bold" />
+                <On Platform="Android" Value="Roboto-Bold.ttf#Roboto" />
+            </OnPlatform>
+
+            <x:String x:Key="icon's name">icon's code;</x:String>
+            <OnPlatform x:Key="IconsFont" x:TypeArguments="x:String">
+                <On Platform="iOS">telerikfont</On>
+                <On Platform="Android">Fonts/telerikfont.ttf#telerikfont</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseFontSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android" Value="15" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="11" />
+                <On Platform="Android" Value="12" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MidMediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="12" />
+                <On Platform="Android" Value="14" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MediumSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="14" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android" Value="18" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargerSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="20" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="20" />
+                <On Platform="Android" Value="24" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="ExtraBigSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="24" />
+                <On Platform="Android" Value="32" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="HugeSize" x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="32" />
+                <On Platform="Android" Value="48" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BaseButtonFontAttributes" x:TypeArguments="FontAttributes">
+                <On Platform="iOS" Value="Bold" />
+                <On Platform="Android" Value="None" />
+            </OnPlatform>
+
+            <!--  CONVERTERS  -->
+            <converters:DatetimeConverter x:Key="DatetimeConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:OpacityVisibleConverter x:Key="OpacityVisibleConverter" />
+            <converters:ToUpperConverter x:Key="ToUpperConverter" />
+            <converters:DurationConverter x:Key="DurationConverter" />
+            <converters:LabelStatusConverter x:Key="LabelStatusConverter" />
+            <converters:LabelColorConverter x:Key="LabelColorConverter" />
+            <converters:BookmarkConverter x:Key="BookmarkConverter" />
+            <converters:ProgressBarConverter x:Key="ProgressBarConverter" />
+            <converters:ThumbnailUrlConverter x:Key="ThumbnailUrlConverter" />
+            <converters:StatusFrameConverter x:Key="StatusFrameConverter" />
+            <converters:RatingConverter x:Key="RatingConverter" />
+            <converters:ReviewsCountConverter x:Key="ReviewsCountConverter" />
+            <converters:DurationVisibleConverter x:Key="DurationVisibleConverter" />
+            <converters:CollectionViewEmptyConverter x:Key="CollectionViewEmptyConverter" />
+            <converters:LearningStatusBackgroundColorConverter x:Key="LearningStatusBackgroundColorConverter" />
+            <converters:ClassRunExpandConverter x:Key="ClassRunExpandConverter" />
+            <converters:CourseLearningStatusConverter x:Key="CourseLearningStatusConverter" />
+            <converters:ApplyBackgroundColorConverter x:Key="ApplyBackgroundColorConverter" />
+            <converters:LearningStatusConverter x:Key="LearningStatusConverter" />
+            <converters:LearningStatusEnableConverter x:Key="LearningStatusEnableConverter" />
+            <converters:ClassRunDateTimeConverter x:Key="ClassRunDateTimeConverter" />
+            <converters:ClassRunSizeConverter x:Key="ClassRunSizeConverter" />
+            <converters:ParticipantConverter x:Key="ParticipantConverter" />
+            <converters:PendingPopupConverter x:Key="PendingPopupConverter" />
+            <converters:ProgressBarVisibleConverter x:Key="ProgressBarVisibleConverter" />
+            <converters:CourseLearningStatusColorConverter x:Key="CourseLearningStatusColorConverter" />
+            <converters:TagViewVisibleConverter x:Key="TagViewVisibleConverter" />
+            <converters:ClassRunStatusConverter x:Key="ClassRunStatusConverter" />
+            <assignment:AssignmentStatusConverter x:Key="AssignmentStatusConverter" />
+            <assignment:AssignmentStatusBackgroundColorConverter x:Key="AssignmentStatusBackgroundColorConverter" />
+            <assignment:AssignmentLearningStatusConverter x:Key="AssignmentLearningStatusConverter" />
+            <converters:ClassRunDateConverter x:Key="ClassRunDateConverter" />
+            <converters:ClassRunTimeConverter x:Key="ClassRunTimeConverter" />
+            <converters:FileExtensionConverter x:Key="FileExtensionConverter" />
+            <converters:ClassRunInformationExpandConverter x:Key="ClassRunInformationExpandConverter" />
+            <converters:ClassRunTime12HourConverter x:Key="ClassRunTime12HourConverter" />
+            <converters:LearningPathsTotalItemsConverter x:Key="LearningPathsTotalItemsConverter" />
+            <converters:LearningPathsCountConverter x:Key="LearningPathsCountConverter" />
+            <converters:SessionStatusConverter x:Key="SessionStatusConverter" />
+            <converters:SessionFrameVisibleConverter x:Key="SessionFrameVisibleConverter" />
+            <converters:BookmarkInfoConverter x:Key="BookmarkInfoConverter" />
+            <converters:AvatarUrlConverter x:Key="AvatarUrlConverter" />
+            <converters:TotalNewNotificationConverter x:Key="TotalNewNotificationConverter" />
+            <converters:ReportBrokenLinkConverter x:Key="ReportBrokenLinkConverter" />
+            <converters:AssignmentScoreConverter x:Key="AssignmentScoreConverter" />
+            <converters:ConfirmButtonBackgroundConverter x:Key="ConfirmButtonBackgroundConverter" />
+            <converters:CheckCardTypeConverter x:Key="CheckCardTypeConverter" />
+            <converters:LearningStatusVisibleConverter x:Key="LearningStatusVisibleConverter" />
+            <converters:NewsfeedEmptyConverter x:Key="NewsfeedEmptyConverter" />
+            <converters:StringEmptyConverter x:Key="StringEmptyConverter" />
+            <converters:NewsfeedPostForwardNullConverter x:Key="NewsfeedPostForwardNullConverter" />
+            <converters:RemainingItemThresholdLoadMoreSkeletonVisibleConverter x:Key="RemainingItemThresholdLoadMoreSkeletonVisibleConverter" />
+            <converters:CourseCommunityVisibleConverter x:Key="CourseCommunityVisibleConverter" />
+            <converters:CourseLikeIconSourceConverter x:Key="CourseLikeIconSourceConverter" />
+            <converters:CourseLikeStatusConverter x:Key="CourseLikeStatusConverter" />
+            <converters:DigitalContentLikeIconSourceConverter x:Key="DigitalContentLikeIconSourceConverter" />
+            <converters:DigitalContentLikeStatusConverter x:Key="DigitalContentLikeStatusConverter" />
+            <converters:SessionVenueConverter x:Key="SessionVenueConverter" />
+            <converters:JoinWebinarButtonVisibleConverter x:Key="JoinWebinarButtonVisibleConverter" />
+            <converters:JoinWebinarButtonEnableConverter x:Key="JoinWebinarButtonEnableConverter" />
+            <converters:WebinarExpiredConverter x:Key="WebinarExpiredConverter" />
+            <converters:JoinWebinarButtonBackgroundColorConverter x:Key="JoinWebinarButtonBackgroundColorConverter" />
+
+            <!--  EXPLICIT STYLES  -->
+            <Style x:Key="ValidationErrorLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+                <Setter Property="TextColor" Value="{StaticResource DefaultTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <!--  IMPLICIT STYLES  -->
+            <Style
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="Button">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="FontAttributes" Value="{StaticResource BaseButtonFontAttributes}" />
+                <Setter Property="BorderRadius" Value="{StaticResource BaseButtonBorderRadius}" />
+                <Setter Property="BorderWidth" Value="{StaticResource BaseButtonBorderWidth}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource DefaultButtonClassBackgroundColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource DefaultButtonClassBorderColor}" />
+                <Setter Property="TextColor" Value="{StaticResource DefaultButtonClassTextColor}" />
+            </Style>
+
+            <Style
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource DefaultTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+            </Style>
+
+            <Style
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource DefaultTextColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource EntryPlaceholderColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource EntryBackgroundColor}" />
+            </Style>
+
+            <Style
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="ActivityIndicator">
+                <Setter Property="Color" Value="{StaticResource ActivityIndicatorColor}" />
+            </Style>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#FFFFFF" />
+                <Setter Property="BackgroundColor" Value="#F9F9F9" />
+                <Setter Property="BarTextColor" Value="{StaticResource DefaultTextColor}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

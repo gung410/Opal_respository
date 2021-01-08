@@ -1,0 +1,43 @@
+<ng-container [formGroup]="form">
+  <div class="tab-content-section">
+    <div class="form-controls-group">
+      <label class="form-control">
+        <input class="k-radio"
+               formControlName="isAutoPublish"
+               name="isAutoPublish"
+               type="radio"
+               [value]="true"
+               [attr.disabled]="readOnly ? true : null"
+               [(ngModel)]="isAutoPublish"
+               kendoRadioButton>
+        {{ 'Auto Publish' | translator }}
+      </label>
+      <label class="form-control">
+        <input class="k-radio"
+               formControlName="isAutoPublish"
+               name="isAutoPublish"
+               type="radio"
+               [value]="false"
+               [attr.disabled]="readOnly ? true : null"
+               [(ngModel)]="isAutoPublish"
+               kendoRadioButton>
+        {{ 'Schedule Publish' | translator }}
+      </label>
+    </div>
+    <div *ngIf="!isAutoPublish"
+         class="form-controls-group">
+      <label>{{'Publish Schedule Date' | globalTranslator}}</label>
+      <kendo-datepicker class="tab-content-section__date-picker"
+                        formControlName="autoPublishDate"
+                        kendoErrorTooltip
+                        position="top"
+                        [(ngModel)]="date"
+                        (valueChange)="onDateInputChange($event)"
+                        [placeholder]="'Select the Publish Schedule Date' | globalTranslator"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="readOnly"
+                        [disabledDates]="disabledDatesInThePast"
+                        [disabledDatesValidation]="false"></kendo-datepicker>
+    </div>
+  </div>
+</ng-container>

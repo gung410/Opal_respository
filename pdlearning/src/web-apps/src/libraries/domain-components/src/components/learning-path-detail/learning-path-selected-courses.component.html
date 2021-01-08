@@ -1,0 +1,38 @@
+<div class="learning-path-selected-courses"
+     *ngIf="learningPathDetailVM">
+  <div class="learning-path-selected-courses__item"
+       *ngFor="let courseItem of learningPathDetailVM.learningPathCourseVMs; let idx = index">
+    <div class="learning-path-selected-courses__number">{{ idx + 1 }}</div>
+    <div class="learning-path-selected-courses__thumnail"
+         *ngIf="hasThumbnail">
+      <img alt
+           [src]="courseItem.course.thumbnailUrl ? courseItem.course.thumbnailUrl : 'assets/images/course/thumb-img.svg'">
+    </div>
+    <div class="learning-path-selected-courses__description">
+      <div class="learning-path-selected-courses__name">{{courseItem.course.courseName}}</div>
+    </div>
+    <div class="learning-path-selected-courses__control"
+         *ngIf="!isViewMode">
+      <img src="assets/images/icons/more-horizontal.svg"
+           alt
+           #contextMenu>
+      <kendo-contextmenu [target]="contextMenu"
+                         [alignToAnchor]="true"
+                         [anchorAlign]="defaultContextMenuAnchorAlign"
+                         [popupAlign]="defaultContextMenuPopupAlign"
+                         showOn="click"
+                         (select)="onContextMenuItemSelect($event.item.data, courseItem)">
+        <kendo-menu-item [text]="'Move up' | globalTranslator"
+                         [data]="{ id: 'MoveUp' }"
+                         [disabled]="!canMoveUpSelectedItem(courseItem)"></kendo-menu-item>
+        <kendo-menu-item [text]="'Move down' | globalTranslator"
+                         [data]="{id: 'MoveDown'}"
+                         [disabled]="!canMoveDownSelectedItem(courseItem)"></kendo-menu-item>
+        <kendo-menu-item [text]="'Delete' | globalTranslator"
+                         [data]="{id: 'Delete'}"
+                         [cssClass]="'learning-path-selected-courses__option-remove'"
+                         [disabled]="!canRemoveSelectedItem()"></kendo-menu-item>
+      </kendo-contextmenu>
+    </div>
+  </div>
+</div>

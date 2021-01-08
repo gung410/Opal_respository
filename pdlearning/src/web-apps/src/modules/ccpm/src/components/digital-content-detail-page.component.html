@@ -1,0 +1,229 @@
+<app-toolbar [mergeHeader]="true"
+             [detailToolbar]="true">
+  <toolbar-left>
+    <detail-title [allowEditTitle]="canSaveDigitalContent || canApprovalDigitalContent"
+                  [title]="contentViewModel.title"
+                  [settings]="detailTitleSettings"
+                  [maxLength]="MAX_LENGTH_TITLE"
+                  (onBackButtonClick)="onBackAction()"></detail-title>
+  </toolbar-left>
+  <toolbar-right>
+    <div class="form-editor-page__btn-container">
+      <status-indicator [currentStatus]="contentViewModel.status"
+                        [mapping]="digitalContentStatusMapping"></status-indicator>
+
+      <ng-container>
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.TransferOwnerShipContent, isOwner]"
+                kendoButton
+                [primary]="true"
+                (click)="onTransferOwnershipBtnClicked()">{{'Transfer Ownership' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.EditContent, canShowEditButton]"
+                kendoButton
+                [primary]="true"
+                (click)="onEditButtonClick()">{{ 'Edit' | translator }}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.EditContent, canSaveDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="onSaveDigitalContent(digitalContentStatus.Draft, true)">{{'Save' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.DuplicateContent, canDuplicateDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="onDuplicateBtnClicked()">{{'Duplicate' | translator}}</button>
+
+        <button class="form-editor-page__save-btn"
+                *hasPermission="[ccpmPermissions.ArchiveContent, canShowArchiveButton]"
+                kendoButton
+                [primary]="true"
+                (click)="onArchiveBtnClicked()">{{'Archive' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.MarkAsReadyContent, canShowMarkAsReadyToUseButton]"
+                kendoButton
+                [primary]="true"
+                (click)="onSubmitForStatus(digitalContentStatus.ReadyToUse)">{{'Mark as ready' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.EditContent, canShowMarkAsDraftButton]"
+                kendoButton
+                [primary]="true"
+                (click)="onSaveDigitalContent(digitalContentStatus.Draft)">{{'Mark as draft' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.SubmitForApproveContent, canSubmitDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="onSubmitForStatus(digitalContentStatus.PendingForApproval)">{{'Submit for Approval' | translator}}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.PublishContent, canPublishDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="changeStatus(ContextMenuAction.Publish)">{{ 'Publish' | translator }}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.PublishContent, canUnpublishDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="changeStatus(ContextMenuAction.Unpublish)">{{ 'Unpublish' | translator }}</button>
+
+      </ng-container>
+
+      <ng-container>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.ApproveContent, canApprovalDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="onApprovalClick()">{{ 'Approve' | translator }}</button>
+
+        <button class="k-margin-left-10"
+                *hasPermission="[ccpmPermissions.RejectContent, canApprovalDigitalContent]"
+                kendoButton
+                [primary]="true"
+                (click)="onRejectClick()">{{ 'Reject' | translator }}</button>
+
+      </ng-container>
+    </div>
+  </toolbar-right>
+</app-toolbar>
+
+<div class="digital-content-detail-page">
+  <div class="tab-container">
+    <kendo-tabstrip class="flex top-merge"
+                    #tabstrip
+                    *ngIf="previewMode === 'None'"
+                    [animate]="false"
+                    [keepTabContent]="true"
+                    (tabSelect)="onTabSelect($event)">
+      <kendo-tabstrip-tab [selected]="true">
+        <ng-template kendoTabTitle="">
+          {{ 'Editor' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <digital-learning-content-editor-page *ngIf="contentViewModel.type === learningContent"
+                                                [form]="form"
+                                                [mode]="mode"
+                                                [contentViewModel]="contentViewModel"></digital-learning-content-editor-page>
+          <digital-upload-content-editor-page *ngIf="contentViewModel.type === uploadedContent"
+                                              [mode]="mode"
+                                              [contentViewModel]="contentViewModel"
+                                              [saveUploadContentCallback]="saveInBackground.bind(this)">
+          </digital-upload-content-editor-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Additional information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <detail-content-fragment class="flex detail-page f-detail-content-container"></detail-content-fragment>
+          <digital-additional-information-tab [contentViewModel]="contentViewModel"
+                                              [mode]="mode"
+                                              (onLoad)="onLoad($event)"></digital-additional-information-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Audit Log' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <audit-log-tab (revertChange)="onRevertData($event)"
+                         [activeObjectId]="contentViewModel.id"
+                         [allowRevert]="contentViewModel.status !== digitalContentStatus.PendingForApproval &&
+                                        contentViewModel.status !== digitalContentStatus.Archived"
+                         [originalObjectId]="contentViewModel.originalObjectId"
+                         [versionTrackingType]="versionTrackingType">
+          </audit-log-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Access Right' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <access-right-tab [allowAddCollaborator]="isAllowAddCollaborator"
+                            [allowDeleteCollaborator]="isOwner"
+                            [originalObjectId]="contentViewModel.originalObjectId"
+                            [itemTitle]="contentViewModel.title"
+                            [accessRightType]="accessRightType">
+          </access-right-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Comments' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <comment-tab [input]="commentTabInput">
+          </comment-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Rating and Review' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <digital-content-feedback-tab *ngIf="contentViewModel.originalObjectId"
+                                        [digitalContentId]="contentViewModel.originalObjectId"></digital-content-feedback-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Report broken link' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <broken-link-report-tab [originalObjectId]="contentViewModel.originalObjectId"
+                                  [module]="brokenLinkModule"></broken-link-report-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+    <kendo-dropdownbutton *ngIf="previewMode === 'None'"
+                          (open)="performAutoSaveDigitalContent()"
+                          (itemClick)="onPreviewerChange($event.text)"
+                          [data]="previewOptions"
+                          [popupSettings]="{ popupClass: 'ccpm-preview-button-modes' }"
+                          [buttonClass]="'k-button-preview'">
+      {{ 'Preview' | translator }}
+    </kendo-dropdownbutton>
+    <div class="column flex web-preview"
+         *ngIf="previewMode === 'Web' || previewMode === 'Mobile'">
+      <button class="k-button-close-preview"
+              (click)="hideWebOrMobilePreviewer()"><span class="k-icon k-i-arrow-chevron-left"></span><span>Close Preview</span></button>
+      <digital-content-player *ngIf="previewMode === 'Web'"
+                              [resourceId]="contentViewModel.id"></digital-content-player>
+      <mobile-previewer *ngIf="previewMode === 'Mobile'">
+        <ng-template mobilePreviewerContent="">
+          <button (click)="hideWebOrMobilePreviewer()">&#10006;</button>
+          <digital-content-player [resourceId]="contentViewModel.id"></digital-content-player>
+        </ng-template>
+      </mobile-previewer>
+    </div>
+  </div>
+</div>
+
+<ng-template #dialogRejectCommentTemplate="">
+  <comment-dialog-template [dialogTitle]="'Reject digital content' | translator"
+                           [btnSaveText]="'Reject' | translator"
+                           [requireComment]="true"
+                           (onSaveClick)="saveCommentAndRejectClick($event)"
+                           (onCancelClick)="onRejectCommentCancel()">
+
+  </comment-dialog-template>
+</ng-template>
+
+<ng-template #dialogApprovalCommentTemplate="">
+  <comment-dialog-template [dialogTitle]="'Approval digital content' | translator"
+                           [btnSaveText]="'Approve' | translator"
+                           [requireComment]="false"
+                           (onSaveClick)="saveCommentAndApproveClick($event)"
+                           (onCancelClick)="onApprovalCommentCancel()">
+
+  </comment-dialog-template>
+</ng-template>

@@ -1,0 +1,40 @@
+<div class="button-group"
+     *ngIf="buttons.length > 0">
+  <ng-container *ngFor="let button of normalButtons; let index = index">
+    <ng-template [ngTemplateOutlet]="buttonTmp || defaultLabelTemplate"
+                 [ngTemplateOutletContext]="{index: index, button: button}"></ng-template>
+    <ng-template #defaultLabelTemplate="">
+      <button class="button-group__button"
+              kendoButton
+              [primary]="button.isPrimaryFn == null || button.isPrimaryFn()"
+              *ngIf="!canShowInMoreBtn(button) && canShowBtn(button)"
+              [type]="button.type || 'submit'"
+              [disabled]="button.isDisabledFn && button.isDisabledFn()"
+              (click)="onClick(button)">
+        {{ button.displayText | translator }}
+      </button>
+    </ng-template>
+  </ng-container>
+  <button kendoButton
+          *ngIf="menuItems.length > 0"
+          [title]="''"
+          [class]="'button-group__more-button'"
+          [primary]="false"
+          #target>
+    <img class="icon action"
+         src="assets/images/icons/more.svg">
+    <kendo-contextmenu [target]="target"
+                       [items]="menuItems"
+                       (select)="onItemSelect($event)"
+                       [alignToAnchor]="true"
+                       [anchorAlign]="defaultContextMenuAnchorAlign"
+                       [popupAlign]="defaultContextMenuPopupAlign"
+                       showOn="click">
+      <ng-template [ngIf]="moreButtonTmp">
+        <ng-template kendoContextMenuTemplate="">
+          <ng-template [ngTemplateOutlet]="contentChildrenArray[1]"></ng-template>
+        </ng-template>
+      </ng-template>
+    </kendo-contextmenu>
+  </button>
+</div>

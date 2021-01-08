@@ -1,0 +1,35 @@
+<div class="form-comparison"
+     *ngIf="comparisonFormData && comparisonFormData.length">
+  <div class="form-section-comparison overlay-layer"
+       *ngFor="let formSection of comparisonFormData"
+       [ngClass]="{
+          '--blank': checkBlankArea(formSection.changeType),
+          '--remove': formSection.changeType === ITEMCHANGETYPE.Removed,
+          '--add-new': formSection.changeType === ITEMCHANGETYPE.AddNew,
+          '--section': formSection.isSection
+        }">
+    <div class="form-section-comparison__container">
+      <div class="form-section-comparison__heading"
+           *ngIf="formSection.isSection">
+        <div class="form-section-comparison__section-type">
+          <span class="form-section-comparison__numerical-order">
+            {{formSection.sectionPrioprity + 1}}
+          </span>
+          <div class="form-section-comparison__type-indicator">
+            {{ 'Question Section' | translator }}
+          </div>
+        </div>
+        <div class="form-section-comparison__title"
+             [innerHTML]="formSection.sectionTitle | safeHtml:'html'"></div>
+        <div class="form-section-comparison__description"
+             [innerHTML]="formSection.sectionDescription | safeHtml:'html'"></div>
+      </div>
+      <div class="form-section-comparison__question-list">
+        <form-question-comparison *ngFor="let question of formSection.formQuestions"
+                                  [comparisonQuestionVM]="question"
+                                  [comparisonSide]="side"
+                                  [isInSection]="formSection.isSection"></form-question-comparison>
+      </div>
+    </div>
+  </div>
+</div>

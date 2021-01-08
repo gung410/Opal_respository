@@ -1,0 +1,84 @@
+.card-upload {
+  position: relative;
+  padding: 1rem;
+
+  & + .card-upload {
+    margin-top: 1rem;
+  }
+
+  &__file,
+  &__file-general {
+    display: flex;
+  }
+
+  &__file {
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &__file-general {
+    align-items: flex-start;
+    width: 85%;
+    word-break: break-word;
+    box-sizing: border-box;
+  }
+
+  &__file-icon {
+    align-self: center;
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+
+  &__icon-type {
+    font-size: 2.5rem;
+  }
+
+  &__file-status,
+  &__file-size,
+  &__file-error {
+    font-size: $font-size-small;
+    font-style: italic;
+  }
+
+  &__file-status {
+    color: $color-turquoise;
+  }
+
+  &__file-error {
+    color: $color-coral;
+  }
+
+  &__control {
+    text-align: right;
+    flex-shrink: 0;
+    width: 20%;
+    box-sizing: border-box;
+  }
+
+  &__remove-button {
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  &__percent-upload {
+    font-size: $font-size-small;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  &__progressbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $color-gainsboro;
+  }
+
+  &__progress {
+    height: 2px;
+    background-color: $color-turquoise;
+  }
+}

@@ -1,0 +1,138 @@
+version: "3.4"
+
+services:
+  sqldata:
+    image: ${REGISTRY:-orientdevacr}/sqldata:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: eng/sqlserver/Dockerfile
+
+  nosqldata:
+    image: mongo:4.4.0
+
+  redis:
+    image: redis:5.0.9-alpine
+
+  rabbitmq:
+    image: rabbitmq:3.8.3-management-alpine
+
+  cloudfront-api:
+    image: ${REGISTRY:-orientdevacr}/cloudfront.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/cloudfront-microservice/Api/Dockerfile.dev
+
+  uploader-api:
+    image: ${REGISTRY:-orientdevacr}/uploader.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/uploader-microservice/Api/Dockerfile.dev
+
+  content-api:
+    image: ${REGISTRY:-orientdevacr}/content.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/content-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  course-api:
+    image: ${REGISTRY:-orientdevacr}/course.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/course-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  form-api:
+    image: ${REGISTRY:-orientdevacr}/form.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/form-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  standalonesurvey-api:
+    image: ${REGISTRY:-orientdevacr}/standalonesurvey.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/standalonesurvey-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  learner-api:
+    image: ${REGISTRY:-orientdevacr}/learner.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/learner-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  tagging-api:
+    image: ${REGISTRY:-orientdevacr}/tagging.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/tagging-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - redis
+      - rabbitmq
+
+  brokenlink-api:
+    image: ${REGISTRY:-orientdevacr}/brokenlink.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/brokenlink-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  calendar-api:
+    image: ${REGISTRY:-orientdevacr}/calendar.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/calendar-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  analytics-api:
+    image: ${REGISTRY:-orientdevacr}/analytics.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/analytics-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  webinar-api:
+    image: ${REGISTRY:-orientdevacr}/webinar.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/webinar-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  badge-api:
+    image: ${REGISTRY:-orientdevacr}/badge.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/badge-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  webinar-video-converter-api:
+    image: ${REGISTRY:-orientdevacr}/badge.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/microservices/wbnvidconverter-microservice/Api/Dockerfile.dev
+    depends_on:
+      - sqldata
+      - rabbitmq

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<common:BaseLearnerContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:sharing="clr-namespace:LearnerApp.ViewModels.Sharing;assembly=LearnerApp"
+    xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView;assembly=LearnerApp"
+    xmlns:dataTemplateSelector="clr-namespace:LearnerApp.Common.DataTemplateSelector;assembly=LearnerApp"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:sharing1="clr-namespace:LearnerApp.Views.Sharing;assembly=LearnerApp"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:input="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+    Shell.PresentationMode="ModalAnimated"
+    ios:Page.ModalPresentationStyle="PageSheet"
+    base:ViewModelLocator.AutoWireViewModel="true"
+    ios:Page.UseSafeArea="true"
+    x:Class="LearnerApp.Views.Sharing.SharingContentFormView"
+    x:DataType="sharing:SharingContentFormViewModel">
+    <ContentPage.Content>
+        <Grid
+            RowSpacing="15"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="iOS" Value="50"/>
+                            <On Platform="Android" Value="60"/>
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid
+                Margin="0,10,0,0"
+                Padding="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Frame
+                    Padding="1"
+                    BackgroundColor="White"
+                    BorderColor="LightGray"
+                    CornerRadius="4"
+                    HasShadow="False"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="FillAndExpand"
+                    IsClippedToBounds="True">
+                    <StackLayout Padding="10,5,10,5" Orientation="Horizontal">
+                        <ffimagesvg:SvgCachedImage
+                            HeightRequest="22"
+                            Source="search.svg"
+                            WidthRequest="22">
+                            <ffimagesvg:SvgCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCommand}" />
+                            </ffimagesvg:SvgCachedImage.GestureRecognizers>
+                        </ffimagesvg:SvgCachedImage>
+                        <controls:CustomEntry
+                            x:Name="SearchBar"
+                            HeightRequest="30"
+                            ClearButtonVisibility="WhileEditing"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Search"
+                            PlaceholderColor="LightGray"
+                            ReturnCommand="{Binding SearchCommand}"
+                            Text="{Binding SearchText}" />
+                    </StackLayout>
+                </Frame>
+
+                <controls:LearnerContentFrame
+                    BorderColor="{StaticResource EntryLineColor}"
+                    Grid.Column="1"
+                    VerticalOptions="Fill">
+                    <input:RadButton
+                        Margin="0, 0, 0, 0"
+                        CornerRadius="6"
+                        BackgroundColor="Transparent"
+                        Command="{Binding CancelCommand}"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="14"
+                        TextColor="{StaticResource DefaultTextColor}"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Cancel" />
+                </controls:LearnerContentFrame>
+            </Grid>
+
+            <!-- Content -->
+            <Grid Grid.Row="1">
+                <StackLayout
+                    IsVisible="{Binding ShowStartSearching}" VerticalOptions="CenterAndExpand">
+                    <forms:CachedImage
+                        HeightRequest="100"
+                        Source="no_user_selected.png"
+                        WidthRequest="150" />
+
+                    <Label
+                        Margin="20"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="12"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="In order to share content, please find users by using search."
+                        TextColor="{StaticResource MainBodyTextColor}" />
+                </StackLayout>
+
+                <StackLayout
+                    IsVisible="{Binding ShowNoData}"
+                    Padding="10,0,10,0"
+                    HorizontalOptions="Center">
+                    <ffimagesvg:SvgCachedImage
+                        Source="search_not_found.svg"
+                        HorizontalOptions="Center"
+                        HeightRequest="100"
+                    />
+                    <Label
+                        Text="Oops! We can't find any users that match your search :("
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center" />
+                </StackLayout>
+
+                <learnerCustomCollectionView:LearnerCustomCollectionView
+                    Scrolled="OnContentScrolled"
+                    RemainingItemsThreshold="{Binding ShouldContinueLoadMore, Converter={StaticResource RemainingItemThresholdLoadMoreSkeletonVisibleConverter}}"
+                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                    IsVisible="{Binding ShowData}"
+                    IsLoading="{Binding IsLoading}"
+                    RealItemsSource="{Binding SharingSuggestions}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <dataTemplateSelector:SkeletonDataTemplateSelector>
+                            <dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+                                <DataTemplate>
+                                    <sharing1:SharingContentSuggestionItemView />
+                                </DataTemplate>
+                            </dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+                            <dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+                                <DataTemplate>
+                                    <ContentView Padding="10,0,10,0">
+                                        <shimmer:LearnerShimmer
+                                            HeightRequest="40"
+                                            Type="Persona"
+                                        />
+                                    </ContentView>
+                                </DataTemplate>
+                            </dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+                        </dataTemplateSelector:SkeletonDataTemplateSelector>
+                    </CollectionView.ItemTemplate>
+                    <learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+                        <DataTemplate>
+                            <ContentView Padding="10,10,10,0">
+                                <shimmer:LearnerShimmer
+                                    HeightRequest="40"
+                                    Type="Persona"
+                                />
+                            </ContentView>
+                        </DataTemplate>
+                    </learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+                    <CollectionView.HeaderTemplate>
+                        <DataTemplate>
+                            <!-- There is a bug in Android that if you want to use empty view, you have to set the header and footer-->
+                            <ContentView HeightRequest="0" />
+                        </DataTemplate>
+                    </CollectionView.HeaderTemplate>
+                </learnerCustomCollectionView:LearnerCustomCollectionView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>
+

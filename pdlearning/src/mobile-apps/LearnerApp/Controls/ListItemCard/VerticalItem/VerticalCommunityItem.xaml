@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalItem.VerticalCommunityItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<Frame
+		Padding="10"
+		BorderColor="{StaticResource EntryLineColor}"
+		CornerRadius="6"
+		HasShadow="False"
+		IsClippedToBounds="True"
+		VerticalOptions="Start">
+		<StackLayout>
+			<StackLayout
+				HeightRequest="25"
+				HorizontalOptions="EndAndExpand"
+				IsVisible="{Binding IsVisibleBookmark}"
+				WidthRequest="50">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer
+						CommandParameter="{Binding .}"
+						NumberOfTapsRequired="1"
+						Tapped="OnBookmarkItem" />
+				</StackLayout.GestureRecognizers>
+				<ffimagesvg:SvgCachedImage
+					HeightRequest="25"
+					HorizontalOptions="End"
+					Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+					WidthRequest="25" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				<StackLayout WidthRequest="120">
+					<AbsoluteLayout>
+						<Frame
+							Padding="0"
+							AbsoluteLayout.LayoutBounds="0, 0, 120, 60"
+							BorderColor="{StaticResource EntryLineColor}"
+							CornerRadius="6"
+							HasShadow="False">
+							<StackLayout>
+								<ffimagesvg:SvgCachedImage
+									HeightRequest="40"
+									HorizontalOptions="CenterAndExpand"
+									Source="community.svg"
+									VerticalOptions="CenterAndExpand"
+									WidthRequest="50" />
+							</StackLayout>
+						</Frame>
+					</AbsoluteLayout>
+				</StackLayout>
+				<StackLayout HorizontalOptions="FillAndExpand" Spacing="0">
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource BaseFontSize}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding Name}"
+						TextColor="{StaticResource MainBodyTextColor}" />
+					<Label
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="{StaticResource LittleSize}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding Description}"
+						TextColor="{StaticResource SecondaryTextColor}" />
+				</StackLayout>
+			</StackLayout>
+			<StackLayout>
+				<Label
+					FontSize="{StaticResource LittleSize}"
+					Text="{Binding MemberCount, StringFormat='Community | {0} member(s)'}"
+					TextColor="{StaticResource SecondaryTextColor}" />
+			</StackLayout>
+		</StackLayout>
+	</Frame>
+</ContentView>

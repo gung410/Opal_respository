@@ -1,0 +1,19 @@
+<div class="owner-container"
+     *ngIf="owner">
+  <div class="owner-container__avatar">
+    <img class="avatar-img"
+         src="{{ avatarUrl ? avatarUrl : 'assets/images/others/default-avatar.png'}}">
+    <img class="avatar-icon"
+         src="{{iconLocation}}"
+         *ngIf="iconLocation"
+         [ngClass]="iconPosition">
+  </div>
+  <div class="user-info">
+    <p class="main-title">
+      {{ fullName }}
+      <b *ngIf="isMine">{{ '(Mine)' | globalTranslator }}</b>
+    </p>
+    <p class="sub-title"
+       *ngIf="emailAddress">{{ emailAddress }}</p>
+  </div>
+</div>

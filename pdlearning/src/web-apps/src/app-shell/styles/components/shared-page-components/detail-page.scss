@@ -1,0 +1,244 @@
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  &__content-tabs {
+    flex-grow: 1;
+
+    >.k-content {
+      padding: 24px 0;
+    }
+  }
+
+  &.-loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .toolbar {
+    background: $color-white;
+    padding: $main-grid-unit * 3;
+    box-shadow: 0 15px 38px rgba(68, 26, 26, 0.03);
+    border-radius: $main-border-radius;
+    margin-bottom: 0 !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    flex-shrink: initial;
+    flex: none;
+    min-height: 0;
+
+    @include flex-layout-media('lt-lg') {
+      padding: $main-grid-unit * 1.5;
+    }
+
+    &__left-group {
+      display: flex;
+      align-items: center;
+      max-width: 100%;
+      overflow: hidden;
+
+      &__back-button {
+        font-size: $font-base;
+        font-weight: $font-weight-medium;
+        margin-right: 24px;
+        color: $color-blue-dard;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+      &__title-group {
+        margin-left: 0;
+        margin-top: 0;
+        overflow: hidden;
+        margin-right: 60px;
+
+        &__title {
+          font-size: $font-h4;
+          margin: 3px 0 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: flex;
+          flex-shrink: 1;
+
+          &::before {
+            content: '\200b';
+          }
+        }
+
+        &__sub-title {
+          font-size: $font-size-small;
+          color: $color-blue-light;
+          margin: 2px 0 0;
+        }
+
+        &__icon {
+          margin-left: 5px;
+          font-size: $font-h5;
+          margin-top: -15px;
+        }
+      }
+    }
+
+    &__right-group-buttons {
+      display: flex;
+      align-items: center;
+
+      button {
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &__status {
+        margin-right: $main-grid-unit * 3;
+        min-height: $main-control-height;
+        line-height: $main-control-height;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  transform: rotate(180deg);
+  z-index: $z-index-level-3;
+
+  &__container {
+    position: relative;
+    width: 35px;
+    height: 65px;
+    cursor: pointer;
+  }
+
+  &__chevron {
+    position: absolute;
+    width: 32px;
+    height: 8px;
+    opacity: 0;
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation: move 3s ease-out infinite;
+
+    &:first-child {
+      animation: move 3s ease-out 1s infinite;
+    }
+
+    &:nth-child(2) {
+      animation: move 3s ease-out 2s infinite;
+    }
+
+    &:before,
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 51%;
+      background: $color-turquoise;
+    }
+
+    &:before {
+      left: 0;
+      transform: skew(0deg, 30deg);
+    }
+
+    &:after {
+      right: 0;
+      width: 50%;
+      transform: skew(0deg, -30deg);
+    }
+  }
+}
+
+@keyframes move {
+  25% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  67% {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  .detail-page {
+    .toolbar {
+      flex-direction: column;
+      padding-left: 0;
+      padding-right: 0;
+
+      &__left-group {
+        &__title-group {
+          margin-right: 10px;
+        }
+
+        &__back-button {
+          margin-right: 16px;
+        }
+      }
+
+      &__left-container {
+        align-self: flex-start;
+      }
+
+      &__right-container {
+        align-self: flex-end;
+        padding-right: 10px;
+      }
+    }
+
+    &__content-tabs,
+    .opal-tabstrip {
+      >.k-tabstrip-items {
+        display: block;
+        white-space: nowrap;
+        overflow-x: auto;
+
+        .k-item {
+          display: inline-block;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  .detail-page {
+    .toolbar {
+      &__right-group-buttons {
+        display: block;
+
+        &__status {
+          margin-right: 0;
+
+          .status-indicator {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}

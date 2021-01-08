@@ -1,0 +1,32 @@
+<div class="question-bank-import-dialog ccpm-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">{{'Import questions' | translator}}</div>
+    <div class="dialog-header__search-section">
+      <search-input [(ngModel)]="textSearch"
+                    [placeholder]="'Search in Question Bank' | translator"
+                    (search)="onSubmitSearch()">
+      </search-input>
+      <div class="question-bank-import-dialog__filter">
+        <label class="question-bank-import-dialog__label">{{ 'Filter' | globalTranslator }}</label>
+        <question-bank-group [displayMode]="questionGroupDisplayMode.DropDownList"
+                             (questionGroupChange)="onQuestionGroupChange($event)"
+                             [isFilterByUsing]="true"></question-bank-group>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-body">
+    <question-bank-list #questionBankList
+                        [search]="submitSearch"
+                        [mode]="mode"
+                        [questionGroupIds]="questionGroupIds"
+                        [questionType]="questionType"
+                        [(selectedItems)]="questionBankImport"></question-bank-list>
+  </div>
+  <div class="dialog-footer">
+    <button (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+    <button kendoButton
+            [primary]="true"
+            (click)="onSubmit()">{{ 'Select' | globalTranslator }}</button>
+  </div>
+</div>

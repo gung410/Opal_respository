@@ -1,0 +1,118 @@
+<div class="assignment-editor-config"
+     [formGroup]="form">
+  <div class="form-container">
+    <div class="form-controls-group -required">
+      <label>{{ 'Title' | translator }}</label>
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">{{ assignmentVm.title || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input #titleInput
+                 position="top"
+                 kendoTextBox
+                 formControlName="title"
+                 [(ngModel)]="assignmentVm.title"
+                 (ngModelChange)="emitAssignmentVmChanged()"
+                 kendoErrorTooltip>
+        </ng-template>
+      </editable>
+    </div>
+    <ng-container *ngIf="isLocalDevelopmentMode()">
+      <div class="form-controls-group">
+        <label>{{ 'Assessment Rubric' | translator }}</label>
+        <editable [modeView]="mode === AssignmentMode.View">
+          <ng-template editableViewMode="">
+            <div class="form-controls-group__row">
+              <div class="metadata-tag-text"
+                   *ngIf="assignmentVm.assessmentId">
+                {{ assignmentVm.assessmentDic[assignmentVm.assessmentId] ? assignmentVm.assessmentDic[assignmentVm.assessmentId].name : 'N/A' }}
+              </div>
+              <span class="assignment-editor-config__can-preview-select-item-btn"
+                    *ngIf="displayPreviewAssessment()"
+                    (click)="onAssessmentSelectItemPreviewBtnClicked($event, assignmentVm.assessmentId)">{{ 'Preview' | translator}}</span>
+            </div>
+            <span *ngIf="!assignmentVm.assessmentId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="assessmentId"
+                         [(ngModel)]="assignmentVm.assessmentId"
+                         [items]="assignmentVm.assessments"
+                         [valueField]="'id'"
+                         [labelField]="'name'"
+                         kendoErrorTooltip
+                         position="top"
+                         [notCloseDropdownOnFocusOut]="showPreviewAssessment"
+                         [notClearSearchTextOnFocusOut]="showPreviewAssessment">
+              <ng-template opalOptionTmp
+                           let-item="item"
+                           let-item$="item$"
+                           let-index="index">
+                <div class="assignment-editor-config__can-preview-select-item"
+                     kendoTooltip
+                     [tooltipClass]="'info-tooltip'">
+                  <span class="assignment-editor-config__can-preview-select-item-title"
+                        [title]="item.name"> {{ item.name }}</span>
+                  <span class="assignment-editor-config__can-preview-select-item-btn"
+                        (click)="onAssessmentSelectItemPreviewBtnClicked($event, item.id)">{{ 'Preview' | translator}}</span>
+                </div>
+              </ng-template>
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group"
+           *ngIf="displayScoreMode()">
+        <label>{{ 'Final Assessment Score' | translator }}</label>
+        <editable [modeView]="mode === AssignmentMode.View">
+          <ng-template editableViewMode="">{{ scoreModeTypeMap[assignmentVm.scoreMode].text || '- N/A' }}
+          </ng-template>
+          <ng-template editableEditMode="">
+            <div class="form-controls-group -vertical">
+              <div class="k-checkbox-container">
+                <input class="k-radio"
+                       type="radio"
+                       kendoErrorTooltip
+                       position="top"
+                       [value]="ScoreMode.Instructor"
+                       [(ngModel)]="assignmentVm.scoreMode"
+                       [ngModelOptions]="{ standalone: true }"
+                       kendoRadioButton>
+                <label>{{'Instructor' | translator}}</label>
+              </div>
+              <div class="k-checkbox-container">
+                <input class="k-radio"
+                       type="radio"
+                       position="top"
+                       [value]="ScoreMode.PeerAssessment"
+                       [(ngModel)]="assignmentVm.scoreMode"
+                       [ngModelOptions]="{ standalone: true }"
+                       kendoRadioButton>
+                <label>{{'Peer Assessment' | translator}}</label>
+              </div>
+            </div>
+          </ng-template>
+        </editable>
+        <span class="alert -info">{{ messageScoreMode }}</span>
+      </div>
+    </ng-container>
+    <div class="form-controls-group assignment-editor-config__randomize">
+      <editable [modeView]="mode === AssignmentMode.View">
+        <ng-template editableViewMode="">
+          <label for="ch2">{{ 'Randomize questions: ' | translator }}</label>
+          <img class="assignment-editor-config__randomize-image"
+               alt
+               [src]="assignmentVm.randomizedQuestions ? 'assets/images/icons/icon-accept.svg'  :'assets/images/icons/icon-reject.svg'">
+        </ng-template>
+        <ng-template editableEditMode="">
+          <input class="k-checkbox assignment-editor-config__randomize-checkbox"
+                 id="assignment-editor-config__randomize-checkbox"
+                 type="checkbox"
+                 formControlName="randomizedQuestions"
+                 [(ngModel)]="assignmentVm.randomizedQuestions"
+                 (ngModelChange)="emitAssignmentVmChanged()">
+          <label for="ch2">{{ 'Randomize questions' | translator }}</label>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</div>

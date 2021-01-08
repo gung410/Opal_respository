@@ -1,0 +1,65 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <scrollable-menu stickyElement
+                     [stickyDependElement]="stickyDependElement"
+                     [stickySpacing]="stickySpacing"
+                     [title]="'Information about the course'"
+                     [tabs]="tabs">
+    </scrollable-menu>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content"
+           #basicInfoTabContainer>
+        <basic-info-tab [form]="form"
+                        [course]="course"
+                        [mode]="mode"></basic-info-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #providerInfoTabContainer>
+        <provider-info-tab [form]="form"
+                           [course]="course"
+                           [mode]="mode"></provider-info-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #metadataTabContainer>
+        <metadata-tab [form]="form"
+                      [course]="course"
+                      [mode]="mode"></metadata-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           [hidden]="isPlanningVerificationRequired()"
+           #copyRightTabContainer>
+        <copyright-tab [form]="form"
+                       [course]="course"
+                       [mode]="mode"></copyright-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #targetaudienceTabContainer>
+        <target-audience-tab [form]="form"
+                             [course]="course"
+                             [mode]="mode">
+        </target-audience-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #coursePlanningTabContainer>
+        <course-planning-tab [form]="form"
+                             [course]="course"
+                             [mode]="mode"></course-planning-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #evaluationEcertificateTabContainer
+           [hidden]="course.isMicrolearning || isPlanningVerificationRequired()">
+        <evaluation-ecertificate-tab [form]="form"
+                                     [course]="course"
+                                     [mode]="mode"></evaluation-ecertificate-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #courseAdministrationTabContainer>
+        <course-administration-tab [form]="form"
+                                   [course]="course"
+                                   [mode]="mode"></course-administration-tab>
+      </div>
+    </div>
+  </div>
+</div>

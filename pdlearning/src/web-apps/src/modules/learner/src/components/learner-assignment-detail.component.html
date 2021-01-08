@@ -1,0 +1,124 @@
+<div class="learner-course-detail learner-assignment-detail"
+     *ngIf="itemDetail">
+  <ng-container *ngIf="!isShowPlayer">
+    <div class="learner-course-detail__sort-detail-container">
+      <div class="learner-course-detail__learning-card-container">
+        <div class="learner-course-detail__back"
+             (click)="onBackClick()">
+          <i class="icon back"></i>
+          {{"Back" | globalTranslator}}
+        </div>
+        <!-- Learning Card -->
+        <div class="learning-card display-only">
+          <div>
+            <div class="info-container">
+              <span class="card-status"
+                    *ngIf="itemDetail.myAssignment.status !== MyAssignmentStatus.NotStarted"
+                    [ngClass]="{
+           'in-progress': itemDetail.myAssignment.status === MyAssignmentStatus.InProgress,
+           'completed': itemDetail.myAssignment.status === MyAssignmentStatus.Completed,
+           'late-submission': itemDetail.myAssignment.status === MyAssignmentStatus.LateSubmission,
+           'in-complete': itemDetail.myAssignment.status === MyAssignmentStatus.Incomplete}">
+                {{ statusColorMap[itemDetail.myAssignment.status].text | translator }}
+              </span>
+              <div class="course-img">
+                <img src="assets/images/icons/sm/quiz.svg">
+              </div>
+              <div class="card-info">
+                <div class="card-title"
+                     [title]="itemDetail.assignment.title">{{ itemDetail.assignment.title }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Learning Card -->
+        <div *hasPermission="[doAssignmentPermissionKey, showStart]"
+             class="learner-primary-btn learner-course-detail__course-action"
+             (click)="start()">
+          {{"Start" | globalTranslator}}
+        </div>
+        <div *hasPermission="[doAssignmentPermissionKey, showContinue]"
+             class="learner-primary-btn learner-course-detail__course-action"
+             (click)="continue()">
+          {{"Continue" | globalTranslator}}
+        </div>
+        <div class="learner-primary-btn learner-course-detail__course-action"
+             *ngIf="showViewAgain"
+             (click)="learnAgain()">
+          {{"View again" | translator}}
+        </div>
+      </div>
+    </div>
+    <div class="learner-course-detail__course-detail-container">
+      <div class="learner-course-detail__bookmark-section-wrapper">
+        <div class="learner-course-detail__section learner-course-detail__bookmark-section">
+          <div class="learner-course-detail__nav-container"
+               *ngFor="let item of visibleSections; index as i">
+            <div class="learner-course-detail__nav-item"
+                 [ngClass]="{ '--active': currentActiveSectionNumber === i + 1 }"
+                 (click)="scrollTo(item.section.nativeElement, i + 1)">
+              {{ item.text | translator }}
+            </div>
+          </div>
+          <div class="learner-section-container">
+            <kendo-dropdownbutton [data]="visibleSections"
+                                  [popupSettings]="{ popupClass: 'learner-section-modes' }"
+                                  [primary]="false"
+                                  (itemClick)="onSelectSection($event.text)"
+                                  [buttonClass]="'k-button-preview'">
+              {{ firstSection }}
+            </kendo-dropdownbutton>
+          </div>
+          <div class="learner-course-detail__group-button">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="learner-course-detail__section learner-course-detail__about-section mt-30"
+           #informationSection>
+        <ng-container>
+          <div class="learner-course-detail__section-title --sub-title">{{"Information" | translator}}</div>
+          <div class="learner-course-detail__info-container"
+               *ngIf="itemDetail">
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Title" | translator}}</div>
+              <div>
+                {{ itemDetail.assignment.title }}
+              </div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Start date" | translator}}</div>
+              <div>{{itemDetail.myAssignment.startDate | date: 'dd/MM/yyyy - HH:mm'}}</div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"End date" | translator}}</div>
+              <div>{{itemDetail.myAssignment.endDate | date: 'dd/MM/yyyy - HH:mm'}}</div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Score" | translator}}</div>
+              <div>{{itemDetail.score}}/{{itemDetail.totalScore}}</div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="learner-course-detail__section"
+           #commentSection>
+        <learner-assignment-comment [input]="commentTabInput"></learner-assignment-comment>
+      </div>
+
+
+    </div>
+  </ng-container>
+
+  <div class="assignment-player"
+       *ngIf="isShowPlayer">
+    <main-assignment-player></main-assignment-player>
+  </div>
+  <!-- <learning-comment *ngIf="showFinishScreen"
+                    [learningId]="itemDetail.assignment.resourceId"
+                    [learningTitle]="itemDetail.assignment.title"
+                    (submit)="onSubmitFeedbacks()"></learning-comment> -->
+
+</div>

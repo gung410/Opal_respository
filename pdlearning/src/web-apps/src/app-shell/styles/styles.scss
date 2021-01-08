@@ -1,0 +1,322 @@
+/* You can add global styles to this file, and also import other style files */
+/* These classes is using for testing only */
+
+@import './spinner';
+@import '~@progress/kendo-theme-default/scss/dialog';
+@import '~@progress/kendo-theme-default/scss/menu';
+@import '~@progress/kendo-theme-default/scss/grid';
+@import '~@progress/kendo-theme-default/scss/combobox';
+@import '~@progress/kendo-theme-default/scss/multiselect';
+@import '~@progress/kendo-theme-default/scss/editor';
+@import '~@progress/kendo-theme-default/scss/input';
+@import '~@progress/kendo-theme-default/scss/checkbox';
+@import '~@progress/kendo-theme-default/scss/radio';
+@import '~@progress/kendo-theme-default/scss/colorpicker';
+@import '~@progress/kendo-theme-default/scss/numerictextbox';
+@import '~@progress/kendo-theme-default/scss/datetime';
+@import '~@progress/kendo-theme-default/scss/treeview';
+@import '~@progress/kendo-theme-default/scss/dropdownlist';
+@import '~@progress/kendo-theme-default/scss/tabstrip';
+@import '~@progress/kendo-theme-default/scss/notification';
+@import '~@progress/kendo-theme-default/scss/switch';
+@import '~@progress/kendo-theme-default/scss/scheduler';
+@import '~@progress/kendo-theme-default/scss/gantt';
+@import '~@progress/kendo-theme-default/scss/panelbar';
+@import '~video.js/dist/video-js.css';
+
+@import './helpers/variables';
+@import './helpers/placeholder';
+@import './helpers/mixins';
+
+@import './fonts';
+@import './moe-font';
+@import './learner-font';
+@import './icons';
+
+@import './layouts/layouts';
+@import './layouts/main';
+@import './layouts/home';
+@import './layouts/editor';
+@import './layouts/form';
+@import './layouts/icons';
+@import './layouts/flex-box';
+@import './layouts/text-box';
+
+@import './components/dialog';
+@import './components/home-menu';
+@import './components/buttons';
+@import './components/menu';
+@import './components/toolbar';
+@import './components/grid';
+@import './components/dropdown';
+@import './components/editor';
+@import './components/checkbox';
+@import './components/colorpicker';
+@import './components/tabs';
+@import './components/radio';
+@import './components//opal-list';
+@import './components/error-tooltip';
+@import './components/info-tooltip';
+@import './components/alert';
+@import './components/textbox';
+@import './components/select';
+@import './components/file-uploader';
+@import './components/search-input.component';
+@import './components/app-toolbar-fragment';
+@import './components/detail-title.component';
+@import './components/mobile-previewer.component';
+@import './components/scrollbar';
+@import './components/notification';
+@import './components/data-check-indicator';
+@import './components/switch';
+@import './components/button-group';
+@import './components/zindex';
+@import './components/panelbar';
+@import './components/videojs';
+
+@import './components/share/countdown-timer.component.scss';
+@import './components/share/content-dialog.component.scss';
+@import './components/share/copyright-form.component.scss';
+@import './components/share/action-bar.component.scss';
+@import './components/share/status-indicator.component.scss';
+@import './components/share/scrollable-menu.component.scss';
+@import './components/share/owner-info.component.scss';
+@import './components/share/navigation-menu.component.scss';
+@import './components/share/quiz-player/index';
+@import './components/share/metadata/index';
+@import './components/share/detail-content-fragment.component.scss';
+@import './components/share/breadcrumb.component.scss';
+@import './components/share/comment-tab.component.scss';
+@import './components/share/reschedule-date-info.scss';
+@import './components/share/management-toolbar.scss';
+@import './components/share/editable.component.scss';
+@import './components/share/mega-menu.component.scss';
+@import './components/share/broadcast-message-notification.component.scss';
+@import './components/share/data-filter.component.scss';
+@import './components/share/popup-container.component.scss';
+
+@import './components/domain-components/classrun-detail/classrun-detail.component.scss';
+@import './components/domain-components/course-criteria-detail/course-criteria-detail.component.scss';
+@import './components/domain-components/course-detail/course-detail.component.scss';
+@import './components/domain-components/course-detail/basic-info-tab.component.scss';
+@import './components/domain-components/course-detail/provider-info-tab.component.scss';
+@import './components/domain-components/course-detail/evaluation-ecertificate-tab.component.scss';
+@import './components/domain-components/course-planning-cycle-detail/course-planning-cycle-detail.component.scss';
+@import './components/domain-components/course-criteria-max-participant-select.component.scss';
+@import './components/domain-components/course-criteria-registration-violation-dialog.component.scss';
+@import './components/domain-components/learner-profile/learner-profile.component.scss';
+@import './components/domain-components/learner-profile/learner-basic-info.component.scss';
+@import './components/domain-components/detail-content.scss';
+@import './components/domain-components/comment-dialog.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-basic-info-tab.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-pd-opportunities.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-pd-opportunities-dialog.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-selected-courses.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-sharing.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-detail-page.component.scss';
+@import './components/domain-components/learning-path-detail/learning-path-detail.component.scss';
+@import './components/domain-components/blockout-date-detail/blockout-date-detail.scss';
+@import './components/domain-components/session-detail/session-detail.component.scss';
+@import './components/domain-components/funding-and-subsidy.component.scss';
+@import './components/domain-components/list-attendance-tracking-grid.component.scss';
+@import './components/domain-components/absence-detail-dialog.component.scss';
+@import './components/domain-components/list-session-grid.component.scss';
+@import './components/domain-components/list-registration-grid.component.scss';
+@import './components/domain-components/opal-report.scss';
+@import './components/domain-components/opal-report-dynamic.scss';
+@import './components/domain-components/preview-digital-content.scss';
+@import './components/domain-components/select-course-dialog.component.scss';
+@import './components/domain-components/select-user-dialog.component.scss';
+@import './components/domain-components/mail-editor.component.scss';
+@import './components/domain-components/answer-feedback-dialog.component.scss';
+@import './components/domain-components/question-blank-option-editor.component.scss';
+@import './components/domain-components/question-text-option-editor.component.scss';
+@import './components/domain-components/upload-file-dialog.component.scss';
+@import './components/domain-components/broken-link-report.scss';
+@import './components/domain-components/rich-text-editor.component.scss';
+@import './components//domain-components/question-title-editor.component.scss';
+@import './components/domain-components/embed-iframe-dialog.component.scss';
+@import './components/domain-components/math-live-dialog.component.scss';
+@import './components/domain-components/assignment-player.component.scss';
+@import './components/domain-components/list-assignment-grid.component.scss';
+@import './components/domain-components/course-filter.component.scss';
+@import './components/domain-components/drop-file-uploader.component.scss';
+@import './components/domain-components/list-announcement-grid.component.scss';
+@import './components/domain-components/announcement-detail-dialog.component.scss';
+@import './components/domain-components/copy-learning-path-hyperlink.scss';
+@import './components/domain-components/batch-upload-files/batch-upload-files.component.scss';
+@import './components/domain-components/personal-file-dialog/personal-file-dialog.component.scss';
+@import './components/domain-components/card-upload/card-upload.component.scss';
+@import './components/domain-components/list-course-grid.component.scss';
+@import './components/domain-components/list-classrun-grid.component.scss';
+@import './components/domain-components/list-course-planning-cycle-grid.scss';
+@import './components/domain-components/opal-kendo-editor/opal-kendo-editor.scss';
+@import './components/domain-components/video-annotation/video-annotation.component.scss';
+@import './components/domain-components/video-annotation/video-annotation-player.component.scss';
+@import './components/domain-components/video-annotation/video-annotation-comments.component.scss';
+@import './components/domain-components/video-annotation/video-chapter-detail.component.scss';
+@import './components/domain-components/video-annotation/video-chapter-list.component.scss';
+@import './components/domain-components/blockout-date-warning.component.scss';
+@import './components/domain-components/ecertificate-detail/ecertificate-detail.component.scss';
+@import './components/domain-components/ecertificate-detail/ecertificate-layout-selection.component.scss';
+@import './components/domain-components/ecertificate-detail/ecertificate-template-customise.component.scss';
+@import './components/domain-components/personal-file-list.component.scss';
+@import './components/domain-components/personal-file-preview-dialog.component.scss';
+@import './components/domain-components/metadata-select-deselect-all-node-template.component';
+@import './components/domain-components/preview-form-dialog.component.scss';
+@import './components/domain-components/assessment-player.component.scss';
+@import './components/domain-components/device-view-simulation.component.scss';
+@import './components/shared-page-components/detail-page.scss';
+@import './components/shared-page-components/management-page.scss';
+
+@import './layouts/responsive';
+
+@import './modules/share';
+@import './modules/form';
+@import './modules/learner';
+
+@import '../../players/moe-fonticons/style.css';
+@import '../../modules/ccpm/src/styles/ccpm';
+@import '../../modules/learner/src/styles/learner';
+@import '../../modules/cam/src/styles/cam';
+@import '../../modules/lmm/src/styles/lmm';
+@import '../../modules/common/src/styles/common';
+@import '../../players/calendar/src/styles/calendar';
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: $font-family-base;
+  font-size: $font-base;
+  color: $text;
+  background: $color-white-smoke;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+[spinner] .spinner-wrapper {
+  border: 1px solid green;
+  height: 100px;
+  margin: 10px 0 10px 0;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+
+  &--keep-space {
+    visibility: hidden !important;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+[readOnly='true'],
+.readonly {
+  pointer-events: none;
+}
+
+.overflow-initial {
+  overflow: initial;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: $font-h1;
+}
+
+h2 {
+  font-size: $font-h2;
+  font-weight: normal;
+}
+
+.border-error {
+  border: 0.1px solid #ff7575;
+}
+
+.truncate-text {
+  @include truncate-text;
+}
+
+kendo-pager {
+  border: 0 !important;
+
+  kendo-pager-prev-buttons {
+    border: 1px solid $color-gainsboro;
+    border-right: unset;
+    border-top-left-radius: 4.5px;
+    border-bottom-left-radius: 4.5px;
+  }
+
+  kendo-pager-next-buttons {
+    border: 1px solid $color-gainsboro;
+    border-left: unset;
+    border-top-right-radius: 4.5px;
+    border-bottom-right-radius: 4.5px;
+  }
+
+  kendo-pager-numeric-buttons {
+    border: 1px solid $color-gainsboro;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+
+    .k-pager-numbers .k-link.k-state-selected {
+      background: $color-light-gray;
+    }
+
+    .k-pager-numbers .k-link.k-state-hover,
+    .k-pager-numbers .k-link:hover {
+      background: $color-light-gray;
+    }
+  }
+}

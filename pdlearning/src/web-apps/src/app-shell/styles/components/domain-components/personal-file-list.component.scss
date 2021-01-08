@@ -1,0 +1,39 @@
+.personal-file-list {
+  &.--border-top {
+    border-top: 1px solid #d8dce6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    th:first-child {
+      border-top-left-radius: 3px;
+    }
+
+    th:last-child {
+      border-top-right-radius: 3px;
+    }
+  }
+
+  .k-header {
+    white-space: nowrap;
+  }
+
+  &__action-button {
+    color: $color-blue-dard;
+    padding: 10px;
+
+    &:hover {
+      color: $color-coral;
+    }
+
+    .k-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__item-title {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

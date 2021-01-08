@@ -1,0 +1,99 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <div class="ecertificate-template-customise__preview-container">
+      <button class="ecertificate-template-customise__preview-button"
+              kendoButton
+              [look]="'flat'"
+              (click)="onPreview()">
+        {{ 'Preview' | translator }}
+      </button>
+    </div>
+    <label class="form-title">{{ 'Customise' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Template Name' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">{{ eCertificateTemplate.title || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="eCertificateTemplate.title"
+                 formControlName="title"
+                 kendoErrorTooltip
+                 position="top"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Background' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <opal-file-uploader class="ecertificate-template-customise__image-uploader"
+                              [ngModel]="eCertificateTemplate.getTemplateParam(ECertificateSupportedField.Background)"
+                              (ngModelChange)="eCertificateTemplate.setTemplateParam(ECertificateSupportedField.Background, $event)"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="'ecertificate-items'"
+                              formControlName="background"
+                              [readOnly]="true"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+          <span *ngIf="!eCertificateTemplate.getTemplateParam(ECertificateSupportedField.Background)">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-file-uploader class="ecertificate-template-customise__image-uploader"
+                              [ngModel]="eCertificateTemplate.getTemplateParam(ECertificateSupportedField.Background)"
+                              (ngModelChange)="eCertificateTemplate.setTemplateParam(ECertificateSupportedField.Background, $event)"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="'ecertificate-items'"
+                              formControlName="background"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group"
+         *ngFor="let param of eCertificateTemplate.layoutParams">
+      <ng-container *ngIf="param.key !== ECertificateSupportedField.Background">
+        <label for="ch2">{{ param.title}}</label>
+        <label class="ecertificate-template-customise__description"
+               for="ch2">{{ param.description }}</label>
+        <ng-container *ngIf="!param.isAutoPopulated"
+                      [ngSwitch]="param.type">
+          <editable *ngSwitchCase="ECertificateParamType.Image"
+                    [modeView]="asViewMode()">
+            <ng-template editableViewMode="">
+              <opal-file-uploader class="ecertificate-template-customise__image-uploader"
+                                  [ngModel]="eCertificateTemplate.getTemplateParam(param.key)"
+                                  (ngModelChange)="eCertificateTemplate.setTemplateParam(param.key, $event)"
+                                  [settings]="fileUploaderSetting"
+                                  [uploadFolder]="'ecertificate-items'"
+                                  [readOnly]="true"
+                                  [ngModelOptions]="{standalone: true}"></opal-file-uploader>
+              <span *ngIf="!eCertificateTemplate.getTemplateParam(param.key)">- N/A</span>
+            </ng-template>
+            <ng-template editableEditMode="">
+              <opal-file-uploader class="ecertificate-template-customise__image-uploader"
+                                  [ngModel]="eCertificateTemplate.getTemplateParam(param.key)"
+                                  (ngModelChange)="eCertificateTemplate.setTemplateParam(param.key, $event)"
+                                  [settings]="fileUploaderSetting"
+                                  [uploadFolder]="'ecertificate-items'"
+                                  [ngModelOptions]="{standalone: true}"></opal-file-uploader>
+            </ng-template>
+          </editable>
+          <editable *ngSwitchCase="ECertificateParamType.Text"
+                    [modeView]="asViewMode()">
+            <ng-template editableViewMode="">{{ eCertificateTemplate.getTemplateParam(param.key) || '- N/A' }}</ng-template>
+            <ng-template editableEditMode="">
+              <input class="form-control"
+                     type="text"
+                     [ngModel]="eCertificateTemplate.getTemplateParam(param.key)"
+                     (ngModelChange)="eCertificateTemplate.setTemplateParam(param.key, $event)"
+                     [ngModelOptions]="{standalone: true}">
+            </ng-template>
+          </editable>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</form>

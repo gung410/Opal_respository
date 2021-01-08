@@ -1,0 +1,509 @@
+@mixin suffix-asterik {
+  &::after {
+    content: ' *';
+    color: $red;
+    margin-left: 2px;
+  }
+}
+
+
+input[type='text'],
+input[type='number'],
+input[type='search'] {
+  border-radius: $main-border-radius;
+  border: $border;
+  font-size: $font-h6;
+  padding: 0 16px;
+  height: $main-control-height;
+  line-height: $main-control-height;
+  margin: 0;
+  -webkit-appearance: none;
+  outline: none;
+
+  &:focus,
+  &:active {
+    border: $accent-border;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  @include flex-layout-media('lt-lg') {
+    height: $main-small-control-height;
+    line-height: $main-small-control-height;
+  }
+}
+
+textarea {
+  border-radius: $main-border-radius;
+}
+
+.k-datepicker .k-dateinput-wrap,
+.k-timepicker .k-dateinput-wrap,
+.k-datetimepicker .k-dateinput-wrap,
+.k-numerictextbox .k-numeric-wrap {
+  &.k-state-focused {
+    box-shadow: none;
+  }
+
+  .k-input {
+    padding: 9px 8px !important;
+    height: $main-control-height !important;
+  }
+}
+
+.k-datepicker .k-dateinput-wrap,
+.k-timepicker .k-dateinput-wrap,
+.k-datetimepicker .k-dateinput-wrap {
+  border-radius: $main-border-radius;
+}
+
+.k-datepicker .k-picker-wrap,
+.k-timepicker .k-picker-wrap,
+.k-datetimepicker .k-picker-wrap,
+.k-numerictextbox .k-numeric-wrap {
+  border-radius: $main-border-radius;
+  border: $border !important;
+}
+
+
+input[type='search'] {
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.description {
+  color: $description;
+  margin-top: 10px;
+}
+
+.search-field {
+  position: relative;
+  width: 300px;
+  height: $main-control-height;
+  line-height: $main-control-height;
+  padding: 0;
+
+  @include flex-layout-media('lt-lg') {
+    height: $main-small-control-height;
+    line-height: $main-small-control-height;
+  }
+
+  >search-input {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    padding-right: 35px;
+    box-sizing: border-box;
+    border: 1px solid $color-gainsboro;
+    border-radius: $main-border-radius;
+    background-color: $color-white;
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 2px;
+    top: 3px;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url(../assets/images/icons/search.svg) center no-repeat;
+  }
+}
+
+.hidden-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.file-input {
+  font-size: 20px;
+  font-weight: $font-weight-medium;
+  border: 0;
+  border-bottom: 1px solid $color-gainsboro;
+  border-radius: 0 !important;
+
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.upload-content {
+  position: relative;
+  margin: 20px 2px;
+  width: 600px;
+  height: 400px;
+
+  .content-type-icon {
+    width: 102px;
+    height: 119px;
+    margin: 0 auto;
+    display: block;
+
+    &.pdf {
+      background: url(../assets/images/icons/sm/pdf.svg) center no-repeat !important;
+    }
+  }
+}
+
+.drop-file-area,
+.upload-progress {
+  z-index: -1;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: rgba(97, 138, 216, 0.1);
+  border-radius: 5px;
+
+  &.show {
+    z-index: 1;
+    opacity: 1;
+  }
+}
+
+.drop-file-area {
+  &:hover .add-file-icon {
+    transform: scale(1.1);
+  }
+}
+
+.drop-file-area .add-file-icon,
+.drop-file-area:hover .add-file-icon {
+  @extend %smooth;
+}
+
+.upload-progress {
+  >canvas {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .description.central {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 230px;
+  }
+}
+
+.preview-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  text-align: center;
+
+  img {
+    max-width: 500px;
+  }
+}
+
+.input-group {
+  margin: 10px 0;
+  line-height: 16px;
+
+  label.on-top {
+    display: block;
+    color: $description;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .k-textbox,
+  .k-dropdown {
+    width: 100%;
+  }
+
+  >.k-radio,
+  >.k-checkbox {
+    margin-right: 10px;
+  }
+
+  &.vertical-arrange {
+    >label {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &.placeholder-option {
+    opacity: 0.3;
+    padding: 0 10px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    .option-text {
+      color: $accent;
+    }
+  }
+
+  &.editable {
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+
+    &:hover {
+      background: $gray100;
+
+      .remove-option {
+        display: inline-block;
+      }
+    }
+
+    &.correct::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      display: inline-block;
+      left: -16px;
+      top: 10px;
+      background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+    }
+
+    .remove-option {
+      display: none;
+    }
+  }
+}
+
+.horizontal-form-controls-group {
+  display: flex;
+  align-items: center;
+
+  >*+* {
+    margin-left: 10px;
+  }
+}
+
+.form-controls-group {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-right: 10px;
+  margin-bottom: 15px;
+
+  .form-controls-title-group {
+    display: flex;
+    flex-direction: row;
+
+    >label {
+      color: $color-blue-light;
+      font-size: $font-h6;
+      margin-bottom: 10px;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  >*:not(label) {
+    margin-bottom: 5px;
+  }
+
+  .-readonly {
+    pointer-events: none;
+  }
+
+  >label {
+    color: $color-blue-light;
+    font-size: $font-h6;
+    margin-bottom: 10px;
+  }
+
+  >.alert {
+    align-self: flex-start;
+  }
+
+  &.-horizontal {
+    flex-direction: row;
+    align-items: center;
+
+    >*+* {
+      margin-left: 10px;
+    }
+
+    >label {
+      margin-bottom: 0;
+    }
+
+    >.form-control {
+      width: auto;
+    }
+  }
+
+  &>&.-horizontal {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.-required {
+    >.form-controls-title-group {
+      >label {
+        @include suffix-asterik();
+      }
+    }
+
+    >label {
+      @include suffix-asterik();
+    }
+  }
+
+  >.form-control {
+    width: 100%;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.form-control {
+  width: 100%;
+
+  &.-virtual {
+    visibility: hidden;
+    min-width: 10px;
+    width: 10px;
+    height: 1px;
+  }
+
+  &.-fullwidth {
+    width: 100%;
+  }
+}
+
+.form-title {
+  color: $color-indigo;
+  font-size: $font-h4;
+  font-weight: $font-weight-medium;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.form-section-title-group {
+  display: flex;
+}
+
+.form-section-title {
+  font-size: $font-h5;
+  color: $color-blue-light;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  display: block;
+
+  &.-required {
+    @include suffix-asterik();
+  }
+}
+
+.form-section {
+  &+& {
+    margin-top: 15px;
+  }
+
+  &.-required {
+    >.form-section-title {
+      @include suffix-asterik();
+    }
+  }
+
+  >.form-section-group {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px 40px;
+  user-select: none;
+}
+
+.form-btn-container {
+  display: flex;
+  justify-content: flex-end;
+
+  >button {
+    margin-left: 10px;
+  }
+}
+
+.form-heading {
+  margin-bottom: 20px;
+
+  .form-title {
+    margin-bottom: 0;
+  }
+
+  .form-sub-title {
+    font-size: $font-normal;
+    line-height: 17px;
+  }
+}
+
+.form-label {
+  text-transform: uppercase;
+}
+
+.k-textbox,
+.k-input.k-textbox,
+.k-textarea {
+  font-size: 0.875rem;
+}
+
+@include flex-layout-media('lt-sm') {
+  .form-container {
+    padding: 2*$main-grid-unit;
+  }
+
+  .form-controls-group {
+    padding-right: 0;
+  }
+
+  .search-field {
+    width: 205px;
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  .search-field {
+    width: 200px;
+  }
+}

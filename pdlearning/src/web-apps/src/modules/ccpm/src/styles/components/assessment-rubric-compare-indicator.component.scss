@@ -1,0 +1,89 @@
+.assessment-rubric-compare-indicator {
+  &__title {
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    width: fit-content;
+    color: #fff;
+    padding: 10px 20px 10px 10px;
+    margin-bottom: 20px;
+    background-color: $color-light-gray;
+    border-radius: 0 0 10px 0;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+  }
+
+  &__main-container {
+    padding: 30px;
+    border: 1px solid $color-gainsboro;
+    border-radius: $main-border-radius;
+    margin-bottom: 20px;
+
+    &.--add-new {
+      background-color: rgba(58, 207, 129, 0.2);
+    }
+
+    &.--remove {
+      background-color: rgba(255, 98, 98, 0.2);
+    }
+
+    &.--blank {
+      color: transparent;
+
+      & > * {
+        visibility: hidden;
+      }
+
+      background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, white 4px, white 7px, transparent 8px);
+    }
+  }
+
+  &__item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__item-title {
+    min-width: 100px;
+  }
+
+  &__value-input {
+    width: 100%;
+  }
+
+  &__rubric-edit-container {
+    padding: 30px;
+    border: 1px solid $color-gainsboro;
+    border-radius: $main-border-radius;
+  }
+
+  &__rubric-scale-title {
+    font-size: $font-h5;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-right: 20px;
+    max-width: 40%;
+    overflow: auto;
+  }
+
+  &__rubric-criteria-title {
+    min-width: 150px;
+  }
+
+  &__option {
+    display: flex;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  &__rubric-criteria-value {
+    white-space: nowrap;
+  }
+}

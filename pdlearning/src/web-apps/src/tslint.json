@@ -1,0 +1,9 @@
+{
+  "extends": ["../tslint.json"],
+  "rules": {
+    "export-name": false,
+    "missing-optional-annotation": false,
+    "interface-name": false
+  },
+  "rulesDirectory": ["codelyzer"]
+}

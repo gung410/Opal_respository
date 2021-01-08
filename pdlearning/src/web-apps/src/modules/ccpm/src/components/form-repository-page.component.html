@@ -1,0 +1,94 @@
+<app-toolbar [customClass]="'digital-content-repository-page-toolbar'">
+  <toolbar-left>
+    <search-input [(ngModel)]="textSearch"
+                  [placeholder]="'Search in Form' | translator"
+                  (search)="onSearch()"></search-input>
+  </toolbar-left>
+  <toolbar-center class="flex row"></toolbar-center>
+  <toolbar-right>
+
+    <kendo-dropdownbutton class="digital-content-repository-page-toolbar__import"
+                          *hasPermission="formPermission.CreateForm"
+                          [icon]="formCreationButtonIcon"
+                          [data]="formImportOption"
+                          [popupSettings]="{ popupClass: 'ccpm-create-button-modes' }"
+                          [primary]="true">
+      {{ 'Import' | globalTranslator }}
+    </kendo-dropdownbutton>
+
+    <kendo-dropdownbutton class="digital-content-repository-page-toolbar__import"
+                          *hasPermission="formPermission.CreateForm"
+                          [icon]="formCreationButtonIcon"
+                          [data]="formCreationOptions"
+                          [popupSettings]="{ popupClass: 'ccpm-create-button-modes' }"
+                          [primary]="true">
+      {{ 'Add new' | globalTranslator }}
+    </kendo-dropdownbutton>
+
+    <div [hidden]="!canShowFilterBtn">
+      <div class="digital-content-repository-page-toolbar__filter">
+        <label>{{ 'Filter' | globalTranslator }}</label>
+        <opal-select class="form-filter"
+                     [autoScrollToViewOnOpen]="false"
+                     [items]="filterItems"
+                     [valueField]="'value'"
+                     [labelField]="'text'"
+                     [(selectedValue)]="formFilterStatus"
+                     [placeholder]="'All' | globalTranslator"
+                     kendoErrorTooltip
+                     [searchable]="false"
+                     (focus)="onOpalSelectControlFocus()"></opal-select>
+      </div>
+    </div>
+  </toolbar-right>
+</app-toolbar>
+<kendo-tabstrip [animate]="false"
+                #kendoTabstrip
+                (tabSelect)="onFormTabSelect($event)">
+  <ng-container></ng-container>
+
+  <kendo-tabstrip-tab *hasPermission="formPermission.ViewListForm"
+                      [selected]="searchTermService.queryMode === formQueryModeEnum.All"
+                      [title]="formQueryMode.get(formQueryModeEnum.All) | translator">
+    <ng-template kendoTabContent="">
+      <form-list #formList
+                 [searchTerm]="searchTerm"
+                 [filterStatus]="formFilterStatus"
+                 [contextMenuItems]="contextMenuItemsForListingTab"
+                 [excludeBySurveyTypes]="excludeBySurveyTypes"
+                 [queryMode]="formQueryModeEnum.All"></form-list>
+    </ng-template>
+  </kendo-tabstrip-tab>
+
+  <kendo-tabstrip-tab *hasPermission="formPermission.ViewListForm"
+                      [selected]="searchTermService.queryMode === formQueryModeEnum.PostCourseTemplate"
+                      [title]="formQueryMode.get(formQueryModeEnum.PostCourseTemplate) | translator">
+    <ng-template kendoTabContent="">
+      <form-list [searchTerm]="searchTerm"
+                 [contextMenuItems]="contextMenuItemsForListingTab"
+                 [queryMode]="formQueryModeEnum.PostCourseTemplate"
+                 [filterBySurveyTypes]="filterBySurveyTypes"></form-list>
+    </ng-template>
+  </kendo-tabstrip-tab>
+
+  <kendo-tabstrip-tab *hasPermission="formPermission.ViewListSubmittedForm"
+                      [title]="formQueryMode.get(formQueryModeEnum.PendingApproval) | translator"
+                      [selected]="searchTermService.queryMode === formQueryModeEnum.PendingApproval">
+    <ng-template kendoTabContent="">
+      <form-list [searchTerm]="searchTerm"
+                 [contextMenuItems]="contextMenuItemsForApprovalTab"
+                 [queryMode]="formQueryModeEnum.PendingApproval"></form-list>
+    </ng-template>
+  </kendo-tabstrip-tab>
+
+  <kendo-tabstrip-tab *hasPermission="formPermission.ViewListArchivedForm"
+                      [title]="formQueryMode.get(formQueryModeEnum.Archived) | translator"
+                      [selected]="searchTermService.queryMode === formQueryModeEnum.Archived">
+    <ng-template kendoTabContent="">
+      <form-list [searchTerm]="searchTerm"
+                 [contextMenuItems]="contextMenuItemsForArchivedTab"
+                 [queryMode]="formQueryModeEnum.Archived"
+                 [hiddenColumns]="['modified']"></form-list>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>

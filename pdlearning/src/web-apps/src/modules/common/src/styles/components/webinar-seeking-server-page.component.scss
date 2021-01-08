@@ -1,0 +1,28 @@
+.webinar-container {
+  margin: 2px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+
+  .show-spinner {
+    width: 100px;
+    height: 100px;
+    background: none !important;
+    padding: 30px;
+
+    .spinner {
+      left: 0% !important;
+      top: 48% !important;
+      z-index: 0 !important;
+    }
+  }
+
+  .show-spinner::after {
+    background: none !important;
+    z-index: 0 !important;
+  }
+}

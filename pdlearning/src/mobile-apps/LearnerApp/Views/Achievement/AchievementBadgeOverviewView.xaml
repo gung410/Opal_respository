@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView;assembly=LearnerApp"
+             xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+             xmlns:achievement="clr-namespace:LearnerApp.ViewModels.Achievement;assembly=LearnerApp"
+             xmlns:badge="clr-namespace:LearnerApp.Views.Achievement.Badge;assembly=LearnerApp"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+             x:Class="LearnerApp.Views.Achievement.AchievementBadgeOverviewView"
+             x:DataType="achievement:AchievementBadgeOverviewViewModel">
+
+    <StackLayout Orientation="Vertical" Spacing="20">
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowAllCommand}" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    FontSize="{StaticResource LargeSize}"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding TotalCount, StringFormat='Total Badges ({0}) >'}" />
+                <Label
+                    FontSize="{StaticResource MidMediumSize}"
+                    IsVisible="{Binding TotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+                    Text="see more"
+                    TextColor="{StaticResource SecondaryTextColor}"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <learnerCustomCollectionView:LearnerCustomCollectionView
+                x:Name="List"
+                IsVisible="{Binding IsShowList}"
+                RealItemsSource="{Binding Badges}"
+                HeightRequest="300"
+                IsLoading="{Binding IsLoading}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <learnerCustomCollectionView:LearnerCustomCollectionView.ItemTemplate>
+                    <badge:AchievementBadgeDataTemplateSelector />
+                </learnerCustomCollectionView:LearnerCustomCollectionView.ItemTemplate>
+                <CollectionView.FooterTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="5,5,5,5">
+                            <controls:LearnerContentFrame
+                                Padding="1"
+                                BackgroundColor="{StaticResource WhiteColor}"
+                                BorderColor="LightGray"
+                                CornerRadius="4"
+                                HasShadow="False"
+                                IsClippedToBounds="True">
+                                <StackLayout>
+                                    <Label
+                                        Margin="10"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="SHOW ALL"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ShowAllCommand}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </controls:LearnerContentFrame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.FooterTemplate>
+
+            </learnerCustomCollectionView:LearnerCustomCollectionView>
+
+            <StackLayout IsVisible="{Binding Source={x:Reference List}, Path=IsVisible, Converter={StaticResource InverseBoolConverter}}">
+                <Label HorizontalOptions="CenterAndExpand" Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

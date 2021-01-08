@@ -1,0 +1,19 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [title]="'Title'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.title | translator}}
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.Ratingv2View"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+
+	<ContentView.Content>
+		<StackLayout
+			x:Name="RatingStack"
+			IsVisible="false"
+			Orientation="Horizontal"
+			Spacing="15">
+			<ffimagesvg:SvgCachedImage
+				x:Name="Star1"
+				HeightRequest="10"
+				Source="white_star.svg"
+				WidthRequest="10">
+				<ffimagesvg:SvgCachedImage.GestureRecognizers>
+					<TapGestureRecognizer Tapped="Rating_Tapped" />
+				</ffimagesvg:SvgCachedImage.GestureRecognizers>
+			</ffimagesvg:SvgCachedImage>
+			<ffimagesvg:SvgCachedImage
+				x:Name="Star2"
+				HeightRequest="10"
+				Source="white_star.svg"
+				WidthRequest="10">
+				<ffimagesvg:SvgCachedImage.GestureRecognizers>
+					<TapGestureRecognizer Tapped="Rating_Tapped" />
+				</ffimagesvg:SvgCachedImage.GestureRecognizers>
+			</ffimagesvg:SvgCachedImage>
+			<ffimagesvg:SvgCachedImage
+				x:Name="Star3"
+				HeightRequest="10"
+				Source="white_star.svg"
+				WidthRequest="10">
+				<ffimagesvg:SvgCachedImage.GestureRecognizers>
+					<TapGestureRecognizer Tapped="Rating_Tapped" />
+				</ffimagesvg:SvgCachedImage.GestureRecognizers>
+			</ffimagesvg:SvgCachedImage>
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

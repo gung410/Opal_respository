@@ -1,0 +1,255 @@
+specific-community-calendar {
+  .action {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 8px 16px;
+
+    .create-event-btn {
+      width: 185px;
+      height: 48px;
+      padding: 0px 22px 0px 0px;
+    }
+  }
+
+  .k-scheduler {
+    &-toolbar {
+      height: 56px;
+      background-clip: padding-box;
+      background: #fff;
+      padding: 0 16px;
+
+      .k-header {
+        height: 32px;
+      }
+    }
+
+    &-pane {
+      .k-scheduler-times {
+        &-all-day {
+          max-height: 78px !important;
+          height: auto !important;
+        }
+      }
+    }
+
+    &-footer {
+      display: none;
+    }
+
+    &-dayview,
+    &-weekview {
+      .k-scheduler-pane {
+        .k-scheduler-header-wrap div {
+          border-color: inherit;
+          overflow-y: overlay;
+          max-height: 100px;
+        }
+
+        &:first-child {
+          tr:first-child {
+            th {
+              height: 40px !important;
+              vertical-align: middle;
+            }
+
+            .k-scheduler-times-all-day {
+              height: 80px;
+              vertical-align: top;
+            }
+          }
+        }
+
+        &:nth-child(2) {
+          tr {
+            height: 30px !important;
+          }
+
+          th {
+            padding: 0px 8px;
+            height: 12px !important;
+          }
+
+          td {
+            height: 12px !important;
+          }
+        }
+      }
+
+      th {
+        font-weight: 500;
+        color: #8799ba;
+        text-align: center;
+        align-items: center;
+      }
+
+      .k-event {
+        box-sizing: border-box !important;
+      }
+    }
+
+    &-monthview {
+      th {
+        font-weight: 500;
+        color: #8799ba;
+        text-align: center;
+        align-items: center;
+      }
+
+      td {
+        height: 96px !important;
+
+        span {
+          padding: 15px 7px;
+          text-align: center;
+        }
+      }
+
+      .today {
+        .k-nav-day {
+          background: url('../assets/images/icons/today.svg') no-repeat center;
+          color: #ffffff;
+          border-radius: 20px;
+        }
+      }
+    }
+
+    &-navigation {
+      li {
+        border: none;
+
+        a {
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          height: 32px;
+          background-color: #ffffff;
+          color: #303450 !important;
+
+          .k-icon.k-i-calendar {
+            display: none;
+          }
+        }
+      }
+
+      .k-nav {
+        color: #303450 !important;
+
+        &-today a {
+          width: 84px;
+          height: 32px;
+          border-radius: 4px 0px 0px 4px;
+        }
+
+        &-prev a {
+          width: 24px !important;
+          height: 32px !important;
+        }
+
+        &-next a {
+          width: 24px !important;
+          height: 32px !important;
+          border-radius: 0px 4px 4px 0px;
+        }
+
+        &-current a {
+          height: 32px !important;
+          border: none;
+        }
+      }
+    }
+
+    &-views {
+      li {
+        width: 75px;
+        background: #fff;
+        font-size: 1rem;
+        font-weight: 400;
+
+        &:first-child {
+          + {
+            li {
+              border-radius: 4px 0 0 4px;
+            }
+          }
+        }
+
+        &:last-child {
+          border-radius: 0 4px 4px 0;
+        }
+
+        span {
+          height: 32px;
+          color: #303450 !important;
+        }
+
+        &.k-state-selected {
+          font-weight: 500;
+        }
+      }
+
+      .k-state-selected {
+        background: #8799ba;
+
+        span {
+          color: #ffffff !important;
+        }
+      }
+    }
+
+    .k-event {
+      border-radius: unset;
+      border: 1px solid #ffffff !important;
+      color: #303450;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::before {
+        background-color: transparent;
+      }
+
+      &-template {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .event-template {
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .k-more-events {
+      padding: 0;
+      height: 13px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      position: absolute;
+      -ms-flex-pack: center;
+      justify-content: center;
+      border-radius: unset;
+      align-items: center;
+
+      span {
+        height: 0.5em;
+      }
+    }
+  }
+
+  .k-i-add-event {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/add-event.svg') no-repeat center;
+  }
+
+  @include flex-layout-media('tablet-portrait') {
+    .k-scheduler-views {
+      right: 16px;
+      top: 10px;
+    }
+  }
+}

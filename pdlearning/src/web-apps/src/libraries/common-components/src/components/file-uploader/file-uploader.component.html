@@ -1,0 +1,76 @@
+<div class="opal-file-uploader__main-content-container">
+  <div class="opal-file-uploader__info"
+       *ngIf="settings.extensions && settings.extensions.length">{{"Supported formats" | globalTranslator}}:
+    {{ settings.extensions.join(', ') }}.
+  </div>
+  <div class="opal-file-uploader__info"
+       *ngIf="settings.maxFileSize">{{ "Maximum upload file size: ##size## MB" | globalTranslator: {size: settings.maxFileSize} }}.
+  </div>
+  <div class="opal-file-uploader__upload-content"
+       [ngClass]="{ '-readonly': readOnly }">
+    <div class="opal-file-uploader__body"
+         [ngClass]="{'d-none': isError}">
+      <div [ngClass]="{'d-none': showAdditionalProcessStatus}">
+        <div class="opal-file-uploader__drop-file-area column align-center-center"
+             [hidden]="validatingFile"
+             [ngClass]="{ '-show': !uploadingFile, '-has-file': file != null || value != null }">
+          <img class="add-file-icon"
+               src="assets/images/icons/upload-file.svg">
+          <span class="add-file-icon__title"
+                [hidden]="file">{{"Drag here \n or click to browse files" | translator}}</span>
+          <input class="hidden-input"
+                 type="file"
+                 #inputRef
+                 (change)="onFileSelect($event.target.files)">
+        </div>
+        <div class="opal-file-uploader__upload-progress column align-center-center"
+             [hidden]="!uploadingFile"
+             [ngClass]="{ '-show': uploadingFile }">
+
+          <canvas class="d-none"
+                  #progressCanvas
+                  width="160"
+                  height="160"></canvas>
+          <div spinner="">
+          </div>
+          <span class="description central">{{'Uploading ##percentage##%' | globalTranslator: {percentage : uploadingPercentage} }}</span>
+        </div>
+      </div>
+
+      <ng-content></ng-content>
+    </div>
+
+    <div class="opal-file-uploader__preview-img"
+         *ngIf="value; else localFile">
+      <img src="{{ value }}">
+    </div>
+
+    <ng-template #localFile="">
+      <div class="opal-file-uploader__preview-img opal-file-uploader__preview-img--locally"
+           *ngIf="file && keepInLocal && !uploadingFile">
+        {{ file.name }}
+        <i class="k-icon k-i-close cursor-pointer"
+           (click)="resetUpload()"></i>
+      </div>
+    </ng-template>
+    <div class="loading-container opal-file-uploader__preview-img"
+         *ngIf="validatingFile">
+      <img class="loading-icon"
+           src="assets/images/loading.gif"
+           alt="Loading">
+    </div>
+  </div>
+
+  <div class="opal-file-uploader__error"
+       [ngClass]="{'d-none': !isError}">
+    <div class="content-error">
+      <p class="error-message">{{errorMessage | globalTranslator}}</p>
+      <a class="btn-link"
+         href="javascript:;"
+         (click)="onTryAgain()">{{ 'Try again' | globalTranslator }}</a>
+    </div>
+  </div>
+</div>
+<span class="opal-file-uploader__close-btn k-icon k-i-close cursor-pointer"
+      *ngIf="showBtnDelete && value != null"
+      (click)="resetUpload()"></span>

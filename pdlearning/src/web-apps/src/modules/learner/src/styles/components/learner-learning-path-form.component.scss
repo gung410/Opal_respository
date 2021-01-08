@@ -1,0 +1,19 @@
+.learning-path-form {
+  padding: 0 50px 65px;
+
+  &__btn-group {
+    display: flex;
+    margin-left: auto;
+  }
+
+  &__main-btn {
+    &.--del-btn {
+      color: $color-coral;
+      margin-right: 15px;
+
+      &:hover {
+        background-color: $color-silver;
+      }
+    }
+  }
+}

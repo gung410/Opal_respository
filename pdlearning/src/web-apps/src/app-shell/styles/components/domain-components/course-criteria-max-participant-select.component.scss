@@ -1,0 +1,33 @@
+.course-criteria-max-participant-select {
+  width: 100%;
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__row {
+    &:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    td:nth-child(2) {
+      min-width: 200px;
+      vertical-align: top;
+    }
+
+    th {
+      text-align: left;
+    }
+  }
+
+  &__max-participants-input {
+    max-width: 100px;
+  }
+}

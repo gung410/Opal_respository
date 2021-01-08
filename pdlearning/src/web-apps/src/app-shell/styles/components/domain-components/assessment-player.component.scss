@@ -1,0 +1,191 @@
+@mixin mobileViewAsessment() {
+  .assessment-player {
+    padding: 10px;
+
+    &__assessment-title-container {
+      max-width: 200px;
+    }
+
+    &__back-button {
+      padding-left: 10px !important;
+    }
+
+    assessment-criteria {
+      .assessment-criteria {
+        &__comment-container {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+main-assessment-player,
+assessment-answer-editor {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &.-preview-mobile {
+    @include mobileViewAsessment();
+  }
+
+  .assessment-player {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background: $white;
+
+    &__tool-bar {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid $color-gainsboro;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    &__tool-bar-left {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    &__tool-bar-right {
+      display: flex;
+    }
+
+    &__back-button {
+      font-size: 18px;
+      font-weight: 500;
+
+      span {
+        font-weight: bold;
+      }
+    }
+
+    &__assessment-title-container {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+    }
+
+    &__assessment-title {
+      font-size: 18px;
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    &__criteria {
+      border: 1px solid $color-gainsboro;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    &__message-info {
+      display: flex;
+      flex-direction: row;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    &__user-modify {
+      margin-bottom: 30px;
+    }
+
+    &__user-modify-text {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    &__user-modify-date {
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    &__submit-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    &__submit-btn {
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+
+    assessment-criteria {
+      display: flex;
+      flex-direction: column;
+
+      .assessment-criteria {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+
+        &__logic-validation-errors {
+          margin-left: 2em;
+          margin-top: 10px;
+        }
+
+        &__title-container {
+          border-bottom: 1px solid $color-gainsboro;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+        }
+
+        &__title {
+          font-size: 18px;
+          font-weight: 500;
+          color: $color-light-gray;
+        }
+
+        &__comment-container {
+          display: flex;
+          flex-direction: column;
+          margin-top: 5px;
+          width: 500px;
+        }
+
+        &__comment-title {
+          font-weight: 500;
+          text-decoration: underline;
+        }
+
+        &__comment {
+          width: 100%;
+        }
+
+        assessment-scale {
+          display: flex;
+
+          .assessment-scale {
+            display: flex;
+            margin-bottom: 15px;
+
+            &__content-container {
+              display: flex;
+              flex-direction: column;
+              margin-left: 10px;
+            }
+
+            &__title {
+              font-weight: 500;
+              margin-bottom: 10px;
+            }
+
+            &__content {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $media-breakpoint-tb) {
+  @include mobileViewAsessment();
+}

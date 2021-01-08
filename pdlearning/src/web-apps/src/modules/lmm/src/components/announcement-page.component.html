@@ -1,0 +1,31 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #announcementStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="stickyDependElement">
+      <kendo-tabstrip-tab [selected]="true">
+        <ng-template kendoTabTitle="">
+          {{ 'New announcement' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <send-announcement-page [courseId]="courseId"
+                                  [classRunId]="classRunId"></send-announcement-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab>
+        <ng-template kendoTabTitle="">
+          {{ 'Announcement' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <announcement-activity-log-page [courseId]="courseId"
+                                          [classRunId]="classRunId"
+                                          [stickyDependElement]="announcementStickyTabHeaderElement.headerElement">
+          </announcement-activity-log-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

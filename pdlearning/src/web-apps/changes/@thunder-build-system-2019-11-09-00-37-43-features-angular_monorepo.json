@@ -1,0 +1,8 @@
+{
+  "type": "major",
+  "comment": "Initialze @thunder/build-system package",
+  "packageName": "@thunder/build-system",
+  "email": "khanh.bui@orientsoftware.com",
+  "commit": "a7f800006d1ef86931a587d1c87fac9536af076e",
+  "date": "2019-11-08T17:37:10.512Z"
+}

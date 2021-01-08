@@ -1,0 +1,27 @@
+<opal-file-uploader class="digital-content-upload-dialog basic-info-tab__thumbnail-uploader"
+                    [hidden]="preview"
+                    #fileUploader
+                    [(ngModel)]="thumbnailUrl"
+                    [uploadFolder]="'editor-uploads'"
+                    [settings]="fileUploaderSetting"
+                    (uploaderProgressChange)="onUploaderProgressChanged($event)"></opal-file-uploader>
+<ng-container>
+  <div class="form-group">
+    <div class="file-preview"
+         externalLinkGuard
+         [innerHTML]="preview"></div>
+  </div>
+  <div class="actions row">
+    <div class="flex"></div>
+    <button (click)="insertEmbedHtml()"
+            [disabled]="!embedHtml"
+            [primary]="true"
+            kendoButton>
+      {{ 'OK' | globalTranslator }}
+    </button>
+    <button (click)="closeDialog()"
+            kendoButton>
+      {{ 'Cancel' | globalTranslator }}
+    </button>
+  </div>
+</ng-container>

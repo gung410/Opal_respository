@@ -1,0 +1,26 @@
+detail-title {
+  .back-button {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .title-group {
+    margin-left: 10px;
+
+    .title {
+      font-size: $font-h4;
+    }
+
+    .edit-icon {
+      margin-left: 5px;
+      padding-bottom: 15px;
+      cursor: pointer;
+
+      &--disabled {
+        cursor: default;
+        pointer-events: none;
+        opacity: 0.3;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<div class="broadcast-message-notification-container"
+     *ngIf="enableBroadcastMessage && isShowBroadcastMessageBanner"
+     [ngClass]="cssClass">
+  <iframe [src]="notificationAlertUrl"
+          [height]="iframeHeight"></iframe>
+</div>

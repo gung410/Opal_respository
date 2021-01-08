@@ -1,0 +1,44 @@
+<ng-container [formGroup]="form">
+  <div class="dialog-title">{{ (sectionDetailVM.data.id ? 'Update Sub-Unit': 'New Sub-Unit') | translator }}</div>
+
+  <div class="form-controls-group">
+    <label>{{ 'Title' | translator }}</label>
+    <input [(ngModel)]="sectionDetailVM.title"
+           #titleInput
+           position="top"
+           kendoTextBox
+           formControlName="title"
+           kendoErrorTooltip>
+  </div>
+  <div class="form-controls-group">
+    <label>{{ 'Description' | translator }}</label>
+    <input [(ngModel)]="sectionDetailVM.description"
+           #descriptionInput
+           position="top"
+           kendoTextBox
+           formControlName="desription"
+           kendoErrorTooltip>
+  </div>
+  <!-- temporary hide due to unuse -->
+  <!-- <div class="form-controls-group">
+    <label>{{ 'Credits Award' | translator }}</label>
+    <kendo-numerictextbox class="form-control"
+                          type="number"
+                          [min]="0"
+                          [max]="maxInt"
+                          [decimals]="0"
+                          [format]="'n0'"
+                          autoCorrect="true"
+                          formControlName="creditsAward"
+                          [(ngModel)]="sectionDetailVM.creditsAward"
+                          kendoErrorTooltip></kendo-numerictextbox>
+  </div> -->
+  <div class="form-btn-container">
+    <button [look]="'outline'"
+            (click)="onClickCancel()"
+            kendoButton>{{'Cancel' | translator}}</button>
+    <button (click)="onClickSave()"
+            [primary]="true"
+            kendoButton>{{'Save' | translator}}</button>
+  </div>
+</ng-container>

@@ -1,0 +1,32 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ 'Upload Files' | translator }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+
+<div class="dialog-content">
+  <kendo-fileselect [(ngModel)]="selectedFile"
+                    [restrictions]="fileRestrictions"
+                    [multiple]="false">
+  </kendo-fileselect>
+</div>
+<div class="dialog-actions">
+  <kendo-dropdownbutton *ngIf="downloadTemplateOption != null"
+                        [data]="downloadTemplateOption.templateFormats"
+                        [primary]="true"
+                        textField="fileFormatName"
+                        valueField="fileFormat"
+                        (itemClick)="onDownloadTemplate($event.fileFormat)"
+                        [popupSettings]="{ popupClass: 'select-files-dialog__dropdown-button'}">
+    {{ 'Download Template' | globalTranslator}}
+  </kendo-dropdownbutton>
+  <button kendoButton
+          (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+  <button kendoButton
+          [primary]="true"
+          (click)="onImport()">{{ 'Import' | globalTranslator }}</button>
+</div>

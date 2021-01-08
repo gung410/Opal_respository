@@ -1,0 +1,51 @@
+<div class="form-question-answer-review">
+  <div class="form-question-answer-review__overal-score-container"
+       *ngIf="isQuiz">
+    <div class="form-question-answer-review__overal-score-item">
+      <div class="form-question-answer-review__overal-score-text">
+        {{ 'Score:' | translator }}
+      </div>
+      <div class="form-question-answer-review__overal-score-value">
+        {{ formAnswer.score }}
+        ({{ formAnswer.scorePercentage }} %)
+      </div>
+    </div>
+    <div class="form-question-answer-review__overal-score-item">
+      <div class="form-question-answer-review__overal-score-text">
+        {{ 'Correct answers:' | translator }}
+      </div>
+      <div class="form-question-answer-review__overal-score-value">
+        {{ correctAnswer }}
+      </div>
+    </div>
+    <div class="form-question-answer-review__overal-score-item">
+      <div class="form-question-answer-review__overal-score-text">
+        {{ 'Incorrect answers:' | translator }}
+      </div>
+      <div class="form-question-answer-review__overal-score-value">
+        {{ incorrectAnswer }}
+      </div>
+    </div>
+
+    <div class="form-question-answer-review__overal-score-item">
+      <div class="form-question-answer-review__overal-score-text">
+        {{ 'Total questions:' | translator }}
+      </div>
+      <div class="form-question-answer-review__overal-score-value">
+        {{ formAnswer.questionAnswers?.length }}
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="sectionsQuestion">
+    <ng-container *ngFor="let section of sectionsQuestion; let idx = index">
+      <form-section-info [formSectionVm]="section"></form-section-info>
+      <ng-container *ngFor="let items of section.questions; let i = index">
+        <question-answer-review [question]="items"
+                                [priority]="idx + 1"
+                                [minorPriority]="i + 1"
+                                [formAnswer]="formAnswer"
+                                [formDataType]="formDataType"></question-answer-review>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

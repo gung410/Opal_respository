@@ -1,0 +1,34 @@
+drop-file-uploader {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+
+  .drop-file-uploader {
+    width: 100%;
+    height: 100%;
+    padding-top: 5%;
+    border-radius: 10px;
+    z-index: 100;
+    background-color: rgba(1, 1, 1, 0.2);
+    border: 3px dashed $color-light-gray;
+    color: $color-light-gray;
+    box-sizing: border-box;
+
+    &__banner {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      &--icon {
+        width: 50px;
+      }
+
+      &--label {
+        font-size: 20px;
+        margin-left: 1em;
+        text-align: center;
+      }
+    }
+  }
+}

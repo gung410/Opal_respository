@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dataTemplateSelector:SkeletonDataTemplateSelector
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dataTemplateSelector="clr-namespace:LearnerApp.Common.DataTemplateSelector;assembly=LearnerApp"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:badge="clr-namespace:LearnerApp.Views.Achievement.Badge;assembly=LearnerApp"
+    x:Class="LearnerApp.Views.Achievement.Badge.AchievementBadgeDataTemplateSelector">
+    <dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+        <DataTemplate>
+            <badge:AchievementBadgeItemView />
+        </DataTemplate>
+    </dataTemplateSelector:SkeletonDataTemplateSelector.Content>
+    <dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+        <DataTemplate>
+            <Frame
+                Margin="1"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="LightGray"
+                CornerRadius="6"
+                HasShadow="False">
+                <shimmer:LearnerShimmer
+                    HeightRequest="250"
+                    WidthRequest="200"
+                    Type="Video"
+                />
+            </Frame>
+        </DataTemplate>
+    </dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+</dataTemplateSelector:SkeletonDataTemplateSelector>
+

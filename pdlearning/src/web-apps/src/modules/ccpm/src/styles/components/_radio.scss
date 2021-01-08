@@ -1,0 +1,23 @@
+ccpm-app {
+  .k-radio {
+    border: 2px solid $color-blue-light;
+
+    &:hover,
+    &:focus {
+      border-color: $color-blue-light;
+    }
+
+    &:checked {
+      border-color: $color-blue-light;
+
+      &:focus {
+        border-color: $color-blue-light;
+      }
+
+      &::before {
+        color: $color-blue-light;
+        background-color: $color-blue-light;
+      }
+    }
+  }
+}

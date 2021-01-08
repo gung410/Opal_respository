@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.OnBoardingView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+
+    <controls:CustomHybridWebView
+        x:Name="OnBoarding"
+        ContentType="Internet"
+        OnContentLoaded="OnBoarding_OnContentLoaded"
+        Source="{Binding SourceUrl}"
+        VerticalOptions="FillAndExpand" />
+</common:BaseLearnerContentPage>

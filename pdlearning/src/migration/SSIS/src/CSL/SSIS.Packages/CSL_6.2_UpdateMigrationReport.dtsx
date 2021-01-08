@@ -1,0 +1,474 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/31/2019 1:39:35 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HCM-NGUYETTT"
+  DTS:CreatorName="ORIENTSOFTWARE\nguyet.tran"
+  DTS:DTSID="{4C7F63EC-E337-43C6-97BD-0933C4041381}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1301.433"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CSL_6 2_UpdateMigrationReport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{CABA9BD1-F0D7-4839-82C7-F211FDDEC06E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADO.NET Destination Database - CSL]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{09852D03-C59C-4B6C-B462-0AA86D68E2F0}"
+      DTS:ObjectName="ADO.NET Destination Database - CSL">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="server=127.0.0.1;uid=root;Driver={MySQL ODBC 8.0 ANSI Driver};database=humhub;port=3306;">
+          <DTS:Password
+            DTS:Name="pwd"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAFDVHFtK+cUyyQY0xf8F5dQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADD/kTt0WJMi8CHPZQVABvaAAAAAASAAACgAAAAEAAAAAIjqbZS+L3JVfVwUFJm54MQAAAAFi1J7KS9/p8TPawVynLfkhQAAAAFPc6gVS4HyVN+/lBMVzb0JTF8aw</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OLE DB Migration Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CA2B18E5-0AC1-438F-A865-6A16E1E1A7DC}"
+      DTS:ObjectName="OLE DB Migration Database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HCM-NGUYETTT;Initial Catalog=migration-intermediate-opal2-ccpm-learner;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D9447F81-0358-4EA0-B052-A9D9135383C7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_activity">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0211F26B-8162-4201-9174-B07771B42461}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_comment">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CC6C99D1-D5FE-457E-BCF0-86F406BEBB8D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_content">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C32EEE7B-4002-4825-B070-F231902328F9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_contentcontainer">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CA7AC8C4-A3DC-4658-BB51-FA256874B3A3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_content_tag">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3E41D61-51E1-4367-8BB8-2F8167BDAFF5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_content_tag_relation">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DD631540-6503-4F26-94C1-3942312F49CA}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_file">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7C85178E-34E3-44DB-869E-36CD70EF5F05}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_forum_thread">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C6585352-3130-4593-A2CF-87F5A1433D69}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_forum_thread_revision">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B58D758B-F2B9-4314-922F-C9FE984939CF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_post">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{692C27AB-31D6-4210-8B57-2D92ECE9CDC3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_space">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{633F138F-4D4D-4D67-859A-D69385E6304B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_space_membership">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{90AE6DEE-59C3-4913-A8A6-ED15686D9C04}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="varTotalRecord_user_follow">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Get_CSL_Tables_TotalRecords"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4A35F256-07B7-4A66-AA7D-68BCF04D82CB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Get_CSL_Tables_TotalRecords"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{09852D03-C59C-4B6C-B462-0AA86D68E2F0}"
+          SQLTask:SqlStatementSource="call prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Get()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="1"
+            SQLTask:DtsVariableName="User::varTotalRecord_contentcontainer" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="2"
+            SQLTask:DtsVariableName="User::varTotalRecord_space" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="3"
+            SQLTask:DtsVariableName="User::varTotalRecord_space_membership" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="4"
+            SQLTask:DtsVariableName="User::varTotalRecord_post" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="5"
+            SQLTask:DtsVariableName="User::varTotalRecord_user_follow" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="6"
+            SQLTask:DtsVariableName="User::varTotalRecord_comment" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="7"
+            SQLTask:DtsVariableName="User::varTotalRecord_activity" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="8"
+            SQLTask:DtsVariableName="User::varTotalRecord_content" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="9"
+            SQLTask:DtsVariableName="User::varTotalRecord_content_tag" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="10"
+            SQLTask:DtsVariableName="User::varTotalRecord_content_tag_relation" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="11"
+            SQLTask:DtsVariableName="User::varTotalRecord_forum_thread" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="12"
+            SQLTask:DtsVariableName="User::varTotalRecord_forum_thread_revision" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="13"
+            SQLTask:DtsVariableName="User::varTotalRecord_file" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Insert_MigrationReport"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ea7ba9c7-5418-47a1-8061-0b5a37b0b09c}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Insert_MigrationReport"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CA2B18E5-0AC1-438F-A865-6A16E1E1A7DC}"
+          SQLTask:SqlStatementSource="INSERT INTO mig.GenerateMigrationReport(Folder, Name, Type, TotalRecords, StartTime, EndTime, TimeTaken)&#xA;VALUES('CSL','CSL_6.2_UpdateMigrationReport','Package',NULL,GETDATE(),NULL,NULL)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Update_MigrationReport"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{824e2156-406c-42e4-a8b0-84520f250ef7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Update_MigrationReport"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CA2B18E5-0AC1-438F-A865-6A16E1E1A7DC}"
+          SQLTask:SqlStatementSource="UPDATE mig.GenerateMigrationReport &#xA;SET EndTime = GETDATE(),&#xA;        TimeTaken = DATEDIFF(SECOND, StartTime, GETDATE())&#xA;WHERE Folder = 'CSL' AND Name = 'CSL_6.2_UpdateMigrationReport' AND Type = 'Package'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_Update_MigrationReport_TotalRecords"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A512E297-690F-4244-8976-D7AFF492BC00}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_Update_MigrationReport_TotalRecords"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CA2B18E5-0AC1-438F-A865-6A16E1E1A7DC}"
+          SQLTask:SqlStatementSource="EXEC mig.prc_CSL_Generate_Migration_Report_TotalRecord_DBTable_Update &#xA;@TotalRecord_contentcontainer = ?,&#xA;@TotalRecord_space  = ?,&#xA;@TotalRecord_space_membership  = ?,&#xA;@TotalRecord_post  = ?,&#xA;@TotalRecord_user_follow  = ?,&#xA;@TotalRecord_comment  = ?,&#xA;@TotalRecord_activity  = ?,&#xA;@TotalRecord_content  = ?,&#xA;@TotalRecord_content_tag  = ?,&#xA;@TotalRecord_content_tag_relation  = ?,&#xA;@TotalRecord_forum_thread  = ?,&#xA;@TotalRecord_forum_thread_revision  = ?,&#xA;@TotalRecord_file  = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::varTotalRecord_contentcontainer"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::varTotalRecord_space"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::varTotalRecord_space_membership"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::varTotalRecord_post"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="4"
+            SQLTask:DtsVariableName="User::varTotalRecord_user_follow"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="5"
+            SQLTask:DtsVariableName="User::varTotalRecord_comment"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="6"
+            SQLTask:DtsVariableName="User::varTotalRecord_activity"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="7"
+            SQLTask:DtsVariableName="User::varTotalRecord_content"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="8"
+            SQLTask:DtsVariableName="User::varTotalRecord_content_tag"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="9"
+            SQLTask:DtsVariableName="User::varTotalRecord_content_tag_relation"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="10"
+            SQLTask:DtsVariableName="User::varTotalRecord_forum_thread"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="11"
+            SQLTask:DtsVariableName="User::varTotalRecord_forum_thread_revision"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="12"
+            SQLTask:DtsVariableName="User::varTotalRecord_file"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="20"
+            SQLTask:ParameterSize="0" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{526F0C2B-6DD9-4E67-9678-3BDBFC77E0F8}"
+      DTS:From="Package\SQL_Get_CSL_Tables_TotalRecords"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQL_Update_MigrationReport_TotalRecords" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{772F3FEC-F547-40BC-95D6-5F0B35E1E5CB}"
+      DTS:From="Package\SQL_Insert_MigrationReport"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SQL_Get_CSL_Tables_TotalRecords" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E14BFF03-797A-450D-8E1D-4DE262B0F159}"
+      DTS:From="Package\SQL_Update_MigrationReport_TotalRecords"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL_Update_MigrationReport" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="247,42"
+          Id="Package\SQL_Get_CSL_Tables_TotalRecords"
+          TopLeft="428,148" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\SQL_Insert_MigrationReport"
+          TopLeft="443,34" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\SQL_Update_MigrationReport"
+          TopLeft="437,383" />
+        <NodeLayout
+          Size="285,42"
+          Id="Package\SQL_Update_MigrationReport_TotalRecords"
+          TopLeft="403,269" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="548.5,190">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79"
+              Start="0,0"
+              End="0,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="550.25,76">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="545.75,311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

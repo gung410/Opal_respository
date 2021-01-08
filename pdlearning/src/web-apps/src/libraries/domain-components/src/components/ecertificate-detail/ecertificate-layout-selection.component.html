@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'E-Certificate Layout' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Select E-Certificate Layout' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <div *ngIf="eCertificateTemplate.eCertificateLayoutId">
+            {{ eCertificateTemplate.selectedLayout ? eCertificateTemplate.selectedLayout.name : '' }}
+          </div>
+          <span *ngIf="!eCertificateTemplate.eCertificateLayoutId">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="eCertificateTemplate.eCertificateLayouts"
+                       [valueField]="'id'"
+                       [labelField]="'name'"
+                       [ngModel]="eCertificateTemplate.eCertificateLayoutId"
+                       (ngModelChange)="onSelectECertificate($event)"
+                       formControlName="eCertificateLayoutId"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+      <div class="ecertificate-layout-selection__layout-info"
+           *ngIf="eCertificateTemplate.eCertificateLayoutId">
+        <div class="ecertificate-layout-selection__description">
+          {{ eCertificateTemplate.selectedLayout ? eCertificateTemplate.selectedLayout.description : '' }}
+        </div>
+        <img class="ecertificate-layout-selection__background"
+             [src]="'data:image/jpeg;base64, ' + base64PreviewImage | safeHtml:'resourceUrl'">
+      </div>
+    </div>
+  </div>
+</form>

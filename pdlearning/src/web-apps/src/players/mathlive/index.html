@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+  <title>MathLive Basic Example</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      color: #444;
+      background-color: #f9f9f9;
+    }
+
+    main {
+      max-width: 820px;
+      margin: auto;
+    }
+
+    .mathfield {
+      border: 1px solid #ddd;
+      padding: 5px;
+      margin: 10px 0 10px 0;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .math-notification {
+      width: 100%;
+      text-align: right;
+      font-weight: bold;
+      font-size: 0.8em;
+    }
+
+    #output {
+      display: none;
+      padding: 5px;
+      margin: 200px 0 10px 0;
+      border-radius: 5px;
+      border: 1px solid #000;
+
+      font-family: 'Source Code Pro', Menlo,
+        'Bitstream Vera Sans Mono', Monaco, Courier, 'Andale Mono',
+        monospace;
+      color: #f0c674;
+      background: #35434e;
+    }
+
+    .keyboard-toolbar {
+      width: auto !important;
+    }
+
+    .keyboard-toolbar .left {
+      max-width: 580px !important;
+    }
+
+    .keyboard-toolbar .layer-switch {
+      min-width: 60px !important;
+      border-radius: 3px !important;
+      background: white;
+      box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
+        3px 3px 5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .keyboard-toolbar .left {
+      flex-wrap: wrap !important;
+    }
+
+    .keyboard-toolbar .selected {
+      min-width: fit-content !important;
+      border-radius: 3px !important;
+      background: white;
+      box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1),
+        inset 3px 3px 5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .keyboard-toolbar svg {
+      height: 30px !important;
+      width: 45px !important;
+    }
+
+    .ML__fieldcontainer__field {
+      padding-right: 30px !important;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .keyboard-toolbar {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="mathfield"
+         id="mf"></div>
+    <div class="math-notification"><span>(Click the keyboard icon to toggle Mathematics Keyboard)</span></div>
+    <div id="output"></div>
+  </main>
+
+  <script src="./mathlive.js"></script>
+  <script src="./tex-svg.js"></script>
+  <script type="module">
+    function convertMathjaxLatex(latex) {
+        var originLatex = latex.split('\\mleft').join('');
+        originLatex = originLatex.split('\\mright?').join('');
+        originLatex = originLatex.split('\\mright').join('');
+        originLatex = originLatex.split('\\left').join('');
+        originLatex = originLatex.split('\\right?').join('');
+        originLatex = originLatex.split('\\right').join('');
+        originLatex = originLatex.split('>').join('\\gt');
+        originLatex = originLatex.split('<').join('\\lt ');
+        originLatex = originLatex.split('\\placeholder{}').join('{\\square}');
+        return originLatex;
+    };
+
+    function encodeLatex(latex) {
+      var encodedLatex = latex.split('>').join('\\gt');
+      encodedLatex = encodedLatex.split('<').join('\\lt ');
+      return encodedLatex;
+    }
+
+    const mf = MathLive.makeMathField('mf', {
+      smartMode: true,
+      virtualKeyboardMode: 'manual',
+      customVirtualKeyboardLayers: {
+                        'custom-math' /* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'fnbutton w15', latex: '\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\sqrt{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\sqrt[\\placeholder{}]{\\placeholder{}}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap tex', latex: 'x'},
+                                    { class: 'keycap tex', latex: 'n'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '1'},
+                                    { class: 'keycap', latex: '2'},
+                                    { class: 'keycap', latex: '3'},
+                                    { class: 'fnbutton', insert: '\\div'},
+
+                                ],
+                                [
+                                    { class: 'bigfnbutton w15', latex: '\\frac{Dy}{Dx}'},
+                                    { class: 'bigfnbutton w15', latex: '\\int_{0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\int'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: 'x^{\\placeholder{}}'},
+                                    { class: 'keycap', latex: 'x^{2}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '4'},
+                                    { class: 'keycap', latex: '5'},
+                                    { class: 'keycap', latex: '6'},
+                                    { class: 'keycap', latex: '\\times'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w15', latex: '\\sum_{n\\mathop=0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\prod_{n\\mathop=0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\sum'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '\\lt'},
+                                    { class: 'keycap', latex: '\\gt'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '7'},
+                                    { class: 'keycap', latex: '8'},
+                                    { class: 'keycap', latex: '9'},
+                                    { class: 'keycap', latex: '-'},
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '\\log_{\\placeholder{}}'},
+                                    { class: 'bigfnbutton w15', latex: '\\placeholder{}\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: 'e^{\\placeholder{}}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '('},
+                                    { class: 'keycap', latex: ')'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '0'},
+                                    { class: 'keycap', latex: '.'},
+                                    { class: 'keycap', latex: '='},
+                                    { class: 'keycap', latex: '+'},
+                                ]
+                            ],
+                        },
+                        'custom-lower-character' /* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: 'q'},
+                                    { class: 'keycap', latex: 'w'},
+                                    { class: 'keycap', latex: 'e'},
+                                    { class: 'keycap', latex: 'r'},
+                                    { class: 'keycap', latex: 't'},
+                                    { class: 'keycap', latex: 'y'},
+                                    { class: 'keycap', latex: 'u'},
+                                    { class: 'keycap', latex: 'i'},
+                                    { class: 'keycap', latex: 'o'},
+                                    { class: 'keycap', latex: 'p'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: 'a'},
+                                    { class: 'keycap', latex: 's'},
+                                    { class: 'keycap', latex: 'd'},
+                                    { class: 'keycap', latex: 'f'},
+                                    { class: 'keycap', latex: 'g'},
+                                    { class: 'keycap', latex: 'h'},
+                                    { class: 'keycap', latex: 'j'},
+                                    { class: 'keycap', latex: 'k'},
+                                    { class: 'keycap', latex: 'l'},
+                                ],
+                                [
+                                    { class: 'keycap w15', label: '⇧', command: ["switchKeyboardLayer","custom-upper-character"]},
+                                    { class: 'keycap', latex: 'z'},
+                                    { class: 'keycap', latex: 'x'},
+                                    { class: 'keycap', latex: 'c'},
+                                    { class: 'keycap', latex: 'v'},
+                                    { class: 'keycap', latex: 'b'},
+                                    { class: 'keycap', latex: 'n'},
+                                    { class: 'keycap', latex: 'm'},
+                                    { class: 'keycap w15', label: '⌫', command: ["performWithFeedback","deletePreviousChar"]},
+                                ],
+                                [
+                                    { class: 'keycap', latex: ';'},
+                                    { class: 'keycap', latex: ','},
+                                    { class: 'keycap w50', label: ' ', latex: '\\text{ }' },
+                                    { class: 'keycap', latex: '@'},
+                                    { class: 'keycap', latex: '!'},
+                                ]
+                            ],
+                        },
+                        'custom-upper-character' /* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: 'Q'},
+                                    { class: 'keycap', latex: 'W'},
+                                    { class: 'keycap', latex: 'E'},
+                                    { class: 'keycap', latex: 'R'},
+                                    { class: 'keycap', latex: 'T'},
+                                    { class: 'keycap', latex: 'Y'},
+                                    { class: 'keycap', latex: 'U'},
+                                    { class: 'keycap', latex: 'I'},
+                                    { class: 'keycap', latex: 'O'},
+                                    { class: 'keycap', latex: 'P'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: 'A'},
+                                    { class: 'keycap', latex: 'S'},
+                                    { class: 'keycap', latex: 'D'},
+                                    { class: 'keycap', latex: 'F'},
+                                    { class: 'keycap', latex: 'G'},
+                                    { class: 'keycap', latex: 'H'},
+                                    { class: 'keycap', latex: 'J'},
+                                    { class: 'keycap', latex: 'K'},
+                                    { class: 'keycap', latex: 'L'},
+                                ],
+                                [
+                                    { class: 'modifier keycap w15', label: '⇧', command: ["switchKeyboardLayer","custom-lower-character"]},
+                                    { class: 'keycap', latex: 'Z'},
+                                    { class: 'keycap', latex: 'X'},
+                                    { class: 'keycap', latex: 'C'},
+                                    { class: 'keycap', latex: 'V'},
+                                    { class: 'keycap', latex: 'B'},
+                                    { class: 'keycap', latex: 'N'},
+                                    { class: 'keycap', latex: 'M'},
+                                    { class: 'keycap w15', label: '⌫', command: ["performWithFeedback","deletePreviousChar"]},
+                                ],
+                                [
+                                    { class: 'keycap', latex: ';'},
+                                    { class: 'keycap', latex: ','},
+                                    { class: 'keycap w50', label: ' ', latex: '\\text{ }' }
+                                ]
+                            ],
+                        },
+                        'custom-logarith': {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'fnbutton w15', latex: '\\text{e}'},
+                                    { class: 'fnbutton w15', latex: '\\text{cosec}'},
+                                    { class: 'fnbutton w15', latex: '\\text{cosec}^{-1}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\cos '},
+                                    { class: 'fnbutton w15', latex: '\\cos^{-1}'},
+                                    { class: 'fnbutton w15', latex: '\\cos^{\\placeholder{}}'},
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: 'exp x_{n}'},
+                                    { class: 'fnbutton w15', latex: '\\text{sec}'},
+                                    { class: 'fnbutton w15', latex: '\\text{sec}^{-1}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\tan'},
+                                    { class: 'fnbutton w15', latex: '\\tan^{-1}'},
+                                    { class: 'fnbutton w15', latex: '\\tan^{\\placeholder{}}'},
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '\\log_{\\placeholder{}}x'},
+                                    { class: 'fnbutton w15', latex: '\\text{sec}^{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\text{cosec}^{\\placeholder{}}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\sin'},
+                                    { class: 'fnbutton w15', latex: '\\sin^{-1}'},
+                                    { class: 'fnbutton w15', latex: '\\sin^{\\placeholder{}}'},
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '\\lg{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\ln{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\log_{\\placeholder{}}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\cot'},
+                                    { class: 'fnbutton w15', latex: '\\cot^{-1}'},
+                                    { class: 'fnbutton w15', latex: '\\cot^{\\placeholder{}}'},
+                                ]
+                            ],
+                      },
+                        'custom-function' /* done */: {
+                            styles: '.w30 {width: 130px !important}',
+                            rows: [
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: 'f(\\placeholder{})', aside: 'f(x)'},
+                                    { class: 'bigfnbutton w30', latex: 'f'},
+                                    { class: 'bigfnbutton w30', latex: 'f:\\placeholder{} \\rightarrow \\placeholder{})', aside: 'f:A &rarr; B'},
+                                    { class: 'bigfnbutton w30', latex: '\\frac{d^{n}y}{dx^{x}}'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'}
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\lim_{x\\to\\placeholder{}}f(x)'},
+                                    { class: 'bigfnbutton w30', latex: 'f^{-1}'},
+                                    { class: 'bigfnbutton w30', latex: 'f:\\placeholder{} \\mapsto \\placeholder{})', aside: 'f:x :&rarr; y'},
+                                    { class: 'bigfnbutton w30', latex: '\\frac{dy}{dx}'},
+                                    { class: 'bigfnbutton w30', latex: '\\Delta{x}'}
+
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: 'g'},
+                                    { class: 'bigfnbutton w30', latex: 'gf'},
+                                    { class: 'bigfnbutton w30', latex: '_{0} f'},
+                                    { class: 'bigfnbutton w30', latex: '\\frac{dy}{dt}, \\frac{d^{2}y}{d^{2}t}, ...'},
+                                    { class: 'bigfnbutton w30', latex: '\\int{y dx}'}
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: `f^{\\prime}(x),f^{\\prime \\prime}(x),...,f^{n}(x)`},
+                                    { class: 'bigfnbutton w30', latex: '\\int dx'},
+                                    { class: 'bigfnbutton w30', latex: '\\int_{0}^{\\infty} dx'},
+                                    { class: 'bigfnbutton w30', latex: '\\frac{d^{2}y}{d^{2}x}'},
+                                    { class: 'bigfnbutton w30', latex: '\\int_{a}^{b}{y dx}'}
+                                ]
+                            ],
+                      },
+                        'custom-greek-function': {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'separator w10'},
+                                    { class: 'fnbutton w15', latex: 'x^{\\placeholder{}}'},
+                                    { class: 'bigfnbutton w15', latex: '\\placeholder{}\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\exponentialE^{#?}'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '1'},
+                                    { class: 'keycap', latex: '2'},
+                                    { class: 'keycap', latex: '3'},
+                                    { class: 'keycap', latex: '\\times'},
+                                ],
+                                [
+                                    { class: 'separator w10'},
+                                    { class: 'fnbutton w15', latex: '\\frac{#0}{#?}'},
+                                    { class: 'fnbutton w15', latex: '\\sqrt{#0}'},
+                                    { class: 'fnbutton w15', latex: '\\sqrt[#?]{#0}'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '4'},
+                                    { class: 'keycap', latex: '5'},
+                                    { class: 'keycap', latex: '6'},
+                                    { class: 'bigfnbutton', latex: '\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                ],
+                                [
+                                    { class: 'separator w10'},
+                                    { class: 'bigfnbutton w15', latex: '\\frac{\\differentialD #0}{\\differentialD x}'},
+                                    { class: 'bigfnbutton w15', latex: '\\int_{0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\int'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '7'},
+                                    { class: 'keycap', latex: '8'},
+                                    { class: 'keycap', latex: '9'},
+                                    { class: 'keycap', latex: '-'},
+                                ],
+                                [
+                                    { class: 'separator w10'},
+                                    { class: 'bigfnbutton w15', latex: '\\sum_{n\\mathop=0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\prod_{n\\mathop=0}^{\\infty}'},
+                                    { class: 'bigfnbutton w15', latex: '\\sum'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '0'},
+                                    { class: 'keycap', latex: '.'},
+                                    { class: 'keycap', latex: '='},
+                                    { class: 'keycap', latex: '+'},
+                                ]
+                            ],
+                      },
+                        'custom-symbols': {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: '\\vartriangle'},
+                                    { class: 'keycap', latex: '\\vartriangleleft'},
+                                    { class: 'keycap', latex: '\\vartriangleright'},
+                                    { class: 'keycap', latex: '\\blacktriangle'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\Uparrow'},
+                                    { class: 'keycap', latex: '\\uparrow'},
+                                    { class: 'keycap', latex: '\\upuparrows'},
+                                    { class: 'keycap', latex: '\\updownarrow'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\vec{\\placeholder{}}', aside: 'Vector'},
+                                    { class: 'keycap', latex: '\\hat{\\placeholder{}}', aside: 'Hat'},
+                                    { class: 'keycap', latex: '\\check{\\placeholder{}}', aside: 'Vector Check'},
+                                    { class: 'keycap', latex: '\\times'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\bigcirc'},
+                                    { class: 'keycap', latex: '\\circlearrowleft'},
+                                    { class: 'keycap', latex: '\\circ'},
+                                    { class: 'keycap', latex: '\\nabla'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\Downarrow'},
+                                    { class: 'keycap', latex: '\\downarrow'},
+                                    { class: 'keycap', latex: '\\downdownarrows'},
+                                    { class: 'keycap', latex: '\\updownarrow'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\left| \\placeholder{} \\right|', aside: 'Vector'},
+                                    { class: 'keycap', latex: '\\bar{\\placeholder{}}', side: 'Vector'},
+                                    { class: 'keycap', latex: '\\pm'},
+                                    { class: 'bigfnbutton', latex: '\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\square'},
+                                    { class: 'keycap', latex: '\\circ'},
+                                    { class: 'keycap', latex: '\\boxtimes'},
+                                    { class: 'keycap', latex: '\\blacksquare'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\Leftarrow'},
+                                    { class: 'keycap', latex: '\\leftarrow'},
+                                    { class: 'keycap', latex: '\\leftleftarrows'},
+                                    { class: 'keycap', latex: '\\Leftrightarrow'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\ast'},
+                                    { class: 'keycap', latex: '\\placeholder{}^{\\prime} '},
+                                    { class: 'keycap', latex: '\\infty'},
+                                    { class: 'keycap', latex: '\\emptyset'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\boxdot'},
+                                    { class: 'keycap', latex: '\\boxed'},
+                                    { class: 'keycap', latex: '\\Diamond'},
+                                    { class: 'keycap', latex: '\\blacklozenge'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\Rightarrow'},
+                                    { class: 'keycap', latex: '\\rightarrow'},
+                                    { class: 'keycap', latex: '\\rightrightarrows'},
+                                    { class: 'keycap', latex: '\\rightleftarrows'},
+                                    { class: 'separator w10'},
+                                    { class: 'keycap', latex: '\\ulcorner \\placeholder{} \\urcorner '},
+                                    { class: 'keycap', latex: '\\llcorner \\placeholder{} \\lrcorner '},
+                                    { class: 'keycap', latex: '\\underline{\\placeholder{}}', aside: 'Underline'},
+                                    { class: 'keycap', latex: '\\overline{\\placeholder{}}', aside: 'Overline'},
+                                ]
+                            ],
+                      },
+                        'custom-greek': {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: '\\varphi', aside: 'Phi var'},
+                                    { class: 'keycap', latex: '\\varsigma', aside: 'Sigma var'},
+                                    { class: 'keycap', latex: '\\epsilon', aside: 'Epsilon'},
+                                    { class: 'keycap', latex: '\\rho', aside: 'Rho'},
+                                    { class: 'keycap', latex: '\\upsilon', aside: 'Upsilon'},
+                                    { class: 'keycap', latex: '\\tau', aside: 'Tau'},
+                                    { class: 'keycap', latex: '\\theta', aside: 'Iheta'},
+                                    { class: 'keycap', latex: '\\iota', aside: 'Iota'},
+                                    { class: 'keycap', latex: '\\omicron', aside: 'Omicron'},
+                                    { class: 'keycap', latex: '\\pi', aside: 'Pi'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\alpha', aside: 'Alpha'},
+                                    { class: 'keycap', latex: '\\sigma', aside: 'Sigma'},
+                                    { class: 'keycap', latex: '\\gamma', aside: 'Gamma'},
+                                    { class: 'keycap', latex: '\\delta', aside: 'Delta'},
+                                    { class: 'keycap', latex: '\\phi', aside: 'Phi'},
+                                    { class: 'keycap', latex: '\\gamma', aside: 'Gamma'},
+                                    { class: 'keycap', latex: '\\eta', aside: 'Eta'},
+                                    { class: 'keycap', latex: '\\xi', aside: 'Xi'},
+                                    { class: 'keycap', latex: '\\kappa', aside: 'Kappa'},
+                                    { class: 'keycap', latex: '\\lambda', aside: 'Lambda'},
+                                ],
+                                [
+                                    { class: 'keycap w15', label: '⇧', command: ["switchKeyboardLayer","custom-greek-upper"]},
+                                    { class: 'keycap', latex: '\\zeta', aside: 'Zeta'},
+                                    { class: 'keycap', latex: '\\chi', aside: 'Chi'},
+                                    { class: 'keycap', latex: '\\psi', aside: 'Psi'},
+                                    { class: 'keycap', latex: '\\omega', aside: 'Omega'},
+                                    { class: 'keycap', latex: '\\beta', aside: 'Beta'},
+                                    { class: 'keycap', latex: '\\nu', aside: 'Nu'},
+                                    { class: 'keycap', latex: '\\mu', aside: 'Mu'},
+                                    { class: 'keycap w15', label: '⌫', command: ["performWithFeedback","deletePreviousChar"]},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\varepsilon', aside: 'Epsilon var'},
+                                    { class: 'keycap', latex: '\\vartheta', aside: 'Theta var'},
+                                    { class: 'keycap', latex: '\\varkappa', aside: 'Kappa var'},
+                                    { class: 'keycap', latex: '\\varpi', aside: 'Pi var'},
+                                    { class: 'keycap', latex: '\\varrho', aside: 'Rho var'}
+                                ]
+                            ],
+                        },
+                        'custom-greek-upper': {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: '\\Phi', aside: 'Phi'},
+                                    { class: 'keycap', latex: '\\Sigma', aside: 'Sigma'},
+                                    { class: 'keycap', latex: '\\epsilon', aside: 'Epsilon'},
+                                    { class: 'keycap', latex: 'P', aside: 'Rho'},
+                                    { class: 'keycap', latex: 'T', aside: 'Tau'},
+                                    { class: 'keycap', latex: '\\Upsilon', aside: 'Upsilon'},
+                                    { class: 'keycap', latex: '\\Theta', aside: 'Theta'},
+                                    { class: 'keycap', latex: 'I', aside: 'Iota'},
+                                    { class: 'keycap', latex: 'O', aside: 'Omicron'},
+                                    { class: 'keycap', latex: '\\Pi', aside: 'Pi'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: 'A', aside: 'Alpha'},
+                                    { class: 'keycap', latex: '\\Sigma', aside: 'Sigma'},
+                                    { class: 'keycap', latex: '\\Delta', aside: 'Delta'},
+                                    { class: 'keycap', latex: '\\Phi', aside: 'Phi'},
+                                    { class: 'keycap', latex: '\\Gamma', aside: 'Gamma'},
+                                    { class: 'keycap', latex: 'H', aside: 'Eta'},
+                                    { class: 'keycap', latex: '\\Xi', aside: 'Xi'},
+                                    { class: 'keycap', latex: 'K', aside: 'Kappa'},
+                                    { class: 'keycap', latex: '\\Lambda', aside: 'Lambda'},
+                                ],
+                                [
+                                    { class: 'modifier keycap w15', label: '⇧', command: ["switchKeyboardLayer","custom-greek"]},
+                                    { class: 'keycap', latex: 'Z', aside: 'Zeta'},
+                                    { class: 'keycap', latex: 'X', aside: 'Chi'},
+                                    { class: 'keycap', latex: '\\Psi', aside: 'Psi'},
+                                    { class: 'keycap', latex: '\\Omega', aside: 'Omega'},
+                                    { class: 'keycap', latex: 'B', aside: 'Beta'},
+                                    { class: 'keycap', latex: 'N', aside: 'Nu'},
+                                    { class: 'keycap', latex: 'M', aside: 'Mu'},
+                                    { class: 'keycap w15', label: '⌫', command: ["performWithFeedback","deletePreviousChar"]},
+                                ],
+                                [
+                                    { class: 'keycap w50', label: ' ', latex: '\\text{ }' }
+                                ]
+                            ],
+                        },
+                        'custom-equal-symbols' /* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: '='},
+                                    { class: 'keycap', latex: '\\neq'},
+                                    { class: 'keycap', latex: '\\equiv'},
+                                    { class: 'keycap', latex: '\\cong'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} + \\placeholder{}', aside: 'A+B'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} - \\placeholder{}', aside: 'A-B' },
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} X \\placeholder{}', aside: 'AxB'},
+                                    { class: 'bigfnbutton w25', latex: '\\sqrt[\\placeholder{}]{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\left| {a} \\right|'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\leqslant'},
+                                    { class: 'keycap', latex: '\\geqslant'},
+                                    { class: 'keycap', latex: '\\geq'},
+                                    { class: 'keycap', latex: '\\leq'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} : \\placeholder{}', aside: 'A:B'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} \\div \\placeholder{}', aside: 'A &#247; B'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} / \\placeholder{}', aside: 'A / B'},
+                                    { class: 'keycap w25', latex: '\\sqrt{\\placeholder{}}'},
+                                    { class: 'bigfnbutton w15', latex: '^{  n}{C}_{\\tau}'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\propto'},
+                                    { class: 'keycap', latex: '\\pm'},
+                                    { class: 'keycap', latex: '\\nleq'},
+                                    { class: 'keycap', latex: '\\ngeq'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '_{\\placeholder{}}^{  n}{C}_{\\tau}'},
+                                    { class: 'bigfnbutton w25', latex: '\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                    { class: 'keycap w25', latex: 'n!'},
+                                    { class: 'keycap w25', latex: 'a_{x}'},
+                                    { class: 'separator w15'}
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\lt'},
+                                    { class: 'keycap', latex: '\\gt'},
+                                    { class: 'keycap', latex: '\\approx'},
+                                    { class: 'keycap', latex: '\\infty'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{}\\frac{\\placeholder{}}{\\placeholder{}}'},
+                                    { class: 'bigfnbutton w25', latex: '\\sum_{i\\mathop=1}^{n}ai'},
+                                    { class: 'bigfnbutton w25', latex: 'a^{\\frac{p}{q}}'},
+                                    { class: 'keycap w25', latex: 'a^{x}'},
+                                    { class: 'separator w15'}
+                                ]
+                            ],
+                        },
+                        'custom-set-notation'/* done */: {
+                            styles: '.w25 {width: 100px !important;}',
+                            rows: [
+                                [
+                                    { class: 'keycap', latex: '\\mathbb{R}'},
+                                    { class: 'keycap', latex: '\\mathbb{R}^{+}'},
+                                    { class: 'keycap', latex: '\\mathbb{R}^{n}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '\\subset'},
+                                    { class: 'keycap', latex: '\\supset'},
+                                    { class: 'keycap', latex: '\\subseteq'},
+                                    { class: 'keycap', latex: '\\supseteq'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '\\{x_{1}, x_{2}, . . .\\}'},
+                                    { class: 'bigfnbutton w25', latex: '\\{x: . . .\\}'},
+                                    { class: 'keycap w25', latex: 'n(A)'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\mathbb{R}_{0}^{+}'},
+                                    { class: 'keycap', latex: '\\mathbb{Q}'},
+                                    { class: 'keycap', latex: '\\mathbb{Q}^{+}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '\\ni'},
+                                    { class: 'keycap', latex: '\\in'},
+                                    { class: 'keycap', latex: '\\notin'},
+                                    { class: 'keycap', latex: '\\subsetneq'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap w25', latex: '\\emptyset', aside: 'Empty set'},
+                                    { class: 'keycap w25', latex: 'A^{\\prime}'},
+                                    { class: 'keycap w25', latex: '(a, b)'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\mathbb{Q}_{0}^{+}'},
+                                    { class: 'keycap', latex: '\\mathbb{Q}^{-}'},
+                                    { class: 'keycap', latex: '\\mathbb{C}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '\\cup'},
+                                    { class: 'keycap', latex: '\\cap'},
+                                    { class: 'keycap', latex: '\\nsubseteq'},
+                                    { class: 'keycap', latex: '\\nsupseteq'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap w25', latex: '[a, b]'},
+                                    { class: 'keycap w25', latex: '[a, b)'},
+                                    { class: 'keycap w25', latex: '(a, b]'},
+                                ],
+                                [
+                                    { class: 'keycap', latex: '\\mathbb{Z}'},
+                                    { class: 'keycap', latex: '\\mathbb{Z}^{+}'},
+                                    { class: 'keycap', latex: '\\mathbb{P}'},
+                                    { class: 'separator w5'},
+                                    { class: 'keycap', latex: '\\mathbb{Z}^{-}'},
+                                    { class: 'keycap', latex: '\\mathbb{R}^{-}'},
+                                    { class: 'keycap', latex: '\\xi'},
+                                    { class: 'keycap', latex: '\\supsetneq'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '(\\placeholder{}, \\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: '(\\placeholder{}_{1}: . . .)'},
+                                    { class: 'bigfnbutton w25', latex: '(\\placeholder{}_{1}, \\placeholder{}_{2}: . . .)'},
+                                ]
+                            ],
+                        },
+                        'custom-layout': {
+                            styles: '.w40 { width:140px !important; } .w60 { width:170px !important; }',
+                            rows: [
+                                [
+                                    { class: 'bigfnbutton w15',
+                                      latex: '\\Biggm[\\frac{\\placeholder{}}{\\placeholder{}}\\frac{\\placeholder{}}{\\placeholder{}}\\Biggm]'},
+                                    { class: 'bigfnbutton w15',
+                                      latex: '\\Biggm(\\frac{\\placeholder{}}{\\placeholder{}}\\frac{\\placeholder{}}{\\placeholder{}}\\frac{\\placeholder{}}{\\placeholder{}}\\Biggm)'},
+                                    { class: 'bigfnbutton w15', latex: '\\Biggm[\\frac{\\placeholder{}}{\\placeholder{}}\\Biggm]'},
+                                    { class: 'bigfnbutton w15',
+                                      latex: '\\Biggm|\\frac{\\placeholder{}}{\\placeholder{}}\\frac{\\placeholder{}}{\\placeholder{}}\\Biggm|'},
+                                    { class: 'bigfnbutton w15', latex: '\\Biggm|\\frac{\\placeholder{}}{\\placeholder{}}\\Biggm|'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w20', latex: '\\left| \\vec{\\placeholder{}} \\right|'},
+                                    { class: 'bigfnbutton w20', latex: 'F(x) = \\placeholder{}'},
+                                    { class: 'bigfnbutton w20', latex: 'P(x) = \\placeholder{}'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w20', latex: '(\\placeholder{} + \\placeholder{})^{2} = \\placeholder{}'},
+                                    { class: 'bigfnbutton w20', latex: '(\\placeholder{}^{2} + \\placeholder{}^{2}) = \\placeholder{}'},
+                                    { class: 'bigfnbutton w20', latex: '(\\placeholder{}^{2} - \\placeholder{}^{2}) = \\placeholder{}'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w20', latex: '\\frac{\\sin\\placeholder{}}{\\cos\\placeholder{}} = \\placeholder{}'},
+                                    { class: 'bigfnbutton w40', latex: '\\sin^{2}A + \\cos^{2}A = 1'},
+                                    { class: 'bigfnbutton w60', latex: 'S^2_n=\\frac{1}{n-1}\\sum ^n_{i\\mathop=1}\\mleft(x_i-\\overline{x_{}}_2\\mright)^2'}
+                                ]
+                            ],
+                        },
+                        'custom-complex'/* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'fnbutton w15', latex: 'i'},
+                                    { class: 'fnbutton w15', latex: 'z'},
+                                    { class: 'fnbutton w15', latex: '\\text{Re} \\text{z}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\vec{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: '\\vec{A}'},
+                                    { class: 'fnbutton w15', latex: '\\vec{AB}'},
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '|Z|'},
+                                    { class: 'fnbutton w15', latex: '\\left| \\vec{AB} \\right|'},
+                                    { class: 'fnbutton w15', latex: '\\text{lm} \\text{z}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '\\hat{a}'},
+                                    { class: 'fnbutton w15', latex: '\\hat{\\placeholder{}}'},
+                                    { class: 'fnbutton w15', latex: 'a_{x}b'}
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '\\text{arg} z'},
+                                    { class: 'fnbutton w15', latex: '\\text{arg}^{*}'},
+                                    { class: 'fnbutton w15', latex: '\\text{M}'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '{a}'},
+                                    { class: 'fnbutton w15', latex: '\\measuredangle'},
+                                    { class: 'fnbutton w15', latex: '\\sphericalangle'}
+                                ],
+                                [
+                                    { class: 'fnbutton w15', latex: '\\text{M}^{-1}'},
+                                    { class: 'fnbutton w15', latex: '\\text{M}^{T}'},
+                                    { class: 'fnbutton w15', latex: '\\text{det} M'},
+                                    { class: 'separator w5'},
+                                    { class: 'fnbutton w15', latex: '{i}'},
+                                    { class: 'fnbutton w15', latex: '{j}'},
+                                    { class: 'fnbutton w15', latex: '{k}'},
+                                ]
+                            ],
+                        },
+                        'custom-propalities'/* done */: {
+                            styles: '',
+                            rows: [
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\text{A, B, C, etc}'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} \\cup \\placeholder{}'},
+                                    { class: 'bigfnbutton w25', latex: '\\text{A} \\cup \\text{B}'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: 'P(\\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: 'P(\\placeholder{} | \\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: 'f(\\placeholder{}), g(\\placeholder{}),..'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{}, \\placeholder{}, \\placeholder{}, etc'},
+                                    { class: 'bigfnbutton w25', latex: '\\placeholder{} \\cap \\placeholder{}'},
+                                    { class: 'bigfnbutton w25', latex: '\\text{A} \\cap \\text{B}'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: 'E(\\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: 'E[g(\\placeholder{})]'},
+                                    { class: 'bigfnbutton w25', latex: 'F(\\placeholder{}), G(\\placeholder{}),..'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: 'Var(\\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: 'B(\\placeholder{}, \\placeholder{})'},
+                                    { class: 'bigfnbutton w25', latex: 'Po(\\mu)'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: 'N(\\mu, \\sigma)_{2}'},
+                                    { class: 'bigfnbutton w25', latex: '\\mu'},
+                                    { class: 'bigfnbutton w25', latex: '\\sigma_{2}'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\text{M}_{-1}'},
+                                    { class: 'bigfnbutton w25', latex: '\\text{M}_{T}'},
+                                    { class: 'bigfnbutton w25', latex: '\\text{det} M'},
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w25', latex: '\\phi'},
+                                    { class: 'bigfnbutton w25', latex: '\\sigma'},
+                                    { class: 'bigfnbutton w25', latex: '\\varphi'},
+                                ]
+                            ],
+                        },
+                        'custom-calcutus'/* done */: {
+                            styles: '.w30 {width: 130px !important}',
+                            rows: [
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ]
+                            ],
+                        },
+                        'custom-exponential': {
+                            styles: '.w30 {width: 130px !important}',
+                            rows: [
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ],
+                                [
+                                    { class: 'separator w5'},
+                                    { class: 'bigfnbutton w30', latex: '\\times'},
+                                    { class: 'bigfnbutton w30', latex: '\\delta x'},
+                                ]
+                            ],
+                        },
+                        'custom-arrow'/* done */: {
+                            styles: '.w30 {width: 130px !important}',
+                            rows: [
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\to'},
+                                    { class: 'bigfnbutton w25', latex: '\\gets'},
+                                    { class: 'bigfnbutton w25', latex: '\\downarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\uparrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\longleftrightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nleftrightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nRightarrow'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\Rightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\Leftarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\Downarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\Uparrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\Longleftrightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nLeftrightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nLeftarrow'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\downdownarrows'},
+                                    { class: 'bigfnbutton w25', latex: '\\upuparrows'},
+                                    { class: 'bigfnbutton w25', latex: '\\leftleftarrows', insert: '\\overleftarrow{\\to}'},
+                                    { class: 'bigfnbutton w25', latex: '\\leftrightarrows', insert: '\\overleftarrow{\\to}'},
+                                    { class: 'bigfnbutton w25', latex: '\\rightleftarrows', insert: '\\overrightarrow{\\gets}'},
+                                    { class: 'bigfnbutton w25', latex: '\\looparrowleft'},
+                                    { class: 'bigfnbutton w25', latex: '\\nleftarrow'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\nearrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nwarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\swarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\searrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\nrightarrow'},
+                                    { class: 'bigfnbutton w25', latex: '\\looparrowright'},
+                                    { class: 'separator w25'},
+                                ]
+                            ],
+                        },
+                        'custom-geometry'/* done */: {
+                            styles: '.w30 {width: 130px !important}',
+                            rows: [
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\nparallel'},
+                                    { class: 'bigfnbutton w25', latex: '\\|'},
+                                    { class: 'bigfnbutton w25', latex: '\\perp'},
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\triangle'},
+                                    { class: 'bigfnbutton w25', latex: '\\measuredangle'},
+                                    { class: 'bigfnbutton w25', latex: '\\angle'}
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\forall'},
+                                    { class: 'bigfnbutton w25', latex: '\\llcorner'},
+                                    { class: 'bigfnbutton w25', latex: '\\lrcorner'}
+                                ],
+                                [
+                                    { class: 'bigfnbutton w25', latex: '\\sphericalangle'},
+                                    { class: 'bigfnbutton w25', latex: '{^{\\circ}}'},
+                                    { class: 'bigfnbutton w25', latex: '\\square'}
+                                ]
+                            ],
+                        },
+                      },
+      customVirtualKeyboards: {
+        'custom-numeric': {
+          classes: 'custom',
+          tooltip: 'Number',
+          layer: 'custom-math',
+          label: '123'
+        },
+        'custom-roman': {
+          tooltip: 'Character',
+          layer: 'custom-lower-character',
+          label: 'ABC',
+          layers: ['custom-lower-character', 'custom-upper-character']
+        },
+        'custom-set-nonation': {
+          tooltip: 'Set Notation',
+          layer: 'custom-set-notation',
+          label: '∈/&#8477;'
+        },
+        'custom-basic-operation': {
+          tooltip: 'Basic Operation & Miscellaneous Symbols',
+          layer: 'custom-equal-symbols',
+          label: '&#177;',
+        },
+        'custom-function': {
+          tooltip: 'Functions & Calculus',
+          layer: 'custom-function',
+          label: '&#402;(x) & ∫dx'
+        },
+        'custom-logarith': {
+          tooltip: 'Logarithm & Circular',
+          layer: 'custom-logarith',
+          label: 'lg/sin & e &#x033D;'
+        },
+        'custom-matrix-vectors': {
+          tooltip: 'Matrices & Vectors',
+          layer: 'custom-complex',
+          label: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:wrs="http://www.wiris.com/xml/cvs-extension" height="40" width="40" wrs:baseline="19"><!--MathML: <math xmlns="http://www.w3.org/1998/Math/MathML" class="wrs_chemistry"><mi mathvariant="normal">i</mi><mo>&#xA0;</mo><mo>&amp;</mo><mo>&#xA0;</mo><mover><mi>AB</mi><mo>&#x2192;</mo></mover></math>--><defs><style type="text/css">@font-face{font-family:'horizontal225a4f6397f19c438fc1d';src:url(data:font/truetype;charset=utf-8;base64,AAEAAAAMAIAAAwBAT1MvMlJxIOAAAADMAAAATmNtYXCwg0j/AAABHAAAAERjdnQgAAcAAAAAAWAAAAACZ2x5ZuwE1kUAAAFkAAAA3GhlYWQNciGiAAACQAAAADZoaGVhBusXCAAAAngAAAAkaG10eGjtB6sAAAKcAAAAEGxvY2EAAYSYAAACrAAAABRtYXhwBLEEbgAAAsAAAAAgbmFtZReja/8AAALgAAAByXBvc3QB9wD6AAAErAAAACBwcmVwu5WEAAAABMwAAAAHAAACRwGQAAUAAAQABAAAAAAABAAEAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAgICAAACOv8xEDev96AAAD6ACWAAAAAAACAAEAAQAAABQAAwABAAAAFAAEADAAAAAIAAgAAgAAI6/yAPIL//8AACOv8gDyC///3FIOAg34AAEAAAAAAAAAAAAHAAAAAQAAAVUBqwGrAAMAIxgBsAQQsAE8sAEQsALUsAIQsAU8ALAEELAB1LABELAA1DAxERUhNQGrAatWVgABAAAAqwErAlUACABBGAGwCRCwA9SwAxCwAtSwAhCwBTywCRCwBzwAsAkQsAfUsAcQsAjUsAgQsAHUsAEQsALUsAcQsAXUsAUQsATUMDETJzUNATU3IzVgYAEr/tVgYAGqQGvV1WpAVgABAIEBVgGsAawAAwAdGAGwBRCwADywABCwAdQAsAUQsADUsAAQsAPUMTABITUhAaz+1QErAVZWAAEAAAABAABFUxdzXw889QADBAD/////1a3u0f/////Vre7RAAAAAAMAAwAAAAAKAAIAAQAAAAAAAQAAA+j/agAAF3AAAP//AwAAAQAAAAAAAAAAAAAAAAAAAAQDIAAAAasAAAGrAAABqwCBAAAAAAAAAAAAAAA7AAAApAAAANwAAQAAAAQADQACAAAAAAACAIAEAAAAAAAEAABfAAAAAAAAABUBAgAAAAAAAAABAB4AAAAAAAAAAAACAA4AHgAAAAAAAAADADwALAAAAAAAAAAEAB4AaAAAAAAAAAAFABYAhgAAAAAAAAAGAA8AnAAAAAAAAAAIABwAqwABAAAAAAABAB4AAAABAAAAAAACAA4AHgABAAAAAAADADwALAABAAAAAAAEAB4AaAABAAAAAAAFABYAhgABAAAAAAAGAA8AnAABAAAAAAAIABwAqwADAAEECQABAB4AAAADAAEECQACAA4AHgADAAEECQADADwALAADAAEECQAEAB4AaAADAAEECQAFABYAhgADAAEECQAGAA8AnAADAAEECQAIABwAqwBIAG8AcgBpAHoAbwBuAHQAYQBsACAARgBvAG4AdABSAGUAZwB1AGwAYQByAE0AYQB0AGgAcwAgAEYAbwByACAATQBvAHIAZQAgAEgAbwByAGkAegBvAG4AdABhAGwAIABGAG8AbgB0AEgAbwByAGkAegBvAG4AdABhAGwAIABGAG8AbgB0AFYAZQByAHMAaQBvAG4AIAAxAC4AMEhvcml6b250YWxfRm9udABNAGEAdABoAHMAIABGAG8AcgAgAE0AbwByAGUAAAAAAwAAAAAAAAH0APoAAAAAAAAAAAAAAAAAAAAAAAAAALkH/wACjYUA)format('truetype');font-weight:normal;font-style:normal;}</style></defs><text font-family="Arial" font-size="16" text-anchor="middle" x="2.5" y="19">i</text><text font-family="Arial" font-size="16" text-anchor="middle" x="13.5" y="19">&amp;</text><text font-family="horizontal225a4f6397f19c438fc1d" font-size="12" text-anchor="middle" x="25.5" y="8">&#xF20B;</text><text font-family="horizontal225a4f6397f19c438fc1d" font-size="12" text-anchor="middle" x="29.5" y="8">&#x23AF;</text><text font-family="horizontal225a4f6397f19c438fc1d" font-size="12" text-anchor="middle" x="33.5" y="8">&#x23AF;</text><text font-family="horizontal225a4f6397f19c438fc1d" font-size="12" text-anchor="middle" x="37.5" y="8">&#x23AF;</text><text font-family="horizontal225a4f6397f19c438fc1d" font-size="12" text-anchor="middle" x="41.5" y="8">&#xF200;</text><text font-family="Arial" font-size="16" text-anchor="middle" x="33.5" y="19">AB</text></svg>`
+        },
+        'custom-probability': {
+          tooltip: 'Probability & Statistics',
+          layer: 'custom-propalities',
+          label: 'p(x)'
+        },
+        'custom-arrow': {
+          tooltip: 'Arrows',
+          layer: 'custom-arrow',
+          label: '&rarr; &#8599;'
+        },
+        'custom-greek': {
+          tooltip: 'Greek Symbols',
+          layer: 'custom-greek',
+          label: '𝜔 / &#8486;',
+          layers: ['custom-greek', 'custom-greek-upper']
+        },
+        'custom-layout': {
+          tooltip: 'Sample layout',
+          layer: 'custom-layout',
+          label: '(A/B)'
+        },
+        'custom-geometry': {
+          tooltip: 'Geometry',
+          layer: 'custom-geometry',
+          label: '&#8737;'
+        }
+      },
+      virtualKeyboards: 'custom-numeric custom-roman custom-set-nonation custom-basic-operation custom-function custom-logarith  custom-matrix-vectors custom-probability custom-greek custom-geometry custom-arrow custom-layout',
+      smartFence: false,
+      onContentDidChange: (mf) => {
+        var mathLiveLatex = mf.$text();
+        document.getElementById('output').innerHTML = mathLiveLatex;
+        const originLatex = convertMathjaxLatex(mathLiveLatex);
+        mathLiveLatex = encodeLatex(mathLiveLatex);
+
+        const mathInputFields = document.getElementsByClassName('ML__caret');
+        const textCursor = mathInputFields[0];
+        if(textCursor !== undefined) {
+          textCursor.setAttribute('tabindex', '-1');
+          textCursor.focus()
+          textCursor.removeAttribute('tabindex')
+        }
+
+        let svg = MathJax.tex2svg(originLatex, {
+                        em: 16,
+                        ex: 8,
+                        display: true,
+                        scale: 1,
+                        lineWidth: 1000000
+                      });
+
+        svg.firstElementChild.setAttribute("latexcode", mathLiveLatex);
+        window.parent.postMessage({
+                          key: 'MathliveContentChanged',
+                          content: svg.innerHTML
+                        }, '*');
+      },
+
+      onVirtualKeyboardToggle: () => {
+        window.parent.postMessage({
+                          key: 'MathliveKeyboardToggle',
+                          content: mf.virtualKeyboardVisible
+                        }, '*');
+      }
+    });
+
+    window.addEventListener('message', function(event) {
+      if (event.data.key === 'MathliveInit') {
+        mf.$latex(event.data.content);
+      }
+    });
+
+    window.addEventListener('message', function(event) {
+      if (event.data.key === 'MathliveOpen') {
+        document.querySelector(".ML__virtual-keyboard-toggle").click();
+      }
+    });
+  </script>
+</body>
+
+</html>

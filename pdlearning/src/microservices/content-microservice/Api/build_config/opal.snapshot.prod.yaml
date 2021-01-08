@@ -1,0 +1,63 @@
+---
+format_version: 3
+environments:
+  systemtest:
+    pipelines:
+      - cx-content-api-snapshot-build
+  development:
+    pipelines:
+      - cx-content-api-development
+  uat-next:
+    pipelines:
+      - cx-content-api-uat-next
+pipelines:
+  cx-content-api-snapshot-build:
+    group: cx-content-api-snapshot
+    label_template: "snapshot-2.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: src/microservices/content-microservice/Api/
+      SONAR_PROJECTKEY: cx-content-api-release
+      SONAR_SOLUTION_FILE: PlatformWorkspace.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: osd-linux-docker-build-sonar-dotnetcore
+    materials:
+      bitbuket-git:
+        branch: releases/2.0
+        git: "https://bitbucket.org/cxdev/cx-opal20-platform.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - src/microservices/content-microservice/Api/**/*.*
+  cx-content-api-development:
+    group: cx-content-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream
+  cx-content-api-uat-next:
+    group: cx-content-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-content-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-content-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG:
+      DOCKER_IMAGE_REPO: cx-content-api
+    template: ansible-deploy-fetch-upstream

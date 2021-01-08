@@ -1,0 +1,97 @@
+  <div class="form-question-answer-player__title-container">
+    <div class="form-question-answer-player__index-in-form">{{questionNumber}}.</div>
+    <div class="form-question-answer-player__question-title"
+         [innerHTML]="safeQuestionTitle"></div>
+  </div>
+  <div class="form-question-answer-player__body-container"
+       *ngIf="questions[0].questionType == questionType.SingleChoice">
+    <div class="form-question-answer-player__body-question-container">
+      <div class="form-question-answer-player__question-option-container -submitted"
+           *ngFor="let questionOption of firstQuestionOptions; let i = index;">
+        <div class="question-option">
+          <input class="k-radio"
+                 type="checkbox"
+                 disabled
+                 [checked]="questionOption.value == firstQuestionAnswer.answerValue">
+          <div class="form-question-answer-player__question-option-value"
+               *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}
+            <div class="form-question-answer-player__full-percent"
+                 *ngIf="pollStatisticsData">
+              <div class="form-question-answer-player__question-statistics">
+                <div class="form-question-answer-player__question-statistics-infor">
+                  {{questionOption.answerPercentage | number:'1.0-2'}}% - {{getVotes(questionOption.answerCount)}}
+                </div>
+                <div class="form-question-answer-player__question-statistics-percent"
+                     [style.width.%]="questionOption.answerPercentage"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-image">
+          <img class="image"
+               src="{{getMediaUrl(questionOption.imageUrl)}}"
+               *ngIf="questionOption.imageUrl">
+          <video class="video"
+                 *ngIf="questionOption.videoUrl"
+                 width="100%"
+                 height="100%"
+                 style="max-width:100%"
+                 #videoElement
+                 controls
+                 controlsList="nodownload">
+            <source [src]="getMediaUrl(questionOption.videoUrl)"
+                    controls>
+            <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                video</a> instead.</p>
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-question-answer-player__body-container"
+       *ngIf="questions[0].questionType == questionType.MultipleChoice">
+    <div class="form-question-answer-player__body-question-container">
+      <div class="form-question-answer-player__question-option-container  -submitted"
+           *ngFor="let questionOption of firstQuestionOptions; let i = index;">
+        <div class="question-option">
+          <input class="k-checkbox"
+                 type="checkbox"
+                 disabled
+                 [checked]="isSelectedValue(questionOption.value)">
+          <div class="form-question-answer-player__question-option-value"
+               *ngIf="!questionOption.isEmptyValue">{{questionOption.value}}
+            <div class="form-question-answer-player__full-percent"
+                 *ngIf="pollStatisticsData">
+              <div class="form-question-answer-player__question-statistics">
+                <div class="form-question-answer-player__question-statistics-infor">
+                  {{questionOption.answerPercentage | number:'1.0-2'}}% - {{getVotes(questionOption.answerCount)}}
+                </div>
+                <div class="form-question-answer-player__question-statistics-percent"
+                     [style.width.%]="questionOption.answerPercentage"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="option-image">
+          <img class="image"
+               src="{{getMediaUrl(questionOption.imageUrl)}}"
+               *ngIf="questionOption.imageUrl">
+          <video class="video"
+                 *ngIf="questionOption.videoUrl"
+                 width="100%"
+                 height="100%"
+                 style="max-width:100%"
+                 #videoElement
+                 controls
+                 controlsList="nodownload">
+            <source [src]="getMediaUrl(questionOption.videoUrl)"
+                    controls>
+            <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                video</a> instead.</p>
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="total-vote"
+       *ngIf="pollStatisticsData">Total votes: {{totalVotes}}</div>

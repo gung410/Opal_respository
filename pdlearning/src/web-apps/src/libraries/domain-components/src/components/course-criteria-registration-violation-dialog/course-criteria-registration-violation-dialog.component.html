@@ -1,0 +1,44 @@
+<kendo-grid class="opal-grid -no-merge -course-criteria-dialog"
+            [data]="courseCriteriaRegistrationViolationDetailItems">
+
+  <kendo-grid-column [width]="50"
+                     [title]="'Criteria'">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.criteria | translator }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="100"
+                     [title]="'Learner Profile'">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.learnerProfile }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="100"
+                     [title]="'Course Criteria'">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.courseCriteria }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="100"
+                     [title]="'Reason'">
+    <!-- Cell template of title field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.reason }}
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Close' | globalTranslator }}</button>
+  <button kendoButton
+          [primary]="true"
+          (click)="overrideCourseCriteria()">{{ 'Override' | globalTranslator }}</button>
+</div>

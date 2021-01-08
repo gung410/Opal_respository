@@ -1,0 +1,200 @@
+assignment-question-option-editor {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &.-readonly {
+    &.-correct::before {
+      top: 8px;
+    }
+
+    &.-incorrect::before {
+      top: 8px;
+    }
+  }
+
+  &.-correct::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    display: inline-block;
+    top: 19px;
+    left: -21px;
+    background: url('../assets/images/icons/completed-mark.svg') no-repeat center;
+  }
+
+  &.-incorrect::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    display: inline-block;
+    top: 19px;
+    left: -21px;
+    background: url('../assets/images/icons/incorrect-mark.svg') no-repeat center;
+  }
+
+  &.-addNewOption {
+    .assignment-question-option-editor {
+      @extend %smooth;
+
+      .k-checkbox,
+      .k-radio {
+        border-radius: 50%;
+        width: 21px;
+        height: 21px;
+        line-height: 21px;
+        background: white;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid $color-blue-light;
+        pointer-events: none;
+
+        &::after {
+          content: '+';
+          color: $color-blue-light;
+        }
+
+        &:disabled {
+          pointer-events: none;
+        }
+      }
+
+      &__value {
+        &::placeholder {
+          color: $color-blue-light;
+        }
+      }
+
+      &:hover {
+        @extend %smooth;
+
+        .k-checkbox,
+        .k-radio {
+          background: $color-blue-light;
+
+          &::after {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.assignment-question-option-editor {
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 5px;
+  position: relative;
+
+  &.-survey {
+    margin-left: -1.5em;
+  }
+
+  & + & {
+    margin-top: 5px;
+  }
+
+  &.-is-edit:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &__container-left-col {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    flex-shrink: 1;
+  }
+
+  &__container-right-col {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__remove-btn {
+    display: none;
+
+    &.-show {
+      display: inline-block;
+    }
+  }
+
+  &__value {
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-grow: 1;
+    color: $color-blue-dard;
+    font-size: $font-h6;
+    width: 90%;
+  }
+
+  &__text {
+    flex-grow: 1;
+    color: $color-blue-dard;
+    font-size: $font-h6;
+    width: 90%;
+    margin-left: 15px;
+    word-break: break-all;
+  }
+
+  &__disabled-answer {
+    border-color: rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  &__icon {
+    flex-direction: row;
+    align-items: center;
+    display: none;
+
+    &.-show {
+      display: block;
+    }
+
+    &-setup,
+    &-picture {
+      padding: 10px;
+      border-left: 1px solid $color-gainsboro;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+  }
+
+  &__remove-btn {
+    padding: 8px 10px;
+    border-left: 1px solid $color-gainsboro;
+
+    .remove-btn-icon.k-icon.k-i-minus-circle {
+      font-size: 20px;
+    }
+  }
+}
+
+.option-image {
+  max-height: 200px;
+  max-width: 98%;
+  display: flex;
+
+  .image {
+    max-height: inherit;
+    max-width: inherit;
+  }
+
+  .delete-btn {
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid;
+    margin-left: 4px;
+  }
+}

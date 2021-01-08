@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    x:Class="LearnerApp.Controls.MyClassRunRejectReasonPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="300"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <Frame
+        Margin="40,0,40,0"
+        Padding="20"
+        BackgroundColor="White"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Center">
+        <StackLayout Spacing="10">
+            <StackLayout Orientation="Horizontal">
+                <ffimagesvg:SvgCachedImage
+                    x:Name="AvatarImg"
+                    Aspect="AspectFit"
+                    ErrorPlaceholder="default_avatar.png"
+                    HeightRequest="50"
+                    WidthRequest="50" />
+                <StackLayout Spacing="0">
+                    <Label x:Name="FullNameLbl" />
+                    <Label
+                        FontSize="10"
+                        Text="Approving Officer"
+                        TextColor="#8799BA" />
+                    <Label x:Name="ChangeDateLbl" />
+                </StackLayout>
+            </StackLayout>
+
+            <BoxView
+                BackgroundColor="#D8D8D8"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand" />
+
+            <Label x:Name="ReasonLbl" />
+            <Button
+                Padding="0"
+                BackgroundColor="White"
+                BorderColor="#D8D8D8"
+                BorderWidth="1"
+                Clicked="Close_Clicked"
+                CornerRadius="4"
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="16"
+                HeightRequest="30"
+                HorizontalOptions="FillAndExpand"
+                Text="Close"
+                TextColor="{StaticResource MainBodyTextColor}" />
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

@@ -1,0 +1,14 @@
+<div class="compare-version-dialog compare-version-form-dialog">
+  <div class="dialog-header">
+    <div class="dialog-header__title">
+      {{ title | translator }}
+    </div>
+    <div class="dialog-header__actions">
+      <span class="k-icon k-i-close"
+            (click)="onCancel()"></span>
+    </div>
+  </div>
+  <div class="dialog-body">
+    <ng-content></ng-content>
+  </div>
+</div>

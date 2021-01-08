@@ -1,0 +1,98 @@
+<ng-container *ngIf="!currentLearningPath && !isSearchingWithText">
+  <button class="learning-path-list__main-btn"
+          *hasPermission="[learningPathCUDPermissionKey, !showLearningPathList]"
+          kendoButton
+          [primary]="true"
+          (click)="onCreate()">+ {{"Create New" | translator}}</button>
+  <div class="learning-path-list">
+    <learning-carousel class="section"
+                       *ngIf="!showLearningPathList"
+                       [learningCardItems]="myLearningPathsItems"
+                       [learningCardItemsTotalCount]="myLearningPathsItemsTotalCount"
+                       [title]="'My own learning paths' | translator"
+                       [emptyText]="'There’s nothing here yet!' | translator"
+                       (learningCardClick)="onLearningPathClick($event, learningPathSectionEnum.MyOwn)"
+                       (showAllClick)="onShowMyLearningClick(learningPathSectionEnum.MyOwn)"></learning-carousel>
+  </div>
+  <div class="learning-path-list">
+    <learning-carousel class="section"
+                       *ngIf="!showLearningPathList"
+                       [learningCardItems]="sharedLearningPathForMeItems"
+                       [learningCardItemsTotalCount]="sharedLearningPathForMeItemsTotalCount"
+                       [title]="'Shared learning paths for you' | translator"
+                       [emptyText]="'There’s nothing here yet!' | translator"
+                       (learningCardClick)="onLearningPathClick($event, learningPathSectionEnum.SharedToMe)"
+                       (showAllClick)="onShowMyLearningClick(learningPathSectionEnum.SharedToMe)"></learning-carousel>
+  </div>
+  <div class="learning-path-list">
+    <learning-carousel class="section"
+                       *ngIf="!showLearningPathList"
+                       [learningCardItems]="recommendLearningPathFromLMMItems"
+                       [learningCardItemsTotalCount]="recommendLearningPathFromLMMItemsTotalCount"
+                       [title]="'Recommendations for You' | translator"
+                       [emptyText]="'There’s nothing here yet!' | translator"
+                       (learningCardClick)="onLearningPathClick($event, learningPathSectionEnum.RecommendForYou)"
+                       (showAllClick)="onShowMyLearningClick(learningPathSectionEnum.RecommendForYou)"></learning-carousel>
+  </div>
+  <div>
+    <learning-card-list #learningPathsList
+                        *ngIf="showLearningPathList"
+                        [title]="learningPathListTitle | translator"
+                        [hasBackButton]="true"
+                        [showTitle]="true"
+                        [numberOfItemsOnPage]="numberOfItemsOnPage"
+                        [getPagedLearningItemsCallback]="getPagedLearningPathCallback.bind(this)"
+                        (backButtonClick)="onLearningPathsBackClick($event)"
+                        (learningCardClick)="onLearningPathClick($event)">
+      <!-- Right content for toolbar -->
+      <div class="learner-toolbar-extension"
+           *hasPermission="[learningPathCUDPermissionKey, learningPathOwnerSection]">
+        <button class="learning-path-list__main-btn"
+                kendoButton
+                [primary]="true"
+                (click)="onCreate()">+ {{"Create New" | translator}}</button>
+      </div>
+      <!-- Right content for toolbar -->
+    </learning-card-list>
+  </div>
+</ng-container>
+<div class="learning-path-detail"
+     *ngIf="currentLearningPath">
+  <learning-card-list #learningPathItemsList
+                      [title]="currentLearningPath.title"
+                      [toolbarCustomClass]="'--no-spacing'"
+                      [hasBackButton]="true"
+                      [showTitle]="true"
+                      [showLongCard]="true"
+                      [detailUrl]="detailUrl"
+                      [isBookmark]="currentLearningPath.isBookmark"
+                      [showCopyPermalink]="showCopyPermalink"
+                      [numberOfItemsOnPage]="numberOfItemsOnPage"
+                      [getPagedLearningItemsCallback]="getPagedLearningPathItemsCallback.bind(this)"
+                      (backButtonClick)="onLearningPathItemsBackClick($event)"
+                      (learningCardClick)="onLearningPathDetailItemClick($event)"
+                      (iconPermalinkClick)="iconPermalinkClick($event)"
+                      (iconBookmarkClick)="iconBookmarkClick()">
+    <!-- Right content for toolbar -->
+    <div class="learner-toolbar-extension"
+         *hasPermission="[learningPathCUDPermissionKey, learningPathOwnerSection && currentLearningPath.courses?.length]">
+      <!-- TODO: to be updating -->
+      <!-- <div class="learner-toolbar-extension__text">Sharing with 5 users</div>
+    <button kendoButton
+            [primary]="true">
+      {{ 'Share' | globalTranslator }}
+    </button> -->
+      <button kendoButton
+              [disabled]="false"
+              (click)="onEdit()">{{"Edit" | translator}}</button>
+    </div>
+    <!-- Right content for toolbar -->
+  </learning-card-list>
+</div>
+<learner-search-filter-result *ngIf="isSearchingWithText && !currentLearningPath"
+                              [placeholderText]="'Search course' | translator"
+                              [searchText]="searchingText"
+                              [filterByType]="filterByType"
+                              [getPagedSearchFilterCallBack]="getPagedSearchFilterCallBack.bind(this)"
+                              (learningCardClick)="onLearningPathClick($event)">
+</learner-search-filter-result>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<CollectionView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+             x:Class="LearnerApp.Controls.LearnerCustomCollectionView.LearnerCustomCollectionView"
+             ItemsSource="{Binding Source={x:Reference This}, Path=FinalItemsSource}"
+             x:Name="This"
+             Footer="{Binding .}"
+             FooterTemplate="{Binding Source={x:Reference This}, Path=LoadMoreViewTemplateSelector}">
+</CollectionView>

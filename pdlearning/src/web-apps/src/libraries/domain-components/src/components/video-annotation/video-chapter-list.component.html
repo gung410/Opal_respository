@@ -1,0 +1,27 @@
+<div class="video-chapter-list">
+  <label class="video-annotation__title">{{"annotation" | globalTranslator | uppercase}}</label>
+  <label class="video-annotation__sub-title">{{"Lecture name" | globalTranslator}}</label>
+  <div class="video-chapter-list__lecture-name"
+       *ngIf="contentOwner">{{ contentOwner.fullName }}</div>
+  <label class="video-annotation__sub-title">{{"List of chapters" | globalTranslator}}</label>
+  <div class="video-chapter-list__items"
+       #chapterList>
+    <ng-container *ngIf="chapters.length; else emptyChapters">
+      <ng-container *ngFor="let chapter of chapters; let i = index">
+        <video-chapter-list-item [chapters]="chapters"
+                                 [chapter]="chapter"
+                                 [index]="i"
+                                 [isSelected]="chapter === currentChapter"
+                                 (chapterClicked)="onChapterClicked($event)"></video-chapter-list-item>
+      </ng-container>
+    </ng-container>
+    <ng-template #emptyChapters="">
+      <div class="video-chapter-list__empty-chapter">{{"There are no new chapters" | globalTranslator}}</div>
+    </ng-template>
+  </div>
+  <button class="video-chapter-list__add-btn"
+          *ngIf="isManagementMode"
+          kendoButton
+          [primary]="true"
+          (click)="onAddChapterClicked()">{{"Add chapter" | globalTranslator}}</button>
+</div>

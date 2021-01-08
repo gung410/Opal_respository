@@ -1,0 +1,23 @@
+<div class="learner-toolbar ">
+  <div class="learner-toolbar__left">
+    <div class="learner-toolbar__navigation ng-star-inserted">
+      <button class="back-button k-button k-flat k-button-icontext"
+              kendoButton
+              (click)="onBackClicked()">
+        <span class="k-icon k-i-arrow-chevron-left ng-star-inserted"></span>
+        {{'Back ' | translator }}</button>
+    </div>
+    <div class="learner-toolbar__heading ng-star-inserted">
+      <div>
+        <div class="learner-toolbar__title ng-star-inserted"> {{'Shared by other users' | translator }}
+        </div>
+        <small class="ng-star-inserted"> {{totalCount}} {{'Item(s) Found' | translator }} </small>
+      </div>
+    </div>
+  </div>
+  <div class="learner-toolbar__right"></div>
+</div>
+<learning-shared-list [sharedItems]="sharedItems"
+                      [sharedMetadata]="sharedMetadata"
+                      [totalCount]="totalCount"
+                      (sharedClick)="onSharedClicked($event)"></learning-shared-list>

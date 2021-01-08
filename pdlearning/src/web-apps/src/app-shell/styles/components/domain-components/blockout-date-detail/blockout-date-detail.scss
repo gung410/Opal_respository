@@ -1,0 +1,29 @@
+blockout-date-detail {
+  display: flex;
+  flex-grow: 1;
+  background: white;
+  margin: 24px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #eee;
+
+  .blockout-date-detail {
+    &__form-container {
+      display: flex;
+      flex-direction: row;
+      padding: 0px;
+    }
+
+    &__wrapper {
+      width: 450px;
+    }
+
+    &__from-date {
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    &__to-date {
+      width: 200px;
+    }
+  }
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.MyProfileView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    Title="My Profile"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="#E5E5E5">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Padding" Value="36,0,20,0" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="HeightRequest" Value="56" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="LabelButton" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="#313552" />
+            </Style>
+
+            <Style x:Key="ImageButton" TargetType="ffimagesvg:SvgCachedImage">
+                <Setter Property="HeightRequest" Value="12" />
+                <Setter Property="WidthRequest" Value="12" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="Source" Value="arrow_right.svg" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout BackgroundColor="#F9F9F9">
+        <StackLayout
+            x:Name="ProfileStack"
+            Margin="0,30,0,30"
+            Padding="36,0,0,0"
+            Orientation="Horizontal">
+            <Frame
+                Padding="0"
+                CornerRadius="40"
+                HasShadow="False"
+                IsClippedToBounds="True"
+                VerticalOptions="CenterAndExpand">
+                <ffimageloading:CachedImage
+                    Aspect="AspectFill"
+                    HeightRequest="80"
+                    Source="{Binding Avatar}"
+                    WidthRequest="80" />
+            </Frame>
+            <StackLayout VerticalOptions="CenterAndExpand">
+                <Label
+                    FontAttributes="None"
+                    FontSize="24"
+                    Text="{Binding UserInfo.Name}"
+                    TextColor="{StaticResource MainBodyTextColor}" />
+                <Label FontSize="16" Text="{Binding UserInfo.Email}" />
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout x:Name="ButtonsStack">
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <Label Style="{StaticResource LabelButton}" Text="Profile" />
+                <ffimagesvg:SvgCachedImage Style="{StaticResource ImageButton}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickEditProfileCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <Label Style="{StaticResource LabelButton}" Text="Terms of Use" />
+                <ffimagesvg:SvgCachedImage Style="{StaticResource ImageButton}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickTermOfUseCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <Label Style="{StaticResource LabelButton}" Text="Privacy Statement" />
+                <ffimagesvg:SvgCachedImage Style="{StaticResource ImageButton}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickPrivacyPolicyCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <Label Style="{StaticResource LabelButton}" Text="Report Vulnerability" />
+                <ffimagesvg:SvgCachedImage Style="{StaticResource ImageButton}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickReportVulnerabilityCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <Label Style="{StaticResource LabelButton}" Text="Change Password" />
+                <ffimagesvg:SvgCachedImage Style="{StaticResource ImageButton}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickChangePasswordCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Padding="27" VerticalOptions="EndAndExpand">
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding Version}"
+                TextColor="#8799BA" />
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="{Binding CopyrightText}"
+                TextColor="#8799BA" />
+        </StackLayout>
+    </StackLayout>
+</common:BaseLearnerContentPage>

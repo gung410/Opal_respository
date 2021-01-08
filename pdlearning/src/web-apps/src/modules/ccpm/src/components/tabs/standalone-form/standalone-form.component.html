@@ -1,0 +1,67 @@
+<div class="standalone-form tab-content-inner">
+  <div class="tab-content-inner__header">
+    <div class="standalone-form__header-control">
+      <div class="standalone-form__deep-link"
+           [hidden]="!formData?.isStandalone && !isFromLNASurveys">
+        <label for="">{{ 'URL' | translator }}</label>
+        <div class="standalone-form__link-input">
+          <input type="text"
+                 [value]="standaloneFormUrl">
+        </div>
+        <button kendoButton
+                [primary]="true"
+                (click)="copyStandaloneFormUrl()">
+          {{ 'Copy URL' | translator }}
+        </button>
+      </div>
+      <div class="standalone-form__state-control"
+           [hidden]="!formData?.isStandalone || isFromLNASurveys">
+        <label for="">{{ 'Publish to catalogue' | translator }}</label>
+        <kendo-switch class="standalone-form__toggle-button"
+                      [(ngModel)]="formData.publishToCatalogue"
+                      [disabled]="!canEditQuestion"
+                      [onLabel]="' '"
+                      [offLabel]="' '"
+                      (valueChange)="onIsStandaloneChange($event)"></kendo-switch>
+      </div>
+      <div class="standalone-form__state-control"
+           [hidden]="!formData?.isStandalone || isFromLNASurveys">
+        <label for="">{{ 'Access mode' | translator }}</label>
+        <kendo-switch class="standalone-form__toggle-button access-mode-switch"
+                      [checked]="isPublicMode"
+                      [disabled]="!canEditQuestion || !isSystemAdmin"
+                      [onLabel]="'Public'"
+                      [offLabel]="'Restrict'"
+                      (valueChange)="onStandaloneModeChange($event)"></kendo-switch>
+      </div>
+      <div class="standalone-form__state-control"
+           [hidden]="isFromLNASurveys">
+        <label for="">{{ 'Enable standalone' | translator }}</label>
+        <kendo-switch class="standalone-form__toggle-button"
+                      [(ngModel)]="formData.isStandalone"
+                      [disabled]="!canEditQuestion"
+                      [onLabel]="' '"
+                      [offLabel]="' '"
+                      (valueChange)="onIsStandaloneChange($event)"></kendo-switch>
+      </div>
+    </div>
+    <div class="standalone-form__header-control --left"
+         *ngIf="formData?.isStandalone || isFromLNASurveys">
+      <action-bar [buttons]="groupButtons"
+                  [selectedItems]="getCheckedItemsForMassAction()"></action-bar>
+      <button kendoButton
+              [primary]="true"
+              [disabled]="!canEditQuestion"
+              (click)="openAddParticipantDialog()">
+        {{ 'Add Participant' | translator }}
+      </button>
+    </div>
+  </div>
+</div>
+<!--In some cases reg. the life cycle of the components,
+  originalObjectId would be undifined due to latency, so that to make sure, we should have a check for it-->
+<list-participant-grid #listParticipant
+                       *ngIf="(formData?.isStandalone || isFromLNASurveys) && originalObjectId"
+                       [formOriginalObjectId]="originalObjectId"
+                       [(selectedItems)]="checkedParticipants"
+                       (viewParticipant)="showFormAnswerReview($event)"></list-participant-grid>

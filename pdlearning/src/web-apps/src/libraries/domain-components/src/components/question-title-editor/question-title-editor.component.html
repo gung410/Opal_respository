@@ -1,0 +1,11 @@
+<div class="question-title-editor">
+  <span class="placeholder"
+        *ngIf="isEditable && !html"
+        (click)="open()">{{placeholder}}</span>
+  <span class="edit-icon k-icon k-i-pencil"
+        *ngIf="isEditable"
+        (click)="open()"></span>
+  <div externalLinkGuard
+       *ngIf="html"
+       [innerHTML]="preview"></div>
+</div>

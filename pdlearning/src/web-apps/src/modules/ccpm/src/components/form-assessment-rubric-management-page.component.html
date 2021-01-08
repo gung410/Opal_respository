@@ -1,0 +1,67 @@
+<div class="form-assessment-rubric-management-page">
+  <div class="form-assessment-rubric-management-page__title">{{ assessmentTitle }}</div>
+
+  <div *ngIf="type === 'Holistic'">
+    <!-- Holistic Editor -->
+    <div class="form-assessment-rubric-management-page__contaiter">
+      <form-assessment-rubric-editor [type]="'Scale'"
+                                     [readOnly]="isViewMode"
+                                     [assessmentData]="editableAssessmentData"
+                                     (dataChange)="onAssessmentDataChange($event)"
+                                     (onDelete)="onDeleteAssessmentData($event)"
+                                     (onMoveUp)="onMoveAssessmentDataClicked($event, 'UP')"
+                                     (onMoveDown)="onMoveAssessmentDataClicked($event, 'DOWN')"
+                                     (onDragAndDrop)="onDragAndDropAssessmentData($event)"></form-assessment-rubric-editor>
+      <form-assessment-adder *ngIf="!isViewMode"
+                             [title]="'Add New'"
+                             [disabled]="disabledAddAssessment"
+                             (onAddNewClick)="addNewHolistic()"></form-assessment-adder>
+    </div>
+  </div>
+
+  <div *ngIf="type === 'Analytic'">
+    <!-- Analytic Scale Editor -->
+    <div class="form-assessment-rubric-management-page__contaiter">
+      <form-assessment-rubric-editor [type]="'Scale'"
+                                     [readOnly]="isViewMode"
+                                     [assessmentData]="editableAssessmentData"
+                                     [canShowPercentage]="false"
+                                     [canShowDescription]="false"
+                                     (dataChange)="onAssessmentDataChange($event)"
+                                     (onDelete)="onDeleteAssessmentData($event, true)"
+                                     (onMoveUp)="onMoveAssessmentDataClicked($event, 'UP')"
+                                     (onMoveDown)="onMoveAssessmentDataClicked($event, 'DOWN')"
+                                     (onDragAndDrop)="onDragAndDropAssessmentData($event)"></form-assessment-rubric-editor>
+      <form-assessment-adder *ngIf="!isViewMode"
+                             [title]="'Add New Scale'"
+                             [disabled]="disabledAddAssessment"
+                             (onAddNewClick)="addNewAnalytic('Scale')"></form-assessment-adder>
+    </div>
+
+    <!-- Analytic Criteria Editor -->
+    <div class="form-assessment-rubric-management-page__contaiter">
+      <form-assessment-rubric-editor [type]="'Criteria'"
+                                     [readOnly]="isViewMode"
+                                     [assessmentData]="editableAssessmentData"
+                                     [canShowDescription]="false"
+                                     (dataChange)="onAssessmentDataChange($event)"
+                                     (onDelete)="onDeleteAssessmentData($event)"
+                                     (onMoveUp)="onMoveAssessmentDataClicked($event, 'UP')"
+                                     (onMoveDown)="onMoveAssessmentDataClicked($event, 'DOWN')"
+                                     (onDragAndDrop)="onDragAndDropAssessmentData($event)"></form-assessment-rubric-editor>
+      <form-assessment-adder *ngIf="!isViewMode"
+                             [title]="'Add New Criteria'"
+                             [disabled]="disabledAddAssessment"
+                             (onAddNewClick)="addNewAnalytic('Criteria')"></form-assessment-adder>
+    </div>
+
+    <!-- Scale Criteria Cell Value Editor -->
+    <div class="form-assessment-rubric-management-page__contaiter">
+      <form-assessment-rubric-editor [type]="'Rubric'"
+                                     [readOnly]="isViewMode"
+                                     [assessmentData]="editableAssessmentData"
+                                     [canShowDescription]="false"
+                                     (dataChange)="onAssessmentDataChange($event)"></form-assessment-rubric-editor>
+    </div>
+  </div>
+</div>

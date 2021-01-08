@@ -1,0 +1,27 @@
+data-check-indicator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.data-check-indicator {
+  &__content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__has-data-indicator {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-self: flex-start;
+    background-color: $red-active;
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+}

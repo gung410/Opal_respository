@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Home.Newsfeed.CommunityPostFeedItem"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:svgImage="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+	<ContentView.Content>
+		<Frame
+			Margin="1"
+			Padding="10"
+			android:VisualElement.Elevation="5"
+			ios:VisualElement.IsShadowEnabled="true"
+			ios:VisualElement.ShadowColor="Black"
+			ios:VisualElement.ShadowOpacity="0.3"
+			ios:VisualElement.ShadowRadius="2.5"
+			BackgroundColor="White"
+			BorderColor="LightGray"
+			CornerRadius="6"
+			HasShadow="False">
+			<ios:VisualElement.ShadowOffset>
+				<Size>
+					<x:Arguments>
+						<x:Double>0</x:Double>
+						<x:Double>1.5</x:Double>
+					</x:Arguments>
+				</Size>
+			</ios:VisualElement.ShadowOffset>
+			<StackLayout>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="40" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="10" />
+						<ColumnDefinition Width="40" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<!--  SEND BY INFO  -->
+					<Frame
+						Grid.Row="0"
+						Grid.Column="0"
+						Padding="0"
+						BorderColor="LightGray"
+						CornerRadius="20"
+						HasShadow="false"
+						HeightRequest="40"
+						IsClippedToBounds="True"
+						WidthRequest="40">
+						<ffimageloading:CachedImage
+							Aspect="AspectFill"
+							DownsampleToViewSize="true"
+							ErrorPlaceholder="image_place_holder_h60.png"
+							HeightRequest="40"
+							HorizontalOptions="Center"
+							Source="{Binding PostedByInfo.AvatarUrl, Converter={StaticResource AvatarUrlConverter}}"
+							VerticalOptions="Center"
+							WidthRequest="40" />
+					</Frame>
+
+					<StackLayout
+						Grid.Row="0"
+						Grid.Column="1"
+						Spacing="0"
+						VerticalOptions="CenterAndExpand">
+						<Label
+							FontSize="11"
+							LineBreakMode="TailTruncation"
+							MaxLines="1"
+							Text="{Binding PostedByInfo.FullName}"
+							TextColor="{StaticResource MainBodyTextColor}" />
+						<Label
+							FontSize="10"
+							LineBreakMode="TailTruncation"
+							MaxLines="1"
+							Text="{Binding ChangedDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+							TextColor="{StaticResource MainBodyTextColor}" />
+					</StackLayout>
+
+					<svgImage:SvgCachedImage
+						Grid.Row="0"
+						Grid.Column="2"
+						HeightRequest="7"
+						HorizontalOptions="Center"
+						Source="arrow.svg"
+						VerticalOptions="CenterAndExpand"
+						WidthRequest="5" />
+
+					<!--  COMMUNITY INFO  -->
+					<Frame
+						Grid.Row="0"
+						Grid.Column="3"
+						Padding="5"
+						BorderColor="{StaticResource EntryLineColor}"
+						CornerRadius="20"
+						HasShadow="False"
+						HeightRequest="40"
+						IsClippedToBounds="True"
+						WidthRequest="40">
+						<svgImage:SvgCachedImage
+							DownsampleToViewSize="True"
+							HeightRequest="25"
+							HorizontalOptions="CenterAndExpand"
+							Source="community.svg"
+							VerticalOptions="CenterAndExpand"
+							WidthRequest="25" />
+					</Frame>
+
+					<StackLayout
+						Grid.Row="0"
+						Grid.Column="4"
+						Spacing="0"
+						VerticalOptions="CenterAndExpand">
+						<Label
+							FontSize="11"
+							LineBreakMode="TailTruncation"
+							MaxLines="1"
+							Text="{Binding CommunityName}"
+							TextColor="{StaticResource MainBodyTextColor}" />
+						<Label
+							FontSize="10"
+							IsVisible="{Binding Description, Converter={StaticResource StringEmptyConverter}}"
+							LineBreakMode="TailTruncation"
+							MaxLines="1"
+							Text="{Binding Description}"
+							TextColor="{StaticResource MainBodyTextColor}" />
+					</StackLayout>
+				</Grid>
+				<StackLayout>
+					<ffimageloading:CachedImage
+						Aspect="AspectFill"
+						ErrorPlaceholder="image_place_holder_h150.png"
+						HeightRequest="80"
+						HorizontalOptions="CenterAndExpand"
+						IsVisible="{Binding PostContentImageUrl, Converter={StaticResource StringEmptyConverter}}"
+						Source="{Binding PostContentImageUrl}"
+						WidthRequest="180" />
+
+					<Label
+						FontSize="13"
+						HorizontalOptions="StartAndExpand"
+						IsVisible="{Binding PostContent, Converter={StaticResource StringEmptyConverter}}"
+						LineBreakMode="TailTruncation"
+						MaxLines="2"
+						Text="{Binding PostContent}"
+						TextColor="{StaticResource MainBodyTextColor}"
+						TextType="Html"
+						VerticalOptions="CenterAndExpand" />
+				</StackLayout>
+			</StackLayout>
+			<Frame.GestureRecognizers>
+				<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+			</Frame.GestureRecognizers>
+		</Frame>
+	</ContentView.Content>
+</ContentView>

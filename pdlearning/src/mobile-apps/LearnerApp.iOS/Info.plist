@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>UIDeviceFamily</key>
+        <array>
+            <integer>1</integer>
+            <integer>2</integer>
+        </array>
+        <key>UIAppFonts</key>
+        <array>
+            <string>Fonts/telerikfont.ttf</string>
+            <string>FontAwesome5Brands.otf</string>
+            <string>FontAwesome5Regular.otf</string>
+            <string>FontAwesome5Solid.otf</string>
+        </array>
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+            <string>UIInterfaceOrientationPortraitUpsideDown</string>
+            <string>UIInterfaceOrientationLandscapeLeft</string>
+            <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>NSCameraUsageDescription</key>
+        <string>The OPAL2.0 app would like to use your camera to let you add a picture to your profile photo.</string>
+        <!-- for iOS 11 -->
+        <key>NSPhotoLibraryAddUsageDescription </key>
+        <string>The OPAL2.0 app would like save to photo.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>The OPAL2.0 app would like access to your photo gallery to upload your profile photo.</string>
+        <key>NSCalendarsUsageDescription</key>
+        <string>This app needs access to the calendar to schedule learning related timeline.</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>This app needs access to the location to track the learner&apos;s activities.</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>This app needs access to the location to track the learner&apos;s activities.</string>
+        <key>MinimumOSVersion</key>
+        <string>11.0</string>
+        <key>CFBundleDisplayName</key>
+        <string>OPAL2.0</string>
+        <key>CFBundleIdentifier</key>
+        <string>com.opal2.moe.edu.sg.development</string>
+        <key>CFBundleVersion</key>
+        <string>1.0</string>
+        <key>CFBundleShortVersionString</key>
+        <string>1.0.0</string>
+        <key>CFBundleName</key>
+        <string>LearnerApp</string>
+        <key>UIUserInterfaceStyle</key>
+        <string>Light</string>
+        <key>XSAppIconAssets</key>
+        <string>Assets.xcassets/AppIcon.appiconset</string>
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLName</key>
+                <string>moe opal</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>com.opal2.moe.edu.sg.development</string>
+                </array>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+            </dict>
+        </array>
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        <key>UIStatusBarStyle</key>
+        <string>UIStatusBarStyleLightContent</string>
+        <key>UIViewControllerBasedStatusBarAppearance</key>
+        <false/>
+        <key>FirebaseAppDelegateProxyEnabled</key>
+        <false/>
+        <key>LSSupportsOpeningDocumentsInPlace</key>
+        <true/>
+        <key>UIFileSharingEnabled</key>
+        <true/>
+    </dict>
+</plist>

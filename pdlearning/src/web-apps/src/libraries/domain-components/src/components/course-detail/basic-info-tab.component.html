@@ -1,0 +1,247 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Overview Information' | translator }}</label>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Thumbnail' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('thumbnailUrl', asViewMode())">
+        <ng-template editableViewMode="">
+          <opal-file-uploader class="basic-info-tab__thumbnail-uploader"
+                              *ngIf="course.thumbnailUrl"
+                              [(ngModel)]="course.thumbnailUrl"
+                              [settings]="fileUploaderSetting"
+                              [uploadFolder]="'course-thumbnails'"
+                              formControlName="thumbnailUrl"
+                              [readOnly]="true"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+          <span *ngIf="!course.thumbnailUrl">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-file-uploader class="basic-info-tab__thumbnail-uploader"
+                              [(ngModel)]="course.thumbnailUrl"
+                              [settings]="fileUploaderSetting"
+                              [showBtnDelete]="true"
+                              [uploadFolder]="'course-thumbnails'"
+                              formControlName="thumbnailUrl"
+                              kendoErrorTooltip
+                              position="top"></opal-file-uploader>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Title' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('courseName', asViewMode() || mode === CourseDetailMode.Recurring)">
+        <ng-template editableViewMode="">{{ course.courseName || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="course.courseName"
+                 formControlName="courseName"
+                 kendoErrorTooltip
+                 position="top"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Type of PD Opportunity' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('pdActivityType', asViewMode() || mode === CourseDetailMode.Recurring)">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.pdActivityType">
+            {{ course.metadataTagsDic[course.pdActivityType] ? course.metadataTagsDic[course.pdActivityType].displayText : '' }}
+          </div>
+          <span *ngIf="!course.pdActivityType">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.pdTypeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="course.pdActivityType"
+                       formControlName="pdActivityType"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-section -required"
+         [hidden]="isPlanningVerificationRequired()">
+      <label class="form-section-title"
+             for="ch2">{{ 'Duration' | translator }}</label>
+      <div class="form-section-group">
+        <div class="form-controls-group"
+             [hidden]="course.isMicrolearning">
+          <label for="ch2">{{ 'Duration (Hours):' | translator }}</label>
+          <editable [modeView]="course.isViewOnlyForField('durationHours', asViewMode())">
+            <ng-template editableViewMode="">{{ course.durationHours != null ? course.durationHours : '- N/A' }}</ng-template>
+            <ng-template editableEditMode="">
+              <kendo-numerictextbox class="form-control"
+                                    type="number"
+                                    [min]="0"
+                                    [max]="maxInt"
+                                    [decimals]="0"
+                                    [format]="'n0'"
+                                    autoCorrect="true"
+                                    [(ngModel)]="course.durationHours"
+                                    formControlName="durationHours"
+                                    kendoErrorTooltip
+                                    position="top"></kendo-numerictextbox>
+            </ng-template>
+          </editable>
+        </div>
+        <div class="form-controls-group">
+          <label for="ch2">{{ 'Duration (Minutes):' | translator }}</label>
+          <editable [modeView]="course.isViewOnlyForField('durationMinutes', asViewMode())">
+            <ng-template editableViewMode="">{{ course.durationMinutes != null ?  course.durationMinutes : '- N/A' }}
+            </ng-template>
+            <ng-template editableEditMode="">
+              <kendo-numerictextbox class="form-control"
+                                    type="number"
+                                    [min]="0"
+                                    [max]="!isPlanningVerificationRequired() && !course.isMicrolearning ? 59 : maxInt"
+                                    [decimals]="0"
+                                    [format]="'n0'"
+                                    autoCorrect="true"
+                                    [(ngModel)]="course.durationMinutes"
+                                    formControlName="durationMinutes"
+                                    kendoErrorTooltip
+                                    position="top"></kendo-numerictextbox>
+            </ng-template>
+          </editable>
+        </div>
+      </div>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Category' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('categoryIds', asViewMode())">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let categoryId of course.categoryIds">
+            <div class="metadata-tag-text"
+                 *ngIf="categoryId">
+              {{ course.metadataTagsDic[categoryId] ? course.metadataTagsDic[categoryId].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="course.categoryIds.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.categorySelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="course.categoryIds"
+                       [multiple]="true"
+                       formControlName="categoryIds"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="!isPlanningVerificationRequired() && course.canViewFundingAndSubsidy()">
+      <label for="ch2">{{ 'Funding and Subsidy' | translator }}</label>
+      <funding-and-subsidy></funding-and-subsidy>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Mode of Learning' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('learningMode', asViewMode()) || mode === CourseDetailMode.Recurring">
+        <ng-template editableViewMode="">
+          <div class="metadata-tag-text"
+               *ngIf="course.learningMode">
+            {{ course.metadataTagsDic[course.learningMode] ? course.metadataTagsDic[course.learningMode].displayText : '' }}
+          </div>
+          <span *ngIf="!course.learningMode">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="course.modeOfLearningSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [minDropdownHeight]="100"
+                       [(ngModel)]="course.learningMode"
+                       [readOnly]="course.isMicrolearning"
+                       formControlName="learningMode"
+                       kendoErrorTooltip
+                       position="top">
+          </opal-select>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         *ngIf="!isPlanningVerificationRequired() || mode !== CourseDetailMode.NewCourse">
+      <label for="ch2">{{ 'Course Code' | translator }}</label>
+      {{ course.courseCode || '- N/A' }}
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="course.isMicrolearning">
+      <label for="ch2">{{ 'Traisi Course Code (Where applicable)' | translator }}</label>
+      <editable [modeView]="course.isViewOnlyForField('externalCode', asViewMode())">
+        <ng-template editableViewMode=""> {{ course.externalCode || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="course.externalCode"
+                 formControlName="externalCode"
+                 kendoErrorTooltip
+                 position="top">
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group"
+         [hidden]="isPlanningVerificationRequired()">
+      <label>
+        {{ 'Course Outline & Structure' | translator }}
+      </label>
+      <editable [modeView]="course.isViewOnlyForField('courseOutlineStructure', asViewMode())">
+        <ng-template editableViewMode="">{{ course.courseOutlineStructure || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    formControlName="courseOutlineStructure"
+                    [(ngModel)]="course.courseOutlineStructure"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"
+                    kendoErrorTooltip
+                    position="top"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label>
+        {{ 'Objective/ Outcome of PD Opportunity' | translator }}
+      </label>
+      <editable [modeView]="course.isViewOnlyForField('courseObjective', asViewMode())">
+        <ng-template editableViewMode="">{{ course.courseObjective || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    formControlName="courseObjective"
+                    [(ngModel)]="course.courseObjective"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"
+                    kendoErrorTooltip
+                    position="top"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required"
+         [hidden]="isPlanningVerificationRequired()">
+      <label>
+        {{ 'Course Synopsis/ Description' | translator }}
+      </label>
+      <editable [modeView]="course.isViewOnlyForField('description', asViewMode())">
+        <ng-template editableViewMode="">{{ course.description || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    formControlName="description"
+                    [(ngModel)]="course.description"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"
+                    kendoErrorTooltip
+                    position="top"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

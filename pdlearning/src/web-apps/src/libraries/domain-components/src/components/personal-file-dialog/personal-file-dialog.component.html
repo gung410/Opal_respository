@@ -1,0 +1,56 @@
+<div class="personal-files-dialog batch-upload-files-dialog">
+  <kendo-tabstrip class="flex top-merge"
+                  [animate]="false"
+                  [keepTabContent]="true">
+    <kendo-tabstrip-tab [selected]="true">
+      <ng-template kendoTabTitle="">
+        {{ 'Upload New' | translator }}
+      </ng-template>
+      <ng-template kendoTabContent="">
+        <div class="personal-file-content --batch-upload">
+          <batch-upload-file-content #batchUploadFileContent
+                                     [uploadFolder]="uploadFolder"
+                                     [selectedFileNumber]="personalFilesList ? personalFilesList.uploadParameters.length : 0"
+                                     [maxFileCount]="maxFileCount"
+                                     [icon]="icon"
+                                     [settings]="settings">
+          </batch-upload-file-content>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab>
+      <ng-template kendoTabTitle="">
+        {{ 'Personal File List' | translator }}
+      </ng-template>
+      <ng-template kendoTabContent="">
+        <div class="personal-file-content">
+          <div class="personal-file-header">
+            <search-input [(ngModel)]="textSearch"
+                          [placeholder]="'Search in Personal Space' | translator"
+                          (search)="onSubmitSearch()">
+            </search-input>
+          </div>
+          <personal-file-list #personalFilesList
+                              [mode]="'Import'"
+                              [search]="submitSearch"
+                              [maxFileCount]="maxFileCount"
+                              [totalFile]="batchUploadFileContent ? batchUploadFileContent.listFile?.length : 0"
+                              [filterByType]="fileType"
+                              [filterByExtensions]="filterByExtensions"></personal-file-list>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
+
+  <div class="personal-file-control">
+    <button class="personal-file-button"
+            (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+    <button class="personal-file-button"
+            kendoButton
+            (click)="onSave()"
+            [primary]="true">
+      {{ 'Save' | globalTranslator }}
+    </button>
+  </div>
+</div>

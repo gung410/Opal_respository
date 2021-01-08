@@ -1,0 +1,460 @@
+<div class="learner-course-detail"
+     [hidden]="showAssignmentDetail"
+     *ngIf="courseId && course && course.courseDetail">
+  <ng-container *ngIf="showCourseDetail">
+    <div class="learner-course-detail__sort-detail-container">
+      <div class="learner-course-detail__learning-card-container">
+        <div class="learner-course-detail__back"
+             (click)="onBackClick()">
+          <i class="icon back"></i>
+          {{"Back" | translator}}
+        </div>
+        <learning-card *ngIf="learningItem"
+                       [displayOnlyMode]="true"
+                       [learningCardItem]="learningItem"
+                       [showBookmark]="false"
+                       [showProgressBar]="false"
+                       [showUpcomingSession]="false"></learning-card>
+        <div class="learner-course-detail__card-message"
+             *ngIf="showCardConfirmation && currentClassRun">
+          <div class="learner-course-detail__card-message-title"><i
+               class="icon course-complete-circle learner-course-detail__course-complete-circle"></i>
+            <div class="learner-course-detail__alert-message">
+              <div>
+                {{ cardMessageTitle | translator }}
+              </div>
+              <div class="learner-course-detail__classrun-name">
+                {{currentClassRun.classTitle}}
+              </div>
+            </div>
+          </div>
+          <div class="learner-course-detail__card-message-action">
+            <div class="secondary-btn learner-course-detail__card-message-cancel-btn"
+                 (click)="onCardMessageCancel()">
+              {{ messageCancelText }}
+            </div>
+            <div class="learner-primary-btn learner-course-detail__card-message-confirm-btn"
+                 (click)="onCardMessageConfirm()">
+              {{ messageConfirmText }}
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="course.isMicrolearning && !course.isCourseUnavailable">
+          <div *hasPermission="[startLearningPermissionKey, showStartMicrolearning]"
+               class="learner-primary-btn learner-course-detail__course-action"
+               (click)="startMicrolearning()">
+            {{"Start Learning" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showContinueMicrolearning"
+               (click)="continueMicrolearning()">
+            {{"Continue" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showViewAgainMicrolearning"
+               (click)="viewAgainMicrolearning()">
+            {{"View again" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showLearnAgain"
+               (click)="learnAgain()">
+            {{"Learn again" | translator}}
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!course.isMicrolearning && !course.isCourseUnavailable">
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showAddToPlan"
+               (click)="onAddCourseToPlan()">
+            {{"Add to PD Plan" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showRemoveFromPlan"
+               (click)="removeFromPlan()">
+            {{"Remove from PD Plan" | translator}}
+          </div>
+          <div *hasPermission="[startLearningPermissionKey, showStartClassRun]"
+               class="learner-primary-btn learner-course-detail__course-action"
+               [ngClass]="{'disabled': disableLearning}"
+               (click)="!disableLearning && startClassRun()">
+            {{"Start Learning" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               [ngClass]="{'disabled': disableLearning}"
+               *ngIf="showContinueClassRun && isClassRunStarted"
+               (click)="!disableLearning && continueClassRun()">
+            {{"Continue" | translator}}
+          </div>
+          <div class="learner-primary-btn learner-course-detail__course-action"
+               *ngIf="showViewAgainClassRun"
+               (click)="viewAgainClassRun()">
+            {{"View again" | translator}}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="learner-course-detail__course-detail-container">
+      <div class="learner-course-detail__bookmark-section-wrapper">
+        <div class="learner-course-detail__section learner-course-detail__bookmark-section">
+          <div class="learner-course-detail__nav-container"
+               *ngFor="let item of visibleSections; index as i">
+            <div class="learner-course-detail__nav-item"
+                 [ngClass]="{'--active': currentActiveSectionNumber === i+1}"
+                 (click)="scrollTo(item.section.nativeElement, i+1)">{{item.text | translator}}</div>
+          </div>
+          <div class="learner-section-container">
+            <kendo-dropdownbutton [data]="visibleSections"
+                                  [popupSettings]="{ popupClass: 'learner-section-modes' }"
+                                  [primary]="false"
+                                  (itemClick)="onSelectSection($event.text)"
+                                  [buttonClass]="'k-button-preview'">
+              {{ firstSection }}
+            </kendo-dropdownbutton>
+          </div>
+          <div *ngIf="hasLikeShareCopyPermission || hasBookmarkPermission"
+               class="learner-course-detail__group-button">
+            <ng-container *ngIf="hasLikeShareCopyPermission">
+              <div class="learner-course-detail__like">
+                <i class="icon"
+                   [ngClass]="[isLike ? 'liked' : 'like']"
+                   (click)="toggleLike()"></i>
+              </div>
+              <div class="learner-course-detail__text">
+                <span>{{totalLike}} {{ (totalLike > 1 ? "Likes" : "Like") | translator }}</span>
+              </div>
+            </ng-container>
+            <div class="learner-course-detail__showmore">
+              <img class="icon action"
+                   src="assets/images/icons/more-dard.svg"
+                   #contextMenu>
+              <kendo-contextmenu [target]="contextMenu"
+                                 [alignToAnchor]="true"
+                                 [anchorAlign]="anchorAlign"
+                                 [popupAlign]="popupAlign"
+                                 showOn="click"
+                                 (select)="onContextMenuItemSelect($event.item.data)">
+                <kendo-menu-item *ngIf="hasLikeShareCopyPermission"
+                                 [text]="'Share' | translator"
+                                 [data]="{ id: 'share' }">
+                  <ng-template kendoMenuItemTemplate
+                               let-item="item">
+                    <i [ngClass]="'icon-learner shared'"></i>
+                    {{item.text}}
+                  </ng-template>
+                </kendo-menu-item>
+                <kendo-menu-item *ngIf="hasLikeShareCopyPermission"
+                                 [text]="'Copy URL' | translator"
+                                 [data]="{ id: 'copy' }">
+                  <ng-template kendoMenuItemTemplate
+                               let-item="item">
+                    <i [ngClass]="'icon-learner copy'"></i>
+                    {{item.text}}
+                  </ng-template>
+                </kendo-menu-item>
+                <kendo-menu-item *ngIf="hasBookmarkPermission"
+                                 [text]="(course?.bookmarkInfo ? 'Remove From Bookmark' : 'Add To Bookmark') | translator"
+                                 [data]="{ id: 'bookmarks' }">
+                  <ng-template kendoMenuItemTemplate
+                               let-item="item">
+                    <div *ngIf="course?.bookmarkInfo; else elseUnbookmark">
+                      <i class="icon-learner save">
+                        <div class="path1"></div>
+                        <div class="path2"></div>
+                      </i>
+                    </div>
+                    <ng-template #elseUnbookmark=""><i class="icon-learner save-outline"></i></ng-template>
+                    {{item.text}}
+                  </ng-template>
+                </kendo-menu-item>
+              </kendo-contextmenu>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="learner-course-detail__section learner-course-detail__about-section mt-30"
+           #upcomingSessionSection
+           [hidden]="!upcomingSession">
+        <div class="learner-course-detail__section-title mb-0">{{"Upcoming Session" | translator}}</div>
+        <div class="learner-classrun-item__session learner-classrun-item__session--upcoming"
+             *ngIf="upcomingSession">
+          <div class="learner-classrun-item__session-info">
+            <div class="learner-classrun-item__session-info-title">
+              {{ upcomingSession.sessionTitle }}
+            </div>
+          </div>
+          <div class="learner-classrun-item__session-detail">
+            <div class="learner-classrun-item__session-item">
+              <div class="learner-classrun-item__group-date">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/date.svg">
+                  {{ 'Date' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{ upcomingSession.startTime | date: 'dd/MM/yyyy' }}
+                </div>
+              </div>
+              <div class="learner-classrun-item__group-date">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/time.svg">
+                  {{ 'Start Time' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{ upcomingSession.startTime | date: 'HH:mm' }}
+                </div>
+              </div>
+              <div class="learner-classrun-item__group-date">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/time.svg">
+                  {{ 'End Time' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{ upcomingSession.endTime | date: 'HH:mm' }}
+                </div>
+              </div>
+            </div>
+            <div class="learner-classrun-item__info">
+              <div class="learner-classrun-item__info-left">
+                <div class="learner-classrun-item__title learner-classrun-item__title--icon">
+                  <img src="assets/images/icons/location.svg">
+                  {{ 'Venue' | translator }}
+                </div>
+                <div class="learner-classrun-item__value">{{ getVenue(upcomingSession) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="learner-classrun-item__info-button-check-in">
+            <button kendoButton
+                    *ngIf="hasCheckinPermission && !isCheckInCompleted && showCheckIn(upcomingSession)"
+                    (click)="onCheckInClicked(upcomingSession)"
+                    [primary]="true">{{'Check-in' | translator}}</button>
+            <div class="learner-classrun-item__check-in-completed"
+                 *ngIf="isCheckInCompleted"><img src="assets/images/icons/course-complete-circle.svg"
+                   alt="Completed">{{"Check in completed" | translator}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="learner-course-detail__section learner-course-detail__about-section"
+           [ngClass]="{'mt-30': !upcomingSession}"
+           #aboutSection>
+        <div class="learner-course-detail__section-title mb-0">{{"About" | translator}}</div>
+        <div class="learner-course-detail__about-content"
+             *ngIf="course.courseDetail.description"
+             externalLinkGuard
+             [innerHTML]="course.courseDetail.description"></div>
+
+        <ng-container *ngIf="course.courseDetail && courseMetadata">
+          <div class="learner-course-detail__section-title --sub-title">{{"Information" | translator}}</div>
+          <ng-container class="learner-course-detail__info-container">
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Type Of PD Activity" | translator}}</div>
+              <span *ngIf="course.courseDetail.pdActivityType">
+                {{courseMetadata[course.courseDetail.pdActivityType]
+                  ? courseMetadata[course.courseDetail.pdActivityType].displayText : 'N/A'}}
+              </span>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Mode of Learning" | translator}}</div>
+              <span *ngIf="course.courseDetail.learningMode">
+                {{courseMetadata[course.courseDetail.learningMode]
+                  ? courseMetadata[course.courseDetail.learningMode].displayText : 'N/A'}}
+              </span>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Category" | translator}}</div>
+              <div *ngIf="course.courseDetail.categoryIds">
+                <ng-container *ngFor="let categoryId of course.courseDetail.categoryIds">
+                  <p>
+                    {{courseMetadata[categoryId]
+                      ? courseMetadata[categoryId].displayText : ''}}</p>
+                </ng-container>
+                <span *ngIf="course.courseDetail.categoryIds.length === 0">N/A</span>
+              </div>
+
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Course Code" | translator}}</div>
+              <div>{{course.courseDetail.courseCode || 'N/A'}}</div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Traisi Course Code" | translator}}</div>
+              <span>{{course.courseDetail.externalCode ? course.courseDetail.externalCode : 'N/A'}}</span>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Cost" | translator}}</div>
+              <div>{{courseCost.value }} SGD
+                <span class="explanation-icon"
+                      *ngIf="courseCost.text === 'Notional'"
+                      (mouseenter)="toggleShowExplaination()"
+                      (mouseleave)="toggleShowExplaination()">
+                  <img src="assets/images/icons/question-mark.svg"
+                       alt="icon">
+                </span>
+                <span class="explanation-text"
+                      *ngIf="isShowExplanationNote">{{ 'This is a notional cost chargeable for Non-MOE staff' | translator}}
+                </span></div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Number of views" | translator}}</div>
+              <div>{{totalView}}</div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Number of shares" | translator}}</div>
+              <div>{{totalShare}}</div>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Course Outline & Structure" | translator}}</div>
+              <span>{{course.courseDetail.courseOutlineStructure ? course.courseDetail.courseOutlineStructure : 'N/A'}}</span>
+            </div>
+            <div class="learner-course-detail__info-item">
+              <div class="learner-course-detail__info-title">{{"Objectives/Outcomes" | translator}}</div>
+              <span>{{course.courseDetail.courseObjective ? course.courseDetail.courseObjective : 'N/A'}}</span>
+            </div>
+          </ng-container>
+
+          <div *ngIf="showMoreInfo">
+            <learner-course-more-details [fullCourseDetail]="course.courseDetail"
+                                         [courseMetadata]="courseMetadata"
+                                         [communityUrl]="communityUrl"
+                                         [showLinkCommunity]="showLinkCommunity"></learner-course-more-details>
+          </div>
+
+
+          <div class="learner-course-detail__show-more"
+               (click)="toggleShowMoreInfo()">{{ showMoreInfo ?
+               ("Show less" | translator) : ("Show more" | translator)}}
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="learner-course-detail__section learner-course-detail__content-section"
+           #contentSection>
+        <div class="learner-course-detail__section-title">{{"Content" | translator}}</div>
+        <div class="learner-course-detail__table-of-contents"
+             *ngIf="tableOfContents">
+          <learner-course-content [(showMore)]="showMoreContents"
+                                  [completedLectureIds]="completedLectureIds"
+                                  [highlightLectureId]="nextLectureId"
+                                  [tableOfContents]="tableOfContents"
+                                  [disableLearning]="disableCourseContent"
+                                  (fullContents)="updateShowFullContent($event)"
+                                  (lectureClick)="!disableLearning && onLectureClick($event)"></learner-course-content>
+          <div class="learner-course-detail__show-more"
+               *ngIf="!showFullContents"
+               (click)="toggleShowMoreContents()">
+            {{ showMoreContents ? ("Show less" | translator) : ("Show more" | translator)}}
+          </div>
+        </div>
+        <div class="learner-course-detail__no-content"
+             *ngIf="!tableOfContents">
+          The course content is under maintenance
+        </div>
+        <div *hasPermission="[checkinPermissionKey, canShowPostCourseLink]"
+             class="learner-course-detail__postCourseEvaluation"
+             [ngClass]="{'disabled': isDisablePostCourse}"
+             (click)="!isDisablePostCourse && onPostCourseClicked()">
+          <img class="learner-course-detail__type-icon"
+               src="assets/images/icons/sm/document.svg"
+               alt="Document">
+          {{"Post course evaluation" | translator}}
+        </div>
+      </div>
+      <!-- TODO: Will implement on release 2.1 -->
+      <div class="learner-course-detail__section learner-course-detail__content-section"
+           #assignmentSection
+           [hidden]="!showAssignments">
+        <div class="learner-course-detail__section-title">{{"Assignments" | translator}}</div>
+        <learning-assignments [items]="myAssignments"
+                              (assignmentClicked)="onAssignmentClicked($event)"></learning-assignments>
+
+      </div>
+
+      <div class="learner-course-detail__section learner-course-detail__classRun-section"
+           #classRunSection
+           [hidden]="course.isMicrolearning">
+        <div class="learner-course-detail__section-title">{{"Class Run" | translator | uppercase  }}</div>
+        <learner-classrun *ngIf="course && !course.isMicrolearning"
+                          [course]="course"
+                          [readyToLearn]="showStartClassRun && !disableLearning"
+                          [addCourseToPlanCallback]="onAddCourseToPlan.bind(this)">
+        </learner-classrun>
+      </div>
+
+      <div class="learner-course-detail__section learner-course-detail__review-section"
+           #reviewSection>
+        <learner-review-list [itemId]="courseId"
+                             [reviewType]="reviewType"
+                             [feedbackConfig]="reviewConfig"
+                             (showMore)="onReviewShowMore()"></learner-review-list>
+      </div>
+
+    </div>
+  </ng-container>
+  <lecture-player class="learner-course-detail__lecture-player"
+                  *ngIf="showLecturePlayer && course.myLecturesInfo && lecturesMap"
+                  [myCourseId]="course.myCourseInfo.id"
+                  [courseId]="course.courseId"
+                  [course]="course"
+                  [isCompleted]="course.myCourseInfo && course.myCourseInfo.status === myCourseStatus.Completed"
+                  [isMicrolearning]="course.isMicrolearning"
+                  [courseTitle]="course.courseDetail.courseName"
+                  [currentLectureId]="selectedLectureId"
+                  [lectures]="lectures"
+                  [tableOfContents]="tableOfContents"
+                  [hasContentChanged]="hasContentChanged"
+                  [reviewOnly]="reviewOnly"
+                  [displayMode]="displayMode"
+                  (backClick)="onLecturePlayerBackClick()"
+                  (completeLecture)="onLectureCompleted($event)"></lecture-player>
+  <main-quiz-player-page *ngIf="showPostCourse"></main-quiz-player-page>
+</div>
+
+<learner-assignment-detail *ngIf="showAssignmentDetail"
+                           [itemDetail]="currentAssignment"
+                           [enableScrollCommentSection]="enableScrollCommentSection"
+                           (back)="onAssignmentBack($event)">
+</learner-assignment-detail>
+
+<ng-template #checkinTemplate="">
+  <div class="learner-checkin-confirmation">
+    <form #checkinForm="ngForm">
+      <kendo-maskedtextbox class="learner-checkin-confirmation__input"
+                           name="checkinCode"
+                           #maskedTextbox
+                           [mask]="checkinCodeFormat"
+                           [includeLiterals]="true"
+                           [(ngModel)]="checkinCode"
+                           [maskValidation]="true"></kendo-maskedtextbox>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #absenceTemplate="">
+  <div class="learner-absence-reason">
+    <opal-select class="absence-filter"
+                 [items]="reasonAbsenceFilter"
+                 [valueField]="'value'"
+                 [labelField]="'text'"
+                 [(selectedValue)]="reasonAbsenceFilterStatus"
+                 (selectedValueChange)="onSelectReason($event)"
+                 [minDropdownHeight]="200"
+                 [maxDropdownHeight]="200"
+                 [searchable]="false"
+                 kendoErrorTooltip
+                 position="top"></opal-select>
+    <textarea class="learner-absence-reason__input"
+              *ngIf="showOtherReason"
+              [placeholder]="'Type other reason here...'"
+              [(ngModel)]="absenceReason"></textarea>
+    <div class="learner-absence-reason__document">{{ "Please submit your supporting document here." | translator}}</div>
+    <div class="learner-absence-reason__attach-btn">
+      <img src="assets/images/icons/paper-clip.svg">{{"Attach file" | translator}}</div>
+    <opal-file-uploader #fileUploader
+                        [settings]="fileUploaderSetting"
+                        [keepInLocal]="true"
+                        [uploadFolder]="'learner-attachments'">
+    </opal-file-uploader>
+  </div>
+</ng-template>

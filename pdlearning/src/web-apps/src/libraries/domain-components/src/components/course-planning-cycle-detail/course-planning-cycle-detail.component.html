@@ -1,0 +1,19 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <scrollable-menu [title]="'Information about the planning cycle'"
+                     [tabs]="tabs"
+                     stickyElement
+                     [stickyDependElement]="stickyDependElement"
+                     [stickySpacing]="stickySpacing"></scrollable-menu>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content"
+           #planningCycleOverviewInfoTab>
+        <course-planning-cycle-overview-info-tab [form]="form"
+                                                 [mode]="mode"
+                                                 [coursePlanningCycle]="coursePlanningCycle"></course-planning-cycle-overview-info-tab>
+      </div>
+    </div>
+  </div>
+</div>

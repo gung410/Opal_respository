@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'learner';
+  src:
+    url('../assets/fonts/learner/learner.ttf?koyl3k') format('truetype'),
+    url('../assets/fonts/learner/learner.woff?koyl3k') format('woff'),
+    url('../assets/fonts/learner/learner.svg?koyl3k#learner') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'learner' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-learner {
+  display: flex;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 4px;
+  margin-right: 6px;
+  border-radius: 4px;
+  font-size: 24px;
+  width: 32px;
+
+  &.shared:before {
+    content: "\e904";
+  }
+
+  &.copy:before {
+    content: "\e900";
+  }
+
+  &.save .path1:before {
+    content: "\e901";
+  }
+
+  &.save .path2:before {
+    content: "\e902";
+    margin-left: -0.818359375em;
+  }
+
+  &.save-outline:before {
+    content: "\e903";
+  }
+}

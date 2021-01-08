@@ -1,0 +1,10 @@
+learning-path-detail-page {
+  .populate-container {
+    display: flex;
+    justify-content: flex-end;
+
+    &__populate-button {
+      margin: 15px 0;
+    }
+  }
+}

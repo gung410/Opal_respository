@@ -1,0 +1,163 @@
+<div class="form-question-comparison overlay-layer"
+     *ngIf="comparisonQuestionVM"
+     [ngClass]="{
+        '--blank': isBlankArea(comparisonQuestionVM.changeType),
+        '--remove': comparisonQuestionVM.changeType.includes(QUESTIONCHANGETYPE.Removed),
+        '--add-new': comparisonQuestionVM.changeType.includes(QUESTIONCHANGETYPE.AddNew)
+      }">
+  <div class="form-question-comparison__heading">
+    <span class="form-question-comparison__numerical-order"
+          *ngIf="isInSection; else noSection">{{comparisonQuestionVM.priority + 1}}.{{comparisonQuestionVM.minorPriority + 1}}</span>
+    <ng-template #noSection="">
+      <span class="form-question-comparison__numerical-order">{{comparisonQuestionVM.priority + 1}}</span>
+    </ng-template>
+    <span class="form-question-comparison__question-type">{{ getQuestionTypeDisplay(comparisonQuestionVM.questionType) }}</span>
+  </div>
+  <div class="form-question-comparison__body">
+    <div class="form-question-comparison__title"
+         *ngIf="comparisonQuestionVM.questionType !== QUESTIONTYPE.FillInTheBlanks"
+         [innerHTML]="comparisonQuestionVM.questionTitle | safeHtml:'html'">
+    </div>
+
+    <!-- ShortText -->
+    <div class="form-question-comparison__answer --short-text"
+         *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.ShortText && comparisonQuestionVM.questionCorrectAnswer"
+         [innerHTML]="comparisonQuestionVM.questionCorrectAnswer.toString() | safeHtml:'html'"></div>
+    <!-- End ShortText -->
+
+    <!-- DropDown / Signle choice / True/False / Multiple -->
+    <ul class="form-question-comparison__options"
+        *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.TrueFalse ||
+           comparisonQuestionVM.questionType === QUESTIONTYPE.SingleChoice ||
+           comparisonQuestionVM.questionType === QUESTIONTYPE.MultipleChoice ||
+           comparisonQuestionVM.questionType === QUESTIONTYPE.DropDown">
+      <li class="form-question-comparison__option overlay-layer"
+          *ngFor="let option of comparisonQuestionVM.questionOptions"
+          [ngClass]="{
+         '--blank': isOptionblankArea(option.changeType),
+         '--remove': option.changeType.includes(ITEMCHANGETYPE.Removed),
+         '--add-new': option.changeType.includes(ITEMCHANGETYPE.AddNew)
+       }">
+        <div class="form-question-comparison__option-value">
+          <img class="form-question-comparison__correct-icon"
+               src="assets/images/icons/completed-mark-black.svg"
+               alt="icon"
+               *ngIf="option.isCorrectAnswer">
+          <input class="k-radio form-question-comparison__form-control"
+                 type="radio"
+                 *ngIf="comparisonQuestionVM.questionType !== QUESTIONTYPE.MultipleChoice"
+                 [ngClass]="{'--correct-checked': option.changeType.includes(OPTIONCHANGETYPE.CorrectAnswerChecked),
+                             '--correct-remove': option.changeType.includes(OPTIONCHANGETYPE.CorrectAnswerRemoved)}"
+                 [checked]="option.isCorrectAnswer"
+                 [disabled]="true">
+          <input class="k-checkbox form-question-comparison__form-control"
+                 type="checkbox"
+                 *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.MultipleChoice"
+                 [ngClass]="{'--correct-checked': option.changeType.includes(OPTIONCHANGETYPE.CorrectAnswerChecked),
+                             '--correct-remove': option.changeType.includes(OPTIONCHANGETYPE.CorrectAnswerRemoved)}"
+                 [checked]="option.isCorrectAnswer"
+                 [disabled]="true">
+          <span class="form-question-comparison__text"
+                *ngIf="!option.isEmptyValue"
+                [innerHTML]="option.value | safeHtml:'html'"></span>
+        </div>
+        <ng-container *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.MultipleChoice ||
+                         comparisonQuestionVM.questionType === QUESTIONTYPE.SingleChoice">
+          <div class="option-media option-video overlay-layer"
+               *ngIf="option.videoUrl"
+               [ngClass]="{
+                '--blank': isMediaOptionblankArea(option.changeType),
+                '--remove': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionRemoved),
+                '--add-new': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionAddNew),
+                '--media-changed': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionChanged)
+              }">
+            <video class="video"
+                   controls
+                   controlslist="nodownload"
+                   height="100%"
+                   style="max-width:100%"
+                   width="100%">
+              <source [src]="getMediaUrl(option.videoUrl)"
+                      controls>
+              <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(option.videoUrl)">link
+                  to download the video</a> instead.</p>
+            </video>
+          </div>
+          <div class="option-media option-image overlay-layer"
+               *ngIf="option.imageUrl"
+               [ngClass]="{
+                '--blank': isMediaOptionblankArea(option.changeType),
+                '--remove': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionRemoved),
+                '--add-new': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionAddNew),
+                '--media-changed': option.changeType.includes(OPTIONCHANGETYPE.MediaOptionChanged)
+              }">
+            <img class="image"
+                 [src]="getMediaUrl(option.imageUrl)">
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+    <!-- End DropDown / Signle choice / True/False / Multiple -->
+
+    <!-- Fill In The Blank -->
+    <div class="form-question-comparison__answer"
+         *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.FillInTheBlanks">
+      <ng-container *ngFor="let option of comparisonQuestionVM.questionOptions">
+        <span class="overlay-layer"
+              *ngIf="option.type === QUESTIONOPTIONTYPEENUM.Text"
+              [ngClass]="{
+                '--blank': isOptionblankArea(option.changeType),
+                '--remove': option.changeType.includes(OPTIONCHANGETYPE.Removed),
+                '--add-new': option.changeType.includes(OPTIONCHANGETYPE.AddNew)
+              }"
+              [innerHTML]="option.value | safeHtml:'html'"></span>
+        <span class="blank-answer overlay-layer"
+              *ngIf="option.type === QUESTIONOPTIONTYPEENUM.Blank"
+              [ngClass]="{
+                '--blank': isOptionblankArea(option.changeType),
+                '--remove': option.changeType.includes(OPTIONCHANGETYPE.Removed),
+                '--add-new': option.changeType.includes(OPTIONCHANGETYPE.AddNew)
+              }">
+          <span class="blank-answer__text"
+                [innerHTML]="option.value | safeHtml:'html'"></span>
+        </span>
+      </ng-container>
+    </div>
+    <!-- End Fill In The Blank -->
+
+    <!-- Date Picker -->
+    <div class="form-question-comparison__answer"
+         *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.DatePicker">
+      <kendo-datepicker class="form-question-comparison__form-control --date"
+                        [ngClass]="{'--changed': comparisonQuestionVM.changeType.includes(QUESTIONCHANGETYPE.DatePickerChange) }"
+                        [value]="getDatePickerAnswer(comparisonQuestionVM.questionCorrectAnswer)"
+                        [placeholder]="'Select the correct date (day/month/year)'"
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="true"></kendo-datepicker>
+    </div>
+    <!-- End Date Picker -->
+
+    <!-- Date Range Picker -->
+    <div class="form-question-comparison__answer"
+         *ngIf="comparisonQuestionVM.questionType === QUESTIONTYPE.DateRangePicker">
+      <div class="form-question-comparison__date-group">
+        <kendo-datepicker class="form-question-comparison__form-control --date"
+                          [ngClass]="{'--changed': comparisonQuestionVM.changeType.includes(QUESTIONCHANGETYPE.FromDateChange) }"
+                          [value]="getDateRangePickerAnswer(comparisonQuestionVM.questionCorrectAnswer, 0)"
+                          [placeholder]="'Select the from date (day/month/year)'"
+                          position="top"
+                          [format]="'dd/MM/yyyy'"
+                          [disabled]="true"></kendo-datepicker>
+        <kendo-datepicker class="form-question-comparison__form-control --date"
+                          [ngClass]="{'--changed': comparisonQuestionVM.changeType.includes(QUESTIONCHANGETYPE.ToDateChange) }"
+                          [value]="getDateRangePickerAnswer(comparisonQuestionVM.questionCorrectAnswer, 1)"
+                          [placeholder]="'Select the to date (day/month/year)'"
+                          position="top"
+                          [format]="'dd/MM/yyyy'"
+                          [disabled]="true"></kendo-datepicker>
+      </div>
+    </div>
+    <!-- End Date Range Picker -->
+  </div>
+</div>

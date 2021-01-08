@@ -1,0 +1,25 @@
+<div class="detail-content">
+  <div class="detail-content__left-container">
+    <scrollable-menu [title]="'Course Criteria Content'"
+                     [tabs]="tabs"
+                     stickyElement
+                     [stickyDependElement]="stickyDependElement"
+                     [stickySpacing]="stickySpacing"></scrollable-menu>
+  </div>
+  <div class="detail-content__right-container">
+    <div class="scrollable-menu-content">
+      <div class="scrollable-menu-content__tab-content"
+           #learnerRelatedCriteriaTab>
+        <learner-related-criteria-tab [courseCriteria]="courseCriteria"
+                                      [form]="form"
+                                      [mode]="mode"></learner-related-criteria-tab>
+      </div>
+      <div class="scrollable-menu-content__tab-content"
+           #courseRelatedCriteriaTabTab>
+        <course-related-criteria-tab [courseCriteria]="courseCriteria"
+                                     [form]="form"
+                                     [mode]="mode"></course-related-criteria-tab>
+      </div>
+    </div>
+  </div>
+</div>

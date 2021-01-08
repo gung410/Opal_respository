@@ -1,0 +1,26 @@
+lmm-outlet attendance-tracking-management-page {
+  list-attendance-tracking-grid {
+    min-height: 0;
+  }
+
+  .attendance-tracking-management {
+    &__selection {
+      margin-top: 10px;
+    }
+
+    &__action-btn-container {
+      margin-top: 10px;
+      margin-bottom: 0px;
+      display: flex;
+      position: relative;
+
+      >*+* {
+        margin-left: 10px;
+      }
+    }
+
+    &__get-session-btn {
+      z-index: 2;
+    }
+  }
+}

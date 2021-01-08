@@ -1,0 +1,45 @@
+version: '2.4'
+
+services:
+  learner-api:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+      - BuildVersion=${GO_PIPELINE_LABEL}
+      - VIRTUAL_HOST=${ENVIRONMENT_NAME}-learnapp-${PROJECT_NAME}-api-learner.${DOMAIN_POSTFIX}
+      - DeveloperExceptionEnabled={{ DeveloperExceptionEnabled }}
+      - ConnectionStrings:Default=Data Source=${MSSQL_HOSTNAMES};Initial Catalog=${ENVIRONMENT_NAME}-learner-${PROJECT_NAME}-db;User ID={{ mssql_username }};Password={{ mssql_password }}
+      - RabbitMQOptions:HostNames=${RABBITMQ_HOSTNAMES}
+      - RabbitMQOptions:UserName=${RABBITMQ_USERNAME}
+      - RabbitMQOptions:Password=${RABBITMQ_PASSWORD}
+      - RabbitMQOptions:SslEnabled=${RABBITMQ_SSL_ENABLED}
+      - RabbitMQOptions:QueueName={{ RabbitMQOptions_QueueName }}
+      - RabbitMQOptions:ExchangeName={{ RabbitMQOptions_ExchangeName }}
+      - RabbitMQOptions:RetryCount={{ RabbitMQOptions_RetryCount }}
+      - RabbitMQOptions:RetryPolicyInSeconds={{ RabbitMQOptions_RetryPolicyInSeconds }}
+      - RabbitMQOptions:DefaultCommandExchange={{ RabbitMQOptions_DefaultCommandExchange }}
+      - RabbitMQOptions:DefaultEventExchange={{ RabbitMQOptions_DefaultEventExchange }}
+      - RabbitMQOptions:DefaultActivityExchange={{ RabbitMQOptions_DefaultActivityExchange }}
+      - RabbitMQOptions:DefaultAuditLogExchange={{ RabbitMQOptions_DefaultAuditLogExchange }}
+      - RabbitMQOptions:DefaultIntegrationExchange={{ RabbitMQOptions_DefaultIntegrationExchange }}
+      - OpalAuthorityInternalUrl=${IDM_INTERNAL_URL}
+      - AuthSettings:AuthorityUrl=${IDM_PUBLIC_URL}
+      - Logging:LogLevel:Default=${APPLICATION_LOG_LEVEL}
+      - Logging:LogLevel:Microsoft=${FRAMEWORK_LOG_LEVEL}
+      - GetAccessRightsUrl={{GetAccessRightsUrl}}
+{% if https_proxy is defined %}
+      - HTTPS_PROXY={{ https_proxy }}
+{% endif %}
+    container_name: ${ENVIRONMENT_NAME}-learner-${PROJECT_NAME}-api
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

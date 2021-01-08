@@ -1,0 +1,15 @@
+<div class="digital-content-upload-dialog__header">
+  <div class="digital-content-upload-dialog__actions d-flex">
+    <span class="digital-content-upload-dialog__btn_close k-icon k-i-close"
+          (click)="closeDialog()"></span>
+  </div>
+</div>
+
+<opal-file-uploader class="digital-content-upload-dialog basic-info-tab__thumbnail-uploader"
+                    #fileUploader
+                    [(ngModel)]="thumbnailUrl"
+                    [uploadFolder]="'form-question-option'"
+                    [settings]="fileUploaderSetting"
+                    (uploaderProgressChange)="onUploaderProgressChanged($event)"
+                    kendoErrorTooltip>
+</opal-file-uploader>

@@ -1,0 +1,25 @@
+standalone-form-answer-review-dialog {
+  width: 80vw;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @include flex-layout-media('tablet-horizontal') {
+    width: 100vw;
+  }
+
+  .dialog-header {
+    justify-content: flex-end;
+
+    .k-i-close {
+      font-size: 1.5rem;
+    }
+  }
+
+  .standalone-form-answer-review-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+}

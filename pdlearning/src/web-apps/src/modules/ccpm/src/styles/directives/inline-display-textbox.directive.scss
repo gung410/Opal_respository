@@ -1,0 +1,17 @@
+input.inline-display-textbox {
+  height: auto;
+  line-height: 150%;
+
+  &.k-textbox {
+    padding: 4px 10px;
+  }
+
+  &.-as-text {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  &:focus {
+    flex-grow: 1;
+  }
+}

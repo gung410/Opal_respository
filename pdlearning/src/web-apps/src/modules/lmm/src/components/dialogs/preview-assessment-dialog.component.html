@@ -1,0 +1,25 @@
+<div class="column flex web-preview"
+     *ngIf="(previewMode === PreviewMode.Web || previewMode === PreviewMode.Mobile)">
+  <button class="k-button-close-preview"
+          (click)="closePreview()"><span class="k-icon k-i-arrow-chevron-left"></span><span>Close Preview</span></button>
+  <kendo-dropdownlist [data]="previewOptions"
+                      [(ngModel)]="previewMode">
+  </kendo-dropdownlist>
+  <div class="preview-form__content">
+    <device-view-simulation [previewMode]="previewMode">
+      <ng-template webTemplate="">
+        <main-assessment-player [forPreview]="true"
+                                [isMobileMode]="false"
+                                [assessmentId]=" assessmentId">
+        </main-assessment-player>
+      </ng-template>
+      <ng-template mobileTemplate="">
+        <main-assessment-player [forPreview]="true"
+                                [isMobileMode]="true"
+                                [assessmentId]="assessmentId">
+        </main-assessment-player>
+      </ng-template>
+    </device-view-simulation>
+
+  </div>
+</div>

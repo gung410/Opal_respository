@@ -1,0 +1,10 @@
+<div class="nav-item"
+     *ngFor="let item of navigationMenuService.items"
+     [ngClass]="{ active: item && item.isActivated, 'show-mega-menu': item.menuType === 'learner-catalog' && item.data && item.data.length > 0}"
+     (click)="item.onClick(item)">
+  {{ item.name }}
+  <span class="item-text">{{ item.name }}</span>
+  <mega-menu *ngIf="item.menuType === 'learner-catalog' && item.data && item.data.length > 0"
+             [serviceScheme]="item.data"
+             [subMenu]="item.subData"></mega-menu>
+</div>

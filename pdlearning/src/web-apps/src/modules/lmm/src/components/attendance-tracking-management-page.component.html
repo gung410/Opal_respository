@@ -1,0 +1,69 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management attendance-tracking-management">
+    <div class="management-toolbar">
+      <div class="management-toolbar__left-container">
+        <div class="attendance-tracking-management__selection">
+          <opal-select class="form-control"
+                       [(items)]="sessionItems"
+                       [labelField]="'sessionTitle'"
+                       [valueField]="'id'"
+                       [fetchDataFn]="fetchSessionsFn"
+                       (selectedItemChange)="updateSelectedSession($event)"
+                       [fetchNoPaging]="true"
+                       position="top">
+          </opal-select>
+          <div class="attendance-tracking-management__action-btn-container">
+            <button [primary]="true"
+                    [disabled]="onDisable()"
+                    (click)="onPresent()"
+                    kendoButton>
+              {{ 'Present' | translator }}
+            </button>
+            <button kendoButton
+                    [primary]="true"
+                    [disabled]="onDisable()"
+                    (click)="onAbsent()">
+              {{ 'Absent' | translator }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="sessionItems && sessionItems.length > 0">
+      <div class="management-toolbar">
+        <div class="management-toolbar__left-container">
+          <div class="search-field">
+            <search-input [(ngModel)]="searchText"
+                          [placeholder]="'Search for learner' | translator"
+                          (search)="onSubmitSearch()"></search-input>
+          </div>
+          <data-filter [component]="filterPopupContent"
+                       [applyFn]="onApplyFilter.bind(this)"></data-filter>
+        </div>
+        <div class="management-toolbar__right-container">
+          <div class="attendance-tracking-management__action-btn-container">
+            <button class="attendance-tracking-management__get-session-btn -small"
+                    *ngIf="canShowGetSessionCodeBtn()"
+                    kendoButton
+                    [primary]="true"
+                    (click)="openQRDialog()">
+              {{ 'Get Session Code' | translator }}
+            </button>
+            <opal-report-dynamic class="exporting"
+                                 *ngIf="onShowExportBtn"
+                                 [paramsReportDynamic]="paramsReportDynamic"></opal-report-dynamic>
+          </div>
+        </div>
+      </div>
+      <list-attendance-tracking-grid [classRunId]="classRunId"
+                                     [sessionId]="selectedSession != null ? selectedSession.id : null"
+                                     [filter]="filter"
+                                     [(selectedItems)]="attendanceTrackingSelectedItems"
+                                     (viewAttendanceTracking)="viewAttendanceTracking($event)"
+                                     (loadedData)="loadedDataGrid($event)"
+                                     [indexActionColumns]="[0]"
+                                     [stickyDependElement]="stickyDependElement"></list-attendance-tracking-grid>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="learning-community-card"
+     [ngClass]="{'learning-long-card': showLongCard, 'learning-card': !showLongCard}">
+  <div [ngClass]="{'container': showLongCard, 'info-container': !showLongCard}">
+    <div class="course">
+      <div class="course-img-container"
+           (click)="onCommunityClick()">
+        <div class="course-img">
+          <img *ngIf="communityCardItem.imageUrl"
+               [src]="communityCardItem.imageUrl">
+          <img src="assets/images/course/img-community-default.svg"
+               *ngIf="!communityCardItem.imageUrl">
+        </div>
+      </div>
+      <div class="card-info"
+           (click)="onCommunityClick()">
+
+        <div class="learning-path-info"
+             *ngIf="!showLongCard">
+          <div class="card-type">
+            {{"Community" | translator}}
+          </div>
+          <div class="card-childs-length">
+            {{ communityCardItem.members ? communityCardItem.members : 0 }}
+            {{ (communityCardItem.members && communityCardItem.members === 1 ? 'member' : 'members') | translator}}
+          </div>
+        </div>
+        <div class="card-title two-line-truncate-text"
+             [title]="communityCardItem.title">{{communityCardItem.title}}</div>
+
+        <div class="general-info"
+             *ngIf="showLongCard">
+          <span class="group-name">{{"Community" | translator}}</span>
+          <span>&nbsp;|&nbsp;</span>
+          <span>{{communityCardItem.members}} {{"Members" | translator}}</span>
+        </div>
+
+        <!-- TODO: Will Update -->
+        <!-- <div class="message-noti">
+          <span class="message-count">2</span>
+          <span class="message-text ">{{"New messages" | translator}}</span>
+        </div> -->
+      </div>
+      <div class="card-desc"
+           *ngIf="showLongCard">
+        <div class="card-desc-title">{{"Description" | translator}}</div>
+        <div class="card-desc-info"
+             multilineText
+             [innerHTML]="communityCardItem.description"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-course"
+       *ngIf="showBookmark"
+       (click)="onBookmarkChange()">
+    <i class="icon {{ communityCardItem.isBookmark ? 'save' : 'save-outline' }}"></i>
+  </div>
+</div>

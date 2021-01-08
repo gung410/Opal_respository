@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  webinar-recorder:
+    image: orientdevacr/webinar-recorder:latest
+    container_name: local-webinar-recorder-opal
+    environment:
+      - MEETING_URL=http://localhost:4203/playback/presentation/2.3/618dcdfb0cd9ae4481164961c4796dd8e3930c8d-1606268814166
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+    volumes:
+      - C:\Users\Public\converted-video:/data/records
+    network_mode: host
+volumes:
+  webinar-efs-volume:
+    external: false

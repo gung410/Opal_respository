@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.HorizontalListView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:dataTemplateSelector="clr-namespace:LearnerApp.Common.DataTemplateSelector"
+	xmlns:horizontalitem="clr-namespace:LearnerApp.Controls.ListItemCard.HorizontalItem"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView"
+	xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer"
+	xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+	x:Name="This">
+	<StackLayout Spacing="10">
+		<!--  Title  -->
+		<StackLayout Orientation="Horizontal">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Navigation_Tapped" />
+			</StackLayout.GestureRecognizers>
+
+			<Label x:Name="TitleLbl" FontSize="{StaticResource LargeSize}" />
+		</StackLayout>
+
+		<!--  Empty list message  -->
+		<Label
+			x:Name="EmpltListLbl"
+			HorizontalOptions="CenterAndExpand"
+			Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+
+		<learnerCustomCollectionView:LearnerCustomCollectionView
+			x:Name="ListItem"
+			Footer="{Binding .}"
+			HeightRequest="340"
+			HorizontalScrollBarVisibility="Never"
+			IsLoading="{Binding Source={x:Reference This}, Path=IsLoading}">
+			<CollectionView.ItemsLayout>
+				<GridItemsLayout HorizontalItemSpacing="5" Orientation="Horizontal" />
+			</CollectionView.ItemsLayout>
+
+			<CollectionView.ItemTemplate>
+				<horizontalitem:HorizontalItemTemplateSelector>
+					<horizontalitem:HorizontalItemTemplateSelector.HorizontalCourseItemTemplate>
+						<DataTemplate>
+							<horizontalitem:HorizontalCourseItem />
+						</DataTemplate>
+					</horizontalitem:HorizontalItemTemplateSelector.HorizontalCourseItemTemplate>
+					<horizontalitem:HorizontalItemTemplateSelector.HorizontalDigitalContentItemTemplate>
+						<DataTemplate>
+							<horizontalitem:HorizontalDigitalContentItem />
+						</DataTemplate>
+					</horizontalitem:HorizontalItemTemplateSelector.HorizontalDigitalContentItemTemplate>
+					<horizontalitem:HorizontalItemTemplateSelector.HorizontalLearningPathItemTemplate>
+						<DataTemplate>
+							<horizontalitem:HorizontalLearningPathItem />
+						</DataTemplate>
+					</horizontalitem:HorizontalItemTemplateSelector.HorizontalLearningPathItemTemplate>
+					<dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+						<DataTemplate>
+							<Frame
+								Margin="1"
+								Padding="10"
+								BackgroundColor="White"
+								BorderColor="LightGray"
+								CornerRadius="6"
+								HasShadow="False">
+								<shimmer:LearnerShimmer Type="Profile" WidthRequest="300" />
+							</Frame>
+						</DataTemplate>
+					</dataTemplateSelector:SkeletonDataTemplateSelector.Skeleton>
+				</horizontalitem:HorizontalItemTemplateSelector>
+			</CollectionView.ItemTemplate>
+
+			<CollectionView.FooterTemplate>
+				<DataTemplate>
+					<ContentView Padding="0,0,5,5">
+						<Frame
+							Padding="1"
+							android:VisualElement.Elevation="5"
+							ios:VisualElement.IsShadowEnabled="true"
+							ios:VisualElement.ShadowColor="Black"
+							ios:VisualElement.ShadowOpacity="0.3"
+							ios:VisualElement.ShadowRadius="5"
+							BackgroundColor="{StaticResource WhiteColor}"
+							BorderColor="LightGray"
+							CornerRadius="4"
+							HasShadow="False"
+							HeightRequest="150"
+							IsClippedToBounds="True">
+							<ios:VisualElement.ShadowOffset>
+								<Size>
+									<x:Arguments>
+										<x:Double>2.5</x:Double>
+										<x:Double>2.5</x:Double>
+									</x:Arguments>
+								</Size>
+							</ios:VisualElement.ShadowOffset>
+							<StackLayout>
+								<Label
+									Margin="10"
+									HorizontalOptions="CenterAndExpand"
+									Text="SHOW ALL"
+									VerticalOptions="CenterAndExpand" />
+								<StackLayout.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Navigation_Tapped" />
+								</StackLayout.GestureRecognizers>
+							</StackLayout>
+						</Frame>
+					</ContentView>
+				</DataTemplate>
+			</CollectionView.FooterTemplate>
+		</learnerCustomCollectionView:LearnerCustomCollectionView>
+	</StackLayout>
+</ContentView>

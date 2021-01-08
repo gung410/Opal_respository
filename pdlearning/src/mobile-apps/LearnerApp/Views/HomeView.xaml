@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common:TabRootContentPage
+    x:Class="LearnerApp.Views.HomeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:calendar="clr-namespace:LearnerApp.Views.Home.Calendar"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.ListItemCard"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:home="clr-namespace:LearnerApp.Views.Sharing.Home;assembly=LearnerApp"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:learnerCustomRepeatableStackView="clr-namespace:LearnerApp.Controls.LearnerCustomRepeatableStackView;assembly=LearnerApp"
+    xmlns:newsfeed="clr-namespace:LearnerApp.Views.Home.Newsfeed;assembly=LearnerApp"
+    xmlns:outstandingTasks="clr-namespace:LearnerApp.Views.Home.OutstandingTasks;assembly=LearnerApp"
+    xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+    xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="Home"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:HomeViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StatusCourseStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="{StaticResource MainBodyTextColor}" />
+            </Style>
+            <Style x:Key="NumberOfStatusCourseStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource MainBodyTextColor}" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshingForRefreshView}">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <StackLayout Padding="0,0,0,10" BackgroundColor="#F9F9F9">
+                <StackLayout Padding="0">
+                    <StackLayout Padding="10" Orientation="Horizontal">
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <StackLayout HorizontalOptions="StartAndExpand">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource RobotoBold}"
+                                    FontSize="24"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Welcome back" />
+                                <Label FontSize="20" Text="{Binding Name}" />
+                            </StackLayout>
+                            <StackLayout
+                                HorizontalOptions="End"
+                                IsVisible="{Binding IsVisibleSetting}"
+                                VerticalOptions="Start"
+                                WidthRequest="24">
+                                <forms:SvgCachedImage
+                                    HeightRequest="24"
+                                    Source="setting.svg"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="24" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SettingCommand}" NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <Grid VerticalOptions="FillAndExpand">
+                    <StackLayout
+                        Padding="10,10,10,0"
+                        IsVisible="{Binding IsRefreshing, Converter={StaticResource InverseBoolConverter}}"
+                        Spacing="20">
+                        <Frame
+                            android:VisualElement.Elevation="5"
+                            ios:VisualElement.IsShadowEnabled="true"
+                            ios:VisualElement.ShadowColor="Black"
+                            ios:VisualElement.ShadowOpacity="0.3"
+                            ios:VisualElement.ShadowRadius="2.5"
+                            BackgroundColor="{StaticResource WhiteColor}"
+                            BorderColor="LightGray"
+                            CornerRadius="4"
+                            HasShadow="False"
+                            IsClippedToBounds="True">
+                            <ios:VisualElement.ShadowOffset>
+                                <Size>
+                                    <x:Arguments>
+                                        <x:Double>0</x:Double>
+                                        <x:Double>1.5</x:Double>
+                                    </x:Arguments>
+                                </Size>
+                            </ios:VisualElement.ShadowOffset>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="CenterAndExpand">
+                                    <Label Style="{StaticResource NumberOfStatusCourseStyle}" Text="{Binding NumberOfCompleteCourses}" />
+                                    <Label Style="{StaticResource StatusCourseStyle}" Text="Completed Courses" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="CenterAndExpand">
+                                    <Label Style="{StaticResource NumberOfStatusCourseStyle}" Text="{Binding NumberOfOngoingCourses}" />
+                                    <Label Style="{StaticResource StatusCourseStyle}" Text="Ongoing Courses" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+
+                        <StackLayout Spacing="20">
+                            <!--  Calendar  -->
+                            <calendar:CalendarSectionView BindingContext="{Binding CalendarSection}" />
+
+                            <!--  Newsfeed  -->
+                            <StackLayout IsVisible="{Binding IsShowNewsfeedWidget}">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding LoadmoreNewsfeedCommand}" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label
+                                        FontSize="{StaticResource LargeSize}"
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding NewsfeedTotalCount, StringFormat='News Feed ({0}) >'}" />
+                                    <Label
+                                        FontSize="{StaticResource MidMediumSize}"
+                                        IsVisible="{Binding NewsfeedTotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+                                        Text="see more"
+                                        TextColor="{StaticResource SecondaryTextColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+
+                                <learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView
+                                    x:Name="NewsfeedList"
+                                    IsVisible="{Binding NewsfeedTotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+                                    RealItemsSource="{Binding NewsfeedCollection}"
+                                    Spacing="10">
+                                    <BindableLayout.ItemTemplateSelector>
+                                        <newsfeed:NewsfeedDataTemplateSelectorImp />
+                                    </BindableLayout.ItemTemplateSelector>
+                                </learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView>
+
+                                <StackLayout IsVisible="{Binding Source={x:Reference NewsfeedList}, Path=IsVisible, Converter={StaticResource InverseBoolConverter}}">
+                                    <Label HorizontalOptions="CenterAndExpand" Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <!--  Outstanding tasks  -->
+                            <outstandingTasks:OutstandingTasksSectionView BindingContext="{Binding OutstandingTasksSection}" />
+
+                            <!--  Shared by order user  -->
+                            <home:SharingSectionView BindingContext="{Binding SharingSection}" />
+
+                            <!--  My learning  -->
+                            <controls:HorizontalListView
+                                EmptyListMessage="Browse the Catalogue and start your learning journey!"
+                                IsVisible="{Binding IsShowMyLearningWidget}"
+                                NavigationKey="MyLearning"
+                                NavigationTitle="My learning"
+                                Source="{Binding MyLearningCollection}"
+                                TotalCount="{Binding MyLearningTotalCount}" />
+
+                            <!--  Recommendations  -->
+                            <controls:HorizontalListView
+                                IsVisible="{Binding IsShowRecommendForYouWidget}"
+                                NavigationKey="RecommendationsForYou"
+                                NavigationTitle="Recommendations for You"
+                                Source="{Binding MyRecommendationsCollection}"
+                                TotalCount="{Binding RecommendationsTotalCount}" />
+
+                            <!--  Recommendations Organization  -->
+                            <controls:HorizontalListView
+                                IsVisible="{Binding IsShowRecommendForOrgWidget}"
+                                NavigationKey="RecommendationByYourOrganisation"
+                                NavigationTitle="Recommendations by Your Organisation"
+                                Source="{Binding MyRecommendationOrganizationCollection}"
+                                TotalCount="{Binding RecommendationsOrgTotalCount}" />
+
+                            <!--  Bookmark  -->
+                            <controls:HorizontalListView
+                                IsVisible="{Binding IsShowBookmarkWidget}"
+                                NavigationKey="Bookmarks"
+                                NavigationTitle="Bookmarks"
+                                Source="{Binding MyBookmarkCollection}"
+                                TotalCount="{Binding BookmarkTotalCount}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <Frame
+                        Margin="10"
+                        Padding="10"
+                        BackgroundColor="White"
+                        BorderColor="LightGray"
+                        CornerRadius="6"
+                        HasShadow="False"
+                        IsVisible="{Binding IsRefreshing}">
+                        <shimmer:LearnerShimmer
+                            Grid.Row="0"
+                            HeightRequest="500"
+                            Type="Profile" />
+                    </Frame>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
+</common:TabRootContentPage>

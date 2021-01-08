@@ -1,0 +1,71 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ 'Announcement' }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onClose()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <kendo-tabstrip class="opal-tabstrip top-merge announcement-detail-dialog__tabstrip"
+                  [animate]="false">
+    <kendo-tabstrip-tab [selected]="true">
+      <ng-template kendoTabTitle="">
+        {{ 'Information' | translator }}
+      </ng-template>
+      <ng-template kendoTabContent="">
+        <div class="announcement-detail-dialog__info">
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Title' | translator }}</label>
+            <span>{{announcement.title}}</span>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Status' | translator }}</label>
+            <status-indicator [currentStatus]="announcement.status"
+                              [mapping]="statusColorMap"></status-indicator>
+          </div>
+          <div class="form-controls-group"
+               *ngIf="announcement.scheduleDate">
+            <label for="ch2">{{ 'Schedule Date' | translator }}</label>
+            <span>{{announcement.scheduleDate | date: 'dd/MM/yyyy hh:mm a'}}</span>
+          </div>
+          <div class="form-controls-group"
+               *ngIf="announcement.sentDate">
+            <label for="ch2">{{ 'Sent Date' | translator }}</label>
+            <span>{{announcement.sentDate | date: 'dd/MM/yyyy hh:mm a'}}</span>
+          </div>
+          <div class="form-controls-group">
+            <label for="ch2">{{ 'Message' | translator }}</label>
+            <div externalLinkGuard
+                 [innerHTML]="preview"></div>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab>
+      <ng-template kendoTabTitle="">
+        {{ 'Recipients' | translator }}
+      </ng-template>
+      <ng-template kendoTabContent="">
+        <div class="announcement-detail-dialog__recipients">
+          <kendo-grid [hideHeader]="true"
+                      [data]="users">
+            <kendo-grid-column [width]="200"
+                               [title]="'Paticipant'">
+              <!-- Cell template of title field-->
+              <ng-template kendoGridCellTemplate
+                           let-dataItem>
+                <owner-info *ngIf="dataItem"
+                            [owner]="dataItem"></owner-info>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
+</div>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Close' | globalTranslator }}</button>
+</div>

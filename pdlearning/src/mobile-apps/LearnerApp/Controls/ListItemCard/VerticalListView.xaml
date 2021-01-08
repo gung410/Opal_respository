@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.ListItemCard.VerticalListView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:verticalItem="clr-namespace:LearnerApp.Controls.ListItemCard.VerticalItem">
+
+	<ContentView.Resources>
+		<ResourceDictionary>
+			<DataTemplate x:Key="verticalCourseItemTemplate">
+				<verticalItem:VerticalCourseItem BindingContext="{Binding .}" BookmarkRemoveItemTrigger="OnBookmarkTrigger" />
+			</DataTemplate>
+			<DataTemplate x:Key="verticalDigitalContentTemplate">
+				<verticalItem:VerticalDigitalContentItem BindingContext="{Binding .}" BookmarkRemoveItemTrigger="OnBookmarkTrigger" />
+			</DataTemplate>
+			<DataTemplate x:Key="verticalCommunityTemplate">
+				<verticalItem:VerticalCommunityItem BindingContext="{Binding .}" BookmarkRemoveItemTrigger="OnBookmarkTrigger" />
+			</DataTemplate>
+			<DataTemplate x:Key="verticalLearningPathTemplate">
+				<verticalItem:VerticalLearningPathItem BindingContext="{Binding .}" BookmarkRemoveItemTrigger="OnBookmarkTrigger" />
+			</DataTemplate>
+			<DataTemplate x:Key="verticalStandAloneFormTemplate">
+				<verticalItem:VerticalStandAloneFormItem BindingContext="{Binding .}" />
+			</DataTemplate>
+
+			<verticalItem:VerticalItemTemplateSelector
+				x:Key="verticalItemTemplateSelector"
+				VerticalCommunityItemTemplate="{StaticResource verticalCommunityTemplate}"
+				VerticalCourseItemTemplate="{StaticResource verticalCourseItemTemplate}"
+				VerticalDigitalContentItemTemplate="{StaticResource verticalDigitalContentTemplate}"
+				VerticalLearningPathItemTemplate="{StaticResource verticalLearningPathTemplate}"
+				VerticalStandAloneFormItemTemplate="{StaticResource verticalStandAloneFormTemplate}" />
+		</ResourceDictionary>
+	</ContentView.Resources>
+
+	<ContentView.Content>
+		<StackLayout>
+			<Label
+				x:Name="EmptyViewMessage"
+				HorizontalOptions="CenterAndExpand"
+				Text="Loading..." />
+			<RefreshView Refreshing="OnRefreshListView" VerticalOptions="FillAndExpand">
+				<CollectionView
+					x:Name="ListItem"
+					ItemTemplate="{StaticResource verticalItemTemplateSelector}"
+					RemainingItemsThreshold="0"
+					RemainingItemsThresholdReached="OnLoadmoreItem"
+					SelectionChanged="OnItemSelected"
+					SelectionMode="Single"
+					VerticalOptions="FillAndExpand"
+					VerticalScrollBarVisibility="Never">
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+					</CollectionView.ItemsLayout>
+					<!--  KEEP FOR HANDLE LOAD MORE  -->
+					<!--<CollectionView.Footer>
+						<StackLayout x:Name="LoadingFooter" IsVisible="false">
+							<forms:SvgCachedImage
+								HeightRequest="25"
+								HorizontalOptions="CenterAndExpand"
+								Source="waiting_loading.gif"
+								VerticalOptions="CenterAndExpand"
+								WidthRequest="25" />
+						</StackLayout>
+					</CollectionView.Footer>-->
+				</CollectionView>
+			</RefreshView>
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

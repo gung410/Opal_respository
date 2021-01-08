@@ -1,0 +1,29 @@
+<div class="card-upload">
+  <div class="card-upload__file">
+    <div class="card-upload__file-general">
+      <div class="card-upload__file-icon">
+        <span class="card-upload__icon-type k-file-group k-icon k-i-file"></span>
+      </div>
+      <div class="card-upload__file-info">
+        <div class="card-upload__file-name">{{ uploadParameters.file.name }}</div>
+        <div class="card-upload__file-size">{{ uploadParameters.file.size | fileSizeDisplay }} </div>
+        <div class="card-upload__file-status">{{ status }}</div>
+        <div class="card-upload__file-error"
+             *ngIf="errorMessage">{{ errorMessage }}</div>
+      </div>
+    </div>
+    <div class="card-upload__control">
+      <span class="card-upload__percent-upload">{{ uploadingPercentage }}%</span>
+      <button class="card-upload__remove-button"
+              kendoButton
+              (click)="onDelete()"
+              [icon]="'delete'"
+              [look]="'flat'"
+              [primary]="true"></button>
+    </div>
+  </div>
+  <div class="card-upload__progressbar">
+    <div class="card-upload__progress"
+         [style.width.%]="uploadingPercentage"></div>
+  </div>
+</div>

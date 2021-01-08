@@ -1,0 +1,77 @@
+.calendar-event-tooltip {
+  width: 422px;
+  min-height: 100px;
+  background-color: #ffffff;
+  padding: 16px;
+
+  &.webinar {
+    height: 216px;
+
+    .join-link-btn {
+      text-align: center;
+    }
+  }
+
+  .title {
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0 16px 8px 0;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    + div {
+      padding-top: 0;
+    }
+  }
+
+  .description {
+    margin: 0px;
+    padding: 8px 0 0 32px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    p {
+      margin: 0px;
+      display: contents;
+      word-break: break-word;
+    }
+  }
+
+  div {
+    color: #303450;
+    padding: 8px 0;
+  }
+
+  .calendar-icon {
+    margin-right: 4px;
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/calendar.svg') no-repeat center;
+  }
+
+  .clock-icon {
+    margin-right: 4px;
+    width: 24px;
+    height: 24px;
+    background: url('../assets/images/icons/clock24.svg') no-repeat center;
+  }
+
+  .webinar-live {
+    color: red;
+    font-weight: 500;
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  .calendar-event-tooltip {
+    width: auto;
+    max-width: 100%;
+  }
+}

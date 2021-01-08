@@ -1,0 +1,100 @@
+<div class="common-filter"
+     [formGroup]="form">
+  <div class="common-filter__header">
+    <div class="common-filter__title">
+      <span>{{ 'Filter' | translator}}</span>
+    </div>
+    <div class="common-filter__group-buttons">
+      <button class="button-white-bg"
+              kendoButton
+              (click)="onClear()">{{ 'Clear' | translator }}</button>
+      <button [disabled]="actionFn == null || actionFn.applyFn == null || !hasDataChange"
+              [primary]="true"
+              kendoButton
+              (click)="onApply()">{{ 'Apply' | translator }}</button>
+    </div>
+  </div>
+  <div class="common-filter__content">
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Place of Work' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.departmentSelectItems"
+                   [valueField]="'id'"
+                   [labelField]="'departmentName'"
+                   [fetchDataFn]="fetchDepartmentFn"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.department"
+                   formControlName="department"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Service Scheme' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.serviceSchemeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.serviceScheme"
+                   formControlName="serviceScheme"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Designation' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.designationSelectItems"
+                   [valueField]="'id'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.designation"
+                   formControlName="designation"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Developmental Role' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.developmentalRoleSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.developmentalRole"
+                   formControlName="developmentalRole"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Teaching Level' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.teachingLevelSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.teachingLevel"
+                   formControlName="teachingLevel"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Teaching Course of Study' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.teachingCourseOfStudySelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.teachingCourseOfStudy"
+                   formControlName="teachingCourseOfStudy"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Teaching Subject' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.teachingSubjectSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.teachingSubject"
+                   formControlName="teachingSubject"></opal-select>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="registrationFilterVm.learningFrameworksSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [multiple]="true"
+                   [(ngModel)]="registrationFilterVm.data.learningFrameworks"
+                   formControlName="learningFrameworks"></opal-select>
+    </div>
+  </div>
+</div>

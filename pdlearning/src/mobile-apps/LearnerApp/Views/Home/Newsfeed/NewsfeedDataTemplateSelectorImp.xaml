@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<newsfeed:NewsfeedDataTemplateSelector
+	x:Class="LearnerApp.Views.Home.Newsfeed.NewsfeedDataTemplateSelectorImp"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:newsfeed="clr-namespace:LearnerApp.Views.Home.Newsfeed"
+	xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp">
+
+	<newsfeed:NewsfeedDataTemplateSelector.CommunityPostFeeddDataTemplate>
+		<DataTemplate>
+			<newsfeed:CommunityPostFeedItem />
+		</DataTemplate>
+	</newsfeed:NewsfeedDataTemplateSelector.CommunityPostFeeddDataTemplate>
+	<newsfeed:NewsfeedDataTemplateSelector.PdpmSuggestCourseFeeddDataTemplate>
+		<DataTemplate>
+			<newsfeed:PdpmSuggestCourseFeedItem />
+		</DataTemplate>
+	</newsfeed:NewsfeedDataTemplateSelector.PdpmSuggestCourseFeeddDataTemplate>
+	<newsfeed:NewsfeedDataTemplateSelector.PostForwardDataTemplate>
+		<DataTemplate>
+			<newsfeed:PostForwardItem />
+		</DataTemplate>
+	</newsfeed:NewsfeedDataTemplateSelector.PostForwardDataTemplate>
+	<newsfeed:NewsfeedDataTemplateSelector.UserPostFeeddDataTemplate>
+		<DataTemplate>
+			<newsfeed:UserPostFeedItem />
+		</DataTemplate>
+	</newsfeed:NewsfeedDataTemplateSelector.UserPostFeeddDataTemplate>
+	<newsfeed:NewsfeedDataTemplateSelector.Skeleton>
+		<DataTemplate>
+			<Frame
+				Margin="1"
+				Padding="10"
+				BackgroundColor="White"
+				BorderColor="LightGray"
+				CornerRadius="6"
+				HasShadow="False">
+				<shimmer:LearnerShimmer HeightRequest="100" Type="Feed" />
+			</Frame>
+		</DataTemplate>
+	</newsfeed:NewsfeedDataTemplateSelector.Skeleton>
+</newsfeed:NewsfeedDataTemplateSelector>

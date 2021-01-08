@@ -1,0 +1,184 @@
+<div class="form-question-template">
+  <div>
+    <div class="form-question-template__item"
+         (click)="showImportQuestionDialog()">
+      <div class="form-question-template__type-container">
+        <button class="form-question-template__import-btn"
+                [primary]="true"
+                kendoButton>
+          <span class="icon-moe icon-moe-rectangle"></span>
+          {{'Import questions from repository' | translator}}
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="type !== formType.Poll">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.ShortText)">
+        <div class="form-question-template__type-container">
+          <div>{{'Free Text' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container">
+          <div class="form-question-template__free-text-input --row">
+            <div class="form-question-template__gray-placeholder"
+                 style="width: 50%;"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="type === formType.Quiz">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.FreeResponse)">
+        <div class="form-question-template__type-container">
+          <div>{{'Free response' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container --row --free-response">
+          <span class="form-question-template__icon icon-moe-correct"></span>
+          <div class="form-question-template__free-text-input">
+            <div class="form-question-template__gray-placeholder"
+                 style="width: calc(100% -30px);"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="type !== formType.Poll">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.TrueFalse)">
+        <div class="form-question-template__type-container">
+          <div>{{'True / False' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container --row">
+          <div class="form-question-template__option-container">
+            <div class="form-question-template__radio-checkbox"></div>
+            <div>{{'True' | translator}}</div>
+          </div>
+          <div class="form-question-template__option-container">
+            <div class="form-question-template__radio-checkbox"></div>
+            <div>{{'False' | translator}}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="form-question-template__item"
+         (click)="onQuestionTemplateClick(questionTypeEnum.SingleChoice)">
+      <div class="form-question-template__type-container">
+        <div>{{'Radio buttons' | translator}}</div>
+        <i class="icon sm add-revert"></i>
+      </div>
+      <div class="form-question-template__input-container --column">
+        <div class="form-question-template__option-container">
+          <div class="form-question-template__radio-checkbox"></div>
+          <div class="form-question-template__gray-placeholder"
+               style="width: 70%;"></div>
+        </div>
+        <div class="form-question-template__option-container">
+          <div class="form-question-template__radio-checkbox"></div>
+          <div class="form-question-template__gray-placeholder"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-question-template__item"
+         (click)="onQuestionTemplateClick(questionTypeEnum.MultipleChoice)">
+      <div class="form-question-template__type-container">
+        <div>{{'Checkboxes' | translator}}</div>
+        <i class="icon sm add-revert"></i>
+      </div>
+      <div class="form-question-template__input-container --column">
+        <div class="form-question-template__option-container">
+          <div class="form-question-template__rectangle-checkbox"></div>
+          <div class="form-question-template__gray-placeholder"
+               style="width: 70%;"></div>
+        </div>
+        <div class="form-question-template__option-container">
+          <div class="form-question-template__rectangle-checkbox"></div>
+          <div class="form-question-template__gray-placeholder"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="type !== formType.Poll">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.DropDown)">
+        <div class="form-question-template__type-container">
+          <div>{{'Drop down' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container">
+          <div class="form-question-template__gray-placeholder k-icon k-i-arrow-60-down icon center"
+               style="width: 80%;"></div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="type !== formType.Poll && type !== formType.Survey">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.FillInTheBlanks)">
+        <div class="form-question-template__type-container">
+          <div>{{'Fill in The Blanks' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container">
+          <div class="form-question-template__flex-line">
+            <span class="form-question-template__gray-fragment"></span>
+            <span class="form-question-template__border-bottom-fragment"></span>
+            <span class="form-question-template__gray-fragment"></span>
+          </div>
+          <div class="form-question-template__gray-placeholder"></div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="type !== formType.Poll">
+      <div class="form-question-template__item"
+           (click)="onDateQuestionTemplateClicked()">
+        <div class="form-question-template__type-container">
+          <div>{{'Date Picker' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container">
+          <div class="form-question-template__flex-line">
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+          </div>
+          <div class="form-question-template__flex-line">
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+          </div>
+          <div class="form-question-template__flex-line">
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__dark-gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+            <span class="form-question-template__gray-date"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="type !== formType.Poll && minorPriority == null">
+      <div class="form-question-template__item"
+           (click)="onQuestionTemplateClick(questionTypeEnum.Structure)">
+        <div class="form-question-template__type-container">
+          <div>{{'Section' | translator}}</div>
+          <i class="icon sm add-revert"></i>
+        </div>
+        <div class="form-question-template__input-container">
+          <img class="section"
+               src="assets/images/others/section.png">
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+@mixin preview-aria-col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  max-height: 100%;
+}
+
+lmm-outlet content-detail-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-grow: 1;
+  max-height: 100%;
+
+  > .content-management {
+    > .toolbar {
+      min-height: 80px;
+
+      > .toolbar__center-container {
+        > toolbar-center {
+          min-height: 80px;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+lmm-outlet .content-detail-page,
+course-detail-dialog .content-detail-page {
+  &__message {
+    justify-content: center;
+  }
+
+  &__message-container {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      & + span {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  &__assignment-form-editor {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__main-content-tabs {
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    max-height: 100%;
+  }
+
+  &__main-content-form {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__preview-digital-content {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .preview-aria {
+    display: flex;
+    flex-grow: 1;
+    min-height: 0;
+
+    &__left-col {
+      @include preview-aria-col();
+      max-width: 480px;
+      flex-shrink: 0;
+      margin-right: 20px;
+      min-width: 350px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    &__main-col {
+      @include preview-aria-col();
+      flex-grow: 1;
+      box-shadow: 0 0 10px $color-silver;
+      background: $white;
+      border-radius: 5px;
+
+      > * {
+        flex-grow: 1;
+        width: 100%;
+      }
+    }
+
+    &__preview-button-container {
+      flex-grow: 0;
+      display: flex;
+      justify-content: flex-end;
+      box-sizing: border-box;
+
+      kendo-dropdownbutton {
+        &::before {
+          border-top: 5px solid $color-light-gray;
+        }
+
+        button {
+          border: none;
+
+          &:hover,
+          &:focus {
+            background: $white !important;
+            color: $color-light-gray !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include flex-layout-media('lt-sm') {
+  lmm-outlet {
+    .content-detail-page {
+      .preview-aria {
+        flex-direction: column;
+
+        &__left-col {
+          margin-left: 0;
+          margin-right: 0;
+          max-width: none;
+        }
+
+        &__main-col {
+          margin-top: 20px;
+        }
+      }
+
+      &__preview-digital-content {
+        padding-left: 0;
+        padding-right: 0;
+
+        video {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@include flex-layout-media('lt-mobile') {
+  lmm-outlet {
+    .content-detail-page {
+      .preview-aria {
+        &__left-col {
+          min-width: auto;
+        }
+      }
+    }
+  }
+}

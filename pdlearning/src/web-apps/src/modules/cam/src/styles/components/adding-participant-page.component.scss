@@ -1,0 +1,84 @@
+adding-participant-page {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  max-width: 100%;
+
+  .adding-participant {
+    &__item-title {
+      font-size: $font-branding;
+      margin-top: 10px;
+      color: $color-blue-light;
+      text-transform: uppercase;
+
+      &.-selected {
+        color: $color-blue-dard;
+        font-weight: 500;
+      }
+    }
+
+    &__item-class-title {
+      font-size: $font-size-h3;
+      margin-top: 10px;
+      color: $color-blue-dard;
+      font-weight: 500;
+    }
+
+    &__item-references-container {
+      display: flex;
+    }
+
+    &__item-references {
+      margin: 10px 30px 10px 0;
+    }
+
+    &__item-references-title {
+      font-size: $font-branding;
+      color: $color-blue-light;
+      text-transform: uppercase;
+    }
+
+    &__item-references-value {
+      font-size: $font-branding;
+      color: $color-blue-dard;
+    }
+
+    &__learner-selection {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__individual-learner {
+      flex: 1 1 auto;
+    }
+
+    &__department-learner {
+      flex: 1 1 auto;
+    }
+
+    &__add-learner-btn {
+      flex: 0 1 auto;
+    }
+
+    &__list-participant {
+      padding: 20px 40px;
+    }
+  }
+
+  .btn-submit {
+    width: 100px;
+  }
+
+  .user-list-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__user-info {
+      min-width: 300px;
+    }
+
+    &__department {}
+  }
+}

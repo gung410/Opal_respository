@@ -1,0 +1,53 @@
+{
+  "images": [
+    {
+      "appearances": [],
+      "idiom": "ipad"
+    },
+    {
+      "appearances": [],
+      "idiom": "iphone"
+    },
+    {
+      "appearances": [],
+      "scale": "1x",
+      "idiom": "ipad",
+      "filename": "ipad_opal_logo.png"
+    },
+    {
+      "appearances": [],
+      "scale": "2x",
+      "idiom": "ipad",
+      "filename": "ipad_opal_logo@2x.png"
+    },
+    {
+      "appearances": [],
+      "scale": "3x",
+      "idiom": "ipad",
+      "filename": "ipad_opal_logo@3x.png"
+    },
+    {
+      "appearances": [],
+      "scale": "1x",
+      "idiom": "iphone",
+      "filename": "iphone_opal_logo.png"
+    },
+    {
+      "appearances": [],
+      "scale": "2x",
+      "idiom": "iphone",
+      "filename": "iphone_opal_logo@2x.png"
+    },
+    {
+      "appearances": [],
+      "scale": "3x",
+      "idiom": "iphone",
+      "filename": "iphone_opal_logo@3x.png"
+    }
+  ],
+  "properties": {},
+  "info": {
+    "version": 1,
+    "author": ""
+  }
+}

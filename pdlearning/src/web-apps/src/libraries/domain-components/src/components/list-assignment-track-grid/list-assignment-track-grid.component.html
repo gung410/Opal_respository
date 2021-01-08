@@ -1,0 +1,114 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [rowClass]="rowCallback"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <!-- <kendo-grid-column [field]="'selected'"
+                         [width]="60"
+                         [headerStyle]="{ 'text-align': 'center' }"
+                         [class]="{ 'align-center': true }">
+        <ng-template kendoGridHeaderTemplate
+                     let-column>
+          <input class="k-checkbox"
+                 type="checkbox"
+                 [(ngModel)]="checkAll"
+                 (click)="onCheckAll($event.target.checked)">
+        </ng-template>
+        <ng-template kendoGridCellTemplate
+                     let-dataItem>
+          <input class="k-checkbox"
+                 type="checkbox"
+                 [(ngModel)]="dataItem.selected"
+                 (click)="onCheckItem($event.target.checked, dataItem)">
+        </ng-template>
+      </kendo-grid-column> -->
+  <kendo-grid-column [title]="'Name'"
+                     [width]="300">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <owner-info *ngIf="dataItem.user"
+                  [owner]="dataItem.user"></owner-info>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="180"
+                     [title]="'Service Scheme'">
+    <!-- Cell template of status field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.serviceChemeDisplayText ? dataItem.serviceChemeDisplayText  : 'N/A'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="180"
+                     [title]="'Teaching Level'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingLevelDisplayText ? dataItem.teachingLevelDisplayText : 'N/A' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [width]="180"
+                     [title]="'Teaching Subject'">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.teachingSubjectsDisplayText ? dataItem.teachingSubjectsDisplayText : 'N/A'  }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Score'"
+                     [width]="160">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <span *ngIf="dataItem.quizAnswer == null">N/A</span>
+      <span *ngIf="dataItem.quizAnswer != null">{{ dataItem.quizAnswer.score }}</span>
+      <span style="margin-left: 5px"
+            *ngIf="dataItem.quizAnswer != null">({{ dataItem.quizAnswer.scorePercentage }}%)</span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Start Date'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.startDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'End Date'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.endDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Submission Date'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.submittedDate ? (dataItem.submittedDate | date: 'dd/MM/yyyy') : 'N/A' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Completion Rate'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{ dataItem.completionRate + '%'}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Peer Assessment Status'"
+                     [width]="200">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      {{dataItem.noOfAssessmentDone.displayAsText()}}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Status'"
+                     [width]="150">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

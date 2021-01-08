@@ -1,0 +1,25 @@
+<div class="question-blank-option-editor">
+  <kendo-contextmenu [target]="target"
+                     showOn="click"
+                     [alignToAnchor]="true"
+                     [anchorAlign]="defaultContextMenuAnchorAlign"
+                     [popupAlign]="defaultContextMenuPopupAlign"
+                     (popupClose)="onPopupClose($event)"
+                     (popupOpen)="onPopupOpen($event)">
+    <ng-template kendoContextMenuTemplate="">
+      <div class="question-blank-option-editor__title"> {{ 'Add blank area' | translator }}</div>
+      <div class="question-blank-option-editor__form">
+        <input kendoTextbox
+               [placeholder]="'Correct Answer' | translator"
+               [(ngModel)]="value">
+      </div>
+      <!-- <textarea kendoTextArea
+              [placeholder]="'Feedback'"></textarea> -->
+      <div class="question-blank-option-editor__actions">
+        <button kendoButton
+                [primary]="true"
+                (click)="onSubmitClicked()">{{ 'Submit' | translator }}</button>
+      </div>
+    </ng-template>
+  </kendo-contextmenu>
+</div>

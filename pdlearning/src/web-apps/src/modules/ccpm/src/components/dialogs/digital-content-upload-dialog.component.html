@@ -1,0 +1,47 @@
+<div class="digital-content-upload-dialog__header">
+  <div class="digital-content-upload-dialog__actions d-flex">
+    <span class="digital-content-upload-dialog__btn_close k-icon k-i-close"
+          (click)="closeDialog()"></span>
+  </div>
+</div>
+<opal-file-uploader class="digital-content-upload-dialog basic-info-tab__thumbnail-uploader"
+                    #fileUploader
+                    [(ngModel)]="thumbnailUrl"
+                    [uploadFolder]="'digital-contents'"
+                    [settings]="fileUploaderSetting"
+                    [additionalValidationFn]="additionalValidationFn()"
+                    (uploaderProgressChange)="onUploaderProgressChanged($event)"
+                    [showAdditionalProcessStatus]="isProcessingScormFile"
+                    kendoErrorTooltip>
+
+  <div class="opal-file-uploader__upload-progress column align-center-center"
+       [hidden]="!isProcessingScormFile"
+       [ngClass]="{ '-show': isProcessingScormFile }">
+    <div spinner="">
+    </div>
+    <span class="description central">{{ processScormStatus }}</span>
+  </div>
+
+</opal-file-uploader>
+<ng-template #zipPackageTemplate="">
+  <div class="digital-upload-content-dialog__scorm-confirmation column">
+    <div class="dialog-title">{{ 'Choose package type' | translator }}</div>
+    <kendo-dropdownlist #zipPackageControl
+                        [data]="zipPackages"
+                        [value]="zipPackages[0]"
+                        textField="text"
+                        valueField="value"></kendo-dropdownlist>
+    <div class="actions row">
+      <div class="flex"></div>
+      <button (click)="chooseZipPackage()"
+              kendoButton>
+        {{ 'Apply' | globalTranslator }}
+      </button>
+      <button (click)="chooseZipTypeDialog.close()"
+              kendoButton>
+        {{ 'Cancel' | globalTranslator }}
+      </button>
+    </div>
+
+  </div>
+</ng-template>

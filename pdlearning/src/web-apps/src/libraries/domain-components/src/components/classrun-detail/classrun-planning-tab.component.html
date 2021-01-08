@@ -1,0 +1,99 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Class Run Planning' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label>{{ "Class Run Facilitator" | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div style="margin-bottom: 10px;"
+               *ngFor="let facilitatorId of classRun.data.facilitatorIds">
+            <owner-info *ngIf="facilitatorId"
+                        [owner]="classRun.usersDic[facilitatorId]"></owner-info>
+          </div>
+          <span *ngIf="classRun.data.facilitatorIds.length === 0">N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       kendoErrorTooltip
+                       formControlName="facilitatorIds"
+                       [items]="classRun.facilitatorItems"
+                       [fetchDataFn]="fetchClassRunFacilitatorItemsFn"
+                       [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                       [ignoreItemFn]="ignoreClassRunFacilitatorItemFn"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       [(ngModel)]="classRun.facilitatorId"
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group">
+      <label>{{ "Class Run Co-Facilitator" | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">
+          <div style="margin-bottom: 10px;"
+               *ngFor="let cofacilitatorId of classRun.data.coFacilitatorIds">
+            <owner-info *ngIf="cofacilitatorId"
+                        [owner]="classRun.usersDic[cofacilitatorId]"></owner-info>
+          </div>
+          <span *ngIf="classRun.data.coFacilitatorIds.length === 0">N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       kendoErrorTooltip
+                       formControlName="coFacilitatorIds"
+                       [items]="classRun.coFacilitatorItems"
+                       [fetchDataFn]="fetchClassRunCoFacilitatorItemsFn"
+                       [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                       [ignoreItemFn]="ignoreClassRunCoFacilitatorItemFn"
+                       [labelField]="'fullName'"
+                       [valueField]="'id'"
+                       [clearable]="true"
+                       [(ngModel)]="classRun.coFacilitatorId"
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label>{{ 'Minimum Class Size' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">{{ classRun.minClassSize }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="minClassSize"
+                                [(ngModel)]="classRun.minClassSize"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label>{{ 'Maximum Class Size' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">{{ classRun.maxClassSize }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-numerictextbox class="form-control"
+                                type="number"
+                                [min]="0"
+                                [max]="maxInt"
+                                [decimals]="0"
+                                [format]="'n0'"
+                                autoCorrect="true"
+                                formControlName="maxClassSize"
+                                [(ngModel)]="classRun.maxClassSize"
+                                kendoErrorTooltip
+                                position="top"></kendo-numerictextbox>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

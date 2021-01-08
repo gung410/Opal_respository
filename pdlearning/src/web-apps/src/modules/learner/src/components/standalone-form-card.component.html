@@ -1,0 +1,23 @@
+<div class="learning-card"
+     [ngClass]="{ 'display-only': displayOnlyMode}">
+  <div>
+    <div class="info-container"
+         (click)="onStandaloneFormCardClick()">
+      <span class="card-status"
+            *ngIf="learningCardItem.formParticipantStatus && learningCardItem.formParticipantStatus !== myFormParticipantStatus.NotStarted"
+            [ngClass]="{
+   'in-progress': learningCardItem.formParticipantStatus === myFormParticipantStatus.Incomplete,
+   'completed': learningCardItem.formParticipantStatus === myFormParticipantStatus.Completed}">
+        {{ learningStatusText | translator}}
+      </span>
+      <div class="course-img">
+        <img src="{{ learningCardItem.imageUrl }}"
+             *ngIf="learningCardItem.imageUrl">
+      </div>
+      <div class="card-info">
+        <div class="card-title"
+             [title]="learningCardItem.title">{{ learningCardItem.title }}</div>
+      </div>
+    </div>
+  </div>
+</div>

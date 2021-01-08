@@ -1,0 +1,25 @@
+<div class="container-fluid webinar-error">
+  <div class="row mt-2">
+    <div class="error">
+      <div class="logo row">
+        <img class="center"
+             src="assets/images/logos/opal.png"
+             alt="opal 2.0">
+      </div>
+      <div class="frame-background mt-2 row">
+        <img class="center"
+             src="assets/images/others/webinar-error.png"
+             alt="frame">
+      </div>
+      <div class="row"
+           *ngIf="showTitle">
+        <h2>{{errorTitle}}</h2>
+      </div>
+      <br>
+      <div class="row">
+        <h5 class="center"
+            [innerHTML]="errorMessage"></h5>
+      </div>
+    </div>
+  </div>
+</div>

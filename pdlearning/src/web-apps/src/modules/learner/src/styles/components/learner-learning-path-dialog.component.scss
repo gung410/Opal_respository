@@ -1,0 +1,16 @@
+learner-learning-path-dialog {
+  .form-container {
+    padding: 0;
+  }
+
+  .dialog-content {
+    max-height: calc(95vh - 160px);
+  }
+}
+
+.learner-learning-path-dialog {
+  &__del-btn {
+    margin-right: auto;
+    margin-left: 0 !important;
+  }
+}

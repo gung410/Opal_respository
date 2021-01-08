@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+	x:Class="LearnerApp.Views.Home.OutstandingTasks.OutstandingTaskListPageView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+	xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+	xmlns:learnerCustomCollectionView="clr-namespace:LearnerApp.Controls.LearnerCustomCollectionView;assembly=LearnerApp"
+	xmlns:outstandingTasks="clr-namespace:LearnerApp.Views.Home.OutstandingTasks;assembly=LearnerApp"
+	xmlns:outstandingTasks1="clr-namespace:LearnerApp.ViewModels.Home.OutstandingTasks;assembly=LearnerApp"
+	xmlns:shimmer="clr-namespace:LearnerApp.Plugins.Shimmer;assembly=LearnerApp"
+	Title="Outstanding tasks"
+	base:ViewModelLocator.AutoWireViewModel="true"
+	x:DataType="outstandingTasks1:OutstandingTaskListPageViewModel">
+	<ContentPage.Content>
+		<RefreshView
+			x:Name="RefreshView"
+			Margin="10"
+			Refreshing="RefreshView_Refreshing"
+			VerticalOptions="FillAndExpand">
+			<StackLayout>
+				<learnerCustomCollectionView:LearnerCustomCollectionView
+					x:Name="List"
+					IsLoading="{Binding IsLoading}"
+					RealItemsSource="{Binding OutstandingTasks}"
+					RemainingItemsThreshold="{Binding RemainingItemThreshold}"
+					RemainingItemsThresholdReached="SourceCollection_RemainingItemsThresholdReached">
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+					</CollectionView.ItemsLayout>
+					<CollectionView.ItemTemplate>
+						<outstandingTasks:OutstandingTaskDataTemplateSelector />
+					</CollectionView.ItemTemplate>
+					<learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+						<DataTemplate>
+							<ContentView Padding="0,10,0,0">
+								<Frame
+									Margin="1,1,1,1"
+									Padding="10"
+									BackgroundColor="White"
+									BorderColor="LightGray"
+									CornerRadius="6"
+									HasShadow="False">
+									<shimmer:LearnerShimmer HeightRequest="200" Type="Feed" />
+								</Frame>
+							</ContentView>
+						</DataTemplate>
+					</learnerCustomCollectionView:LearnerCustomCollectionView.LoadMoreView>
+				</learnerCustomCollectionView:LearnerCustomCollectionView>
+			</StackLayout>
+		</RefreshView>
+	</ContentPage.Content>
+</common:BaseLearnerContentPage>
+

@@ -1,0 +1,30 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ 'Copy Data' | translator }}
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="form-controls-group">
+    <kendo-combobox class="search-input"
+                    #comboBox
+                    [data]="courseData"
+                    [valueField]="'id'"
+                    [textField]="'courseName'"
+                    [valuePrimitive]="true"
+                    [virtual]="virtual"
+                    [placeholder]="'Enter the course you want to copy Meta Data and Right from' | globalTranslator"
+                    [kendoDropDownFilter]
+                    (selectionChange)="onSelectionChange($event)"
+                    (click)="openPopup()"
+                    [(ngModel)]="model">
+    </kendo-combobox>
+  </div>
+</div>
+<div class="dialog-actions">
+  <button kendoButton
+          [disabled]="!selectedCourse"
+          [primary]="true"
+          (click)="onCourseImport()">{{ 'Import' | globalTranslator }}</button>
+  <button kendoButton
+          (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+</div>

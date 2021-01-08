@@ -1,0 +1,64 @@
+id,name,title,description,type,relpath,level,owner__id,creator__id,group__id,seq,config,content_plate,extra_plate,qn_hints,ans_explanation,max_mark,is_auto_marked,show_feedback_after_answer,show_feedback,rand_qns,rand_choice,ctime
+22637,,quiz 1,,equiz,,,4198,4198,9675,1000,,<p>introduction</p>,,,,,0,no,summary_report,1,1,2019/05/14 19:07:10
+22638,22638,,1+1=,mcq,22637/,1,4198,,0,1000,,<p>1+1=</p>,"array (
+  'respA' => '<p>1</p>',
+  'respB' => '<p>2</p>',
+  'respC' => '<p>3</p>',
+  'respD' => '<p>4</p>',
+  'respE' => '<p>5</p>',
+  'respF' => '',
+  'respG' => '',
+  'respH' => '',
+  'respI' => '',
+  'respJ' => '',
+  'right_resp' => 'B',
+  'choices_listing_layout' => 'horizontal',
+)",<p>abc hint</p>,<p>explantion</p>,1,1,yes,,0,0,2019/05/15 07:43:28
+22639,22639,,"1+1 = 2,",fib,22637/,1,4198,,0,1000,"a:2:{s:9:""word_list"";s:1:""0"";s:10:""blank_size"";s:1:""0"";}","<p>1+1 = <span class=""asm_select"">2</span>,</p>
+<p>2+<span class=""asm_select"">2</span> = 4</p>
+               extra_plate: array (
+  'word_list' => '',
+)","array (
+  'word_list' => '',
+)",<p>math hint</p>,<p>explanation</p>,1,1,yes,,0,0,2019/05/15 07:45:37
+22640,22640,,1+1,open,22637/,1,4198,,0,1000,,<p>1+1</p>,"array (
+  'right_resp' => '',
+)",<p>hint: 2</p>,<p>explaination: 1+1,1,0,yes,,0,0,2019/05/15 07:46:05
+22641,22641,,abc,qset,22637/,1,4198,,0,1000,"a:3:{s:27:""layout_question_subquestion"";s:10:""top_bottom"";s:11:""sub_display"";s:2:""50"";s:7:""display"";s:15:""instruction_top"";}","<p>abc</p>
+<p>test</p>","array (
+  'instruction' => '',
+)",,,0,0,yes,,0,0,2019/05/15 07:48:51
+22642,22642,,1+1,mcq,22637/22641,2,4198,,0,1000,,<p>1+1</p>,"array (
+  'respA' => '<p>1</p>',
+  'respB' => '<p>2</p>',
+  'respC' => '<p>3</p>',
+  'respD' => '<p>4</p>',
+  'respE' => '',
+  'respF' => '',
+  'respG' => '',
+  'respH' => '',
+  'respI' => '',
+  'respJ' => '',
+  'right_resp' => 'B',
+  'choices_listing_layout' => 'vertical',
+)",,,1,1,yes,,0,0,2019/05/15 07:49:12
+22643,22643,,2*1,msl,22637/22641/,2,4198,,0,1000,,<p>2*1</p>,"array (
+  'respA' => '<p>1</p>',
+  'respB' => '<p>2</p>',
+  'respC' => '<p>3</p>',
+  'respD' => '<p>2</p>',
+  'respE' => '',
+  'respF' => '',
+  'respG' => '',
+  'respH' => '',
+  'respI' => '',
+  'respJ' => '',
+  'right_resps' =>
+  array (
+    'B' => '1',
+    'D' => '1',
+    'A' => '0',
+    'C' => '0',
+  ),
+  'choices_listing_layout' => 'vertical',
+)",,,1,1,yes,,0,0,2019/05/15 07:49:34

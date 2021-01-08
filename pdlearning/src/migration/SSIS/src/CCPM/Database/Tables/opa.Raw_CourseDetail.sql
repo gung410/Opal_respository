@@ -1,0 +1,35 @@
+IF OBJECT_ID(N'opa.Raw_CourseDetail', N'U') IS NULL
+BEGIN
+	CREATE TABLE opa.Raw_CourseDetail(
+	ID	INT NOT NULL,
+	code varchar(max) NULL,
+	course_code	varchar(max) NULL,
+	class_code	varchar(max) NULL,
+	coursetitle	nvarchar(max) NULL,
+	description	ntext NULL,
+	objective ntext NULL,
+	targetaudience nvarchar(max) NULL,
+	sdate varchar(max) NULL,
+	edate	varchar(max) NULL,
+	duration_hour varchar(max) NULL,
+	duration_minutes varchar(max) NULL,
+	end_of_reg	varchar(max) NULL,
+	traisi_is_listed varchar(max) NULL,
+	traisi_course_type	varchar(max) NULL,
+	eduLevelPri	varchar(max) NULL,
+	eduLevelSec	varchar(max) NULL,
+	eduLevelPreU varchar(max) NULL,
+	keywords nvarchar(max) NULL,
+	trainingagency	nvarchar(max) NULL,
+	agg_Id	varchar(max) NULL,
+	creator__id	varchar(max) NULL,
+	owner__id varchar(max) NULL,
+	source	varchar(max) NULL,
+	status varchar(max) NULL,
+	is_approve	varchar(max) NULL,
+	ctime	varchar(max) NULL,
+	publisher__id varchar(max) NULL,
+	publish_time varchar(max) NULL,
+	PRIMARY KEY (ID)
+	)
+END

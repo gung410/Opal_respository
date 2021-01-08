@@ -1,0 +1,60 @@
+standalone-survey-question-adder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  position: relative;
+}
+
+.standalone-survey-question-adder {
+  display: flex;
+  height: 46px;
+  align-items: center;
+
+  &.-outline {
+    width: fit-content;
+    cursor: pointer;
+    color: $white;
+    background: $color-light-gray;
+    font-size: $font-h5;
+    padding: 2px 40px;
+    font-weight: $font-weight-medium;
+    border-radius: $main-border-radius;
+
+    &:hover {
+      background: $color-indigo;
+      color: $white;
+      @extend %smooth;
+    }
+
+    &:active {
+      background: $color-blue-jay;
+      @extend %smooth;
+    }
+
+    &[disabled] {
+      background: $color-light-gray;
+      opacity: 0.2;
+      @extend %smooth;
+    }
+
+    .add-btn-icon {
+      background: transparent;
+      border-color: transparent;
+      color: $white;
+      font-size: 22px;
+      position: initial;
+    }
+  }
+
+  &__question-separator {
+    background-color: $color-gainsboro;
+    mix-blend-mode: normal;
+    height: 1px;
+    flex-grow: 1;
+  }
+
+  &__add-title {
+    margin-left: 10px;
+  }
+}

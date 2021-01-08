@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FA016D3F-BC80-4150-BC50-385E1269404B}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{89a4fe7c-635d-49c9-8d8c-5cd363c0d68d}</TemplateGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>LearnerApp.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>LearnerApp.iOS</AssemblyName>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <IsProjectReferenceProvider>false</IsProjectReferenceProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchEnableSGenConc>false</MtouchEnableSGenConc>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
+    <CodesignEntitlements />
+    <MtouchLink>None</MtouchLink>
+    <MtouchFastDev>true</MtouchFastDev>
+    <DeviceSpecificBuild>true</DeviceSpecificBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\RandomNumberGenerator.cs">
+      <Link>RandomNumberGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Effects\IOSTooltipEffect.cs" />
+    <Compile Include="Effects\UnselectedTabColorEffect.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Spring\Spring.cs" />
+    <Compile Include="Helpers\Spring\SpringViewWrapper.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\CustomEditorRenderer.cs" />
+    <Compile Include="Renderers\CustomEntryRenderer.cs" />
+    <Compile Include="Renderers\CustomNavigationPageRenderer.cs" />
+    <Compile Include="Renderers\CustomPageRenderer.cs" />
+    <Compile Include="Renderers\OPALMediaElementRenderer.cs" />
+    <Compile Include="Renderers\Plugin\ShimmerRenderer.cs" />
+    <Compile Include="Renderers\Plugin\ShimmerViewRenderer.cs" />
+    <Compile Include="Renderers\Plugin\ShimmerWaveLayer.cs" />
+    <Compile Include="Renderers\WebViewVideoPlayerRenderer.cs" />
+    <Compile Include="Services\FilePicker.cs" />
+    <Compile Include="Services\AppVersion.cs" />
+    <Compile Include="Services\CloudFrontCookieSetup.cs" />
+    <Compile Include="Services\MediaService.cs" />
+    <Compile Include="Services\OAuth2PkceSupport.cs" />
+    <Compile Include="Services\PathDownload.cs" />
+    <Compile Include="Services\ScreenRecorderService.cs" />
+    <None Include="Entitlements.plist" />
+    <None Include="Info.plist" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\Roboto-Black.ttf" />
+    <BundleResource Include="Resources\Roboto-Bold.ttf" />
+    <BundleResource Include="Resources\Roboto-Italic.ttf" />
+    <BundleResource Include="Resources\Roboto-Light.ttf" />
+    <BundleResource Include="Resources\Roboto-Medium.ttf" />
+    <BundleResource Include="Resources\Roboto-Regular.ttf" />
+    <BundleResource Include="Resources\Roboto-Thin.ttf" />
+    <BundleResource Include="Resources\FontAwesome5Brands.otf" />
+    <BundleResource Include="Resources\FontAwesome5Regular.otf" />
+    <BundleResource Include="Resources\FontAwesome5Solid.otf" />
+    <BundleResource Include="Resources\Fonts\telerikfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1201.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\401.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\402.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\581.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\801.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Clock.imageset\Clock.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Clock.imageset\Clock1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Clock.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\ipad_opal_logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\ipad_opal_logo@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\ipad_opal_logo@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\iphone_opal_logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\iphone_opal_logo@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImages.imageset\iphone_opal_logo@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="ImageAssets.xcassets\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="ImageAssets.xcassets\nav_back.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="ImageAssets.xcassets\nav_back.imageset\nav_back%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="ImageAssets.xcassets\nav_back.imageset\nav_back%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\launch_logo.png" />
+    <BundleResource Include="Resources\home.png" />
+    <BundleResource Include="Resources\home%402x.png" />
+    <BundleResource Include="Resources\home%403x.png" />
+    <BundleResource Include="Resources\launch_logo%402x.png" />
+    <BundleResource Include="Resources\launch_logo%403x.png" />
+    <BundleResource Include="Resources\pd_planner.png" />
+    <BundleResource Include="Resources\pd_planner%402x.png" />
+    <BundleResource Include="Resources\pd_planner%403x.png" />
+    <BundleResource Include="Resources\catalogue%402x.png" />
+    <BundleResource Include="Resources\catalogue%403x.png" />
+    <BundleResource Include="Resources\catalogue.png" />
+    <BundleResource Include="Resources\learner.png" />
+    <BundleResource Include="Resources\learner%402x.png" />
+    <BundleResource Include="Resources\learner%403x.png" />
+    <BundleResource Include="Resources\report_vector.png" />
+    <BundleResource Include="Resources\black_star.svg" />
+    <BundleResource Include="Resources\search_not_found.svg" />
+    <BundleResource Include="Resources\social_share.svg" />
+    <BundleResource Include="Resources\standalone_form_poll.svg" />
+    <BundleResource Include="Resources\standalone_form_quiz.svg" />
+    <BundleResource Include="Resources\standalone_form_survey.svg" />
+    <BundleResource Include="Resources\trophy.svg" />
+    <BundleResource Include="Resources\white_star.svg" />
+    <BundleResource Include="Resources\show_more.svg" />
+    <BundleResource Include="Resources\content_clock.svg" />
+    <BundleResource Include="Resources\close.svg" />
+    <BundleResource Include="Resources\participation_down.svg" />
+    <BundleResource Include="Resources\bookmarked.svg" />
+    <BundleResource Include="Resources\clock.svg" />
+    <BundleResource Include="Resources\course_complete_circle.svg" />
+    <BundleResource Include="Resources\image_place_holder_h150.png" />
+    <BundleResource Include="Resources\image_place_holder_h60.png" />
+    <BundleResource Include="Resources\browser_image.png" />
+    <BundleResource Include="Resources\xamarin_logo.png" />
+    <BundleResource Include="Resources\bookmark.svg" />
+    <BundleResource Include="Resources\error_popup_icon.svg" />
+    <BundleResource Include="Resources\popup_icon.svg" />
+    <BundleResource Include="Resources\search.svg" />
+    <BundleResource Include="Resources\arrow_left.svg" />
+    <BundleResource Include="Resources\arrow_right.svg" />
+    <BundleResource Include="Resources\signout.svg" />
+    <BundleResource Include="Resources\default_avatar.png" />
+    <BundleResource Include="Resources\launch_logo_dark.png" />
+    <BundleResource Include="Resources\class_run_down_arrow.svg" />
+    <BundleResource Include="Resources\class_run_right_arrow.svg" />
+    <BundleResource Include="Resources\class_run_location.svg" />
+    <BundleResource Include="Resources\digital_content_poll.svg" />
+    <BundleResource Include="Resources\digital_content_rich_text.svg" />
+    <BundleResource Include="Resources\digital_content_survey.svg" />
+    <BundleResource Include="Resources\learning_path_icon.svg" />
+    <BundleResource Include="Resources\class_run_confirm.svg" />
+    <BundleResource Include="Resources\class_run_decline.svg" />
+    <BundleResource Include="Resources\document.svg" />
+    <BundleResource Include="Resources\filter_icon.svg" />
+    <BundleResource Include="Resources\assignments.svg" />
+    <BundleResource Include="Resources\audio.svg" />
+    <BundleResource Include="Resources\book.svg" />
+    <BundleResource Include="Resources\book_report.svg" />
+    <BundleResource Include="Resources\docx.svg" />
+    <BundleResource Include="Resources\gif.svg" />
+    <BundleResource Include="Resources\html.svg" />
+    <BundleResource Include="Resources\jpg.svg" />
+    <BundleResource Include="Resources\m4v.svg" />
+    <BundleResource Include="Resources\mp3.svg" />
+    <BundleResource Include="Resources\mp4.svg" />
+    <BundleResource Include="Resources\ogg.svg" />
+    <BundleResource Include="Resources\ogv.svg" />
+    <BundleResource Include="Resources\pdf.svg" />
+    <BundleResource Include="Resources\png.svg" />
+    <BundleResource Include="Resources\pptx.svg" />
+    <BundleResource Include="Resources\quiz.svg" />
+    <BundleResource Include="Resources\scorm.svg" />
+    <BundleResource Include="Resources\svg.svg" />
+    <BundleResource Include="Resources\video.svg" />
+    <BundleResource Include="Resources\xlsx.svg" />
+    <BundleResource Include="Resources\zip.svg" />
+    <BundleResource Include="Resources\picture_file.svg" />
+    <BundleResource Include="Resources\qr_code.svg" />
+    <BundleResource Include="Resources\attach_file.svg" />
+    <BundleResource Include="Resources\arrow.svg" />
+    <BundleResource Include="Resources\arrow_down.svg" />
+    <BundleResource Include="Resources\session.svg" />
+    <BundleResource Include="Resources\class_run_info.svg" />
+    <BundleResource Include="Resources\learning_path_create.svg" />
+    <BundleResource Include="Resources\learning_path_edit.svg" />
+    <BundleResource Include="Resources\loading.gif" />
+    <BundleResource Include="Resources\delete.svg" />
+    <BundleResource Include="Resources\no_user_selected.png" />
+    <BundleResource Include="Resources\remove.svg" />
+    <BundleResource Include="Resources\comment.svg" />
+    <BundleResource Include="Resources\more.svg" />
+    <BundleResource Include="Resources\copy.svg" />
+    <BundleResource Include="Resources\waiting_loading.gif" />
+    <BundleResource Include="Resources\send.svg" />
+    <BundleResource Include="Resources\learning_path_thumbnail.png" />
+    <BundleResource Include="Resources\eportfolio.svg" />
+    <BundleResource Include="Resources\social.svg" />
+    <BundleResource Include="Resources\more_page%402x.png" />
+    <BundleResource Include="Resources\more_page%403x.png" />
+    <BundleResource Include="Resources\community.svg" />
+    <BundleResource Include="Resources\setting.svg" />
+    <BundleResource Include="Resources\download.svg" />
+    <BundleResource Include="Resources\edit_pencil.svg" />
+    <BundleResource Include="Resources\question_mark.svg" />
+    <BundleResource Include="Resources\more_vertical.svg" />
+    <BundleResource Include="Resources\like.svg" />
+    <BundleResource Include="Resources\liked.svg" />
+    <BundleResource Include="Resources\ecertificate_placeholder@2x.png" />
+    <BundleResource Include="Resources\ecertificate_placeholder@3x.png" />
+    <BundleResource Include="Resources\ecertificate_thumbnail.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Cirrious.FluentLayout" Version="2.9.0" />
+    <PackageReference Include="EasyTipView" Version="1.0.1" />
+    <PackageReference Include="LibVLCSharp" Version="3.4.9" />
+    <PackageReference Include="LibVLCSharp.Forms" Version="3.4.9" />
+    <PackageReference Include="PCLCrypto" Version="2.0.147" />
+    <PackageReference Include="Plugin.DeviceOrientation" Version="1.0.7" />
+    <PackageReference Include="Plugin.HybridWebView" version="1.0.0.1" />
+    <PackageReference Include="Plugin.Toast" Version="2.2.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.7" />
+    <PackageReference Include="Telerik.UI.for.Xamarin" Version="2020.2.624.1" />
+    <PackageReference Include="VideoLAN.LibVLC.iOS" Version="3.3.10" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />
+    <PackageReference Include="Xamarin.TestCloud.Agent" Version="0.21.9" />
+    <PackageReference Include="ZXing.Net" Version="0.16.5" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LearnerApp\LearnerApp.csproj">
+      <Project>{a3dc657a-868b-4bf1-8217-aa0cf2cc519c}</Project>
+      <Name>LearnerApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Binding\LearnerApp.Binding.Wogaa.iOS\LearnerApp.Binding.Wogaa.iOS.csproj">
+      <Project>{38047BF7-CECE-4324-85DB-7C8ADB8F4F09}</Project>
+      <Name>LearnerApp.Binding.Wogaa.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+</Project>

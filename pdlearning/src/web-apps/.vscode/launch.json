@@ -1,0 +1,20 @@
+{
+  /**
+   * Install Chrome Debugger Extension for Visual Studio Code to debug your components with the
+   * Chrome browser: https://aka.ms/spfx-debugger-extensions
+   */
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Gulp bundle",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "stopOnEntry": false,
+      "args": ["bundle"],
+      "cwd": "${workspaceRoot}/apps/osd-spfx-webparts",
+      "runtimeArgs": ["--nolazy"],
+      "console": "internalConsole"
+    }
+  ]
+}

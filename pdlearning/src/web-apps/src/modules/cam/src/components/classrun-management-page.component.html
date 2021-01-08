@@ -1,0 +1,101 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup || canCreateClassRun()">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+      <div class="management-toolbar__right-container">
+        <button *ngIf="canCreateClassRun()"
+                kendoButton
+                [icon]="'plus'"
+                [primary]="true"
+                (click)="onCreateClassRun()">
+          {{ 'Create Class Run' | translator }}
+        </button>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #classRunManagementStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="stickyDependElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.AllClassRunsTab"
+                          [cssClass]="{'hidden': !canViewClassRuns() }">
+        <ng-template kendoTabTitle="">
+          {{ 'All Class Runs' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-classrun-grid *ngIf="canViewClassRuns()"
+                              [searchType]="SearchClassRunType.Owner"
+                              [filter]="filter"
+                              [course]="course"
+                              [courseId]="courseDetailPageInput.data.id"
+                              (loadedData)="loadedDataGrid($event)"
+                              (selectedContextMenu)="onClassRunGridContextMenuSelected($event)"
+                              (viewClassRun)="onViewClassRun($event)"
+                              [(selectedItems)]="allClassRunSelectedItems"
+                              [displayColumns]="allClassRunDisplayColumns"
+                              [indexActionColumns]="[0, 7]"
+                              [stickyDependElement]="classRunManagementStickyTabHeaderElement.headerElement"></list-classrun-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewCancellationClassRequests() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CancellationRequestsTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewCancellationClassRequests()"
+                                [checkHasDataFn]="checkSearchClassHasDataFnCreator(SearchClassRunType.CancellationPending)">
+            {{ 'Cancellation Requests' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-classrun-grid *ngIf="canViewCancellationClassRequests()"
+                              [searchType]="SearchClassRunType.NotApprovedCancellation"
+                              [filter]="filter"
+                              [course]="course"
+                              [courseId]="courseDetailPageInput.data.id"
+                              (viewClassRun)="onViewClassRunRequest($event, SearchClassRunType.CancellationPending)"
+                              [stickyDependElement]="classRunManagementStickyTabHeaderElement.headerElement">
+          </list-classrun-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewRescheduleClassRequests() }"
+                          [selected]="selectedTab === CAMTabConfiguration.RescheduleRequestsTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewRescheduleClassRequests()"
+                                [checkHasDataFn]="checkSearchClassHasDataFnCreator(SearchClassRunType.ReschedulePending)">
+            {{ 'Reschedule Requests' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-classrun-grid *ngIf="canViewRescheduleClassRequests()"
+                              [searchType]="SearchClassRunType.AllReschedule"
+                              [filter]="filter"
+                              [course]="course"
+                              [courseId]="courseDetailPageInput.data.id"
+                              (viewClassRun)="onViewClassRunRequest($event, SearchClassRunType.ReschedulePending)"
+                              [stickyDependElement]="classRunManagementStickyTabHeaderElement.headerElement">
+          </list-classrun-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewPendingRegistrationsAndWithdrawals() }"
+                          [selected]="selectedTab === CAMTabConfiguration.HasPendingRegistrationApprovalClassrunTab">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator *ngIf="canViewPendingRegistrationsAndWithdrawals()"
+                                [checkHasDataFn]="checkSearchClassHasDataFnCreator(SearchClassRunType.RegistrationApprover)">
+            {{ 'Pending Registrations and Withdrawals' | translator }}</data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-classrun-grid *ngIf="canViewPendingRegistrationsAndWithdrawals()"
+                              [searchType]="SearchClassRunType.RegistrationApprover"
+                              [filter]="filter"
+                              [course]="course"
+                              [courseId]="courseDetailPageInput.data.id"
+                              (viewClassRun)="onViewClassRunRequest($event, SearchClassRunType.RegistrationApprover)"
+                              [stickyDependElement]="classRunManagementStickyTabHeaderElement.headerElement">
+          </list-classrun-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

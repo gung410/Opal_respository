@@ -1,0 +1,19 @@
+<div class="batch-upload-files-dialog">
+  <batch-upload-file-content #batchUploadFileContent
+                             [uploadFolder]="uploadFolder"
+                             [icon]="icon"
+                             [maxFileCount]="fileNumber"
+                             [settings]="settings"
+                             [isPreviewMode]="isPreviewMode"></batch-upload-file-content>
+  <div class="batch-upload-files__control">
+    <button class="batch-upload-files__button"
+            (click)="onCancel()"
+            kendoButton>{{'Close' | globalTranslator }}</button>
+    <button class="batch-upload-files__button"
+            kendoButton
+            (click)="onSave()"
+            [primary]="true">
+      {{ 'Save' | globalTranslator }}
+    </button>
+  </div>
+</div>

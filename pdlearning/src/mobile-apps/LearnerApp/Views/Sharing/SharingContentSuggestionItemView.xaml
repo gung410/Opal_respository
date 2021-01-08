@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sharing="clr-namespace:LearnerApp.ViewModels.Sharing;assembly=LearnerApp"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:LearnerApp.Controls;assembly=LearnerApp"
+             xmlns:input="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="LearnerApp.Views.Sharing.SharingContentSuggestionItemView"
+             x:DataType="sharing:SharingSuggestionRecipientViewModel"
+             HeightRequest="65"
+             Padding="10,0,10,0">
+    <ContentView.Content>
+        <controls:LearnerContentFrame>
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ContentView>
+                    <forms:CachedImage
+                        Aspect="AspectFill"
+                        Source="{Binding ProfilePictureUrl}"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        VerticalOptions="Center">
+                        <forms:CachedImage.Transformations>
+                            <transformations:CircleTransformation />
+                        </forms:CachedImage.Transformations>
+                    </forms:CachedImage>
+                </ContentView>
+
+                <StackLayout
+                    Grid.Column="1"
+                    Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="16"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding FullName}"
+                        VerticalOptions="CenterAndExpand" />
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="14"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding EmailAddress}"
+                        TextColor="#8799BA"
+                        VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+
+                <Grid
+                    Grid.Column="2"
+                    MinimumWidthRequest="50"
+                    VerticalOptions="Fill">
+                    <ContentView IsVisible="{Binding ShowShareButton}">
+                        <controls:LearnerContentFrame>
+                            <input:RadButton
+                                Margin="0, 0, 0, 0"
+                                CornerRadius="6"
+                                BackgroundColor="Transparent"
+                                Command="{Binding AddToShareListCommand}"
+                                FontFamily="{StaticResource RobotoRegular}"
+                                FontSize="14"
+                                TextColor="{StaticResource DefaultTextColor}"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Share" />
+                        </controls:LearnerContentFrame>
+                    </ContentView>
+
+                    <input:RadButton
+                        IsVisible="{Binding IsSendingShare}"
+                        Margin="0, 0, 0, 0"
+                        CornerRadius="6"
+                        BackgroundColor="Transparent"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="12"
+                        TextColor="{StaticResource DefaultTextColor}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="False"
+                        Text="Sending..." />
+
+                    <input:RadButton
+                        IsVisible="{Binding ShowSharedView}"
+                        Margin="0, 0, 0, 0"
+                        CornerRadius="6"
+                        BackgroundColor="Transparent"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="14"
+                        TextColor="{StaticResource DefaultTextColor}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="False"
+                        Text="Shared" />
+                </Grid>
+            </Grid>
+        </controls:LearnerContentFrame>
+    </ContentView.Content>
+
+</ContentView>
+

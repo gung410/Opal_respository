@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.MyLearningPathsShowAllView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:controls="clr-namespace:LearnerApp.Controls.ListItemCard"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    Title="{Binding PageTitle}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="{StaticResource ContentPageColor}"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+        <StackLayout Padding="10" Spacing="10">
+            <Button
+                BackgroundColor="{StaticResource MainBodyTextColor}"
+                Command="{Binding CreateNewLearningPathCommand}"
+                CornerRadius="6"
+                FontFamily="{StaticResource RobotoRegular}"
+                IsVisible="{Binding IsVisibileLearningPathCUD}"
+                Text="+ Create New"
+                TextColor="White" />
+
+            <!--  LEARNING PATHS BY VERTICAL LIST  -->
+            <controls:VerticleLearningPath
+                MyLearningPathType="{Binding MyLearningPathType}"
+                OnLoadmoreCommand="{Binding LoadmoreCommand}"
+                OnRefreshCommand="{Binding RefreshCommand}"
+                Source="{Binding MyLearningPathsCollection}"
+                TotalCount="{Binding TotalCount}" />
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

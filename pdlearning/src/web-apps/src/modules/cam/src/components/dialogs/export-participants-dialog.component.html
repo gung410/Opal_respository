@@ -1,0 +1,68 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{'Export Participant' | translator }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'What will you export?' | translator }}</label>
+    <div class="k-checkbox-container">
+      <input class="k-radio"
+             name="export"
+             type="radio"
+             [checked]="exportParticipantVm.checkParticipantFromClassRun()"
+             (click)="exportParticipantVm.setParticipantFromClassRun(SelectParticipantClassRunType.ParticipantFromClassRun)">
+      <label>{{ 'Participants from all class runs' | translator }}</label>
+    </div>
+    <div class="k-checkbox-container">
+      <input class="k-radio"
+             name="export"
+             type="radio"
+             [checked]="exportParticipantVm.checkParticipantFromSelectedClassRun()"
+             (click)="exportParticipantVm.setParticipantFromClassRun(SelectParticipantClassRunType.ParticipantFromSelectedClassRun)">
+      <label>{{ 'Participants from selected class runs' | translator }}</label>
+    </div>
+    <opal-select class="form-control"
+                 *ngIf="exportParticipantVm.checkParticipantFromSelectedClassRun()"
+                 [fetchDataFn]="createFetchClassRunSelectFn"
+                 [(ngModel)]="exportParticipantVm.classRunIds"
+                 [labelField]="'classTitle'"
+                 [valueField]="'id'"
+                 [searchFields]="['classTitle','classRunCode']"
+                 [multiple]="true"
+                 [placeholder]="'Search For ClassRun' | translator"
+                 [dropdownBoundary]="'.dialog-content'">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <label for="ch2">{{ 'Select format to export' | translator }}</label>
+    <div class="k-checkbox-container">
+      <input class="k-radio"
+             name="selectExport"
+             type="radio"
+             [checked]="exportParticipantVm.checkExportParticipantCSVFileFormat()"
+             (click)="exportParticipantVm.setExportParticipantFileFormat(ExportParticipantFileFormatType.CSV)">
+      <label>{{ 'CSV' | translator }}</label>
+    </div>
+    <div class="k-checkbox-container">
+      <input class="k-radio"
+             name="selectExport"
+             type="radio"
+             [checked]="exportParticipantVm.checkExportParticipanExcelFileFormat()"
+             (click)="exportParticipantVm.setExportParticipantFileFormat(ExportParticipantFileFormatType.Excel)">
+      <label>{{ 'Excel' | translator }}</label>
+    </div>
+  </div>
+</div>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+  <button kendoButton
+          [primary]="true"
+          (click)="onProceed()">{{ 'Proceed' | globalTranslator }}</button>
+</div>

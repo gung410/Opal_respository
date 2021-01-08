@@ -1,0 +1,11 @@
+<div class="batch-upload-files__drop-file-area">
+  <img class="batch-upload-files__add-file-icon"
+       alt
+       [src]="icon">
+  <span class="batch-upload-files__title">{{"Drag here or click to browse files" | translator}}</span>
+  <input class="hidden-input"
+         type="file"
+         #fileInput
+         (change)="onFileSelect($event.target.files)"
+         multiple>
+</div>

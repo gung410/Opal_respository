@@ -1,0 +1,256 @@
+form-question-comparison {
+  display: flex;
+  width: 100%;
+}
+
+form-question-comparison * {
+  white-space: normal;
+}
+
+.form-question-comparison {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.8rem 0;
+  box-shadow: 1px 1px 3px 0 $color-gainsboro;
+  border-radius: 5px;
+
+  .--section & {
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    margin-left: 0.8rem;
+  }
+
+  &__heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.8rem;
+  }
+
+  &__body {
+    padding-left: 1.8rem;
+  }
+
+  &__title {
+    flex: 1;
+    padding: 0 0.8rem;
+  }
+
+  &__text {
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  &__title {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  &__numerical-order {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    @extend %box-sizing;
+    @extend %center-center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid $color-blue-dard;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-normal;
+    font-weight: bold;
+    color: $color-blue-dard;
+    border-radius: 50%;
+
+    .--section & {
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+
+  &__question-type {
+    margin-left: 1rem;
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+  }
+
+  &__answer {
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    word-break: break-word;
+
+    &.--short-text {
+      margin-top: 20px;
+      margin-left: 50px;
+      margin-bottom: 15px;
+      margin-right: 15px;
+      padding-left: 1rem;
+      border: 1px solid $color-gainsboro;
+      border-radius: 5px;
+    }
+  }
+
+  &__options {
+    margin: 0;
+    padding: 0 0.8rem;
+    list-style: none;
+  }
+
+  &__option {
+    padding: 0.5rem;
+
+    & + & {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__option-value {
+    display: flex;
+    position: relative;
+    padding-left: 0.75rem;
+    width: calc(100% - 30px);
+  }
+
+  &__correct-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    .form-question-comparison & {
+      margin-top: -4px;
+    }
+  }
+
+  &__form-control {
+    margin: 0 1rem;
+
+    &.--date {
+      display: block;
+      width: 93%;
+
+      & + & {
+        margin-top: 1rem;
+      }
+    }
+
+    &.--changed {
+      border: 3px solid #f5e718;
+      border-radius: 5px;
+    }
+
+    &.--correct-checked {
+      border: 2px solid green;
+    }
+
+    &.--correct-remove {
+      border: 2px solid red;
+    }
+  }
+
+  .option-media {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    margin-top: 1rem;
+    padding: 0.5rem 0 0.5rem 1.75rem;
+
+    .image {
+      max-height: 100%;
+      width: auto;
+      margin: 0;
+    }
+
+    .video {
+      max-height: 100%;
+      width: auto;
+      margin: 0;
+    }
+  }
+
+  .blank-answer {
+    margin: 0 5px;
+    font-weight: bold;
+    border-bottom: 3px solid black;
+    padding: 5px;
+  }
+}
+
+.form-section-comparison {
+  margin-bottom: 0.8rem;
+
+  &.--section {
+    padding: 0.8rem 0;
+  }
+
+  &__container {
+    margin: 0 0.8rem;
+    padding: 0.8rem 0;
+    border-radius: 5px;
+    border-left: 3px solid transparent;
+
+    .--section & {
+      border-color: $color-gainsboro;
+      padding: 0;
+    }
+  }
+
+  &__heading {
+    padding: 0.8rem;
+    box-sizing: border-box;
+  }
+
+  &__section-type {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__numerical-order {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    @extend %box-sizing;
+    @extend %center-center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid $color-blue-dard;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-normal;
+    font-weight: $font-weight-medium;
+    color: $color-blue-dard;
+    border-radius: 50%;
+  }
+
+  &__type-indicator {
+    margin-left: 0.9rem;
+    text-transform: uppercase;
+    font-size: $font-h6;
+    font-weight: $font-weight-medium;
+    color: $color-blue-light;
+  }
+
+  &__title {
+    margin-bottom: 12px;
+    color: $color-blue-dard;
+    font-size: $font-h4;
+    font-weight: 500;
+    max-width: 100%;
+    white-space: break-spaces;
+  }
+
+  &__description {
+    margin-top: 20px;
+    margin-left: 35px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+  }
+}
+
+.form-section-comparison * {
+  white-space: normal;
+}

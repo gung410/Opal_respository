@@ -1,0 +1,52 @@
+<div class="dialog-title"
+     style="align-items: center;">
+  <div>{{ 'Add Form' | translator }}</div>
+  <div class="flex"
+       style="display: flex; justify-content: center;">
+    <div class="search-field">
+      <search-input [(ngModel)]="searchText"
+                    [placeholder]="'Description or a form title...' | translator"
+                    (search)="onSearchForms()"></search-input>
+    </div>
+  </div>
+  <button (click)="cancel()"
+          [look]="'outline'"
+          kendoButton>Cancel</button>
+</div>
+
+<kendo-grid class="home-grid column flex"
+            #grid
+            [data]="gridView"
+            [pageable]="true"
+            [pageSize]="pageSize"
+            [skip]="pageNumber"
+            (pageChange)="onGridPageChange($event)">
+  <kendo-grid-column [title]="'Type' | globalTranslator"
+                     field="type"
+                     width="64">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <img class="grid-file-type"
+           src="assets/images/icons/sm/quiz.svg"
+           *ngIf="!dataItem.fileExtension; else fileUploadIcon">
+      <ng-template #fileUploadIcon="">
+        <img class="grid-file-type"
+             src="assets/images/icons/digital-content/{{ dataItem.fileExtension }}.svg">
+      </ng-template>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [title]="'Title' | globalTranslator"
+                     field="title">
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col"
+                     [title]
+                     width="150">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <div style="display: flex; float: right;">
+        <i class="icon add-item"
+           (click)="addItem(dataItem)"></i>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

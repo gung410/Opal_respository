@@ -1,0 +1,121 @@
+audit-log-tab {
+  display: flex;
+  flex-direction: column;
+
+  .audit-log-tab {
+    &__header {
+      padding: 25px 0;
+    }
+
+    &__header-right {
+      text-align: right;
+
+      > .btn-compare {
+        margin-left: 15px;
+      }
+    }
+
+    &__alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: $main-border-radius;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &.alert-danger {
+        color: $color-blue-dard;
+        background-color: $color-coral-danger;
+      }
+
+      .no-underline {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .btn-undo {
+        padding-left: 5px;
+      }
+
+      .btn-close {
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  .audit-log-grid {
+    &.opal-grid {
+      .k-grid-header .k-header {
+        border-top: 1px solid $color-gainsboro;
+
+        &:first-child {
+          border-top-left-radius: $main-border-radius;
+          border-bottom-left-radius: $main-border-radius;
+        }
+
+        &:last-child {
+          border-top-right-radius: $main-border-radius;
+          border-bottom-right-radius: $main-border-radius;
+        }
+      }
+    }
+
+    tr {
+      td {
+        &:nth-of-type(2) {
+          color: $color-blue-navy;
+        }
+      }
+    }
+  }
+
+  .k-grid-content {
+    min-height: 40vh;
+  }
+}
+
+.audit-revert-dialog {
+  display: flex;
+  flex-direction: column;
+
+  .dialog-header {
+    &__title {
+      font-size: $font-h3;
+      color: $color-blue-dard;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+  }
+
+  .dialog-content {
+    &__information,
+    .form-title {
+      font-size: $font-h6;
+      color: $color-blue-dard;
+    }
+
+    &__information {
+      margin-bottom: 38px;
+
+      &-value {
+        color: $color-blue-navy;
+      }
+    }
+
+    .form-title {
+      margin-bottom: 10px;
+    }
+
+    .form-controls-group {
+      margin-bottom: 60px;
+
+      .k-combobox,
+      .k-dropdown {
+        min-width: 670px;
+      }
+    }
+  }
+}

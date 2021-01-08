@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:achievement="clr-namespace:LearnerApp.ViewModels.Achievement;assembly=LearnerApp"
+             xmlns:learnerCustomRepeatableStackView="clr-namespace:LearnerApp.Controls.LearnerCustomRepeatableStackView;assembly=LearnerApp"
+             xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+             xmlns:eCertificate="clr-namespace:LearnerApp.Views.Achievement.ECertificate;assembly=LearnerApp"
+             x:Class="LearnerApp.Views.Achievement.AchievementECertificateOverviewView"
+             x:DataType="achievement:AchievementECertificateOverviewViewModel">
+    <StackLayout Orientation="Vertical" Spacing="20">
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowAllCommand}" />
+                </StackLayout.GestureRecognizers>
+                <Label
+                    FontSize="{StaticResource LargeSize}"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding TotalCount, StringFormat='Certificates ({0}) >'}" />
+                <Label
+                    FontSize="{StaticResource MidMediumSize}"
+                    IsVisible="{Binding TotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+                    Text="see more"
+                    TextColor="{StaticResource SecondaryTextColor}"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView
+                x:Name="List"
+                IsVisible="{Binding IsShowList}"
+                RealItemsSource="{Binding ECertificates}"
+                IsLoading="{Binding IsLoading}"
+                Spacing="10">
+                <BindableLayout.ItemTemplateSelector>
+                    <eCertificate:AchievementECertificateDataTemplateSelector />
+                </BindableLayout.ItemTemplateSelector>
+                <BindableLayout.EmptyView>
+                    <Label HorizontalOptions="CenterAndExpand" Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+                </BindableLayout.EmptyView>
+            </learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView>
+        </StackLayout>
+    </StackLayout>
+
+</ContentView>

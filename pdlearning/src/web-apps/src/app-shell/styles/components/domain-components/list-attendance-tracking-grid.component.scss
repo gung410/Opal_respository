@@ -1,0 +1,13 @@
+list-attendance-tracking-grid {
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+
+  .list-attendance-tracking-grid {
+    &__view-absence-detail-icon {
+      font-size: 20px;
+      margin-right: 3px;
+    }
+  }
+}

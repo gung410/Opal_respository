@@ -1,0 +1,40 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Class Run Application' | translator }}</label>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Application Start Date' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">{{ (classRun.applicationStartDate | date:'dd/MM/yyyy') || 'N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #startDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="startDatePicker.toggle(true)"
+                            formControlName="applicationStartDate"
+                            [(ngModel)]="classRun.applicationStartDate"
+                            kendoErrorTooltip
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Application End Date' | translator }}</label>
+      <editable [modeView]="showClassRunDetailViewOnly()">
+        <ng-template editableViewMode="">{{ (classRun.applicationEndDate | date:'dd/MM/yyyy') || 'N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <kendo-datepicker class="form-control"
+                            #endDatePicker
+                            [format]="'dd/MM/yyyy'"
+                            [placeholder]="''"
+                            (focus)="endDatePicker.toggle(true && mode !== ClassRunDetailMode.View)"
+                            kendoErrorTooltip
+                            formControlName="applicationEndDate"
+                            [(ngModel)]="classRun.applicationEndDate"
+                            position="top"></kendo-datepicker>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

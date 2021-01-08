@@ -1,0 +1,22 @@
+lmm-outlet assignment-detail-page {
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  assignment-form-editor {
+    padding: 10px 0px;
+
+    .assignment-form-editor {
+      &__left-col {
+        height: fit-content;
+        background: $white;
+      }
+
+      &__right-col {
+        background: $white;
+      }
+    }
+  }
+}

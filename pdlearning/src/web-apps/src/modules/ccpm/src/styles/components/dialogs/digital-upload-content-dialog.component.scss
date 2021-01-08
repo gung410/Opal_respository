@@ -1,0 +1,73 @@
+digital-upload-content-dialog {
+  max-height: 100%;
+  max-width: 100%;
+  width: 820px;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+
+  .sub-title {
+    font-weight: $font-weight-medium;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin: 0 0 10px 0;
+
+    > label {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 24px;
+      color: #9eaebe;
+    }
+
+    > .input-control {
+      width: 100%;
+    }
+  }
+
+  .uploader {
+    position: relative;
+    height: 400px;
+    margin-top: 20px;
+
+    .content-type-icon {
+      width: 102px;
+      height: 119px;
+      margin: 0 auto;
+      display: block;
+
+      &.pdf {
+        background: url(../assets/images/icons/sm/pdf.svg) center no-repeat !important;
+      }
+    }
+
+    .add-file-icon {
+      width: 100px;
+      margin: 0 auto;
+    }
+
+    .filename {
+      position: absolute;
+      bottom: 10px;
+      right: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.digital-upload-content-dialog {
+  &__scorm-confirmation {
+    .actions.row {
+      margin-top: 20px;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.k-notification-group {
+  z-index: 9999;
+  right: 20px !important;
+  top: 60px !important;
+
+  .k-notification-success {
+    background-color: $color-turquoise;
+    border-color: $color-turquoise;
+  }
+
+  .k-notification {
+    padding: 20px 25px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
+    font-size: 17px;
+
+    .k-notification-wrap>.k-icon {
+      margin-top: 4px;
+    }
+  }
+}

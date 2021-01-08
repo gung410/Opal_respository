@@ -1,0 +1,40 @@
+<div class="error-container welcome-container col-12 col-md-8 col-lg-10">
+  <div class="error">
+    <div class="user-info"
+         *ngIf="currentUser">
+      <p class="user-info__text">Welcome</p>
+      <img class="user-info__image"
+           src="{{currentUser.avatarUrl || defaultAvatar}}">
+      <p class="user-info__name">{{currentUser.fullName}}</p>
+      <p class="user-info__email">{{currentUser.emails}}</p>
+    </div>
+    <div *ngIf="!currentUser">
+      <p class="error__title">{{errorMessageTitle | translator}}</p>
+      <div class="error__circle">
+        <img src="{{errorImage}}">
+      </div>
+    </div>
+    <p class="error__sub-description"
+       *ngIf="listModule && listModule.length > 0">{{moduleMessageDescription | translator}}</p>
+    <div class="err-apps-switcher row"
+         *ngIf="listModule && listModule.length > 0">
+      <div class="err-apps-switcher__item col-4 col-md-2"
+           *ngFor="let module of listModule"
+           (click)="onAppClick(module.mainUrl)">
+        <div class="text-center">
+          <img class="err-apps-switcher__item-image"
+               [src]="moduleLogoPath">
+          <p class="err-apps-switcher__item-label">{{module.label}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="error-container__action-container">
+      <p class="error__action"
+         *ngIf="errorMessageAction && !isInIframe"
+         (click)="tryAgain()"><span>{{errorMessageAction | translator}}</span></p>
+      <p class="error__action"
+         *ngIf="canLogOut"
+         (click)="onLogout()"><span>{{"Sign out" | translator}}</span></p>
+    </div>
+  </div>
+</div>

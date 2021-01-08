@@ -1,0 +1,12 @@
+assign-assignment-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 350px;
+
+  .assign-assignment-dialog {
+    &__to-title {
+      margin-left: 30px !important;
+    }
+  }
+}

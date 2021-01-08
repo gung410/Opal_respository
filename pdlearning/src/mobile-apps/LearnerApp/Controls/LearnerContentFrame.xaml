@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Frame
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    ios:VisualElement.IsShadowEnabled="true"
+    ios:VisualElement.ShadowColor="Black"
+    ios:VisualElement.ShadowOpacity="0.3"
+    ios:VisualElement.ShadowRadius="2.5"
+    android:VisualElement.Elevation="5"
+    Padding="10"
+    BorderColor="Transparent"
+    CornerRadius="6"
+    HasShadow="False"
+    x:Class="LearnerApp.Controls.LearnerContentFrame">
+    <ios:VisualElement.ShadowOffset>
+        <Size>
+            <x:Arguments>
+                <x:Double>0</x:Double>
+                <x:Double>1.5</x:Double>
+            </x:Arguments>
+        </Size>
+    </ios:VisualElement.ShadowOffset>
+</Frame>
+

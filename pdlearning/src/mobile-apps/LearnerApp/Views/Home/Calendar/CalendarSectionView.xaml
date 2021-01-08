@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Home.Calendar.CalendarSectionView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+	IsVisible="{Binding IsShowCalendarSection}">
+
+	<ContentView.Content>
+		<Frame
+			Padding="10"
+			android:VisualElement.Elevation="5"
+			ios:VisualElement.IsShadowEnabled="true"
+			ios:VisualElement.ShadowColor="Black"
+			ios:VisualElement.ShadowOpacity="0.3"
+			ios:VisualElement.ShadowRadius="2.5"
+			BorderColor="LightGray"
+			CornerRadius="6"
+			HasShadow="False"
+			IsClippedToBounds="True"
+			VerticalOptions="Start">
+			<ios:VisualElement.ShadowOffset>
+				<Size>
+					<x:Arguments>
+						<x:Double>0</x:Double>
+						<x:Double>1.5</x:Double>
+					</x:Arguments>
+				</Size>
+			</ios:VisualElement.ShadowOffset>
+			<Frame.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding OpenFullCalendarCommand}" />
+			</Frame.GestureRecognizers>
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				<Frame
+					Padding="0"
+					BorderColor="LightGray"
+					CornerRadius="8"
+					HasShadow="False"
+					HorizontalOptions="Start"
+					IsClippedToBounds="True"
+					VerticalOptions="Start"
+					WidthRequest="80">
+					<StackLayout Spacing="0">
+						<StackLayout
+							BackgroundColor="Red"
+							HeightRequest="30"
+							IsClippedToBounds="True"
+							VerticalOptions="Start"
+							WidthRequest="80">
+							<Label
+								HorizontalOptions="CenterAndExpand"
+								Text="{Binding ThisMonth}"
+								TextColor="White"
+								VerticalOptions="CenterAndExpand" />
+						</StackLayout>
+						<StackLayout
+							HeightRequest="50"
+							HorizontalOptions="Start"
+							VerticalOptions="Start"
+							WidthRequest="80">
+							<StackLayout>
+								<Label
+									FontSize="30"
+									HorizontalOptions="CenterAndExpand"
+									Text="{Binding ThisDay}"
+									VerticalOptions="CenterAndExpand" />
+							</StackLayout>
+						</StackLayout>
+					</StackLayout>
+				</Frame>
+
+				<StackLayout Spacing="0" VerticalOptions="CenterAndExpand">
+					<Label Text="{Binding TotalEventToDay, StringFormat='{0} personal event(s) today'}" />
+					<Label Text="{Binding TotalEventThisWeek, StringFormat='{0} event(s) this week'}" />
+					<Label Text="{Binding TotalEventThisMonth, StringFormat='{0} event(s) this month'}" />
+				</StackLayout>
+			</StackLayout>
+		</Frame>
+	</ContentView.Content>
+</ContentView>

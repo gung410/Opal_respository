@@ -1,0 +1,24 @@
+qr-code-dialog {
+  width: 450px;
+
+  .qr-dialog-container {
+    display: flex;
+    flex-direction: row;
+
+    .qr-dialog-left {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+
+      .form-container {
+        padding: 10px 0 0 0;
+      }
+    }
+
+    .qr-dialog-right {
+      .form-container {
+        padding: 10px 0 0 0;
+      }
+    }
+  }
+}

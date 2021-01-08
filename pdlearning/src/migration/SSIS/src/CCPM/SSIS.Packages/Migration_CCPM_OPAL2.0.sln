@@ -1,0 +1,102 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Migration_CCPM_OPAL2.0", "Migration_CCPM_OPAL2.0.dtproj", "{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Database", "01.Database", "{D82C5510-3557-4985-8B15-4606960101F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.SSIS", "02.SSIS", "{98BFE92A-7FB0-47FF-A749-5F140F2C11FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{6685F1A0-FE67-4C45-AAEA-D40CE32566FC}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\Schemas\mig.sql = ..\Database\Schemas\mig.sql
+		..\Database\Schemas\opa.sql = ..\Database\Schemas\opa.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoreProcedures", "StoreProcedures", "{DE14EA32-8B81-4985-BA8F-C0AF5BC4F624}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\StoreProcedures\mia.prc_CCPM_Generate_Migration_Report_TotalRecordAfterMig_DBTable_Forms_Update.sql = ..\Database\StoreProcedures\mia.prc_CCPM_Generate_Migration_Report_TotalRecordAfterMig_DBTable_Forms_Update.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_Insert.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_Insert.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_CSV_Update.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_CSV_Update.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_DBTable_Forms_Update.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_DBTable_Forms_Update.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_DBTable_Get.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecord_DBTable_Get.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecordAfterMig_DBTable_Update.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Generate_Migration_Report_TotalRecordAfterMig_DBTable_Update.sql
+		..\Database\StoreProcedures\mig.prc_CCPM_Raw_Table_create.sql = ..\Database\StoreProcedures\mig.prc_CCPM_Raw_Table_create.sql
+		..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_ErrorLog_Get.sql = ..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_ErrorLog_Get.sql
+		..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_Get.sql = ..\Database\StoreProcedures\mig.prc_Generate_Migration_Report_Get.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_Course_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_Course_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_DigitalContents_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_DigitalContents_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormAnswers_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormAnswers_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormQuestionAnswers_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormQuestionAnswers_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormQuestions_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_FormQuestions_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_Forms_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_Forms_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_Lecture_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_Lecture_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_Section_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_Section_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_SharedQuestions_Insert.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_SharedQuestions_Insert.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Migration_Table_create.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Migration_Table_create.sql
+		..\Database\StoreProcedures\opa.prc_CCPM_Staging_Table_create.sql = ..\Database\StoreProcedures\opa.prc_CCPM_Staging_Table_create.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{6A37CF1A-6B47-4A3C-908E-377DBFDC6983}"
+	ProjectSection(SolutionItems) = preProject
+		..\Database\Tables\mig.GenerateMigrationReport.sql = ..\Database\Tables\mig.GenerateMigrationReport.sql
+		..\Database\Tables\opa.Migration_Course.sql = ..\Database\Tables\opa.Migration_Course.sql
+		..\Database\Tables\opa.Migration_DigitalContents.sql = ..\Database\Tables\opa.Migration_DigitalContents.sql
+		..\Database\Tables\opa.Migration_FormAnswers.sql = ..\Database\Tables\opa.Migration_FormAnswers.sql
+		..\Database\Tables\opa.Migration_FormQuestionAnswers.sql = ..\Database\Tables\opa.Migration_FormQuestionAnswers.sql
+		..\Database\Tables\opa.Migration_FormQuestions.sql = ..\Database\Tables\opa.Migration_FormQuestions.sql
+		..\Database\Tables\opa.Migration_Forms.sql = ..\Database\Tables\opa.Migration_Forms.sql
+		..\Database\Tables\opa.Migration_Lecture.sql = ..\Database\Tables\opa.Migration_Lecture.sql
+		..\Database\Tables\opa.Migration_Section.sql = ..\Database\Tables\opa.Migration_Section.sql
+		..\Database\Tables\opa.Migration_SharedQuestions.sql = ..\Database\Tables\opa.Migration_SharedQuestions.sql
+		..\Database\Tables\opa.Raw_CourseDetail.sql = ..\Database\Tables\opa.Raw_CourseDetail.sql
+		..\Database\Tables\opa.Raw_CourseDevelopmentalRoleAssignment.sql = ..\Database\Tables\opa.Raw_CourseDevelopmentalRoleAssignment.sql
+		..\Database\Tables\opa.Raw_CourseItemAttempts.sql = ..\Database\Tables\opa.Raw_CourseItemAttempts.sql
+		..\Database\Tables\opa.Raw_CourseItems.sql = ..\Database\Tables\opa.Raw_CourseItems.sql
+		..\Database\Tables\opa.Raw_CourseLearningFrameworksAssignment.sql = ..\Database\Tables\opa.Raw_CourseLearningFrameworksAssignment.sql
+		..\Database\Tables\opa.Raw_CourseMaterials.sql = ..\Database\Tables\opa.Raw_CourseMaterials.sql
+		..\Database\Tables\opa.Raw_DevelopmentalRolesAndLearningFrameworkData.sql = ..\Database\Tables\opa.Raw_DevelopmentalRolesAndLearningFrameworkData.sql
+		..\Database\Tables\opa.Raw_quiz.sql = ..\Database\Tables\opa.Raw_quiz.sql
+		..\Database\Tables\opa.Raw_Resources.sql = ..\Database\Tables\opa.Raw_Resources.sql
+		..\Database\Tables\opa.Raw_userquestionattempts.sql = ..\Database\Tables\opa.Raw_userquestionattempts.sql
+		..\Database\Tables\opa.Raw_userquizattempts.sql = ..\Database\Tables\opa.Raw_userquizattempts.sql
+		..\Database\Tables\opa.Staging_CourseDetail.sql = ..\Database\Tables\opa.Staging_CourseDetail.sql
+		..\Database\Tables\opa.Staging_CourseDevelopmentalRoleAssignmen.sql = ..\Database\Tables\opa.Staging_CourseDevelopmentalRoleAssignmen.sql
+		..\Database\Tables\opa.Staging_CourseItemAttempts.sql = ..\Database\Tables\opa.Staging_CourseItemAttempts.sql
+		..\Database\Tables\opa.Staging_CourseItems.sql = ..\Database\Tables\opa.Staging_CourseItems.sql
+		..\Database\Tables\opa.Staging_CourseLearningFrameworksAssignment.sql = ..\Database\Tables\opa.Staging_CourseLearningFrameworksAssignment.sql
+		..\Database\Tables\opa.Staging_CourseMaterials.sql = ..\Database\Tables\opa.Staging_CourseMaterials.sql
+		..\Database\Tables\opa.Staging_DevelopmentalRolesAndLearningFrameworkData.sql = ..\Database\Tables\opa.Staging_DevelopmentalRolesAndLearningFrameworkData.sql
+		..\Database\Tables\opa.Staging_quiz.sql = ..\Database\Tables\opa.Staging_quiz.sql
+		..\Database\Tables\opa.Staging_Resources.sql = ..\Database\Tables\opa.Staging_Resources.sql
+		..\Database\Tables\opa.Staging_userquestionattempts.sql = ..\Database\Tables\opa.Staging_userquestionattempts.sql
+		..\Database\Tables\opa.Staging_userquizattempts.sql = ..\Database\Tables\opa.Staging_userquizattempts.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}.Development|Default.ActiveCfg = Development
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43C5BC3A-5D62-435B-B1E3-90EF2DB7559C} = {98BFE92A-7FB0-47FF-A749-5F140F2C11FC}
+		{D82C5510-3557-4985-8B15-4606960101F6} = {1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}
+		{98BFE92A-7FB0-47FF-A749-5F140F2C11FC} = {1730ADFF-D553-4B0F-9B0F-DA6A7DBE45AA}
+		{6685F1A0-FE67-4C45-AAEA-D40CE32566FC} = {D82C5510-3557-4985-8B15-4606960101F6}
+		{DE14EA32-8B81-4985-BA8F-C0AF5BC4F624} = {D82C5510-3557-4985-8B15-4606960101F6}
+		{6A37CF1A-6B47-4A3C-908E-377DBFDC6983} = {D82C5510-3557-4985-8B15-4606960101F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7EB8593A-089C-4697-8B9B-048213CD45EE}
+	EndGlobalSection
+EndGlobal

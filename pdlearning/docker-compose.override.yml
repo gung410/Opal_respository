@@ -1,0 +1,192 @@
+version: "3.4"
+
+services:
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+      - MSSQL_AGENT_ENABLED=true
+    ports:
+      - "1433:1433"
+    volumes:
+      - orient-sqldata:/var/opt/mssql
+
+  nosqldata:
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootPassXXX
+    ports:
+      - "27017:27017"
+    volumes:
+      - orient-nosqldata:/data/db
+
+  redis:
+    ports:
+      - "6379:6379"
+    volumes:
+      - orient-redisdata:/data
+
+  rabbitmq:
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  cloudfront-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
+      - "5101:80"
+
+  uploader-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
+      - "5102:80"
+
+  content-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=ContentDb;User ID=sa;Password=Pass@word
+      - ConnectionStrings__HangfireDb=Data Source=sqldata,1433;Initial Catalog=HangfireDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Content.Api.dll'
+    ports:
+      - "5103:80"
+
+  course-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=CourseDb;User ID=sa;Password=Pass@word
+      - ConnectionStrings__HangfireDb=Data Source=sqldata,1433;Initial Catalog=HangfireDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Course.Api.dll'
+    ports:
+      - "5104:80"
+
+  form-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=FormDb;User ID=sa;Password=Pass@word
+      - ConnectionStrings__HangfireDb=Data Source=sqldata,1433;Initial Catalog=HangfireDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Form.Api.dll'
+    ports:
+      - "5105:80"
+
+  learner-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=LearnerDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Learner.Api.dll'
+    ports:
+      - "5106:80"
+
+  tagging-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=TaggingDb;User ID=sa;Password=Pass@word
+      - ThunderRedisCacheOptions__RedisConnectionString=${ORIENT_REDIS_HOST:-redis}
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Tagging.Api.dll'
+    ports:
+      - "5107:80"
+
+  brokenlink-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=BrokenLinkDb;User ID=sa;Password=Pass@word
+      - ConnectionStrings__HangfireDb=Data Source=sqldata,1433;Initial Catalog=HangfireDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.BrokenLink.Api.dll'
+    ports:
+      - "5108:80"
+
+  calendar-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=CalendarDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Calendar.Api.dll'
+    ports:
+      - "5109:80"
+
+  analytics-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=AnalyticsDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Analytics.Api.dll'
+    ports:
+      - "5110:80"
+
+  webinar-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=WebinarDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Webinar.Api.dll'
+    ports:
+      - "5112:80"
+
+  standalonesurvey-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=StandaloneSurveyDb;User ID=sa;Password=Pass@word
+      - ConnectionStrings__HangfireDb=Data Source=sqldata,1433;Initial Catalog=HangfireDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.StandaloneSurvey.Api.dll'
+    ports:
+      - "5113:80"
+
+  badge-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=DigitalBadgeDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.Badge.Api.dll'
+    ports:
+      - "5116:80"
+
+  webinar-video-converter-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RabbitMQOptions__HostNames=${ORIENT_RABBIQ_MQ_HOST:-rabbitmq}
+      - RabbitMQOptions__RetryCount=10
+      - ConnectionStrings__Default=Data Source=sqldata,1433;Initial Catalog=WebinarRecordManagementDb;User ID=sa;Password=Pass@word
+    command: sh -c 'dockerize -wait tcp://sqldata:1433 -wait tcp://rabbitmq:5672 -wait tcp://redis:6379 -timeout 60s -- dotnet Conexus.Opal.Microservice.WebinarVideoConverter.Api.dll'
+    ports:
+      - "5116:80"
+
+volumes:
+  orient-sqldata:
+    external: false
+  orient-redisdata:
+    external: false
+  orient-nosqldata:
+    external: false

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Sharing.Home.SharingSectionView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:home="clr-namespace:LearnerApp.ViewModels.Sharing.Home;assembly=LearnerApp"
+	xmlns:home1="clr-namespace:LearnerApp.Views.Sharing.Home;assembly=LearnerApp"
+	xmlns:learnerCustomRepeatableStackView="clr-namespace:LearnerApp.Controls.LearnerCustomRepeatableStackView;assembly=LearnerApp"
+	xmlns:texts="clr-namespace:LearnerApp.Resources.Texts;assembly=LearnerApp"
+	x:DataType="home:SharingSectionViewModel"
+	IsVisible="{Binding IsShowSharingSection}">
+	<ContentView.Content>
+		<StackLayout Orientation="Vertical" Spacing="20">
+			<StackLayout>
+				<StackLayout Orientation="Horizontal">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding ShowAllCommand}" />
+					</StackLayout.GestureRecognizers>
+					<Label
+						FontSize="{StaticResource LargeSize}"
+						HorizontalOptions="StartAndExpand"
+						Text="{Binding TotalCount, StringFormat='Shared by Other Users ({0}) >'}" />
+					<Label
+						FontSize="{StaticResource MidMediumSize}"
+						IsVisible="{Binding TotalCount, Converter={StaticResource NewsfeedEmptyConverter}}"
+						Text="see more"
+						TextColor="{StaticResource SecondaryTextColor}"
+						VerticalOptions="CenterAndExpand" />
+				</StackLayout>
+
+				<learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView
+					x:Name="List"
+					IsLoading="{Binding IsLoading}"
+					IsVisible="{Binding IsShowList}"
+					RealItemsSource="{Binding SharingSource}"
+					Spacing="10">
+					<BindableLayout.ItemTemplateSelector>
+						<home1:SharingContentItemDataTemplateSelector />
+					</BindableLayout.ItemTemplateSelector>
+				</learnerCustomRepeatableStackView:LearnerCustomRepeatableStackView>
+
+				<StackLayout IsVisible="{Binding Source={x:Reference List}, Path=IsVisible, Converter={StaticResource InverseBoolConverter}}">
+					<Label HorizontalOptions="CenterAndExpand" Text="{x:Static texts:TextsResource.NOTHING_HERE_YET}" />
+				</StackLayout>
+			</StackLayout>
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

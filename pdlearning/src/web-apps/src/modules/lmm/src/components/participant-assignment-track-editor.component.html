@@ -1,0 +1,86 @@
+<div class="assignment-editor">
+  <div class="assignment-editor__message-info"
+       *ngIf="participantAssignmentTrackVm.submittedDate == null">
+    <span class="alert -warning">{{"There is no submission received from learner." | translator}}</span>
+  </div>
+  <ng-container *ngIf="participantAssignmentTrackVm.submittedDate != null">
+    <div class="assignment-editor__overal-score-container">
+      <div class="assignment-editor__overal-score-item">
+        <div class="assignment-editor__overal-score-text">
+          {{ 'Score:' | translator }}
+        </div>
+        <div class="assignment-editor__overal-score-value">
+          {{ participantAssignmentTrackVm.totalScore }}
+          ({{ participantAssignmentTrackVm.scorePercentage}}%)
+        </div>
+      </div>
+      <div class="assignment-editor__overal-score-item">
+        <div class="assignment-editor__overal-score-text">
+          {{ 'Completion rate:' | translator }}
+        </div>
+        <div class="assignment-editor__overal-score-value">
+          {{ participantAssignmentTrackVm.completionRate }}%
+        </div>
+      </div>
+      <div class="assignment-editor__overal-score-item">
+        <div class="assignment-editor__overal-score-text">
+          {{ 'Correct awsers:' | translator }}
+        </div>
+        <div class="assignment-editor__overal-score-value">
+          {{ participantAssignmentTrackVm.numberCorrectAnswer }}
+        </div>
+      </div>
+      <div class="assignment-editor__overal-score-item">
+        <div class="assignment-editor__overal-score-text">
+          {{ 'Incorrect awsers:' | translator }}
+        </div>
+        <div class="assignment-editor__overal-score-value">
+          {{ participantAssignmentTrackVm.assignmentVm.totalQuestion - participantAssignmentTrackVm.numberCorrectAnswer }}
+        </div>
+      </div>
+
+      <div class="assignment-editor__overal-score-item">
+        <div class="assignment-editor__overal-score-text">
+          {{ 'Total questions:' | translator }}
+        </div>
+        <div class="assignment-editor__overal-score-value">
+          {{ participantAssignmentTrackVm.assignmentVm.totalQuestion }}
+        </div>
+      </div>
+    </div>
+    <div class="assignment-editor__question-container"
+         *ngFor="let question of participantAssignmentTrackVm.assignmentVm.questions; let i = index; trackBy: assignmentQuestionsDataTrackByFn">
+      <assignment-question-editor class="assignment-editor__question-item"
+                                  [data]="question"
+                                  [mode]="AssignmentMode.ParticipantTrack"
+                                  [disableSetCorrectAnswer]="true"
+                                  [positionInAssignment]="i+1"
+                                  [totalQuestion]="participantAssignmentTrackVm.assignmentVm.totalQuestion"
+                                  [assignmentType]="participantAssignmentTrackVm.assignmentVm.type"
+                                  [assignmentAnswerTrack]="participantAssignmentTrackVm.assignmentAnswerTrackDic[question.id]"
+                                  (scoreChange)="onChangeScoreQuestion()">
+      </assignment-question-editor>
+      <!-- <div class="assignment-editor__freetext-question-config">
+        <div class="k-checkbox-container">
+          <input class="k-checkbox"
+                 type="checkbox"
+                 [(ngModel)]="isAddQuestionFreeTextInPoll"
+                 [checked]="isAddQuestionFreeTextInPoll">
+          <label class="k-checkbox-label">
+            {{'Enable free text option' | translator}}
+            <span class="assignment-editor__freetext-question-config--explanation-icon"
+                  (mouseover)="showExplanationNote()"
+                  (mouseout)="showExplanationNote()">
+              <img src="assets/images/icons/question-mark.svg"
+                   alt="icon">
+            </span>
+          </label>
+        </div>
+        <div class="assignment-editor__freetext-question-config--explanation-text"
+             *ngIf="isShowExplanationNote">
+          {{'When unchecked the enable free text option, the Free text question will be remove.' | translator}}
+        </div>
+      </div> -->
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,125 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ title }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+
+<div class="dialog-content"
+     *ngIf="!loadingData">
+  <form [formGroup]="form">
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class Start Date' | translator }}</label>
+      <kendo-datepicker class="form-control"
+                        #startDatePicker
+                        [format]="'dd/MM/yyyy'"
+                        [placeholder]="''"
+                        (focus)="startDatePicker.toggle(true)"
+                        kendoErrorTooltip
+                        formControlName="startDate"
+                        [(ngModel)]="classRunReschedule.startDate"
+                        position="top"></kendo-datepicker>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class End Date' | translator }}</label>
+      <kendo-datepicker class="form-control"
+                        #endDatePicker
+                        [format]="'dd/MM/yyyy'"
+                        [placeholder]="''"
+                        (focus)="endDatePicker.toggle(true)"
+                        kendoErrorTooltip
+                        formControlName="endDate"
+                        [(ngModel)]="classRunReschedule.endDate"
+                        position="top"></kendo-datepicker>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class Start Time' | translator }}</label>
+      <kendo-timepicker class="form-control"
+                        #startTimePicker
+                        [placeholder]="''"
+                        formControlName="planningStartTime"
+                        [(ngModel)]="classRunReschedule.planningStartTime"
+                        (focus)="startTimePicker.toggle(true)"
+                        kendoErrorTooltip
+                        position="top"></kendo-timepicker>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Class End Time' | translator }}</label>
+      <kendo-timepicker class="form-control"
+                        #endTimePicker
+                        [placeholder]="''"
+                        formControlName="planningEndTime"
+                        [(ngModel)]="classRunReschedule.planningEndTime"
+                        (focus)="endTimePicker.toggle(true)"
+                        kendoErrorTooltip
+                        position="top"></kendo-timepicker>
+    </div>
+
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Reason' | translator }}</label>
+      <textarea class="form-control"
+                formControlName="comment"
+                [placeholder]="'Please add reason why you reschedule this class run' | translator"
+                kendoTextArea
+                [autoSize]="true"
+                kendoErrorTooltip
+                [(ngModel)]="classRunReschedule.comment"
+                rows="5"
+                position="top"></textarea>
+    </div>
+
+    <ng-container *ngFor="let session of sessions; let i = index">
+      <div class="form-controls-group -required">
+        <label for="ch2">{{ 'Session ' | translator }}<b>{{ session.sessionTitle }}</b>{{ ' Date' | translator }}</label>
+        <kendo-datepicker class="form-control"
+                          #sessionDatePicker
+                          [format]="'dd/MM/yyyy'"
+                          [placeholder]="''"
+                          [ngModel]="session.sessionDate"
+                          (ngModelChange)="onSessionDateChanged($event, session)"
+                          kendoErrorTooltip
+                          (focus)="sessionsDatePickers.toArray()[i].toggle(true)"
+                          formControlName="{{session.id + 'SessionDate'}}"
+                          position="top"></kendo-datepicker>
+        <blockout-date-warning [blockOutDates]="blockOutDates"></blockout-date-warning>
+      </div>
+      <div class="form-controls-group -required">
+        <label for="ch2">{{ 'Session ' | translator }}<b>{{ session.sessionTitle }}</b>{{ ' Start Time' | translator }}</label>
+        <kendo-timepicker class="form-control"
+                          #sessionStartTimePicker
+                          [placeholder]="''"
+                          formControlName="{{session.id + 'SessionStartTime'}}"
+                          [(ngModel)]="session.startTime"
+                          (focus)="sessionsStartTimePickers.toArray()[i].toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-timepicker>
+      </div>
+      <div class="form-controls-group -required">
+        <label for="ch2">{{ 'Session ' | translator }}<b>{{ session.sessionTitle }}</b>{{ ' End Time' | translator }}</label>
+        <kendo-timepicker class="form-control"
+                          #sessionEndTimePicker
+                          [placeholder]="''"
+                          formControlName="{{session.id + 'SessionEndTime'}}"
+                          [(ngModel)]="session.endTime"
+                          (focus)="sessionsEndTimePickers.toArray()[i].toggle(true)"
+                          kendoErrorTooltip
+                          position="top"></kendo-timepicker>
+      </div>
+    </ng-container>
+  </form>
+</div>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onCancel()">{{ 'Close' | globalTranslator }}</button>
+  <button type="submit"
+          kendoButton
+          (click)="onProceed()"
+          [primary]="true">{{ 'Proceed' | globalTranslator }}</button>
+</div>

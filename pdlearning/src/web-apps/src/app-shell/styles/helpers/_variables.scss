@@ -1,0 +1,141 @@
+// Main colour to show primary actions e.g button, links and controls
+$accent: rgba(97, 138, 216, 1);
+$highlight: rgba(97, 138, 216, 0.1);
+$active-highlight:rgba(54, 169, 220, 0.1);
+
+// Selected and hover colour
+$accent-hover: rgba(113, 157, 241, 1);
+
+// Active colour
+$accent-active: rgba(76, 116, 192, 1);
+$area-active: #F1F3F8;
+
+// Tags, filter categories, Main menu tab (selected)
+$active-color: rgba(63, 87, 133, 1);
+
+// Icons, secondary buttons e.g cancel
+$active-color: rgba(64, 71, 110, 0.3);
+
+// Containers BG, Modals, text fields and table
+$white: rgba(255, 255, 255, 1);
+
+// Pending, waiting status
+$yellow-400: rgba(233, 212, 34, 0.4);
+$yellow-100: rgba(233, 212, 34, 1);
+$yellow: rgb(239, 220, 51);
+
+// Complete, successful status
+$green-400: rgba(58, 207, 129, 0.4);
+$green-100: rgba(58, 207, 129, 1);
+$light-green: rgb(29, 206, 193);
+$light-green-200: rgb(197, 241, 238);
+
+// Information
+$light-blue: rgba(209, 236, 241, 1);
+
+// Error
+$red: rgba(255, 117, 117, 1);
+$red-hover: rgb(255, 132, 132);
+$red-active: rgb(221, 80, 80);
+
+// Text
+$text: rgb(48, 52, 80);
+$description: rgb(158, 174, 190);
+
+// Common
+$main-background: rgb(242, 246, 250);
+$main-border-radius: 5px;
+$main-input-height: 36px;
+$main-control-height: 48px;
+$main-small-control-height: 38px;
+$main-grid-unit:8px;
+$main-font:'Roboto';
+$light-background: rgb(249, 249, 249);
+$border-color: rgb(242, 246, 250);
+$border: 1px solid rgb(216, 220, 230);
+$accent-border: 1px solid $accent;
+$light-gray-bg: rgb(240, 240, 240);
+$gray100: rgba(0, 0, 0, 0.1);
+$gray200: rgba(0, 0, 0, 0.2);
+$gray400: rgb(70, 70, 70);
+$card-shadows: rgb(238, 238, 238);
+
+
+// Color
+$color-white: #FFF;
+$color-white-smoke: #F9F9F9;
+$color-smoke: #E5E5E5;
+$color-yellow: #EFDC33;
+$color-silver: #EEE;
+$color-light-gray: #313552;
+$color-dim-gray: #A1A8B6;
+$color-blue-dard: #303450;
+$color-blue-light: #8799BA;
+$color-turquoise: #1DCEC1;
+$color-turquoise-patel: #C4F1EE;
+$color-indigo: #2D3469;
+$color-lavender-blush: #FFB8B8;
+$color-misty-rose: #FFB4B4;
+$color-coral: #FF6262;
+$color-coral-danger: #FFDADA;
+$color-gainsboro: #D8DCE6;
+$color-blue: #0E409F;
+$color-blue-navy: #58A8F7;
+$color-blue-jay: #365693;
+$color-blue-royal: #36A9DC;
+$color-gray: #656565;
+$color-border: #E4E8F3;
+$color-black:#000;
+
+
+/*------ Font varible------*/
+
+// Font-size:
+$font-base: 16px;
+$font-size-h1: 2.25rem;
+$font-size-h3: 1.25rem;
+$font-size-h4: 1rem;
+$font-size-normal: 1rem;
+$font-size-small: 0.75rem;
+$font-h1: 3rem;
+$font-h2: 2.25rem;
+$font-h3: 1.75rem;
+$font-h4: 1.5rem;
+$font-h5: 1.125rem;
+$font-h6: 1rem;
+$font-normal: 0.75rem;
+$font-msg: 1.438rem;
+$font-footer: 0.875rem;
+$font-branding: 0.813rem;
+
+$font-family-base:'Roboto',
+sans-serif;
+
+// Font weight
+$font-weight-bold: 900;
+$font-weight-medium: 500;
+/*------End Font varible------*/
+
+// Break-points
+$media-breakpoint-lt-mobile: 480px;
+$media-breakpoint-xs: 599px;
+$media-breakpoint-gt-xs: 600px;
+$media-breakpoint-lt-smallpad: 640px;
+$media-breakpoint-sm: 959px;
+$media-breakpoint-gt-sm: 960px;
+$media-breakpoint-md: 1279px;
+$media-breakpoint-gt-md: 1280px;
+$media-breakpoint-lg: 1919px;
+$media-breakpoint-gt-lg: 1920px;
+$media-breakpoint-xl: 5000px;
+$media-breakpoint-tb: 768px;
+$media-breakpoint-tbsmall: 500px;
+$media-break-grid-md: 1439px;
+$media-break-grid-sm: 1023px;
+
+// z-index levels: mapping with variables in Infrastructure/constants.ts
+$z-index-level-1: 1;
+$z-index-level-2: 1000;
+$z-index-level-3: 2000;
+$z-index-level-4: 3000;
+$z-index-level-5: 4000;

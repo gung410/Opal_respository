@@ -1,0 +1,39 @@
+.question-blank-option-editor {
+  background: $white;
+
+  &__title {
+    font-size: $font-h6;
+    color: black;
+    margin: 25px;
+    box-sizing: border-box;
+  }
+
+  &__form {
+    margin: 0 25px 25px 25px;
+
+    input {
+      min-width: 333px;
+      height: 44px;
+      border-radius: $main-border-radius;
+      border: 1px solid $color-gainsboro;
+      padding: 10px 12px;
+      @extend %box-sizing;
+      font-size: $font-h6;
+
+      &::placeholder {
+        color: $color-dim-gray;
+      }
+    }
+  }
+
+  &__actions {
+    margin: 0 25px 25px 25px;
+    display: block;
+    text-align: right;
+
+    button {
+      width: fit-content;
+      text-transform: capitalize;
+    }
+  }
+}

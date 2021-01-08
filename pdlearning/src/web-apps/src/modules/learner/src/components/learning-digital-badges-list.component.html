@@ -1,0 +1,85 @@
+<div class="learning-digital-badges-list">
+  <ng-container *ngIf="totalCount > 0; else showingEmptyMsg">
+    <ng-container [ngSwitch]="isShowMore">
+      <div *ngSwitchCase="true">
+        <div class="learning-digital-badges-title"
+             *ngIf="isShowMore"
+             (click)="onShowMoreClicked()">
+          {{ 'Digital Badges' | translator }}
+          <i class="icon right"></i>
+        </div>
+        <div class="horizontal-list">
+          <div class="list-control prev"
+               (click)="scrollLeft()"
+               *ngIf="totalCount > 0"></div>
+          <div class="list-control next"
+               (click)="scrollRight()"
+               *ngIf="totalCount > 0"></div>
+          <div class="scroll-inner"
+               *ngIf="totalCount > 0"
+               #scrollElement>
+            <div *ngTemplateOutlet="showingDigitalBadges"></div>
+            <div class="learning-carousel-show-all">
+              <div>
+                <div (click)="onShowMoreClicked()">{{"Show all" | globalTranslator}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="false">
+        <div class="grid-list">
+          <div *ngTemplateOutlet="showingDigitalBadges"></div>
+          <!-- CSS trick to keep the items aligned when missing some items -->
+          <div class="learning-card-item-placeholder"
+               *ngFor="let placeholder of generatePagesArray(5)"></div>
+        </div>
+        <div class="paging"
+             *ngIf="!isShowMore && totalCount > digitalBadgeItems.length">
+          <div class="paginator">
+            <div class="prev"
+                 [ngClass]="{ 'empty': activePageNumber === 1}"
+                 (click)="loadPreviousPage()">◀</div>
+            <div class="items">
+              <div class="nav-item"
+                   *ngFor="let pageNumber of pages"
+                   [ngClass]="[pageNumber === activePageNumber ? 'active': '', pageNumber === undefined ? 'empty': '' ]"
+                   (click)="loadPageItems(pageNumber)">
+                {{ pageNumber ? pageNumber : '...'}}
+              </div>
+            </div>
+            <div class="next"
+                 [ngClass]="{ 'empty': activePageNumber === totalPages}"
+                 (click)="loadNextPage()">▶</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg">{{ "There's nothing here yet!" | translator}}</span>
+  </ng-template>
+  <ng-template #showingDigitalBadges="">
+    <ng-container *ngFor="let item of digitalBadgeItems">
+      <div class="learning-card">
+        <div>
+          <div class="info-container"
+               (click)="onDigitalBadgeClick()">
+            <div class="course-img">
+              <img src="{{ item.imageUrl }}"
+                   *ngIf="item.imageUrl">
+            </div>
+            <div class="card-info">
+              <div class="card-title"
+                   [title]="item.title">{{ item.title }}
+              </div>
+              <span class="general-info">
+                <div>{{ 'Completion date' | translator }}: {{ item.completedDate | date: 'dd/MM/yyyy' }}</div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

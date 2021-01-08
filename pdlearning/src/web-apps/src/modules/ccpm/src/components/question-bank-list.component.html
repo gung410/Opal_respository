@@ -1,0 +1,122 @@
+<kendo-grid class="question-bank-list opal-grid"
+            [ngClass]="{ '--border-top' : mode === questionBankMode.Import }"
+            #grid
+            [data]="gridData"
+            [pageable]="true"
+            [pageSize]="state.take"
+            [skip]="state.skip"
+            (cellClick)="onGridCellClick($event)"
+            (pageChange)="onPageChange($event)">
+  <kendo-grid-column *ngIf="mode === questionBankMode.Import"
+                     [field]="'selected'"
+                     [width]="60"
+                     [headerStyle]="{ 'text-align': 'center' }"
+                     [class]="{ 'align-center': true }">
+    <!-- Header template of selected field-->
+    <ng-template kendoGridHeaderTemplate
+                 let-column>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="checkAll"
+             (click)="onCheckAll($event.target.checked)">
+    </ng-template>
+
+    <!-- Cell template of selected field-->
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <input class="k-checkbox"
+             type="checkbox"
+             [(ngModel)]="dataItem.selected"
+             (click)="onCheckItem($event.target.checked, dataItem)">
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col cursor-pointer"
+                     [title]="'Title' | translator"
+                     field="title"
+                     [width]="400">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <div class="question-bank-list__item-title ellipsis">
+        <span title="{{dataItem.title}}">{{ dataItem.title }}</span>
+        <div class="question-bank-list__group"
+             *ngIf="mode === questionBankMode.Import">
+          <div class="question-bank-list__group-item">
+            <div class="question-bank-list__group-title">{{'Question Group' | translator}}</div>
+            <div class="question-bank-list__info ellipsis">{{dataItem.questionGroupName}}</div>
+          </div>
+          <div class="question-bank-list__group-item">
+            <div class="question-bank-list__group-title">{{'Date' | translator}}</div>
+            <div class="question-bank-list__info ellipsis">{{ dataItem.createdDate | date: 'dd/MM/yyyy HH:mm'}}</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col cursor-pointer"
+                     [title]="'Type' | translator"
+                     field="type">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      <span>{{ getQuestionTypeLabel(dataItem.questionType) }}</span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="mode !== questionBankMode.Import"
+                     field="questionGroupName"
+                     [title]="'Question Group'"
+                     [width]="500">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem
+                 let-rowIndex="rowIndex">
+      <ng-container *ngIf="rowIndex ===editingRow">
+        <question-bank-group class="question-bank-list__question-group"
+                             [questionGroupName]="dataItem.questionGroupName"
+                             [dropdownPosition]="isQuestionGroupDisplayTop(rowIndex, gridData.data) ? 'top' : 'bottom'"
+                             (questionGroupChange)="onQuestionGroupChange(dataItem,$event)"></question-bank-group>
+        <span class="question-bank-list__action-button --edit">
+          <span class="edit-icon k-icon k-i-close-circle"
+                (click)="onClosed()"></span>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="rowIndex!==editingRow">
+        <span class="question-bank-list__group-name"
+              [ngClass]="{ '--no-data': !dataItem.questionGroupName}">
+          {{ dataItem.questionGroupName }}
+          <span class="question-bank-list__arrow"></span>
+        </span>
+        <span class="question-bank-list__action-button --edit"
+              *ngIf="dataItem.questionGroupName">
+          <span class="edit-icon k-icon k-i-pencil"
+                (click)="editQuestionGroup(rowIndex)"></span>
+        </span>
+        <span class="question-bank-list__action-button --add"
+              *ngIf="!dataItem.questionGroupName">
+          <span class="edit-icon k-icon k-i-plus-circle"
+                (click)="editQuestionGroup(rowIndex)"></span>
+        </span>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column class="description-col"
+                     *ngIf="mode !== questionBankMode.Import"
+                     [title]="'Last Modified' | globalTranslator"
+                     field="modified">
+    <ng-template let-dataItem
+                 kendoGridCellTemplate>
+      {{ (dataItem.changedDate || dataItem.createdDate) | date: 'dd/MM/yyyy HH:mm' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column *ngIf="mode !== questionBankMode.Import"
+                     [field]="'Action'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="100">
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <span class="question-bank-list__action-button">
+        <span class="k-icon k-i-delete"
+              (click)="onDeleteFile(dataItem)"></span>
+      </span>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

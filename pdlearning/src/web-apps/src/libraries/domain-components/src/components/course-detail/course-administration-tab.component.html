@@ -1,0 +1,217 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">Course Administration </label>
+    <div class="form-section"
+         [hidden]="course.isMicrolearning">
+      <label class="form-section-title">{{
+        'Assign Up to 2 Course Administrators to Coordinate With Managing The Course (At least 1 must be assigned)' | translator
+      }}</label>
+      <div class="form-controls-group -required">
+        <label>
+          {{ 'Course Administrator(1st)' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('firstAdministratorId', asViewMode())">
+          <ng-template editableViewMode="">
+            <owner-info *ngIf="course.firstAdministratorId"
+                        [owner]="course.usersDic[course.firstAdministratorId]"></owner-info>
+            <span *ngIf="!course.firstAdministratorId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="firstAdministratorId"
+                         [fetchDataLogicDependenciesInput]="course.secondAdministratorId"
+                         [(ngModel)]="course.firstAdministratorId"
+                         [fetchDataFn]="fetchCourseAdministratorItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreAlternativeCourseAdministratorItemFn"
+                         [(items)]="course.courseAdministratorItems"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group">
+        <label>
+          {{ 'Course Administrator(2nd)' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('secondAdministratorId', asViewMode())">
+          <ng-template editableViewMode="">
+            <owner-info *ngIf="course.secondAdministratorId"
+                        [owner]="course.usersDic[course.secondAdministratorId]"></owner-info>
+            <span *ngIf="!course.secondAdministratorId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="secondAdministratorId"
+                         [fetchDataLogicDependenciesInput]="course.firstAdministratorId"
+                         [(ngModel)]="course.secondAdministratorId"
+                         [fetchDataFn]="fetchAlternativeCourseAdministratorItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreCourseAdministratorItemFn"
+                         [(items)]="course.courseAdministrator2ndItems"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [clearable]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section">
+      <label class="form-section-title">{{
+        'Assign Approving Officer(s) to Manage Your Course Through Approval Process (At least 1 must be assigned)' | translator
+      }}</label>
+      <div class="form-controls-group -required">
+        <label>
+          {{ 'Primary Approving Officer' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('primaryApprovingOfficerId', asViewMode())">
+          <ng-template editableViewMode="">
+            <owner-info *ngIf="course.primaryApprovingOfficerId"
+                        [owner]="course.usersDic[course.primaryApprovingOfficerId]"></owner-info>
+            <span *ngIf="!course.primaryApprovingOfficerId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [(ngModel)]="course.primaryApprovingOfficerId"
+                         formControlName="primaryApprovingOfficerId"
+                         [fetchDataLogicDependenciesInput]="course.alternativeApprovingOfficerId"
+                         [fetchDataFn]="fetchCourseApprovingOfficerItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreAlternativeCourseApprovingOfficerItemFn"
+                         [(items)]="course.courseApprovingOfficerItems"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group">
+        <label>
+          {{ 'Alternate Approving Officer' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('alternativeApprovingOfficerId', asViewMode())">
+          <ng-template editableViewMode="">
+            <owner-info *ngIf="course.alternativeApprovingOfficerId"
+                        [owner]="course.usersDic[course.alternativeApprovingOfficerId]"></owner-info>
+            <span *ngIf="!course.alternativeApprovingOfficerId">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="alternativeApprovingOfficerId"
+                         [(ngModel)]="course.alternativeApprovingOfficerId"
+                         [fetchDataLogicDependenciesInput]="course.primaryApprovingOfficerId"
+                         [fetchDataFn]="fetchAlternativeCourseApprovingOfficerItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreCourseApprovingOfficerItemFn"
+                         [(items)]="course.courseApprovingOfficer2ndItems"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [clearable]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section"
+         [hidden]="course.isMicrolearning">
+      <label class="form-section-title">{{ "Assign Course Facilitator to Manage Learner's Learning Progress" | translator }}</label>
+      <div class="form-controls-group -required">
+        <label>
+          {{ 'Course Facilitator' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('courseFacilitatorId', asViewMode())">
+          <ng-template editableViewMode="">
+            <div style="margin-bottom: 10px;"
+                 *ngFor="let courseFacilitatorId of course.courseData.courseFacilitatorIds">
+              <owner-info *ngIf="courseFacilitatorId"
+                          [owner]="course.usersDic[courseFacilitatorId]"></owner-info>
+            </div>
+            <span *ngIf="course.courseData.courseFacilitatorIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="courseFacilitatorId"
+                         [(items)]="course.courseFacilitatorItems"
+                         [fetchDataFn]="fetchCourseFacilitatorItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreCourseFacilitatorItemFn"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [(ngModel)]="course.courseFacilitatorId"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+      <div class="form-controls-group">
+        <label>
+          {{ 'Course Co-Facilitator' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('courseCoFacilitatorId', asViewMode())">
+          <ng-template editableViewMode="">
+            <div style="margin-bottom: 10px;"
+                 *ngFor="let courseCoFacilitatorId of course.courseData.courseCoFacilitatorIds">
+              <owner-info *ngIf="courseCoFacilitatorId"
+                          [owner]="course.usersDic[courseCoFacilitatorId]"></owner-info>
+            </div>
+            <span *ngIf="course.courseData.courseCoFacilitatorIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         formControlName="courseCoFacilitatorId"
+                         [(items)]="course.courseCoFacilitatorItems"
+                         [fetchDataFn]="fetchCourseCoFacilitatorItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [ignoreItemFn]="ignoreCourseCoFacilitatorItemFn"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [(ngModel)]="course.courseCoFacilitatorId"
+                         [clearable]="true"
+                         kendoErrorTooltip
+                         position="top"></opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-section"
+         [hidden]="isPlanningVerificationRequired()">
+      <label class="form-section-title">{{ 'Assign Other Course Content Creator(s) to Collaborate' | translator }}</label>
+      <div class="form-controls-group">
+        <label>
+          {{ 'List of Collaborative Course Content Creator' | translator }}
+        </label>
+        <editable [modeView]="course.isViewOnlyForField('collaborativeContentCreatorIds', asViewMode())">
+          <ng-template editableViewMode="">
+            <div style="margin-bottom: 10px;"
+                 *ngFor="let collaborativeContentCreatorId of course.collaborativeContentCreatorIds">
+              <owner-info *ngIf="collaborativeContentCreatorId"
+                          [owner]="course.usersDic[collaborativeContentCreatorId]"></owner-info>
+            </div>
+            <span *ngIf="course.collaborativeContentCreatorIds.length === 0">- N/A</span>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <opal-select class="form-control"
+                         [multiple]="true"
+                         formControlName="collaborativeContentCreatorIds"
+                         [(items)]="course.collaborativeContentCreatorItems"
+                         [fetchDataFn]="fetchCollaborativeContentCreatorItemsFn"
+                         [fetchDataByValuesFn]="fetchUserItemsByIdsFn"
+                         [labelField]="'fullName'"
+                         [valueField]="'id'"
+                         [(ngModel)]="course.collaborativeContentCreatorIds"
+                         [clearable]="true"
+                         kendoErrorTooltip
+                         position="top">
+            </opal-select>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+  </div>
+</form>

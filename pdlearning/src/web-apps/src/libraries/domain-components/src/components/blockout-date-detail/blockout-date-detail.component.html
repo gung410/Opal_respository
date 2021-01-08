@@ -1,0 +1,101 @@
+<form [formGroup]="form">
+  <div class="form-container blockout-date-detail__wrapper">
+    <div class="form-container blockout-date-detail__form-container">
+      <div class="form-controls-group blockout-date-detail__from-date">
+        <label for="ch2">{{ 'Start Date' | translator }}</label>
+        <editable [modeView]="asViewMode() || asViewModeWhenConfirmed()">
+          <ng-template editableViewMode="">{{ ( blockoutDate.startDateTime | date:'dd/MM/yyyy') || 'N/A' }}</ng-template>
+          <ng-template editableEditMode="">
+            <kendo-datepicker class="form-control"
+                              #startDatePicker
+                              [format]="'dd/MM/yyyy'"
+                              [placeholder]="''"
+                              (focus)="startDatePicker.toggle(true)"
+                              kendoErrorTooltip
+                              position="top"
+                              formControlName="startDateTime"
+                              [(ngModel)]="blockoutDate.startDateTime"
+                              [min]="blockoutDate.getMinStartDate()"
+                              [max]="blockoutDate.getMaxEndDate()"></kendo-datepicker>
+          </ng-template>
+        </editable>
+      </div>
+
+      <div class="form-controls-group blockout-date-detail__to-date">
+        <label for="ch2">{{ 'End Date' | translator }}</label>
+        <editable [modeView]="asViewMode() || asViewModeWhenConfirmed()">
+          <ng-template editableViewMode="">{{ ( blockoutDate.endDateTime | date:'dd/MM/yyyy') || 'N/A' }}</ng-template>
+          <ng-template editableEditMode="">
+            <kendo-datepicker class="form-control"
+                              #endDatePicker
+                              [format]="'dd/MM/yyyy'"
+                              [placeholder]="''"
+                              (focus)="endDatePicker.toggle(true)"
+                              kendoErrorTooltip
+                              position="top"
+                              formControlName="endDateTime"
+                              [(ngModel)]="blockoutDate.endDateTime"
+                              [min]="blockoutDate.getMinStartDate()"
+                              [max]="blockoutDate.getMaxEndDate()"></kendo-datepicker>
+          </ng-template>
+        </editable>
+      </div>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Title' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">{{ blockoutDate.title || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="blockoutDate.title"
+                 formControlName="title"
+                 kendoErrorTooltip
+                 position="top"
+                 autoFocus>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Description' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">{{ blockoutDate.description || '- N/A' }}</ng-template>
+        <ng-template editableEditMode="">
+          <textarea class="form-control"
+                    formControlName="description"
+                    [(ngModel)]="blockoutDate.description"
+                    kendoTextArea
+                    [autoSize]="true"
+                    rows="5"
+                    kendoErrorTooltip
+                    position="top"></textarea>
+        </ng-template>
+      </editable>
+    </div>
+    <div class="form-controls-group -required">
+      <label for="ch2">{{ 'Applicable Service Schemes' | translator }}</label>
+      <editable [modeView]="asViewMode() || asViewModeWhenConfirmed()">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let serviceScheme of blockoutDate.serviceSchemes">
+            <div class="metadata-tag-text"
+                 *ngIf="serviceScheme">
+              {{ blockoutDate.metadataTagsDic[serviceScheme] ? blockoutDate.metadataTagsDic[serviceScheme].displayText : '' }}
+            </div>
+          </ng-container>
+          <span *ngIf="blockoutDate.serviceSchemes.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       [items]="blockoutDate.serviceSchemeSelectItems"
+                       [valueField]="'tagId'"
+                       [labelField]="'displayText'"
+                       [(ngModel)]="blockoutDate.serviceSchemes"
+                       [multiple]="true"
+                       formControlName="serviceSchemes"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

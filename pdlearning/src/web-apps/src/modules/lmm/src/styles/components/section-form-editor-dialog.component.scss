@@ -1,0 +1,9 @@
+section-form-editor-dialog {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  >.form-controls-group {
+    padding-right: 0;
+  }
+}

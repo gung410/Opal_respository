@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.ListItemCard.HorizontalItem.HorizontalLearningPathItem"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    Padding="0,0,5,5">
+    <Frame
+        Padding="0"
+        android:VisualElement.Elevation="5"
+        ios:VisualElement.IsShadowEnabled="true"
+        ios:VisualElement.ShadowColor="Black"
+        ios:VisualElement.ShadowOpacity="0.3"
+        ios:VisualElement.ShadowRadius="2.5"
+        BackgroundColor="White"
+        CornerRadius="6"
+        HasShadow="False"
+        IsClippedToBounds="True"
+        VerticalOptions="Fill"
+        WidthRequest="300">
+        <ios:VisualElement.ShadowOffset>
+            <Size>
+                <x:Arguments>
+                    <x:Double>2.5</x:Double>
+                    <x:Double>2.5</x:Double>
+                </x:Arguments>
+            </Size>
+        </ios:VisualElement.ShadowOffset>
+        <!--  item tapped  -->
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="Item_Selected" />
+        </Frame.GestureRecognizers>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <AbsoluteLayout Grid.Row="0">
+                <!--  main image  -->
+                <ffimagesvg:SvgCachedImage
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    Aspect="AspectFill"
+                    DownsampleToViewSize="True"
+                    ErrorPlaceholder="learning_path_thumbnail.png"
+                    HeightRequest="150"
+                    Source="{Binding ThumbnailUrl, Converter={StaticResource ThumbnailUrlConverter}, ConverterParameter='LearningPath'}" />
+
+                <!--  bookmark icon  -->
+                <Frame
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="0.97, 0.05, 40, 40"
+                    AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                    BorderColor="{StaticResource TintColor}"
+                    CornerRadius="20"
+                    HasShadow="False"
+                    IsClippedToBounds="True"
+                    IsVisible="{Binding IsVisibleBookmark}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="Bookmark_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <ffimagesvg:SvgCachedImage
+                        Aspect="AspectFit"
+                        HeightRequest="15"
+                        HorizontalOptions="CenterAndExpand"
+                        Source="{Binding BookmarkInfo, Converter={StaticResource BookmarkInfoConverter}}"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="15" />
+                </Frame>
+            </AbsoluteLayout>
+            <BoxView
+                Grid.Row="1"
+                BackgroundColor="{StaticResource EntryLineColor}"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand" />
+            <StackLayout
+                Grid.Row="2"
+                Padding="10"
+                HeightRequest="80">
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="12"
+                        Text="Learning Path"
+                        TextColor="#8799BA" />
+                    <Label
+                        FontFamily="{StaticResource RobotoRegular}"
+                        FontSize="12"
+                        Text="{Binding Courses, Converter={StaticResource LearningPathsTotalItemsConverter}}"
+                        TextColor="#8799BA" />
+                </StackLayout>
+                <Label
+                    FontFamily="{StaticResource RobotoRegular}"
+                    FontSize="16"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="2"
+                    Text="{Binding Title}"
+                    TextColor="{StaticResource MainBodyTextColor}"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </Grid>
+    </Frame>
+</ContentView>

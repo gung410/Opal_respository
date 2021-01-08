@@ -1,0 +1,22 @@
+version: '2'
+services:
+  opal-web-app-bbb-playback:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    container_name: ${ENVIRONMENT_NAME}-webinar-playback-${PROJECT_NAME}
+    environment:
+      - PROJECT_NAME=${PROJECT_NAME}
+      - VIRTUAL_HOST=${ENVIRONMENT_NAME}-webinar-playback.${DOMAIN_POSTFIX}
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '5m'
+        max-file: '10'
+    ports:
+      - 0:80
+    volumes:
+      - /data/opal-webinar-efs/presentation:/var/bigbluebutton/presentation/
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

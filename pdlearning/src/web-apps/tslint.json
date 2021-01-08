@@ -1,0 +1,14 @@
+{
+  "extends": ["./node_modules/@microsoft/rush-stack-compiler-3.5/includes/tslint.json"],
+  "rules": {
+    "max-line-length": [true, 200],
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-type"],
+    "no-null-keyword": false,
+    "no-floating-promises": false,
+    "no-use-before-declare": false,
+    "forin": false,
+    "typedef": [true, "call-signature", "parameter", "property-declaration"],
+    "no-switch-case-fall-through": false,
+    "semicolon": false
+  }
+}

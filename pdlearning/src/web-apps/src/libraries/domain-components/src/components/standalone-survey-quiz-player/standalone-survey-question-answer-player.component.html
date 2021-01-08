@@ -1,0 +1,257 @@
+<div class="standalone-survey-question-answer-player">
+  <div class="standalone-survey-question-answer-player__title-container"
+       *ngIf="question.questionType !== questionType.FillInTheBlanks">
+    <div class="standalone-survey-question-answer-player__index-in-form">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__question-title"
+         externalLinkGuard
+         [innerHTML]="safeQuestionTitle"></div>
+  </div>
+
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.ShortText">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <input class="standalone-survey-question-answer-player__answer-textbox"
+             [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+             '-submitted': questionAnswer.submittedDate != null,
+             '-has-correct-answer': question.hasCorrectAnswer()}"
+             kendoTextBox
+             [disabled]="questionAnswer.submittedDate != null"
+             placeholder="{{'Please type your answer' | globalTranslator}}"
+             [ngModel]="questionAnswer.answerValue"
+             (ngModelChange)="onShortTextQuestionAnswerChanged($event)">
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.DatePicker">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <kendo-datepicker class="standalone-survey-question-answer-player__answer-textbox"
+                        [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+             '-submitted': questionAnswer.submittedDate,
+             '-has-correct-answer': question.hasCorrectAnswer()}"
+                        placeholder="{{'Select the correct date (day/month/year)' | globalTranslator}}"
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="questionAnswer.submittedDate"
+                        (valueChange)="onDatePickerQuestionAnswerChanged($event)"></kendo-datepicker>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.DateRangePicker">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <kendo-datepicker class="standalone-survey-question-answer-player__answer-textbox"
+                        [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+             '-submitted': questionAnswer.submittedDate,
+             '-has-correct-answer': question.hasCorrectAnswer()}"
+                        placeholder="{{'Select the from date (day/month/year)' | globalTranslator}}"
+                        [max]="getDateRangeAnswerValue(false)"
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="questionAnswer.submittedDate"
+                        (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, true)"></kendo-datepicker>
+      <kendo-datepicker class="standalone-survey-question-answer-player__answer-textbox"
+                        [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+             '-submitted': questionAnswer.submittedDate,
+             '-has-correct-answer': question.hasCorrectAnswer()}"
+                        placeholder="{{'Select the end date (day/month/year)' | globalTranslator}}"
+                        [min]="getDateRangeAnswerValue(true)"
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabled]="questionAnswer.submittedDate"
+                        (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, false)"></kendo-datepicker>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.LongText">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <textarea class="standalone-survey-question-answer-player__answer-textbox"
+                [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+                '-submitted': questionAnswer.submittedDate != null,
+                '-has-correct-answer': question.hasCorrectAnswer()}"
+                kendoTextArea
+                [disabled]="questionAnswer.submittedDate != null"
+                placeholder="{{'Input your answer' | globalTranslator}}"
+                [ngModel]="questionAnswer.answerValue"
+                (ngModelChange)="onLongTextQuestionAnswerChanged($event)"></textarea>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.TrueFalse">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <div class="standalone-survey-question-answer-player__question-option-container"
+           [ngClass]="{'-checked': questionAnswer.answerValue == question.questionOptions[0].value,
+           '-correct': question.isOptionValueCorrect(question.questionOptions[0].value),
+           '-submitted': questionAnswer.submittedDate != null,
+           '-has-correct-answer': question.hasCorrectAnswer()}">
+        <div class="question-option">
+          <input class="k-radio"
+                 type="checkbox"
+                 [disabled]="questionAnswer.submittedDate != null"
+                 [ngModel]="questionAnswer.answerValue == question.questionOptions[0].value"
+                 (click)="onTrueFalseQuestionOptionSelected(question.questionOptions[0].value)">
+          <div class="standalone-survey-question-answer-player__question-option-value"
+               (click)="onTrueFalseQuestionOptionSelected(question.questionOptions[0].value)">
+            {{getTrueFalseQuestionOptionLabel(question.questionOptions[0].value) | globalTranslator}}
+          </div>
+        </div>
+      </div>
+      <div class="standalone-survey-question-answer-player__question-option-container"
+           [ngClass]="{'-checked': questionAnswer.answerValue == question.questionOptions[1].value,
+           '-correct': question.isOptionValueCorrect(question.questionOptions[1].value),
+           '-submitted': questionAnswer.submittedDate != null,
+           '-has-correct-answer': question.hasCorrectAnswer()}">
+        <div class="question-option">
+          <input class="k-radio"
+                 type="checkbox"
+                 [disabled]="questionAnswer.submittedDate != null"
+                 [ngModel]="questionAnswer.answerValue == question.questionOptions[1].value"
+                 (click)="onTrueFalseQuestionOptionSelected(question.questionOptions[1].value)">
+          <div class="standalone-survey-question-answer-player__question-option-value"
+               (click)="onTrueFalseQuestionOptionSelected(question.questionOptions[1].value)">
+            {{getTrueFalseQuestionOptionLabel(question.questionOptions[1].value) | globalTranslator}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.SingleChoice">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <div class="standalone-survey-question-answer-player__question-option-container"
+           [ngClass]="{'-checked': questionAnswer.answerValue == questionOption.value,
+           '-correct': question.isOptionValueCorrect(questionOption.value),
+           '-submitted': questionAnswer.submittedDate != null,
+           '-has-correct-answer': question.hasCorrectAnswer()}"
+           *ngFor="let questionOption of renderQuestionOptions; let i = index;">
+        <div class="question-option">
+          <input class="k-radio"
+                 type="checkbox"
+                 [disabled]="questionAnswer.submittedDate != null"
+                 [ngModel]="questionOption.value == questionAnswer.answerValue"
+                 (click)="onSingleChoiceQuestionOptionSelected(questionOption.value)">
+          <div class="standalone-survey-question-answer-player__question-option-value"
+               *ngIf="!questionOption.isEmptyValue"
+               (click)="onSingleChoiceQuestionOptionSelected(questionOption.value)">{{questionOption.value}}
+          </div>
+        </div>
+        <div class="option-image">
+          <img class="image"
+               src="{{getMediaUrl(questionOption.imageUrl)}}"
+               *ngIf="questionOption.imageUrl">
+          <video class="video"
+                 *ngIf="questionOption.videoUrl"
+                 width="100%"
+                 height="100%"
+                 style="max-width:100%"
+                 #videoElement
+                 controls
+                 controlsList="nodownload">
+            <source [src]="getMediaUrl(questionOption.videoUrl)"
+                    controls>
+            <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                video</a> instead.</p>
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.MultipleChoice">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <div class="standalone-survey-question-answer-player__question-option-container"
+           [ngClass]="{'-checked': isMultipleChoiceAnswerMatch(questionAnswer, questionOption.value),
+           '-correct': question.isOptionValueCorrect(questionOption.value),
+           '-submitted': questionAnswer.submittedDate != null,
+           '-has-correct-answer': question.hasCorrectAnswer()}"
+           *ngFor="let questionOption of renderQuestionOptions; let i = index;">
+        <div class="question-option">
+          <input class="k-checkbox"
+                 type="checkbox"
+                 [disabled]="questionAnswer.submittedDate != null"
+                 [ngModel]="isMultipleChoiceAnswerMatch(questionAnswer, questionOption.value)"
+                 (click)="onMultipleChoiceQuestionOptionSelected(questionOption.value)">
+          <div class="standalone-survey-question-answer-player__question-option-value"
+               *ngIf="!questionOption.isEmptyValue"
+               (click)="onMultipleChoiceQuestionOptionSelected(questionOption.value)">{{questionOption.value}}
+          </div>
+        </div>
+        <div class="option-image">
+          <img class="image"
+               src="{{getMediaUrl(questionOption.imageUrl)}}"
+               *ngIf="questionOption.imageUrl">
+          <video class="video"
+                 *ngIf="questionOption.videoUrl"
+                 width="100%"
+                 height="100%"
+                 style="max-width:100%"
+                 #videoElement
+                 controls
+                 controlsList="nodownload">
+            <source [src]="getMediaUrl(questionOption.videoUrl)"
+                    controls>
+            <p>Your browser doesn't support HTML5 video. Here is a <a [href]="getMediaUrl(questionOption.videoUrl)">link to download the
+                video</a> instead.</p>
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__body-container"
+       *ngIf="question.questionType == questionType.DropDown">
+    <div class="standalone-survey-question-answer-player__index-in-form -as-placeholder">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <opal-select class="standalone-survey-question-answer-player__answer-dropdown"
+                   [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+        '-submitted': questionAnswer.submittedDate != null,
+        '-has-correct-answer': question.hasCorrectAnswer()}"
+                   [searchable]="false"
+                   [items]="renderQuestionOptions"
+                   [ngModel]="questionAnswer.answerValue"
+                   [labelField]="'value'"
+                   [valueField]="'value'"
+                   [disabled]="questionAnswer.submittedDate != null"
+                   [placeholder]="'Select' | globalTranslator"
+                   [dropdownItemLabelWrap]="true"
+                   (ngModelChange)="onDropDownListSelected($event)">
+      </opal-select>
+    </div>
+  </div>
+  <div class="standalone-survey-question-answer-player__title-container {{questionType.FillInTheBlanks}}"
+       *ngIf="question.questionType == questionType.FillInTheBlanks">
+    <div class="standalone-survey-question-answer-player__index-in-form">{{positionInForm}}.</div>
+    <div class="standalone-survey-question-answer-player__body-question-container">
+      <ng-container *ngFor="let questionOption of renderQuestionOptions; let i = index;">
+        <ng-container *ngIf="questionOption.type === questionOptionTypeEnum.Text">
+          {{ questionOption.value }}
+        </ng-container>
+        <span class="standalone-survey-question-answer-player__question-option-container"
+              *ngIf="questionOption.type === questionOptionTypeEnum.Blank"
+              [ngClass]="{'-checked': isMultipleChoiceAnswerMatch(questionAnswer, questionOption.value),
+        '-correct': question.isOptionValueCorrect(questionOption.value),
+        '-submitted': questionAnswer.submittedDate != null,
+        '-has-correct-answer': question.hasCorrectAnswer()}">
+          <input kendoTextBox
+                 (change)="onFillInTheBlankQuestionAnswerSingleValueFilledUp($event.target.value, i)">
+        </span>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="standalone-survey-question-answer-player__answer-result-toaster-container"
+     *ngIf="displayAnswerResultToaster && question.hasCorrectAnswer()"
+     (click)="closeAnswerResultToaster()">
+  <div class="standalone-survey-question-answer-player__answer-result-toaster"
+       [ngClass]="{'-correct': question.isAnswerCorrect(questionAnswer.answerValue),
+       '-wrong': !question.isAnswerCorrect(questionAnswer.answerValue)}">
+    {{(question.isAnswerCorrect(questionAnswer.answerValue)
+      ? 'CORRECT'
+      : 'INCORRECT') | globalTranslator}}
+  </div>
+</div>

@@ -1,0 +1,36 @@
+@media (min-width: 1300px) {
+  .opal-editor {
+    .k-editor {
+      max-width: 840px;
+      > .k-toolbar {
+        z-index: 3;
+      }
+    }
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1299px) {
+  .opal-editor {
+    .k-editor {
+      max-width: 780px;
+      > .k-toolbar {
+        z-index: 3;
+      }
+    }
+  }
+}
+
+@media (max-width: 1099px) {
+  .opal-editor {
+    .k-editor {
+      max-width: calc(100% - 60px);
+      > .k-toolbar {
+        position: relative;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 0;
+      }
+    }
+  }
+}

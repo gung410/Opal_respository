@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:TabRootContentPage
+    x:Class="LearnerApp.Views.MoreView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:viewModels="clr-namespace:LearnerApp.ViewModels;assembly=LearnerApp"
+    Title="More"
+    base:ViewModelLocator.AutoWireViewModel="true"
+    x:DataType="viewModels:MoreViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="StackLayoutStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Padding" Value="36,0,20,0" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="HeightRequest" Value="56" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Spacing" Value="20" />
+            </Style>
+
+            <Style x:Key="LabelButton" TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="#313552" />
+            </Style>
+
+            <Style x:Key="RightArrowImageStyle" TargetType="forms:SvgCachedImage">
+                <Setter Property="HeightRequest" Value="12" />
+                <Setter Property="WidthRequest" Value="12" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="Source" Value="arrow_right.svg" />
+            </Style>
+
+            <Style x:Key="ImageTitle" TargetType="forms:SvgCachedImage">
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout IsVisible="{Binding IsVisibleEPortfolio}" Style="{StaticResource StackLayoutStyle}">
+                <forms:SvgCachedImage Source="eportfolio.svg" Style="{StaticResource ImageTitle}" />
+                <Label Style="{StaticResource LabelButton}" Text="E-Portfolio" />
+                <forms:SvgCachedImage Style="{StaticResource RightArrowImageStyle}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickEportfolioCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <forms:SvgCachedImage Source="social.svg" Style="{StaticResource ImageTitle}" />
+                <Label Style="{StaticResource LabelButton}" Text="Social" />
+                <forms:SvgCachedImage Style="{StaticResource RightArrowImageStyle}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickSocialCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsVisibleCalendar}" Style="{StaticResource StackLayoutStyle}">
+                <forms:SvgCachedImage Source="social.svg" Style="{StaticResource ImageTitle}" />
+                <Label Style="{StaticResource LabelButton}" Text="Calendar" />
+                <forms:SvgCachedImage Style="{StaticResource RightArrowImageStyle}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickCalendarCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Style="{StaticResource StackLayoutStyle}">
+                <forms:SvgCachedImage Source="trophy.svg" Style="{StaticResource ImageTitle}" />
+                <Label Style="{StaticResource LabelButton}" Text="Achievement" />
+                <forms:SvgCachedImage Style="{StaticResource RightArrowImageStyle}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickAchievementCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsVisibleReport}" Style="{StaticResource StackLayoutStyle}">
+                <forms:SvgCachedImage Source="book_report.svg" Style="{StaticResource ImageTitle}" />
+                <Label Style="{StaticResource LabelButton}" Text="Report" />
+                <forms:SvgCachedImage Style="{StaticResource RightArrowImageStyle}" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnClickReportCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:TabRootContentPage>

@@ -1,0 +1,13 @@
+<ng-template kendoTreeViewNodeTemplate
+             let-dataItem>
+  <div class="metadata-select-deselect-all-node-template">
+    <span> {{ dataItem.displayText }}</span>
+    <ng-container *ngIf="showOption(dataItem)">
+      <span class="metadata-select-deselect-all-node-template__select-all-option"
+            (click)="onClickOption(dataItem, true)">{{ 'Select All' | translator}}</span>
+      <span class="metadata-select-deselect-all-node-template__symbol">{{'|' | translator}}</span>
+      <span class="metadata-select-deselect-all-node-template__deselect-all-option"
+            (click)="onClickOption(dataItem, false)">{{ 'Deselect All' | translator}}</span>
+    </ng-container>
+  </div>
+</ng-template>

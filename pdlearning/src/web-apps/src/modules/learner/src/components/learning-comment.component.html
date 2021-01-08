@@ -1,0 +1,39 @@
+<div class="lecture-player__finish-screen"
+     *ngIf="learningId">
+  <div class="lecture-player__course-complete-icon-container">
+    <i class="icon course-complete-circle lecture-player__course-complete-icon"></i>
+  </div>
+  <div class="lecture-player__congrats-text">{{"Congratulations" | translator}}!</div>
+  <div class="lecture-player__complete-text">{{"You have completed" | translator}} {{learningTitle}}</div>
+
+  <ng-container>
+    <ng-container>
+      <div class="lecture-player__comment-text">{{"Leave a comment" | translator}}</div>
+      <div class="lecture-player__comment-warning-text">
+        ({{"Your review will be shared at the content information page." | translator}})
+      </div>
+    </ng-container>
+
+    <div [formGroup]="form">
+      <ng-container>
+        <editable [modeView]="displayMode">
+          <ng-template editableViewMode="">
+            <div class="lecture-player__comment-content"
+                 multilineText>{{reviewComment}}</div>
+          </ng-template>
+          <ng-template editableEditMode="">
+            <textarea class="lecture-player__comment-textarea"
+                      maxlength="2000"
+                      [(ngModel)]="reviewComment"
+                      formControlName="comment"
+                      kendoErrorTooltip></textarea>
+          </ng-template>
+        </editable>
+      </ng-container>
+    </div>
+
+  </ng-container>
+
+  <div class="learner-primary-btn lecture-player__action-btn mb-20 mt-30"
+       (click)="onSubmit()">{{"Submit" | translator}}</div>
+</div>

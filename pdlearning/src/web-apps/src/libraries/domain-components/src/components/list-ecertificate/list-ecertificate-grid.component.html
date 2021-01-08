@@ -1,0 +1,60 @@
+<kendo-grid class="opal-grid"
+            [ngClass]="{'-no-merge': !mergeHeader}"
+            [data]="gridData"
+            [skip]="state.skip"
+            [pageSize]="state.take"
+            [pageable]="true"
+            (pageChange)="onPageChange($event)"
+            (cellClick)="onGridCellClick($event)"
+            stickyGridHeaderElement
+            [stickyDependElement]="stickyDependElement">
+  <kendo-grid-column [field]="'title'"
+                     [title]="'Title'"
+                     [width]="200"
+                     *ngIf="showTitleColumn()"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'totalCoursesUsing'"
+                     [title]="'Total of Courses Using the Template'"
+                     [width]="150"
+                     *ngIf="showTotalCoursesUsingColumn()"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'totalLearnersReceived'"
+                     [title]="'Total of Learners Received the Template'"
+                     [width]="150"
+                     *ngIf="showTotalLearnersReceivedColumn()"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'status'"
+                     [title]="'Status'"
+                     [width]="150"
+                     *ngIf="showStatusColumn()">
+    <ng-template kendoGridCellTemplate
+                 let-dataItem>
+      <status-indicator [currentStatus]="dataItem.status"
+                        [mapping]="statusColorMap"></status-indicator>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'actions'"
+                     [class]="'grid-action'"
+                     [title]="''"
+                     [width]="60">
+    <!-- Cell template of actions field-->
+    <ng-template let-dataItem
+                 let-rowIndex="rowIndex"
+                 kendoGridCellTemplate>
+      <ng-container *ngIf="getContextMenuByECertificateTemplate(dataItem).length !== 0">
+        <img class="icon action"
+             src="assets/images/icons/more.svg"
+             #more>
+        <kendo-contextmenu [target]="more"
+                           [items]="getContextMenuByECertificateTemplate(dataItem)"
+                           (select)="onSelectedContextMenu($event, dataItem, rowIndex)"
+                           [alignToAnchor]="true"
+                           [anchorAlign]="defaultContextMenuAnchorAlign"
+                           [popupAlign]="defaultContextMenuPopupAlign"
+                           showOn="click">
+        </kendo-contextmenu>
+      </ng-container>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>

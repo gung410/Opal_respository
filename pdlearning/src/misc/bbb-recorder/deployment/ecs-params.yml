@@ -1,0 +1,28 @@
+version: 1
+task_definition:
+  ecs_network_mode: awsvpc
+  task_role_arn: ecsTaskExecutionRole
+  task_execution_role: ecsTaskExecutionRole
+  task_size:
+    cpu_limit: 512
+    mem_limit: 2048
+  efs_volumes:
+    - name: webinar-efs-volume
+
+      # The tag parameter is not a param from AWS.
+      # It's used by deploy script to find correct EFS id.
+      # See more at <CX's bitbucket>/csc-infrastructure/opal/infrastructure/ecs/README.md
+      tag:
+        key: Name
+        value: opal-webinar-efs
+  services:
+    webinar-recorder:
+      cpu_shares: 1
+      mem_limit: 2048
+      log_configuration:
+        log_driver: awslogs
+        log_options:
+          awslogs-group: awslogs-webinar
+          awslogs-region: ap-southeast-1
+          awslogs-stream-prefix: webinar-recorder
+# run_params: network_configuration will be filled automatically when deploying

@@ -1,0 +1,120 @@
+<div class="learner-catalogue-page"
+     [ngClass]="{'hidden': currentLearningItem}">
+  <div class="anchor"
+       #anchor></div>
+  <kendo-popup [anchor]="anchor"
+               #advSearchFilterPopup
+               *ngIf="showAdvFilter">
+    <learner-catalog-search-filter #advSearchFilter
+                                   (close)="hideAdvSearchFilter()"
+                                   (applyFilter)="applyAdvSearchFilter()"></learner-catalog-search-filter>
+  </kendo-popup>
+  <div class="searching-section"
+       *ngIf="showingCatalogueSearch">
+    <div class="welcome-msg m-0">{{"Let's learn something new" | translator}}</div>
+    <div class="search-field">
+      <div class="search-input">
+        <i class="icon lg search cursor-pointer"
+           (click)="onSearchText()"></i>
+        <input type="text"
+               #searchInput
+               [(ngModel)]="searchText"
+               (keydown.enter)="onSearchText()"
+               [placeholder]="'Search in Catalogue' | translator">
+        <i class="icon close search-input__icon catalog-clear-search"
+           *ngIf="isShowClearText"
+           (click)="resetFilter()"></i>
+      </div>
+      <button kendoButton
+              [imageUrl]="'assets/images/icons/filter.svg'"
+              (click)="showAdvSearchFilter()">
+        <span class="filter-number"
+              *ngIf="filterNumber > 0">{{ filterNumber }}</span>
+        {{"Filter" | translator}}</button>
+      <button kendoButton
+              *ngIf="previousSearchText == null || previousSearchText != '' || filterNumber > 0"
+              (click)="resetFilter()">{{"Clear" | translator}}</button>
+    </div>
+
+    <!-- <div class="search-result-info">
+      <span class="search-text-info"></span>
+      <
+    </div> -->
+    <div class="search-result-info"
+         *ngIf="showingCourseSearchResult">
+      <div class="result-for"
+           *ngIf="previousSearchText != ''">
+        <div>Results for <strong>{{previousSearchText}}</strong></div>
+      </div>
+      <div class="items-count">
+        <span>{{ "##temsCount## items found" | translator: { itemsCount: total } }}</span>
+      </div>
+
+      <div class="search-type-container">
+        <span *ngFor="let searchType of catalogueSearchTypes"
+              [ngClass]="{'active': activeSearchType === searchType.value }"
+              (click)="searchOnType(searchType)"> {{ searchType.name | translator }} ({{ searchType.total }})</span>
+      </div>
+    </div>
+  </div>
+
+  <learning-card-list #searchResultList
+                      *ngIf="showingCourseSearchResult"
+                      [getPagedLearningItemsCallback]="getPagedSearchCoursesCallBack.bind(this)"
+                      [numberOfItemsOnPage]="12"
+                      [titleHtml]="getSearchCoursesListTitleHtml()"
+                      (learningCardClick)="onLearningCardClick($event)"
+                      [showTitle]="false">
+  </learning-card-list>
+
+  <ng-container *ngIf="showDefaultPage">
+    <learning-carousel class="section"
+                       *ngIf="suggestedLearningItems.length > 0 ||
+                                                       (suggestedLearningItems.length === 0 && newlyAddedLearningItems.length === 0)"
+                       [learningCardItems]="suggestedLearningItems"
+                       [title]="sectionWidget.RecommendedForYou | translator"
+                       [learningCardItemsTotalCount]="suggestedLearningItemsTotalCount"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowCourseRecommendationsClick()"></learning-carousel>
+
+    <learning-carousel class="section"
+                       [learningCardItems]="organisationSuggestedLearningItems"
+                       [title]="sectionWidget.RecommendedByYourOrganisation | translator"
+                       [learningCardItemsTotalCount]="organisationSuggestedLearningItemsTotalCount"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowOrgCourseRecommendationsClick()"></learning-carousel>
+
+    <learning-carousel class="section"
+                       *ngIf="sharedToMeItems.length > 0"
+                       [learningCardItems]="sharedToMeItems"
+                       [title]="sectionWidget.Shared | translator"
+                       [learningCardItemsTotalCount]="sharedToMeItemsTotalCount"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowSharedToMeItemsClick()"></learning-carousel>
+
+    <learning-carousel class="section"
+                       *ngIf="newlyAddedLearningItems.length > 0"
+                       [learningCardItems]="newlyAddedLearningItems"
+                       [title]="sectionWidget.NewlyAdded | translator"
+                       [learningCardItemsTotalCount]="newlyAddedLearningItemsTotalCount"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowNewlyAddedCoursesClick()"></learning-carousel>
+  </ng-container>
+
+  <learning-card-list #cardListDetail
+                      *ngIf="showingCardList"
+                      [getPagedLearningItemsCallback]="cardListCallback.bind(this)"
+                      [title]="cardListTitle | translator"
+                      [numberOfItemsOnPage]="12"
+                      (backButtonClick)="onCardListBack()"
+                      (learningCardClick)="onLearningCardClick($event)"
+                      [hasBackButton]="true"
+                      [showTitle]="true">
+  </learning-card-list>
+</div>
+
+<learning-detail-page *ngIf="currentLearningItem"
+                      [learningId]="currentLearningItem.id"
+                      [learningType]="currentLearningItem.type"
+                      (back)="onCourseDetailBackClick()">
+</learning-detail-page>

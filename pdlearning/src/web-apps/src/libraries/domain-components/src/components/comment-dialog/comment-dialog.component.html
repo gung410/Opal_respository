@@ -1,0 +1,31 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">{{ title }}</div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onClose()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <form [formGroup]="form">
+    <div class="form-controls-group"
+         [ngClass]="{ '-required': requiredCommentField }">
+      <label for="ch2">{{ 'Comment' | translator }}</label>
+      <textarea class="form-control"
+                formControlName="comment"
+                [placeholder]="'Please add comment ...' | translator"
+                kendoTextArea
+                [(ngModel)]="comment"
+                [autoSize]="true"
+                rows="5"
+                kendoErrorTooltip
+                position="top"></textarea>
+    </div>
+  </form>
+</div>
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onClose()">{{ 'Cancel' | globalTranslator }}</button>
+  <button kendoButton
+          [primary]="true"
+          (click)="onProceed()">{{ 'Proceed' | globalTranslator }}</button>
+</div>

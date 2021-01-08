@@ -1,0 +1,94 @@
+<form class="k-form-inline event-form-content"
+      [formGroup]="form">
+  <div class="form-controls-group"
+       *ngIf="communitySelectable">
+    <div class="form-title">{{ 'Community' | translator }}</div>
+    <opal-select class="form-control community-select"
+                 [items]="communities"
+                 [labelField]="'title'"
+                 [valueField]="'id'"
+                 formControlName="communityId"
+                 [clearable]="true"
+                 [placeholder]="'Select from the list' | translator"
+                 kendoErrorTooltip
+                 position="top">
+    </opal-select>
+  </div>
+  <div class="form-controls-group">
+    <div class="form-title">{{'Title' | translator}}</div>
+    <input class="form-control"
+           kendoTextBox
+           placeholder="Type event title"
+           formControlName="title"
+           kendoErrorTooltip
+           position="top">
+  </div>
+  <div class="event-type">
+    <div class="form-title">{{'Event Time' | translator}}</div>
+    <div class="form-control event-time-selector">
+      <label for="start-immediately-cbx">
+        <input class="k-radio"
+               id="start-immediately-cbx"
+               name="scheduled"
+               type="radio"
+               value="immediately"
+               #regular
+               [(ngModel)]="scheduled"
+               (change)="onScheduledChanged()"
+               [ngModelOptions]="{standalone: true}"
+               [disabled]="!canEditEvent && selectedEventId"
+               kendoRadioButton>
+        {{ 'Start Immediately' | translator }}</label>
+      <label for="select-date-cbx">
+        <input class="k-radio"
+               id="select-date-cbx"
+               name="scheduled"
+               type="radio"
+               value="scheduled"
+               #webinar
+               [(ngModel)]="scheduled"
+               (change)="onScheduledChanged()"
+               [ngModelOptions]="{standalone: true}"
+               [disabled]="!canEditEvent && selectedEventId"
+               kendoRadioButton>
+        {{ 'Select a date' | translator }}</label>
+    </div>
+  </div>
+  <div class="form-controls-group -horizontal event-form-datetime-picker">
+    <div class="form-controls-group">
+      <div class="form-title">{{'Date' | translator}}</div>
+      <kendo-datepicker #eventDate
+                        formControlName="eventDate"
+                        placeholder="Select the date"
+                        kendoErrorTooltip
+                        position="top"
+                        [format]="'dd/MM/yyyy'"
+                        [disabledDates]="startDisabledDates.bind(this)"
+                        [disabled]="scheduled === 'immediately'">
+      </kendo-datepicker>
+    </div>
+  </div>
+  <div class="form-controls-group -horizontal event-form-datetime-picker">
+    <div class="form-controls-group"
+         *ngIf="scheduled === 'scheduled'">
+      <div class="form-title">{{'Start time' | translator}}</div>
+      <kendo-timepicker #timeStart
+                        formControlName="timeStartsAt"
+                        placeholder="Select the time"
+                        kendoErrorTooltip
+                        position="top"
+                        (valueChange)="onTimesChanged()">
+      </kendo-timepicker>
+    </div>
+    <div class="form-controls-group">
+      <div class="form-title">{{'End time' | translator}}</div>
+      <kendo-timepicker #timeEnd
+                        formControlName="timeEndsAt"
+                        placeholder="Select the time"
+                        kendoErrorTooltip
+                        position="top"
+                        (valueChange)="onTimesChanged()">
+      </kendo-timepicker>
+    </div>
+  </div>
+</form>

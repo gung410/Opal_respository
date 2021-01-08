@@ -1,0 +1,12 @@
+.k-panelbar>.k-item>.k-link.k-state-selected {
+  background: $white;
+  color: $color-gray;
+
+  &:hover {
+    background: #ebebeb;
+  }
+}
+
+.k-panelbar>.k-item>.k-link.k-state-focused {
+  box-shadow: none;
+}

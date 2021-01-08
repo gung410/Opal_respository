@@ -1,0 +1,21 @@
+.opal-list {
+  &__item {
+    display: flex;
+    background-color: white;
+    border: 1px solid #d8dce6 !important;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  &__item-content {
+    padding: 10px;
+    flex-grow: 1;
+  }
+
+  &__close-btn {
+    padding: 10px;
+    line-height: unset;
+    text-align: center;
+  }
+}

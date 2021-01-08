@@ -1,0 +1,9 @@
+{
+  "name": "@thunder/angular-plugin-builders",
+  "version": "1.0.0",
+  "license": "MIT",
+  "builders": "builders.json",
+  "scripts": {
+    "build": "node ../../../node_modules/typescript/bin/tsc -p ./tsconfig.json && node ../../../node_modules/ts-node/dist/bin.js --project ./tsconfig.json ./merge-schemas.ts"
+  }
+}

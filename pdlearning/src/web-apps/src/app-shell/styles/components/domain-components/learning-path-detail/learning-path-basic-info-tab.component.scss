@@ -1,0 +1,60 @@
+learning-path-basic-info-tab {
+  .learning-path-basic-info-tab {
+    &__add-course-btn {
+      float: right;
+    }
+
+    &__pd-opportunities-select {
+      max-width: 85%;
+      margin-right: 15px;
+    }
+  }
+
+  kendo-grid.opal-grid.k-grid {
+    tr {
+      height: 55px !important;
+
+      td {
+        .icon.action {
+          width: 15px !important;
+          height: 15px !important;
+        }
+
+        &.grid-action {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .basic-info-tab {
+    &__thumbnail-uploader {
+      width: 320px;
+      height: 150px;
+      border: 1px solid $color-gainsboro;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    &__reset-btn {
+      margin-top: 5px;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: $font-size-normal;
+    }
+  }
+
+  .opal-file-uploader__drop-file-area {
+    &:not(.-has-file) {
+      .add-file-icon__title {
+        display: inline-block;
+        color: $color-dim-gray;
+      }
+    }
+  }
+
+  .opal-file-uploader__drop-file-area,
+  .opal-file-uploader__upload-progress {
+    background-color: transparent;
+  }
+}

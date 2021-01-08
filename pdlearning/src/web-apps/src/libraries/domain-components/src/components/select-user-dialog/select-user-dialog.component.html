@@ -1,0 +1,31 @@
+<div class="dialog-header">
+  <div class="dialog-header__title">
+    {{ title }}
+  </div>
+  <div class="dialog-header__actions">
+    <span class="k-icon k-i-close"
+          (click)="onCancel()"></span>
+  </div>
+</div>
+<div class="dialog-content">
+  <div class="form-controls-group">
+    <opal-select class="form-control"
+                 [fetchDataFn]="fetchUserSelectItemFn"
+                 [(ngModel)]="selectedValue"
+                 [labelField]="'fullName'"
+                 [valueField]="'extId'"
+                 [searchFields]="['firstName','lastName']"
+                 [clearable]="true"
+                 [placeholder]="'Select the course content creator' | translator"
+                 [dropdownBoundary]="'.dialog-content'">
+    </opal-select>
+  </div>
+</div>
+
+<div class="dialog-actions">
+  <button kendoButton
+          (click)="onCancel()">{{ 'Cancel' | globalTranslator }}</button>
+  <button kendoButton
+          [primary]="true"
+          (click)="onProceed()">{{ 'Proceed' | globalTranslator }}</button>
+</div>

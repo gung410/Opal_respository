@@ -1,0 +1,56 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #learnerProfileDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <owner-info *ngIf="learnerVm.user"
+                        [owner]="learnerVm.user"></owner-info>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="displayStatus()"
+                              [mapping]="statusColorMap"
+                              [prefix]="displayPrefixStatus()"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #learnerProfileDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="learnerProfileDetailStickyToolbarElement.element">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.PersonalInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Personal Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <learner-profile [learnerVm]="learnerVm"
+                           [stickyDependElement]="learnerProfileDetailStickyTabHeaderElement.headerElement"
+                           [stickySpacing]="stickySpacing"></learner-profile>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

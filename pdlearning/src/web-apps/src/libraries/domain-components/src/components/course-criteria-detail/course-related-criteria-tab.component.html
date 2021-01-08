@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <label class="form-title">{{ 'Course Related Criteria' | translator }}</label>
+    <div class="form-controls-group">
+      <label for="ch2">{{ 'Pre-Requisite Course' | translator }}</label>
+      <editable [modeView]="asViewMode()">
+        <ng-template editableViewMode="">
+          <ng-container *ngFor="let prerequisiteCourseId of courseCriteria.preRequisiteCourses">
+            <div class="metadata-tag-text">
+              {{courseCriteria.prerequisiteCoursesDic[prerequisiteCourseId]
+                ? courseCriteria.prerequisiteCoursesDic[prerequisiteCourseId].fullTitle
+                : 'n/a'}}
+            </div>
+          </ng-container>
+          <span *ngIf="courseCriteria.preRequisiteCourses.length === 0">- N/A</span>
+        </ng-template>
+        <ng-template editableEditMode="">
+          <opal-select class="form-control"
+                       formControlName="preRequisiteCourse"
+                       [multiple]="true"
+                       [(ngModel)]="courseCriteria.preRequisiteCourses"
+                       [fetchDataFn]="fetchPrerequisiteCourseFn"
+                       [(items)]="courseCriteria.prerequisiteCoursesSelectItems"
+                       [labelField]="'fullTitle'"
+                       [clearable]="true"
+                       [valueField]="'id'"
+                       kendoErrorTooltip
+                       position="top"></opal-select>
+        </ng-template>
+      </editable>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,13 @@
+server {
+    server_name   localhost;
+    root          /var/bigbluebutton;
+
+    location /playback/presentation/2.3 {
+      root /var/bigbluebutton;
+      try_files $uri /playback/presentation/2.3/index.html;
+    }
+
+    location /playback/presentation/playback.html {
+            return 301 /playback/presentation/2.3/playback.html?$query_string;
+    }
+}

@@ -1,0 +1,22 @@
+<div class="batch-upload-files">
+  <div class="batch-upload-files__content">
+    <batch-file-uploader (onFileDropped)="onFileDropped($event)"
+                         [icon]="icon"
+                         [totalFile]="listFile.length"
+                         [settings]="settings"
+                         [selectedFileNumber]="selectedFileNumber"
+                         [maxFileCount]="maxFileCount"></batch-file-uploader>
+    <div class="batch-upload-files__list-file"
+         *ngIf="listFile">
+      <div *ngFor="let item of listFile; index as i">
+        <upload-card #uploadCard
+                     [uploadFolder]="uploadFolder"
+                     [uploadParameters]="item"
+                     (triggerUpload)="triggerUpload($event)"
+                     (deleteFile)="deleteFile($event)"
+                     [isTemporary]="isPreviewMode">
+        </upload-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="column flex web-preview preview-content-container">
+  <button class="k-button-close-preview"
+          (click)="closePreview()">
+    <span class="k-icon k-i-arrow-chevron-left"></span>
+    <span>Close Preview</span>
+  </button>
+  <div class="preview-content__content">
+    <img class="preview-content__image"
+         [style.width.px]="previewECertificateTemplateModel.width"
+         [style.height.px]="previewECertificateTemplateModel.height"
+         [src]="'data:image/jpeg;base64, ' + previewECertificateTemplateModel.base64ECertificateTemplate | safeHtml:'resourceUrl'">
+  </div>
+</div>

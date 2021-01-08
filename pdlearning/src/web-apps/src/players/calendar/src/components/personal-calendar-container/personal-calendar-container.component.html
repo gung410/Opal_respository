@@ -1,0 +1,16 @@
+<kendo-tabstrip *ngIf="existSharedTeams; else notExistSharedTeams">
+  <kendo-tabstrip-tab [title]="'Personal Calendar'"
+                      [selected]="true">
+    <ng-template kendoTabContent="">
+      <personal-calendar [calendarHeight]="calendarHeight"></personal-calendar>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab [title]="'Shared by AOs'">
+    <ng-template kendoTabContent="">
+      <team-calendar></team-calendar>
+    </ng-template>
+  </kendo-tabstrip-tab>
+</kendo-tabstrip>
+<ng-template #notExistSharedTeams="">
+  <personal-calendar [calendarHeight]="calendarHeight"></personal-calendar>
+</ng-template>

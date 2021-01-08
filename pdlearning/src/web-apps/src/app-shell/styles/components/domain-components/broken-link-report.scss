@@ -1,0 +1,53 @@
+.broken-link-report-tab {
+  .k-header {
+    border-top: 1px solid $color-gainsboro;
+
+    &:first-child {
+      max-width: 40%;
+      min-width: 100px;
+    }
+  }
+}
+
+.broken-link-report-dialog {
+  width: 500px;
+
+  .form-controls-group {
+    padding-left: 0;
+  }
+
+  &__icon {
+    padding: 3px;
+    border-radius: 50%;
+    border: 1px solid $color-gray;
+    color: $color-gray;
+  }
+
+  &__title {
+    margin: 10px 0;
+    font-size: $font-h5;
+  }
+
+  &__description {
+    margin: 10px 0 0 10px;
+  }
+
+  &__announcement {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &-btn {
+      width: fit-content;
+      margin-top: 20px;
+    }
+
+    &-img {
+      margin-bottom: 20px;
+    }
+
+    &-icon {
+      height: 3rem;
+    }
+  }
+}

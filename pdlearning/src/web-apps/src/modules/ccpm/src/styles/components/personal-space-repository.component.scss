@@ -1,0 +1,104 @@
+.repository-page-toolbar {
+  padding: 15px 50px 15px 50px;
+
+  @include flex-layout-media('tablet-horizontal') {
+    padding: 10px 50px 10px 50px;
+  }
+
+  &.f-app-toolbar {
+    &.no-bottom {
+      .toolbar {
+        padding: 25px 20px 25px 0;
+
+        @include flex-layout-media('tablet-horizontal') {
+          padding: 5px 20px 5px 0;
+        }
+      }
+    }
+
+    .toolbar {
+      > div {
+        overflow: inherit;
+      }
+
+      &__left-container {
+        detail-title,
+        .title-group {
+          max-width: 100%;
+          overflow: hidden;
+
+          > div {
+            display: flex;
+            max-width: 100%;
+          }
+
+          .edit-icon {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .k-textbox {
+    min-width: 230px;
+  }
+
+  toolbar-right {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__filter {
+    margin-left: 1rem;
+
+    .opal-select.ng-select {
+      height: auto;
+    }
+  }
+
+  &__label {
+    align-self: center;
+    font-weight: $font-weight-medium;
+  }
+
+  &__select,
+  .question-bank-select {
+    margin-left: 1rem;
+    min-width: 200px;
+  }
+}
+
+.repository-page-sub-toolbar {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-end;
+
+  &__sort-label {
+    align-self: center;
+    font-weight: $font-weight-medium;
+  }
+
+  &__sort-select {
+    margin-left: 1rem;
+    min-width: 200px;
+    height: auto;
+  }
+}
+
+.personal-file-wrapper {
+  position: relative;
+
+  &__storage-limit {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    z-index: 1;
+  }
+
+  &__data {
+    margin-left: 5px;
+  }
+}

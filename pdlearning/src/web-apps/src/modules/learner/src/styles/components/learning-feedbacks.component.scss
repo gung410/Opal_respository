@@ -1,0 +1,111 @@
+.learning-feedbacks {
+  @include flex-column-container;
+  align-items: center;
+  width: 100%;
+
+  &__finish-screen {
+    @include flex-column-container;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__section {
+    margin-bottom: 30px;
+  }
+
+  &__course-complete-icon {
+    width: 150px;
+    height: 150px;
+
+    &-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+  }
+
+  &__congrats-text {
+    font-size: 42px;
+    margin-bottom: 10px;
+  }
+
+  &__complete-text {
+    font-size: $font-h2;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 35px;
+  }
+
+  &__rating-stars {
+    display: block;
+  }
+
+  &__comment-text {
+    text-align: center;
+    color: $color-blue-light;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
+  &__comment-textarea {
+    padding: 15px;
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 2px solid #e4e8f3;
+    border-radius: 5px;
+    width: 400px;
+    min-height: 150px;
+    resize: none;
+    font-family: $main-font;
+    font-size: $font-h6;
+    line-height: 21px;
+    margin-top: 30px;
+    word-break: break-word;
+  }
+
+  &__comment-warning-text {
+    text-align: center;
+    color: $color-blue-light;
+    margin-bottom: 25px;
+  }
+
+  &__comment-content {
+    max-width: 400px;
+    font-size: $font-h6;
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  &__action-btn {
+    min-width: 400px;
+  }
+
+  &__on-list {
+    .learning-feedbacks__comment-text {
+      color: $color-blue-dard;
+      text-transform: none;
+      text-align: left;
+    }
+
+    .learning-feedbacks__rating-stars {
+      .rating-stars {
+        justify-content: left;
+
+        &__star {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .learning-feedbacks__comment-textarea {
+      margin-top: 0;
+    }
+
+    .learning-feedbacks__section:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

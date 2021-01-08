@@ -1,0 +1,534 @@
+<ng-container [formGroup]="form">
+  <div class="assignment-question-editor">
+    <div class="assignment-question-editor__give-score"
+         *ngIf="mode === AssignmentMode.ParticipantTrack">
+      <div class="assignment-question-editor__give-score-container"
+           [ngClass]="{'-fill-in-the-blanks': data.question_Type === QuizAssignmentQuestionType.FillInTheBlanks}">
+        <kendo-numerictextbox *ngIf="canScoreGivingAssignment()"
+                              class="assignment-question-editor__give-score-input"
+                              type="number"
+                              [min]="0"
+                              [max]="data.maxScore"
+                              [decimals]="0"
+                              format="#"
+                              autoCorrect="true"
+                              [ngModel]="assignmentAnswerTrack.giveScore"
+                              (ngModelChange)="onChangeScore($event)"
+                              [readonly]="!canGiveScore()"
+                              [ngModelOptions]="{standalone: true}"></kendo-numerictextbox>
+        <div class="assignment-question-editor__give-score-symbol">/</div>
+        <div class="assignment-question-editor__max-score">{{data.maxScore}}</div>
+      </div>
+      <span class="assignment-question-editor__give-score-text">{{ 'Score' | translator}}</span>
+    </div>
+    <div class="assignment-question-editor__question-container">
+      <ng-container *ngIf="mode === AssignmentMode.Edit"
+                    [ngSwitch]="data.question_Type">
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.DropDown">
+          {{'Drop down' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.MultipleChoice">
+          {{'Checkboxes' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.SingleChoice">
+          {{'Radio buttons' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.TrueFalse">
+          {{'True / False' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.FreeText">
+          {{'Free Text' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.DatePicker">
+          {{'DATE PICKER: ONE DATE' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.DateRangePicker">
+          {{'DATE PICKER: DATE RANGE' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchCase="QuizAssignmentQuestionType.FillInTheBlanks">
+          {{'Fill in The Blanks' | translator}}
+        </div>
+        <div class="assignment-question-editor__question-type"
+             *ngSwitchDefault>
+          {{'Unknown' | translator}}
+        </div>
+      </ng-container>
+      <div class="assignment-question-editor__title-container">
+        <div class="assignment-question-editor__index-in-assignment">{{positionInAssignment}}</div>
+        <div class="assignment-question-editor__question-title">
+          <question-title-editor *ngIf="canShowQuestionTitle()"
+                                 formControlName="title"
+                                 errorHightLight
+                                 kendoErrorTooltip
+                                 position="bottom"
+                                 [isEditable]="canEditQuestion()"
+                                 [isRequired]="true"
+                                 [placeholder]="'Input question title'"
+                                 [html]="originalQuestionTitle"
+                                 (htmlChange)="onQuestionTitleChanged($event)"
+                                 [dialogZIndex]="maxZIndexOfTooltip"></question-title-editor>
+          <div class="assignment-question-editor__fill-in-the-blank-question"
+               *ngIf="data.question_Type === QuizAssignmentQuestionType.FillInTheBlanks">
+            <ng-container *ngFor="let questionOption of data.question_Options; let questionOptionindex = index">
+              <ng-container *ngIf="questionOption.type === AssignmentQuestionOptionType.Text">
+                <span class="assignment-question-editor__question-option-label assignment-fill-in-the-blank-question__text-label"
+                      #textLabel>
+                  {{ questionOption.value }}
+                </span>
+                <question-text-option-editor *ngIf="canEditQuestion()"
+                                             [target]="textLabel"
+                                             [value]="questionOption.value"
+                                             (submit)="onUpdateOrRemoveTextOption($event, questionOptionindex)">
+                </question-text-option-editor>
+              </ng-container>
+              <ng-container *ngIf="questionOption.type === AssignmentQuestionOptionType.Blank">
+                <input class="assignment-fill-in-the-blank-question__learner-answer"
+                       *ngIf="mode === AssignmentMode.LearnerAnswer"
+                       [ngStyle]="{'width.px': widthOfBlanks[questionOptionindex] == null ? minWidthOfBlank : widthOfBlanks[questionOptionindex]}"
+                       kendoTextBox
+                       [ngModel]="getBlankOptionAnswerOfLearner(questionOptionindex)"
+                       [ngModelOptions]="{standalone: true}"
+                       (ngModelChange)="onBlankOptionChange($event, questionOptionindex)"
+                       [readOnly]="readOnlyQuestion()">
+                <ng-container *ngIf="mode !== AssignmentMode.LearnerAnswer">
+                  <span class="assignment-question-editor__question-option-label assignment-fill-in-the-blank-question__blank-label"
+                        [ngClass]="{ '-correct': true }"
+                        #blankLabel>
+                    {{ questionOption.value }}
+                  </span>
+                  <question-blank-option-editor *ngIf="canEditQuestion()"
+                                                [target]="blankLabel"
+                                                [value]="questionOption.value"
+                                                (submit)="onUpdateOrRemoveBlankOption($event, questionOptionindex)">
+                  </question-blank-option-editor>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        <ng-container>
+          <div class="assignment-question-editor__hint-container"
+               kendoTooltip
+               [tooltipClass]="'question-hint'"
+               position="left"
+               closable="true"
+               showOn="click">
+            <i class="k-icon k-i-info assignment-question-editor__hint-icon"
+               *ngIf="showQuestionHint()"
+               [title]="data.question_Hint"></i>
+          </div>
+          <ng-container *ngIf="canEditQuestion()">
+            <img class="assignment-question-editor__context-menu icon action"
+                 src="assets/images/icons/more.svg"
+                 [ngClass]="{'-visible': selected}"
+                 #contextMenu>
+            <kendo-contextmenu [target]="contextMenu"
+                               [alignToAnchor]="true"
+                               [anchorAlign]="defaultContextMenuAnchorAlign"
+                               [popupAlign]="defaultContextMenuPopupAlign"
+                               showOn="click"
+                               (select)="onContextMenuItemSelect($event.item.data)">
+              <kendo-menu-item [text]="'Move up' | globalTranslator"
+                               [data]="{ id: 'MoveUp' }"
+                               [disabled]="positionInAssignment == 1 || disableMoveUp"></kendo-menu-item>
+              <kendo-menu-item [text]="'Move down' | globalTranslator"
+                               [data]="{ id: 'MoveDown' }"
+                               [disabled]="positionInAssignment == totalQuestion">
+              </kendo-menu-item>
+              <kendo-menu-item [text]="'Delete' | globalTranslator"
+                               [data]="{ id: 'Delete' }"
+                               [cssClass]="'assignment-question-editor__delete-context-menu-item'"
+                               [disabled]="isDisabledQuestionDeleteBtn()"></kendo-menu-item>
+            </kendo-contextmenu>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.FreeText">
+        <div class="assignment-question-editor__body-question-container">
+          <div class="assignment-question-editor__correct-answer-textbox-container"
+               [ngClass]="{'-correct': mode !== AssignmentMode.LearnerAnswer }">
+            <editable class="textbox-container"
+                      [modeView]="disableSetCorrectAnswer">
+              <ng-template editableViewMode="">{{data.question_CorrectAnswer}}</ng-template>
+              <ng-template editableEditMode="">
+                <textarea class="assignment-question-editor__correct-answer-textbox"
+                          formControlName="freeTextCorrectAnswer"
+                          kendoTextArea
+                          [autoSize]="true"
+                          rows="5"
+                          kendoErrorTooltip
+                          position="bottom"
+                          placeholder="{{'Input correct answer here' | translator}}"
+                          [ngModel]="data.question_CorrectAnswer"
+                          (keyup)="onFreeTextQuestionCorrectAnswerChanged($event.target.value)"></textarea>
+              </ng-template>
+            </editable>
+          </div>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.DatePicker">
+        <div class="assignment-question-editor__body-question-container date-picker">
+          <div class="assignment-question-editor__correct-answer-textbox-container">
+            <editable class="assignment-question-editor__assignment-control"
+                      [ngClass]="{
+                        '-readonly': disableSetCorrectAnswer,
+                        '-correct': displayCorrectDateClass(true),
+                        '-incorrect': displayIncorrectDateClass(true)
+                      }"
+                      [modeView]="disableSetCorrectAnswer">
+              <ng-template editableViewMode="">
+                <div class="assignment-question-editor__answer-date">
+                  {{ getAnswerForDateQuestion(true) | date: 'dd/MM/yyyy' }}
+                </div>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <kendo-datepicker formControlName="datePickerCorrectAnswer"
+                                  kendoErrorTooltip
+                                  position="top"
+                                  [format]="'dd/MM/yyyy'"
+                                  [ngModel]="getAnswerForDateQuestion(true)"
+                                  [placeholder]="'Input correct date here' | globalTranslator"
+                                  (valueChange)="onDatePickerQuestionCorrectAnswerChanged($event)"
+                                  #datePickerElement></kendo-datepicker>
+              </ng-template>
+            </editable>
+          </div>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.DateRangePicker">
+        <div class="assignment-question-editor__body-question-container date-range-picker">
+          <div class="assignment-question-editor__correct-answer-textbox-container">
+            <editable class="assignment-question-editor__assignment-control"
+                      [ngClass]="{
+                        '-readonly': disableSetCorrectAnswer,
+                        '-correct': displayCorrectDateClass(true),
+                        '-incorrect': displayIncorrectDateClass(true)
+                      }"
+                      [modeView]="disableSetCorrectAnswer">
+              <ng-template editableViewMode="">
+                <div class="assignment-question-editor__answer-date">
+                  {{ getAnswerForDateQuestion(true) | date: 'dd/MM/yyyy' }}
+                </div>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <kendo-datepicker formControlName="dateRangePickerFromCorrectAnswer"
+                                  kendoErrorTooltip
+                                  position="top"
+                                  [format]="'dd/MM/yyyy'"
+                                  [ngModel]="getAnswerForDateQuestion(true)"
+                                  [placeholder]="'Input correct From date' | globalTranslator"
+                                  (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, true)"
+                                  #datePickerFromElement></kendo-datepicker>
+              </ng-template>
+            </editable>
+            <span class="k-icon k-i-window-minimize assignment-question-editor__range-symbol"
+                  [ngClass]="{
+                    '-view-mode': disableSetCorrectAnswer,
+                    '-learner-mode': mode === AssignmentMode.LearnerAnswer
+                  }">-</span>
+            <editable class="assignment-question-editor__assignment-control"
+                      [ngClass]="{
+                        '-readonly': disableSetCorrectAnswer,
+                        '-correct': displayCorrectDateClass(false),
+                        '-incorrect': displayIncorrectDateClass(false)
+                      }"
+                      [modeView]="disableSetCorrectAnswer">
+              <ng-template editableViewMode="">
+                <div class="assignment-question-editor__answer-date">
+                  {{ getAnswerForDateQuestion(false) | date: 'dd/MM/yyyy'}}
+                </div>
+              </ng-template>
+              <ng-template editableEditMode="">
+                <kendo-datepicker formControlName="dateRangePickerToCorrectAnswer"
+                                  kendoErrorTooltip
+                                  position="top"
+                                  [format]="'dd/MM/yyyy'"
+                                  [ngModel]="getAnswerForDateQuestion(false)"
+                                  [placeholder]="'Input correct To date' | globalTranslator"
+                                  (valueChange)="onDateRangePickerQuestionCorrectAnswerChanged($event, false)"
+                                  #datePickerEndElement></kendo-datepicker>
+              </ng-template>
+            </editable>
+          </div>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type === QuizAssignmentQuestionType.TrueFalse">
+        <div class="assignment-question-editor__body-question-container">
+          <assignment-question-option-editor type="radio"
+                                             [ngClass]="{
+                                                '-readonly': disableSetCorrectAnswer,
+                                                '-correct': displayCorrectQuestionOptionClass(data.question_Options[0]),
+                                                '-incorrect':  displayIncorrectQuestionOptionClass(data.question_Options[0])
+                                              }"
+                                             [assignmentType]="assignmentType"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             [checked]="getCheckedQuestionOption(data.question_Options[0])"
+                                             [viewMode]="true"
+                                             [allowConfigureImage]="false"
+                                             [value]="getTrueFalseQuestionOptionLabel(data.question_Options[0].value) | translator"
+                                             [noRemove]="true"
+                                             [questionType]="data.question_Type"
+                                             [visibleOptionActions]="hovering"
+                                             (checkedChange)="onTrueFalseQuestionOptionCheckedChange($event, data.question_Options[0].value)"
+                                             [feedback]="data.question_CorrectAnswer"
+                                             (feedbackChange)="onFeedbackCorrectChange($event)">
+          </assignment-question-option-editor>
+          <assignment-question-option-editor type="radio"
+                                             [ngClass]="{
+                                                '-readonly': disableSetCorrectAnswer,
+                                                '-correct': displayCorrectQuestionOptionClass(data.question_Options[1]),
+                                                '-incorrect':  displayIncorrectQuestionOptionClass(data.question_Options[1])
+                                              }"
+                                             [assignmentType]="assignmentType"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             [checked]="getCheckedQuestionOption(data.question_Options[1])"
+                                             [viewMode]="true"
+                                             [value]="getTrueFalseQuestionOptionLabel(data.question_Options[1].value) | translator"
+                                             [noRemove]="true"
+                                             [allowConfigureImage]="false"
+                                             [questionType]="data.question_Type"
+                                             [visibleOptionActions]="hovering"
+                                             (checkedChange)="onTrueFalseQuestionOptionCheckedChange($event, data.question_Options[1].value)"
+                                             [feedback]="data.question_FeedbackWrongAnswer"
+                                             (feedbackChange)="onFeedbackWrongChange($event)">
+          </assignment-question-option-editor>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.SingleChoice">
+        <div class="assignment-question-editor__body-question-container">
+          <assignment-question-option-editor type="radio"
+                                             [ngClass]="{
+                                              '-readonly': disableSetCorrectAnswer,
+                                              '-correct': displayCorrectQuestionOptionClass(questionOption),
+                                              '-incorrect':  displayIncorrectQuestionOptionClass(questionOption)
+                                              }"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             *ngFor="let questionOption of data.question_Options; let i = index; trackBy: questionOptionTrackByFn"
+                                             [checked]="getCheckedQuestionOption(questionOption)"
+                                             [questionOption]="questionOption"
+                                             [value]="questionOption.value"
+                                             [visibleOptionActions]="hovering"
+                                             [imageUploadSettings]="imageUploadSettings.setImageUrl(questionOption.imageUrl)"
+                                             (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                             [assignmentType]="assignmentType"
+                                             [viewMode]="!canEditQuestion()"
+                                             [noRemove]="!canEditQuestion()"
+                                             (checkedChange)="onSingleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                             (remove)="onRemoveOptionClicked($event, i)"
+                                             (optionMediaChange)="onOptionMediaChange($event,i)"
+                                             [feedback]="questionOption.feedback"
+                                             (feedbackChange)="onOptionFeedbackChange($event, i)">
+          </assignment-question-option-editor>
+          <assignment-question-option-editor class="-addNewOption"
+                                             type="radio"
+                                             *ngIf="canEditQuestion()"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             #addNewOptionEditor
+                                             [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                             [visibleOptionActions]="false"
+                                             [noRemove]="true"
+                                             [notRequired]="true"
+                                             [valueInputPlaceholder]="'Add new option' | translator"
+                                             [assignmentType]="assignmentType"
+                                             (valueInputFocusOut)="processAddNewQuestionOption($event)"></assignment-question-option-editor>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.MultipleChoice">
+        <div class="assignment-question-editor__body-question-container">
+          <assignment-question-option-editor type="checkbox"
+                                             [ngClass]="{
+                                                '-readonly': disableSetCorrectAnswer,
+                                                '-correct': displayCorrectQuestionOptionClass(questionOption),
+                                                '-incorrect':  displayIncorrectQuestionOptionClass(questionOption)
+                                              }"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             *ngFor="let questionOption of data.question_Options; let i = index; trackBy: questionOptionTrackByFn"
+                                             [checked]="getCheckedQuestionOption(questionOption)"
+                                             [questionOption]="questionOption"
+                                             [value]="questionOption.value"
+                                             [visibleOptionActions]="hovering"
+                                             [imageUploadSettings]="imageUploadSettings.setImageUrl(questionOption.imageUrl)"
+                                             (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                             [assignmentType]="assignmentType"
+                                             [questionType]="data.question_Type"
+                                             [viewMode]="!canEditQuestion()"
+                                             [noRemove]="!canEditQuestion()"
+                                             (checkedChange)="onMultipleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                             (remove)="onRemoveOptionClicked($event, i)"
+                                             (optionMediaChange)="onOptionMediaChange($event,i)">
+          </assignment-question-option-editor>
+          <assignment-question-option-editor class="-addNewOption"
+                                             type="checkbox"
+                                             *ngIf="canEditQuestion()"
+                                             [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                             #addNewOptionEditor
+                                             [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                             [visibleOptionActions]="false"
+                                             [noRemove]="true"
+                                             [notRequired]="true"
+                                             [valueInputPlaceholder]="'Add new option' | translator"
+                                             [assignmentType]="assignmentType"
+                                             (valueInputFocusOut)="processAddNewQuestionOption($event)"></assignment-question-option-editor>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.DropDown">
+        <div class="assignment-question-editor__body-question-container">
+          <ng-container *ngIf="mode === AssignmentMode.LearnerAnswer || mode === AssignmentMode.ParticipantTrack">
+            <opal-select class="assignment-question-editor__dropdown-question"
+                         [ngClass]="{
+                            '-readonly': disableSetCorrectAnswer,
+                            '-correct': displayCorrectDropdownQuestionClass(),
+                            '-incorrect': displayIncorrectDropdownQuestionClass()
+                          }"
+                         [readOnly]="readOnlyQuestion()"
+                         [items]="data.question_Options"
+                         [valueField]="'value'"
+                         [labelField]="'value'"
+                         [placeholder]="'Select a correct answer' | translator"
+                         [ngModel]="getAnswerForDropdownQuestion()"
+                         (ngModelChange)="onSingleChoiceQuestionOptionCheckedChange(true, $event)"
+                         [ngModelOptions]="{standalone: true}"></opal-select>
+          </ng-container>
+          <ng-container *ngIf="mode === AssignmentMode.Edit || mode === AssignmentMode.View">
+            <assignment-question-option-editor type="radio"
+                                               [ngClass]="{
+                                                  '-readonly': disableSetCorrectAnswer,
+                                                  '-correct': data.isOptionValueCorrect(questionOption.value)
+                                                }"
+                                               [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                               *ngFor="let questionOption of data.question_Options; let i = index; trackBy: questionOptionTrackByFn"
+                                               [checked]="getCheckedQuestionOption(questionOption)"
+                                               [value]="questionOption.value"
+                                               [visibleOptionActions]="hovering"
+                                               [allowConfigureImage]="false"
+                                               [assignmentType]="assignmentType"
+                                               [viewMode]="!canEditQuestion()"
+                                               [noRemove]="!canEditQuestion()"
+                                               (valueChange)="onQuestionOptionValueChanged($event, i)"
+                                               (checkedChange)="onSingleChoiceQuestionOptionCheckedChange($event, questionOption.value)"
+                                               (remove)="onRemoveOptionClicked($event, i)"
+                                               [feedback]="questionOption.feedback"
+                                               (feedbackChange)="onOptionFeedbackChange($event, i)">
+            </assignment-question-option-editor>
+            <assignment-question-option-editor class="-addNewOption"
+                                               type="radio"
+                                               *ngIf="canEditQuestion()"
+                                               [disableSetCorrectAnswer]="disableSetCorrectAnswer"
+                                               #addNewOptionEditor
+                                               [(checked)]="addNewOptionIsCorrectAnswerValue"
+                                               [visibleOptionActions]="false"
+                                               [noRemove]="true"
+                                               [notRequired]="true"
+                                               [valueInputPlaceholder]="'Add new option' | translator"
+                                               [assignmentType]="assignmentType"
+                                               (valueInputFocusOut)="processAddNewQuestionOption($event)">
+            </assignment-question-option-editor>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.FillInTheBlanks && mode === AssignmentMode.Edit">
+        <div class="assignment-question-editor__body-question-container assignment-fill-in-the-blank-question__add-option-controls">
+          <div class="assignment-fill-in-the-blank-question__option-control"
+               #addTextBtn>
+            <span class="k-icon k-i-plus-outline"></span>
+            <span class="">{{ 'Add new text' | translator }}</span>
+          </div>
+          <question-text-option-editor [target]="addTextBtn"
+                                       *ngIf="canEditQuestion()"
+                                       (submit)="onAddNewTextOptionSubmit($event)"></question-text-option-editor>
+          <div class="assignment-fill-in-the-blank-question__option-control"
+               #addBlankBtn>
+            <span class="k-icon k-i-plus-outline"></span>
+            <span class="assignment-fill-in-the-blank-question__add-blank-title">{{ 'Add new blank' | translator }}</span>
+          </div>
+          <question-blank-option-editor [target]="addBlankBtn"
+                                        *ngIf="canEditQuestion()"
+                                        (submit)="onAddNewBlankOptionSubmit($event)"></question-blank-option-editor>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container -track-mode"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.FillInTheBlanks && mode === AssignmentMode.ParticipantTrack">
+        <span class="assignment-question-editor__track-text">{{ 'Answer of Learner:' | translator }}</span>
+        <div class="assignment-question-editor__track-answer">
+          <ng-container *ngFor="let questionOption of data.question_Options; let questionOptionindex = index">
+            <ng-container *ngIf="questionOption.type === AssignmentQuestionOptionType.Text">
+              <span class="assignment-question-editor__question-option-label assignment-fill-in-the-blank-question__text-label"
+                    #textLabel>
+                {{ questionOption.value}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="questionOption.type === AssignmentQuestionOptionType.Blank">
+              <span class="assignment-question-editor__question-option-label assignment-fill-in-the-blank-question__blank-label"
+                    [ngClass]="{
+                      '-readonly': disableSetCorrectAnswer,
+                      '-correct': getCorrectQuestionOption(questionOption) === true,
+                      '-incorrect': getCorrectQuestionOption(questionOption) === false && mode === AssignmentMode.ParticipantTrack
+                    }"
+                    #blankLabel>
+                {{ getAnswerOfFillInTheBlankForOption(questionOptionindex) }}
+              </span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__body-container -track-mode"
+           *ngIf="data.question_Type == QuizAssignmentQuestionType.FreeText && mode === AssignmentMode.ParticipantTrack">
+        <span class="assignment-question-editor__track-text">{{ 'Answer of Learner:' | translator }}</span>
+        <div class="assignment-question-editor__body-question-container">
+          <div class="assignment-question-editor__correct-answer-textbox-container">
+            {{ assignmentAnswerTrack.questionAnswer }}
+          </div>
+        </div>
+      </div>
+
+      <div class="assignment-question-editor__logic-validation-errors alert -danger"
+           *ngIf="logicValidationErrors">
+        <div *ngFor="let key of logicValidationErrorKeys">{{ logicValidationErrors[key] | translator}}</div>
+      </div>
+      <div class="assignment-question-editor__explanatory-note-container"
+           *ngIf="showAnswerExplanatoryNote()">
+        <p class="assignment-question-editor__explanatory-note-title">{{ 'EXPLANATION' | translator }}</p>
+        <p class="assignment-question-editor__explanatory-note-content"> {{ data.question_AnswerExplanatoryNote }}</p>
+      </div>
+      <div class="assignment-question-editor__answer-info"
+           *ngIf="mode === AssignmentMode.ParticipantTrack">
+        <div class="assignment-question-editor__answer-info-item">
+          <img src="assets/images/icons/completed-mark.svg"
+               alt="icon">
+          {{ 'Correct answer' }}
+        </div>
+        <div class="assignment-question-editor__answer-info-item">
+          <img src="assets/images/icons/incorrect-mark.svg"
+               alt="icon">
+          {{ 'Incorrect answer' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

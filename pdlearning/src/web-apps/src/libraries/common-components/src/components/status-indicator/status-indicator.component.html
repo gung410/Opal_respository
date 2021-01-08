@@ -1,0 +1,14 @@
+<div class="status-indicator">
+  <span class="status-indicator__dot"
+        *ngIf="canDisplayStatusDot()"
+        [style.background-color]="displayStatusColorDot()"></span>
+  <span class="status-indicator__text">
+    <span class="status-indicator__prefix-text"
+          *ngIf="prefix">
+      {{ prefix || '' }}
+    </span>
+    <span class="status-indicator__status-text">
+      {{ displayStatus()}}
+    </span>
+  </span>
+</div>

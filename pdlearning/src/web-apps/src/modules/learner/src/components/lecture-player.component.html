@@ -1,0 +1,148 @@
+<div class="lecture-player">
+  <div class="lecture-player__course-title-container">
+    <div class="lecture-player__back"
+         (click)="showBackConfirmationDialog()">
+      <i class="icon back"></i>
+      {{"Back" | globalTranslator}}
+    </div>
+    <div class="lecture-player__course-title"
+         *ngIf="courseTitle">{{courseTitle}}</div>
+    <!-- The below div is duplicated so that lecture-player__course-title can be in the center -->
+    <div class="lecture-player__back hidden--keep-space"
+         (click)="showBackConfirmationDialog()">
+      <i class="icon back"></i>
+      {{"Back" | globalTranslator}}
+    </div>
+  </div>
+  <div class="lecture-player__steps-container"
+       *ngIf="lectures">
+    <div class="lecture-player__change-lecture"
+         [ngClass]="{'hidden--keep-space': currentStep === 1}"
+         (click)="previousLecture()">{{"Previous" | globalTranslator}}</div>
+    <div class="lecture-player__steps-text">
+      <ng-container *ngIf="lectures && currentStep">
+        {{currentStep}} {{"of" | translator}} {{lectures.length}} {{"steps" | translator}}
+      </ng-container>
+    </div>
+    <!--
+      We temporarily remove this button hidden checking as the customer required for testing.
+      You can feel free to enable this later.
+      [ngClass]="{'hidden--keep-space': hideNextOrFinish}"
+    -->
+    <div class="lecture-player__change-lecture --align-right"
+         (click)="nextOrFinish()"
+         [ngClass]="{'disabled': disableNext}">
+      {{ currentStep < lectures.length ? ("Next" | globalTranslator) : ("Finish" | globalTranslator)}}
+    </div>
+  </div>
+  <div class="lecture-player__progress-bar"
+       *ngIf="lectures">
+    <div class="lecture-player__progress-bar-inner"
+         *ngIf="completedSteps > 0"
+         [ngClass]="{ '--full': completedSteps === lectures.length}"
+         [style.width]="(completedSteps/lectures.length*100) + '%'"></div>
+  </div>
+
+  <ng-container *ngIf="currentLecture && currentLecture.lectureDetail && !showFinishScreen">
+    <div class="lecture-player__lecture-content"
+         *ngIf="currentLecture && currentLecture.lectureDetail && currentLecture.lectureDetail.type">
+
+      <div class="lecture-player__inline-content"
+           *ngIf="currentLecture.lectureDetail.type === lectureType.InlineContent"
+           externalLinkGuard
+           [innerHTML]="currentLecture.lectureDetail.value | safe: 'html'">
+      </div>
+
+      <div class="lecture-player__quiz-content"
+           *ngIf="currentLecture.lectureDetail.type === lectureType.Quiz">
+        <main-quiz-player-page class="lecture-player__quiz-player"
+                               [isDisplayPollResultToLearners]="currentLecture.lectureDetail?.quizConfig?.displayPollResultToLearners">
+        </main-quiz-player-page>
+      </div>
+
+      <div class="lecture-player__digital-content"
+           *ngIf="currentLecture.lectureDetail.type === lectureType.DigitalContent">
+        <digital-content-player *ngIf="currentLecture.myLectureInfo"
+                                [lectureId]="currentLecture.lectureDetail.id"
+                                [classRunId]="course.myClassRun?.classRunId"
+                                [displayMode]="displayMode"
+                                [isLectureNextButtonClicked]="isLectureNextButtonClicked"
+                                [reviewOnly]="this.reviewOnly"
+                                [resourceId]="currentLecture.lectureDetail.resourceId"
+                                [myLectureId]="currentLecture.myLectureInfo.id"
+                                [onScormFinishCallback]="finishDigitalContent.bind(this)"
+                                [disableDownload]="!hasContentDownloadPermission || !currentLecture.lectureDetail?.digitalContentConfig?.canDownload"
+                                (onDownloadFile)="onDownloadDigitalContent(currentLecture.lectureDetail.resourceId)"
+                                maxMainContentHeight="680px"></digital-content-player>
+      </div>
+    </div>
+
+    <div class="learner-primary-btn lecture-player__action-btn lecture-player__next-btn"
+         *ngIf="canShowNextButton(currentLecture)"
+         (click)="nextOrFinish()">
+      {{ currentStep < lectures.length ? ("Next" | globalTranslator) : ("Finish" | globalTranslator)}}
+    </div>
+  </ng-container>
+
+  <learning-feedbacks *ngIf="showFinishScreen"
+                      [learningId]="courseId"
+                      [learningTitle]="courseTitle"
+                      [reviewType]="reviewType"
+                      [configuration]="feedbacksConfig"
+                      [classRunId]="course.myClassRun && course.myClassRun.classRunId"
+                      [hasContentChanged]="hasContentChanged"
+                      (submit)="onSubmitFeedbacks($event)"></learning-feedbacks>
+</div>
+
+<div class="lecture-player__overlay"
+     *ngIf="showTableOfContents"></div>
+<div class="lecture-player__toc"
+     *ngIf="tableOfContents"
+     [ngClass]="{'--hide': !showTableOfContents}">
+  <div class="lecture-player__toc-toggle-icon"
+       (click)="toggleTableOfContents()">
+    <div class="lecture-player__toc-burger-icon"
+         *ngIf="!showTableOfContents">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <i class="icon sm color-back-icon"
+       *ngIf="showTableOfContents"></i>
+  </div>
+  <div class="lecture-player__toc-title-container">
+    <div class="lecture-player__back"
+         (click)="showBackConfirmationDialog()">
+      <i class="icon back"
+         style="margin-left: -10px"
+         (click)="onBackToCoursePageClick()"></i>
+      {{"Back to course page" | translator}}
+    </div>
+    <div class="lecture-player__toc-title">{{courseTitle}}</div>
+    <div class="lecture-player__toc-content-title">{{"Content" | translator}}</div>
+  </div>
+  <div class="lecture-player__toc-separator"></div>
+  <learner-course-content class="lecture-player__toc-content"
+                          *ngIf="currentLecture"
+                          [tableOfContents]="tableOfContents"
+                          [highlightLectureId]="showFinishScreen ? undefined : currentLecture.lectureId"
+                          [completedLectureIds]="completedLectureIds"
+                          [showMore]="true"
+                          [showCursorPointerLectureIds]="[nextLearnerableLectureId]"
+                          (lectureClick)="onLectureClick($event)"></learner-course-content>
+</div>
+
+<ng-template #backConfirmation="">
+  <div class="confirmation-dialog__main-container">
+    <div class="confirmation-dialog__icon-container">
+      <i class="icon lg book"></i>
+    </div>
+    <div class="confirmation-dialog__title">{{"Are you sure you want to quit? Your progress will be saved" | translator}}</div>
+    <div class="confirmation-dialog__actions-container">
+      <div class="secondary-btn confirmation-dialog__action-btn"
+           (click)="backConfirmationDialog.close()">{{"No" | globalTranslator}}</div>
+      <div class="secondary-btn confirmation-dialog__action-btn"
+           (click)="onBackClick()">{{"Yes, I want to quit" | translator}}</div>
+    </div>
+  </div>
+</ng-template>

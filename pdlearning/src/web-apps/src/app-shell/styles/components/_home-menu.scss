@@ -1,0 +1,34 @@
+.home-menu {
+  @extend %clear-ul;
+  border-right: $border;
+  background: $white;
+  height: 100%;
+
+  li {
+    position: relative;
+    font-weight: 600;
+    padding: 15px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &.active {
+      color: $accent;
+      background: $highlight;
+
+      &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        width: 3px;
+        background: $accent;
+      }
+    }
+
+    &:hover {
+      background: $highlight;
+    }
+  }
+}

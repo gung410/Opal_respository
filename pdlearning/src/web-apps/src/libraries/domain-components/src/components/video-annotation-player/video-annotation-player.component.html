@@ -1,0 +1,21 @@
+<video-annotation *ngIf="chapters"
+                  [mode]="mode"
+                  [src]="videoUrl"
+                  [videoId]="videoId"
+                  [chapters]="chapters"
+                  [fileType]="fileType"
+                  [fileExtension]="fileExtension"
+                  [ownerId]="ownerId"
+                  [chapterInfo]="chapterInfo"
+                  [commentInfo]="commentInfo"></video-annotation>
+<div class="video-annotation-player__actions "
+     *ngIf="isEditMode">
+  <button class="video-annotation-player__cancel"
+          [primary]="false"
+          kendoButton
+          (click)="onCancel()">{{"Cancel" | globalTranslator}}</button>
+  <button class="video-annotation-player__save"
+          [primary]="true"
+          kendoButton
+          (click)="onSave()">{{"Save" | globalTranslator}}</button>
+</div>

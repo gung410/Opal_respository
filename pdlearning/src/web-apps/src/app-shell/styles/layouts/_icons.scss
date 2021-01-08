@@ -1,0 +1,291 @@
+.icon {
+  display: inline-block;
+  padding: 4px;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+
+  &.icon-fill {
+    background-size: contain;
+  }
+
+  &.lg {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.sm {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.tiny {
+    width: 12px;
+    height: 12px;
+    padding: 1px;
+    margin-right: 4px;
+  }
+
+  &.action {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $gray100;
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &.right {
+    background: url('../assets/images/icons/arrow-right.svg') no-repeat center;
+
+    &.revert {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.back {
+    background: url('../assets/images/icons/back.svg') no-repeat center;
+  }
+
+  &.more {
+    background: url('../assets/images/icons/more.svg') no-repeat center;
+  }
+
+  &.save {
+    background: url('../assets/images/icons/save.svg') no-repeat center;
+  }
+
+  &.save-outline {
+    background: url('../assets/images/icons/save-outline.svg') no-repeat center;
+  }
+
+  &.add-revert {
+    background: url('../assets/images/icons/float/add-revert.svg') no-repeat center;
+  }
+
+  &.reading {
+    background: url('../assets/images/icons/files/template.svg') no-repeat center;
+  }
+
+  &.video {
+    background: url('../assets/images/icons/files/video.svg') no-repeat center;
+  }
+
+  &.audio {
+    background: url('../assets/images/icons/files/audio.svg') no-repeat center;
+  }
+
+  &.document {
+    background: url('../assets/images/icons/files/document.svg') no-repeat center;
+  }
+
+  &.html {
+    background: url('../assets/images/icons/files/html.svg') no-repeat center;
+  }
+
+  &.picture {
+    background: url('../assets/images/icons/files/picture.svg') no-repeat center;
+  }
+
+  &.poll {
+    background: url('../assets/images/icons/files/poll.svg') no-repeat center;
+  }
+
+  &.scorm {
+    background: url('../assets/images/icons/files/scorm.svg') no-repeat center;
+  }
+
+  &.survey {
+    background: url('../assets/images/icons/files/survey.svg') no-repeat center;
+  }
+
+  &.quiz {
+    background: url('../assets/images/icons/files/quiz.svg') no-repeat center;
+  }
+
+  &.photo {
+    background: url('../assets/images/icons/files/photo.svg') no-repeat center;
+  }
+
+  &.pdf {
+    background: url('../assets/images/icons/files/pdf.svg') no-repeat center;
+  }
+
+  &.file {
+    background: url('../assets/images/icons/files/file.svg') no-repeat center;
+  }
+
+  &.close {
+    background: url('../assets/images/icons/close.svg') no-repeat center;
+  }
+
+  &.open {
+    background: url('../assets/images/icons/open.svg') no-repeat center;
+  }
+
+  &.clock {
+    background: url('../assets/images/icons/clock.svg') no-repeat center;
+  }
+
+  &.hat {
+    background: url('../assets/images/icons/hat.svg') no-repeat center;
+  }
+
+  &.hat-selected {
+    background: url('../assets/images/icons/hat-selected.svg') no-repeat center;
+  }
+
+  &.class-run {
+    background: url('../assets/images/icons/class-run.svg') no-repeat center;
+  }
+
+  &.class-run-selected {
+    background: url('../assets/images/icons/class-run-selected.svg') no-repeat center;
+  }
+
+  &.session {
+    background: url('../assets/images/icons/session.svg') no-repeat center;
+  }
+
+  &.session-selected {
+    background: url('../assets/images/icons/session-selected.svg') no-repeat center;
+  }
+
+  &.user {
+    background: url('../assets/images/icons/user.svg') no-repeat center;
+  }
+
+  &.user-selected {
+    background: url('../assets/images/icons/user-selected.svg') no-repeat center;
+  }
+
+  &.star-outline {
+    background-image: url('../assets/images/icons/star-outline.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.star {
+    background-image: url('../assets/images/icons/star.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.book {
+    background-image: url('../assets/images/icons/book.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.course-complete-circle {
+    background-image: url('../assets/images/icons/course-complete-circle.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.rejected {
+    background-image: url('../assets/images/icons/rejected.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.color-back-icon {
+    background-image: url('../assets/images/icons/color-back-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.scorm-package {
+    background-image: url('../assets/images/icons/scorm-package.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.scorm-package-finished {
+    background-image: url('../assets/images/icons/scorm-package-finished.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.search {
+    background-image: url('../assets/images/icons/search-icon.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.close {
+    background-image: url('../assets/images/icons/close.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.upcoming {
+    background-image: url('../assets/images/icons/upcoming.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.liked {
+    background: url('../assets/images/icons/liked.svg') no-repeat center;
+  }
+
+  &.like {
+    background: url('../assets/images/icons/like.svg') no-repeat center;
+  }
+
+  &.remove-option {
+    background: $red;
+    border-radius: 15px;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 12px;
+      height: 4px;
+      border-radius: 2px;
+      background: $white;
+      top: 10px;
+      left: 6px;
+    }
+
+    &:hover,
+    &:active {
+      background: $red;
+    }
+  }
+
+  &.enter {
+    border-radius: 16px;
+    cursor: pointer;
+    background: $accent url('../assets/images/icons/enter.svg') no-repeat center;
+
+    &:hover {
+      box-shadow: 0 2px 8px $accent;
+    }
+  }
+
+  &.add-item {
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    background: $accent url('../assets/images/icons/plus.svg') no-repeat center;
+
+    &:hover {
+      box-shadow: 0 2px 8px $accent;
+    }
+  }
+
+  &.content-type {
+    background-size: contain;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+}

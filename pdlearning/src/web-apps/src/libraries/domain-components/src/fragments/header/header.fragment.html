@@ -1,0 +1,80 @@
+<div class="module-navigation row">
+  <img class="go-back"
+       src="assets/images/icons/arrow-left.svg"
+       *ngIf="headerService.returnHomeCallback"
+       (click)="headerService.returnHomeCallback()">
+  <div class="app-brand row"
+       (click)="navigateToModuleHomePage()">
+    <img class="opal-logo"
+         src="{{appGlobal.environment.logoPath}}">
+  </div>
+
+  <div class="page-title flex">
+    <span class="module-name"
+          *ngIf="!headerService.returnHomeCallback">{{ headerService.moduleName }}</span>
+    <span class="title-content-placeholder"
+          #titleContent></span>
+  </div>
+
+  <!--TODO: Remove ngIf after fixing IODC Authen -->
+  <div class="app-notification"
+       *ngIf="enableBellNotification">
+    <iframe class="notification-bell"
+            #notificationAnchor
+            frameBorder="0"
+            scrolling="no"
+            [src]="notificationUrl"></iframe>
+    <kendo-popup #notificationPopup
+                 [anchor]="notificationAnchor"
+                 [anchorAlign]="notificationAnchorAlign"
+                 [popupAlign]="notificationPopupAlign"
+                 *ngIf="showNotification">
+      <iframe class="notification-content"
+              *ngIf="enableBellNotification"
+              allowfullscreen
+              frameBorder="0"
+              [height]="notificationHeight"
+              [src]="notificationContentUrl"></iframe>
+    </kendo-popup>
+  </div>
+
+  <div class="modules-switcher"
+       [ngClass]="{ open: openDropdown }">
+    <i class="icon-moe-switcher icons switch-module"
+       #switch></i>
+
+    <kendo-contextmenu [target]="switch"
+                       (select)="onSelect($event)"
+                       [alignToAnchor]="true"
+                       [anchorAlign]="defaultContextMenuAnchorAlign"
+                       [popupAlign]="defaultContextMenuPopupAlign"
+                       showOn="click">
+      <ng-template kendoContextMenuTemplate
+                   #test>
+        <div class="dropdown-menu">
+          <p class="dropdown-menu__item"
+             title="{{module.description}}"
+             *ngFor="let module of modules"
+             (click)="module.navigateToModule()">{{module.name}}</p>
+        </div>
+      </ng-template>
+    </kendo-contextmenu>
+
+  </div>
+
+  <div class="user-photo-container"
+       #avatar>
+    <img class="user-photo"
+         src="{{ avatarUrl }}">
+    <div class="user-profile-btn">{{"Profile" | globalTranslator}}</div>
+  </div>
+
+  <kendo-contextmenu [kendoMenuHierarchyBinding]="userActionItems"
+                     [target]="avatar"
+                     [textField]="['text']"
+                     (select)="onSelectUserAction($event)"
+                     showOn="click"
+                     [alignToAnchor]="true"
+                     [anchorAlign]="defaultContextMenuAnchorAlign"
+                     [popupAlign]="defaultContextMenuPopupAlign"></kendo-contextmenu>
+</div>

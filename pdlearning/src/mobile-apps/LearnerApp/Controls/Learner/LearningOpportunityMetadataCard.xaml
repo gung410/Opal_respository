@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="LearnerApp.Controls.Learner.LearningOpportunityMetadataCard"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleGroup" TargetType="Label">
+                <Setter Property="FontSize" Value="{StaticResource BaseButtonFontSize}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout Spacing="15">
+        <StackLayout>
+            <Label
+                FontFamily="{StaticResource RobotoRegular}"
+                FontSize="24"
+                Text="Metadata"
+                TextColor="{StaticResource MainBodyTextColor}" />
+            <!--  Service schemes  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Service schemes" />
+                <Label x:Name="ServiceSchemes" />
+            </StackLayout>
+            <!--  Subject  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Subject / Interest Area" />
+                <Label x:Name="Subject" />
+            </StackLayout>
+            <!--  PD Area / Theme  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="PD Area / Theme" />
+                <Label x:Name="PDAreaTheme" />
+            </StackLayout>
+            <!--  Course Level  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Course Level" />
+                <Label x:Name="CourseLevel" />
+            </StackLayout>
+            <!--  Learning Framework  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Learning Framework" />
+                <Label x:Name="LearningFramework" />
+            </StackLayout>
+            <!--  Learning Dimension  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Learning Dimension" />
+                <Label x:Name="LearningDimension" />
+            </StackLayout>
+            <!--  Learning Area  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Learning Area" />
+                <Label x:Name="LearningArea" />
+            </StackLayout>
+            <!--  Learning Sub-Area  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Learning Sub-Area" />
+                <Label x:Name="LearningSubArea" />
+            </StackLayout>
+            <!--  Teacher Outcome  -->
+            <StackLayout Spacing="0">
+                <Label Style="{StaticResource TitleGroup}" Text="Teacher Outcome" />
+                <Label x:Name="TeacherOutcome" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

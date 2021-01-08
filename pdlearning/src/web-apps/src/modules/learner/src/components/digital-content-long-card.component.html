@@ -1,0 +1,49 @@
+<div class="learning-long-card">
+  <div class="container">
+    <div class="course"
+         (click)="onDigitalContentCardClick()">
+      <div class="course-img-container">
+        <div class="course-img">
+          <img src="{{ learningCardItem.imageUrl }}"
+               *ngIf="learningCardItem.imageUrl">
+        </div>
+        <span class="card-status"
+              *ngIf="learningCardItem.learningStatus === MyDigitalContentStatus.InProgress || learningCardItem.learningStatus === MyDigitalContentStatus.Completed"
+              [ngClass]="{
+     'in-progress': learningCardItem.learningStatus === MyDigitalContentStatus.InProgress,
+     'completed': learningCardItem.learningStatus === MyDigitalContentStatus.Completed}">
+          {{ learningStatusText | translator}}
+        </span>
+      </div>
+      <div class="card-info">
+        <div class="card-title two-line-truncate-text"
+             title="{{ learningCardItem.title }}">{{ learningCardItem.title }}</div>
+        <span class="general-info">
+          <i class="icon tiny {{ learningCardItem.rating < 1 ? 'star-outline' : 'star' }}"></i>
+          <i class="icon tiny {{ learningCardItem.rating >= 2 ? 'star' : 'star-outline' }}"></i>
+          <i class="icon tiny {{ learningCardItem.rating === 3 ? 'star' : 'star-outline' }}"></i>
+          <div>{{ learningCardItem.rating }}&nbsp;</div>
+        </span>
+
+        <!-- TODO: hard code here -->
+        <div class="tags two-line-truncate-text">
+
+          <span class="tag-item"
+                *ngFor="let tag of learningCardItem.tags.slice(0, 2)"
+                [title]="tag | translator">{{ tag | translator}}</span>
+        </div>
+        <!-- <div class="general-info">
+          <div class="uploaded-date">
+            {{"UPLOADED" | translator}}: {{ learningCardItem.uploadedDate | date: 'dd/MM/yyyy'}}
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="save-course"
+       *ngIf="showBookmark"
+       (click)="onBookmarkChange()">
+    <i class="icon {{ learningCardItem.isBookmark ? 'save' : 'save-outline' }}"></i>
+  </div>
+</div>

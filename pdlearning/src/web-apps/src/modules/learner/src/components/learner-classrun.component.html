@@ -1,0 +1,51 @@
+<div *ngIf="courseClassRunItems && courseClassRunItems.length > 0">
+  <ng-container *ngFor="let item of courseClassRunItems">
+    <learner-classrun-item [item]="item"
+                           [course]="course"
+                           [applyClassRunState]="getApplyClassRunState(item)"
+                           [showActionButton]="hasClassRunPermission && item.status != 'Cancelled'"
+                           [showApplyButton]="showApply(item)"
+                           [showWithdrawButton]="showWithdraw(item)"
+                           [showChangeClassButton]="showChangeClassRun(item)"
+                           [readyToLearn]="readyToLearn"
+                           (apply)="onClassRunClicked($event)"
+                           (withdraw)="onWithdrawClicked($event)"
+                           (changeClassRun)="onChangeClassRunClicked($event)"></learner-classrun-item>
+  </ng-container>
+</div>
+
+<ng-template #confirmationWithdrawalInput="">
+  <div class="learner-warning-confirmation"
+       *ngIf="isLessThan10DaysFromStartDate()">
+    <img src="assets/images/icons/info.svg"
+         alt="icon">
+    {{'For withdrawal less than 10 days, your Course Approving Officer will need to be informed and required to nominate a replacement.' | translator}}
+  </div>
+  <div class="learner-warning-body">{{'Please indicate reason for withdrawal from class run:' | translator}}</div>
+  <div class="learner-withdraw-confirmation">
+    <textarea class="learner-withdraw-confirmation__input"
+              [(ngModel)]="confirmationReason"
+              [placeholder]="'Type your reason' | translator"></textarea>
+  </div>
+</ng-template>
+
+<ng-template #confirmationClassrunInput="">
+  <div class="learner-warning-confirmation"
+       *ngIf="isLessThan10DaysFromStartDate()">
+    <img src="assets/images/icons/info.svg"
+         alt="icon">
+    {{'For changing class less than 10 days, your Course Approving Officer will need to be informed and required to nominate a replacement.' | translator}}
+  </div>
+  <div class="learner-warning-confirmation"
+       *ngIf="classFull">
+    <img src="assets/images/icons/info.svg"
+         alt="icon">
+    {{'The class is currently full. You will be moved to waitlist if you change to this class.' | translator}}
+  </div>
+  <div class="learner-warning-body">{{'Please indicate reason for change in class run:' | translator}}</div>
+  <div class="learner-withdraw-confirmation">
+    <textarea class="learner-withdraw-confirmation__input"
+              [(ngModel)]="confirmationReason"
+              [placeholder]="'Type your reason' | translator"></textarea>
+  </div>
+</ng-template>

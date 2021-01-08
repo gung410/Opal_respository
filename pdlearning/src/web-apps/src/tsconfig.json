@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "target": "es5",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "typeRoots": ["../../node_modules/@types", "./typings"],
+    "types": ["custom-global", "systemjs", "jasmine", "lodash-es"],
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@opal20/infrastructure": ["./libraries/infrastructure/src"],
+      "@opal20/infrastructure/*": ["./libraries/infrastructure/src/*"],
+      "@opal20/authentication": ["./libraries/authentication/src"],
+      "@opal20/authentication/*": ["./libraries/authentication/src/*"],
+      "@opal20/common-components": ["./libraries/common-components/src"],
+      "@opal20/common-components/*": ["./libraries/common-components/src/*"],
+      "@opal20/domain-api": ["./libraries/domain-api/src"],
+      "@opal20/domain-api/*": ["./libraries/domain-api/src/*"],
+      "@opal20/domain-components": ["./libraries/domain-components/src"],
+      "@opal20/domain-components/*": ["./libraries/domain-components/src/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

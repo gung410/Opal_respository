@@ -1,0 +1,174 @@
+<div class="learner-home-page"
+     [ngClass]="{'hidden': currentLearningItem || showNewsFeed || showOutstandingTask || showShared || assignmentId}">
+  <div [hidden]="showingCourseRecommendation || showingOrganisationCourseRecommendation || showStandaloneFormPlayer">
+    <div>
+      <div class="welcome-msg">
+        {{'Welcome back' | translator}}
+        <div class="welcome-user-name">{{ currentUserName }}</div>
+      </div>
+      <div *hasPermission="[customizeWidgetPermissionKey, listWidgets]"
+           class="setting-icon"
+           (click)="showSettingsDialog()">
+        <div class="setting-text">{{'Settings' | translator}}
+        </div>
+        <img src="assets/images/icons/setup-black.svg" />
+      </div>
+      <div class="no-summary">
+        <div class="no-summary__status">
+          <div class="no-summary-number">{{numberOfCompletedCourses}}</div>
+          <div class="no-summary-text">Completed Courses</div>
+        </div>
+        <div class="no-summary__status">
+          <div class="no-summary-number">{{numberOfOngoingCourses}}</div>
+          <div class="no-summary-text">Ongoing Courses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-group">
+      <div class="container-group-left"
+           [ngClass]="{'full': !showingSettings.showingSettingsNewsFeed}">
+        <learning-calendar-list [ngClass]="{'full': !showingSettings.showingSettingsNewsFeed}"
+                                *ngIf="showingSettings.showingSettingsCalendar"
+                                [numberOfHeightTimes]="numberOfHeightTimes">
+        </learning-calendar-list>
+
+        <learning-outstanding-list [ngClass]="{'full': !showingSettings.showingSettingsNewsFeed}"
+                                   *ngIf="showingSettings.showSettingsOutstanding"
+                                   (outStandingTaskClick)="onOutstandingTaskClick($event)"
+                                   [outstandingTaskItems]="outstandingTasks"
+                                   [outstandingTaskItemsTotalCount]="outstandingTasksTotalCount"
+                                   [isShowMore]="true"
+                                   [numberOfHeightTimes]="numberOfHeightTimes"
+                                   (showMoreOutstandingTaskClick)="onShowMoreOutstandingTaskClicked()">
+        </learning-outstanding-list>
+
+        <learning-shared-list [ngClass]="{'full': !showingSettings.showingSettingsNewsFeed}"
+                              *ngIf="showingSettings.showingSettingsShared"
+                              (sharedClick)="onSharedClick($event)"
+                              [sharedItems]="sharedItems"
+                              [sharedMetadata]="sharedMetadata"
+                              [totalCount]="totalShared"
+                              [isShowMore]="true"
+                              [numberOfHeightTimes]="numberOfHeightTimes"
+                              (showMoreSharedClick)="onShowMoreSharedClicked()">
+        </learning-shared-list>
+      </div>
+
+      <div class="container-group-right"
+           [ngClass]="{'full': !showingSettings.showSettingsOutstanding && !showingSettings.showingSettingsShared && !showingSettings.showingSettingsCalendar}">
+        <learning-newsfeed-list [ngClass]="{'full': !showingSettings.showSettingsOutstanding && !showingSettings.showingSettingsShared && !showingSettings.showingSettingsCalendar}"
+                                *ngIf="showingSettings.showingSettingsNewsFeed"
+                                [isShowMore]="true"
+                                (newsFeedClick)="onNewsFeedClick($event)"
+                                (loadMoreNewsFeedClick)="onLoadMoreNewsFeedClick()">
+        </learning-newsfeed-list>
+      </div>
+    </div>
+
+    <learning-carousel class="section"
+                       *ngIf="showingSettings.showingSettingsMyLearning"
+                       [learningCardItems]="recentInProgressLearningItems"
+                       [learningCardItemsTotalCount]="recentInProgressLearningItemsTotalCount"
+                       [title]="sectionWidget.MyLearning | translator"
+                       [emptyText]="'Browse the Catalogue and start your learning journey!' | translator"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowMyLearningClick()"></learning-carousel>
+    <learning-carousel class="section"
+                       *ngIf="showingSettings.showingSettingsRecommendedForYou"
+                       [learningCardItems]="suggestedLearningItems"
+                       [learningCardItemsTotalCount]="suggestedLearningItemsTotalCount"
+                       [title]="sectionWidget.RecommendedForYou | translator"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowCourseRecommendationClick()"></learning-carousel>
+    <learning-carousel class="section"
+                       *ngIf="showingSettings.showingSettingsRecommendedByYourOrganisation"
+                       [learningCardItems]="organisationSuggestedLearningItems"
+                       [learningCardItemsTotalCount]="organisationSuggestedLearningItemsTotalCount"
+                       [title]="sectionWidget.RecommendedByYourOrganisation | translator"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowOrganisationCourseRecommendationsClick()"></learning-carousel>
+    <learning-carousel class="section"
+                       *ngIf="showingSettings.showingSettingsBookmarks"
+                       [learningCardItems]="bookmarkLearningItems"
+                       [learningCardItemsTotalCount]="bookmarkLearningItemsTotalCount"
+                       [title]="sectionWidget.Bookmarks | translator"
+                       (learningCardClick)="onLearningCardClick($event)"
+                       (showAllClick)="onShowBookmarkClick()"></learning-carousel>
+  </div>
+
+  <learning-card-list #courseRecommendationList
+                      *ngIf="showingCourseRecommendation"
+                      [getPagedLearningItemsCallback]="getPagedSuggestedCoursesCallBack.bind(this)"
+                      [title]="sectionWidget.RecommendedForYou | translator"
+                      [numberOfItemsOnPage]="numberOfItemsOnRecommendation"
+                      (backButtonClick)="onCourseRecommendationBackButtonClick($event)"
+                      (learningCardClick)="onLearningCardClick($event)"
+                      hasBackButton="true"
+                      showTitle="true"></learning-card-list>
+
+  <learning-card-list #organisationRecommendationList
+                      *ngIf="showingOrganisationCourseRecommendation"
+                      [getPagedLearningItemsCallback]="getOrganisationSuggestedCoursesCallBack.bind(this)"
+                      [title]="sectionWidget.RecommendedByYourOrganisation | translator"
+                      [numberOfItemsOnPage]="numberOfItemsOnOrganisationRecommendation"
+                      (backButtonClick)="onOrganisationCourseRecommendationBackButtonClick($event)"
+                      (learningCardClick)="onLearningCardClick($event)"
+                      hasBackButton="true"
+                      showTitle="true"></learning-card-list>
+
+  <ng-container *ngIf="showStandaloneFormPlayer">
+    <div class="lecture-player__course-title-container">
+      <div class="lecture-player__back"
+           (click)="onStandaloneFormBackClick()">
+        <i class="icon back"></i>
+        {{"Back" | globalTranslator}}
+      </div>
+    </div>
+    <main-form-standalone-player-page></main-form-standalone-player-page>
+  </ng-container>
+
+</div>
+
+<tracking-target *ngIf="!currentLearningItem"
+                 [pageStartEventName]="'ReachLandingPage'"
+                 [pageStartPayload]="{}"
+                 [pageEndEventName]="'OutlandingPage'"
+                 [pageEndPayload]="{}"></tracking-target>
+<learning-detail-page *ngIf="currentLearningItem"
+                      [learningId]="currentLearningItem.id"
+                      [learningType]="currentLearningItem.type"
+                      [canContinueTask]="canContinueTask"
+                      [canStartTask]="canStartTask"
+                      (back)="onCourseDetailBackClick()">
+</learning-detail-page>
+
+<learner-newsfeed-page *ngIf="showNewsFeed"
+                       (newsFeedBackClick)="onNewsFeedBack()"></learner-newsfeed-page>
+
+<learning-outstanding-page *ngIf="showOutstandingTask"
+                           (outStandingTaskBackClick)="onOutstandingTaskBack()"
+                           (outStandingTaskClick)="onOutstandingTaskClick($event)"></learning-outstanding-page>
+
+<learning-shared-page *ngIf="showShared"
+                      (sharedBackClick)="onSharedBack()"
+                      (sharedClick)="onSharedClick($event)"></learning-shared-page>
+
+<learner-assignment-detail *ngIf="assignmentId"
+                           [assignmentId]="assignmentId"
+                           [canContinueTask]="canContinueTask"
+                           [canStartTask]="canStartTask"
+                           (back)="onAssignmentDetailBackClick()"></learner-assignment-detail>
+
+<ng-template #settingsInput="">
+  <div class="home-widget-list">
+    <div class="home-widget-list__group"
+         *ngFor="let widget of listWidgets">
+      <input class="k-checkbox form-control"
+             type="checkbox"
+             (click)="changedSelectedWidget(widget)"
+             [checked]="widget.userPreferenceModel.value ? 'checked' : ''">
+      <label class="k-checkbox-label">{{ widget.name }}</label>
+    </div>
+  </div>
+</ng-template>

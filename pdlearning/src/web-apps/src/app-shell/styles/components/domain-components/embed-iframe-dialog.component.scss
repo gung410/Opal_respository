@@ -1,0 +1,29 @@
+embed-iframe-dialog {
+  overflow: auto;
+  padding-bottom: 10px;
+
+  .actions {
+    margin-top: 10px;
+
+    button {
+      margin: 0 10px 0 0;
+    }
+  }
+
+  .form-group {
+    margin: 0 10px;
+
+    .d-inline {
+      display: inline-block;
+      margin: 10px 10px 10px 0;
+    }
+
+    .d-inline:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .text-warning {
+    color: #1dcec1;
+  }
+}

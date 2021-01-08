@@ -1,0 +1,139 @@
+learner-my-learning {
+  @include flex-column-container;
+
+  .search-bar {
+    display: flex;
+    margin: 0px 0px 30px 0px;
+
+    search-input {
+      display: flex;
+      flex-direction: row;
+      line-height: 44px;
+      max-width: 300px;
+
+      .search {
+        right: unset;
+        margin-left: 12px;
+        top: 9px;
+      }
+
+      .clear-search {
+        top: 15px;
+        left: 268px;
+        right: unset;
+      }
+
+      input[type='text'] {
+        padding-left: 45px !important;
+        padding-right: 30px !important;
+        height: 45px;
+        min-width: 222px;
+
+        &::placeholder {
+          /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: $color-dim-gray;
+          opacity: 1;
+        }
+
+        &:-ms-input-placeholder {
+          /* Internet Explorer 10-11 */
+          color: $color-dim-gray;
+        }
+
+        &::-ms-input-placeholder {
+          /* Microsoft Edge */
+          color: $color-dim-gray;
+        }
+
+        &:focus,
+        &:active {
+          border: 1px solid #618ad8 !important;
+
+          &::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            opacity: 0.6;
+          }
+
+          &:-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            opacity: 0.6;
+          }
+
+          &::-ms-input-placeholder {
+            /* Microsoft Edge */
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+
+    .k-button {
+      height: 46px;
+      font-size: $font-h5;
+      position: relative;
+      margin-left: 10px;
+      margin-top: 1px;
+
+      > img {
+        padding-left: 10px;
+      }
+
+      &:hover {
+        background: $white;
+        color: $color-blue-dard;
+      }
+    }
+  }
+
+  .main-content {
+    margin: 0 50px;
+  }
+
+  .tabs-menu {
+    display: flex;
+    margin-bottom: 30px;
+    background: $color-white;
+    border-radius: 5px;
+
+    .tab {
+      padding: 8px 22px;
+      cursor: pointer;
+      font-family: Roboto;
+      font-style: normal;
+      font-size: $font-h5;
+      line-height: 21px;
+      text-align: center;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:not(:first-child) {
+        margin-left: 24px;
+      }
+
+      &.active {
+        font-weight: $font-weight-medium;
+        background: $color-turquoise;
+        color: white;
+        cursor: default;
+      }
+
+      &:hover {
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  .tab-content {
+    margin-top: 43px;
+  }
+
+  .community {
+    font-size: $font-h1;
+    color: $color-blue-dard;
+    text-align: center;
+    margin: 150px;
+    cursor: pointer;
+  }
+}

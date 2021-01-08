@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Views.Catelogue.CatalogueSearchResultView"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:ffimagesvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:listitemcard="clr-namespace:LearnerApp.Controls.ListItemCard"
+	xmlns:verticalitem="clr-namespace:LearnerApp.Controls.ListItemCard.VerticalItem">
+
+	<ContentView.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Frame
+					Padding="1"
+					BackgroundColor="White"
+					BorderColor="LightGray"
+					CornerRadius="4"
+					HasShadow="False"
+					HorizontalOptions="FillAndExpand"
+					IsClippedToBounds="True">
+					<StackLayout Padding="10,0,10,0" Orientation="Horizontal">
+						<ffimagesvg:SvgCachedImage
+							HeightRequest="22"
+							Source="search.svg"
+							WidthRequest="22">
+							<ffimagesvg:SvgCachedImage.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding CatalogueSearchCommand}" Tapped="OnCatalogueSearch_Clicked" />
+							</ffimagesvg:SvgCachedImage.GestureRecognizers>
+						</ffimagesvg:SvgCachedImage>
+						<controls:CustomEntry
+							Margin="{StaticResource BaseMarginTextbox}"
+							ClearButtonVisibility="WhileEditing"
+							Completed="KeywordInput_Completed"
+							FontSize="16"
+							HorizontalOptions="FillAndExpand"
+							Placeholder="Search in Catalogue"
+							PlaceholderColor="LightGray"
+							ReturnCommand="{Binding CatalogueSearchCommand}"
+							Text="{Binding Keyword, Mode=TwoWay}"
+							TextChanged="KeywordInput_TextChanged" />
+					</StackLayout>
+				</Frame>
+
+				<!--  ADVANCE SEARCH  -->
+				<Frame
+					Padding="0"
+					BorderColor="LightGray"
+					CornerRadius="4"
+					HasShadow="False">
+					<Frame.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding AdvancedSearchCommand}" NumberOfTapsRequired="1" />
+					</Frame.GestureRecognizers>
+					<ffimagesvg:SvgCachedImage
+						Margin="10,0,10,0"
+						HeightRequest="20"
+						Source="filter_icon.svg"
+						VerticalOptions="CenterAndExpand"
+						WidthRequest="20" />
+				</Frame>
+			</StackLayout>
+
+			<Frame
+				Padding="1"
+				BorderColor="LightGray"
+				HasShadow="False"
+				IsVisible="{Binding IsEnableSearch}">
+				<StackLayout Spacing="0">
+					<StackLayout
+						Padding="0"
+						BackgroundColor="LightGray"
+						HeightRequest="35"
+						Orientation="Horizontal"
+						Spacing="1">
+						<Button
+							x:Name="PdoSearchBtn"
+							Padding="0"
+							BackgroundColor="LightGray"
+							BorderColor="LightGray"
+							Clicked="OnPdoSearch_Clicked"
+							Command="{Binding PdoTappedCommand}"
+							CornerRadius="0"
+							HorizontalOptions="FillAndExpand"
+							Text="PDOs"
+							TextColor="{StaticResource MainBodyTextColor}" />
+						<Button
+							x:Name="UserSearchBtn"
+							Padding="0"
+							BackgroundColor="White"
+							BorderColor="LightGray"
+							Clicked="OnUserSearch_Clicked"
+							Command="{Binding UserSearchCommand}"
+							CornerRadius="0"
+							HorizontalOptions="FillAndExpand"
+							Text="Learners"
+							TextColor="{StaticResource MainBodyTextColor}" />
+					</StackLayout>
+					<!--  PDO result  -->
+					<StackLayout
+						x:Name="PdoResult"
+						Padding="10"
+						BackgroundColor="{StaticResource ContentPageColor}"
+						IsVisible="{Binding IsSearchPdo}"
+						VerticalOptions="FillAndExpand">
+						<controls:SearchGroupFilter
+							BackCommand="{Binding BackSearchCommand}"
+							FilterCommand="{Binding SearchFilterCommand}"
+							FilterData="{Binding FilterData}"
+							OnBack="OnDismissSearch_Clicked" />
+
+						<listitemcard:VerticalListView
+							OnLoadmoreCommand="{Binding LoadmoreCatalogueSearchCommand}"
+							OnRefreshCommand="{Binding RefreshCatalogueSearchCommand}"
+							Source="{Binding SearchCollection}"
+							TotalCount="{Binding SearchTotalCount}"
+							VerticalOptions="FillAndExpand" />
+					</StackLayout>
+
+					<!--  User result  -->
+					<StackLayout
+						Padding="10"
+						BackgroundColor="{StaticResource ContentPageColor}"
+						IsVisible="{Binding Path=IsVisible, Source={x:Reference PdoResult}, Converter={StaticResource InverseBoolConverter}}"
+						Spacing="10"
+						VerticalOptions="FillAndExpand">
+						<verticalitem:VerticalUserItem />
+						<verticalitem:VerticalUserItem />
+						<verticalitem:VerticalUserItem />
+						<verticalitem:VerticalUserItem />
+					</StackLayout>
+				</StackLayout>
+			</Frame>
+		</StackLayout>
+	</ContentView.Content>
+</ContentView>

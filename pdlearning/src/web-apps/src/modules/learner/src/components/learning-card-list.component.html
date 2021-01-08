@@ -1,0 +1,113 @@
+<div class="learning-card-list"
+     #listSection>
+  <learner-toolbar *ngIf="hasBackButton || showTitle"
+                   [total]="total"
+                   [totalTextClass]="totalTextClass"
+                   [titleHtml]="titleHtml"
+                   [title]="title"
+                   [hasBackButton]="hasBackButton"
+                   [showTitle]="showTitle"
+                   [detailUrl]="detailUrl"
+                   [showCopyPermalink]="showCopyPermalink"
+                   [isBookmark]="isBookmark"
+                   [showBookmark]="showBookmark && hasPermissionToBookmark"
+                   (iconBookmarkClick)="iconBookmarkClick.emit()"
+                   [toolbarCustomClass]="toolbarCustomClass"
+                   (backButtonClick)="onBackButtonClick()"
+                   (iconPermalinkClick)="iconPermalinkClick.emit($event)">
+    <ng-content></ng-content>
+  </learner-toolbar>
+  <ng-container *ngIf="total > 0; else showingEmptyMsg">
+    <div class="grid-list"
+         *ngIf="!showLongCard">
+      <ng-container *ngFor="let item of learningItems">
+        <ng-container [ngSwitch]="item.type">
+          <learning-card *ngSwitchCase="learningType.Course"
+                         [showBookmark]="hasPermissionToBookmark"
+                         [showProgressBar]="item.learningStatus !== undefined"
+                         [learningCardItem]="item"
+                         (learningCardClick)="onLearningCardClick($event)"></learning-card>
+          <digital-content-card *ngSwitchCase="learningType.DigitalContent"
+                                [showBookmark]="hasPermissionToBookmark"
+                                [learningCardItem]="item"
+                                (learningCardClick)="onDigitalContentCardClick($event)"></digital-content-card>
+          <learning-path-card *ngSwitchCase="learningType.LearningPath"
+                              [showBookmark]="hasPermissionToBookmark"
+                              [learningCardItem]="item"
+                              (learningCardClick)="onLearningCardClick($event)"></learning-path-card>
+          <learning-path-card *ngSwitchCase="learningType.LearningPathLMM"
+                              [showBookmark]="hasPermissionToBookmark"
+                              [learningCardItem]="item"
+                              (learningCardClick)="onLearningCardClick($event)"></learning-path-card>
+          <learning-community-card *ngSwitchCase="learningType.Community"
+                                   [showBookmark]="hasPermissionToBookmark"
+                                   [showLongCard]="false"
+                                   [communityCardItem]="item"></learning-community-card>
+          <standalone-form-card *ngSwitchCase="learningType.StandaloneForm"
+                                [learningCardItem]="item"
+                                (learningCardClick)="onStandaloneFormCardClick($event)"></standalone-form-card>
+        </ng-container>
+      </ng-container>
+      <!-- CSS trick to keep the items aligned when missing some items -->
+      <div class="learning-card-item-placeholder"
+           *ngFor="let placeholder of generatePagesArray(5)"></div>
+    </div>
+    <div class="vertical-list"
+         *ngIf="showLongCard">
+
+      <ng-container *ngFor="let item of learningItems">
+        <ng-container [ngSwitch]="item.type">
+          <learning-long-card *ngSwitchCase="learningType.Course"
+                              [showBookmark]="hasPermissionToBookmark"
+                              [showProgressBar]="item.learningStatus !== undefined"
+                              [learningCardItem]="item"
+                              (learningCardClick)="onLearningCardClick($event)">
+          </learning-long-card>
+          <digital-content-long-card *ngSwitchCase="learningType.DigitalContent"
+                                     [showBookmark]="hasPermissionToBookmark"
+                                     [learningCardItem]="item"
+                                     (learningCardClick)="onDigitalContentCardClick($event)">
+          </digital-content-long-card>
+          <learning-path-card *ngSwitchCase="learningType.LearningPath"
+                              [showBookmark]="hasPermissionToBookmark"
+                              [learningCardItem]="item"
+                              (learningCardClick)="onLearningCardClick($event)"></learning-path-card>
+          <learning-path-card *ngSwitchCase="learningType.LearningPathLMM"
+                              [showBookmark]="hasPermissionToBookmark"
+                              [learningCardItem]="item"
+                              (learningCardClick)="onLearningCardClick($event)"></learning-path-card>
+          <learning-community-card *ngSwitchCase="learningType.Community"
+                                   [showBookmark]="hasPermissionToBookmark"
+                                   [showLongCard]="true"
+                                   [communityCardItem]="item"></learning-community-card>
+          <standalone-form-card *ngSwitchCase="learningType.StandaloneForm"
+                                [learningCardItem]="item"
+                                (learningCardClick)="onStandaloneFormCardClick($event)"></standalone-form-card>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="paging">
+      <div class="paginator">
+        <div class="prev"
+             [ngClass]="{ 'empty': activePageNumber === 1}"
+             (click)="loadPreviousPage()">◀</div>
+        <div class="items">
+          <div class="nav-item"
+               *ngFor="let pageNumber of pages"
+               [ngClass]="[pageNumber === activePageNumber ? 'active': '', pageNumber === undefined ? 'empty': '' ]"
+               (click)="loadPageItems(pageNumber)">
+            {{ pageNumber ? pageNumber : '...'}}
+          </div>
+        </div>
+        <div class="next"
+             [ngClass]="{ 'empty': activePageNumber === totalPages}"
+             (click)="loadNextPage()">▶</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #showingEmptyMsg="">
+    <span class="learning-empty-msg"
+          *ngIf="total != null">{{ "There's nothing here yet!" | translator}}</span>
+  </ng-template>
+</div>

@@ -1,0 +1,35 @@
+<div class="content-management-container -no-padding-margin">
+  <div class="content-management">
+    <div class="management-toolbar"
+         *ngIf="hasActionBtnGroup">
+      <div class="management-toolbar__left-container">
+        <action-bar [buttons]="actionBtnGroup"
+                    [selectedItems]="getSelectedItemsForMassAction"></action-bar>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    #classRunManagementStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="stickyDependElement">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.AllClassRunsTab">
+        <ng-template kendoTabTitle="">
+          {{ 'All Class Runs' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <list-classrun-grid [filter]="filter"
+                              [searchType]="SearchClassRunType.LearningManagement"
+                              [course]="course"
+                              [courseId]="courseDetailPageInput.data.id"
+                              (viewClassRun)="onViewClassRun($event)"
+                              [forContent]="true"
+                              [displayColumns]="allClassRunsDisplayColumns"
+                              [(selectedItems)]="allClassRunSelectedItems"
+                              [indexActionColumns]="[0]"
+                              [stickyDependElement]="classRunManagementStickyTabHeaderElement.headerElement"></list-classrun-grid>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

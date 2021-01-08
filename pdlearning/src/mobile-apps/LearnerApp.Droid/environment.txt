@@ -1,0 +1,5 @@
+## https://docs.microsoft.com/en-us/xamarin/android/deploy-test/environment
+## https://www.mono-project.com/docs/advanced/runtime/logging-runtime-events
+## https://stackoverflow.com/questions/26760798/xamarin-android-turn-off-mono-logs/26768870
+db shell setprop debug.mono.log gref
+adb shell setprop debug.mono.env "'MONO_LOG_LEVEL=info|MONO_LOG_MASK=asm'"

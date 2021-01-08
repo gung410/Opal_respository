@@ -1,0 +1,209 @@
+<div class="catalog-search-filter">
+  <div class="header-section">
+    <span class="header-section__title">{{ 'Filter' | translator }}</span>
+    <a class="header-section__clear-filter"
+       (click)="clearFilter()">{{ 'Clear filter' | translator }}</a>
+    <button kendoButton
+            [primary]="true"
+            (click)="applyAndClose()">{{ 'Apply' | translator }}</button>
+  </div>
+
+  <div class="body-section">
+    <div class="group">
+      <label for="ch2">{{ 'Type of PD Activity' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="model.pdTypeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [(selectedValue)]="model.pdActivityType"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <div class="group">
+      <label for="ch2">{{ 'Mode of Learning' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="model.modeOfLearningSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [(selectedValue)]="model.learningMode"
+                   [readOnly]="model.isMicrolearning()"
+                   kendoErrorTooltip
+                   position="top">
+      </opal-select>
+    </div>
+    <div class="group">
+      <label for="ch2">{{ 'Category' | translator }}</label>
+
+      <opal-select class="form-control"
+                   [items]="model.categorySelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [(selectedValue)]="model.categoryIds"
+                   [multiple]="true"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <div class="group">
+      <label>{{'Service Scheme' | globalTranslator}}</label>
+      <opal-select class="form-control"
+                   [items]="model.serviceSchemeSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [(selectedValue)]="model.serviceSchemeIds"
+                   [multiple]="true"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <div class="group">
+      <label>{{'Developmental Role' | globalTranslator}}</label>
+      <opal-select class="form-control"
+                   [disabled]="!(model.developmentalRoleSelectItems && model.developmentalRoleSelectItems.length > 0)"
+                   [multiple]="true"
+                   [(selectedValue)]="model.developmentalRoleIds"
+                   [items]="model.developmentalRoleSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <div class="group">
+      <label for="ch2">{{ 'Teaching Level' | translator }}</label>
+      <opal-select class="form-control"
+                   [multiple]="true"
+                   [(selectedValue)]="model.teachingLevels"
+                   [items]="model.teachingLevelsSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <div class="group">
+      <label for="ch2">{{ 'Course Level' | translator }}</label>
+      <opal-select class="form-control"
+                   [items]="model.courseLevelSelectItems"
+                   [valueField]="'tagId'"
+                   [labelField]="'displayText'"
+                   [(selectedValue)]="model.courseLevel"
+                   kendoErrorTooltip
+                   position="top"></opal-select>
+    </div>
+    <ng-container *ngIf="showMore">
+      <div class="group">
+        <label for="ch2">{{ 'Subject/ Interest Area' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [items]="model.subjectSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [(selectedValue)]="model.subjectAreaIds"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Learning Framework' | translator }}</label>
+        <opal-select class="form-control"
+                     [disabled]="!(model.learningFrameworksSelectItems && model.learningFrameworksSelectItems.length > 0)"
+                     [items]="model.learningFrameworksSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [(selectedValue)]="model.learningFrameworkIds"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Learning Dimension' | translator }}</label>
+        <opal-select class="form-control"
+                     [disabled]="!(model.learningFrameworkIds && model.learningFrameworkIds.length > 0) &&
+                     !(model.learningDimensionSelectItems && model.learningDimensionSelectItems.length > 0)"
+                     [items]="model.learningDimensionSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [(selectedValue)]="model.learningDimensionIds"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Learning Area' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [disabled]="!(model.learningDimensionIds && model.learningDimensionIds.length > 0) &&
+                     !(model.learningAreaSelectItems && model.learningAreaSelectItems.length > 0)"
+                     [items]="model.learningAreaSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [(selectedValue)]="model.learningAreaIds"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Learning Sub-Area' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [disabled]="!(model.learningAreaIds && model.learningAreaIds.length > 0) &&
+                     !(model.learningSubAreaSelectItems && model.learningSubAreaSelectItems.length > 0)"
+                     [items]="model.learningSubAreaSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     [(selectedValue)]="model.learningSubAreaIds"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Nature of Course' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [(selectedValue)]="model.natureOfCourse"
+                     [items]="model.natureCourseSelectItems"
+                     [valueField]="'tagId'"
+                     [labelField]="'displayText'"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Digital file type' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [(selectedValue)]="model.attachmentType"
+                     [items]="model.attachmentTypeSelectItems"
+                     [valueField]="'id'"
+                     [labelField]="'displayText'"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+      <div class="group">
+        <label for="ch2">{{ 'Community type' | translator }}</label>
+
+        <opal-select class="form-control"
+                     [(selectedValue)]="model.communitiesType"
+                     [items]="model.communityTypeSelectItems"
+                     [valueField]="'id'"
+                     [labelField]="'displayText'"
+                     [multiple]="true"
+                     kendoErrorTooltip
+                     position="top"></opal-select>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <div class="catalog-search-filter__show-more"
+       (click)="toggleShowMore()"
+       *ngIf="!showMore">{{ 'show more' | translator }}
+  </div>
+  <div class="catalog-search-filter__show-less"
+       (click)="toggleShowMore()"
+       *ngIf="showMore">{{ 'show less' | translator }}
+  </div>
+
+  <div class="catalog-search-filter__close-popup-search">
+    <button kendoButton
+            (click)="onClose()"></button>
+  </div>
+
+</div>

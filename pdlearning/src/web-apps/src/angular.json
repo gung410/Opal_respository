@@ -1,0 +1,483 @@
+{
+  "$schema": "../node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "opal20": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "app-shell",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/opal20",
+            "index": "app-shell/index.html",
+            "main": "app-shell/bootstrapers/main.ts",
+            "polyfills": "app-shell/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "app-shell/favicon.ico",
+              "app-shell/assets",
+              {
+                "glob": "cloudfront-cookies-signer.html",
+                "input": "./app-shell",
+                "output": "./"
+              },
+              {
+                "glob": "silent-refresh.html",
+                "input": "./app-shell",
+                "output": "./"
+              },
+              {
+                "glob": "scorm-player.html",
+                "input": "./players/scorm-player/src",
+                "output": "./"
+              },
+              {
+                "glob": "**/*",
+                "input": "./players/scorm-player/src/scripts/simplify-scorm",
+                "output": "./assets/scripts/scorm-player"
+              },
+              {
+                "glob": "**/*",
+                "input": "./players/scorm-player/src/scripts",
+                "output": "./assets/scripts/scorm-player"
+              },
+              {
+                "glob": "**/*",
+                "input": "./players/mathlive",
+                "output": "./mathlive"
+              },
+              "app-shell/manifest.webmanifest"
+            ],
+            "styles": ["app-shell/styles/styles.scss"],
+            "scripts": [
+              "../node_modules/systemjs/dist/s.js",
+              "../node_modules/systemjs/dist/extras/named-register.js",
+              "../node_modules/systemjs/dist/extras/amd.js",
+              "../node_modules/director-fork/build/director.js"
+            ]
+          },
+          "configurations": {
+            "docker": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.docker.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.development.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "systemtest": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.systemtest.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "uat": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.uat.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "pre-prod": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.pre-prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.production.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "uat-next": {
+              "fileReplacements": [
+                {
+                  "replace": "app-shell/environments/environment.ts",
+                  "with": "app-shell/environments/environment.uat-next.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "20mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "opal20:build"
+          },
+          "configurations": {
+            "docker": {
+              "browserTarget": "opal20:build:docker"
+            },
+            "systemtest": {
+              "browserTarget": "opal20:build:systemtest"
+            },
+            "uat": {
+              "browserTarget": "opal20:build:uat"
+            },
+            "pre-prod": {
+              "browserTarget": "opal20:build:pre-prod"
+            },
+            "production": {
+              "browserTarget": "opal20:build:production"
+            },
+            "development": {
+              "browserTarget": "opal20:build:development"
+            },
+            "uat-next": {
+              "browserTarget": "opal20:build:uat-next"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "opal20:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "app-shell/test.ts",
+            "polyfills": "app-shell/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": ["app-shell/favicon.ico", "app-shell/assets", "app-shell/manifest.webmanifest"],
+            "styles": ["app-shell/styles/styles.scss"],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "infrastructure": {
+      "root": "libraries/infrastructure",
+      "sourceRoot": "libraries/infrastructure/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libraries/infrastructure/tsconfig.json",
+            "project": "libraries/infrastructure/package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libraries/infrastructure/test/test.ts",
+            "tsConfig": "libraries/infrastructure/tsconfig.spec.json",
+            "karmaConfig": "libraries/infrastructure/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libraries/infrastructure/tsconfig.json", "libraries/infrastructure/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "authentication": {
+      "root": "libraries/authentication",
+      "sourceRoot": "libraries/authentication/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libraries/authentication/tsconfig.lib.json",
+            "project": "libraries/authentication/package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libraries/authentication/test/test.ts",
+            "tsConfig": "libraries/authentication/tsconfig.spec.json",
+            "karmaConfig": "libraries/authentication/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libraries/authentication/tsconfig.json", "libraries/authentication/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "domain-components": {
+      "root": "libraries/domain-components",
+      "sourceRoot": "libraries/domain-components/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libraries/domain-components/tsconfig.lib.json",
+            "project": "libraries/domain-components/package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libraries/domain-components/test/test.ts",
+            "tsConfig": "libraries/domain-components/tsconfig.spec.json",
+            "karmaConfig": "libraries/domain-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libraries/domain-components/tsconfig.json", "libraries/domain-components/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "common-components": {
+      "root": "libraries/common-components",
+      "sourceRoot": "libraries/common-components/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libraries/common-components/tsconfig.lib.json",
+            "project": "libraries/common-components/package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libraries/common-components/test/test.ts",
+            "tsConfig": "libraries/common-components/tsconfig.spec.json",
+            "karmaConfig": "libraries/common-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libraries/common-components/tsconfig.json", "libraries/common-components/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "domain-api": {
+      "root": "libraries/domain-api",
+      "sourceRoot": "libraries/domain-api/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libraries/domain-api/tsconfig.lib.json",
+            "project": "libraries/domain-api/package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libraries/domain-api/test/test.ts",
+            "tsConfig": "libraries/domain-api/tsconfig.spec.json",
+            "karmaConfig": "libraries/domain-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libraries/domain-api/tsconfig.json", "libraries/domain-api/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "opal20"
+}

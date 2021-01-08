@@ -1,0 +1,103 @@
+<div class="assignment-form-editor">
+  <ng-container *ngIf="!isPreviewing">
+    <div class="assignment-form-editor__editor-container">
+      <div class="assignment-form-editor__left-col"
+           *ngIf="assignmentVm.type === AssignmentType.Quiz"
+           #assignmentEditorPageLeftCol>
+        <kendo-panelbar class="assignment-panelbar-custom">
+          <kendo-panelbar-item class="assignment-panelbar-custom__item"
+                               title
+                               *ngIf="assignmentVm.selectedAssignmentQuestion != null"
+                               [icon]="'arrow-60-right'"
+                               [expanded]="isExpandedOption"
+                               [iconClass]="'assignment-panelbar-custom__icon-collapse'">
+            <ng-template kendoPanelBarItemTitle="">
+              <div class="assignment-panelbar-custom__title"
+                   (click)="onPanelBarItemClick()">{{selectedQuestionText}}</div>
+            </ng-template>
+            <ng-template kendoPanelBarContent="">
+              <assignment-question-config *ngIf="assignmentVm.selectedAssignmentQuestion != null"
+                                          [(assignmentQuestion)]="assignmentVm.selectedAssignmentQuestion"
+                                          (assignmentQuestionChange)="emitAssignmentVmChanged()"
+                                          [mode]="mode"></assignment-question-config>
+            </ng-template>
+          </kendo-panelbar-item>
+          <kendo-panelbar-item class="assignment-panelbar-custom__item"
+                               title
+                               [icon]="'arrow-60-right'"
+                               [expanded]="!isExpandedOption"
+                               [iconClass]="'assignment-panelbar-custom__icon-collapse'">
+            <ng-template kendoPanelBarItemTitle="">
+              <div class="assignment-panelbar-custom__title"
+                   (click)="onPanelBarItemClick()">{{'Configuration' | translator}}</div>
+            </ng-template>
+            <ng-template kendoPanelBarContent="">
+              <assignment-editor-config [form]="form"
+                                        [(assignmentVm)]="assignmentVm"
+                                        (assignmentVmChange)="emitAssignmentVmChanged()"
+                                        [mode]="mode"></assignment-editor-config>
+            </ng-template>
+          </kendo-panelbar-item>
+        </kendo-panelbar>
+
+      </div>
+      <div class="assignment-form-editor__right-col">
+        <assignment-editor #assignmentEditor
+                           [(assignmentVm)]="assignmentVm"
+                           (assignmentVmChange)="emitAssignmentVmChanged()"
+                           (selectedQuestionChange)="onSelectedQuestionChange($event)"
+                           [mode]="mode"></assignment-editor>
+      </div>
+    </div>
+
+    <div class="assignment-form-editor__actions row"
+         *ngIf="mode === AssignmentMode.Edit">
+      <button class="assignment-form-editor__actions-btn"
+              [look]="'outline'"
+              (click)="onClickCancel()"
+              kendoButton>{{ 'Cancel' | translator }}</button>
+      <kendo-dropdownbutton class="assignment-form-editor__actions-btn -preview"
+                            textField="text"
+                            [data]="previewDropdownItems"
+                            [popupSettings]="{popupClass: 'lmm-preview-button-modes'}"
+                            [primary]="false"
+                            (itemClick)="onPreviewClicked($event.value)">
+        {{ 'Preview' | translator }}
+      </kendo-dropdownbutton>
+      <button class="assignment-form-editor__actions-btn"
+              (click)="onClickSave()"
+              [disabled]="!hasDataChanged()"
+              [primary]="true"
+              kendoButton>{{ assignmentVm.id ? 'Save' : 'Create' | translator }}</button>
+    </div>
+  </ng-container>
+
+  <div class="preview-content assignment-form-editor__preview-container"
+       *ngIf="isPreviewing">
+    <div class="column flex web-preview preview-content-container">
+      <button class="k-button-close-preview"
+              (click)="closePreview()"><span class="k-icon k-i-arrow-chevron-left"></span><span>Close Preview</span></button>
+      <opal-select class="preview-content__preview-mode-select"
+                   [items]="previewDropdownItems"
+                   [searchable]="false"
+                   [minDropdownHeight]="0"
+                   [labelField]="'text'"
+                   [valueField]="'value'"
+                   [(ngModel)]="previewingMode"></opal-select>
+      <div class="preview-content__content">
+        <device-view-simulation [previewMode]="previewingMode">
+          <ng-template webTemplate="">
+            <main-assignment-player [assignmentData]="assignmentVm.data"
+                                    [isMobileMode]="false"
+                                    [forPreview]="isPreviewing"></main-assignment-player>
+          </ng-template>
+          <ng-template mobileTemplate="">
+            <main-assignment-player [assignmentData]="assignmentVm.data"
+                                    [isMobileMode]="true"
+                                    [forPreview]="isPreviewing"></main-assignment-player>
+          </ng-template>
+        </device-view-simulation>
+      </div>
+    </div>
+  </div>
+</div>

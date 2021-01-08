@@ -1,0 +1,88 @@
+<div class="content-management-container">
+  <div class="content-management detail-page"
+       [ngClass]="{ '-loading': loadingData }">
+    <div class="toolbar"
+         stickyElement
+         #coursePlanningCycleDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <p class="toolbar__left-group__title-group__title">
+              <span [title]="title"> {{ title }} </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="coursePlanningCycle.originCoursePlanningCycleData.status ? coursePlanningCycle.originCoursePlanningCycleData.status : ''"
+                              [mapping]="statusColorMap"></status-indicator>
+          </div>
+          <button-group [buttons]="buttonGroup"></button-group>
+        </div>
+      </div>
+    </div>
+
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    stickyTabHeaderElement
+                    #coursePlanningCycleDetailStickyTabHeaderElement="stickyTabHeaderElement"
+                    [stickyDependElement]="coursePlanningCycleDetailStickyToolbarElement.element"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)">
+      <kendo-tabstrip-tab [selected]="selectedTab === CAMTabConfiguration.CoursePlanningCycleInfoTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Information' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <course-planning-cycle-detail [form]="form"
+                                        [coursePlanningCycle]="coursePlanningCycle"
+                                        [mode]="detailPageInput.data.mode"
+                                        [stickyDependElement]="coursePlanningCycleDetailStickyTabHeaderElement.headerElement"
+                                        [stickySpacing]="stickySpacing"></course-planning-cycle-detail>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewCourses() }"
+                          [selected]="selectedTab === CAMTabConfiguration.CoursesOfPlanningCycleTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Courses' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <course-of-planning-cycle-management-page *ngIf="canViewCourses()"
+                                                    [coursePlanningCycleDetailMode]="detailPageInput.data.mode"
+                                                    [coursePlanningCycleDetailPageInput]="detailPageInput"
+                                                    [coursePlanningCycle]="coursePlanningCycle.coursePlanningCycleData"
+                                                    [stickyDependElement]="coursePlanningCycleDetailStickyTabHeaderElement.headerElement">
+          </course-of-planning-cycle-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [cssClass]="{'hidden': !canViewBlockoutDates() }"
+                          [selected]="selectedTab === CAMTabConfiguration.BlockoutDateTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Block Out Dates' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <blockout-date-management-page *ngIf="canViewBlockoutDates()"
+                                         [mode]="detailPageInput.data.mode"
+                                         [coursePlanningCycleDetailPageInput]="detailPageInput"
+                                         [stickyDependElement]="coursePlanningCycleDetailStickyTabHeaderElement.headerElement"
+                                         [coursePlanningCycle]="coursePlanningCycle.coursePlanningCycleData">
+          </blockout-date-management-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

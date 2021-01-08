@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseLearnerContentPage
+    x:Class="LearnerApp.Views.WithdrawalReasonView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModelBase="clr-namespace:LearnerApp.ViewModels.Base;assembly=LearnerApp"
+    xmlns:common="clr-namespace:LearnerApp.Views.Common;assembly=LearnerApp"
+    Title="{Binding Title}"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    BackgroundColor="#E5E5E5">
+
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <ScrollView x:Name="ScrollStack" VerticalOptions="FillAndExpand">
+                    <StackLayout x:Name="LearningInformationArea" VerticalOptions="FillAndExpand">
+                        <StackLayout Margin="10">
+                            <StackLayout Spacing="10">
+                                <Frame
+                                    Padding="0"
+                                    CornerRadius="2"
+                                    HasShadow="False">
+                                    <StackLayout>
+                                        <CollectionView
+                                            x:Name="WithdrawalReasonCollection"
+                                            BackgroundColor="#E5E5E5"
+                                            ItemsSource="{Binding CommentCollection}"
+                                            Scrolled="WithdrawalReasonCollection_OnScrolled"
+                                            VerticalOptions="Start"
+                                            VerticalScrollBarVisibility="Never">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout Padding="10" BackgroundColor="White">
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <StackLayout Margin="1">
+                                                                <Frame
+                                                                    Padding="0"
+                                                                    BorderColor="#D8D8D8"
+                                                                    CornerRadius="25"
+                                                                    HasShadow="False"
+                                                                    HeightRequest="50"
+                                                                    IsClippedToBounds="True">
+                                                                    <Image
+                                                                        Aspect="AspectFill"
+                                                                        Source="{Binding AvatarUrl, Converter={StaticResource AvatarUrlConverter}}"
+                                                                        WidthRequest="50" />
+                                                                </Frame>
+                                                            </StackLayout>
+                                                            <StackLayout Spacing="0">
+                                                                <StackLayout Spacing="0">
+                                                                    <Label
+                                                                        FontFamily="{StaticResource RobotoBold}"
+                                                                        FontSize="16"
+                                                                        Text="{Binding FullName}"
+                                                                        TextColor="{StaticResource MainBodyTextColor}" />
+                                                                    <Label
+                                                                        FontSize="{StaticResource LittleSize}"
+                                                                        Text="{Binding DepartmentName}"
+                                                                        TextColor="#8799BA" />
+                                                                    <Label
+                                                                        FontSize="{StaticResource LittleSize}"
+                                                                        Text="{Binding CreatedDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+                                                                        TextColor="#8799BA" />
+                                                                </StackLayout>
+                                                            </StackLayout>
+                                                        </StackLayout>
+                                                        <Label Text="{Binding Content}" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseLearnerContentPage>

@@ -1,0 +1,10 @@
+<div class="opal-list__item"
+     *ngFor="let item of items; let index = index">
+  <div class="opal-list__item-content">
+    <ng-template [ngTemplateOutlet]="itemTmp"
+                 [ngTemplateOutletContext]="{ item: item, index: index }"></ng-template>
+  </div>
+  <i class="opal-list__close-btn icon action k-icon k-i-close"
+     *ngIf="canRemoveFn == null || canRemoveFn(item)"
+     (click)="onRemove(item)"></i>
+</div>

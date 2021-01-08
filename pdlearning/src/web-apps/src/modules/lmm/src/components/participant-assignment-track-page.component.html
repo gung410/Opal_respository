@@ -1,0 +1,100 @@
+<div class="content-management-container">
+  <div class="content-management detail-page">
+    <div class="toolbar"
+         stickyElement
+         #participantAssignmentDetailStickyToolbarElement="stickyElement">
+      <div class="toolbar__left-container">
+        <div class="toolbar__left-group">
+          <button class="toolbar__left-group__back-button"
+                  kendoButton
+                  [icon]="'arrow-chevron-left'"
+                  [look]="'flat'"
+                  (click)="onClickBack()">
+            {{ 'Back' | translator }}
+          </button>
+          <div class="toolbar__left-group__title-group"
+               kendoTooltip
+               [tooltipClass]="'info-tooltip'">
+            <breadcrumb *ngIf="breadCrumbItems.length > 0"
+                        [items]="breadCrumbItems"></breadcrumb>
+            <owner-info *ngIf="user"
+                        [owner]="user"></owner-info>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar__center-container">
+      </div>
+      <div class="toolbar__right-container">
+        <div class="toolbar__right-group-buttons">
+          <div class="toolbar__right-group-buttons__status">
+            <status-indicator [currentStatus]="status"
+                              [mapping]="statusColorMap"></status-indicator>
+            <p class="participant-assignment-track-page__submit-date"
+               *ngIf="participantAssignmentTrackVm.submittedDate != null">
+              {{ 'Submit Date:' | translator }}
+              {{ participantAssignmentTrackVm.submittedDate | date: 'dd/MM/yyyy' }}
+            </p>
+          </div>
+          <button kendoButton
+                  [primary]="true"
+                  [disabled]="!dataHasChanged()"
+                  (click)="onSaveManualScore()">
+            {{ 'Save' | translator }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <kendo-tabstrip class="opal-tabstrip top-merge"
+                    [animate]="false"
+                    (tabSelect)="onTabSelected($event)"
+                    stickyTabHeaderElement
+                    [stickyDependElement]="participantAssignmentDetailStickyToolbarElement.element">
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.LearnerAssignmentAnswerTab">
+        <ng-template kendoTabTitle="">
+          {{ 'Answers' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <participant-assignment-track-editor [participantAssignmentTrackVm]="participantAssignmentTrackVm">
+          </participant-assignment-track-editor>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.LearnerAssignmentAnswerCommentTab"
+                          *ngIf="showCommentFeedbackAssignment()">
+        <ng-template kendoTabTitle="">
+          <data-check-indicator [checkHasDataFn]="checkCommentsHasDataFnCreator()">
+            {{ 'Comments' | translator }}
+          </data-check-indicator>
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <comment-tab [input]="commentTabInput">
+          </comment-tab>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.AssessmentTab"
+                          [cssClass]="{'hidden': !canViewAssessment() }">
+        <ng-template kendoTabTitle="">
+          {{ 'Assessment' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <assessment-answer-editor *ngIf="canViewAssessment()"
+                                    [input]="mainAssessmentInput">
+          </assessment-answer-editor>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <kendo-tabstrip-tab [selected]="selectedTab === LMMTabConfiguration.PeerAssessmentTab"
+                          [cssClass]="{'hidden': !canViewPeerAssessment() }">
+        <ng-template kendoTabTitle="">
+          {{ 'Peer Assessment' | translator }}
+        </ng-template>
+        <ng-template kendoTabContent="">
+          <peer-assessment-page *ngIf="canViewPeerAssessment()"
+                                [input]="peerAssessmentInput"
+                                [courseId]="detailPageInput.data.courseId"
+                                [classRunId]="detailPageInput.data.classRunId"
+                                [assignmentId]="detailPageInput.data.assignmentId">
+          </peer-assessment-page>
+        </ng-template>
+      </kendo-tabstrip-tab>
+    </kendo-tabstrip>
+  </div>
+</div>

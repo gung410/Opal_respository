@@ -1,0 +1,66 @@
+.feedback-dialog {
+  width: 450px;
+
+  &__icon {
+    padding: 3px;
+    border-radius: 50%;
+    border: 1px solid $color-gray;
+    color: $color-gray;
+  }
+
+  .feedback-dialog__action {
+    justify-content: space-between;
+    margin-top: 10px;
+
+    &.--button-right {
+      justify-content: flex-end;
+    }
+  }
+
+  &__btn {
+    margin-left: 0;
+
+    &.--danger {
+      color: $color-coral;
+
+      &:hover {
+        background-color: $color-silver;
+      }
+    }
+  }
+
+  .form-controls-group {
+    padding-right: 0;
+
+    &>label {
+      color: $color-blue-dard;
+      font-size: $font-size-normal;
+      line-height: 20px;
+    }
+
+    &.--feedback-dialog {
+      position: relative;
+      margin-bottom: 0;
+      padding-bottom: 15px;
+
+      .explanation-text {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+.explanation-text {
+  padding: 12px;
+  background-color: $color-blue-light;
+  border-radius: 5px;
+  color: $color-white;
+}
+
+.explanation-icon {
+  cursor: pointer;
+}

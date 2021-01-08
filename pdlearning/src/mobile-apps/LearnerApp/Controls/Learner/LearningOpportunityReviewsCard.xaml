@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+	x:Class="LearnerApp.Controls.Learner.LearningOpportunityReviewsCard"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:LearnerApp.Controls"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<ContentView>
+		<StackLayout x:Name="ReviewStack" Spacing="15">
+			<Label
+				x:Name="ReviewCountLbl"
+				FontFamily="{StaticResource RobotoRegular}"
+				FontSize="{StaticResource BaseButtonFontSize}"
+				TextColor="{StaticResource SecondaryTextColor}" />
+			<StackLayout x:Name="TotalReviewStack" HorizontalOptions="CenterAndExpand">
+				<StackLayout x:Name="TotalRatingStack" Orientation="Horizontal">
+					<controls:Ratingv2View
+						x:Name="TotalRatingValue"
+						IsEnableRate="False"
+						StarSize="10"
+						StarSpacing="5" />
+					<Label
+						x:Name="TotalRating"
+						FontFamily="{StaticResource RobotoRegular}"
+						FontSize="12"
+						TextColor="{StaticResource MainBodyTextColor}" />
+				</StackLayout>
+				<Label
+					x:Name="TotalReview"
+					FontFamily="{StaticResource RobotoRegular}"
+					FontSize="12"
+					HorizontalOptions="CenterAndExpand"
+					TextColor="{StaticResource MainBodyTextColor}" />
+			</StackLayout>
+
+			<controls:RepeatableStack x:Name="ListReviews" Orientation="Vertical">
+				<controls:RepeatableStack.ItemTemplate>
+					<DataTemplate>
+						<StackLayout>
+							<StackLayout Orientation="Horizontal">
+								<StackLayout Margin="1">
+									<Frame
+										Padding="0"
+										BorderColor="#D8D8D8"
+										CornerRadius="25"
+										HasShadow="False"
+										HeightRequest="50"
+										IsClippedToBounds="True">
+										<Image
+											Aspect="AspectFit"
+											Source="default_avatar.png"
+											WidthRequest="50" />
+									</Frame>
+								</StackLayout>
+								<StackLayout Spacing="0" VerticalOptions="CenterAndExpand">
+									<Label
+										FontFamily="{StaticResource RobotoBold}"
+										FontSize="16"
+										HorizontalOptions="FillAndExpand"
+										LineBreakMode="TailTruncation"
+										MaxLines="1"
+										Text="{Binding UserFullName}"
+										TextColor="{StaticResource MainBodyTextColor}" />
+									<Label
+										FontSize="{StaticResource LittleSize}"
+										Text="{Binding CreatedDate, Converter={StaticResource ClassRunDateTimeConverter}}"
+										TextColor="#8799BA" />
+									<StackLayout IsVisible="{Binding IsVisibleRating}" Orientation="Horizontal">
+										<controls:Ratingv2View
+											IsEnableRate="False"
+											Rate="{Binding Rate}"
+											StarSize="10"
+											StarSpacing="5" />
+										<Label FontSize="{StaticResource LittleSize}" Text="{Binding Rate, StringFormat='({0})'}" />
+									</StackLayout>
+								</StackLayout>
+								<StackLayout
+									HorizontalOptions="EndAndExpand"
+									IsVisible="{Binding IsOwnerReview}"
+									VerticalOptions="CenterAndExpand">
+									<StackLayout.GestureRecognizers>
+										<TapGestureRecognizer CommandParameter="{Binding .}" Tapped="EditComment_Tapped" />
+									</StackLayout.GestureRecognizers>
+									<forms:SvgCachedImage
+										HeightRequest="20"
+										Source="edit_pencil.svg"
+										WidthRequest="20" />
+								</StackLayout>
+							</StackLayout>
+							<Label Text="{Binding CommentContent}" />
+						</StackLayout>
+					</DataTemplate>
+				</controls:RepeatableStack.ItemTemplate>
+			</controls:RepeatableStack>
+		</StackLayout>
+	</ContentView>
+</ContentView>

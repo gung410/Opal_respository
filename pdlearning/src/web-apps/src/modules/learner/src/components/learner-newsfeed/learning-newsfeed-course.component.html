@@ -1,0 +1,18 @@
+<div class="newsfeed course"
+     *ngIf="newsfeed"
+     (click)="onNewsFeedClick()">
+  <img class="newsfeed-course"
+       src="{{ newsfeed.thumbnailUrl ? newsfeed.thumbnailUrl :  'assets/images/course/thumb-img.svg'}}">
+  <div class="newsfeed-course-title truncate-text">
+    {{ updateInfo | translator }}
+  </div>
+  <div class="newsfeed-heading course truncate-text">{{ newsfeed.courseName }}</div>
+  <div class="duration-container course"
+       *ngIf="newsfeed.createdDate">
+    <span class="truncate-text"
+          [title]="newsfeed.createdDate | date: 'dd/MM/yyyy hh:mm a'">
+      {{ newsfeed.createdDate | date: 'dd/MM/yyyy hh:mm a' }}
+    </span>
+  </div>
+
+</div>
