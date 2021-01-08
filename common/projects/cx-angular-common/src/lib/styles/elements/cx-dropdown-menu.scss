@@ -1,0 +1,63 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+
+$cx-dropdown-menu-shadow: 0px 11px 15px rgba(0, 0, 0, 0.05), 0px 24px 38px rgba(0, 0, 0, 0.05);
+$cx-dropdown-menu-border: 1px solid #e2e2e2;
+
+.cx-dropdown-menu {
+  min-width: 250px;
+  max-width: 500px;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: $cx-dropdown-menu-border;
+  @include box-sizing(border-box);
+  box-shadow: $cx-dropdown-menu-shadow;
+  background: #fff;
+  &__item {
+    cursor: pointer;
+    padding: 6px 15px;
+    margin: 5px 0;
+    color: $cx-color-text-main;
+    display: block;
+    border-radius: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: cx-calc-rem(14px);
+    font-weight: 500;
+    &:hover,
+    &:not([href]):not([tabindex]):hover,
+    &:not([href]):not([tabindex]):focus {
+      text-decoration: none;
+      color: $cx-color-text-light;
+      background: $cx-color-hover-background;
+    }
+    &.cx-actived {
+      font-weight: 500;
+      color: $cx-color-text-light;
+      background: $cx-color-hover-background;
+    }
+    > i {
+      font-size: cx-calc-rem(16px);
+      transform: translateY(2px);
+      display: inline-block;
+      margin-right: 5px;
+      min-width: 18px;
+    }
+  }
+  &::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    top: -10px;
+    right: 10px;
+    margin-left: -10px;
+    filter: drop-shadow(0px -1px 0px #e2e2e2);
+    border: 10px solid transparent;
+    border-top-width: 0;
+    border-bottom-color: #fff;
+  }
+}

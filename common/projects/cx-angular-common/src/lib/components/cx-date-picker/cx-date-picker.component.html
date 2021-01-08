@@ -1,0 +1,9 @@
+<div class="cx-datepicker-container">
+  <div class="cx-datepicker-container__invalid-text" *ngIf="invalidText">{{invalidText}}</div>
+  <input type="text"
+       id="{{uniqueId}}"
+       (change)="onChange()"
+       [disabled]="isDisabled"
+       [placeholder]="placeholder"
+       [ngClass]="{'disable-input-background': isDisabled}">
+</div>

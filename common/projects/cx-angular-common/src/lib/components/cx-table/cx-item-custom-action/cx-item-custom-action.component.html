@@ -1,0 +1,7 @@
+<div class="cx-table-containers__action dropdown-item" ngbDropdownItem (click)="onItemClicked()">
+  <i class="{{icon}}"></i>
+  <ng-content select="cx-item-action-content"></ng-content>
+  <div class="cx-table-containers__sub-action">
+    <ng-content select="cx-item-sub-action"></ng-content>
+  </div>
+</div>

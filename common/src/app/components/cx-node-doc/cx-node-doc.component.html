@@ -1,0 +1,15 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+    <button (click)="rootUpdate()">Update root node name</button>
+    <div class="simple-tree">
+      <cx-node [node]="treeData" [selectedNodeComponent]="selectedNodeComponent" (nodeClicked)="nodeClickedHandler($event)"
+        (createNodeClicked)="createNodeClickedHandler($event)" (newNodeCreated)="newNodeCreatedHandler($event)">
+      </cx-node>
+    </div>
+  </div>
+  <div contentSecond>
+  </div>
+  <div contentThird>
+  </div>
+</cx-docs-view>

@@ -1,0 +1,77 @@
+<cx-docs-view>
+  <div contentFirst>
+    <button (click)="removeDataContainer()">Remove data container</button>
+    <button (click)="removeDataItem()">Remove data items</button>
+    <button (click)="resetData()">Reset data</button>
+    <button (click)="clearSelected()">Clear selected</button>
+    
+    <cx-checkbox [(selected)]="showActionsButtonInLastRow">
+        Show Actions Button In Last Row
+    </cx-checkbox>
+    <!-- Body -->
+    <cx-table-containers [headers]="headers" [itemTemplate]="employeeRowTemplate" [containers]="departments"
+      [containerChildrenCountRoute]="'childrenCount'" [items]="itemsData"
+      [noRecordText]="'No Records'" [noContainerText]="'No Container'" [noItemText]="'No Item'"
+      [itemIdRoutes]="['Identity.Id']"  [currentSortType]="currentSortType" (sortTypeChange)="onSortTypeChange($event)" [isDataLazyLoad]="false" [currentFieldSort]="currentFieldSort"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow"
+      [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [containerTemplate]="departmentDataTemplate" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [itemActionNgbBootstrapPlacement]="itemActionPlacement"
+      (moveItem)="onMoveEmployee($event)" (removeItems)="onRemoveEmployeesInTable($event)">
+      <ng-template #departmentDataTemplate let-department=container>
+        <div>{{department.DepartmentName}}</div>
+      </ng-template>
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            Custom action
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              {{employeesRoleMap[employee?.employeeIdentity?.id]}}
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table-containers__items">
+          <div class="cx-table-containers__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table-containers__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table-containers__items--info">
+            <span class="cx-table-containers__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table-containers__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table-containers__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table-containers__status">
+          <div>
+            <span class="cx-table-containers__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table-containers__status--logged-label">Logged in: </span>
+            <span
+              class="cx-table-containers__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-employee=item>
+        Test custom template
+      </ng-template>
+    </cx-table-containers>
+  </div>
+
+  <div contentSecond>
+    <button (click)="changeData()">Change data round 1</button>
+    <button (click)="changeAnotherData()">Change data round 2</button>
+  </div>
+  <div contentThird>
+  </div>
+</cx-docs-view>

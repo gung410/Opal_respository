@@ -1,0 +1,112 @@
+@import './mixins.scss';
+
+%cx-default-container {
+    background: white;
+    color: black;
+    display: block;
+}
+
+%cx-inherit-child-container {
+    @include cx-inherit-child-container();
+}
+
+%cx-input {
+    @include box-sizing(border-box);
+    border: 1px solid $cx-input-border-color;
+    padding: $cx-input-vertical-padding $cx-input-horizontal-padding;
+    font-size: $cx-font-size-sm;
+    border-radius: .25rem;
+    background-color: white;
+    height: auto;
+    line-height: $cx-default-line-height;
+    color: black;
+}
+
+%cx-link {
+    cursor: pointer;
+    color: #007bff !important;
+    &:hover {
+        text-decoration: underline !important;
+    }
+    &.-disabled {
+        color: #dbdbdb !important;
+        cursor: none;
+        pointer-events: none;
+        &:hover {
+            text-decoration: none !important;
+        }
+    }
+}
+
+%cx-flex-row-box {
+    @include cx-flex-box(row);
+}
+
+%cx-flex-col-box {
+    @include cx-flex-box(column);
+}
+
+%cx-flex-row-container {
+    @include cx-flex-container(row);
+}
+
+%cx-flex-col-container {
+    @include cx-flex-container(column);
+    flex-direction: column;
+}
+
+%cx-flex-fix-content {
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+%cx-flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+%cx-fill {
+    @include cx-fill();
+}
+
+%cx-truncate-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+%cx-flex-border {
+    @include cx-flex-border($cx-border-thick);
+    &.-dark {
+        @include cx-flex-border($cx-border-thick, $cx-border-color-dark);
+    }
+}
+
+%cx-material-icons {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+%cx-flex-border {
+    @include cx-flex-border($cx-border-thick);
+    &.-dark {
+        @include cx-flex-border($cx-border-thick, $cx-border-color-dark);
+    }
+}

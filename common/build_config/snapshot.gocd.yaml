@@ -1,0 +1,18 @@
+--- 
+environments: 
+  development-npm-registry: 
+    pipelines: 
+      - snapshot-cx-angular-common   
+format_version: 3
+pipelines: 
+  snapshot-cx-angular-common: 
+    group: snapshot-cx-angular-common
+    label_template: "1.4.${COUNT}-beta" 
+    lock_behavior: none
+    template: angular-build-package
+    parameters: # list of parameters that can be configured for a pipeline
+      LIBRARY_DIR: cx-angular-common
+    materials: 
+      bitbuket-git: 
+        branch: develop
+        git: "git@bitbucket.org:cxdev/cx-angular-common.git"

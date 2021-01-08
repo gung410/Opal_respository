@@ -1,0 +1,88 @@
+<div class="cx-narrow-tree-node" [@smoothAppendRemove]>
+  <div class="cx-narrow-tree-node__current-data" [style.padding-left.px]="currentPadding">
+    <div class="cx-narrow-tree-node__actions" *ngIf="!isViewMode">
+      <div class="cx-narrow-tree-node__btn" *ngIf="enableEditBtn && !isRoot" (click)="onEdit()"
+        [title]="text.editTooltip">
+        <i class="material-icons hover" [ngClass]="icon.edit"></i>
+      </div>
+      <div class="cx-narrow-tree-node__btn" *ngIf="enableMoveBtn && !isRoot" (click)="onMoveItemFromCurrentFolder()"
+        [title]="text.moveTooltip">
+        <i class="material-icons hover" [ngClass]="icon.move"></i>
+      </div>
+      <div class="cx-narrow-tree-node__btn" *ngIf="enableRemoveBtn && !isRoot" (click)="onDelete()"
+        [title]="text.removeTooltip">
+        <i class="material-icons hover" [ngClass]="icon.remove"></i>
+      </div>
+    </div>
+    <input *ngIf="displayCheckboxes && !isRoot && !isViewMode" type="checkbox" id="checkbox-{{objectId}}"
+      [(ngModel)]="checked" (ngModelChange)="toggleCheckbox()">
+    <label *ngIf="displayCheckboxes && !isRoot && !isViewMode" class="cx-narrow-tree-node__checkbox"
+      for="checkbox-{{objectId}}">
+      <i class="material-icons" [ngClass]="checked ? 'check-box-icon' : 'box-icon'"></i>
+    </label>
+    <div *ngIf="showCollapseExpandButton" class="cx-narrow-tree-node__btn" (click)="onToggleShowingChildrenClicked()">
+      <i class="material-icons" [ngClass]="showChildren ? icon.collapse : icon.expand"></i>
+    </div>
+    <!-- TODO: Need to fix for cx-tree-node too -->
+    <div *ngIf="avatar && avatar.length && avatar.trim()" class="cx-narrow-tree-node__avatar-icon">
+      <i class="{{avatar}}" [ngClass]="{'cx-narrow-tree-node__avatar-icon--navigated': isNavigatedNode}"></i>
+    </div>
+    <div *ngIf="!isEditingItem" class="cx-narrow-tree-node__display-area" [ngClass]="{'cx-narrow-tree-node__display-area--dialog-mode' : isViewMode,
+                  'cx-narrow-tree-node__display-area--navigated': isNavigatedNode}"
+      (click)="onSelectItemFromCurrentItem()">
+      <ng-template [ngTemplateOutlet]="displayTemplate" [ngTemplateOutletContext]="{object:object}">
+      </ng-template>
+    </div>
+    <div class="cx-narrow-tree-node__edit-area" *ngIf="!isViewMode && isEditingItem">
+      <input #editInput type="text" class="form-control cx-narrow-tree-node__input" [(ngModel)]="name"
+        (keyup.enter)="onSave()">
+      <div class="cx-narrow-tree-node__btn cx-narrow-tree-node__save-btn" (click)="onSave()" [title]="text.saveTooltip">
+        <i class="material-icons hover" [ngClass]="icon.save"></i>
+      </div>
+      <div class="cx-narrow-tree-node__btn" (click)="onClose()" [title]="text.closeTooltip">
+        <i class="material-icons" [ngClass]="icon.close"></i>
+      </div>
+    </div>
+  </div>
+  <div class="cx-narrow-tree-node__children" [hidden]="!showChildren">
+    <div [style.left.px]="childrenVerticalLinePathLengthInPx" class="cx-narrow-tree-node__children-vertical-line">
+    </div>
+    <div *ngFor="let obj of childrenObjects; let idx = index; let last = last"
+      class="cx-narrow-tree-node__child-container">
+      <div [style.left.px]="childrenVerticalLinePathLengthInPx"
+        [style.width.px]="currentDataHorizontalLinePathLengthInPx"
+        class="cx-narrow-tree-node__children-horizontal-path">
+      </div>
+      <div *ngIf="last" class="cx-narrow-tree-node__last-child-vertical-line-cover"
+        [style.background-color]="backgroundColor" [style.left.px]="childrenVerticalLinePathLengthInPx"></div>
+      <cx-narrow-tree-node *ngIf="obj !== undefined" [(object)]="childrenObjects[idx]"
+        [remainingObjectsArray]="remainingObjectArrayToPushDownChildren" [displayFieldRoute]="displayFieldRoute"
+        [idFieldRoute]="idFieldRoute" [parentIdFieldRoute]="parentIdFieldRoute" [displayTemplate]="displayTemplate"
+        [icon]="icon" [text]="text" [currentRoutes]="currentRoutes" [buttonCondition]="buttonCondition"
+        [route]="routeDepartments" [selectedObjectIds]="selectedObjectIds" [destinationItems]="destinationItems"
+        [isViewMode]="isViewMode" [level]="level + 1" [defaultExpandLevel]="defaultExpandLevel"
+        [navigatedNodeData]="navigatedNodeData" [addButtonTemplate]="addButtonTemplate"
+        (move)="onMoveItemFromChildrenFolder($event)" [backgroundColor]="backgroundColor"
+        (deleteItem)="onDeleteItem($event)" (addItem)="onAddItem($event)" (editItem)="onEditItem($event)"
+        (selectItem)="onSelectItem($event)" (clickItem)="onSelectItemFromChildrenItem($event)"
+        [dynamicIcon]="dynamicIcon">
+      </cx-narrow-tree-node>
+    </div>
+    <div *ngIf="enableAddBtn" [style.padding-left.px]="childPadding"
+      class="cx-narrow-tree-node__child-container cx-narrow-tree-node__child-container--new-child">
+      <div class="cx-narrow-tree-node__new-child-line-path" [style.width.px]="currentDataHorizontalLinePathLengthInPx"
+        [style.left.px]="childrenVerticalLinePathLengthInPx">
+        <div class="cx-narrow-tree-node__new-child-line-path-below-cover" [style.background-color]="backgroundColor"
+        [style.width.px]="currentDataHorizontalLinePathLengthInPx" [style.left.px]="childrenVerticalLinePathLengthInPx">
+      </div>
+      </div>
+      <div class="cx-narrow-tree-node__btn" (click)="onAddNew()" [title]="text.addTooltip">
+        <div *ngIf="addButtonTemplate !== undefined" class="cx-narrow-tree-node__add-button-template">
+          <ng-template [ngTemplateOutlet]="addButtonTemplate" [ngTemplateOutletContext]="{object:object}">
+          </ng-template>
+        </div>
+        <i *ngIf="addButtonTemplate === undefined" [ngClass]="icon.add"></i>
+      </div>
+    </div>
+  </div>
+</div>

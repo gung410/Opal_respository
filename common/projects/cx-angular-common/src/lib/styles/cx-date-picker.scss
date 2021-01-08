@@ -1,0 +1,138 @@
+@import './material-icons.scss';
+@import './variables.scss';
+#ui-datepicker-div.ui-datepicker {
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-shadow: 0px 11px 15px rgba(0, 0, 0, 0.05), 0px 24px 38px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e2e2;
+  z-index: 9998 !important; // lower than loader, and larger than modal
+  .ui-datepicker-header {
+    border: none;
+    background: transparent;
+    font-weight: normal;
+    font-size: 11px;
+    text-transform: uppercase;
+
+    .ui-datepicker-title {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-weight: bold;
+
+      select {
+        font-size: 14px;
+        border-radius: 10px;
+        width: 70px;
+        margin: 0 5px;
+        border-color: transparent;
+        background-color: transparent;
+        font-weight: 700;
+        color: #5d5d5d;
+        padding: 1px 5px;
+        cursor: pointer;
+        &:hover {
+          background: #e4e4e4;
+        }
+        option {
+          background: #fff;
+        }
+      }
+    }
+
+    .ui-datepicker-next {
+      &::before {
+        @extend .material-icons;
+        content: 'keyboard_arrow_right';
+        color: #011f54;
+      }
+
+      &.ui-datepicker-next-hover {
+        opacity: 1;
+      }
+    }
+
+    .ui-datepicker-prev {
+      &::before {
+        @extend .material-icons;
+        content: 'keyboard_arrow_left';
+        color: #011f54;
+      }
+
+      &.ui-datepicker-prev-hover {
+        opacity: 1;
+        left: 2px;
+      }
+    }
+
+    .ui-datepicker-next,
+    .ui-datepicker-prev {
+      opacity: 0.5;
+      top: 10px;
+      border: none;
+      right: 15px;
+
+      &.ui-state-hover {
+        background: transparent;
+        border-color: transparent;
+        cursor: pointer;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+      }
+
+      span {
+        background-image: none;
+      }
+    }
+  }
+
+
+  table.ui-datepicker-calendar {
+    margin: 0;
+
+    thead th {
+      text-transform: uppercase;
+      border: none;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    tbody td {
+      border: none;
+      padding: 0;
+
+      .ui-state-default {
+        background: transparent;
+        border: none;
+        text-align: center;
+        padding: 6px 0;
+        margin: 0;
+        font-weight: normal;
+        color: #212529;
+        font-size: 12px;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+      }
+
+      .ui-state-active {
+        color: #ffffff;
+        background-color: #657692;
+      }
+      .ui-state-hover {
+        color: #ffffff;
+        background-color: #a3b7d8;
+      }
+    }
+  }
+
+  @media screen and (max-width: $screen-ipad-min) {
+    position: fixed !important;
+    top: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    border-radius: 0px;
+  }
+}

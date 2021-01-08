@@ -1,0 +1,13 @@
+<div
+    class="list-menu-item-box"
+    [attr.aria-expanded]="!isCollapsed"
+>
+
+  <div
+    [class.expanded]="!isCollapsed"
+    [class.collapse]="isCollapsed"
+    *ngFor="let menu of listMenu; let idx = index"
+    [attr.data-index]="idx">
+    <cx-menu-item [menuItem]="menu"></cx-menu-item>
+  </div>
+</div>

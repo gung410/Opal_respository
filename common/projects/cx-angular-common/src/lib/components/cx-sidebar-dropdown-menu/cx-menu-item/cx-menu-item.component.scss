@@ -1,0 +1,34 @@
+// @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.menu-item-box {
+  //hover
+  &:hover {
+    color: #000;
+    background-color: #fff;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  &[aria-expanded="true"] {
+    .fa-caret-down {
+      transform: rotate(180deg);
+      transition: all 0.2s;
+    }
+  }
+
+  &[aria-expanded="false"] {
+    .fa-caret-down {
+      transition: all 0.2s;
+    }
+  }
+
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  font-weight: 200;
+  color: #fff;
+  padding: 7px;
+  cursor: pointer;
+  background-color: #000;
+  font-family: "Poppins", sans-serif;
+}

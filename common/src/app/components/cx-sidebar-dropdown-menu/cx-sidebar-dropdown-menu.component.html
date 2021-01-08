@@ -1,0 +1,70 @@
+
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+    <div>
+      <div>
+        <h1>Conexus Sidebar</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt libero leo. Nunc in urna libero. Morbi
+          quam sem, tempor quis sollicitudin ut, congue vitae enim. Interdum et malesuada fames ac ante ipsum primis in
+          faucibus. Fusce sit amet ex quis lorem tempus sodales. Mauris eget quam eget lacus vulputate egestas sed non
+          tortor. Ut aliquam nulla ut turpis accumsan, et blandit nulla feugiat. Donec neque risus, ornare posuere
+          imperdiet ut, auctor et magna. Ut justo sem, tempus sit amet risus at, efficitur sodales nulla. Quisque et
+          nibh
+          lacinia, gravida metus ac, scelerisque nisi.
+        </p>
+      </div>
+
+      <div>
+        <h1>Section Two</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt libero leo. Nunc in urna libero. Morbi
+          quam sem, tempor quis sollicitudin ut, congue vitae enim. Interdum et malesuada fames ac ante ipsum primis in
+          faucibus. Fusce sit amet ex quis lorem tempus sodales. Mauris eget quam eget lacus vulputate egestas sed non
+          tortor. Ut aliquam nulla ut turpis accumsan, et blandit nulla feugiat. Donec neque risus, ornare posuere
+          imperdiet ut, auctor et magna. Ut justo sem, tempus sit amet risus at, efficitur sodales nulla. Quisque et
+          nibh
+          lacinia, gravida metus ac, scelerisque nisi.</p>
+      </div>
+
+      <div>
+        <h1>Section Three</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt libero leo. Nunc in urna libero. Morbi
+          quam sem, tempor quis sollicitudin ut, congue vitae enim. Interdum et malesuada fames ac ante ipsum primis in
+          faucibus. Fusce sit amet ex quis lorem tempus sodales. Mauris eget quam eget lacus vulputate egestas sed non
+          tortor. Ut aliquam nulla ut turpis accumsan, et blandit nulla feugiat. Donec neque risus, ornare posuere
+          imperdiet ut, auctor et magna. Ut justo sem, tempus sit amet risus at, efficitur sodales nulla. Quisque et
+          nibh
+          lacinia, gravida metus ac, scelerisque nisi.</p>
+      </div>
+
+      <div>
+        <h1>Section Four</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt libero leo. Nunc in urna libero. Morbi
+          quam sem, tempor quis sollicitudin ut, congue vitae enim. Interdum et malesuada fames ac ante ipsum primis in
+          faucibus. Fusce sit amet ex quis lorem tempus sodales. Mauris eget quam eget lacus vulputate egestas sed non
+          tortor. Ut aliquam nulla ut turpis accumsan, et blandit nulla feugiat. Donec neque risus, ornare posuere
+          imperdiet ut, auctor et magna. Ut justo sem, tempus sit amet risus at, efficitur sodales nulla. Quisque et
+          nibh
+          lacinia, gravida metus ac, scelerisque nisi.</p>
+      </div>
+    </div>
+  </div>
+
+  <div contentSecond>
+    {{'{
+        id: string,
+        content: string,
+        children: [],
+        isDisplay: boolean,
+        role: [],
+        isCollapsed: boolean,
+        level: number
+    }'}}
+  </div>
+  <div contentThird>
+    <p>Conexus sidebar for shared</p>
+    <div class="sidebar-doc-container">
+      <cx-sidebar-dropdown-menu [listMenu]="listMenu"></cx-sidebar-dropdown-menu>
+    </div>
+  </div>
+</cx-docs-view>

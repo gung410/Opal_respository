@@ -1,0 +1,18 @@
+--- 
+environments: 
+  development-npm-registry: 
+    pipelines: 
+      - release-cx-angular-common    
+format_version: 3
+pipelines: 
+  release-cx-angular-common: 
+    group: release-cx-angular-common
+    label_template: "1.0.${COUNT}" 
+    lock_behavior: none
+    template: angular-build-package
+    parameters: # list of parameters that can be configured for a pipeline
+      LIBRARY_DIR: cx-angular-common
+    materials: 
+      bitbuket-git: 
+        branch: release/0.1
+        git: "git@bitbucket.org:cxdev/cx-angular-common.git"

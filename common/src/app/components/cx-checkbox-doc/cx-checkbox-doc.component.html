@@ -1,0 +1,43 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+
+    <cx-checkbox [(checkboxes)]="checkboxes1"></cx-checkbox>
+    <div class="checkbox-level1">
+      <cx-checkbox [(selected)]="checkboxes1[0]" [(checkboxes)]="checkboxes2"></cx-checkbox>
+    </div>
+    <div class="checkbox-level2">
+      <cx-checkbox [(selected)]="checkboxes2[i]" *ngFor="let item of cbs2; let i=index">
+      </cx-checkbox>
+    </div>
+    <div class="checkbox-level1">
+      <cx-checkbox [(selected)]="checkboxes1[1]" [(checkboxes)]="checkboxes3">
+      </cx-checkbox>
+    </div>
+    <div class="checkbox-level2">
+      <cx-checkbox [(selected)]="checkboxes3[i]" *ngFor="let item of cbs3; let i=index">
+      </cx-checkbox>
+    </div>
+  </div>
+
+  <div contentSecond>
+    <h1>content 2</h1>
+    <div>
+      <cx-customized-checkbox [groupName]="'testMasterCheckbox'" [childrenGroupName]="'testChildren'">
+        Master checkbox
+      </cx-customized-checkbox>
+      <cx-customized-checkbox [parentName]="'testMasterCheckbox'" [groupName]="'testChildren'">
+        Checkbox 1
+      </cx-customized-checkbox>
+      <cx-customized-checkbox [parentName]="'testMasterCheckbox'" [groupName]="'testChildren'">
+        Checkbox 2
+      </cx-customized-checkbox>
+      <cx-customized-checkbox [parentName]="'testMasterCheckbox'" [groupName]="'testChildren'">
+        Checkbox 3
+      </cx-customized-checkbox>
+    </div>
+  </div>
+  <div contentThird>
+    <p>content 3</p>
+  </div>
+</cx-docs-view>

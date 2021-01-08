@@ -1,0 +1,16 @@
+<nav class="cx-breadcrumb" aria-label="breadcrumb" *ngIf="breadCrumbItems">
+  <ol class="breadcrumb cx-breadcrumb__list">
+    <li class="breadcrumb-item cx-breadcrumb__item" [attr.separator-symbol]="separatorSymbol" [class.active]="isLastBreadCrumbItem"
+        [attr.aria-current]="isLastBreadCrumbItem ? 'page' : ''"
+        *ngFor="let breadCrumbItem of breadCrumbItems; let isLastBreadCrumbItem = last">
+      <span class="cx-breadcrumb__item-text cx-breadcrumb__item-text--normal"
+            title="{{getPropertyValue(breadCrumbItem,labelledPropertyName)}}" *ngIf="!isLastBreadCrumbItem"
+            (click)="onClickedBreadCrumbItem(breadCrumbItem)">
+        {{getPropertyValueWithTruncatedLabel(breadCrumbItem,labelledPropertyName) }}
+      </span>
+      <span class="cx-breadcrumb__item-text" *ngIf="isLastBreadCrumbItem">
+        {{getPropertyValue(breadCrumbItem,labelledPropertyName)}}
+      </span>
+    </li>
+  </ol>
+</nav>

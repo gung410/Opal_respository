@@ -1,0 +1,61 @@
+<div *ngIf="actions" class="action-toolbar">
+  <!-- Main action buttons -->
+  <ng-container *ngIf="showMainActionButtons">
+    <ng-container *ngFor="let action of actions.listEssentialActions">
+      <button
+        [disabled]="action.disable"
+        class="cx-btn cx-btn-secondary cx-btn-small"
+        (click)="onClick(action)"
+      >{{action.text}}</button>
+    </ng-container>
+  </ng-container>
+  <!-- End main action buttons -->
+
+  <!-- More action buttons -->
+  <ng-container *ngIf="showMoreActionButtons">
+    <button
+      id="customActionDropdown"
+      class="cx-btn cx-btn-secondary cx-btn-small action-toolbar__multiple-actions"
+      [class.is-last-child]="showMainActionButtons"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i  class="icon icon-meatball"></i>
+    </button>
+    <div
+      autoClose="outside"
+      class="action-toolbar__actions-dropdown dropdown">
+      <div class="action-toolbar__item-menu dropdown-menu cx-dropdown-menu" aria-labelledby="customActionDropdown">
+        <div
+          *ngIf="actions.listNonEssentialActions && actions.listNonEssentialActions.length > 0"
+          [ngClass]="!isVerticalToShowMenuAction ? 'horizontalMode' : 'verticalMode'">
+          <ng-container *ngFor="let action of actions.listNonEssentialActions">
+            <div
+              class="cx-dropdown-menu__item"
+              [class.cx-dropdown-menu-item-disabled]="action.disable"
+              (click)="onClick(action)">
+              <i *ngIf="action.icon" [ngClass]="action.icon"></i>
+              {{action.text}}
+            </div>
+          </ng-container>
+        </div>
+        <div
+          *ngIf="actions.listSpecifyActions && actions.listSpecifyActions.length > 0"
+          [ngClass]="!isVerticalToShowMenuAction ? 'horizontalMode' : 'verticalMode'">
+          <div
+            *ngIf="actions.listNonEssentialActions && actions.listNonEssentialActions.length > 0"
+            class="devide-line">
+          </div>
+          <ng-container *ngFor="let action of actions.listSpecifyActions">
+            <div
+              class="cx-dropdown-menu__item"
+              [class.cx-dropdown-menu-item-disabled]="action.disable"
+              (click)="onClick(action)">
+                <i *ngIf="action.icon" [ngClass]="action.icon"></i>
+                {{action.text}}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- End more action buttons -->
+</div>

@@ -1,0 +1,9 @@
+<cx-dialog-template (cancel)="cancel()"
+    (done)="remove()">
+    <modal-header>
+        <h3>{{dialogHeaderText}}</h3>
+      </modal-header>
+  <content>
+      Remove {{items.length}} item(s)
+  </content>
+</cx-dialog-template>

@@ -1,0 +1,98 @@
+cx-tree-node {
+    .cx-tree-node {
+        &__display-area {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 1.142em;
+            white-space: nowrap;
+            overflow: hidden;
+
+            &--dialog-mode {
+                cursor: pointer;
+            }
+        }
+        &__current-data {
+            position: relative;
+            border-bottom: 1px solid #f2f2f2;
+            width: 100%;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+
+            &--chosen {
+                background-color: #add8e6;
+                cursor: initial;
+            }
+
+            &--active {
+                cursor: pointer;
+            }
+
+            &:hover, &--selected {
+                background-color: #d7f5fa;
+                cursor: initial;
+            }
+        }
+        &__checkbox {
+            position: absolute;
+            left: -50px;
+            cursor: pointer;
+        }
+        &__btn {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            font-size: 0;
+            &--absolute {
+                position: absolute;
+                top: 50%;
+                transform: translate(-100%, -50%);
+            }
+        }
+        &__input {
+            display: inline-block;
+            vertical-align: middle;
+            width: 300px;
+        }
+        &__add-child-area {
+            padding: 10px 0;
+        }
+        &__edit-area {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        &__actions {
+            width: 150px;
+            position: absolute;
+            right: 0;
+        }
+        &__avatar-icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        &__current-data i.box-icon{
+            opacity: 0;
+        }
+        &__current-data:hover i.box-icon, &__checkbox:hover i.box-icon {
+            opacity: 1;
+        }
+        &__save-btn {
+            margin-left: 10px;
+        }
+        &__expand-btn {
+            width: 22px;
+            min-width: 22px;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    cx-tree-node {
+        .cx-tree-node {
+            &__actions {
+                display: none;
+            }
+        }
+    }
+}

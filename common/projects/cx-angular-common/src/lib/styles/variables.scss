@@ -1,0 +1,156 @@
+@function cx-calc-rem($size) {
+  @return ($size / $cx-root-font-size) * 1rem;
+}
+
+$cx-root-font-size: 16px;
+
+$cx-media-type-list: 'xs' 'gt-xs' 'lt-sm' 'sm' 'gt-sm' 'lt-md' 'md' 'gt-md' 'lt-lg' 'lg' 'gt-lg' 'lt-xl' 'xl';
+
+$cx-media-breakpoint-xs: cx-calc-rem(599px);
+$cx-media-breakpoint-gt-xs: cx-calc-rem(600px);
+$cx-media-breakpoint-sm: cx-calc-rem(959px);
+$cx-media-breakpoint-gt-sm: cx-calc-rem(960px);
+$cx-media-breakpoint-md: cx-calc-rem(1279px);
+$cx-media-breakpoint-gt-md: cx-calc-rem(1280px);
+$cx-media-breakpoint-lg: cx-calc-rem(1919px);
+$cx-media-breakpoint-gt-lg: cx-calc-rem(1920px);
+$cx-media-breakpoint-xl: cx-calc-rem(500px);
+
+$cx-z-index-level-1: 100;
+$cx-z-index-level-2: 200;
+$cx-z-index-level-3: 300;
+$cx-z-index-level-4: 400;
+
+$cx-font-family: 'Roboto', 'ProximaNova-Regular', 'sans-serif';
+$cx-font-size-xs: cx-calc-rem(14px);
+$cx-font-size-sm: cx-calc-rem(16px);
+$cx-font-size-md: cx-calc-rem(20px);
+$cx-font-size-lg: cx-calc-rem(24px);
+$cx-font-size-xl: cx-calc-rem(28px);
+$cx-font-size-xxl: cx-calc-rem(36px);
+$cx-font-size-xxxl: cx-calc-rem(40px);
+
+$cx-faded-opacity: 0.5;
+$cx-desc-faded-opacity: 0.7;
+
+$cx-icon-size-xs-px: 20px;
+$cx-icon-size-sm-px: 30px;
+$cx-icon-size-md-px: 45px;
+
+$cx-icon-font-weight: 100;
+
+$cx-icon-font-weight-hover: 600;
+
+$cx-icon-size-xs: cx-calc-rem($cx-icon-size-xs-px);
+$cx-icon-size-sm: cx-calc-rem($cx-icon-size-sm-px);
+$cx-icon-size-md: cx-calc-rem($cx-icon-size-md-px);
+
+$cx-space-type-list: 'xs' 'sm' 'md' 'lg' 'xl' 'xxl';
+$cx-space-xs: 5px;
+$cx-space-sm: 10px;
+$cx-space-md: 15px;
+$cx-space-lg: 20px;
+$cx-space-xl: 25px;
+$cx-space-xxl: 30px;
+
+$cx-border-thick: 1px;
+$cx-border-color: rgb(219, 219, 219);
+$cx-border-color-dark: rgba(0, 0, 0, 0.15);
+$cx-border: $cx-border-thick solid $cx-border-color;
+
+$cx-default-background-color: white;
+$cx-default-animation-time: 250ms;
+
+$cx-input-vertical-padding: cx-calc-rem(6px);
+$cx-input-horizontal-padding: cx-calc-rem(13px);
+$cx-input-vertical-padding-sm: cx-calc-rem(3px);
+$cx-input-horizontal-padding-sm: cx-calc-rem(10px);
+$cx-input-border-color: #ccc;
+
+$cx-default-line-height: 150%;
+$cx-small-line-height: 120%;
+
+$cx-checkbox-container-size: 1.5em;
+$cx-checkbox-container-margin-right: $cx-space-xs;
+
+$cx-dropdown-bg-dark: #6c788a;
+$cx-dropdown-bg-darker: #565e6e;
+$cx-dropdown-bg-light: rgb(255, 255, 255);
+
+$cx-menu-dropdown-bg-light: $cx-dropdown-bg-light;
+$cx-menu-dropdown-bg-dark: $cx-dropdown-bg-dark;
+$cx-menu-dropdown-bg-darker: $cx-dropdown-bg-darker;
+
+$cx-select-dropdown-bg-dark: $cx-dropdown-bg-dark;
+$cx-select-dropdown-bg-darker: $cx-dropdown-bg-darker;
+$cx-select-dropdown-bg-light: $cx-dropdown-bg-light;
+
+$cx-alert-vertical-padding: $cx-space-xs;
+$cx-alert-horizontal-padding: $cx-space-sm;
+$cx-alert-font-size: $cx-font-size-xs;
+
+$cx-default-box-shadow-left: -2px 6px 10px 0px rgba(0, 0, 0, 0.3);
+
+$cx-header-bg-color: rgb(56, 61, 73);
+$cx-header-arrow-down-color: #687283;
+
+// ***************Bootstrap Override******************* //
+$cx-blue: #2f7fd9 !default;
+$cx-blue-hover: #005fa9 !default;
+$cx-light-blue: #3db5fd !default;
+$cx-cinnabar: #e55231 !default;
+$cx-primary-background-color: #1aadce;
+$cx-primary-color: #fff;
+$cx-secondary-background-color: #808080; // TODO change if necessary
+$cx-secondary-color: #fff;
+$cx-disabled-color: #808080;
+$cx-white: #fff !default;
+$cx-default-color: #5a6981;
+
+$screen-mobile-max: 767px;
+$screen-ipad-min: 768px;
+$screen-ipad-max: 1024px;
+
+// *************** Define main site for PDPM & SAM ******************* //
+$main-font-size: cx-calc-rem(14px);
+$main-bg-color: #f9f9f9;
+$main-bg-container: #fff;
+$main-color: #5b6a83;
+$main-color-lighter: #49648e;
+$main-color-dark: #1f2c42;
+$main-color-white: #89aae0;
+$main-text-color: #303450;
+$main-text-color-light: #9799ba;
+$main-text-subtitle-color: #a1a8b6;
+$disabled-text-color: #909090;
+
+$button-bg: #313552;
+$button-bg-hover: #2d3469;
+$button-bg-pressed: #0e409f;
+
+$box-shadow: #ccc;
+
+// Cx color variables
+$cx-color-main: #313552;
+$cx-color-main-dark: #303450;
+$cx-color-main-light: #404465;
+$cx-color-danger: #ff6262;
+
+$cx-color-main-active: #4c74c0;
+
+$cx-color-text-light: #fff;
+$cx-color-text-main: #303450;
+$cx-color-hover-background: $cx-color-main-dark;
+$cx-color-highlight: #1dcec1;
+
+// Status color
+$completed-color: #1dcec1;
+$progressbar-color: #c4f1ee;
+$fail-color: #ff6262;
+$notification-fail-color: #ffb8b8;
+$stroke-notification-fail-color: #ffb4b4;
+$pendding-color: #efdc33;
+$warningcolor: #efdc33;
+
+$cx-font-weight-medium: 500;
+$cx-font: 'Roboto', sans-serif;

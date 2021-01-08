@@ -1,0 +1,55 @@
+cx-tag-group-doc {
+  .cx-tag-group-doc {
+    &__list {
+      list-style: none;
+      clear: both;
+      margin-bottom: 0;
+    }
+    &__tag {
+      display: inline-block;
+      margin: 0 5px;
+      background-color: #7389ad;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      color: #ffffff;
+
+      .icon {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      &:hover {
+        background: #7e90ac !important;
+      }
+    }
+
+    &__item {
+      height: 35px;
+      display: inline-block;
+      background: #cfdbe5;
+      margin: 5px;
+      border-radius: 5px;
+
+      &--text {
+        height: 30px;
+        float: left;
+        padding: 4px 0 4px 10px;
+      }
+
+      &--icon {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        margin-top: 4px;
+      }
+
+      &--icon::before {
+        font-size: 25px;
+      }
+      &--icon:hover {
+        color: white;
+      }
+    }
+  }
+}

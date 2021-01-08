@@ -1,0 +1,30 @@
+{
+  "name": "@conexus/cx-angular-common",
+  "version": "3.3.2",
+  "dependencies": {
+    "jsrsasign": "9.1.6",
+    "sweetalert2": "9.1.5"
+  },
+  "peerDependencies": {
+    "@angular/common": "~9.1.12",
+    "@angular/core": "~9.1.12",
+    "@angular/flex-layout": "^9.0.0-beta.31",
+    "moment": "~2.24.0",
+    "@angular/cdk": "~9.2.4",
+    "@angular/material": "~9.2.4",
+    "@angular/animations": "~9.1.12",
+    "md5-typescript": "~1.0.5",
+    "@ng-bootstrap/ng-bootstrap": "~6.2.0",
+    "bootstrap": "~4.3.1",
+    "angular2-moment": "~1.9.0",
+    "font-awesome": "~4.7.0",
+    "animate.css": "^3.7.0",
+    "survey-angular": "1.8.12",
+    "surveyjs-widgets": "1.8.12",
+    "select2": "~4.0.6-rc.1",
+    "inputmask": "4.0.9",
+    "jquery-ui": "~1.12.1",
+    "jquery": "~1.12.4"
+  },
+  "sideEffects": true
+}

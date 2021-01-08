@@ -1,0 +1,274 @@
+@import './elements/cx-button.scss';
+@import './elements/ag-grid.scss';
+@import './elements/cx-dropdown-menu.scss';
+@import './modal-dialog.scss';
+@import './mat-tab.scss';
+@import './variables.scss';
+
+
+html, body {
+  font-family: $cx-font;
+  font-size: 16px;
+  color: $cx-color-text-main;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 36px;
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 122.7%;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 30px;
+  margin-bottom: 0;
+}
+
+input[type=checkbox]:not(.sv-item__control, .ag-checkbox-input) {
+  display: none;
+}
+input[type=radio]:not(.sv-item__control) {
+  display: none;
+}
+input:focus {
+  color: $cx-color-text-main;
+  background-color: #fff;
+  border-color: #8799BA;
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn {
+    &.btn-xs {
+        @include cx-button-size($cx-font-size-xs);
+    }
+    &.btn-sm {
+        @include cx-button-size($cx-font-size-sm);
+    }
+    &.btn-md {
+        @include cx-button-size($cx-font-size-md);
+    }
+    &.btn-lg {
+        @include cx-button-size($cx-font-size-lg);
+    }
+}
+
+.cx-popover {
+    position: absolute;
+    bottom: calc(100% + #{$cx-space-xs});
+    display: inline-block;
+    left: 0;
+    &__container {
+        padding: $cx-space-xs $cx-space-sm;
+        display: flex;
+        position: relative;
+        color: white;
+        background-color: $cx-blue;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 100%;
+        font-size: $cx-font-size-xs;
+    }
+    &__arrow {
+        position: absolute;
+        top: 100%;
+        border-left: $cx-space-xs solid transparent;
+        border-right: $cx-space-xs solid transparent;
+        border-top: $cx-space-xs solid $cx-blue;
+        width: 0;
+        height: 0;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    &.-inner {
+        position: relative;
+        margin-bottom: $cx-space-xs;
+    }
+}
+
+@each $spacing-type in $cx-space-type-list {
+    .cx-flex-space-seperator-#{$spacing-type} {
+        @include cx-flex-space-seperator(cx-get-spacing-value($spacing-type));
+    }
+}
+
+.cx-flex-border {
+    @extend %cx-flex-border;
+}
+
+.form-group {
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    >.form-group {
+        padding-bottom: 0.5rem;
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+    &.-inline {
+        display: flex;
+        align-items: center;
+        .form-label {
+            margin-bottom: 0;
+            margin-right: $cx-space-xs;
+        }
+        .form-control {
+            width: auto;
+            display: inline-block;
+        }
+    }
+    &.-table {
+        display: table;
+        >.form-group {
+            display: table-row;
+            padding: 0;
+            >* {
+                display: table-cell;
+                padding-bottom: 1rem;
+            }
+            >.form-label {
+                padding-right: $cx-space-sm;
+                white-space: nowrap;
+            }
+        }
+        >.form-group-caption {
+            display: table-caption;
+        }
+        &.-compact {
+            >.form-group {
+                >* {
+                    padding-bottom: 0.5rem;
+                }
+            }
+        }
+    }
+    &.-compact {
+        padding-bottom: 0.5rem;
+    }
+}
+
+.form-label {
+    line-height: $cx-default-line-height;
+    display: inline-block;
+}
+
+.form-control {
+    &.-not-input {
+        border: none;
+        padding: 0;
+    }
+}
+
+.form-group-caption {
+    display: block;
+    padding-bottom: 0.5rem;
+}
+
+.form-control-error {
+    font-size: 0.8em;
+    color: red;
+    &.-bottom {
+        margin-top: 0.4em;
+    }
+    &.-top {
+        margin-bottom: 0.4em;
+    }
+    &.-right {
+        margin-left: 0.4em;
+    }
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.required-star {
+    &::after {
+        content: '*';
+        display: inline-block;
+        color: red;
+    }
+}
+
+.cx-input {
+    @extend %cx-input;
+}
+
+.cx-link {
+    @extend %cx-link;
+}
+
+.cx-hide {
+	display: none;
+}
+
+.cx-show {
+	display: block;
+}
+
+.mat-tab-body-content {
+    height: auto;
+}
+
+.ag-theme-material .ag-header-cell-label .ag-sort-ascending-icon, .ag-sort-descending-icon {
+  margin-bottom: 2.5px;
+}
+
+// Fix back drop cx-survey-input modal
+.cx-survey-input-modal {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+select {
+  background: #ffffff url(https://i.imgur.com/S242F5Z.png) no-repeat 96% 50%/10px 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.cx-toolbar {
+  margin: 0;
+  padding: 0 15px;
+  background: #fff;
+  height: 70px;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  transition: margin 0.2s, width 0.2s;
+  box-shadow: 0px 15px 38px rgba(0, 0, 0, 0.03);
+
+  &--floating {
+    position: fixed;
+    left: 0;
+    z-index: 4;
+    top: 0px;
+    border: 1px solid #e2e2e2;
+    padding: 8px 10px;
+    background: #fff;
+    width: calc(100% - 96px);
+    margin: 0 48px;
+    box-shadow: none;
+    border-bottom: none;
+    border-radius: 5px 5px 0px 0px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cx-toolbar--floating {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+  }
+}

@@ -1,0 +1,32 @@
+@import 'constants.scss';
+
+@mixin svg($background-color, $checkmark-color: white) {
+  border: none;
+  background-color: $background-color;
+  fill: $checkmark-color;
+}
+
+.sv-checkbox {
+  color: $cx-color-main;
+}
+.sv-checkbox__decorator {
+  border-radius: 3px;
+  outline: none;
+}
+.sv-checkbox__svg {
+  border: 3px solid $cx-color-main;
+  border-radius: 3px;
+  fill: transparent;
+}
+.sv-checkbox--checked .sv-checkbox__svg {
+  @include svg($cx-color-main);
+  path {
+    d: path('M18.9433 6.42747C19.4436 6.9678 19.4112 7.81139 18.8709 8.31169L8.87018 17.5715L4.42747 13.4579C3.88714 12.9576 3.85469 12.114 4.35498 11.5737C4.85528 11.0334 5.69888 11.0009 6.23921 11.5012L8.87018 13.9373L17.0591 6.35499C17.5994 5.85469 18.443 5.88714 18.9433 6.42747Z') !important;
+  }
+}
+.sv-checkbox--checked.sv-checkbox--disabled .sv-checkbox__svg {
+  @include svg(#C0C0C0);
+}
+.sv-checkbox--disabled .sv-checkbox__svg {
+  border: 3px solid #F9F9F9;
+}

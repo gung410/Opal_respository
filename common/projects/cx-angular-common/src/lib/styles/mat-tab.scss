@@ -1,0 +1,9 @@
+mat-tab-group {
+  .mat-ink-bar {
+    background-color: $cx-color-highlight !important;
+  }
+  .mat-tab-label-active {
+    opacity: 1;
+    font-weight: 500;
+  }
+}

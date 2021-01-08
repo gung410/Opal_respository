@@ -1,0 +1,56 @@
+
+<div class="universal-toolbar" cxFloatingToolbar [class.is-disabled]="hasSingleDepartment">
+  <div class="department-selector-container" [class.department-selector-actived]="showDepartmentSelectorDropdown">
+      <div *ngIf="departmentModel.isDisplayOrganisationNavigation"
+        class="department-selector-container__navigation-tree">
+        <cx-tree-dropdown #cxTreeDropdown *ngIf="!hideDepartmentHierarchyFilter" [buttonCondition]="buttonCondition" [flatObjectsArray]="departmentModel.departments"
+          [currentDepartmentId]="departmentModel.currentDepartmentId"
+          [displaySearchResult]="displaySearchResult"
+          [extendFooterDepartmentTree]="extendFooterDepartmentTree"
+          [enableSearch]="departmentModel.enableSearch"
+          [havingExtensiveArea]="departmentModel.havingExtensiveArea"
+          [icon]="departmentModel.icon" [idFieldRoute]="departmentModel.idFieldRoute"
+          [isDetectExpandTree]="departmentModel.isDetectExpandTree" [isShowSearchResult]="departmentModel.isShowSearchResult"
+          [isViewMode]="departmentModel.isViewMode" [parentIdFieldRoute]="departmentModel.parentIdFieldRoute"
+          [selectedObjectIds]="departmentModel.selectedObjectIds" [text]="departmentModel.text" [treeHeader]="departmentModel.treeHeader"
+          [title]="departmentModel.treeHeader"
+          (expandChildOrganisation)="onExpandChildDepartment($event)"
+          (searchOnSearchBox)="onSearchDepartment($event)"
+          (selectItem)="onSelectDepartmentTree($event)">
+        </cx-tree-dropdown>
+        <ng-template #displaySearchResult>
+          <div *ngIf="departmentModel.searchDepartmentResult && departmentModel.searchDepartmentResult.length > 0" class="department-selector-container__count-result text-center">
+            {{ departmentModel.searchDepartmentResult.length }} results matched your search criteria.
+          </div>
+          <div class="department-selector-container__search-result">
+            <ul *ngFor="let department of departmentModel.searchDepartmentResult" class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="department-selector-container__search-result--name text-primary" (click)="onClickSearchResult(department)">
+                  {{ department.departmentName }}
+                </div>
+                <div class="department-selector-container__search-result--path text-primary">
+                  {{ departmentModel.departmentPathMap[department.identity.id] }}
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="departmentModel.isNoSearchResult" class="department-selector-container__search-result">
+            <span class="department-selector-container__search-result--no-result text-primary">
+              {{departmentModel.noResultFoundMessage}}
+            </span>
+          </div>
+        </ng-template>
+        <ng-template #extendFooterDepartmentTree>
+          <ng-content select="extend-footer-department-tree"></ng-content>
+        </ng-template>
+      </div>
+      <div *ngIf="departmentModel.isDisplayOrganisationNavigation"
+        class="department-selector-container__breadcrumb"
+        (click)="toggleDepartmentSelectorDropdown()">
+        {{currentDepartmentName}}
+      </div>
+  </div>
+  <div class="universal-toolbar__actions">
+    <ng-content select="universal-toolbar-actions"></ng-content>
+  </div>
+</div>

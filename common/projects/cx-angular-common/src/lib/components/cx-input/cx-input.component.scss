@@ -1,0 +1,42 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+cx-input {
+    .cx-input {
+        @include box-sizing(border-box);
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        padding-left: 0;
+        padding-top: $cx-space-xs;
+        padding-bottom: $cx-space-xs;
+        padding-right: $cx-space-sm;
+        font-size: cx-calc-rem(20px);
+        border-radius: .25rem;
+        background-color: white;
+        height: auto;
+        color: black;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &__icon {
+            cursor: pointer;
+            padding-right: $cx-space-sm;
+            padding-left: $cx-space-sm;
+            i {
+                vertical-align: middle;
+            }
+        }
+        &__input {
+            flex: 1;
+            input {
+                border: none;
+                width: 100%;
+            }
+        }
+        &__clear-button {
+        }
+        &__clear-button-icon::before {
+            cursor: pointer;
+            content: 'X';
+        }
+    }
+}

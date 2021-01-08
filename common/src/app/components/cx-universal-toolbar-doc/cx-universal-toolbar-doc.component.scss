@@ -1,0 +1,18 @@
+::ng-deep cx-checkbox.checkbox-sub-organisation {
+  .cx-checkbox {
+    margin: 12px 0;
+    color: #303450;
+    &__container {
+      margin-right: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .material-icons {
+      transform: translateX(-2px);
+      &::before {
+        font-size: 26px;
+      }
+    }
+  }
+}

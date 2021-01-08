@@ -1,0 +1,30 @@
+<nav class="cx-breadcrumb" *ngIf="breadCrumbItems">
+  <ng-container *ngIf="simpleStyle">
+    <div class="cx-breadcrumb__list">
+      <div *ngFor="let breadCrumbItem of breadCrumbItems; let isFirstBreadcrumbItem = first; let isLastBreadCrumbItem = last; let i = index"
+          class="breadcrumb-item-simple">
+        <a *ngIf="isExpandedBreadcrumb || isFirstBreadcrumbItem || isLastBreadCrumbItem"
+          class="breadcrumb-item-simple__text" title="{{breadCrumbItem.name}}" (click)="onClickedBreadCrumbItem(breadCrumbItem, i)">
+          {{ getPropertyValueWithTruncatedLabel(breadCrumbItem.name, isFirstBreadcrumbItem, isLastBreadCrumbItem) }}
+        </a>
+        <a *ngIf="!isExpandedBreadcrumb && isFirstBreadcrumbItem"
+          class="breadcrumb-item-simple__text" (click)="onClickExpandBreadcrumb()">
+          {{ expandIconClick }}
+          <i class="icon-arrow-right-bold separator breadcrumb-item-simple__icon"></i>
+        </a>
+        <i *ngIf="!isLastBreadCrumbItem && isExpandedBreadcrumb"
+          class="icon-arrow-right-bold separator breadcrumb-item-simple__icon"></i>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!simpleStyle">
+    <ol class="cx-breadcrumb__list">
+      <li *ngFor="let breadCrumbItem of breadCrumbItems; let isFirstBreadcrumbItem = first; let isLastBreadCrumbItem = last; let i = index"
+        class="cx-breadcrumb__list__item">
+        <a class="cx-breadcrumb__list__item__text" title="{{breadCrumbItem.name}}" (click)="onClickedBreadCrumbItem(breadCrumbItem, i)">
+          {{getPropertyValueWithTruncatedLabel(breadCrumbItem.name, isFirstBreadcrumbItem, isLastBreadCrumbItem) }}
+        </a>
+      </li>
+    </ol>
+  </ng-container>
+</nav>

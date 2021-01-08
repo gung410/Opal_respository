@@ -1,0 +1,69 @@
+<div class="cx-tree-node" [@smoothAppendRemove]>
+  <div class="cx-tree-node__current-data" [style.padding-left.px]="currentPadding" [ngClass]="nodeStatusClass">
+    <div class="cx-tree-node__actions" *ngIf="!isViewMode">
+      <div class="cx-tree-node__btn" *ngIf="enableAddBtn" (click)="onAddNew()" [title]="text.addTooltip">
+        <i class="material-icons hover" [ngClass]="icon.add"></i>
+      </div>
+      <div class="cx-tree-node__btn" *ngIf="enableEditBtn && !isRoot" (click)="onEdit()" [title]="text.editTooltip">
+        <i class="material-icons hover" [ngClass]="icon.edit"></i>
+      </div>
+      <div class="cx-tree-node__btn" *ngIf="enableMoveBtn && !isRoot" (click)="onMoveItemFromCurrentFolder()" [title]="text.moveTooltip">
+        <i class="material-icons hover" [ngClass]="icon.move"></i>
+      </div>
+      <div class="cx-tree-node__btn" *ngIf="enableRemoveBtn && !isRoot" (click)="onDelete()" [title]="text.removeTooltip">
+        <i class="material-icons hover" [ngClass]="icon.remove"></i>
+      </div>
+    </div>
+    <input type="checkbox" id="checkbox-{{objectId}}" *ngIf="displayCheckboxes && !isRoot && !isViewMode" [(ngModel)]="checked"
+      (ngModelChange)="toggleCheckbox()">
+    <label class="cx-tree-node__checkbox" *ngIf="displayCheckboxes && !isRoot && !isViewMode" for="checkbox-{{objectId}}">
+      <i class="material-icons" [ngClass]="checked ? 'check-box-icon' : 'box-icon'"></i>
+    </label>
+    <div class="cx-tree-node__btn cx-tree-node__expand-btn" (click)="onToggleShowingChildrenClicked()">
+      <i *ngIf="showCollapseExpandButton && childrenObjects.length > 0"
+        class="material-icons" [ngClass]="showChildren ? icon.collapse : icon.expand"></i>
+    </div>
+    <div class="material-icons cx-tree-node__avatar-icon">
+      <i class="material-icons" [ngClass]="avatar"></i>
+    </div>
+    <div *ngIf="!isEditingItem" class="cx-tree-node__display-area" [ngClass]="{'cx-tree-node__display-area--dialog-mode' : isViewMode}"
+      (click)="isViewMode && onSelectItemFromCurrentItem()">
+      <ng-template [ngTemplateOutlet]="displayTemplate" [ngTemplateOutletContext]="{object:object}">
+      </ng-template>
+    </div>
+  </div>
+  <div class="cx-tree-node__edit-area" *ngIf="!isViewMode && isEditingItem">
+    <input #editInput type="text" class="form-control cx-tree-node__input" [(ngModel)]="name" (keyup.enter)="onSave()">
+    <div class="cx-tree-node__btn cx-tree-node__save-btn" (click)="onSave()" [title]="text.saveTooltip">
+      <i class="material-icons hover" [ngClass]="icon.save"></i>
+    </div>
+    <div class="cx-tree-node__btn" (click)="onClose()" [title]="text.closeTooltip">
+      <i class="material-icons" [ngClass]="icon.close"></i>
+    </div>
+  </div>
+</div>
+<div class="cx-tree-node__children" [hidden]="!showChildren">
+  <div class="cx-tree-node__add-child-area" [style.padding-left.px]="childPadding" *ngIf="!isViewMode && isAddingNewItem">
+    <div class="material-icons cx-tree-node__avatar-icon">
+      <i class="material-icons" [ngClass]="icon.emptyNode"></i>
+    </div>
+    <input #addInput type="text" class="form-control cx-tree-node__input cx-tree-node__input" [(ngModel)]="name"
+      (keyup.enter)="onSaveNewItem()">
+    <div class="cx-tree-node__btn cx-tree-node__save-btn" (click)="onSaveNewItem()" [title]="text.saveTooltip">
+      <i class="material-icons hover" [ngClass]="icon.save"></i>
+    </div>
+    <div class="cx-tree-node__btn" (click)="onClose()" [title]="text.closeTooltip">
+      <i class="material-icons" [ngClass]="icon.close"></i>
+    </div>
+  </div>
+  <ng-container *ngFor="let obj of childrenObjects; let idx = index">
+    <cx-tree-node *ngIf="obj !== undefined" [(object)]="childrenObjects[idx]" [remainingObjectsArray]="remainingObjectArrayToPushDownChildren"
+      [displayFieldRoute]="displayFieldRoute" [idFieldRoute]="idFieldRoute" [parentIdFieldRoute]="parentIdFieldRoute"
+      [displayTemplate]="displayTemplate" [icon]="icon" [text]="text" [dynamicIcon]="dynamicIcon" [currentRoutes]="currentRoutes"
+      [buttonCondition]="buttonCondition" [route]="routeDepartments" [selectedObjectIds]="selectedObjectIds"
+      [destinationItems]="destinationItems" [isViewMode]="isViewMode" [level]="level + 1" [defaultExpandLevel]="defaultExpandLevel"
+      (move)="onMoveItemFromChildrenFolder($event)" (deleteItem)="onDeleteItem($event)" (addItem)="onAddItem($event)"
+      (editItem)="onEditItem($event)" (selectItem)="onSelectItem($event)" (clickItem)="onSelectItemFromChildrenItem($event)">
+    </cx-tree-node>
+  </ng-container>
+</div>

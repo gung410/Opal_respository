@@ -1,0 +1,11 @@
+<div class="cx-input">
+  <div class="cx-input__icon" (click)="onInputIconClicked()">
+    <i [ngClass]="iconClass"></i>
+  </div>
+  <div class="cx-input__input">
+    <input #input (keyup.enter)="onEnterKeyUp()" type="text" [(ngModel)]="value">
+  </div>
+  <div class="cx-input__clear-button" (click)="onClearClicked()">
+    <i class="cx-input__clear-button-icon" [ngClass]="clearButtonIconClass"></i>
+  </div>
+</div>

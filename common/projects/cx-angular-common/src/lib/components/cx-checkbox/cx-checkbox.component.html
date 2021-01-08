@@ -1,0 +1,11 @@
+<label class="cx-checkbox" [ngClass]="{'-disabled': disabled}">
+  <div class="cx-checkbox__container">
+    <input class="cx-checkbox__checkbox" type="checkbox"
+        [value]="assignedValue"
+        [(ngModel)]="selected"/>
+    <i class="material-icons"></i>
+  </div>
+  <div class="cx-checkbox__label">
+    <ng-content></ng-content>
+  </div>
+</label>

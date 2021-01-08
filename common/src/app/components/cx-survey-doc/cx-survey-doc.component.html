@@ -1,0 +1,41 @@
+<cx-docs-view>
+  <div contentFirst>
+    <div class="buttons">
+      <button class="cx-btn" (click)="render()">Render Survey</button>
+      <button class="cx-btn" (click)="open()">Open Dialog</button>
+    </div>
+    <div class="row content">
+      <div class="col-6">
+        <h3>JSON</h3>
+        <textarea [(ngModel)]="surveyJson"></textarea>
+      </div>
+      <div class="col-6">
+        <h3>DATA</h3>
+        <textarea [(ngModel)]="surveyData"></textarea>
+      </div>
+    </div>
+    <ng-container *ngIf="surveyDocViewModel && surveyDocViewModel.json">
+      <cx-surveyjs
+        [json]="surveyDocViewModel.json"
+        [data]="surveyDocViewModel.data"
+        [validationFunctions]="surveyDocViewModel.validationFunctions"
+        [submitName]="surveyDocViewModel.submitName"
+        [cancelName]="surveyDocViewModel.cancelName"
+        [variables]="surveyDocViewModel.variables"
+        [hideSubmitBtn]="surveyDocViewModel.hideSubmitBtn"
+        (submit)="onSubmit($event)"
+        (cancel)="onCancel()"
+        (changePage)="onChangePage($event)"
+        (changeValue)="onChangeValue($event)"
+        (submitting)="onSubmitting($event)"
+        (valueChanged)="onChangedValue($event)"
+        (afterSurveyRender)="onAfterSurveyRender($event)"
+      >
+      </cx-surveyjs>
+    </ng-container>
+  </div>
+  <div contentSecond>
+    <button class="cx-btn" (click)="showConfirmDialog()">Open Confirm Dialog</button>
+  </div>
+  <div contentThird></div>
+</cx-docs-view>

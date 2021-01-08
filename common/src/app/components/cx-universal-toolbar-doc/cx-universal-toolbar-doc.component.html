@@ -1,0 +1,25 @@
+<cx-docs-view>
+  <div contentFirst style="width: 100vw; height: 100vh;">
+    <cx-universal-toolbar
+      [breadCrumbNavigation]="breadCrumbNavigation"
+      [departmentModel]="departmentModel"
+    >
+      <extend-footer-department-tree>
+        <cx-checkbox
+          [selected]="true"
+          class="checkbox-sub-organisation"
+        >
+          Include sub departments
+        </cx-checkbox>
+        <div class="cx-tree-dropdown-divider"></div>
+      </extend-footer-department-tree>
+    </cx-universal-toolbar>
+    <cx-action-toolbar
+      [actions]="userActions"
+      [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+      (menuActionClick)="onClickButtonGroupAction($event)"
+      class="user-action__section mt-4 d-block"
+    >
+    </cx-action-toolbar>
+  </div>
+</cx-docs-view>

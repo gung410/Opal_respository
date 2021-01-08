@@ -1,0 +1,23 @@
+@function cx-get-spacing-value($spacing-type) {
+    @if($spacing-type=="xs") {
+        @return $cx-space-xs;
+    }
+    @else if($spacing-type=="sm") {
+        @return $cx-space-sm;
+    }
+    @else if($spacing-type=="md") {
+        @return $cx-space-md;
+    }
+    @else if($spacing-type=="lg") {
+        @return $cx-space-lg;
+    }
+    @else if($spacing-type=="xl") {
+        @return $cx-space-xl;
+    }
+    @else if($spacing-type=="xxl") {
+        @return $cx-space-xxl;
+    }
+    @else {
+        @return 0px;
+    }
+}

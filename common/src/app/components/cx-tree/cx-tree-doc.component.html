@@ -1,0 +1,26 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+
+    <cx-tree [flatObjectsArray]="flatDepartmentsArray" [idFieldRoute]="'identity.id'" [parentIdFieldRoute]="'parentDepartmentId'"
+      [displayFieldRoute]="'departmentInfo.name'" (deleteItem)="onDeleteDepartment($event)" (addItem)="onAddDepartment($event)"
+      (editItem)="onEditDepartment($event)" [displayTemplate]="displayTemplate" [icon]="iconsData" [text]="textData"
+      [buttonCondition]="buttonConditions" [dynamicIcon]="dynamicIcon">
+      <ng-template #displayTemplate let-object="object">
+        <div class="display-value">{{ object.departmentInfo.name }}</div>
+      </ng-template>
+    </cx-tree>
+
+  </div>
+
+  <div contentSecond>
+    <ng-container *ngFor="let item of checkboxes">
+      <cx-checkbox #checkbox [assignedValue]="item"></cx-checkbox>
+    </ng-container>
+    <cx-master-checkbox [checkboxes]="checkboxList"></cx-master-checkbox>
+
+  </div>
+  <div contentThird>
+    <p>content 2</p>
+  </div>
+</cx-docs-view>

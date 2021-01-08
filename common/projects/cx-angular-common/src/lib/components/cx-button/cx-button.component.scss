@@ -1,0 +1,46 @@
+@import '../../styles/variables.scss';
+@import '../../styles/placeholders.scss';
+@import '../../styles/mixins.scss';
+
+cx-button {
+  @extend %cx-inherit-child-container;
+  display: inline-block;
+  max-width: 100%;
+  cursor: pointer;
+
+  .cx-button {
+    @extend %cx-fill;
+    display: flex;
+    flex-wrap: nowrap;
+
+    &__main {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: $cx-icon-size-sm-px;
+        margin-right: 5px;
+      }
+    }
+
+    .btn-primary {
+      background-color: $cx-default-color;
+      border-color: $cx-default-color;
+
+      &:hover {
+        background-color: $cx-blue-hover;
+        border-color: $cx-blue-hover;
+      }
+    }
+
+    .btn-outline-primary {
+      border-color: $cx-blue;
+      color: $cx-blue;
+
+      &:hover {
+        color: white;
+        background-color: $cx-blue;
+      }
+    }
+  }
+}

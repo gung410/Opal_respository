@@ -1,0 +1,88 @@
+@import "../../../lib/styles/mixins.scss";
+
+:host {
+  display: block;
+}
+
+.navbar-container {
+  background-color: #fff;
+  white-space: nowrap;
+  position: relative;
+  @include cx-shadow(0px 5px 6px -4px rgba(0, 0, 0, 0.14));
+  -webkit-box-shadow: 0px 5px 4px -2px rgba(0, 0, 0, 0.14);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .btn-scroll {
+    position: absolute;
+    height: 100%;
+    background: #fff;
+    top: 0;
+    outline: none;
+    border: none;
+    opacity: 0;
+    transition: 0.2s opacity;
+    &.scroll-left {
+      left: 0;
+      @include cx-shadow(4px 0px 5px -3px #0000007d);
+      i {
+        display: block;
+        transform: rotate(90deg);
+      }
+
+    }
+    &.scroll-right {
+      right: 0;
+      @include cx-shadow(-4px 0px 5px -3px #0000007d);
+      border-collapse: separate;
+      i {
+        display: block;
+        transform: rotate(-90deg);
+      }
+    }
+  }
+  .navbar-item-list {
+    overflow-x: auto;
+    padding: 0 32px;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    cx-navbar-item {
+      margin-right: 10px;
+    }
+  }
+
+  &.scrollable {
+    .btn-scroll {
+      opacity: 1;
+      &.cx-disabled {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__initial-state{
+    display: block;
+  }
+  &__hide{
+      display: none;
+  }
+  &__scroll{
+    box-shadow: none;
+    position: absolute;
+    width: 50%;
+    height: 90px;
+    background-color: #fff;
+    left: 0;
+    padding: 15px 0px;
+    // box-shadow: -6px -11px 6px 12px #cbcbcb; TODO: show shadow header when collapse
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+  }
+}

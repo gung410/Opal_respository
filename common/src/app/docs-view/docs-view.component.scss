@@ -1,0 +1,30 @@
+.cx-docs-view {
+    padding: 20px 50px 50px 20px;
+}
+
+.cx-docs-view-section-tab {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.docs-component-view-text-content {
+	flex-grow: 1;
+    width: 90%;
+    min-height: 500px;
+    margin: 10px;
+    padding: 30px;
+}
+
+.docs-component-api,
+.docs-component-overview {
+	width: 90%;
+	display: inline-flex;
+}
+
+.docs-toc-container {
+	width: 20%;
+    float: right;
+    margin: 10px 20px 10px 5px;
+    padding: 5px 0 10px 10px;
+    border-left: 4px solid #3f51b5;
+}

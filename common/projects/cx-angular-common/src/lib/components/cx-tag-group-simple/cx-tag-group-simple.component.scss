@@ -1,0 +1,63 @@
+@import "../../styles/variables.scss";
+cx-tag-group-simple {
+  .cx-tag-group-simple {
+    list-style: none;
+    clear: both;
+    margin-bottom: 0;
+    &__tag-close {
+      color: white;
+    }
+
+    &__group {
+      display: table;
+      margin: 5px;
+      border: 1px solid #f1f1f1;
+      border-radius: 5px;
+      margin: 10px 10px 5px 10px;
+      float: left;
+    }
+
+    &__name {
+      display: flex;
+      text-overflow: clip;
+      padding-inline-start: 10px;
+      margin-top: -15px;
+      margin-right: 12px;
+    }
+
+    &__group-close {
+      float: right;
+      margin: -9px -10px 0 0;
+      border: 1px solid #e8e3e3;
+      background-color: #e8e3e3;
+      border-radius: 50%;
+      height: 20px;
+      width: 20px;
+      position: relative;
+      &::before {
+        font-size: 20px !important;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+      }
+      &:hover {
+        color: white !important;
+        cursor: pointer;
+      }
+    }
+
+    &__clear-all {
+      float: left;
+      margin: 25px 10px 20px 10px;
+      &--text {
+        color: red;
+        font-weight: bold;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

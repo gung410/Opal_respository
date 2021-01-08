@@ -1,0 +1,6 @@
+<div class="cx-button" [ngClass]="{'-disabled' : !enabled}">
+    <button #mainBtn class="cx-button__main" cxButton [btnSize]="size" [btnType]="type" [btnEnabled]="enabled" [attr.tabindex]="tabIndex" (click)="onBtnClicked($event)">
+        <i *ngIf="iconClass" class="{{iconClass}}"></i>
+        <ng-content></ng-content>
+    </button>
+</div>

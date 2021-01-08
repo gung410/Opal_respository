@@ -1,0 +1,25 @@
+
+<!-- parent menu -->
+<div
+    class="menu-item-box"
+    [attr.aria-expanded]="!menuItem.isCollapsed"
+    *ngIf="menuItem.isDisplay"
+    (click)="collapse()"
+>
+
+  <span [ngStyle]="{'margin-left': indentation }" class="content">
+    {{menuItem.content}}
+  </span>
+  <div class="toggle-arrow-box">
+    <i *ngIf="haveChildren" class="fa fa-caret-down"></i>
+  </div>
+</div>
+
+<!-- list sub menu -->
+<div
+
+    class="list-sub-menu"
+    *ngIf="menuItem.children"
+>
+    <cx-dropdown-menu  [listMenu]='menuItem.children' [isCollapsed]="menuItem.isCollapsed"></cx-dropdown-menu>
+</div>

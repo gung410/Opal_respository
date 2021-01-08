@@ -1,0 +1,17 @@
+.cx-slidebar-doc{
+  padding: 50px 10px;
+}
+
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  &__group-actions {
+    .action-item:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+}

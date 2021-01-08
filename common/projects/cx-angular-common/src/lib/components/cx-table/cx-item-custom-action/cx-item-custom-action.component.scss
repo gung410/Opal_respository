@@ -1,0 +1,33 @@
+@import './../../../styles/variables.scss';
+@import './../../../styles//mixins.scss';
+
+cx-item-custom-action {
+    .cx-item-custom-action {
+
+    }
+    .cx-table-containers {
+        &__action {
+            position: relative;
+        }
+        &__action:hover {
+            .cx-table-containers__sub-action {
+                display: block;
+            }
+
+            .cx-table-containers__sub-action:empty {
+                display: none;
+            }
+        }
+        &__sub-action {
+            position: absolute;
+            display: none;
+            right: calc(#{$cx-space-sm} + 100%);
+            top: 0;
+            @include rounded-corners(10px);
+            border: none;
+            @include cx-shadow();
+            background-color: $cx-dropdown-bg-light;
+            padding: $cx-space-sm;
+        }
+    }
+}

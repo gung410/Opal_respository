@@ -1,0 +1,57 @@
+<cx-dialog-template
+  [showFooterActionButtons]="fixedButtonsFooter"
+  [showCustomFooter]="fixedButtonsFooter"
+  [showModalHeader]="showModalHeader"
+  [isShowingMandatoryText]="isShowingMandatoryText"
+  [fixedHeight]="fixedHeight"
+  (cancel)="onClickCancel()">
+  <modal-header>
+    <h3>{{modalHeaderText}}</h3>
+  </modal-header>
+  <content>
+    <cx-surveyjs
+        #cxSurveyComponent
+        [json]="json"
+        [data]="data"
+        [validationFunctions]="validationFunctions"
+        [variables]="variables"
+        [hideSubmitBtn]="hideSubmitBtn"
+        [hideFooter]="fixedButtonsFooter"
+        (submit)="onSubmit($event)"
+        (submitting)="onSubmitting($event)"
+        (cancel)="onCancel()"
+        (changePage)="onChangePage($event)"
+        (changeValue)="onChangeValue($event)"
+        (valueChanged)="onChangedValue($event)"
+        (afterSurveyRender)="onAfterSurveyRender($event)"></cx-surveyjs>
+  </content>
+  <modal-footer *ngIf="fixedButtonsFooter">
+    <div class="cx-button-group">
+      <input #cancelButton
+        *ngIf="cancelName"
+        class="cx-btn cx-btn-secondary"
+        type="button" value="{{cancelName}}"
+        (click)="onClickCancel()"/>
+      <input #prevButton
+        *ngIf="multiplePage"
+        [hidden]="isFirstPage"
+        class="cx-btn cx-btn-secondary"
+        type="button"
+        value="{{previousName}}"
+        (click)="onClickPrevPage()"/>
+      <input #nextButton
+        *ngIf="multiplePage"
+        [hidden]="isLastPage"
+        class="cx-btn"
+        type="button"
+        value="{{nextName}}"
+        (click)="onClickNextPage()"/>
+      <input #submitButton
+        [hidden]="!isLastPage && multiplePage"
+        class="cx-btn"
+        type="button"
+        value="{{submitName}}"
+        (click)="onClickSubmit()"/>
+    </div>
+  </modal-footer>
+</cx-dialog-template>

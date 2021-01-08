@@ -1,0 +1,28 @@
+<cx-dialog-template
+  [showCustomFooter]="true"
+  [showCloseButton]="showCloseButton"
+  (cancel)="onClickCancel()"
+  (done)="onClickSubmit()">
+  <modal-header>
+    <h3>{{header}}</h3>
+  </modal-header>
+  <content>
+    <div class="confimation-text">
+      {{content}}
+    </div>
+  </content>
+  <modal-footer>
+    <div class="cx-button-group">
+      <input *ngIf="showCancelButton"
+        class="cx-btn cx-btn-secondary"
+        type="button" value="{{cancelButtonText}}"
+        (click)="onClickCancel()"/>
+      <input *ngIf="showConfirmButton"
+        class="cx-btn"
+        [class.cx-btn-danger]="isDanger"
+        type="button"
+        value="{{confirmButtonText}}"
+        (click)="onClickSubmit()"/>
+    </div>
+  </modal-footer>
+</cx-dialog-template>

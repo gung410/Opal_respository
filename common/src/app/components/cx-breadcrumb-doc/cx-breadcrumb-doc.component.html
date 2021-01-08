@@ -1,0 +1,15 @@
+<cx-docs-view>
+  <div contentFirst>
+    <cx-breadcrumb [breadCrumbItems]="currentDepartmentCrumb" [labelledPropertyName]="'departmentName'"
+      (clickItem)="onCxBreadCrumbClick($event)" [separatorSymbol]="separatorSymbol"></cx-breadcrumb>
+    <cx-breadcrumb-simple [breadCrumbItems]="listBreadCrumbItemSimple" [simpleStyle]="false" style="margin-top: 10px"></cx-breadcrumb-simple>
+    <cx-breadcrumb-simple [breadCrumbItems]="listBreadCrumbItemSimple" [simpleStyle]="true" style="margin-top: 10px"></cx-breadcrumb-simple>
+    
+  </div>
+  <div contentSecond>
+
+  </div>
+  <div contentThird>
+
+  </div>
+</cx-docs-view>

@@ -1,0 +1,155 @@
+@import '../../../../styles/variables.scss';
+cx-narrow-tree-node {
+  .cx-narrow-tree-node {
+    &__display-area {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.142em;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+      &--navigated {
+        font-weight: bold;
+      }
+      
+      &--dialog-mode {
+        cursor: pointer;
+      }
+    }
+    &__add-button-template {
+      min-height: 20px;
+    }
+    &__current-data {
+      position: relative;
+      width: 100%;
+      padding-top: 10px;
+      padding-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    &__checkbox {
+      position: absolute;
+      left: -50px;
+      cursor: pointer;
+    }
+
+    &__btn {
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      font-size: 0;
+
+      &--absolute {
+        position: absolute;
+        top: 50%;
+        transform: translate(-100%, -50%);
+      }
+    }
+
+    &__input {
+      display: inline-block;
+      vertical-align: middle;
+      width: 150px;
+    }
+
+    &__add-child-area {
+      padding: 10px 0;
+      display: flex;
+    }
+
+    &__edit-area {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &__actions {
+      width: 150px;
+      position: absolute;
+      right: 0;
+    }
+
+    &__avatar-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 10px;
+      
+      &--navigated::before {
+        font-weight: bold;
+      }
+    }
+
+    &__current-data i.box-icon {
+      opacity: 0;
+    }
+
+    &__current-data:hover i.box-icon,
+    &__checkbox:hover i.box-icon {
+      opacity: 1;
+    }
+
+    &__save-btn {
+      margin-left: 10px;
+    }
+
+    &__new-child {
+      display: flex;
+      align-items: center;
+    }
+
+    &__new-child-line-path {
+      position: absolute;
+      width: 30px;
+      height: 1px;
+      background-color: $cx-secondary-background-color;
+      top: calc(100% - 20px);
+    }
+    &__new-child-line-path-below-cover {
+      height: 3px;
+      margin-top: 1px;
+    }
+    &__children {
+      position: relative;
+    }
+
+    &__child-container {
+        position: relative;
+        &:last-child {
+          > .cx-narrow-tree-node__last-child-vertical-line-cover {
+            width: 1px;
+            position: absolute;
+            height: calc(100% - 31px);
+            top: 31px;
+          }
+        }
+        &--new-child {
+          display: flex;
+          align-items: center;
+        }
+    }
+
+    &__children-vertical-line {
+      position: absolute;
+      width: 1px;
+      background-color: $cx-secondary-background-color;
+      height: calc(100% - 16px);
+    }
+
+    &__children-horizontal-path {
+      position: absolute;
+      height: 1px;
+      background-color: $cx-secondary-background-color;
+      top: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  cx-narrow-tree-node {
+    .cx-narrow-tree-node {
+      &__actions {
+        display: none;
+      }
+    }
+  }
+}

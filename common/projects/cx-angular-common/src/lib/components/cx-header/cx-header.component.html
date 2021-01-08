@@ -1,0 +1,126 @@
+<div class="cx-header">
+  <!-- TODO: No need top header part now <div *ngIf="topHeader" class="top">
+    <a class="link" [href]="topHeader.linkHref" [attr.title]="topHeader.linkAlt" [attr.alt]="topHeader.linkAlt" rel="noopener noreferrer" target="_blank" routerLinkActive="active">
+      <span [class]="'icon ' + topHeader.iconClass"></span>
+      <span class="text">{{topHeader.text}}</span>
+    </a>
+  </div> -->
+  <div class="cx-header-content">
+    <div *ngIf="logo" class="logo">
+      <a class="logo__link" [routerLink]="logo.routeLink" routerLinkActive="active">
+        <div class="logo__image"><img [src]="logo.imageUrl" [alt]="logo.imageAlt"></div>
+        <div class="title-container">
+          <span class="logo__text">{{logo.text}}</span>
+        </div>
+      </a>
+    </div>
+    <div class="cx-header-placeholder">
+    </div>
+    <!-- End of logo -->
+    <div class="general-search-box">
+      <div class="search-icon" (click)="onSearch(generalSearchBox.value)">
+        <span><i class="icon-search"></i></span>
+      </div>
+      <div *ngIf="searchValue" class="clear-icon" (click)="onClearSearch()">
+        <span><i class="icon-close"></i></span>
+      </div>
+      <input #generalSearchBox class="search-input" type="text"
+        (keyup.enter)="onSearch(generalSearchBox.value)" [(ngModel)]="searchValue"
+        [placeholder]="placeholderText" />
+    </div>
+    <!-- End of General Search Box -->
+    <!-- <div class="notifications" [hidden]="!isShowNotificationBell" ngbDropdown #notificationsDropdown="ngbDropdown" [placement]="'bottom-right'"
+      [autoClose]="'outside'"
+      (openChange)="openNotification($event)">
+      <a ngbDropdownToggle class="notifications-toogle cx-dropdown-icon"
+        [ngClass]="{ 'cx-dropdown-icon--rounded-circle': notificationsDropdown.isOpen() || isHoverNotificationsIcon }"
+        (mouseover)="isHoverNotificationsIcon=true" (mouseout)="isHoverNotificationsIcon=false">
+        <i class="icon-bell notifications-bell">
+          <div class="unread-notifications-counter" *ngIf="notificationList && notificationList.totalNewCount">
+              <p *ngIf="notificationList.totalNewCount <= 99">{{notificationList.totalNewCount}}</p>
+              <p *ngIf="notificationList.totalNewCount > 99" class="ninety-nine-plus">99+</p>
+          </div>
+        </i>
+      </a>
+      <div class="cx-dropdown-menu notifications-menu" ngbDropdownMenu>
+        <div class="notification-title">
+          <div class="notification-title__text">{{multipleLanguages.notifications}}</div>
+        </div>
+        <div *ngIf="notificationList" class="notification-container">
+          <div [@smoothAppendRemove]
+            class="notification-item"
+            [class.notification-item--unread]="!notificationItem.dateReadUtc"
+            *ngFor="let notificationItem of notificationList.items; trackBy: notificationItemTrackByFn">
+            <img
+              *ngIf="notificationItem.avatarUrl !== undefined && notificationItem.avatarUrl !== ''"
+              class="notification-item__avatar rounded-circle"
+              [src]="notificationItem.avatarUrl"
+              (click)="onClickedNotification(notificationItem)">
+            <div
+              class="notification-item__message"
+              [class.has-hyperlink]="notificationItem.hyperLink ? notificationItem.hyperLink.length > 0 : false"
+              (click)="onClickedNotification(notificationItem)">
+              <div>
+                <span class="notification-item__message__content">{{notificationItem.message}}</span>
+              </div>
+              <div class="notification-item__message__time">{{notificationItem.sentDate | amTimeAgo}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="notification-item-no-content" *ngIf="!notificationList || !notificationList.items || !notificationList.items.length">
+          No content
+        </div>
+      </div>
+    </div> -->
+    <div class="notifications" ngbDropdown placement="bottom-right" [hidden]="!isShowNotificationBell">
+      <iframe *ngIf="!devLocalEnv" #toggleNotification ngbDropdownToggle allowfullscreen frameBorder="0" [src]="bellUrl"></iframe>
+      <div
+        class="cx-dropdown-menu popup-notifications"
+        ngbDropdownMenu
+        aria-labelledby="iframe"
+      >
+        <ng-container *ngIf="notificationContentUrl">
+          <iframe allowfullscreen frameBorder="0" [height]="height" [src]="notificationContentUrl"></iframe>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- End of Notifications -->
+    <div *ngIf="bellUrl" class="apps" ngbDropdown #appsMenuDropdown="ngbDropdown" [placement]="'bottom-right'"
+      [autoClose]="'outside'">
+      <a class="apps-toogle cx-dropdown-icon" id="apps-toogle" ngbDropdownToggle
+        [ngClass]="{ 'cx-dropdown-icon--rounded-circle': appsMenuDropdown.isOpen() || isHoverAppsMenuIcon }"
+        (mouseover)="isHoverAppsMenuIcon=true" (mouseout)="isHoverAppsMenuIcon=false">
+        <i class="icon-apps apps-icon"></i>
+      </a>
+
+      <div class="cx-dropdown-menu" ngbDropdownMenu aria-labelledby="apps-toogle">
+        <ng-container *ngFor="let appItem of applications">
+          <a class="cx-dropdown-menu__item apps-switcher" [href]="appItem.mainUrl" [title]="appItem.label"
+            [attr.target]="appItem.openNewTab ? '_blank' : '_self'"
+            [ngClass]="{'cx-actived': checkIsCurrentURL(appItem.mainUrl)}">
+            {{appItem.label}}
+          </a>
+        </ng-container>
+      </div>
+    </div>
+    <!-- End of AppSwitcher -->
+    <div *ngIf="currentUser" class="user-area" ngbDropdown #userDropdown="ngbDropdown" [placement]="'bottom-right'">
+      <a class="dropdown-toggle cx-dropdown-icon" id="dropdownConfig" ngbDropdownToggle
+        [ngClass]="{ 'cx-dropdown-icon--opacity-50': userDropdown.isOpen() || isHoverUserIcon }"
+        (mouseover)="isHoverUserIcon=true" (mouseout)="isHoverUserIcon=false">
+        <img class="user-avatar rounded-circle" [src]="currentUser.avatarUrl" [alt]="currentUser.familyName">
+      </a>
+      <div ngbDropdownMenu class="cx-dropdown-menu" aria-labelledby="dropdownConfig">
+        <ng-content select="cx-header-user-dropdown"></ng-content>
+      </div>
+    </div>
+    <!-- End of User Menu -->
+    <div class="hamburger">
+      <a id="hamburger-button" class="hamburger__icon" [ngClass]="{'hamburger__open': toggleHamburger}"
+        (click)="onToggleHamburger()">
+        <div class="hamburger__inner"></div>
+      </a>
+    </div>
+  </div>
+</div>

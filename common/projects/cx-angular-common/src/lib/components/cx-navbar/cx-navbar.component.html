@@ -1,0 +1,13 @@
+<div class="navbar-container" [class.scrollable]="scrollable">
+  <button class="btn-scroll scroll-left" (click)="scrollLeft()" [class.cx-disabled]="isScrollAtStart">
+    <i class="icon-down-arrow"></i>
+  </button>
+  <div #scrollDiv class="navbar-item-list" cxClickOutside (clickOutside)="collapseOtherItems($event)"
+    (scroll)="onScroll($event)">
+    <cx-navbar-item *ngFor="let item of listMenu" [navbarItem]="item" [listMenu]="listMenu"
+      (itemExpand)="collapseOtherItems($event)"></cx-navbar-item>
+  </div>
+  <button class="btn-scroll scroll-right" (click)="scrollRight()" [class.cx-disabled]="isScrollAtEnd">
+    <i class="icon-down-arrow"></i>
+  </button>
+</div>

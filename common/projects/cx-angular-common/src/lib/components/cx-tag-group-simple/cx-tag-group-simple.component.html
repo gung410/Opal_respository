@@ -1,0 +1,20 @@
+<div class="cx-tag-group-simple" *ngIf="tagGroup && tagGroup.length > 0">
+  <ng-container class="cx-tag-group-simple__container" *ngFor="let group of tagGroup">
+    <div *ngIf="group[tagProperty]" class="cx-tag-group-simple__group" [ngStyle]="{'background-color': backgroundColor}">
+      <div class="cx-tag-group-simple__name" *ngIf="tagGroupFieldDisplay == ''">{{group[tagGroupField]}}</div>
+      <div class="cx-tag-group-simple__name" *ngIf="tagGroupFieldDisplay != ''">{{group[tagGroupField][tagGroupFieldDisplay]}}</div>
+      <i aria-hidden="true" class="cx-tag-group-simple__group-close material-icons close-icon-global"
+        (click)="onCloseTagGroupClicked(group)">
+      </i>
+      <ng-container>
+        <ng-template [ngTemplateOutlet]="tagTemplate" [ngTemplateOutletContext]="{ item: group[tagProperty], groupConst: group[tagGroupField] }">
+        </ng-template>
+      </ng-container>
+    </div>
+  </ng-container>
+  <div class="cx-tag-group-simple__clear-all">
+    <span class="cx-tag-group-simple__clear-all--text" (click)="onClearAllClicked()">
+      {{clearAllText}}
+    </span>
+  </div>
+</div>

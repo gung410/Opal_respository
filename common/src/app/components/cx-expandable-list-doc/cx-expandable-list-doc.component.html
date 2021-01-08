@@ -1,0 +1,21 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+    <cx-expandable-list
+      [items]="items"
+      [expandTemplate]="expandTemplate"
+      [symbol]="','"
+      [numberOfDisplay]="2">
+      <ng-template #expandTemplate let-item="item">
+        <span>{{ item.name }}</span>
+      </ng-template>
+    </cx-expandable-list>
+  </div>
+
+  <div contentSecond>
+    <p>bbbb</p>
+  </div>
+  <div contentThird>
+    <p>Conexus button for shared</p>
+  </div>
+</cx-docs-view>

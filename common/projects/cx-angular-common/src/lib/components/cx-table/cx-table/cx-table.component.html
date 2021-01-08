@@ -1,0 +1,83 @@
+<div class="cx-table">
+  <div class="cx-table__actions-container" [ngClass]="{'cx-table__actions-container--hidden': !showMassActions}">
+    <div *ngIf="showMassDefaultAction">
+      <cx-button (clicked)="onRemoveSelectedItems()" [iconClass]="icon.removeClass">Remove</cx-button>
+    </div>
+    <ng-content select="cx-table-mass-actions">
+    </ng-content>
+  </div>
+  <div class="cx-table__info-table" *ngIf="!checkboxDisabled">
+    <span *ngIf="items && items.length != 0" class="cx-table__info-table--selected-items font-italic">
+      {{selectedRow}} {{cxTableLabel.selectedItemLabel}}
+    </span>
+  </div>
+  <table #table class="cx-table__content table table-hover">
+    <thead #tableHeadPlaceholder class="cx-table__table-header-placeholder">
+      <tr>
+        <th class="cx-table__checkbox" #tableHeadPlaceholderColumn *ngIf="!checkboxDisabled">
+          <cx-customized-checkbox>
+          </cx-customized-checkbox>
+        </th>
+        <th #tableHeadPlaceholderColumn *ngFor="let header of headers" class="cx-table__header"
+          [ngStyle]="{'width.px': header.width}">
+          {{ header.text }}
+          <i class="{{getSortIcon(header)}} cx-table__header-icon"></i>
+        </th>
+        <th #tableHeadPlaceholderColumn [style.width.px]="widthOfLastColumnHeader"></th>
+      </tr>
+    </thead>
+    <thead #tableHead class="cx-table__table-header" [ngClass]="{'cx-table__table-header--fixed': isHeaderFixed}"
+      [ngStyle]="{'top.px': isHeaderFixed? fixedHeaderTopPositionWhenWindowScrollInPx: '0'}"
+      [style.width.px]="tableHeadPlaceholder.offsetWidth">
+      <tr>
+        <th #tableHeadColumn class="cx-table__checkbox" *ngIf="!checkboxDisabled">
+          <cx-customized-checkbox [childrenGroupName]="childrenCheckboxesGroupName"
+            [groupName]="masterCheckboxGroupName" [(selected)]="masterSelected">
+          </cx-customized-checkbox>
+        </th>
+        <th #tableHeadColumn *ngFor="let header of headers" class="cx-table__header" [ngStyle]="{'width.px': header.width}"
+          (click)="header.fieldSort && sortByFieldClick(header.fieldSort, header.sortType);">
+          {{ header.text }}
+          <i class="{{getSortIcon(header)}} cx-table__header-icon"></i>
+        </th>
+        <th #tableHeadColumn [style.width.px]="widthOfLastColumnHeader"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items; let iIndex = index; trackBy: itemTrackByFn">
+        <td class="cx-table__checkbox" *ngIf="!checkboxDisabled">
+          <cx-customized-checkbox [parentName]="masterCheckboxGroupName" [groupName]="childrenCheckboxesGroupName"
+            [selected]="selectedItemsMap[getItemIdFromRoute(item)] !== undefined"
+            [assignedValue]="item" (valueSelected)="onSelectedItemChange($event)"></cx-customized-checkbox>
+        </td>
+        <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{ item: item }" >
+        </ng-template>
+        <td class="cx-table__last-data" [style.width.px]="widthOfLastColumnHeader">
+          <div *ngIf="showActionsButtonInLastRow" ngbDropdown [autoClose]="'outside'"
+            [placement]="itemActionNgbBootstrapPlacement(iIndex)">
+            <div ngbDropdownToggle class="cx-table__show-actions-button">
+              <i class="{{icon.moreActionsClass}}"></i>
+            </div>
+            <div ngbDropdownMenu class="cx-dropdown-menu">
+              <cx-item-custom-action [icon]="icon.removeClass" [item]="item" ngbDropdownItem
+                (customActionClick)="onDeleteItemClicked(item)">
+                <cx-item-action-content>
+                  Remove
+                </cx-item-action-content>
+              </cx-item-custom-action>
+              <ng-template [ngTemplateOutlet]="itemCustomActionTemplate" [ngTemplateOutletContext]="{ item: item }">
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="!showActionsButtonInLastRow" class="cx-table__last-column-template">
+            <ng-template [ngTemplateOutlet]="lastColumnCustomTemplate" [ngTemplateOutletContext]="{ item: item }">
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="(!items || items.length === 0) && emptyStateText !== undefined" class="empty-state">
+    {{emptyStateText}}
+  </div>
+</div>

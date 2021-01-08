@@ -1,0 +1,17 @@
+<cx-dialog-template (cancel)="cancel()"
+    (done)="confirm()">
+    <modal-header>
+        <h3>{{dialogHeader}}</h3>
+      </modal-header>
+  <content>
+    <cx-extensive-tree #extensiveTree [flatObjectsArray]="flatObjectsArray" [idFieldRoute]="idFieldRoute"
+      [parentIdFieldRoute]="parentIdFieldRoute" [displayFieldRoute]="displayFieldRoute"
+      [icon]="icon" [text]="text" [movedItem]="movedItem" [countChildrenFieldRoute]="countChildrenFieldRoute"
+      (clickItem)="onClickItem($event)" [isViewMode]="isViewMode" [nameDepartmentTemplate]="nameTemplate"
+      (loadChildren)="loadChildren($event)">
+      <ng-template #nameTemplate let-object="item">
+          <span>{{ object.displayText }}</span>
+      </ng-template>
+    </cx-extensive-tree>
+  </content>
+</cx-dialog-template>

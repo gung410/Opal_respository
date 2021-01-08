@@ -1,0 +1,6 @@
+ag-grid-angular {
+  // Fix height has value 0 on safari version lower than 13
+  .ag-body-viewport {
+    height: auto;
+  }
+}

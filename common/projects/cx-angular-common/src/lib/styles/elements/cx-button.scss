@@ -1,0 +1,107 @@
+@import "../variables.scss";
+$cx-button-color-primary: $cx-color-main;
+$cx-button-color-danger: $cx-color-danger;
+$cx-button-color-danger-hover: #d64d4d;
+$cx-button-color-danger-active: #b94141;
+$cx-button-color-disabled: #EEEEEE;
+$cx-button-color-secondary: #fff;
+$cx-button-color-hover: #1B1E33;
+$cx-button-color-actived: #365693;
+$cx-button-border-color: #8db2ec;
+$cx-button-border-color-secondary: #d8dce6;
+$btn-focus-width: 1px;
+a,
+button,
+input[type="button"] {
+  &[class^="cx-btn"],
+  &[class*=" cx-btn"] {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid  $cx-button-color-primary;
+    box-shadow: none;
+    outline: none;
+    color: $cx-color-text-light;
+    font-size: cx-calc-rem(16px);
+    font-weight: $cx-font-weight-medium;
+    padding: 0 32px;
+    line-height: 46px;
+    height: 48px;
+    background: $cx-button-color-primary;
+    border-radius: 5px;
+    transition: 0.2s ease-out;
+    text-decoration: none;
+
+    &.cx-btn-small {
+      line-height: 38px;
+      height: 40px;
+      padding: 0 16px;
+    }
+
+    &:hover {
+      color: $cx-color-text-light;
+      background: $cx-button-color-hover;
+      border-color: $cx-button-color-hover;
+    }
+
+    &:focus {
+      &:active {
+        background: $cx-button-color-actived;
+        color: $cx-color-text-light;
+      }
+    }
+    &:disabled,
+    &[disabled] {
+      background: $cx-button-color-disabled;
+      color: rgba($cx-color-text-main, .3);
+      border-color: $cx-button-border-color-secondary;
+    }
+  }
+  &.cx-btn-secondary {
+    color: $cx-color-text-main;
+    background: $cx-button-color-secondary;
+    border-color: $cx-button-border-color-secondary;
+    &:hover {
+      color: $cx-color-text-light;
+      background: $cx-button-color-hover;
+      border-color: $cx-button-color-hover;
+    }
+    &:focus {
+      &:active {
+        color: $cx-color-text-light;
+        background: $cx-button-color-actived;
+      }
+    }
+    &:disabled,
+    &[disabled] {
+      background: $cx-button-color-disabled;
+      color: rgba($cx-color-text-main, .3);
+    }
+  }
+  &.cx-btn-danger {
+    color: $cx-color-text-light;
+    background: $cx-button-color-danger;
+    border-color: $cx-button-color-danger;
+  }
+
+  &.cx-btn-icon {
+    i {
+      margin-right: 6px;
+      transform: translateY(1px);
+      display: inline-block;
+    }
+  }
+
+  &.cx-btn-icon-right {
+    i {
+      margin-left: 6px;
+      transform: translateY(1px);
+      display: inline-block;
+    }
+  }
+}
+
+.cx-button-group {
+  .cx-btn:not(:last-child) {
+    margin-right: 16px;
+  }
+}

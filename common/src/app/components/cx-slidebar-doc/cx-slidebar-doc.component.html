@@ -1,0 +1,57 @@
+<div class="cx-slidebar-doc">
+
+  <cx-slidebar [position]="slidebarPosition" [height]="height">
+    <slidebar-header>
+      <div class="filter-header">
+        <div class="filter-header__title">
+          <h4>Filters {{height}}</h4>
+        </div>
+        <div class="filter-header__group-actions">
+          <button class="action-item cx-btn cx-btn-big">Apply</button>
+          <button class="action-item cx-btn cx-btn-big cx-btn-secondary">Clear</button>
+        </div>
+      </div>
+    </slidebar-header>
+    <slidebar-body>
+      <div>
+        <form action="">
+
+          <div *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]" class="form-group">
+            <label for="input">Filter {{item}}</label>
+            <div class="">
+              <input type="text" class="form-control" id="input">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </slidebar-body>
+  </cx-slidebar>
+
+  <div class="cx-slidebar-doc__options">
+    <form class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="position">Position:</label>
+          <select name="position" [(ngModel)]="slidebarPosition" id="position" class="form-control">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="form-group">
+          <label for="height">Height:</label>
+          <input type="text" name="height" class="form-control" [(ngModel)]="height">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="cx-slidebar-doc__actions">
+    <button (click)="openSlidebar()" class="cx-btn cx-btn-big">
+      Open Filters
+      <i class="icon-filter"></i></button>
+  </div>
+</div>

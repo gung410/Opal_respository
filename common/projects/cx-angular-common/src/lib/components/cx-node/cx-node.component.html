@@ -1,0 +1,83 @@
+<div class="cx-node" [ngClass]="'node-level-' + level">
+  <div
+    class="cx-node__content"
+    [class.cx-selected]="currentComponent === selectedNodeComponent"
+    [style.padding-left.px]="level * 28"
+  >
+    <div
+      class="cx-node__content__expand-icon"
+      [class.cx-hide]="level !== 1"
+      (click)="node.hideChildren = !node.hideChildren"
+    >
+      <i
+        class="icon icon-down-arrow"
+        [class.cx-expanded]="!node.hideChildren"
+        [class.cx-collapse]="node.hideChildren"
+      ></i>
+    </div>
+    <div
+      class="cx-node__content--node-icon"
+      (click)="nodeClickedHandler(currentComponent)"
+    >
+      <i *ngIf="node.iconClass" class="icon" [ngClass]="node.iconClass"></i>
+    </div>
+    <div
+      class="cx-node__content--name"
+      [class.cx-hasSubName]="node.subName !== undefined"
+      (click)="nodeClickedHandler(currentComponent)"
+      data-toggle="tooltip"
+      [attr.title]="node.name"
+    >
+      <span class="main-name">{{ node.name }}</span>
+      <span *ngIf="node.subName !== undefined" class="sub-name">{{
+        node.subName
+      }}</span>
+      <div *ngIf="node.status !== undefined" class="node-status">
+        <div class="node-status__circle" [ngClass]="node.status.type"></div>
+        <div class="node-status__text">{{ node.status.text }}</div>
+      </div>
+    </div>
+    <div
+      *ngIf="node.children && node.children.length > 0"
+      class="cx-node__content__total-children"
+    >
+      <div>
+        <p>{{ node.children.length }}</p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="cx-node__children"
+    [class.cx-show]="!node.hideChildren"
+    [class.cx-hide]="node.hideChildren"
+  >
+    <ng-container *ngIf="node.children && node.children.length > 0">
+      <ng-container *ngFor="let childNode of node.children">
+        <cx-node
+          [node]="childNode"
+          [selectedNodeComponent]="selectedNodeComponent"
+          [level]="level + 1"
+          (nodeClicked)="nodeClickedHandler($event)"
+          (createNodeClicked)="createNodeClickedHandler($event)"
+          (newNodeCreated)="newNodeCreatedHandler($event)"
+        ></cx-node>
+      </ng-container>
+    </ng-container>
+    <div
+      *ngIf="level !== 0 && node.canCreateChildren"
+      class="cx-node__create-new-node"
+      [style.padding-left.px]="(level + 1) * 20"
+      (click)="createNodeClickedHandler(currentComponent)"
+    >
+      <div class="cx-node__create-new-node__icon">
+        <i
+          class="icon"
+          [ngClass]="node.createChildrenIcon ? node.createChildrenIcon : 'icon-add'"
+        ></i>
+      </div>
+      <div class="cx-node__create-new-node__text">
+        <span>{{node.addNodeText || 'Add node'}}</span>
+      </div>
+    </div>
+  </div>
+</div>

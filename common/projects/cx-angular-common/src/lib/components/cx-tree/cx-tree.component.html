@@ -1,0 +1,47 @@
+<div class="cx-tree">
+  <div class="cx-tree__acts" *ngIf="!isViewMode && selectedItems.length > 0" [@smoothAppendRemove]>
+    <div class="cx-tree__act-btn" (click)="unselect()">
+      <i class="material-icons" [ngClass]="icon.indeterminate"></i>
+    </div>
+    <div class="cx-tree__act-btn cx-tree__act-btn--command" [title]="text.moveBtn" (click)="onMoveItem()">
+      <i class="material-icons cx-tree__act-icon" [ngClass]="icon.move"></i>
+      <span class="cx-tree__act-label">{{text.moveBtn}}</span>
+    </div>
+    <div class="cx-tree__act-btn cx-tree__act-btn--command" [title]="text.removeBtn" (click)="onDeleteItem(selectedItems)">
+      <i class="material-icons cx-tree__act-icon" [ngClass]="icon.remove"></i>
+      <span class="cx-tree__act-label">{{text.removeBtn}}</span>
+    </div>
+  </div>
+  <div class="cx-tree-node">
+    <div *ngIf="showTreeHeader" class="cx-tree__header">
+      {{text.header}}
+    </div>
+    <cx-tree-node
+      [level]="0"
+      [@smoothAppendRemove]
+      [object]="rootObject" 
+      [idFieldRoute]="idFieldRoute"
+      [parentIdFieldRoute]="parentIdFieldRoute" 
+      [displayFieldRoute]="displayFieldRoute"
+      [remainingObjectsArray]="flatObjectsArray" 
+      [isRoot]="true"
+      [displayTemplate]="displayTemplate" 
+      [icon]="icon" 
+      [dynamicIcon]="dynamicIcon"
+      [text]="text" 
+      [buttonCondition]="buttonCondition"
+      [isViewMode]="isViewMode" 
+      [currentRoutes]="currentRoutes" 
+      [selectedObjectIds]="selectedObjectIds" 
+      [destinationItems]="destinationItems"
+      [defaultExpandLevel]="defaultExpandLevel"
+
+      (move)="onMoveItem($event)"
+      (deleteItem)="onDeleteItem($event)"
+      (addItem)="onAddItem($event)"
+      (editItem)="onEditItem($event)"
+      (selectItem)="onSelectItem($event)"
+      (clickItem)="onClickItem($event)">
+    </cx-tree-node>
+  </div>
+</div>

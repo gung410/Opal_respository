@@ -1,0 +1,33 @@
+@import "../../../styles/mixins.scss";
+.cx-table {
+    .empty-state {
+        font-size: 1.3em;
+        color: #adadad;
+        margin: 50px 0;
+        text-align: center;
+    }
+
+    &__info-table {
+        margin: 10px 0;
+        &--selected-items {
+            margin-left: 15px;
+        }
+    }
+    .icon {
+        font-size: 1em;
+        margin-top: 4px;
+        margin-left: 10px;
+    }
+    .icon-sort-up, .icon-sort-down {
+        font-size: 0.8em;
+        margin-top: 6px;
+        margin-left: 12px;
+    }
+}
+
+.empty-state {
+    font-size: 1.3em;
+    color: #adadad;
+    margin: 50px 0;
+    text-align: center;
+}

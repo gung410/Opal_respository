@@ -1,0 +1,440 @@
+@import '../../styles/variables.scss';
+@import '../../styles/elements/cx-button.scss';
+@import '../../styles/material-icons.scss';
+@import '../../styles/cx-date-picker.scss';
+@import 'styles/themes/modern/modern.scss';
+
+cx-surveyjs {
+  $radio-size: 25px;
+  $radio-margin-right: 5px;
+  .form-control {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 22px;
+    color: $cx-color-text-main;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #D8DCE6;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    min-height: calc(1.5em + 0.75rem + 2px);
+    &::placeholder {
+      color: #A1A8B6;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  textarea.form-control {
+    height: 90px;
+    padding: 16px;
+    line-height: 24px;
+  }
+
+  .sv_bootstrap_css .sv_qstn {
+    padding: 0 16px 24px 16px;
+  }
+
+  .cx-surveyjs, .modal-dialog {
+    .sv_main {
+      .sv_qstn {
+        // Remove border for all input fields when readonly
+        input:disabled,
+        textarea:read-only,
+        div.form-control {
+          color: #A1A8B6;
+          background: #EEEEEE;
+        }
+      }
+    }
+
+    // Custom for div on survey with tab
+    &__tab~div[id^="surveyElement_"] {
+      height: calc(100% - 110px);
+      overflow: auto;
+    }
+
+    // custom for form-control focus
+    .form-control:focus {
+      border: 1px solid #8799BA;
+      box-shadow: none;
+    }
+
+    .card-header {
+      background: none;
+      padding: 0 15px;
+      border: 0;
+      h3, h5 {
+        margin: 0;
+      }
+      h3 span {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+    }
+
+    // Custom for select2
+    .select2 {
+      .select2-selection {
+        border: 1px solid #d8dce6;
+        border-radius: 5px;
+        min-height: 48px;
+
+        &:focus, &:focus:active {
+          color: $cx-color-text-main;
+          border: 1px solid #8799ba;
+          box-shadow: none;
+        }
+
+        &__choice {
+          background: #F2F5FB;
+          color: $cx-color-text-main;
+          font-size: 16px;
+          line-height: 22px;
+          border: 1px solid #D8DCE6;
+          padding: 0px 10px;
+          height: 24px;
+          margin-right: 12px;
+          &__remove {
+            font-weight: 400;
+            margin-right: 2px;
+            color: $cx-color-text-main;
+            &:hover {
+              color: #80bdff;
+            }
+          }
+        }
+
+        .select2-selection__rendered {
+          border: none;
+          transform: translateY(6px);
+          padding-bottom: 12px;
+          padding-left: 16px;
+        }
+        &--single .select2-selection__rendered{
+          @extend .form-control;
+        }
+
+        .select2-selection__arrow {
+          background: transparent;
+          height: 100%;
+          border: none;
+          b {
+            border-color: #495057 transparent transparent transparent;
+          }
+        }
+      }
+
+      &.select2-container--disabled {
+        .select2-selection {
+          border: 1px solid #d8dce6!important;
+          &--single,
+          &--multiple {
+            background-color: #eee;
+            cursor: initial;
+            .select2-selection__rendered {
+              border: none !important;
+              cursor: initial;
+            }
+          }
+        }
+      }
+    }
+    // Custom for cx-survey-input elements
+    .sv_main .sv_qstn .row {
+      div:first-child {
+        height: 37.9px;
+        line-height: 37.9px;
+        border-radius: 5px;
+        border-left: 2px solid #333333;
+        padding: 0 !important;
+        padding-left: 10px !important;
+        color: $cx-color-text-main;
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-left: -5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    // Custom for validation fail text
+    .cx-question-content {
+      position: relative;
+    }
+
+    .alert.alert-danger {
+      border: none;
+      padding: 0;
+      margin: 0;
+      margin-top: -16px;
+      font-weight: 500;
+      font-size: 12px;
+      color: #FF7575;
+      background: transparent;
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .sv_qstn.has-error {
+      select.form-control,
+      input.form-control,
+      span.select2-selection {
+        border: 1px solid #FF7575;
+      }
+      &[style="width: 100%;"] .alert-danger{
+        position: initial;
+      }
+    }
+
+    // Custom font style for h5 element
+    .h5,
+    h5 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $cx-color-text-main;
+    }
+    .cx-question-content {
+      margin-top: 14px;
+    }
+
+    // Fix padding for panel title
+    .sv_p_title {
+      padding-left: 0.5em;
+    }
+
+    // Custom button for survey
+    .sv_qstn {
+      button {
+        &.remove-item {
+          margin-left: 10px;
+          margin-top: 1.5px;
+        }
+      }
+
+      a {
+        &.popover-btn {
+          height: 18px;
+          width: 18px;
+          font-size: 16px;
+          border-radius: 50px;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          text-align: center;
+          background-color: #51A8F9;
+          text-decoration: none;
+        }
+        &.popover-btn:focus {
+          outline: unset;
+        }
+      }
+    }
+
+    .cx-survey-input-container {
+      .cx-survey-input-selected-label {
+        margin-bottom: 8px;
+        margin-top: 24px;
+        h5 {
+          margin: 0;
+        }
+      }
+      .cx-survey-input-tagbox {
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid #D8DCE6;
+        padding: 10px 15px;
+        border-radius: 5px;
+        .tag-item {
+          display: flex;
+          align-items: center;
+          background: #F2F5FB;
+          text-transform: uppercase;
+          font-size: 16px;
+          line-height: 19px;
+          padding: 3px 10px;
+          padding-right: 6px;
+          margin: 5px 10px 5px 0;
+          border-radius: 5px;
+          color: #303450;
+          border: 1px solid #D8DCE6;
+          &__remove {
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            text-align: center;
+            margin-left: 10px;
+            color: #303450;
+            font-size: 6px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  // Fix background color for cx-survey-input row
+  .sv_qstn .sv_qstn_error_top+div.form-control {
+    background-color: #e9ecef;
+  }
+
+  .sv_qstn {
+    table.table.sv_q_matrix {
+      thead tr th {
+        text-align: center;
+      }
+
+      tbody td {
+        .sv_q_m_label {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%,-27%);
+          width: auto;
+        }
+
+        label {
+          cursor: pointer;
+        }
+      }
+    }
+
+    select,
+    option {
+      cursor: pointer;
+    }
+
+    .result {
+      >.row {
+        margin: 5px;
+        padding: 5px;
+        border-top: $cx-border;
+
+        >div {
+          padding: 0;
+        }
+      }
+    }
+
+    .sv_q_select_column>*:not(.sv_technical) {
+      display: -ms-flexbox;
+    }
+  }
+
+  // Custom for card footer & buttons
+  .surveyContainer .card-footer input.btn {
+    margin-left: 4px;
+  }
+
+  .surveyContainer .card-footer {
+    .cx-btn {
+      margin-right: 16px;
+    }
+  }
+
+  // Remove mt-4
+  .cx-surveyjs-container>div:first-child {
+    margin-top: 0 !important;
+  }
+
+  .cx-surveyjs-page-title {
+    padding: 0 15px;
+  }
+
+  // Custom for card footer & buttons
+  .card-footer {
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 0;
+    text-align: right;
+    background: none;
+    text-align: right;
+    border-top: none;
+    padding-right: 1em;
+    // input {
+    //   margin-left: $cx-btn-margin;
+    // }
+    .cx-btn, input[type="button"] {
+      margin-left: 16px;
+    }
+    .sv_prev_btn {
+      color: $cx-color-text-main;
+      background: $cx-button-color-secondary;
+      border: 1px solid #E4E8FC;
+    }
+    .sv_prev_btn, .sv_next_btn, .sv_complete_btn {
+      vertical-align: unset;
+    }
+  }
+
+  .cx-textarea-invalid {
+    border: 1px solid #FF7575 !important;
+    box-shadow: 0 0 0 1.5px rgba(255, 117, 117, 0.25) !important;
+  }
+  // Custom for comment question with counter
+  .cx-textarea-counter {
+    text-align:right;
+    font-size: 12px;
+    &.counter-invalid {
+      font-weight: 500;
+      color: #FF7575;
+    }
+  }
+}
+
+fieldset.sv-selectbase.select-all {
+  margin-top: 60px;
+  .checkbox-select-all {
+    margin-top: -45px;
+    position: absolute;
+  }
+}
+
+@media (max-width: 1023px) {
+  .sv-selectbase__item.sv-q-col-1 {
+    width: 49% !important;
+  }
+}
+@media (min-width: 1024px) {
+  .sv-selectbase__item.sv-q-col-1 {
+    width: 33% !important;
+  }
+}
+
+.select2-container--classic.select2-container--open .select2-dropdown {
+  border-top: 1px solid #5897fb;
+  border-bottom: 1px solid #5897fb;
+}
+
+.select2-container--classic.select2-container--open .select2-selection,
+.select2-container--classic.select2-container--focus .select2-selection {
+  border: 1px solid #8799ba;
+  box-shadow: none;
+}
+
+
+
+.select2-container {
+  outline: none;
+  .select2-dropdown {
+    border: 1px solid #D8DCE6;
+    border-top: 0;
+  }
+  .select2-results {
+    &__message {
+      color: #A1A8B6;
+      font-size: 14px;
+    }
+  }
+}
+
+// Custom widget jquery date picker
+.form-control.widget-datepicker {
+  background: #fff;
+}

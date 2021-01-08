@@ -1,0 +1,62 @@
+@import 'constants.scss';
+@import '../../../../../styles/variables.scss';
+
+.sv-matrix {
+  .sv-table {
+    thead {
+      tr {
+        th {
+          border-bottom: none;
+          border-top: none;
+          text-align: center;
+        }
+
+        td {
+          border-top: none;
+          font-weight: bold;
+        }
+
+      }
+    }
+
+    tbody {
+      tr {
+        td:first-child {
+          width: 60%;
+        }
+
+        td:not(:first-child) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.sv-boolean__switch {
+  background-color: $main-color !important;
+}
+
+.sv-item__decorator {
+  circle {
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: $screen-mobile-max) {
+  .sv_main .panel-body.card-block .sv_row .sv_qstn table.sv-table thead {
+      display: none;
+  }
+  .sv_main .panel-body.card-block .sv_row .sv_qstn table.sv-table td::after {
+      content: attr(headers);
+      padding-left: 1em;
+  }
+  .sv_main .panel-body.card-block .sv_row .sv_qstn table.sv-table td {
+      display: block;
+      text-align: left;
+  }
+  .sv_main .panel-body.card-block .sv_row .sv_qstn table.sv-table tbody td:first-child {
+      width: 100%;
+      font-weight: 500;
+  }
+}

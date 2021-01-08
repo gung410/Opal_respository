@@ -1,0 +1,31 @@
+@import './../../styles/variables.scss';
+
+cx-customized-checkbox {
+    .cx-customized-checkbox {
+        margin-bottom: 0;
+        cursor: pointer;
+        &__container {
+            display: inline-block;
+            vertical-align: middle;
+            &:hover {
+                i::before {
+                    font-weight: $cx-icon-font-weight-hover;
+                }
+            }
+            i::before {
+                font-size: $cx-icon-size-sm-px;
+                font-weight: $cx-icon-font-weight;
+                content: "check_box_outline_blank";
+            }
+            input[type="checkbox"]:checked ~ i::before {
+                content: "check_box";
+            }
+            input[type="checkbox"]:indeterminate ~ i::before {
+                content: "indeterminate_check_box";
+            }
+        }
+        &__label {
+            display: inline-block;
+        }
+    }
+}

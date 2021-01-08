@@ -1,0 +1,43 @@
+<div class="docs-component-viewer">
+  <mat-tab-group>
+    <mat-tab label="Overview">
+      <!-- <cx-button [closeable]="true" [type]="'primary'" size="sm" (clicked)="onBtnClicked($event)"
+        (closed)="onBtnClosed($event)">Test
+        button</cx-button> -->
+      <div class="cx-tree">
+      </div>
+    </mat-tab>
+    <mat-tab label="Collapsible Input">
+      <cx-input (submit)="onSubmitted($event)"></cx-input>
+      <cx-collapsible-input (submit)="onCollapsibleSubmitted($event)"></cx-collapsible-input>
+    </mat-tab>
+    <mat-tab label="List Table">
+      <cx-table-containers>
+      </cx-table-containers>
+    </mat-tab>
+    <mat-tab label="Header">
+      <cx-header *ngIf="currentUser" [currentUser]="currentUser" [mainMenu]="mainMenuHeader" [homeRedirectRouterLink]="''" [currentURL]="'https://development-competence-opal-spa.csc.cxs.cloud'"
+                 [logoUrl]="'assets/images/logo-vip-24.png'" [logoAlt]="'System Administrator'" (logout)="onLogout()">
+      </cx-header>
+    </mat-tab>
+    <mat-tab label="Breadcrumb">
+      <cx-breadcrumb [breadCrumbItems]="filteredDepartments" [labelledPropertyName]="'departmentName'" (clickItem)="onCxBreadCrumbClick($event)"></cx-breadcrumb>
+    </mat-tab>
+    <mat-tab label="Dropdown">
+      <cx-tree-dropdown
+        [flatObjectsArray]="flatDepartmentsArray"
+        [idFieldRoute]="'identity.id'"
+        [parentIdFieldRoute]="'parentDepartmentId'"
+        [displayFieldRoute]="'departmentInfo.name'"
+        [displayTemplate]="displayTemplate"
+        [icon]="iconsData"
+        [text]="textData"
+        [isViewMode]="true"
+        [buttonCondition]="buttonConditions"
+        (selectItem)="onSelectItemFromDropdownMenu($event)"
+        [currentRoutes]="currentRoutes"
+        [selectedObjectIds]="selectedObjectIds">
+      </cx-tree-dropdown>
+    </mat-tab>
+  </mat-tab-group>
+</div>

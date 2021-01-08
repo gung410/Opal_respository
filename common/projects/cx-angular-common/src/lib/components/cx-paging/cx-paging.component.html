@@ -1,0 +1,60 @@
+<div *ngIf="totalRecords > 0" class="cx-pagination">
+  <div class="cx-pagination__text">
+    <span class="record-selection">
+      <span class="record-selection__text">View</span>
+      <span class="record-selection__page-size">
+        <select class="box" (change)="onChangePageSize($event.target.value)" [value]="currentPageSize">
+          <option *ngFor="let pageSize of pageSizes" [value]="pageSize">{{pageSize}}</option>
+        </select>
+      </span>
+      <span class="record-selection__text">items</span>
+    </span>
+  </div>
+
+  <div class="cx-pagination__list">
+    <div *ngIf="!isCurrentFirstPage && isShowFirstOrLastNavigation" class="cx-navigation-first box vertical-center-align" (click)="onNavigateFirstClicked()">
+      <div class="flex-box">
+        <div class="vertical-center-align">
+          <i class="cx-navigation-first__icon material-icons navigate-before"></i>
+        </div>
+        <div class="vertical-center-align">
+          <span class="cx-navigation-first__text">First</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="totalRecords !== undefined && totalRecords > 0" class="cx-paging box flex-box">
+      <div *ngIf="!isCurrentFirstPage && pagesArray.length > 1" class="cx-paging__nav-icon cx-paging__nav-icon--previous-page vertical-center-align" (click)="onNavigatePreviousClicked()">
+        <i class="{{icon.previous}}"></i>
+      </div>
+      <div class="cx-paging__pages" *ngIf="pagesArray && pagesArray.length">
+        <div class="cx-paging__page-number">
+            {{currentPage}} of {{pagesArray.length}}
+        </div>
+        <div *ngFor="let page of pages" class="cx-paging__page">
+          <div class="cx-paging__page"
+          [ngClass]="{'cx-paging__page--current': page === currentPage}">
+          <cx-button (clicked)="onPageClicked(page)">
+            {{page}}
+          </cx-button>
+        </div>
+      </div>
+      </div>
+      <div *ngIf="!isCurrentLastPage && pagesArray.length > 1" class="cx-paging__nav-icon cx-paging__nav-icon--next-page vertical-center-align" (click)="onNavigateNextClicked()">
+        <i class="{{icon.next}}"></i>
+      </div>
+    </div>
+    <div *ngIf="!isCurrentLastPage && isShowFirstOrLastNavigation" class="cx-navigation-last box vertical-center-align" (click)="onNavigateLastClicked()">
+      <div class="flex-box">
+        <div class="vertical-center-align">
+          <span class="cx-navigation-last__text">Last</span>
+        </div>
+        <div class="vertical-center-align">
+          <i class="cx-navigation-last__icon material-icons navigate-next"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cx-pagination__text vertical-center-align">
+    <span class="total-records">Found a total {{totalRecords}} items</span>
+  </div>
+</div>

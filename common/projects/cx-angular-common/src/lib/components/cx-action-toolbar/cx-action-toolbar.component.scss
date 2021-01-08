@@ -1,0 +1,96 @@
+@import "../../styles/variables.scss";
+
+.action-toolbar {
+  display: flex;
+  button.cx-btn.cx-btn-small {
+    box-shadow: none;
+    line-height: 30px;
+    height: 32px;
+    border: 1px solid #d8dce6;
+    font-size: 14px;
+    border-radius: 0;
+    border-left: none;
+    &:focus:active, &:hover {
+      border-left: none;
+    }
+    &:first-child:not(:last-child) {
+      border: 1px solid #d8dce6;
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-child:not(:first-child) {
+      border-radius: 0 5px 5px 0;
+      border-left: none;
+    }
+    &:disabled,
+    &[disabled] {
+      background: #fff;
+      color: rgba($cx-color-text-main, .2);
+    }
+  }
+
+  #customActionDropdown {
+    width: 40px;
+    min-width: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid #d8dce6;
+    > i {
+      font-size: 4px;
+      transform: rotate(90deg);
+    }
+    &.is-last-child {
+      border-radius: 0 5px 5px 0;
+      border-left: none;
+    }
+  }
+
+  &__actions-dropdown {
+    position: unset;
+    .cx-dropdown-menu {
+      &__item.cx-dropdown-menu-item-disabled {
+        opacity: 0.4;
+        background: none !important;
+        color: $cx-color-main !important;
+        cursor: initial;
+      }
+    }
+  }
+
+  &__item-menu {
+    z-index: 4;
+    min-width: 300px;
+    .devide-line{
+      height: 1px;
+      width: 100%;
+      background-color: #f2f2f2;
+      margin: 5px 0 5px 0;
+    }
+    >i {
+      font-size: cx-calc-rem(18px);
+    }
+    &::after {
+      left: 19px;
+    }
+  }
+
+  @media (max-height: 820px) {
+
+    .horizontalMode {
+      display: table-cell;
+    }
+
+    .horizontalMode:first-child {
+      border-right: 1px solid #ccc;
+    }
+
+    .devide-line {
+      display: none;
+    }
+  }
+
+  .verticalMode {
+    display: block !important;
+  }
+}

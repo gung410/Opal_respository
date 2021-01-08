@@ -1,0 +1,52 @@
+<div class="cx-narrow-tree" [style.width]="maxWidth"
+  [style.background-color]="backgroundColor">
+  <div class="cx-narrow-tree__acts" *ngIf="!isViewMode && selectedItems.length > 0" [@smoothAppendRemove]>
+    <div class="cx-narrow-tree__act-btn" (click)="unselect()">
+      <i class="material-icons" [ngClass]="icon.indeterminate"></i>
+    </div>
+    <div class="cx-narrow-tree__act-btn cx-narrow-tree__act-btn--command" [title]="text.moveBtn" (click)="onMoveItem()">
+      <i class="material-icons cx-narrow-tree__act-icon" [ngClass]="icon.move"></i>
+      <span class="cx-narrow-tree__act-label">{{text.moveBtn}}</span>
+    </div>
+    <div class="cx-narrow-tree__act-btn cx-narrow-tree__act-btn--command" [title]="text.removeBtn" (click)="onDeleteItem(selectedItems)">
+      <i class="material-icons cx-narrow-tree__act-icon" [ngClass]="icon.remove"></i>
+      <span class="cx-narrow-tree__act-label">{{text.removeBtn}}</span>
+    </div>
+  </div>
+  <div class="cx-narrow-tree-node">
+    <div *ngIf="showTreeHeader" class="cx-narrow-tree__header">
+      {{text.header}}
+    </div>
+    <cx-narrow-tree-node
+      [level]="0"
+      [@smoothAppendRemove]
+      [object]="rootObject" 
+      [idFieldRoute]="idFieldRoute"
+      [parentIdFieldRoute]="parentIdFieldRoute" 
+      [displayFieldRoute]="displayFieldRoute"
+      [remainingObjectsArray]="flatObjectsArray" 
+      [isRoot]="true"
+      [displayTemplate]="displayTemplate" 
+      [dynamicIcon]="dynamicIcon"
+      [icon]="icon" 
+      [text]="text" 
+      [buttonCondition]="buttonCondition"
+      [isViewMode]="isViewMode" 
+      [currentRoutes]="currentRoutes" 
+      [selectedObjectIds]="selectedObjectIds" 
+      [destinationItems]="destinationItems"
+      [navigatedNodeData]="navigatedNodeData"
+      [displayCheckboxes]="displayCheckboxes"
+      [defaultExpandLevel]="defaultExpandLevel"
+      [addButtonTemplate]="addButtonTemplate"
+      [backgroundColor]="backgroundColor"
+
+      (move)="onMoveItem($event)"
+      (deleteItem)="onDeleteItem($event)"
+      (addItem)="onAddItem($event)"
+      (editItem)="onEditItem($event)"
+      (selectItem)="onSelectItem($event)"
+      (clickItem)="onClickItem($event)">
+    </cx-narrow-tree-node>
+  </div>
+</div>

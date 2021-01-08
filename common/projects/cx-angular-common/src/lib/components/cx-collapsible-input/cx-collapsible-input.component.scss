@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+cx-collapsible-input {
+    $open-button-width: 30px;
+    .cx-collapsible-input {
+        display: inline-block;
+        position: relative;
+        &__content {
+            display: inline-block;
+            &--hidden {
+                width: 0 !important;
+                visibility: hidden;
+            }
+        }
+        &__open-button {
+            display: inline-block;
+            cursor: pointer;
+            padding-left: $cx-space-sm;
+            padding-right: $cx-space-sm;
+            &--hidden {
+                width: 0;
+                padding-left: 0;
+                padding-right: 0;
+                visibility: hidden;
+            }
+            i {
+                vertical-align: middle;
+            }
+        }
+    }
+}

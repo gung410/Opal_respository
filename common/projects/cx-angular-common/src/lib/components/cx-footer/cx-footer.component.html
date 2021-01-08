@@ -1,0 +1,14 @@
+<footer *ngIf="footerData">
+  <div class="footer-left">
+    <a *ngIf="footerData.vulnerabilityUrl" class="footer-link" target="_blank" href="{{footerData.vulnerabilityUrl}}">
+      {{footerData.vulnerabilityText}}<i id="open-new-icon" class="material-icons">open_in_new</i>
+    </a>
+    <a *ngIf="footerData.privacyStatementUrl" class="footer-link" target="_blank" href="{{footerData.privacyStatementUrl}}">{{footerData.privacyStatementText}}</a>
+    <a *ngIf="footerData.termsOfUseUrl" class="footer-link" target="_blank" href="{{footerData.termsOfUseUrl}}">{{footerData.termsOfUseText}}</a>
+  </div>
+  <div class="footer-right">
+    <span *ngIf="footerData.copyrightText" class="copyright">{{footerData.copyrightText}}&nbsp;</span>
+    <span *ngIf="footerData.rightReservedText" class="right-reserved">{{footerData.rightReservedText}}&nbsp;</span>
+    <span *ngIf="footerData.dateReleaseText" class="date-release">{{footerData.dateReleaseText}}</span>
+  </div>
+</footer>

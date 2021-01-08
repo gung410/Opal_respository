@@ -1,0 +1,171 @@
+@import '../../styles/variables.scss';
+
+$main-color: #354c71;
+$main-color-lighter: #5173a9;
+$last-item-color: #6b86b1;
+
+.cx-breadcrumb {
+    &__list {
+        padding: 0px;
+        background: transparent;
+        list-style: none;
+        overflow: hidden;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        display: flex;
+        white-space: nowrap;
+        flex-wrap: wrap;
+
+        .breadcrumb-item-simple {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            &__text {
+                font-weight: 400;
+                font-size: 14px;
+                color: $cx-color-text-main;
+                &:hover {
+                  text-decoration: underline;
+                }
+            }
+
+            &__icon {
+                display: inline-block;
+                color:  $cx-color-text-main;
+                font-size: 10px;
+                margin: 0 12px;
+            }
+
+            &:last-child {
+                cursor: unset;
+                a {
+                    font-weight: 500;
+                    pointer-events: none;
+                }
+                &:hover {
+                    text-decoration: none;;
+                }
+            }
+        }
+
+        &__item {
+            float: left;
+            background: $main-color;
+            color: #fff;
+            font-size: 0.75em;
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                background: $main-color-lighter;
+            }
+
+            &__text {
+                color: white;
+                text-decoration: none;
+                padding: 2px 0 2px 30px;
+                position: relative;
+                display: block;
+
+                &::before,
+                &::after {
+                    content: " ";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border-top: 50px solid transparent;
+                    border-bottom: 50px solid transparent;
+                    border-left: 20px solid;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -50px;
+                    left: 100%;
+                }
+
+                &::after {
+                    border-left-color: $main-color;
+                    z-index: 2;
+                }
+
+                &::before {
+                    border-left-color: white;
+                    margin-left: 3px;
+                    z-index: 1;
+                }
+
+                &:hover {
+                    color: #fff;
+                    text-decoration: none;
+
+                    &::after {
+                        border-left-color: $main-color-lighter;
+                    }
+                }
+            }
+
+            &:nth-child(1) {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+
+                a {
+                    padding-left: 10px;
+                }
+            }
+
+            &:nth-last-child(1) {
+                background: $last-item-color;
+                cursor: unset;
+
+                a {
+                    cursor: unset;
+                    pointer-events: none;
+
+                    &::after {
+                        border-left-color: $last-item-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cx-breadcrumb {
+        &__list {
+            &__item {
+                &__text {
+                    padding: 5px 0px 5px 18px;
+
+                    &::before,
+                    &::after {
+                        border-top: 20px solid transparent;
+                        border-bottom: 20px solid transparent;
+                        border-left: 10px solid;
+                        margin-top: -20px;
+                    }
+                }
+
+                &:first-child a {
+                    padding-left: 8px;
+                }
+
+                &:first-child a,
+                &:nth-last-child(2) a {
+                    &::after {
+                        border-left-color: $main-color;
+                    }
+
+                    &:hover {
+                        &::after {
+                            border-left-color: $main-color-lighter;
+                        }
+                    }
+                }
+
+                &:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

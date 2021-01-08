@@ -1,0 +1,7 @@
+{
+    "entry": "./projects/cx-angular-common/src/lib/styles/_styles.scss",
+    "dest": "./dist/cx-angular-common/lib/styles/_styles.scss",
+    "includePaths": [
+        "node_modules"
+    ]
+}

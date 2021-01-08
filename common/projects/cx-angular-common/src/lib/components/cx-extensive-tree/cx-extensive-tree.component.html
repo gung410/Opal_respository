@@ -1,0 +1,135 @@
+<div class="cx-extensive-tree">
+  <div class="cx-extensive-tree__header" [class.extend]="!isViewMode">
+    <div class="row col-6 first-column">
+      {{ extensiveTreeHeader }}
+    </div>
+    <div class="col-5 cx-extensive-area" *ngIf="havingExtensiveArea">
+      <ng-template
+        *ngIf="!isViewMode"
+        [ngTemplateOutlet]="headerExtensiveTemplate"
+      >
+      </ng-template>
+    </div>
+    <div *ngIf="!isViewMode" class="col cx-actions-area"></div>
+  </div>
+
+  <div *ngFor="let field of itemArray; let i = index">
+    <div
+      *ngIf="field.isDisplay"
+      class="cx-extensive-tree__container"
+      [ngClass]="{
+        'cx-extensive-tree__display-area--dialog-mode': isViewMode,
+        'cx-extensive-tree__display-area--selected': field.isSelected,
+        extend: !isViewMode
+      }"
+    >
+      <div
+        class="row first-column"
+        [className]="!isViewMode ? 'col-6' : 'col-12'"
+        style="width: 253px; left: 0px"
+      >
+        <td *ngIf="field.isDisplay" class="cx-extensive-tree__item">
+          <div class="cx-extensive-tree__current-data">
+            <div [ngStyle]="{ width: setPaddingNode(field) }"></div>
+            <div
+              class="cx-extensive-tree__btn"
+              (click)="clickExpandShowChildren(field, i)"
+            >
+              <i
+                *ngIf="getNumberOfChildren(field) && getNumberOfChildren(field) > 0"
+                class="material-icons"
+                [ngClass]="field.showChildren ? icon.collapse : icon.expand"
+              >
+              </i>
+            </div>
+            <div class="material-icons cx-extensive-tree__avatar-icon">
+              <i class="material-icons" [ngClass]="getAvatar(field)"></i>
+            </div>
+            <div
+              class="cx-extensive-tree__display-area"
+              (click)="onClickItem(field)"
+            >
+              <ng-template
+                [ngTemplateOutlet]="nameDepartmentTemplate"
+                [ngTemplateOutletContext]="{ item: field.object }"
+              >
+              </ng-template>
+            </div>
+          </div>
+        </td>
+      </div>
+
+      <div class="col-5 cx-extensive-area" *ngIf="havingExtensiveArea">
+        <ng-container *ngIf="field.isDisplay">
+          <ng-template
+            [ngTemplateOutlet]="itemExtensiveTemplate"
+            [ngTemplateOutletContext]="{ item: field.object }"
+          >
+          </ng-template>
+        </ng-container>
+      </div>
+
+      <div *ngIf="!isViewMode" class="col cx-actions-area">
+        <div *ngIf="field.isDisplay" class="cx-actions-area__actions">
+          <div class="cx-actions-area__action-btns">
+            <div
+              class="cx-actions-area__btn"
+              *ngIf="field.object.enableAddBtn"
+              (click)="onAddNew(field, i)"
+              [title]="text.addTooltip"
+            >
+              <i
+                class="material-icons hover"
+                [ngClass]="'icon-create-new-folder'"
+              ></i>
+            </div>
+            <div
+              class="cx-actions-area__meatball-btn"
+              *ngIf="
+                (field.object.enableRemoveBtn ||
+                field.object.enableEditBtn ||
+                field.object.enableMoveBtn) && field.level != 0
+              "
+              [placement]="'left'"
+              ngbDropdown
+            >
+              <i
+                class="material-icons hover"
+                [ngClass]="'icon icon-meatball meatball-action'"
+                ngbDropdownToggle
+              ></i>
+              <div class="cx-actions-area__dropdown--menu" ngbDropdownMenu>
+                <div class="cx-actions-area__dropdown--menu--arrow-menu"></div>
+                <button
+                  *ngIf="field.object.enableEditBtn && field.level != 0"
+                  class="ag-grid-dropdown--menu--item-btn dropdown-item"
+                  ngbDropdownItem
+                  (click)="onEdit(field)"
+                >
+                  <span>Edit</span>
+                </button>
+
+                <button
+                  *ngIf="field.object.enableRemoveBtn && field.level != 0"
+                  class="ag-grid-dropdown--menu--item-btn dropdown-item"
+                  ngbDropdownItem
+                  (click)="onDeleteItem(field)"
+                >
+                  <span>Delete</span>
+                </button>
+
+                <button
+                  *ngIf="field.object.enableMoveBtn && field.level != 0"
+                  class="ag-grid-dropdown--menu--item-btn dropdown-item"
+                  ngbDropdownItem
+                >
+                  <span>Move</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

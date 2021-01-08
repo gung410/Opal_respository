@@ -1,0 +1,13 @@
+<cx-dialog-template (cancel)="cancel()"
+    (done)="confirm()">
+    <modal-header>
+        <h3>{{dialogHeader}}</h3>
+      </modal-header>
+  <content>
+    <cx-tree [flatObjectsArray]="flatObjectsArray" [idFieldRoute]="idFieldRoute"
+      [parentIdFieldRoute]="parentIdFieldRoute" [displayFieldRoute]="displayFieldRoute" [currentRoutes]="currentRoutes"
+      [selectedObjectIds]="selectedObjectIds" [displayTemplate]="displayTemplate" [icon]="icon" [text]="text"
+      [isViewMode]="isViewMode" [destinationItems]="destinationItems" (clickItem)="onClickItem($event)">
+    </cx-tree>
+  </content>
+</cx-dialog-template>

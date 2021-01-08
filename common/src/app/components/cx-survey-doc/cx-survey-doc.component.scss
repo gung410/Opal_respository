@@ -1,0 +1,11 @@
+.content {
+  textarea {
+    width: 100%;
+    height: 300px;
+  }
+}
+.buttons {
+  button:not(:first-child) {
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+.cx-breadcrumb {
+  &__list {
+    background-color: transparent;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  &__item-text {
+    &--normal {
+      color: $cx-blue;
+
+      &:link,
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      &:active {
+        color: $cx-white;
+      }
+    }
+  }
+}
+
+
+.breadcrumb-item+.breadcrumb-item {
+  padding-left: 0.2rem;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  padding-right: 0rem;
+}
+
+[separator-symbol]::before {
+  content: attr(separator-symbol) "" !important;
+}
+
+ol :first-child::before {
+  display: none;
+}

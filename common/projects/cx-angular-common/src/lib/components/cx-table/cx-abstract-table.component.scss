@@ -1,0 +1,154 @@
+@import "./../../styles/variables.scss";
+@import "./../../styles//mixins.scss";
+
+cx-table,
+cx-table-containers {
+  .table thead th {
+    border-top: none !important;
+    font-size: 14px;
+    color: #909090;
+    font-family: "OpenSans", sans-serif, arial;
+    vertical-align: middle;
+  }
+
+  .table td {
+    vertical-align: middle;
+  }
+
+  .cx-table,
+  .cx-table-containers {
+    $show-action-button-size: 36px;
+    $square-button-border-radius: 4px;
+    width: 100%;
+    &__content {
+      position: relative;
+    }
+    &__table-header {
+        transition: transform 0.05s;
+        background-color: $cx-primary-color;
+        position: absolute;
+        width: 100%;
+        &--fixed {
+          position: fixed;
+          z-index: 1;
+        }
+    }
+    &__table-header-placeholder {
+
+    }
+    &__table-header-placeholder {
+      &--hidden {
+        visibility: collapse;
+      }
+    }
+    &__content {
+      width: 100%;
+    }
+    &__checkbox {
+      width: 4%;
+    }
+
+    cx-customized-checkbox {
+      .cx-customized-checkbox {
+        vertical-align: middle;
+
+        &__container i {
+          vertical-align: middle;
+        }
+      }
+    }
+
+    td {
+      vertical-align: middle;
+    }
+
+    &__last-data {
+      vertical-align: middle;
+    }
+
+    &__show-actions-button {
+      width: $show-action-button-size;
+      height: $show-action-button-size;
+      text-align: center;
+      border-width: 1px;
+      border-style: solid;
+      border-color: transparent;
+      border-radius: $square-button-border-radius;
+      cursor: pointer;
+
+      &::after {
+        content: none;
+      }
+
+      &:hover {
+        border-color: $cx-primary-background-color;
+      }
+
+      i {
+        font-size: 36px;
+        display: block;
+      }
+    }
+
+    &__action {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-right: $cx-space-xs;
+      margin-bottom: $cx-space-xs;
+      white-space: nowrap;
+
+      i {
+        font-size: 36px;
+        margin: 0px 5px 0px 5px;
+      }
+    }
+
+    &__actions-container {
+      margin-left: -4px;
+      display: flex;
+      &--hidden {
+        visibility: hidden;
+      }
+    }
+
+    &__container-icon {
+      display: inline-flex;
+      align-items: center;
+      width: $show-action-button-size;
+      width: 36px;
+      margin: 0px 15px 0px 3px;
+
+      i {
+        vertical-align: middle;
+      }
+    }
+
+    &__container-info {
+      display: inline-flex;
+      cursor: pointer;
+      align-items: center;
+      &:hover {
+        color: $cx-primary-background-color;
+      }
+    }
+
+    &__header {
+      cursor: pointer;
+      position: relative;
+      &-icon {
+        position: absolute;
+        font-size: 22px;
+      }
+    }
+    [ngbDropdown] {
+        position: static;
+    }
+  }
+
+  .cx-dropdown-menu {
+    @include rounded-corners(10px);
+    border: none;
+    @include cx-shadow();
+  }
+}

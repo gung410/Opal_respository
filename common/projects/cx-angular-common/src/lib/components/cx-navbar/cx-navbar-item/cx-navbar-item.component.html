@@ -1,0 +1,50 @@
+<div
+  class="navbar-box"
+  [class.collapsed]="navbarItem.isCollapsed && level === 1"
+  [class.expanded]="!navbarItem.isCollapsed && level === 1"
+>
+  <!-- have route -->
+
+  <a *ngIf="navbarItem.route"
+    [ngClass]="{'parent-item': level === 1, 'child-item': level === 2, 'is-active': navbarItem.isActive}"
+    class="parent-item"
+    [routerLink]="'/' + navbarItem.route"
+    routerLinkActive="is-active"
+    (click)="expand()"
+    [attr.aria-expanded]="!navbarItem.isCollapsed"
+  >
+    <div class="content" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
+      <!-- <i class="icon" [ngClass]="!navbarItem.isActive && !mouseOvered ? navbarItem.icon : navbarItem.iconActive"></i> -->
+      <span class="text" #navbarItemContent>{{ navbarItem.content }}</span>
+    </div>
+    <div *ngIf="level === 1" [style.width.px]="navbarItemContent.offsetWidth" class="underline-box"></div>
+  </a>
+  <!-- not have route -->
+
+  <div *ngIf="!navbarItem.route"
+    id="{{uniqueMenuParentId}}"
+    [ngClass]="{'parent-item': level === 1, 'child-item': level === 2, 'is-active': navbarItem.isActive}"
+    (click)="expand()"
+    [attr.aria-expanded]="!navbarItem.isCollapsed">
+    <div class="content" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
+      <!-- <i class="icon" [ngClass]="!navbarItem.isActive && !mouseOvered && navbarItem.isCollapsed ? navbarItem.icon : navbarItem.iconActive"></i> -->
+      <span class="text" #navbarSubMenuItemContent>{{ navbarItem.content }}</span>
+      <i *ngIf="level === 1 && navbarItem.children.length > 0" class="icon icon-sort-down"></i>
+    </div>
+    <div *ngIf="level === 1" [style.width.px]="navbarSubMenuItemContent.offsetWidth" class="underline-box"></div>
+  </div>
+  <!-- sub menu -->
+  <div *ngIf="navbarItem.children && navbarItem.children.length > 0"
+    id="{{uniqueSubMenuId}}"
+    class="sub-item cx-dropdown-menu"
+    [class.cx-show]="!navbarItem.isCollapsed">
+    <cx-navbar-item
+      *ngFor="let item of navbarItem.children"
+      class="cx-dropdown-menu__item"
+      [navbarItem]="item"
+      [level]="level + 1"
+      [listMenu]="listMenu"
+      (itemExpand)="childClick($event)"
+    ></cx-navbar-item>
+  </div>
+</div>

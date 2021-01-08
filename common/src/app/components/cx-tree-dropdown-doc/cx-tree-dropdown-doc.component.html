@@ -1,0 +1,26 @@
+<cx-doc-views>
+  <div contentFirst>
+    <cx-tree-dropdown
+      [flatObjectsArray]="flatDepartmentsArray"
+      [idFieldRoute]="'identity.id'"
+      [parentIdFieldRoute]="'parentDepartmentId'"
+      [displayFieldRoute]="'departmentInfo.name'"
+      [displayTemplate]="displayTemplate"
+      [icon]="iconsData"
+      [text]="textData"
+      [buttonCondition]="buttonConditions"
+      [isViewMode]="true"
+      [currentRoutes]="currentRoutes"
+      [selectedObjectIds]="selectedObjectIds"
+      [enableSearch]="true"
+      (selectItem)="onSelectItem($event)">
+    </cx-tree-dropdown>
+    <ng-template #displayTemplate let-object="object">
+      <div class="display-value">{{ object.departmentInfo.name }}</div>
+    </ng-template>
+  </div>
+  <div contentSecond>
+  </div>
+  <div contentThird>
+  </div>
+</cx-doc-views>

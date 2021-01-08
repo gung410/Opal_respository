@@ -1,0 +1,91 @@
+@import './../../../projects/cx-angular-common/src/lib/styles/mixins.scss';
+
+.docs-component-viewer-nav{
+    position:-webkit-sticky;
+    position:sticky;
+    top:25px
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content{
+    margin:25px;
+    width:240px;
+    max-height:75vh;
+    overflow:auto;
+    float: left;
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content::-webkit-scrollbar{
+    height:4px;
+    width:4px
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content button{
+    padding:10px 15px;
+    font-weight:700;
+    line-height:16px;
+    margin:0;
+    font-size:13px;
+    cursor:pointer;
+    position:relative;
+    display:block;
+    width:100%;
+    text-align:left;
+    background:0 0;
+    border:none
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content button:focus{
+    outline:0
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content button .mat-icon{
+    position:absolute;
+    right:5px;
+    font-size:18px
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content hr{
+    padding:0;
+    margin:0
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content ul{
+    list-style-type:none;
+    margin:0 0 5px;
+    padding:0;
+    overflow-y: auto;
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content li{
+    font-size:13px;
+    line-height:16px;
+    margin:0;
+    padding:5px 15px 5px 20px;
+}
+.docs-component-viewer-nav .docs-component-viewer-nav-content a{
+    display:block;
+    text-decoration:none;
+}
+.docs-component-sidenav-content{
+    display:flex;
+    flex-direction:column;
+    min-height:100%
+}
+.docs-component-sidenav-inner-content{
+    display:flex;
+    flex-direction:column;
+    flex:1
+}
+.docs-component-sidenav-body-content{
+    display:flex;
+    flex:1 1 auto
+}
+@media (max-width:720px){
+    .docs-component-viewer-sidenav-container .docs-component-viewer-sidenav{
+        z-index:4
+    }
+    .docs-component-viewer-nav{
+        position:relative;
+        top:0
+    }
+    .docs-component-viewer-nav .docs-component-viewer-nav-content{
+        margin:0;
+        max-height:initial;
+        @include box-sizing(border-box);
+    }
+    .docs-component-viewer-sidenav-container{
+        flex:1 0 auto
+    }
+}

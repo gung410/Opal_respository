@@ -1,0 +1,26 @@
+<cx-tag-group [tagGroup]="tagGroupObject" [tagProperty]="'listFilter'" [tagGroupField]="'const'"
+  (closeTagGroup)="onCloseTagGroup($event)" [tagTemplate]="tagTemplate" [backgroundColor]="'#f1f1f1'"
+  (clearAll)="onClearAll()">
+  <ul class="cx-tag-group-doc__list">
+    <ng-template #tagTemplate let-tag=item let-groupConst=groupConst>
+      <li class="cx-tag-group-doc__item">
+        <span class="cx-tag-group-doc__item--text">{{tag.name}}</span>
+        <i aria-hidden="true" class="cx-tag-group-doc__item--icon tiny material-icons close-icon-global d-print-none"
+          (click)="onCloseTag(tag, groupConst)"></i>
+      </li>
+    </ng-template>
+  </ul>
+</cx-tag-group>
+<cx-tag-group-simple [tagGroup]="tagGroupObjectSimple" [tagProperty]="'data'" [tagGroupField]="'filterOptions'"
+  [tagGroupFieldDisplay]="'text'" (closeTagGroup)="onCloseTagGroup($event)" [tagTemplate]="tagTemplate1"
+  [backgroundColor]="'#f1f1f1'" (clearAll)="onClearAll()">
+  <ul class="cx-tag-group-doc__list">
+    <ng-template #tagTemplate1 let-tag=item let-groupConst=groupConst>
+      <li class="cx-tag-group-doc__item">
+        <span class="cx-tag-group-doc__item--text">{{groupConst.text}} | {{tag.text}}</span>
+        <i aria-hidden="true" class="cx-tag-group-doc__item--icon tiny material-icons close-icon-global d-print-none"
+          (click)="onCloseTag(tag, groupConst)"></i>
+      </li>
+    </ng-template>
+  </ul>
+</cx-tag-group-simple>

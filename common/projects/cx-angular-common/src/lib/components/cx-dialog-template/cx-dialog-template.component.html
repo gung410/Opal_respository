@@ -1,0 +1,28 @@
+<div class="cx-dialog-template" [ngClass]="{'cx-dialog-template--fixed': fixedHeight}">
+  <div class="modal-close-button" (click)="onCancel()" *ngIf="showCloseButton">
+    <i class="material-icons close-icon"></i>
+  </div>
+  <div class="modal-header" *ngIf="showModalHeader">
+    <ng-content select="modal-header"></ng-content>
+  </div>
+  <div *ngIf="isShowingMandatoryText">
+    <cx-mandatory-text></cx-mandatory-text>
+  </div>
+  <div class="modal-body">
+    <ng-content select="content"></ng-content>
+  </div>
+
+  <div class="modal-footer" *ngIf="showFooterActionButtons">
+    <ng-container *ngIf="!showCustomFooter">
+      <button *ngIf="showCancelButton" class="cx-btn cx-btn-secondary" (click)="onCancel()">
+        {{cancelButtonText}}
+      </button>
+      <button *ngIf="showConfirmButton" class="cx-btn" (click)="onDone()" [disabled]="doneButtonDisabled" ngbAutofocus>
+        {{doneButtonText}}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="showCustomFooter">
+      <ng-content select="modal-footer"></ng-content>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@import '../../styles/cx-date-picker.scss';
+@import "../../styles/variables.scss";
+
+cx-date-picker {
+  .cx-datepicker-container {
+    display: inline-block;
+    padding-top: 18px;
+    position: relative;
+    &__invalid-text {
+      font-weight: $cx-font-weight-medium;
+      font-size: cx-calc-rem(12px);
+      color: #FF7575;
+      background: transparent;
+      position: absolute;
+      white-space: nowrap;
+      top: 0;
+      left: 2px;
+    }
+    & > input {
+      padding: 0.375rem 0.75rem;
+      line-height: 1.5;
+      color: #495057;
+      background-color: #fff;
+      border: 1px solid #D8DCE6;
+      border-radius: 0.25rem;
+    }
+    .disable-input-background {
+      background-color: #ABABAB;
+    }
+  }
+}
+

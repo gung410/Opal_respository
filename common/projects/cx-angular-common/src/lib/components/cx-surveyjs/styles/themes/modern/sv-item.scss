@@ -1,0 +1,38 @@
+@import 'constants.scss';
+@import '../../../../../styles/mixins.scss';
+
+.sv-item {
+  position: relative;
+  cursor: pointer;
+}
+.sv-item--disabled {
+  cursor: default;
+}
+.sv-item__decorator {
+  position: relative;
+  display: inline-block;
+  @include box-sizing(border-box);
+  width: 30px;
+  height: 30px;
+  border: solid 1px transparent;
+  vertical-align: middle;
+}
+.sv-item__svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  @include box-sizing(border-box);
+  width: 20px;
+  height: 20px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.sv-item__control:focus + .sv-item__decorator {
+  border-color: $main-color;
+  outline: none;
+}
+.sv-item__control-label {
+  margin-left: 0.4125em;
+  vertical-align: middle;
+}

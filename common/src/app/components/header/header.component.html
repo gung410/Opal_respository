@@ -1,0 +1,68 @@
+<cx-docs-view>
+  <div contentFirst>
+    <div>
+      <h4>cx-header</h4>
+      <p>Current search text: {{ currentSearchText }}</p>
+      <cx-header
+        *ngIf="currentUser"
+        [currentUser]="currentUser"
+        [placeholderText]="placeholderText"
+        [logo]="logo"
+        [applications]="applications"
+        [notificationList]="notificationList"
+        [isShowNotificationBell]="isShowNotificationBell"
+        [bellUrl]="notificationBellUrl"
+        [(searchValue)]="currentSearchText"
+        [currentURL]="'https://development-competence-opal-spa.csc.cxs.cloud'"
+        (signOut)="onLogout()"
+        (editProfile)="onEditProfile()"
+        (clickSettings)="onClickSettings()"
+        (clickSupport)="onClickSupport()"
+        (openNotificationPopUp)="onOpenNotificationPopUp($event)"
+        (searchOnSearchBox)="onSearch($event)"
+        (clickedNotification)="onClickNotification($event)"
+      >
+        <cx-header-user-dropdown>
+          <a class="cx-dropdown-menu__item" [title]="'Profile'" (click)="onEditProfile()">
+            <i class="icon-staff cx-user-menu-item__icon"></i>
+            Profile
+          </a>
+          <a class="cx-dropdown-menu__item" [title]="'Profile'" (click)="onEditProfile()">
+            <i class="icon-staff cx-user-menu-item__icon"></i>
+            Profile
+          </a>
+        </cx-header-user-dropdown>
+      </cx-header>
+      <div class="app-header__nav-bar">
+        <cx-navbar *ngIf="menus" [listMenu]="menus"></cx-navbar>
+      </div>
+    </div>
+    <!-- End of Example -->
+  </div>
+  <div contentSecond>
+    <h3>Properties</h3>
+    <ul>
+      <li *ngFor="let prop of propApiData">
+        <h4>{{ prop.name }}</h4>
+        <span>{{ prop.desc }}</span>
+      </li>
+    </ul>
+    <mat-divider></mat-divider>
+    <h3>Event handlers</h3>
+    <ul>
+      <li *ngFor="let prop of eventApiData">
+        <h4>{{ prop.name }}</h4>
+        <span>{{ prop.desc }}</span>
+      </li>
+    </ul>
+    <mat-divider></mat-divider>
+    <h3>Binding values</h3>
+    <ul>
+      <li>
+        <h4>searchValue</h4>
+        <span></span>
+      </li>
+    </ul>
+  </div>
+  <div contentThird></div>
+</cx-docs-view>

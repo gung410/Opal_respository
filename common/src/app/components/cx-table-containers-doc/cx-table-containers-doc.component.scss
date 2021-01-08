@@ -1,0 +1,46 @@
+cx-table-containers {
+  .cx-table-containers {
+    &__items {
+      &--avatar {
+        width: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 15px;
+
+        &-image {
+          width: inherit;
+          border-radius: 50%;
+        }
+      }
+
+      &--info {
+        display: inline-block;
+        vertical-align: middle;
+
+        &-item {
+          display: table;
+        }
+
+        &-item-sub {
+          font-size: 1em;
+          color: #909090;
+          margin: 0;
+        }
+      }
+    }
+
+    &__status {
+      &--logged-label {
+        color: #909090;
+      }
+
+      &--logged-in {
+        color: #5db31f;
+      }
+    }
+
+    &__roles {
+      color: #909090;
+    }
+  }
+}

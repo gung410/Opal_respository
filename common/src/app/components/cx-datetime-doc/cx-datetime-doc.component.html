@@ -1,0 +1,17 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+
+    <h4>Date picker: (base on jquery)</h4>
+    <cx-date-picker [(date)]="date" [minDate]="minDate" [maxDate]="maxDate" [format]="format" [placeholder]="placeholder" (dateChange)="onDateChange($event)"></cx-date-picker>
+    <button (click)="submit()">submit</button>
+    <h5 *ngIf="date">Selected date:  {{date.toDateString()}}</h5>
+  </div>
+
+  <div contentSecond>
+    <p>bbbb</p>
+  </div>
+  <div contentThird>
+    <p>Conexus button for shared</p>
+  </div>
+</cx-docs-view>

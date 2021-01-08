@@ -1,0 +1,12 @@
+<div class="cx-surveyjs">
+  <mat-tab-group *ngIf="!isCompleted && showPageAsTab" class="cx-surveyjs__tab" #surveyTabGroup [@.disabled]="true" (selectedIndexChange)="onTabChanged($event)">
+    <mat-tab *ngFor="let page of pages | slice:0:lastValidTabIndex+1; let i=index" [label]="page" id="page{{i}}">
+    </mat-tab>
+  </mat-tab-group>
+  <div id='{{surveyjsElementId}}'></div>
+  <ng-container *ngIf="!hideFooter">
+    <input *ngIf="cancelName && !isCompleted" [hidden]="!surveyModel || surveyModel.isDisplayMode" class="cx-btn cx-btn-secondary" #cancelButton type="button" value="{{cancelName}}"
+    (click)="onCancel()" />
+    <input [hidden]="'true'" #dummyTextbox type="text" />
+  </ng-container>
+</div>

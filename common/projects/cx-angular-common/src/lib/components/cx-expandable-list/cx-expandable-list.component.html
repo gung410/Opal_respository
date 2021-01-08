@@ -1,0 +1,14 @@
+<div *ngFor="let item of items; let idx = index" class="cx-expandable-list">
+  <div [ngClass]="idx > numberOfDisplay - 1 && !showExpand ? 'cx-hide' : 'cx-show'">
+    <ng-template
+      [ngTemplateOutlet]="expandTemplate"
+      [ngTemplateOutletContext]="{ item: item }"
+    >
+    </ng-template>
+    <span *ngIf="(idx < items.length && idx < numberOfDisplay - 1 && items.length > 1) || (showExpand && idx !== items.length - 1)">{{ symbol }}</span>
+    <a class="cx-expandable-list__expand"
+      *ngIf="idx === numberOfDisplay - 1 && items.length > numberOfDisplay - 1 && items.length !== numberOfDisplay"
+      (click)="expandClick($event.target)">&nbsp;(+{{ items.length - numberOfDisplay }})</a>
+    <br *ngIf="idx < items.length && idx === numberOfDisplay" />
+  </div>
+</div>

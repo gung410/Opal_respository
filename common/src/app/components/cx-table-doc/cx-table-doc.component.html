@@ -1,0 +1,482 @@
+<cx-docs-view>
+  <div contentFirst>
+    <h3>Cx table component lazy load</h3>
+
+    <cx-table-containers [headers]="headers" [itemTemplate]="employeeRowTemplate" [containers]="departments"
+      [containerChildrenCountRoute]="'childrenCount'" [items]="itemsData" [noRecordText]="'No Records'"
+      [noContainerText]="'No Container'" [noItemText]="'No Item'" [itemIdRoutes]="['Identity.Id']"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [containerTemplate]="departmentDataTemplate" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      (moveItem)="onMoveEmployee($event)" (removeItems)="onRemoveEmployeesInTable($event)">
+      <ng-template #departmentDataTemplate let-department=container>
+        <div>{{department.DepartmentName}}</div>
+      </ng-template>
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            Custom action
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              {{employeesRoleMap[employee?.employeeIdentity?.id]}}
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table-containers__items">
+          <div class="cx-table-containers__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table-containers__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table-containers__items--info">
+            <span class="cx-table-containers__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table-containers__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table-containers__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table-containers__status">
+          <div>
+            <span class="cx-table-containers__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table-containers__status--logged-label">Logged in: </span>
+            <span
+              class="cx-table-containers__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-employee=item>
+        Test custom template
+      </ng-template>
+    </cx-table-containers>
+    <cx-checkbox [(selected)]="showActionsButtonInLastRow">
+      Show Actions Button In Last Row
+    </cx-checkbox>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (selectItem)="onSelectItem($event)" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+    <div class="cx-table__paging-area">
+      <cx-paging [totalRecords]="employeesForLazyLoading.length" [recordsPerPage]="employeesPerPage" [pageSizes]="[5, 10, 15, 20]"
+        [currentPage]="currentEmployeesPage" (currentPageChange)="onCurrentPageChange($event)" (pageSizeChange)="onPageSizeChange($event)"></cx-paging>
+    </div>
+    <button (click)="onIncreaseEmployeesPerPage()">Increase employees number per page ({{employeesPerPage}})</button>
+    <button (click)="onDecreaseEmployeesPerPage()">Dncrease employees number per page ({{employeesPerPage}})</button>
+
+    <div>Test text</div>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders1" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (moveItem)="onMoveEmployee($event)" (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+
+    <div>Test text</div>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (selectItem)="onSelectItem($event)" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+
+    <div>Test text</div>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (selectItem)="onSelectItem($event)" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+
+    <div>Test text</div>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (selectItem)="onSelectItem($event)" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+    <div>Test text</div>
+    <cx-table *ngIf="currentEmployeesInPage" [showMassDefaultAction]="true" [showMassActions]="true"
+      [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="currentEmployeesInPage"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [currentSortType]="lazyLoadTableSortType" [lastColumnCustomTemplate]="lastColumnCustomTemplate"
+      [showActionsButtonInLastRow]="showActionsButtonInLastRow" (sortTypeChange)="onSortTypeChange($event)"
+      (selectItem)="onSelectItem($event)" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            tung dao test
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <!-- <span>{{employee.lastLogin}}</span> -->
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+      <ng-template #lastColumnCustomTemplate let-emp="item">
+        <div>
+          Test template
+        </div>
+      </ng-template>
+      <cx-table-mass-actions>
+        <cx-button (clicked)="onAcceptClicked()" [iconClass]="'material-icons accept'">Accept</cx-button>
+        <cx-button (clicked)="onRejectClicked()" [iconClass]="'material-icons reject'">Reject</cx-button>
+      </cx-table-mass-actions>
+    </cx-table>
+  </div>
+
+  <div contentSecond>
+    <button (click)="changeData()">Change data round 1</button>
+    <button (click)="changeData1()">Change data round 2</button>
+  </div>
+  <div contentThird>
+    <h3>Table: No content </h3>
+    <cx-table [headers]="cxTableHeaders" [itemTemplate]="employeeRowTemplate" [items]="itemsData"
+      [itemIdRoutes]="['Identity.Id']" [itemCustomActionTemplate]="departmentCustomActionTemplate"
+      [isDataLazyLoad]="false" [emptyStateText]="'No records!'" (moveItem)="onMoveEmployee($event)"
+      (removeItems)="onRemoveEmployeesInETable($event)">
+      <ng-template #departmentCustomActionTemplate let-employee=item>
+        <cx-item-custom-action [item]="employee" (customActionClick)="onCustomActionClicked($event)">
+          <cx-item-action-content>
+            Edit
+          </cx-item-action-content>
+          <cx-item-sub-action>
+            <div>
+              Sub Action
+            </div>
+          </cx-item-sub-action>
+        </cx-item-custom-action>
+      </ng-template>
+      <ng-template #employeeRowTemplate let-employee=item>
+        <td class="display-value cx-table__items">
+          <div class="cx-table__items--avatar" *ngIf="employee.EmailAddress">
+            <img class="cx-table__items--avatar-image" [src]="getAvatarFromEmail(employee.EmailAddress)">
+          </div>
+          <div class="cx-table__items--info">
+            <span class="cx-table__items--info-item">{{employee.FirstName}} {{employee.LastName}}</span>
+            <p class="cx-table__items--info-item-sub">{{employee.EmployerDepartmentId}}</p>
+          </div>
+        </td>
+        <td class="cx-table__roles">
+          <cx-expandable-list [items]="employee.Roles" [expandTemplate]="expandTemplate" [symbol]="','"
+            [numberOfDisplay]="2">
+            <ng-template #expandTemplate let-item="item">
+              <span>{{ item }}</span>
+            </ng-template>
+          </cx-expandable-list>
+        </td>
+        <td class="cx-table__status">
+          <div>
+            <span class="cx-table__status--logged-label">{{employee.EntityStatus.StatusId}}</span>
+          </div>
+          <div *ngIf="employee.EntityStatus">
+            <span class="cx-table__status--logged-label">Logged in: </span>
+            <span class="cx-table__status--logged-in">{{employee.EntityStatus.LastUpdated | amTimeAgo}}</span>
+          </div>
+        </td>
+      </ng-template>
+    </cx-table>
+    <div class="cx-table__paging-area">
+      <cx-paging [totalRecords]="0" [recordsPerPage]="12" [currentPage]="currentCxTablePage" [pageSizes]="pageSizeRanges"
+        (currentPageChange)="onCurrentPageChange($event)"></cx-paging>
+    </div>
+  </div>
+</cx-docs-view>

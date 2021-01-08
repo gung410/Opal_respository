@@ -1,0 +1,91 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+$color-normal: #54576f;
+$color-active: $cx-color-text-main;
+$child-item-color-active: #d7d9db;
+$color-child-item: #2F3E55;
+:host {
+  display: inline-block;
+}
+
+.navbar-box {
+    background-color: inherit;
+    display: flex;
+
+    .parent-item {
+        font-size: 1em;
+        color: $color-normal;
+        letter-spacing: 1px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        @include disable-user-select();
+        padding: 0 10px;
+        text-transform: capitalize;
+        .icon-down-arrow {
+            font-size: 11px;
+            margin-left: 5px;
+        }
+        .underline-box {
+            height: 6px;
+            background-color: transparent;
+            transition: all 0.3s;
+
+        }
+
+        &.is-active {
+          color: $color-active;
+          text-shadow: 1px 0px 0px #a0a2b5;
+
+          .underline-box {
+            background-color: $cx-color-highlight;
+          }
+        }
+
+        &:hover,
+        &[aria-expanded="true"] {
+          color: $color-active;
+          text-decoration: none;
+          text-shadow: 1px 0px 0px #a0a2b5;
+        }
+
+        .content {
+            padding: 10px 0;
+
+            .icon {
+              margin-left: 10px;
+              font-size: 9px;
+              color: #7a7a7a;
+              transform: translateY(-1px);
+              display: inline-block;
+            }
+        }
+    }
+
+    >.sub-item.cx-dropdown-menu {
+      display: none;
+      z-index: 9;
+      cx-navbar-item {
+        display: block;
+        padding: 0 !important;
+        &:hover {
+          a.child-item {
+            color: $cx-color-text-light;;
+            text-decoration: none;
+          }
+        }
+        a.child-item {
+          width: 100%;
+          padding: 6px 15px;
+          color: $cx-color-text-main;
+          text-transform: capitalize;
+        }
+      }
+      &.cx-show {
+        display: block;
+      }
+      &::after {
+        left: 40px;
+      }
+    }
+}

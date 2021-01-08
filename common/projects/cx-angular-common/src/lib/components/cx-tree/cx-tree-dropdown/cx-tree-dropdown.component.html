@@ -1,0 +1,37 @@
+<div class="cx-tree-dropdown">
+  <div ngbDropdown #treeDropdown="ngbDropdown" autoClose='outside' class="d-inline-block">
+    <button class="cx-tree-dropdown__button" id="cxTreeDropdown" ngbDropdownToggle [disabled]="flatObjectsArray.length <= 1">
+      <i class="material-icons cx-tree-dropdown__dashboard-icon" [ngClass]="icon.root"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="cxTreeDropdown" class="dropdown-menu cx-tree-dropdown__menu">
+      <div *ngIf="enableSearch" class="cx-tree-dropdown__general-search-box">
+        <div class="cx-tree-dropdown__search-icon" (click)="onSearch(generalSearchBox.value)">
+          <i class="icon-search"></i>
+        </div>
+        <div *ngIf="searchValue" class="cx-tree-dropdown__clear-icon" (click)="onClearSearch()">
+          <i class="icon-close"></i>
+        </div>
+        <input #generalSearchBox class="cx-tree-dropdown__search-input" type="text"
+          (keyup.enter)="onSearch(generalSearchBox.value)" [(ngModel)]="searchValue"
+          placeholder="{{multipleLanguages.search + ' ' + title}}" />
+      </div>
+      <div class="cx-tree-dropdown-divider"></div>
+      <ng-template [ngTemplateOutlet]="extendFooterDepartmentTree">
+      </ng-template>
+      <cx-extensive-tree *ngIf="!isShowSearchResult" [flatObjectsArray]="flatObjectsArray"
+        [idFieldRoute]="idFieldRoute" [parentIdFieldRoute]="parentIdFieldRoute" [text]="text"
+        [displayFieldRoute]="displayFieldRoute" [isViewMode]="isViewMode"
+        [countChildrenFieldRoute]="'childrenCount'" [havingExtensiveArea]="havingExtensiveArea"
+        [nameDepartmentTemplate]="nameTemplate" (loadChildren)="loadChildrenDepartment($event)"
+        [extensiveTreeHeader]="treeHeader" [currentDepartmentId]="currentDepartmentId" [isDetectExpandTree]="isDetectExpandTree"
+        (clickItem)="onSelectItem($event); treeDropdown.close()" [enableSearch]="enableSearch">
+        <ng-template #nameTemplate let-object="item">
+          <span title="{{object?.identity?.archetype}}" class="department__department-name">{{
+            object.departmentName }}</span>
+        </ng-template>
+      </cx-extensive-tree>
+      <ng-template [ngTemplateOutlet]="displaySearchResult">
+      </ng-template>
+    </div>
+  </div>
+</div>

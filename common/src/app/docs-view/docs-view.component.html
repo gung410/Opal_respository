@@ -1,0 +1,19 @@
+<div class="cx-docs-view">
+  <mat-tab-group>
+    <mat-tab [label]="'Overview'">
+      <div class="docs-component-view-text-content">
+        <ng-content select="[contentFirst]"></ng-content>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'Api'">
+      <div class="docs-component-view-text-content">
+        <ng-content select="[contentSecond]"></ng-content>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'Example'">
+      <div class="docs-component-view-text-content">
+        <ng-content select="[contentThird]"></ng-content>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

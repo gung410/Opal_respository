@@ -1,0 +1,31 @@
+<cx-docs-view>
+  <div contentFirst>
+    <!-- Body -->
+    <cx-narrow-tree [flatObjectsArray]="flatDepartmentsArray" [idFieldRoute]="'identity.id'"
+      [parentIdFieldRoute]="'parentDepartmentId'" [displayFieldRoute]="'departmentInfo.name'"
+      [displayTemplate]="displayTemplate" [icon]="iconsData" [text]="textData" [buttonCondition]="buttonConditions"
+      [showTreeHeader]="false" [displayCheckboxes]="false" [selectedObjectIds]="selectedObjectIds"
+      [currentRoutes]="currentRoutes" [navigatedNodeData]="currentNavigatedDepartment" [defaultExpandLevel]="3"
+      [addButtonTemplate]="addButtonTemplate" (clickItem)="onSelectItem($event)"
+      (moveItem)="onMoveItemToDestination($event)" (deleteItem)="onDeleteDepartment($event)"
+      (addItem)="onAddDepartment($event)" (editItem)="onEditDepartment($event)">
+      <ng-template #displayTemplate let-object="object">
+        <div class="display-value">{{ object.departmentInfo.name }}</div>
+      </ng-template>
+      <ng-template #addButtonTemplate let-object="object">
+          <i class="material-icons add"></i>
+      </ng-template>
+    </cx-narrow-tree>
+  </div>
+
+  <div contentSecond>
+    <ng-container *ngFor="let item of checkboxes">
+      <cx-checkbox #checkbox [assignedValue]="item"></cx-checkbox>
+    </ng-container>
+    <cx-master-checkbox [checkboxes]="checkboxList"></cx-master-checkbox>
+
+  </div>
+  <div contentThird>
+    <p>content 2</p>
+  </div>
+</cx-docs-view>

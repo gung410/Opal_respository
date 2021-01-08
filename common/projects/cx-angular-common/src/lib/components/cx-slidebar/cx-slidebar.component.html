@@ -1,0 +1,22 @@
+<div class="cx-slidebar">
+  <ng-template #slidebarContent>
+    <div class="slidebar-content" [ngStyle]="{'height': height}">
+      <div class="slidebar-content__header">
+        <ng-content select="slidebar-header"></ng-content>
+      </div>
+
+      <div class="slidebar-content__body"
+       [ngStyle]="{'max-height': ('calc(' + height + ' - 100px'), 'height': ('calc(' + height + ' - 40px')}">
+        <ng-content select="slidebar-body" ></ng-content>
+      </div>
+      <div class="slidebar-content__footer">
+        <ng-content select="slidebar-footer"></ng-content>
+      </div>
+      <button class="slidebar-content__btn-close cx-btn cx-btn-small cx-btn-secondary"
+        (click)="closeSlidebar()">
+        <span class="icon-chevron-right-bold"></span>
+      </button>
+    </div>
+
+  </ng-template>
+</div>

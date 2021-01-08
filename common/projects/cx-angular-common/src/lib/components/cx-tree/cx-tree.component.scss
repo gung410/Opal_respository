@@ -1,0 +1,31 @@
+cx-tree {
+    .cx-tree  {
+        position: relative;
+        &__act-btn {
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            &--command {
+                margin-left: 25px;
+            }
+        }
+        &__act-icon {
+           display: inline-block;
+           vertical-align: middle;
+        }
+        &__act-label {
+           font-size: 1.142em;
+           display: inline-block;
+           vertical-align: middle;
+        }
+        &__header {
+            font-size: 15px;
+            border-bottom: 2px solid #ddd;
+            color: #909090;
+            padding-top: 10px;
+        }
+        >.cx-tree-node {
+            margin-left: 50px
+        }
+    }
+}

@@ -1,0 +1,106 @@
+<div class="cx-table-containers__actions-container"
+  [ngClass]="{'cx-table-containers__actions-container--hidden': !showMassActions}">
+  <div *ngIf="showMassDefaultAction">
+    <cx-button (clicked)="onRemoveSelectedItems()" [iconClass]="icon.removeClass">Remove</cx-button>
+    <cx-button [iconClass]="icon.moveGlobalClass">Move</cx-button>
+  </div>
+  <ng-content select="cx-table-mass-actions">
+  </ng-content>
+</div>
+<div class="cx-table-containers__info-table">
+  <span *ngIf="items && items.length != 0" class="cx-table-containers__info-table--selected-items font-italic">
+    {{selectedRow}} {{cxTableLabel.selectedItemLabel}}
+  </span>
+</div>
+<table #table class="cx-table-containers__content table table-hover">
+  <thead #tableHeadPlaceholder class="cx-table__table-header-placeholder">
+    <tr>
+      <th class="cx-table-containers__checkbox" #tableHeadPlaceholderColumn>
+        <cx-customized-checkbox>
+        </cx-customized-checkbox>
+      </th>
+      <th #tableHeadPlaceholderColumn *ngFor="let header of headers" class="cx-table-containers__header"
+        [ngStyle]="{'width.px': header.width}">
+        {{ header.text }}
+        <i class="{{getSortIcon(header)}} cx-table-containers__header-icon"></i>
+      </th>
+      <th #tableHeadPlaceholderColumn [style.width.px]="widthOfLastColumnHeader"></th>
+    </tr>
+  </thead>
+  <thead #tableHead class="cx-table-containers__table-header"
+    [ngClass]="{'cx-table-containers__table-header--fixed': isHeaderFixed}"
+    [ngStyle]="{'top.px': isHeaderFixed? fixedHeaderTopPositionWhenWindowScrollInPx: '0'}"
+    [style.width.px]="tableHeadPlaceholder.offsetWidth">
+    <tr>
+      <th #tableHeadColumn class="cx-table-containers__checkbox">
+        <cx-customized-checkbox [childrenGroupName]="childrenCheckboxesGroupName" [groupName]="masterCheckboxGroupName"
+          [(selected)]="masterSelected">
+        </cx-customized-checkbox>
+      </th>
+      <th #tableHeadColumn *ngFor="let header of headers" class="cx-table-containers__header"
+        (click)="header.fieldSort && sortByFieldClick(header.fieldSort, header.sortType);">
+        {{ header.text }}
+        <i class="{{getSortIcon(header)}} cx-table-containers__header-icon"></i>
+      </th>
+      <th #tableHeadColumn></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="isDisplayContainer">
+      <tr *ngFor="let container of containers">
+        <td></td>
+        <td>
+          <div class="cx-table-containers__container-main">
+            <div class="cx-table-containers__container-icon">
+              <i class="{{getContainerIcon(container)}}"></i>
+            </div>
+            <div class="cx-table-containers__container-info" (click)="containerInfoClick(container)">
+              <ng-template [ngTemplateOutlet]="containerTemplate" [ngTemplateOutletContext]="{ container: container }">
+              </ng-template>
+            </div>
+          </div>
+        </td>
+        <td *ngFor="let header of headers"></td>
+      </tr>
+      <tr
+        *ngIf="(!containers || containers.length === 0) && (items && items.length > 0) && noContainerText !== undefined"
+        class="no-record-state">
+        <td colspan="100%">{{noContainerText}}</td>
+      </tr>
+    </ng-container>
+    <tr *ngFor="let item of items; let iIndex = index">
+      <td class="cx-table-containers__checkbox">
+        <cx-customized-checkbox [parentName]="masterCheckboxGroupName" [groupName]="childrenCheckboxesGroupName"
+          [selected]="selectedItemsMap[getItemIdFromRoute(item)] !== undefined" [assignedValue]="item"
+          (valueSelected)="onSelectedItemChange($event)"></cx-customized-checkbox>
+      </td>
+      <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{ item: item }">
+      </ng-template>
+      <td class="cx-table-containers__last-data">
+        <div *ngIf="showActionsButtonInLastRow" ngbDropdown [autoClose]="'outside'"
+          [placement]="itemActionNgbBootstrapPlacement(iIndex)">
+          <div ngbDropdownToggle class="cx-table-containers__show-actions-button">
+            <i class="{{icon.moreActionsClass}}"></i>
+          </div>
+          <div ngbDropdownMenu class="cx-dropdown-menu dropdown-content">
+            <ng-template [ngTemplateOutlet]="itemCustomActionTemplate" [ngTemplateOutletContext]="{ item: item }">
+            </ng-template>
+          </div>
+        </div>
+        <div *ngIf="!showActionsButtonInLastRow" class="cx-table__last-column-template">
+          <ng-template [ngTemplateOutlet]="lastColumnCustomTemplate" [ngTemplateOutletContext]="{ item: item }">
+          </ng-template>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="(!items || items.length === 0) && (containers && containers.length > 0) && noItemText !== undefined"
+      class="no-record-state">
+      <td colspan="100%">{{noItemText}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="(!items || items.length === 0) && (!containers || containers.length === 0) && noRecordText !== undefined"
+  class="no-record-state">
+  {{noRecordText}}
+</div>

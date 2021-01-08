@@ -1,0 +1,8 @@
+@import '../../styles/variables.scss';
+
+.cx-expandable-list {
+	&__expand {
+		cursor: pointer;
+		color: $cx-blue !important;
+	}
+}

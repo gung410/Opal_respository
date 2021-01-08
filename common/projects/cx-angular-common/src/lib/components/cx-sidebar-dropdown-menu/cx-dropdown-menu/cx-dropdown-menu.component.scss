@@ -1,0 +1,11 @@
+.list-menu-item-box {
+  .collapsed {
+    max-height: 0px;
+    opacity: 0;
+  }
+
+  .expanded {
+    max-height: auto;
+    opacity: 1;
+  }
+}

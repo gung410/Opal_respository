@@ -1,0 +1,16 @@
+<div class="cx-collapsible-input">
+    <div [ngClass]="{'cx-collapsible-input__content--hidden': !isOpenInput}"
+        class="cx-collapsible-input__content"
+        [style.width]="expandedInputWidth">
+        <cx-input [(value)]="value"
+                  [iconClass]="iconClass"
+                  [placeholder]="placeholder"
+                  (clear)="onClearClicked()"
+                  (submit)="onSubmitted()">
+        </cx-input>
+    </div>
+    <div [ngClass]="{'cx-collapsible-input__open-button--hidden': isOpenInput}"
+        class="cx-collapsible-input__open-button" (click)="onOpenButtonClicked()">
+        <i [ngClass]="iconClass"></i>
+    </div>
+</div>

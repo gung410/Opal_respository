@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+cx-checkbox {
+    .cx-checkbox {
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &__container {
+            margin-right: $cx-space-sm;
+            i {
+              transform: translateY(3px);
+              &::before {
+                content: "check_box_outline_blank";
+              }
+            }
+            input[type="checkbox"]:checked ~ i::before {
+                content: "check_box";
+            }
+            input[type="checkbox"]:indeterminate ~ i::before {
+                content: "indeterminate_check_box";
+            }
+        }
+    }
+}
