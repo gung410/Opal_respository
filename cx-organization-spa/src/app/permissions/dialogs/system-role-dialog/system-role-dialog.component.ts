@@ -34,11 +34,11 @@ export class SystemRoleDialogComponent implements OnInit, OnDestroy {
   systemRoleOriginName: string;
   assignableRoleIds: number[] = [87, 88, 89, 90, 112, 145, 142];
   selectedSystemRoleInfo: SystemRoleInfo = new SystemRoleInfo();
-  readonly specialCharsRegExp: RegExp = /[^A-Za-z0-9\s]/;
+  readonly specialCharsRegExp: RegExp = /[\!\@\#\$\%\^\&\*\(\)]/;
   assignableSystemRoles: AssignableSystemRole[] = [];
   dialogTitle: string = 'Create new role';
   isEmptyString: boolean = false;
-  isSpecialChars: boolean = false;
+  hasSpecialChars: boolean = false;
   isDuplicatedSystemRoleName: boolean = false;
 
   private _existedSystemRoleNames: string[] = [];
@@ -222,7 +222,7 @@ export class SystemRoleDialogComponent implements OnInit, OnDestroy {
               systemRoleSubjects.localizedData[0].fields[0].localizedText;
             this.systemRoleOriginName = this.systemRoleName;
 
-            this.dialogTitle = `Edit ${this.systemRoleName}`;
+            this.dialogTitle = `Edit role`;
 
             const existedSystemRolePermissionSubjectsDic: NumericDictionary<SystemRolePermissionSubject> = Utils.toDictionary(
               systemRoleSubjects.systemRolePermissionSubjects,
@@ -312,13 +312,13 @@ export class SystemRoleDialogComponent implements OnInit, OnDestroy {
   private get isValidSystemRoleTile(): boolean {
     this.isEmptyString = this.checkEmptyString();
 
-    this.isSpecialChars = this.checkSpecialChars();
+    this.hasSpecialChars = this.checkSpecialChars();
 
     this.isDuplicatedSystemRoleName = this.checkExistedSystemRoleName();
 
     if (
       this.isEmptyString ||
-      this.isSpecialChars ||
+      this.hasSpecialChars ||
       this.isDuplicatedSystemRoleName
     ) {
       return false;

@@ -1,0 +1,63 @@
+cell-broadcast-message-user-info {
+  .cell-user-info {
+    &__items {
+      &--avatar {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 15px;
+
+        &-image {
+          width: inherit;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      &--info {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: flex-start;
+        vertical-align: middle;
+        flex-direction: column;
+
+        &-action-hover:hover {
+          cursor: pointer;
+          color: #0052cc;
+        }
+
+        .cx-progress {
+          cursor: pointer;
+        }
+      }
+
+      &--info-main {
+        cursor: pointer;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      &--info-secondary {
+        color: #8799ba;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 12px;
+        font-size: 12px;
+      }
+
+      &--info-sync-icon {
+        top: 0px;
+        font-size: 16px;
+        position: absolute;
+        margin-left: 30px;
+      }
+    }
+  }
+}

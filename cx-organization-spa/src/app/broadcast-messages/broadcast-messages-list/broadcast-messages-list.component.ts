@@ -1,4 +1,3 @@
-import { UserManagement } from 'app/user-accounts/models/user-management.model';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,6 +11,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CxTableIcon } from '@conexus/cx-angular-common';
+import { ColDef } from 'ag-grid-community';
 import { AgGridConfigModel } from 'app-models/ag-grid-config.model';
 import { SortModel } from 'app-models/sort.model';
 import { ToastrAdapterService } from 'app-services/toastr-adapter.service';
@@ -20,7 +20,8 @@ import { DateTimeUtil } from 'app-utilities/date-time-utils';
 import { StringUtil } from 'app-utilities/string-utils';
 import { BasePresentationComponent } from 'app/shared/components/component.abstract';
 import { BroadcastMessagesGridHeader } from 'app/shared/constants/broadcast-message-grid-header.enum';
-import { CellUserInfoComponent } from 'app/user-accounts/user-list/cell-components/cell-user-info/cell-user-info.component';
+import { UserManagement } from 'app/user-accounts/models/user-management.model';
+import { CellBroadcastMessageUserInfoComponent } from '../cell-components/cell-broadcast-message-user-info/cell-broadcast-message-user-info.component';
 import { CellBroadcastMessageStatusComponent } from '../cell-components/cell-user-status/cell-broadcast-message-status.component';
 import { ActionsItemModel } from '../events/action-items.model';
 import {
@@ -43,6 +44,7 @@ export class BroadcastMessagesListComponent
   implements OnInit {
   @Input() broadcastMessagesData: BroadcastMessagesDto[] = [];
   @Input() broadcastMessageOwners: UserManagement[] = [];
+  @Input() isCurrentUserAllowToMakeActions: boolean;
 
   userDepartmentId: number;
   currentDepartmentId: number = -1;
@@ -112,6 +114,10 @@ export class BroadcastMessagesListComponent
   }
 
   onEditBroadcastMessagesClicked($event: any): void {
+    if (!this.isCurrentUserAllowToMakeActions) {
+      return;
+    }
+
     const broadcastMessageVM: BroadcastMessageViewModel = $event
       ? $event.data
       : null;
@@ -169,8 +175,8 @@ export class BroadcastMessagesListComponent
     );
   }
 
-  private setColumnDef(): any {
-    return [
+  private setColumnDef(): ColDef[] {
+    const colsDef: ColDef[] = [
       {
         headerName: this.getImmediatelyLanguage(
           BroadcastMessagesGridHeader.BroadcastMessageId.text
@@ -211,9 +217,8 @@ export class BroadcastMessagesListComponent
         sortable: false,
         suppressMenu: true,
         cellStyle: {},
-        cellRenderer: 'cellUserInfo',
+        cellRenderer: 'cellBroadcastMessageUserInfo',
         cellRendererParams: {
-          isFromBroadcastMessageList: true,
           broadcastMessageOwners: this.broadcastMessageOwners
         },
         lockPinned: true
@@ -268,8 +273,11 @@ export class BroadcastMessagesListComponent
         hide: false,
         headerClass: 'grid-header-centered',
         cellClass: 'grid-cell-centered'
-      },
-      {
+      }
+    ];
+
+    if (this.isCurrentUserAllowToMakeActions) {
+      colsDef.push({
         headerName: '',
         cellRenderer: 'cellDropdownMenu',
         minWidth: 50,
@@ -287,8 +295,10 @@ export class BroadcastMessagesListComponent
         cellRendererParams: {
           onClick: this.onActionClicked.bind(this)
         }
-      }
-    ];
+      });
+    }
+
+    return colsDef;
   }
 
   private titleComparator = (title: string, comparedTitle: string): number => {
@@ -319,7 +329,7 @@ export class BroadcastMessagesListComponent
       frameworkComponents: {
         cellDropdownMenu: CellBroadcastDropdownMenuComponent,
         cellBroadcastMessageStatus: CellBroadcastMessageStatusComponent,
-        cellUserInfo: CellUserInfoComponent
+        cellBroadcastMessageUserInfo: CellBroadcastMessageUserInfoComponent
       },
       rowData: [],
       selectedRows: [],

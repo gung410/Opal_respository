@@ -2,45 +2,28 @@
 
 ::ng-deep {
   .modal-content {
-    width: fit-content;
-  }
-}
-
-invalid-users-creation-record-dialog {
-  display: block;
-
-  .catalog-title {
-    font-size: 36px;
-  }
-
-  .catalog-toolbar {
-    margin-top: 30px;
-  }
-
-  .catalog-toolbar-mobile {
-    display: none;
-  }
-
-  modal-header {
     width: 100%;
-  }
 
-  @media only screen and (max-width: $screen-xs-max) {
-    .cx-dialog-template {
-      .modal-header {
-        .catalog-toolbar {
-          display: none;
-        }
-      }
+    .modal-body {
+      overflow-x: auto;
+    }
 
-      .modal-body {
-        padding: 10px;
-        margin: 0;
-
-        .invalid-users-creation-content {
-          width: 500px;
+    .invalid-users-creation-table {
+      & > tr:not(:first-child) {
+        & > td {
+          max-width: 200px;
+          & div {
+            white-space: break-spaces;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
     }
+  }
+
+  .modal-size-xl > div {
+    width: 90vw;
+    max-width: unset !important;
   }
 }

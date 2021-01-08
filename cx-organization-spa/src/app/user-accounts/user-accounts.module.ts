@@ -32,16 +32,20 @@ import { StatusHistoricalRowComponent } from './status-historical-row/status-his
 import { UserAccountConfirmationDialogComponent } from './user-account-confirmation-dialog/user-account-confirmation-dialog.component';
 import { UserAccountsDataService } from './user-accounts-data.service';
 import { UserAccountsComponent } from './user-accounts.component';
+import { UserActionsService } from './user-actions.service';
 import { UserAuditHistoryComponent } from './user-audit-history/user-audit-history.component';
 import { UserExportComponent } from './user-export/user-export.component';
 import { UserFilterTagGroupComponent } from './user-filter-tag-group/user-filter-tag-group.component';
 import { UserFilterComponent } from './user-filter/user-filter.component';
 import { CellApprovingOfficerComponent } from './user-list/cell-components/cell-approving-officer/cell-approving-officer.component';
+import { CellDropdownUserListActionsComponent } from './user-list/cell-components/cell-dropdown-user-list-actions/cell-dropdown-user-list-actions.component';
 import { CellExpandableListComponent } from './user-list/cell-components/cell-expandable-list/cell-expandable-list.component';
 import { CellUserInfoComponent } from './user-list/cell-components/cell-user-info/cell-user-info.component';
 import { CellUserStatusComponent } from './user-list/cell-components/cell-user-status/cell-user-status.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { CellDropdownOtherPlaceOfWorkActionsComponent } from './user-other-place-list/cell-components/cell-dropdown-other-place-actions.component';
 import { UserOtherPlaceListComponent } from './user-other-place-list/user-other-place-list.component';
+import { CellDropdownPendingActionsComponent } from './user-pending-list/cell-components/cell-dropdown-pending-actions/cell-dropdown-pending-actions.component';
 import { CellUserPendingInfoComponent } from './user-pending-list/cell-components/cell-user-pending-info/cell-user-pending-info.component';
 import { UserPendingListComponent } from './user-pending-list/user-pending-list.component';
 import { UserPendingActionDialogComponent } from './user-pending/user-pending-action-dialog/user-pending-action-dialog.component';
@@ -70,15 +74,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserFilterComponent,
     UserFilterTagGroupComponent,
     ApprovalInfoComponent,
+    CellDropdownUserListActionsComponent,
     UserListComponent,
     CellUserInfoComponent,
     CellExpandableListComponent,
     CellUserInfoComponent,
     CellApprovingOfficerComponent,
     CellUserStatusComponent,
+    CellDropdownPendingActionsComponent,
     UserPendingListComponent,
     CellUserPendingInfoComponent,
     UserShowHideComponent,
+    CellDropdownOtherPlaceOfWorkActionsComponent,
     UserReportingTemplateComponent,
     MassCreateUserImportPanelComponent,
     UserOtherPlaceListComponent,
@@ -98,8 +105,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AgGridModule.withComponents([
       CellUserInfoComponent,
       CellDropdownActionComponent,
+      CellDropdownPendingActionsComponent,
+      CellDropdownOtherPlaceOfWorkActionsComponent,
       CellUserPendingInfoComponent,
       CellExpandableListComponent,
+      CellDropdownUserListActionsComponent,
       CellApprovingOfficerComponent,
       CellUserStatusComponent,
       UserStatusComponent,
@@ -132,6 +142,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     UserAccountsDataService,
     FileInfoApiService,
+    UserActionsService,
     FileInfoListService,
     ApprovalDataService,
     {

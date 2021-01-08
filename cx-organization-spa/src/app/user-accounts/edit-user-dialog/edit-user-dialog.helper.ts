@@ -88,12 +88,16 @@ export class EditUserDialogHelper {
     this.user = user;
     this.currentUser = currentUser;
   }
-  getDialogMode(): EditUserDialogModeEnum {
+  getDialogMode(
+    isUserHasRightsToAccess2ndPendingApprovalEdit: boolean = false
+  ): EditUserDialogModeEnum {
     if (!this.user) {
       return EditUserDialogModeEnum.Create;
     }
     if (this.user) {
-      const isViewMode = this.isViewMode();
+      const isViewMode = this.isViewMode(
+        isUserHasRightsToAccess2ndPendingApprovalEdit
+      );
 
       return isViewMode
         ? EditUserDialogModeEnum.View
@@ -335,7 +339,9 @@ export class EditUserDialogHelper {
     );
   }
 
-  private isViewMode(): boolean {
+  private isViewMode(
+    isUserHasRightsToAccess2ndPendingApprovalEdit: boolean = false
+  ): boolean {
     if (!this.user && !this.user.entityStatus) {
       return false;
     }
@@ -353,10 +359,7 @@ export class EditUserDialogHelper {
     if (
       this.user.entityStatus.statusId === StatusTypeEnum.PendingApproval2nd.code
     ) {
-      return !(
-        UserManagement.hasSystemAdminRole(this.currentUser.systemRoles) ||
-        UserManagement.hasUserAccountAdminRole(this.currentUser.systemRoles)
-      );
+      return isUserHasRightsToAccess2ndPendingApprovalEdit ? false : true;
     }
 
     return false;

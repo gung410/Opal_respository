@@ -47,7 +47,7 @@ export class CxSurveyjsExtendedService {
     private systemRolesDataService: SystemRolesDataService
   ) {}
 
-  async setCurrentUserVariables(user: User): Promise<void> {
+  async setCurrentUserVariables(user: User): Promise<CxSurveyjsVariable[]> {
     const variables = {};
     this.currentUser = Utils.cloneDeep(user);
 
@@ -136,6 +136,8 @@ export class CxSurveyjsExtendedService {
 
     this.setCurrentUserDepartmentTypes(user.departmentId);
     this.cxSurveyjsService.setVariables(variables);
+
+    return this.cxSurveyjsService.variables;
   }
 
   setCurrentDepartmentVariables(departmentId: number): void {

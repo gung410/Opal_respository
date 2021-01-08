@@ -11,7 +11,8 @@ import {
 } from '@angular/core';
 import {
   CxSurveyjsComponent,
-  CxSurveyjsEventModel
+  CxSurveyjsEventModel,
+  CxSurveyjsVariable
 } from '@conexus/cx-angular-common';
 import { AuthService } from 'app-auth/auth.service';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
@@ -47,7 +48,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   filterFormJSON: any = FilterFormJSON;
   appliedFilterFormJSON: any = AppliedFilterFormJSON;
   appliedData: FilterModel = new FilterModel();
-  filterVariables: any[] = [];
+  filterVariables: CxSurveyjsVariable[] = [];
   filterParams: UserGroupFilterParams;
 
   @ViewChild('filterSurveyJs') filterSurveyJs: CxSurveyjsComponent;
@@ -88,6 +89,13 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   }
 
   initFilterData(): void {
+    this.filterVariables.push(
+      new CxSurveyjsVariable({
+        name: 'replaceTS',
+        value: Math.random().toString()
+      })
+    );
+
     this.subscription.add(
       this.systemRolesStoreService.get().subscribe((systemRoles) => {
         if (!systemRoles) {

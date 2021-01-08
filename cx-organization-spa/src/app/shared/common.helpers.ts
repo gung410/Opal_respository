@@ -12,59 +12,24 @@ export class CommonHelpers {
   static freezeAgGridHeader(): any {
     const headerHeight = 128;
     const freezeFunction = () => {
-      const userAccountDomainUrl = '/user-accounts';
       const agGridHeader = document.querySelector(
         'ag-grid-angular.ag-grid-header-floatable .ag-header'
       );
 
-      const universalToolbarAction = document.querySelector(
-        '.action-group-container'
-      );
-
-      const isOnUserAccountPage = window.location.href.includes(
-        userAccountDomainUrl
-      );
-
-      if (!agGridHeader && !universalToolbarAction) {
+      if (!agGridHeader) {
         return;
       }
 
-      const fixedAgGridHeaderClassName = 'ag-grid-header-fixed';
-      const fixedAgGridHeaderPendingTabClassName =
-        'ag-grid-header-pending-tab-fixed';
-      const fixedAgGridUniversalToolbarClassName = 'pending-list-toolbar-fixed';
+      const fixedClassName = 'ag-grid-header-fixed';
       const currentScrollHeight =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         0;
       if (currentScrollHeight > headerHeight) {
-        agGridHeader.classList.add(fixedAgGridHeaderClassName);
-
-        const agGridToolbarActionBtns = document
-          .querySelector('.action-toolbar')
-          .getElementsByTagName('BUTTON');
-
-        if (agGridToolbarActionBtns.length !== 0 && isOnUserAccountPage) {
-          universalToolbarAction.classList.add(
-            fixedAgGridUniversalToolbarClassName
-          );
-
-          agGridHeader.classList.add(fixedAgGridHeaderPendingTabClassName);
-          agGridHeader.classList.remove(fixedAgGridHeaderClassName);
-        } else {
-          //   universalToolbarAction.classList.add(
-          //     fixedAgGridUniversalToolbarClassName
-          //   );
-          universalToolbarAction.classList.remove(
-            fixedAgGridUniversalToolbarClassName
-          );
-
-          agGridHeader.classList.remove(fixedAgGridHeaderPendingTabClassName);
-          agGridHeader.classList.add(fixedAgGridHeaderClassName);
-        }
+        agGridHeader.classList.add(fixedClassName);
       } else {
-        agGridHeader.classList.remove(fixedAgGridHeaderClassName);
+        agGridHeader.classList.remove(fixedClassName);
       }
     };
 

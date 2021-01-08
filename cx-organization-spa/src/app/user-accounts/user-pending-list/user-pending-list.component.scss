@@ -280,23 +280,17 @@ user-pending-list {
 
 @media only screen and (max-width: $screen-xs-max) {
   .grid-toolbar-fixed {
-    top: 200px;
-    z-index: 3;
+    top: 200px !important;
+    z-index: 5;
   }
 
-  .pending-list-toolbar-fixed {
-    top: 145px !important;
-  }
-  .ag-grid-header-pending-tab-fixed {
-    top: 130px !important;
-  }
   .ag-header.ag-grid-header-fixed {
     top: 254px !important;
   }
 
   .cx-page-container {
     .universal-toolbar {
-      padding: 8px 16px !important;
+      padding: 0 16px !important;
     }
 
     .toolbar-actions {

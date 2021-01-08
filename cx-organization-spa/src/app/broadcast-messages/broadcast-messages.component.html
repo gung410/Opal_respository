@@ -1,9 +1,13 @@
-<div *ngIf="
-    broadcastMessageOwners 
-    && broadcastMessageOwners.length
-    && broadcastMessagesDataPaging
-    && broadcastMessagesDataPaging.items">
-    <broadcast-messages-list
+<div
+  *ngIf="
+  broadcastMessageOwners 
+  && broadcastMessageOwners.length
+  && broadcastMessagesDataPaging
+  && broadcastMessagesDataPaging.items"
+  class="broadcast-messages-container"
+>
+  <broadcast-messages-list
+    [isCurrentUserAllowToMakeActions]="isCurrentUserAllowToMakeActions"
     [broadcastMessagesData]="broadcastMessagesDataPaging?.items"
     [broadcastMessageOwners]="broadcastMessageOwners"
     (singleAction)="onSingleActionClicked($event)"
@@ -11,7 +15,10 @@
     (sortChange)="onSortTypeChange($event)"
   >
   </broadcast-messages-list>
-  <div *ngIf="broadcastMessagesDataPaging" class="broadcast-message__paging-area">
+  <div
+    *ngIf="broadcastMessagesDataPaging"
+    class="broadcast-message__paging-area"
+  >
     <cx-paging
       [currentPage]="broadcastMessagesDataPaging.pageIndex"
       [recordsPerPage]="broadcastMessagesDataPaging.pageSize"

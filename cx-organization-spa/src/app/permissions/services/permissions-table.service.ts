@@ -9,9 +9,7 @@ import { Utils } from '../../shared/utilities/utils';
 import { ActionSignal } from '../dtos/action-signal.dto';
 import { EditingSignal } from '../dtos/editing-signal.dto';
 import { HeaderComparison } from '../dtos/header-comparison.dto';
-import { AccessRightsRequest } from '../dtos/request-dtos/access-rights-request';
 import { GrantedType } from '../enum/granted-type.enum';
-import { ObjectType } from '../enum/object-type.enum';
 import { AccessRightsMatrixModel } from '../models/access-rights-matrix.model';
 import { AccessRightRoles } from '../models/permissionRoles.model';
 import { PermissionsApiService } from './permissions-api.service';
@@ -23,9 +21,23 @@ export class PermissionsTableService {
   headerName$: BehaviorSubject<HeaderComparison> = new BehaviorSubject<HeaderComparison>(
     null
   );
+  lastRowRender$: Observable<boolean>;
+  isChangeTable: boolean = false;
 
+  get lastRowId(): number {
+    return this._lastRowId;
+  }
+  set lastRowId(lastRowId: number) {
+    if (Utils.isDifferent(this._lastRowId, lastRowId)) {
+      this.isChangeTable = true;
+    }
+    this._lastRowId = lastRowId;
+  }
+  private readonly _defaultLasRowId: number = -99;
+  private _lastRowId: number = this._defaultLasRowId;
   private editingSubject: Subject<EditingSignal> = new Subject<EditingSignal>();
   private actionSubject: Subject<ActionSignal> = new Subject<ActionSignal>();
+  private lastRowRenderSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private permissionsApiSvc: PermissionsApiService,
@@ -33,6 +45,7 @@ export class PermissionsTableService {
   ) {
     this.editingSignal$ = this.editingSubject.asObservable();
     this.actionSignal$ = this.actionSubject.asObservable();
+    this.lastRowRender$ = this.lastRowRenderSubject.asObservable();
   }
 
   sendEditingSignal(editingSignal: EditingSignal): void {
@@ -41,6 +54,17 @@ export class PermissionsTableService {
 
   sendActionSignal(actionSignal: ActionSignal): void {
     this.actionSubject.next(actionSignal);
+  }
+
+  sendLastRowRenderSignal(rowId: number): void {
+    if (rowId === this.lastRowId && this.isChangeTable) {
+      this.isChangeTable = false;
+      this.lastRowRenderSubject.next(true);
+    }
+  }
+
+  resetTableService(): void {
+    this.lastRowId = this._defaultLasRowId;
   }
 
   isHeaderNameDifference(): boolean {
@@ -57,6 +81,14 @@ export class PermissionsTableService {
     const flattenPermissionRolesArrayResult = this.flattenPermissionRolesArray(
       systemRolesFollowedAccessRights
     );
+
+    const lastAccessRight =
+      flattenPermissionRolesArrayResult[
+        flattenPermissionRolesArrayResult.length - 1
+      ];
+    if (lastAccessRight && lastAccessRight.accessRightId) {
+    this.lastRowId = lastAccessRight.accessRightId;
+    }
 
     return flattenPermissionRolesArrayResult;
   }

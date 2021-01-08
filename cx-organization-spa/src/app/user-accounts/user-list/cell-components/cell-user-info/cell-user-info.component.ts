@@ -11,6 +11,8 @@ import {
   UserEntityStatusConst,
   UserEntityStatusEnum
 } from 'app/user-accounts/user-accounts.model';
+// tslint:disable-next-line:max-line-length
+import { OtherPlaceOfWorkActionsIndex } from 'app/user-accounts/user-other-place-list/constant/other-place-of-work-actions-index.const.enum';
 
 @Component({
   selector: 'cell-user-info',
@@ -24,20 +26,10 @@ export class CellUserInfoComponent
   implements ICellRendererAngularComp {
   employee: UserManagement;
   params: any;
+  currentTabLabel: string;
 
   agInit(params: any): void {
-    this.params = params;
-    if (!params.isFromBroadcastMessageList) {
-      this.employee = params.data;
-
-      return;
-    }
-
-    this.employee = params.broadcastMessageOwners.find(
-      (broadcastMessageOwner) =>
-        broadcastMessageOwner.identity.extId.toLowerCase() ===
-        params.data.ownerId.toLowerCase()
-    );
+    this.setupCellUserInfo(params);
   }
 
   refresh(params?: any): boolean {
@@ -55,6 +47,25 @@ export class CellUserInfoComponent
   }
 
   onEditUserClicked($event: any): void {
-    this.params.context.componentParent.editUser.emit($event);
+    const isAllowedToEdit = this.checkPermissionToEdit();
+    if (isAllowedToEdit) {
+      this.params.context.componentParent.editUser.emit($event);
+    }
+  }
+
+  private checkPermissionToEdit(): boolean {
+    switch (this.currentTabLabel) {
+      case 'otherPlaceOfWork':
+      case 'userList':
+        return this.params.context.componentParent.isAllowToEditUser();
+      default:
+        return true;
+    }
+  }
+
+  private setupCellUserInfo(params: any): void {
+    this.params = params;
+    this.employee = params.data;
+    this.currentTabLabel = params.context.componentParent.tabLabel;
   }
 }

@@ -8,6 +8,7 @@ export enum SurveyVariableEnum {
   currentUser_isOverallSystemAdministrator = 'currentUser_isOverallSystemAdministrator',
   currentUser_isUserAccountAdministrator = 'currentUser_isUserAccountAdministrator',
   currentUser_isAdministrator = 'currentUser_isAdministrator',
+  currentUser_hasPermissionToEdit = 'currentUser_hasPermissionToEdit',
   currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper = 'currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper',
   currentUser_departmentId = 'currentUser_departmentId',
   currentUser_departmentTypes = 'currentUser_departmentTypes',

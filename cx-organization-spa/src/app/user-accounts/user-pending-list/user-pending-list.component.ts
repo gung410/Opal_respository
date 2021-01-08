@@ -18,7 +18,6 @@ import {
 import { SortModel } from 'app-models/sort.model';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
 import { AppConstant } from 'app/shared/app.constant';
-import { CellDropdownActionComponent } from 'app/shared/components/cell-dropdown-action/cell-dropdown-action.component';
 import { BasePresentationComponent } from 'app/shared/components/component.abstract';
 import { findIndexCommon } from 'app/shared/constants/common.const';
 import { StatusActionTypeEnum } from 'app/shared/constants/status-action-type.enum';
@@ -26,9 +25,10 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 import { GridApi } from '@ag-grid-community/core';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { User } from 'app-models/auth.model';
 import { SystemRole } from 'app/core/models/system-role';
 import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
+import { SAM_PERMISSIONS } from '../../shared/constants/sam-permission.constant';
 import {
   initPendingUserActions,
   initUserActions
@@ -39,9 +39,10 @@ import { ActionsModel } from '../user-actions/models/actions.model';
 import { UserActionsModel } from '../user-actions/models/user-actions.model';
 import { CellUserStatusComponent } from '../user-list/cell-components/cell-user-status/cell-user-status.component';
 import { UserStatusDisplayActionModel } from '../user-list/models/user-selected-status.model';
+import { CellDropdownPendingActionsComponent } from './cell-components/cell-dropdown-pending-actions/cell-dropdown-pending-actions.component';
 import { CellUserPendingInfoComponent } from './cell-components/cell-user-pending-info/cell-user-pending-info.component';
+import { PendingActionIndex } from './constant/pending-actions-index-const.enum';
 import { USER_PENDING_LIST_HEADER_CONST } from './models/user-pending-list.const';
-import { CommonHelpers } from 'app/shared/common.helpers';
 
 @Component({
   selector: 'user-pending-list',
@@ -74,6 +75,9 @@ export class UserPendingListComponent
   @Input() viewOnly: boolean;
   @Input() userItemsData: UserManagement[];
   @Input() reloadPendingTab: boolean = false;
+  @Input() currentUser: User;
+
+  @Input() tabLabel: string;
 
   @Output() editUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() sortChange: EventEmitter<SortModel> = new EventEmitter<SortModel>();
@@ -157,7 +161,7 @@ export class UserPendingListComponent
       frameworkComponents = {
         cellUserInfo: CellUserPendingInfoComponent,
         cellUserStatus: CellUserStatusComponent,
-        cellDropdownMenu: CellDropdownActionComponent
+        cellDropdownMenu: CellDropdownPendingActionsComponent
       };
     }
 
@@ -199,10 +203,25 @@ export class UserPendingListComponent
       this.agGridConfig.selectedRows
     );
 
+    if (
+      actions.listNonEssentialActions &&
+      actions.listNonEssentialActions.length
+    ) {
+      actions.listNonEssentialActions = this.checkPermissionsForListNonEssentialActions(
+        actions.listNonEssentialActions
+      );
+    }
+
+    // [canApprove, canEndorse, canReject, canEdit]
+    const canActions = this.validateActionsInPendingTabs();
+
     if (this.currentSelectedRows > 0) {
       actions.listEssentialActions = initPendingUserActions(
         this.translateAdapterService,
-        this.isCurrentUserDivAdmin
+        this.isCurrentUserDivAdmin,
+        canActions[PendingActionIndex.Approve],
+        canActions[PendingActionIndex.Endorse],
+        canActions[PendingActionIndex.Reject]
       );
       this.userActions.emit(actions);
     } else {
@@ -323,6 +342,36 @@ export class UserPendingListComponent
     params.api.sizeColumnsToFit();
   }
 
+  validateActionsInPendingTabs(
+    pendingLabel?: string
+  ): [boolean, boolean, boolean, boolean] {
+    switch (pendingLabel || this.tabLabel) {
+      case 'pending1stLevel':
+        return [
+          this.currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending1st),
+          this.currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st),
+          this.currentUser.hasPermission(SAM_PERMISSIONS.RejectPending1st),
+          this.currentUser.hasPermission(SAM_PERMISSIONS.EditPending1st)
+        ];
+      case 'pending2ndLevel':
+        return [
+          this.currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending2nd),
+          false,
+          this.currentUser.hasPermission(SAM_PERMISSIONS.RejectPending2nd),
+          this.currentUser.hasPermission(SAM_PERMISSIONS.EditPending2nd)
+        ];
+      case 'pendingSpecialLevel':
+        return [
+          this.currentUser.hasPermission(SAM_PERMISSIONS.ApprovePendingSpecial),
+          false,
+          this.currentUser.hasPermission(SAM_PERMISSIONS.RejectPendingSpecial),
+          this.currentUser.hasPermission(SAM_PERMISSIONS.EditPendingSpecial)
+        ];
+      default:
+        return [false, false, false, false];
+    }
+  }
+
   changeSelectedColumn(show: boolean, column: any): void {
     if (column && column.colId) {
       this.agGridConfig.gridColumnApi.setColumnVisible(column.colId, show);
@@ -396,6 +445,41 @@ export class UserPendingListComponent
       listSpecifyActions: initUserActions(this.translateAdapterService)
         .listSpecifyActions
     });
+  }
+
+  private checkPermissionsForListNonEssentialActions(
+    nonEssentialActions: ActionsModel[]
+  ): any {
+    const nonEssentialActionsResult: ActionsModel[] = [];
+    nonEssentialActions.forEach((nonEssentialAction) => {
+      let isAllowed: boolean;
+      switch (nonEssentialAction.actionType) {
+        case StatusActionTypeEnum.RequestSpecialApproval:
+          if (this.tabLabel !== 'pending2ndLevel') {
+            isAllowed = true;
+
+            break;
+          }
+          isAllowed = this.currentUser.hasPermission(
+            SAM_PERMISSIONS.RequestSpecialApprovalPending2nd
+          );
+          break;
+        case StatusActionTypeEnum.ChangeUserPlaceOfWork:
+          isAllowed = this.currentUser.hasPermission(
+            SAM_PERMISSIONS.AdvancedUserAccountsManagement
+          );
+          break;
+        default:
+          isAllowed = true;
+          break;
+      }
+
+      if (isAllowed) {
+        nonEssentialActionsResult.push(nonEssentialAction);
+      }
+    });
+
+    return nonEssentialActionsResult;
   }
 
   private getUserAction(

@@ -1,9 +1,165 @@
-.filter-department {
-  &__header {
-    margin: 20px 0px 10px 4px;
-    font-weight: 500;
+::ng-deep .modal-backdrop {
+  background-color: #fff;
+}
+
+::ng-deep .filter-slidebar .modal-dialog {
+  position: absolute;
+  top: 128px;
+  max-width: 30vw;
+  width: 30vw;
+  height: calc(100vh - 128px);
+  margin: 0;
+
+  .modal-content {
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.15);
+    padding: 40px 24px 0 32px;
+    border: none;
+
+    .filter-department {
+      height: 90vh;
+
+      .outro-modal {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+        right: -25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: white;
+        outline: none;
+        border: none;
+        box-shadow: 0px 24px 38px rgba(0, 0, 0, 0.05),
+          0px 11px 15px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+      }
+
+      .but-left-side {
+        transform: rotate(180deg);
+      }
+
+      .header {
+        height: 10%;
+        display: flex;
+      }
+
+      .title {
+        color: #303450;
+        margin-top: 10px;
+      }
+
+      .group-action {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+
+        .cx-btn {
+          width: auto;
+          height: 40px;
+          padding: 8px 16px;
+          border: none;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .cx-btn-secondary {
+          text-decoration: underline;
+          border: none;
+          outline: none;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            background-color: white;
+            color: #313552;
+          }
+        }
+      }
+
+      .deparment-name {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 100%;
+      }
+
+      .content {
+        height: 70%;
+
+        .cx-checkbox__checkbox {
+          display: none;
+        }
+
+        .material-icons::before {
+          font-size: 25px !important;
+        }
+      }
+
+      &__content {
+        .deparment-name {
+          display: block;
+          color: #303450;
+          margin-bottom: 26px;
+        }
+      }
+    }
   }
-  &__items {
-    columns: 3;
+
+  .slide-in {
+    animation-name: slide-in;
+    animation-duration: 0.3s;
+  }
+
+  .slide-out {
+    animation-name: slide-out;
+    animation-duration: 0.3s;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    left: 0px;
+    top: 0px;
+  }
+
+  1% {
+    opacity: 0;
+    left: -100vw;
+    top: 0px;
+  }
+
+  100% {
+    opacity: 1;
+    left: 0px;
+    top: 0px;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 1;
+    left: 0px;
+    top: 0px;
+  }
+
+  50% {
+    opacity: 1;
+    left: 0px;
+    top: 0px;
+  }
+
+  100% {
+    opacity: 0;
+    left: -100vw;
+    top: 0px;
   }
 }

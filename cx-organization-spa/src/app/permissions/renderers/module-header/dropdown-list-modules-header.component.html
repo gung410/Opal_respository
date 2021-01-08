@@ -8,6 +8,7 @@
       [valueField]="'id'"
       [labelField]="'dataName'"
       (selectedValueChange)="onItemChanged($event)"
+      [isDisplayCloseIcon]="false"
       [items]="moduleItems"
       [(ngModel)]="selectedModuleId"
       [ngModelOptions]="{ standalone: true }"

@@ -1,10 +1,20 @@
-<div class="department">
-  <div class="filter-section__filter-button text-right">
-    <button class="cx-btn cx-btn-icon-right" (click)="onClickFilter()">
-      {{ 'Common.Label.Filter' | translate }}
-      <i class="icon-controls"></i>
-    </button>
+<div class="slidebar-doc">
+  <div class="slidebar-doc__actions">
+    <div class="department__filter-container">
+      <button (click)="onClickFilter()" class="cx-btn cx-btn-secondary">
+        Filters
+        <i class="icon-filter"></i>
+        <span
+          class="department__filter-number"
+          *ngIf="countDepartmentFilterChoice > 0"
+        >
+          {{ countDepartmentFilterChoice }}
+        </span>
+      </button>
+    </div>
   </div>
+</div>
+<div class="department">
   <div class="department__tree">
     <div *ngIf="flatDepartmentsArray" class="department__filter-section">
       <div
