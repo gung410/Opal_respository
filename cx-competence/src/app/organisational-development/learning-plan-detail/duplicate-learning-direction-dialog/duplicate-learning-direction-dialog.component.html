@@ -1,0 +1,17 @@
+<cx-dialog-template
+  *ngIf="isFormReady"
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+>
+  <modal-header> </modal-header>
+  <content>
+    <cx-surveyjs
+      [json]="jsonForm"
+      [(data)]="formData"
+      [cancelName]="'Cancel'"
+      [submitName]="'Duplicate'"
+      (submitting)="onSubmit($event)"
+      (cancel)="onCancel()"
+    ></cx-surveyjs>
+  </content>
+</cx-dialog-template>

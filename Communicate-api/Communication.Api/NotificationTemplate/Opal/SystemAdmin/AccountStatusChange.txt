@@ -1,0 +1,7 @@
+{{AlertText}}!
+Your OPAL2.0 account has been {{Status}}.
+{{WithReason}}.
+{{OtpCode}}
+You can continue using the system now by clicking the link below.
+{{CallBackText}}
+

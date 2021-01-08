@@ -1,0 +1,99 @@
+---
+format_version: 3
+environments:
+  systemtest: 
+    pipelines: 
+      - cx-queuemanager-api-build
+      - cx-queuemanager-api-systemtest
+  uat: 
+    pipelines: 
+      - cx-queuemanager-api-uat
+  pre-production: 
+    pipelines: 
+      - cx-queuemanager-api-pre-production
+  production: 
+    pipelines: 
+      - cx-queuemanager-api-production
+pipelines:
+  cx-queuemanager-api-build: 
+    group: cx-queuemanager-api
+    label_template: "release-1.2.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      SONAR_PROJECTKEY: datahub-opal-api-queuemanager-release
+      SONAR_SOLUTION_FILE: Datahub.Queue.Manager.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: linux-docker-build-sonar-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/1.2
+        git: "https://bitbucket.org/cxdev/cx-datahub-queue-manager.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+  cx-queuemanager-api-systemtest:
+    group:  cx-queuemanager-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    template: ansible-deploy-fetch-upstream
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+  cx-queuemanager-api-uat:
+    group:  cx-queuemanager-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-systemtest
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-systemtest
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+  cx-queuemanager-api-pre-production:
+    group: cx-queuemanager-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-uat
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+  cx-queuemanager-api-production:
+    group: cx-queuemanager-api
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-pre-production
+        stage: deploy-stage
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-pre-production
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager

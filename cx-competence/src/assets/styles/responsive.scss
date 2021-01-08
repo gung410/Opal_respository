@@ -1,0 +1,198 @@
+@import "variables.scss";
+@import "mixins.scss";
+
+/* Table of Content
+==================================================
+	#Media Queries
+        /* Large devices (large desktops, 1200px and up)
+        /* Medium devices (desktops, 992px and up)
+        /* Small devices (tablets, 768px and up)
+        /* Extra small devices (phones, less than 768px)
+
+================================================== */
+
+/* ====================================================== */
+/* #Media Queries ======================================= */
+/* ====================================================== */
+
+/* Large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: $screen-lg-min){
+
+}
+
+@media only screen and (max-width: $screen-md-max){
+
+}
+
+/* Medium devices */
+@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max){
+
+}
+
+@media only screen and (max-width: $screen-sm-max){
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max){
+
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media only screen and (max-width: $screen-xs-max){
+  .cx-page-container,.team-calendar-page{
+    padding-left: $main-grid-unit*2 !important;
+    padding-right: $main-grid-unit*2!important;
+  }
+
+  .cx-dialog-template{
+    padding: $main-grid-unit*2!important;
+    .modal-close-button{
+      top: $main-grid-unit*2;
+      right: $main-grid-unit*2;
+    }
+  }
+
+  .department{
+    &__navigation-tree{
+      .cx-tree-dropdown__menu{
+        left: -30px !important;
+        width: 500px !important;
+        min-width: auto;
+      }
+    }
+    &__search-result{
+      &--no-result{
+        display: block;
+        padding: 10px 0 0 !important;
+      }
+    }
+  }
+
+  .cx-toolbar{
+    &--floating{
+      width: calc(100% - 32px);
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+  }
+
+  cx-universal-toolbar {
+    .universal-toolbar {
+      .department-selector-container{
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max){
+  .cx-header{
+    >.cx-header-content{
+      padding-left: $main-grid-unit*2 !important;
+      padding-right: $main-grid-unit*2!important;
+      .logo .logo__image{
+        padding-right: 0!important;
+      }
+    }
+  }
+
+  .navbar-item-list{
+    padding-left: $main-grid-unit*2 !important;
+    padding-right: $main-grid-unit*2!important;
+  }
+
+  cx-paging {
+    .cx-pagination{
+      position: relative;
+      &__text{
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin:0!important;
+        &:last-child{
+          left: auto;
+          top: 55px;
+        }
+      }
+      &__list{
+        position: absolute;
+        top: 0;
+        right:0;
+        margin:0!important;
+      }
+    }
+  }
+
+  .cx-toolbar{
+    position: relative;
+    margin-top: 40px;
+    min-width: auto !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    >.user-actions{
+      position: absolute;
+      top: -44px;
+      right: 0;
+    }
+  }
+
+  .cx-panel{
+    padding: $main-grid-unit * 2 !important;
+  }
+
+  .department{
+    &__navigation-tree{
+      .cx-tree-dropdown__menu{
+        width: 340px !important;
+      }
+    }
+  }
+
+  .content-notification{
+    .simple-pagination {
+      >ul{
+        height: 90px;
+        position: relative;
+        >li{
+          &:first-child{
+            position: absolute;
+            top: 50px;
+            left: 0;
+          }
+          &:last-child{
+            position: absolute;
+            right: 0;
+            top: 50px;
+          }
+        }
+      }
+    }
+  }
+
+  .notifications {
+    .popup-notifications{
+      left: 105px !important;
+      width: 360px !important;
+    }
+  }
+
+  cx-universal-toolbar {
+    .universal-toolbar{
+      flex-flow: column;
+      .department-selector-container{
+        width: 100% !important;
+      }
+    }
+  }
+
+  staff-list {
+    .cx-page-container {
+      .toolbar-actions{
+        padding-left: 0 !important;
+        margin-top: $main-grid-unit;
+      }
+    }
+  }
+}

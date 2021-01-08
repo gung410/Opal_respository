@@ -1,0 +1,47 @@
+<fixed-header
+  *ngIf="hasValidUser && currentUser && showHeader"
+  [userData]="currentUser"
+  [multipleLanguages]="multipleLanguages"
+  [notifications]="notifications"
+  [isShowNotificationBell]="isShowNotificationBell"
+  (logout)="onLogout()"
+  (clickSupport)="onSupport()"
+  (changePassword)="onChangePassword()"
+  (editProfile)="navigateToProfile()"
+  (clickSettings)="onClickedSettings()"
+  (searchOnSearchBox)="onSearch($event)"
+>
+</fixed-header>
+<div class="cx-container">
+  <div
+    *ngIf="hasValidUser && enableBroadCast && showHeader"
+    class="notification-alert"
+    [ngClass]="cssClass"
+  >
+    <iframe [src]="notificationAlertUrl" [height]="heightIframe"></iframe>
+  </div>
+  <!-- TODO: Hide for now -->
+  <!-- <ng-container *ngIf="hasValidUser && currentUser && showHeader && showBreadcrumb">
+    <ng-container *ngIf="currentBreadcrumb && currentBreadcrumb.length > 0">
+      <div class="breadcrum-container">
+        <cx-breadcrumb-simple [breadCrumbItems]="currentBreadcrumb" (clickedItem)="onClickBreadcrumbItem($event)" [simpleStyle]="true">
+        </cx-breadcrumb-simple>
+      </div>
+    </ng-container>
+  </ng-container> -->
+  <div class="row container-content">
+    <div
+      class="col-12"
+      [@pageSlideAnimation]="
+        o && o.activatedRouteData && o.activatedRouteData['animation']
+      "
+    >
+      <router-outlet #o></router-outlet>
+    </div>
+  </div>
+</div>
+<cx-footer
+  *ngIf="showHeader && footerData"
+  [footerData]="footerData"
+></cx-footer>
+<report-iframe *ngIf="hasValidUser && currentUser"> </report-iframe>

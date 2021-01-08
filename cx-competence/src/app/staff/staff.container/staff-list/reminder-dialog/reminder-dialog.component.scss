@@ -1,0 +1,31 @@
+.reminder {
+  &__immediate {
+    margin-bottom: 20px;
+    .cx-checkbox {
+      flex-direction: row-reverse;
+      display: inline-flex;
+      width: auto;
+      &__container {
+        i {
+          padding-left: 30px;
+        }
+      }
+      &__label {
+        padding-top: 2px;
+      }
+    }
+  }
+  &__schedule {
+    display: inline-flex;
+  }
+
+  &__title {
+    display: inline-block;
+  }
+  &__hint {
+    opacity: 0.5;
+  }
+  &__date-picker {
+    margin-left: 44px;
+  }
+}

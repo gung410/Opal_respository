@@ -1,0 +1,26 @@
+<cx-dialog-template
+  [showFooterActionButtons]="allowDeletion && editMode"
+  [cancelButtonText]="'Common.Action.Close' | translate"
+  [doneButtonText]="'Common.Action.ConfirmDeletion' | translate"
+  [doneButtonDisabled]="removingUsers.length === 0"
+  (cancel)="onCancel()"
+  (done)="onDone()"
+  [fixedHeight]="true"
+>
+  <modal-header>
+    <h3>
+      {{ dialogTitle }}
+    </h3>
+  </modal-header>
+  <content>
+    <div class="people-list-dialog-content">
+      <cx-people-list
+        [listType]="listType"
+        [allowDeletion]="allowDeletion"
+        [filterParams]="filterParams"
+        [showResults]="true"
+        (peopleRemoved)="onPeopleRemoved($event)"
+      ></cx-people-list>
+    </div>
+  </content>
+</cx-dialog-template>

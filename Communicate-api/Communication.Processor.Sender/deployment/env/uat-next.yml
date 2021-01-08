@@ -1,0 +1,6 @@
+mongo_db_name: uat-next-communication-opal-db
+mongo_db_auth: uat-next-communication-opal:opal-communication-uat-next
+idm_base_url: https://idm.uat-next.opal2.conexus.net
+https_proxy: http://proxy.opal:3128
+ses_configuration_set: ""
+enable_mail_log: false

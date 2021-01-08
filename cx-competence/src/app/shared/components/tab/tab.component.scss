@@ -1,0 +1,10 @@
+.tabs-container {
+  .nav-link {
+    background-color: unset;
+    color: #000;
+
+    &.active {
+      text-decoration: underline;
+    }
+  }
+}

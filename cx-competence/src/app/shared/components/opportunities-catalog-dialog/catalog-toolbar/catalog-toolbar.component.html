@@ -1,0 +1,56 @@
+<div class="toolbar">
+  <div class="toolbar__filtering">
+    <div class="search-box">
+      <i
+        class="icon-search search-box__icon"
+        (click)="onSearch(searchText.value)"
+      ></i>
+      <input
+        #searchText
+        class="search-box__input"
+        placeholder="{{ 'MyPdJourney.Catalog.SearchPlaceholder' | translate }}"
+        (keyup.enter)="onSearch(searchText.value)"
+      />
+      <i
+        *ngIf="searchText.value && searchText.value != ''"
+        class="icon icon-close"
+        (click)="onClickClearSearch(searchText)"
+      ></i>
+    </div>
+    <!-- TODO: Not implemented yet -->
+    <!-- <button
+      class="cx-btn-secondary filter-btn cx-btn-icon-right"
+      (click)="onFilterClicked()">
+      {{ 'MyPdJourney.Catalog.Filter' | translate }}
+      <i class="icon-filter"></i>
+    </button> -->
+    <filter-slidebar-container></filter-slidebar-container>
+    <div *ngIf="enableBookmark" class="show-bookmark-action">
+      <ng-container *ngTemplateOutlet="btnShowBookmark"></ng-container>
+    </div>
+  </div>
+  <div class="cx-divider"></div>
+  <div class="toolbar__actions">
+    <button
+      *ngIf="!pickCourseMode && allowAddExternalPDOPermission"
+      class="cx-btn cx-btn-secondary add-external-btn cx-btn-icon"
+      (click)="onAddExternalPDOClicked()"
+    >
+      <i class="icon-add add-external-icon"></i>
+      {{ 'MyPdJourney.Catalog.AddExternalPDO' | translate }}
+    </button>
+    <div *ngIf="enableBookmark" class="show-bookmark-action-mobile">
+      <ng-container *ngTemplateOutlet="btnShowBookmark"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #btnShowBookmark>
+  <button
+    class="cx-btn cx-btn-secondary bookmark-btn cx-btn-icon"
+    (click)="onBookmarkClicked()"
+  >
+    <i class="icon-bookmark bookmark-icon"></i>
+    {{ 'MyPdJourney.Catalog.Bookmarks' | translate }} ({{ bookmarkSize }})
+  </button>
+</ng-template>

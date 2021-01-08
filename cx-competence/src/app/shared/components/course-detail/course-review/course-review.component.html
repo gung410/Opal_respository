@@ -1,0 +1,71 @@
+<div *ngIf="reviews" class="course-review">
+  <div class="cx-panel course-review__about">
+    <div class="planned-pdo-about">
+      <div class="cx-panel__label">
+        {{ reviews.totalCount > 1 ? 'REVIEWS' : 'REVIEW' }} ({{
+          reviews.totalCount
+        }})
+      </div>
+      <div
+        class="learner-course-detail__section learner-course-detail__review-section"
+        #reviewSection
+      >
+        <div class="learner-course-detail__rating-container">
+          <div
+            class="learner-course-detail__stars-average-num-container"
+            *ngIf="pdoDetail.isMicrolearning"
+          >
+            <div class="learner-course-detail__rating-stars">
+              <i
+                class="icon sm {{
+                  reviews.rating < 1 ? 'star-outline' : 'star'
+                }}"
+              ></i>
+              <i
+                class="icon sm {{
+                  reviews.rating >= 2 ? 'star' : 'star-outline'
+                }}"
+              ></i>
+              <i
+                class="icon sm {{
+                  reviews.rating === 3 ? 'star' : 'star-outline'
+                }}"
+              ></i>
+            </div>
+            <div class="learner-course-detail__rating-number">
+              ({{ reviews.rating | number: '1.0-1' }})
+            </div>
+          </div>
+
+          <div class="learner-course-detail__rating-count">
+            {{ reviews.totalCount }}
+            {{ reviews.totalCount === 1 ? 'review' : 'reviews' }}
+          </div>
+        </div>
+        <course-review-item
+          class="learner-course-detail__review-item"
+          *ngFor="let review of reviews.items"
+          [hasRating]="pdoDetail.isMicrolearning"
+          [review]="review"
+        ></course-review-item>
+        <div
+          class="learner-course-detail__show-more"
+          *ngIf="pageNumber * showReviews < reviews.totalCount"
+          (click)="showMoreReviews()"
+        >
+          Show more
+        </div>
+        <div
+          class="learner-course-detail__show-more"
+          *ngIf="
+            pageNumber * showReviews >= reviews.totalCount &&
+            reviews.totalCount > 3
+          "
+          (click)="showLessReviews()"
+        >
+          Show less
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div
+  class="cx-page-container approval-page"
+  [class.nomination-target]="isNominationsTarget"
+>
+  <approval-bar
+    style="margin-bottom: 10px"
+    [approveButtonText]="approveButtonText"
+    [enableApprovalButton]="hasSelectedPendingItems"
+    [showApprovalButton]="hasReviewPermisson"
+    (changeApprovalTarget)="onChangeApprovalTarget($event)"
+    [showFilter]="showFilter"
+    (approve)="onClickedApprove()"
+    (reject)="onClickedReject()"
+  ></approval-bar>
+
+  <ag-grid-angular
+    *ngIf="gridOptions"
+    #classRegistrationGrid
+    class="ag-grid-header-floatable ag-theme-material styled-grid approval-page__grid"
+    [gridOptions]="gridOptions"
+    [headerHeight]="64"
+    (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectionChanged()"
+  ></ag-grid-angular>
+
+  <cx-paging
+    *ngIf="pagedData"
+    [currentPageSize]="currentPageSize"
+    [totalRecords]="totalItems"
+    [recordsPerPage]="currentPageSize"
+    [currentPage]="currentPageIndex + 1"
+    (currentPageChange)="onCurrentPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)"
+  ></cx-paging>
+</div>

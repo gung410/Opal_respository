@@ -1,0 +1,22 @@
+<div autoClose="outside" class="show-more-dropdown dropdown">
+  <i
+    class="show-more-icon material-icons"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    more_vert
+  </i>
+  <div
+    class="dropdown-menu cx-dropdown-menu"
+    aria-labelledby="customActionDropdown"
+  >
+    <ng-container *ngFor="let action of actions">
+      <ng-template [ngIf]="action.condition">
+        <div class="cx-dropdown-menu__item" (click)="action.event()">
+          {{ action.text }}
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

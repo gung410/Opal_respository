@@ -1,0 +1,33 @@
+<cx-dialog-template
+  (cancel)="onCancel()"
+  (done)="onDone()"
+  [doneButtonText]="doneButtonText"
+  [doneButtonDisabled]="commentText.length === 0"
+>
+  <modal-header>
+    <h3>{{ header }}</h3>
+    <h5 class="evaluation-sub-header" *ngIf="subHeader">{{ subHeader }}</h5>
+  </modal-header>
+  <content>
+    <div class="reply-box">
+      <textarea
+        #textBox
+        rows="4"
+        class="reply-box__input"
+        placeholder="{{
+          'Staff.ApproveLearningNeedsResultDialog.CommentPlaceholder'
+            | translate
+        }}..."
+        [attr.maxlength]="maxLength"
+        [(ngModel)]="commentText"
+      >
+      </textarea>
+      <div class="reply-box__counter text-right">
+        <span class="counter-current">{{ commentText.length }}</span>
+        <span class="counter-maximum"
+          >{{ '/' + maxLength }} {{ 'Common.Label.Chars' | translate }}</span
+        >
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

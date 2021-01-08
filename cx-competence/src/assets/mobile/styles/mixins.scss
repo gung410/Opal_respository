@@ -1,0 +1,22 @@
+@mixin font($weight, $size, $line-height) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+}
+
+@mixin layout($direction, $alignment: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $alignment;
+}
+
+
+@mixin view-child-ratio($ratio) {
+  height: $ratio;
+}
+
+
+@mixin space-top-bottom($margin-top : 0px, $margin-bottom: 0px) {
+  margin-top: $margin-top;
+  margin-bottom: $margin-bottom;
+}

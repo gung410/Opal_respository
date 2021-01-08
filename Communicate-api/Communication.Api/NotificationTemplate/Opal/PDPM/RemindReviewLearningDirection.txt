@@ -1,0 +1,3 @@
+{{SenderName}} ({{Email}}) has submitted learning direction {{LearningDirectionTitle}} for the organisation and needs your acknowledgement.
+
+

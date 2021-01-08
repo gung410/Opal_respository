@@ -1,0 +1,6 @@
+Hi {{UserFullName}},
+The report of user events has been exported successfully. Please click the link below to download the file:
+{{DownloadUrl}}
+If there are any issues, please contact your administrator for support.
+
+

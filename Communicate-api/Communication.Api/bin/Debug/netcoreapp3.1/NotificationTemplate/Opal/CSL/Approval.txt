@@ -1,0 +1,4 @@
+{{OriginatorDisplayName}} requests membership for the community {{SourceDisplayName}} {{OriginatorDisplayName}}
+{{RequestMessage}}
+
+

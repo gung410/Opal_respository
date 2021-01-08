@@ -1,0 +1,1 @@
+﻿We would like to remind you to check the request(s) for registration for the course {{CourseTitle}} - {{ClassrunTitle}}, in case they are awaiting your confirmation.

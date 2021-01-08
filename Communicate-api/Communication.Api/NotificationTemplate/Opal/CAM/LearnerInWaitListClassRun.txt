@@ -1,0 +1,2 @@
+The learner, {{SenderName}} - {{SenderEmail}}, has registered to participate in your course, {{CourseTitle}} - {{ClassrunTitle}}. The learner has been placed on the waitlist as the class run is currently full. Please review the application
+

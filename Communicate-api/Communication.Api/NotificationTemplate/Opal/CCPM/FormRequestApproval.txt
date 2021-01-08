@@ -1,0 +1,1 @@
+{{CreatorName}} has just submitted a {{FormType}} for your approval.

@@ -1,0 +1,46 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:55470",
+      "sslPort": 44346
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "RABBITMQ_USERNAME": "cctadmin",
+        "RABBITMQ_PASSWORD": "Three2kill",
+        "RABBITMQ_SSL_ENABLED": "true",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017",
+        "MONGO_DATABASENAME": "datahub",
+        "MONGO_SSL_ENABLED": "false",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PROJECT_NAME": "learn"
+      }
+    },
+    "Datahub.Queue.Manager": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "RABBITMQ_USERNAME": "cctadmin",
+        "RABBITMQ_PASSWORD": "Three2kill",
+        "RABBITMQ_SSL_ENABLED": "false",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017",
+        "MONGO_DATABASENAME": "datahub",
+        "MONGO_SSL_ENABLED": "false",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PROJECT_NAME": "opal"
+      },
+      "applicationUrl": "https://localhost:44346"
+    }
+  }
+}

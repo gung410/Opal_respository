@@ -1,0 +1,40 @@
+<cx-dialog-template
+  (cancel)="onCancel()"
+  [showConfirmButton]="false"
+  [showCloseButton]="false"
+  [cancelButtonText]="cancelButtonText"
+>
+  <modal-header>
+    <h3>Error detail</h3>
+  </modal-header>
+  <content>
+    <div class="invalid-nomination-content">
+      <table style="width: 100%" class="table invalid-nomination-table">
+        <tr>
+          <th>S/N</th>
+          <th>Course Code</th>
+          <th>Class Run Number</th>
+          <th>Email</th>
+          <th>Reason</th>
+        </tr>
+        <tr *ngFor="let nomination of invalidNominatingResults">
+          <td>
+            <div>{{ nomination.number }}</div>
+          </td>
+          <td>
+            <div>{{ nomination.courseCode }}</div>
+          </td>
+          <td>
+            <div>{{ nomination.classRunCode }}</div>
+          </td>
+          <td>
+            <div>{{ nomination.email }}</div>
+          </td>
+          <td>
+            <div>{{ nomination.reason }}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </content>
+</cx-dialog-template>

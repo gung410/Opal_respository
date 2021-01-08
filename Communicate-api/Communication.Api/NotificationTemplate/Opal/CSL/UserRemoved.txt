@@ -1,0 +1,1 @@
+{{OriginatorName}} has removed you from the community {{CommunityName}}.

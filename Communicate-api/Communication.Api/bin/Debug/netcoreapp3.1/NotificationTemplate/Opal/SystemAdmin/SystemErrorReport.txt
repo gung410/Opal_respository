@@ -1,0 +1,5 @@
+{{Time}}
+{{Message}}
+{{{Records}}}
+Please contact OPAL2.0 vendor helpdesk, if you need more information.
+

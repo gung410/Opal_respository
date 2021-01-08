@@ -1,0 +1,270 @@
+@import '~assets/styles/variables.scss';
+
+.needs-analysis-content {
+  $progress-primary-color: #57d596;
+  $progress-secondary-color: #d8dfe5;
+  $progress-selected-color: #3eb87b;
+  .needs-analysis-title {
+    font-size: 2em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .needs-analysis-title-mobile {
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    font-weight: 500;
+    display: none;
+    margin-bottom: 30px;
+  }
+
+  .survey-progress-bar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 50px 0;
+
+    li {
+      font-weight: bold;
+      counter-increment: stepNum;
+      float: left;
+      width: 100%;
+      position: relative;
+      text-align: center;
+      line-height: 1;
+      color: #fff;
+
+      &:before {
+        content: counter(stepNum);
+        width: 40px;
+        height: 40px;
+        display: block;
+        padding: 6px;
+        border-radius: 50%;
+        background-color: $progress-secondary-color;
+        border: 4px solid $progress-secondary-color;
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+        font-size: 1.2rem;
+      }
+
+      hr {
+        content: '';
+        border: 0;
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background-image: linear-gradient(
+          $progress-primary-color,
+          $progress-primary-color
+        );
+        background-color: $progress-secondary-color;
+        background-repeat: no-repeat;
+        top: 2px;
+        z-index: 0;
+        transform: translateX(50%);
+        left: -50%;
+        transition: background-position 0.3s;
+      }
+      &:first-child hr {
+        width: 50%;
+        transform: translateX(100%);
+        left: 0;
+      }
+
+      &:last-child hr {
+        width: 50%;
+        transform: translateX(100%);
+      }
+    }
+
+    li.passed {
+      cursor: pointer;
+      &:before {
+        transition: 0.2s ease-out;
+        content: counter(stepNum);
+        border-color: $progress-primary-color;
+        background-color: $progress-primary-color;
+        background-clip: border-box;
+      }
+
+      hr {
+        background-position: left center !important;
+      }
+      &:not(.selected) {
+        &:hover:before {
+          border-color: $progress-selected-color;
+          background-color: $progress-selected-color;
+          box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2),
+            0px 2px 2px rgba(0, 0, 0, 0.12), 0px 0px 2px rgba(0, 0, 0, 0.14);
+        }
+      }
+    }
+
+    li.selected {
+      color: $progress-primary-color;
+      &:before {
+        background-color: #fff;
+      }
+    }
+
+    li:last-child:before {
+      content: '\2713';
+    }
+  }
+
+  .needs-analysis-survey {
+    position: relative;
+    cx-surveyjs {
+      .sv_main .sv_container .panel-heading.card-header {
+        border: none;
+        background-color: #fff;
+        text-align: center;
+      }
+      .sv_main .sv_container .panel-body .surveyjs-page-header {
+        text-align: center;
+      }
+
+      .sv_main .sv_container .sv_row > .sv_qstn {
+        overflow-x: hidden;
+      }
+
+      h4 {
+        font-size: 20px;
+      }
+
+      .sv_row {
+        margin-top: 20px;
+      }
+
+      .small {
+        font-size: 14px;
+      }
+
+      .sv_p_description,
+      h4 {
+        padding-left: 14px;
+      }
+
+      @media screen and (min-width: $screen-sm-min) {
+        .sv_main.sv_main .table.sv_q_matrix > tbody > tr > td:first-child {
+          width: 70%;
+        }
+      }
+    }
+
+    &__editing {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+
+  .needs-analysis-preview {
+    margin-bottom: 20px;
+  }
+}
+
+.needs-analysis-container {
+  .actions {
+    text-align: center;
+    .cx-btn {
+      min-width: 200px;
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &.review-mode {
+    height: 100%;
+    overflow: hidden;
+    .needs-analysis-content {
+      height: calc(100% - 50px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .needs-analysis-container {
+    &.review-mode {
+      .actions {
+        display: block;
+        .cx-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .needs-analysis-content {
+    .needs-analysis-title {
+      display: none;
+    }
+    .needs-analysis-title-mobile {
+      display: block;
+    }
+    .needs-analysis-survey {
+      margin: 0 -12px;
+    }
+    .survey-progress-bar {
+      margin: 10px 0 20px;
+      li {
+        &:before {
+          width: 35px;
+          height: 35px;
+          border-width: 2px;
+          padding: 8px;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+        hr {
+          top: 0px;
+        }
+      }
+    }
+    cx-surveyjs {
+      h4 {
+        font-size: 1.2rem;
+        padding-left: 0 !important;
+      }
+      .cx-surveyjs {
+        margin: 0 !important;
+      }
+    }
+    .needs-analysis-preview {
+      background: #fff;
+      border-radius: 5px;
+      padding: 5px 0 20px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      .cx-btn {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        margin-bottom: 2px;
+        width: 90%;
+      }
+      .btn-save-draft {
+        display: none;
+      }
+    }
+    .learning-area-chart {
+      svg {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+}

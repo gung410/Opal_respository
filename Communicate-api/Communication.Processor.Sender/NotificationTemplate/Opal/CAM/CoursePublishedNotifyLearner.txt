@@ -1,0 +1,2 @@
+A new course - {{CourseTitle}} - on {{CoursePDArea}} has been published.
+

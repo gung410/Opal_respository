@@ -1,0 +1,47 @@
+version: '3.6'
+services:
+  datahub-communication-api:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    container_name: ${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-communication
+    environment:
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - BuildVersion=${GO_PIPELINE_LABEL}
+    - PROJECT_NAME=${PROJECT_NAME}
+    - RABBITMQ_HOSTNAMES=rabbitmq-01.${DOMAIN_POSTFIX}
+    - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+    - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+    - QUEUE_MANAGER_API=http://${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-queueManager.${PROJECT_NAME}/QueueManager
+    - EVENT_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-event
+    - COMMAND_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-command
+    - QUEUE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-queue-communication
+    - FireBaseCloudMessage:BaseAppInstanceServerUrl=https://iid.googleapis.com/
+    - FireBaseCloudMessage:BaseFirebaseClouldMessageUrl=https://fcm.googleapis.com/
+    - FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey=${FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey}
+    - IDM_BASEURL=https://${ENVIRONMENT_NAME}-cxid-${PROJECT_NAME}-idp.csc.cxs.cloud/
+    - ORG_DOMAIN_API=http://${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization.${PROJECT_NAME}/
+    - IDM_GRANT_TYPE=client_credentials
+    - IDM_CLIENT_SECRET=BiOiJKV1QiLCJ4NXQiOiKhM
+    - IDM_CLIENT_ID=OrganizationSpa
+    - IDM_SCOPE=userManagement cxDomainInternalApi
+    - MONGO_DATABASENAME=${ENVIRONMENT_NAME}-${PROJECT_NAME}-notification
+    - MONGO_CONNECTIONSTRING=mongodb://${PROJECT_NAME}-notification-${ENVIRONMENT_NAME}:${MONGODB_PASSWORD}@mongodb-01.${PROJECT_NAME}/${ENVIRONMENT_NAME}-${PROJECT_NAME}-notification-db?replicaSet=dev
+    - VIRTUAL_HOST=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-communication.${DOMAIN_POSTFIX}${PUBLIC_DNS}
+    - Email:FromName=OPAL2.0
+    - Email:FromAddress=opal.bcc.all@gmail.com
+    - Email:SslEnabled=true
+    - Email:MailServerAddress=email-smtp.eu-west-1.amazonaws.com
+    - Email:MailServerPort=587
+    - Email:UserName=${SMTP_USERNAME}
+    - Email:UserPassword=${SMTP_PASSWORD}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+    - 0:80
+networks:
+  default:
+    external:
+      name: app_default

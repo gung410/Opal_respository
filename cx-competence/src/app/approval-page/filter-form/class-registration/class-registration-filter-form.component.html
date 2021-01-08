@@ -1,0 +1,95 @@
+<div class="filter-form">
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.ClassRegistration.LearnersLabel' | translate
+    }}</label>
+    <cx-select
+      class="form-selector"
+      [itemObs]="filterLearners"
+      [(selectedItems)]="learnersSelected"
+      [config]="learnerSelectorConfig"
+    ></cx-select>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.ClassRegistration.CourseLabel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="courseSelected"
+        [itemObs]="filterCourses"
+        [config]="courseSelectorConfig"
+        (selectedItemsChange)="updateClassRunItems()"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div *ngIf="classRunsItems && classRunsItems.length" class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.ClassRegistration.ClassRunsLabel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="classRunsSelected"
+        [itemObs]="classRunsObs"
+        [config]="classRunSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.ClassRegistration.RegistrationStatusLabel'
+        | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="registrationStatuses"
+        [itemObs]="registrationStatusObs"
+        [config]="registrationStatusSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-item">
+      <div class="form-group">
+        <label for="input">{{
+          'ApprovalPage.FilterSlidebar.ClassRegistration.ApplicationStartDateLabel'
+            | translate
+        }}</label>
+        <div class="">
+          <cx-date-picker
+            [(date)]="registrationStartDate"
+            [isDisabled]="disableDatePicker"
+            [iconClass]="'material-icons date-range'"
+            (dateChange)="onregistrationStartDateChanged()"
+            [maxDate]="registrationEndDate"
+          >
+          </cx-date-picker>
+        </div>
+      </div>
+    </div>
+    <div class="col-item">
+      <div class="form-group">
+        <label for="input">{{
+          'ApprovalPage.FilterSlidebar.ClassRegistration.ApplicationEndDateLabel'
+            | translate
+        }}</label>
+        <div class="">
+          <cx-date-picker
+            [(date)]="registrationEndDate"
+            [isDisabled]="disableDatePicker"
+            [iconClass]="'material-icons date-range'"
+            [minDate]="registrationStartDate"
+          >
+          </cx-date-picker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

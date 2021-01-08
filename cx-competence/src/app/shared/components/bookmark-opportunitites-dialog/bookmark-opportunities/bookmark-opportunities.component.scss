@@ -1,0 +1,18 @@
+bookmark-opportunities {
+  $opportunity-gap: 2.5px;
+  .bookmark-opportunities {
+    &--empty {
+      height: 165px;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+    }
+    .row {
+      margin-left: -$opportunity-gap;
+      margin-right: -$opportunity-gap;
+      > opportunity-card {
+        padding: $opportunity-gap;
+      }
+    }
+  }
+}

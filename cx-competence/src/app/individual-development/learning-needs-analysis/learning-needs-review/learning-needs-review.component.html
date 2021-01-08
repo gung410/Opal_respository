@@ -1,0 +1,85 @@
+<div class="panel-group" id="accordion" *ngIf="periods && periods.size">
+  <div class="guide-line-text">
+    {{
+      'MyPdJourney.LNA.GettingStartedGuideText'
+        | translate: { years: periods.size }
+    }}
+  </div>
+
+  <!-- Review panel for desktop TODO: implement tab -->
+  <div
+    *ngFor="let period of periods | keyvalue: returnZero"
+    class="panel panel-default review-panel"
+  >
+    <div class="panel-heading">
+      <h4 class="panel-title" style="margin: 0">
+        <a
+          class="title"
+          data-toggle="collapse"
+          data-parent="#accordion"
+          href="#collapse{{ period.value }}"
+          style="color: inherit; text-decoration: inherit"
+          (click)="getLearningNeedsReportData(period.key)"
+        >
+          <i class="icon icon-chevron-right-bold arrow-icon"></i>
+          {{ period.value }}</a
+        >
+      </h4>
+    </div>
+    <div id="collapse{{ period.value }}" class="panel-collapse collapse in">
+      <div class="panel-body mt_20">
+        <ng-container
+          *ngIf="learningNeedsReviews && learningNeedPermission.chart.allowView"
+        >
+          <div
+            *ngFor="let chartModel of learningNeedsReviews.get(period.key)"
+            class="chart-container"
+          >
+            <learning-area-chart
+              [learningAreaChart]="chartModel"
+            ></learning-area-chart>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!--END Review panel for desktop -->
+
+  <!-- Review panel for mobile -->
+  <div
+    *ngFor="let period of periods | keyvalue: returnZero"
+    class="panel panel-default review-panel-mobile"
+  >
+    <div class="panel-heading">
+      <h4 class="panel-title" style="margin: 0">
+        <a
+          class="title"
+          data-toggle="collapse"
+          data-parent="#accordion"
+          href="#collapse{{ period.value }}"
+          style="color: inherit; text-decoration: inherit"
+          (click)="getLearningNeedsReportData(period.key)"
+        >
+          <i class="icon icon-sort-down arrow-icon"></i>
+          {{ period.value }}
+        </a>
+      </h4>
+    </div>
+    <div id="collapse{{ period.value }}" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <ng-container
+          *ngIf="learningNeedsReviews && learningNeedPermission.chart.allowView"
+        >
+          <div *ngFor="let chartModel of learningNeedsReviews.get(period.key)">
+            <learning-area-chart [learningAreaChart]="chartModel">
+            </learning-area-chart>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!-- End review panel for mobile -->
+</div>
+<div class="review-empty" *ngIf="!periods || !periods.size">
+  {{ 'MyPdJourney.LNA.ReviewEmpty' | translate }}
+</div>

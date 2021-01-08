@@ -1,0 +1,70 @@
+@import 'assets/styles/variables.scss';
+
+opportunities-catalog {
+  $opportunity-gap: 2.5px;
+  .catalog {
+    width: 100%;
+    height: 100%;
+    .row {
+      margin-left: -$opportunity-gap;
+      margin-right: -$opportunity-gap;
+      > opportunity-card {
+        padding: $opportunity-gap;
+      }
+    }
+
+    .label {
+      font-size: 1rem;
+      color: #a0afcb;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin: 30px 0 15px 0;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .opportunities {
+      &__suggestions {
+        opportunity-card {
+          .opportunity-image {
+            height: 100%;
+          }
+          .opportunity-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+          }
+        }
+      }
+      &__search-results {
+      }
+    }
+
+    .no-data-label {
+      color: #a1a8b6;
+      font-size: 16px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .catalogue-load-more {
+      margin-top: 15px;
+      text-align: center;
+      .cx-btn {
+        min-width: 145px;
+      }
+    }
+  }
+  @media only screen and (max-width: $screen-xs-max) {
+    .catalog {
+      .row {
+        > opportunity-card {
+          padding-bottom: 10px;
+        }
+      }
+    }
+  }
+}

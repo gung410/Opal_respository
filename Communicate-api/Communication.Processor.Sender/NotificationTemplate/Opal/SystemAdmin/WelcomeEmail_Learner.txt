@@ -1,0 +1,11 @@
+Dear {{RecipientName}},
+Welcome to OPAL2.0!
+Your username is {{Email}} and you can use this email to setup your password.
+To launch OPAL2.0, please click on the link for the Web version or install the applicable mobile app version in your mobile device.
+OPAL2.0 (Web version), optimised for viewing in Chrome browser
+OPAL2.0 mobile app (Android 8 and above)
+OPAL2.0 mobile app (IOS 11 and above)
+To activate your account, please click on Claim OTP button for a one-time password to be sent to you via email.
+
+
+

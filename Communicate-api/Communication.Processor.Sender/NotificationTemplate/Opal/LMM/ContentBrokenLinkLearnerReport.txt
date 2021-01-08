@@ -1,0 +1,1 @@
+﻿{{ReporterName}} has detected the broken link(s) in the {{AssetName}}.

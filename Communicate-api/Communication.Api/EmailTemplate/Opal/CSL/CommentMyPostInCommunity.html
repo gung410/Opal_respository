@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="x-apple-disable-message-reformatting"> <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <title>{{TITLE}}</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+        <style>
+            * {
+                font-family: 'Roboto', sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- Insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+    <!-- Web Font / @font-face : END -->
+    <!-- CSS Reset : BEGIN -->
+    <style>
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            color: #333;
+        }
+
+
+        /* Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+
+        /* Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+
+        /* Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+
+        /* Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+
+
+        table table table {
+            table-layout: auto;
+        }
+
+
+        /* Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+
+        /* Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+        a {
+            text-decoration: none;
+            color: #aca8a1;
+        }
+
+
+        a:hover,
+        a:active {
+            text-decoration: underline;
+            color: #333;
+        }
+
+
+        /* A work-around for email clients meddling in triggered links. */
+        *[x-apple-data-detectors],
+        /* iOS */
+        .unstyle-auto-detected-links *,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+
+        /* Prevents Gmail from displaying a download button on large, non-linked images. */
+        .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+
+        /* If the above doesn't work, add a .g-img class to any image in question. */
+        img.g-img+div {
+            display: none !important;
+        }
+
+
+        /* Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            .email-container {
+                min-width: 320px !important;
+            }
+
+        }
+
+        /* iPhone 6, 6S, 7, 8, and X */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            .email-container {
+                min-width: 375px !important;
+            }
+        }
+
+        /* iPhone 6+, 7+, and 8+ */
+        @media only screen and (min-device-width: 414px) {
+            .email-container {
+                min-width: 414px !important;
+            }
+        }
+    </style>
+    <!-- CSS Reset : END -->
+    <!-- Reset list spacing because Outlook ignores much of our inline CSS. -->
+    <!--[if mso]>
+        <style type="text/css">
+            ul,
+            ol {
+                margin: 0 !important;
+            }
+            li {
+                margin-left: 30px !important;
+            }
+            li.list-item-first {
+                margin-top: 0 !important;
+            }
+            li.list-item-last {
+                margin-bottom: 10px !important;
+            }
+        </style>
+    <![endif]-->
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+        /* Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+
+
+        .button-a-primary {
+            color: #fff !important;
+            font-size: 16px !important;
+            background: #489bd9 !important;
+            border: 1px solid #489bd9 !important;
+        }
+
+
+        .button-td-primary:hover,
+        .button-a-primary:hover {
+            background: #48a9f2 !important;
+            border-color: #48a9f2 !important;
+        }
+
+
+        /* Media Queries */
+        @media screen and (max-width: 599px) {
+            .email-container {
+                max-width: 340px !important;
+                min-width: 340px !important;
+            }
+
+        }
+
+
+        @media screen and (max-width: 480px) {
+
+            /* Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+            .fluid {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+
+            /* Forces table cells into full-width rows. */
+            .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                direction: ltr !important;
+            }
+
+            /* And center justify these ones. */
+            .stack-column-center {
+                text-align: center !important;
+            }
+
+
+            /* Generic utility class for centering. Useful for images, buttons, and nested tables. */
+            .center-on-narrow {
+                text-align: center !important;
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+            }
+
+
+            table.center-on-narrow {
+                display: inline-block !important;
+            }
+
+
+            /* Adjust typography on small screens to improve readability */
+            .email-container p {
+                font-size: 17px !important;
+            }
+        }
+    </style>
+    <!-- Progressive Enhancements : END -->
+    <!-- Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+</head>
+<!--
+    1. body tag: for most email clients
+    2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+    3. mso conditional: For Windows 10 Mail
+-->
+
+<body width="100%" style="margin: 0; mso-line-height-rule: exactly; background-color: #f8f4ed;">
+    <center style="width: 100%; background-color: #f8f4ed; text-align: left;">
+        <!--[if mso | IE]>
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff;">
+        <tr>
+        <td>
+        <![endif]-->
+        <!-- Visually Hidden Preheader Text : BEGIN -->
+        <!--<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: 'Roboto', sans-serif;">
+        </div>-->
+        <!-- Visually Hidden Preheader Text : END -->
+        <!-- Create white space after the desired preview text so email clients don't pull other distracting text into the inbox preview. Extend as necessary. -->
+        <!-- Preview Text Spacing Hack : BEGIN -->
+        <div
+            style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: 'Roboto', sans-serif;">
+            &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+        </div>
+        <!-- Preview Text Spacing Hack : END -->
+        <!--
+            Set the email width. Defined in two places:
+            1. max-width for all clients except Desktop Windows Outlook, allowing the email to squish on narrow but never go wider than 680px.
+            2. MSO tags for Desktop Windows Outlook enforce a 680px width.
+            Note: The Fluid and Responsive templates have a different width (600px). The hybrid grid is more "fragile", and I've found that 680px is a good width. Change with caution.
+        -->
+        <div style="max-width: 700px; margin: 0 auto;" class="email-container">
+            <!--[if mso]>
+            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600">
+            <tr>
+            <td>
+            <![endif]-->
+            <!-- Email Body : BEGIN -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 auto;"
+                align="center">
+                <!-- Email Header : BEGIN -->
+                <tr>
+                    <td style="background-color: #fff; min-height: 170px; padding: 50px 0 50px; text-align: center;">
+                        <img src="cid:logoid" width="129" height="" alt="OPAL2.0 logo" border="0"
+                            style="max-width: 129px; height: auto;" class="g-img">
+                    </td>
+                </tr>
+                <!-- Email Header : END -->
+                <!-- 1 Column Text + Button : BEGIN -->
+                <!-- BEGIN CSL EMAIL CONTENT -->
+                <tr>
+                    <td align="center" valign="top" class="fix-box" style="background-color: #ffffff;">
+
+                        <!-- start  container width 600px -->
+                        <table width="700" align="center" border="0" cellspacing="0" cellpadding="0" class="container"
+                            bgcolor="#ffffff"
+                            style="background-color: #ffffff; border-bottom-left-radius: 4px; border-bottom-left-radius: 4px;">
+                            <tr>
+                                <td valign="top">
+
+                                    <!-- start container width 560px -->
+                                    <table width="560" align="center" border="0" cellspacing="0" cellpadding="0"
+                                        class="full-width" bgcolor="#ffffff" style="background-color:#ffffff;">
+
+                                        <!-- start image and content -->
+                                        <tr>
+                                            <td valign="top" width="100%">
+
+                                                <!-- start content left -->
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                    align="left">
+
+                                                    <!-- start content top-->
+                                                    <tr>
+                                                        <td valign="top" align="left">
+
+
+                                                            <table width="100%" border="0" cellspacing="0"
+                                                                cellpadding="0" align="left">
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%"
+                                                                            style="background-color:#f7f7f7;border-radius:4px"
+                                                                            border="0" cellspacing="0" cellpadding="0"
+                                                                            align="left">
+                                                                            <tr>
+                                                                                <td height="10"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding-left:10px;">
+                                                                                    <table width="100%"
+                                                                                        style="table-layout:fixed;"
+                                                                                        border="0" cellspacing="0"
+                                                                                        cellpadding="0" align="left">
+                                                                                        <tr>
+                                                                                            <!-- START: USER IMAGE COLUMN -->
+                                                                                            <td width="40" valign="top"
+                                                                                                align="left"
+                                                                                                style="padding-right:20px;">
+
+
+                                                                                                <a
+                                                                                                    href="{{CommentOwnerUrl}}">
+                                                                                                    <div>
+                                                                                                        <img src="{{CommentOwnerImageUrl}}"
+                                                                                                            width="50"
+                                                                                                            height="50"
+                                                                                                            alt=""
+                                                                                                            title="{{CommentOwnerName}}"
+                                                                                                            style="border-radius: 4px;"
+                                                                                                            border="0"
+                                                                                                            hspace="0"
+                                                                                                            vspace="0" />
+                                                                                                    </div>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                            <!-- END: USER IMAGE COLUMN-->
+
+                                                                                            <!-- START: CONTENT AND ORIGINATOR DESCRIPTION -->
+                                                                                            <td valign="top">
+                                                                                                <table width="100%"
+                                                                                                    style="table-layout:fixed;"
+                                                                                                    border="0"
+                                                                                                    cellspacing="0"
+                                                                                                    cellpadding="0"
+                                                                                                    align="left">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <a href="{{CommentOwnerUrl}}"
+                                                                                                                style="font-size: 15px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#555; font-weight:300; text-align:left; ">
+                                                                                                                {{CommentOwnerName}}
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td height="15"
+                                                                                                            style="word-wrap:break-word;font-size: 14px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#303450; font-weight:300; text-align:left;">
+                                                                                                            {{CommentContent}}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                            <!-- END: CONTENT AND ORIGINATOR DESCRIPTION -->
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td height="10"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="20"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table border="0" cellspacing="0"
+                                                                            cellpadding="0" align="left">
+                                                                            <tr>
+                                                                                <td
+                                                                                    style="font-size: 12px; line-height: 22px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#555 font-weight:bold; text-align:left;">
+                                                                                    <span>
+                                                                                        <a href="#"
+                                                                                            style="text-decoration: none; color:#555; font-weight:bold; text-transform:capitalize;">{{PostType}}:</a>
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <!--start space height -->
+                                                                            <tr>
+                                                                                <td height="10"></td>
+                                                                            </tr>
+                                                                            <!--end space height -->
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        style="padding:10px; border:1px solid #f7f7f7; border-radius:4px;">
+                                                                        <table width="100%" style="table-layout:fixed;"
+                                                                            border="0" cellspacing="0" cellpadding="0"
+                                                                            align="left">
+                                                                            <tr>
+                                                                                <!-- START: USER IMAGE COLUMN -->
+                                                                                <td width="40" valign="top" align="left"
+                                                                                    style="padding-right:20px;">
+
+
+                                                                                    <a href="{{PostOwnerUrl}}">
+                                                                                        <div>
+                                                                                            <img src="{{PostOwnerImageUrl}}"
+                                                                                                width="50" height="50"
+                                                                                                alt=""
+                                                                                                title="{{PostOwnerName}}"
+                                                                                                style="border-radius: 4px;"
+                                                                                                border="0" hspace="0"
+                                                                                                vspace="0" />
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </td>
+                                                                                <!-- END: USER IMAGE COLUMN-->
+
+                                                                                <!-- START: CONTENT AND ORIGINATOR DESCRIPTION -->
+                                                                                <td valign="top">
+                                                                                    <table width="100%"
+                                                                                        style="table-layout:fixed;"
+                                                                                        border="0" cellspacing="0"
+                                                                                        cellpadding="0" align="left">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <a href="{{PostOwnerUrl}}"
+                                                                                                    style="font-size: 15px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#555; font-weight:300; text-align:left; ">
+                                                                                                    {{PostOwnerName}}
+                                                                                                </a>
+                                                                                                <span
+                                                                                                    style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#8799BA; font-weight:300; text-align:left; ">
+                                                                                                    <span
+                                                                                                        class="time">{{PostCreatedTime}}</span>
+                                                                                                </span>
+                                                                                                <span
+                                                                                                    style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#8799BA; font-weight:300; text-align:left;">
+                                                                                                    in </span>
+                                                                                                <span
+                                                                                                    style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#8799BA; font-weight:bold; text-align:left;">
+                                                                                                    <a style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#8799BA; font-weight:bold; text-align:left; "
+                                                                                                        href="{{CommunityUrl}}">
+                                                                                                        {{CommunityName}}
+                                                                                                    </a>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td height="15"
+                                                                                                style="font-size: 15px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#aeaeae; font-weight:300; text-align:left; ">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <!-- END: CONTENT AND ORIGINATOR DESCRIPTION -->
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2" height="10"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2"
+                                                                                    style="word-wrap:break-word;padding-top:5px; padding-bottom:5px; font-size: 14px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#303450; font-weight:300; text-align:left; border-top: 1px solid #F2F6FA;">
+
+                                                                                    {{PostContent}}
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="10"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+
+                                                                        <table width="100%">
+                                                                            <tr>
+                                                                                <td valign="top" width="auto"
+                                                                                    align="center">
+                                                                                    <table border="0" align="center"
+                                                                                        cellpadding="0" cellspacing="0">
+                                                                                        <td width="auto" align="center"
+                                                                                            valign="middle" height="32"
+                                                                                            style="background-color:#313552; border-radius:5px; background-clip: padding-box;font-size:14px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; text-align:center;font-weight: 600; padding-left:30px; padding-right:30px; padding-top: 5px; padding-bottom: 5px;">
+                                                                                            <span>
+                                                                                                <a href="{{ViewUrl}}"
+                                                                                                    style="text-decoration: none; color: #fff; font-weight: 300;">
+                                                                                                    View Online </a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <!--start space height -->
+                                                    <tr>
+                                                        <td height="15"></td>
+                                                    </tr>
+
+                                                </table>
+                                                <!-- end content left -->
+
+
+                                            </td>
+                                        </tr>
+                                        <!-- end image and content -->
+
+                                    </table>
+                                    <!-- end  container width 560px -->
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- end  container width 600px -->
+                    </td>
+                </tr>
+                <!-- END CSL EMAIL CONTENT -->
+                <tr>
+                    <td style="background-color: #ffffff;">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="80%" align="center"
+                            style="text-align: center;">
+                            <tr>
+                                <td
+                                    style="border-top: solid 1px #ede9e1; padding: 20px; font-family: 'Roboto', sans-serif; font-size: 0.625rem;line-height: 20px; color: #aca8a1;">
+                                    Copyright &copy; 2020 Ministry of Education, Singapore. All rights reserved.<br>
+                                    For any problem, please contact IT helpdesk at <a
+                                        href="mailto:'help@schools.gov.sg'" class="link">help@schools.gov.sg</a> or 1800
+                                    7663 663 (local) / +65 6559 4318 (overseas).
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!-- Email Body : END -->
+            <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </div>
+        <!--[if mso | IE]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </center>
+</body>
+
+</html>

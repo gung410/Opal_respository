@@ -1,0 +1,64 @@
+<div class="planned-pdo-detail">
+  <div class="cx-panel planned-pdo-detail__header">
+    <div class="pdo-title-container">
+      <cx-back-button
+        class="pdo-title-container__back-btn"
+        (click)="onClickBack()"
+      ></cx-back-button>
+      <div *ngIf="pdoDTO" class="pdo-title-container__title">
+        {{ pdoDTO.name }}
+      </div>
+    </div>
+
+    <div class="pdo-tabs">
+      <div
+        *ngFor="let tab of tabs"
+        class="pdo-tabs__tab"
+        [class.tab-active]="selectedTab === tab"
+        (click)="onClickedTab(tab)"
+      >
+        {{ tab.translatePath | translate }}
+      </div>
+    </div>
+    <div *ngIf="unPublished" class="pdo-title-unpublished">Unpublished</div>
+  </div>
+
+  <div *ngIf="dataReady" class="planned-pdo-detail__body">
+    <planned-pdo-content
+      *ngIf="isShowAboutTab"
+      class="cx-tab-body"
+      [pdoDetail]="plannedPDODetail"
+      [pdoAnswer]="pdoAnswer"
+      [klpDto]="klpDto"
+      (updateExternalPDO)="onUpdateExternalPDO($event)"
+    ></planned-pdo-content>
+
+    <planned-pdo-nominations
+      *ngIf="isShowNominationsTab"
+      class="cx-tab-body"
+      [pdoAnswer]="pdoAnswer"
+      [pdoDetail]="plannedPDODetail"
+      [klpDto]="klpDto"
+      [allowManagePDO]="allowManagePDO"
+    ></planned-pdo-nominations>
+
+    <planned-pdo-recommendations
+      *ngIf="isShowRecommendationsTab"
+      class="cx-tab-body"
+      [pdoAnswer]="pdoAnswer"
+      [pdoDetail]="plannedPDODetail"
+      [klpDto]="klpDto"
+      [allowManagePDO]="allowManagePDO"
+    ></planned-pdo-recommendations>
+
+    <planned-pdo-cost
+      *ngIf="isCostTab"
+      class="cx-tab-body"
+      [pdoAnswer]="pdoAnswer"
+      [klpDto]="klpDto"
+      [pdoDetail]="plannedPDODetail"
+      [allowManagePDO]="allowManagePDO"
+      (onUpdateExternalPDOPlannedCost)="updateExternalPDOPlannedCost($event)"
+    ></planned-pdo-cost>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+  [fixedHeight]="true"
+>
+  <modal-header>
+    <div class="header">
+      <div class="catalog-back" (click)="onCancel()">
+        <i class="icon-down-arrow back-icon"></i>
+        {{ navigationHeader | translate }}
+      </div>
+      <div class="catalog-title">
+        {{ 'MyPdJourney.Catalog.Titles.Bookmarks' | translate }}
+      </div>
+    </div>
+  </modal-header>
+  <content>
+    <bookmark-opportunities
+      [selectedCourseIds]="selectedCourseIds"
+      (selected)="onOpportunityClicked($event)"
+      (checkBookmark)="onCheckBookmark($event)"
+    ></bookmark-opportunities>
+  </content>
+</cx-dialog-template>

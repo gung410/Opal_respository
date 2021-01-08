@@ -1,0 +1,7 @@
+<div class="cx-navbar-container">
+  <cx-navbar
+    *ngIf="menuData"
+    [listMenu]="menuData"
+    (clickItem)="clickMenuItem($event)"
+  ></cx-navbar>
+</div>

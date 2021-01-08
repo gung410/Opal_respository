@@ -1,0 +1,93 @@
+@import '../../../../../assets/styles/variables.scss';
+
+staff-filter {
+  .filter-criteria {
+    display: block;
+    margin-top: 32px;
+  }
+  cx-surveyjs {
+    .sv_main .sv-paneldynamic__remove-btn {
+      min-width: auto;
+      font-size: 14px;
+      padding: 0 10px;
+      position: absolute;
+      right: 4px;
+      width: 80px;
+      line-height: 33px;
+      height: 35px;
+    }
+
+    .sv_main .sv_container .panel-footer.card-footer {
+      display: flex;
+    }
+  }
+
+  .ng-select.ng-select-opened > .ng-select-container {
+    height: 60px;
+    max-height: 60px;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .ng-arrow-wrapper {
+    display: none;
+  }
+
+  .ng-dropdown-panel-items {
+    max-height: 240px !important;
+  }
+
+  hr {
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
+
+  .card-block {
+    margin-top: 0px !important;
+  }
+}
+
+.filter-dialog-custom-size {
+  .modal-body {
+    padding: 8px 0 0;
+  }
+}
+
+@media only screen and (max-width: $screen-sm-max) {
+  .filter-dialog-custom-size .modal-lg {
+    max-width: 650px;
+    margin: 1.75rem auto;
+    .sv_qstn .sv_p_container {
+      min-width: 86%;
+    }
+    .sv_bootstrap_css .sv_qstn {
+      padding: 0.5em 1em 1.5em 0;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  staff-filter {
+    cx-surveyjs {
+      .sv_main {
+        .sv-paneldynamic {
+          &__remove-btn {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  .filter-dialog-custom-size {
+    .modal-lg {
+      .sv_qstn {
+        .sv_p_container {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+<div
+  *ngIf="isMobile"
+  [hidden]="loading"
+  class="pd-planner-mobile page full-view"
+>
+  <div class="pd-planner-mobile__header">
+    <i class="header__icon icon-notebook"></i>
+    <div class="header__text align-horizontal-center">
+      {{ 'Mobile.PDPlan.LandingPage.Title' | translate }}
+    </div>
+  </div>
+  <div class="pd-planner-mobile__menus">
+    <div
+      *ngIf="showLNA"
+      class="box menus"
+      (click)="onClickedLearningNeedAnalysis()"
+    >
+      <span class="menus__year">{{ lnaPeriod }}</span>
+      <div class="menus__title">
+        {{
+          'Mobile.PDPlan.LandingPage.Menu.LearningNeedsAnalysis.Title'
+            | translate
+        }}
+      </div>
+      <div class="menus__explanation">
+        {{
+          'Mobile.PDPlan.LandingPage.Menu.LearningNeedsAnalysis.Description'
+            | translate
+        }}
+      </div>
+      <i class="menus__icon icon-sort-up"></i>
+    </div>
+    <div class="box menus" (click)="onClickedLearningNeeds()">
+      <div class="menus__title">
+        {{ 'Mobile.PDPlan.LandingPage.Menu.LearningNeeds.Title' | translate }}
+      </div>
+      <div class="menus__explanation">
+        {{
+          'Mobile.PDPlan.LandingPage.Menu.LearningNeeds.Description' | translate
+        }}
+      </div>
+      <i class="menus__icon icon-sort-up"></i>
+    </div>
+    <div class="box menus" (click)="onClickedPDPlan()">
+      <div class="menus__title">
+        {{
+          'Mobile.PDPlan.LandingPage.Menu.PlannedActivities.Title' | translate
+        }}
+      </div>
+      <div class="menus__explanation">
+        {{
+          'Mobile.PDPlan.LandingPage.Menu.PlannedActivities.Description'
+            | translate
+        }}
+      </div>
+      <i class="menus__icon icon-sort-up"></i>
+    </div>
+  </div>
+  <div class="pd-planner-mobile__hint">
+    {{ 'Mobile.PDPlan.LandingPage.Hint' | translate }}
+  </div>
+</div>
+<div
+  *ngIf="!isMobile"
+  [hidden]="loading"
+  class="pd-planner-web"
+  (resized)="onResized($event)"
+>
+  <individual-development
+    *ngIf="user"
+    [mode]="mode"
+    [user]="user"
+  ></individual-development>
+  <cx-footer *ngIf="footerData" [footerData]="footerData"></cx-footer>
+</div>

@@ -1,0 +1,56 @@
+<div #appHeader class="fixed-header-container app-header" *ngIf="userData">
+  <cx-header
+    #cxHeader
+    [ngClass]="{ hideSearchBar: invalidUser || !isAtStaffList }"
+    [currentUser]="userData"
+    [title]="userData.headerData.title"
+    [placeholderText]="'Common.Header.PlaceHolder' | translate"
+    [logo]="userData.headerData.logo"
+    [multipleLanguages]="multipleLanguages"
+    [applications]="userData.headerData.applications"
+    [notificationList]="notifications"
+    [currentURL]="currentSite"
+    [isShowNotificationBell]="isShowNotificationBell"
+    [bellUrl]="notificationBellUrl"
+    (searchOnSearchBox)="onSearch($event)"
+    (clickedHamburger)="onClickedHamburger()"
+  >
+    <cx-header-user-dropdown>
+      <a class="cx-dropdown-menu__item" (click)="onChangePassword()">
+        <i class="icon-controls cx-user-menu-item__icon"></i>
+        Change password
+      </a>
+      <a class="cx-dropdown-menu__item" (click)="onEditProfile()">
+        <i class="icon-staff cx-user-menu-item__icon"></i>
+        Profile
+      </a>
+      <a class="cx-dropdown-menu__item" (click)="onLogout()">
+        <i class="icon-logout cx-user-menu-item__icon"></i>
+        Sign out
+      </a>
+
+      <!-- TODO: Temporary remove https://cxtech.atlassian.net/browse/CP-5408 -->
+      <!-- <button class="cx-user-menu-item" (click)="onClickedSettings()">
+        <i class="icon-settings cx-user-menu-item__icon"></i>
+        <span class="cx-user-menu-item__title">Settings</span>
+      </button>
+      <button class="cx-user-menu-item" (click)="onSupport()">
+        <i class="icon-headphones cx-user-menu-item__icon"></i>
+        <span class="cx-user-menu-item__title">Support</span>
+      </button> -->
+    </cx-header-user-dropdown>
+  </cx-header>
+  <ng-container>
+    <sticky-navbar
+      *ngIf="
+        !invalidUser ||
+        !userData.headerData.menus ||
+        userData.headerData.menus.length === 0
+      "
+      [menuData]="userData.headerData.menus"
+      (changeMenu)="onChangeMenu($event)"
+    >
+    </sticky-navbar>
+  </ng-container>
+</div>
+<!-- <div #headerPlaceholder class="app-header__placeholder"></div> -->

@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+  datahub-queuemanager:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    volumes:
+      - /data/ssl/rabbitmq:/etc/ssl/rabbitmq
+      - /data/ssl/mongodb:/etc/ssl/mongodb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - RABBITMQ_HOSTNAMES=${RABBITMQ_HOSTNAMES}
+      - BuildVersion=${GO_PIPELINE_LABEL}
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_SSL_ENABLED=${RABBITMQ_SSL_ENABLED}
+      - MONGO_DATABASENAME={{ mongo_db_name }}
+      - MONGO_CONNECTIONSTRING=mongodb://{{ mongo_db_auth }}@${MONGODB_HOSTNAMES}/{{ mongo_db_name }}
+      - MONGO_SSL_ENABLED={{ mongo_db_ssl_enabled }}
+      - VIRTUAL_HOST={{ aspnetcore_environment }}-datahub-${PROJECT_NAME}-api-queuemanager.${DOMAIN_POSTFIX}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default
+
+ 

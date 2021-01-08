@@ -1,0 +1,94 @@
+<div class="filter-form">
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.WithrawalRequest.LearnersLabel' | translate
+    }}</label>
+    <cx-select
+      class="form-selector"
+      [itemObs]="filterLearners"
+      [(selectedItems)]="learnersSelected"
+      [config]="learnerSelectorConfig"
+    ></cx-select>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.WithrawalRequest.CourseLabel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="courseSelected"
+        [itemObs]="filterCourses"
+        [config]="courseSelectorConfig"
+        (selectedItemsChange)="updateClassRunItems()"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div *ngIf="classRunsItems && classRunsItems.length" class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.WithrawalRequest.ClassRunsLabel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="classRunsSelected"
+        [itemObs]="classRunsObs"
+        [config]="classRunSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'ApprovalPage.FilterSlidebar.WithrawalRequest.WithrawalStatusLabel'
+        | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="withrawalRequestStatuses"
+        [itemObs]="withrawalStatusObs"
+        [config]="withrawalStatusSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-item">
+      <div class="form-group">
+        <label for="input">{{
+          'ApprovalPage.FilterSlidebar.WithrawalRequest.SubmitStartDateLabel'
+            | translate
+        }}</label>
+        <div class="">
+          <cx-date-picker
+            [(date)]="withdrawalStartDate"
+            [isDisabled]="disableDatePicker"
+            [iconClass]="'material-icons date-range'"
+            (dateChange)="onApprovingStartDateChanged()"
+          >
+          </cx-date-picker>
+        </div>
+      </div>
+    </div>
+    <div class="col-item">
+      <div class="form-group">
+        <label for="input">{{
+          'ApprovalPage.FilterSlidebar.WithrawalRequest.SubmitEndDateLabel'
+            | translate
+        }}</label>
+        <div class="">
+          <cx-date-picker
+            [(date)]="withdrawalEndDate"
+            [isDisabled]="disableDatePicker"
+            [iconClass]="'material-icons date-range'"
+            [minDate]="withdrawalStartDate"
+          >
+          </cx-date-picker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

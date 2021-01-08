@@ -1,0 +1,54 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+
+.strategic-thrust {
+  width: 100%;
+  min-height: 100vh;
+
+  .strategic-thrust-table {
+    width: 100%;
+    height: 100%;
+    ::ng-deep .ag-header {
+      border-radius: 0 0 5px 5px;
+      &.ag-grid-header-fixed {
+        top: 128px;
+      }
+    }
+  }
+
+  .no-records-container {
+    text-align: center;
+  }
+
+  .submit-btn {
+    margin: 10px 0;
+    height: 40px;
+  }
+
+  .show-hide-columns-btn {
+    padding: 10px 0;
+  }
+
+  .ag-body-horizontal-scroll-viewport {
+    overflow-x: hidden !important;
+  }
+
+  .menu-action {
+    text-align: unset;
+    margin-bottom: 15px;
+    button {
+      border: none;
+    }
+
+    &__left-side {
+      text-align: left;
+      cx-button {
+        margin-right: 2px;
+      }
+    }
+
+    &__right-side {
+      text-align: right;
+    }
+  }
+}

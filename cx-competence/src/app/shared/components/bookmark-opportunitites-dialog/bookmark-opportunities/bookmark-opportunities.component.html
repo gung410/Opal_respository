@@ -1,0 +1,18 @@
+<div class="bookmark-opportunities">
+  <div *ngIf="bookmarkedCourseModels?.length" class="row">
+    <ng-container *ngFor="let courseModel of bookmarkedCourseModels">
+      <opportunity-card
+        class="col-12 col-md-6 col-xl-4"
+        [courseModel]="courseModel"
+        (selected)="onSelectOpportunity($event)"
+        (bookmark)="onSelectBookmark($event)"
+      ></opportunity-card>
+    </ng-container>
+  </div>
+  <div
+    *ngIf="!bookmarkedCourseModels?.length"
+    class="row bookmark-opportunities--empty"
+  >
+    {{ 'MyPdJourney.Bookmark.Empty' | translate }}
+  </div>
+</div>

@@ -1,0 +1,18 @@
+version: '3.6'
+services:
+  datahub-queuemanager:
+    environment:
+    - RABBITMQ_HOSTNAMES=rabbitmq-01.${DOMAIN_POSTFIX},rabbitmq-02.${DOMAIN_POSTFIX},rabbitmq-03.${DOMAIN_POSTFIX}
+    - MONGO_CONNECTIONSTRING=mongodb://DLDBS903:Three2kill@mongodb-01.${DOMAIN_POSTFIX},mongodb-02.${DOMAIN_POSTFIX},mongodb-03.${DOMAIN_POSTFIX}/datahub?replicaSet=prd-csc
+    - HTTPS_PROXY=${HTTPS_PROXY}
+    extra_hosts:
+    - "rabbitmq-01.${DOMAIN_POSTFIX}:10.192.31.71"
+    - "rabbitmq-02.${DOMAIN_POSTFIX}:10.192.35.114"
+    - "rabbitmq-03.${DOMAIN_POSTFIX}:10.192.39.45"
+    - "mongodb-01.${DOMAIN_POSTFIX}:10.192.43.190"
+    - "mongodb-02.${DOMAIN_POSTFIX}:10.192.44.192"
+    - "mongodb-03.${DOMAIN_POSTFIX}:10.192.49.97"
+networks:
+  default:
+    external:
+      name: app_default

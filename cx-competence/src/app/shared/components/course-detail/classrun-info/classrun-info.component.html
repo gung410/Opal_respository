@@ -1,0 +1,246 @@
+<div *ngIf="classrunDetail" class="classrun-detail">
+  <div class="cx-panel classrun-detail__about">
+    <div class="planned-pdo-about">
+      <div class="learner-classrun" *ngIf="classrunDetail">
+        <div class="learner-classrun-item">
+          <div class="learner-classrun-item__row">
+            <div
+              class="learner-classrun-item__icon"
+              [ngClass]="{ normal: !isExpanding, expanding: isExpanding }"
+              (click)="isExpanding = !isExpanding"
+            ></div>
+
+            <div class="learner-classrun-item__class-name">
+              {{ classrunDetail.classTitle }}
+              <!-- <status-indicator
+              [currentStatus]="
+                item.rescheduleStatus === rescheduleStatus.Approved &&
+                item.status !== ClassRunStatus.Cancelled
+                  ? item.rescheduleStatus
+                  : item.status
+              "
+              [mapping]="learnerClassRunStatusColorMap"
+            ></status-indicator> -->
+            </div>
+          </div>
+          <div class="learner-classrun-item__row">
+            <div class="learner-classrun-item__group-date">
+              <div
+                class="learner-classrun-item__title learner-classrun-item__title--icon"
+              >
+                <img src="assets/images/time.svg" />
+                Start Date
+              </div>
+              <div class="learner-classrun-item__value">
+                {{
+                  classrunDetail.planningStartTime == null
+                    ? (classrunDetail.startDate | date: 'dd/MM/yyyy')
+                    : (getDateTime(
+                        classrunDetail.startDate,
+                        classrunDetail.planningStartTime
+                      ) | date: 'dd/MM/yyyy - HH:mm')
+                }}
+              </div>
+            </div>
+            <div class="learner-classrun-item__group-date">
+              <div
+                class="learner-classrun-item__title learner-classrun-item__title--icon"
+              >
+                <img src="assets/images/time.svg" />
+                End Date
+              </div>
+              <div class="learner-classrun-item__value">
+                {{
+                  classrunDetail.planningEndTime == null
+                    ? (classrunDetail.endDate | date: 'dd/MM/yyyy')
+                    : (getDateTime(
+                        classrunDetail.endDate,
+                        classrunDetail.planningEndTime
+                      ) | date: 'dd/MM/yyyy - HH:mm')
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="learner-classrun-item__expand" [hidden]="!isExpanding">
+          <div class="learner-classrun-item__header">
+            <div
+              class="learner-classrun-item__icon"
+              [ngClass]="{
+                normal: !isExpandingClassRun,
+                expanding: isExpandingClassRun
+              }"
+              (click)="isExpandingClassRun = !isExpandingClassRun"
+            ></div>
+            <img src="assets/images/class-run.svg" />
+            Class Run information
+          </div>
+          <div
+            class="learner-classrun-item__detail"
+            [hidden]="!isExpandingClassRun"
+          >
+            <div class="learner-classrun-item__information">
+              <div class="information-left">
+                <div class="learner-classrun-item__title">Class run code</div>
+                <div
+                  class="learner-classrun-item__value learner-classrun-item__value--uppercase"
+                >
+                  {{ classrunDetail.code }}
+                </div>
+              </div>
+            </div>
+            <div class="learner-classrun-item__information information-two-col">
+              <div class="information-left">
+                <div class="learner-classrun-item__title">
+                  Application Start Date
+                </div>
+                <div class="learner-classrun-item__value">
+                  {{
+                    classrunDetail.applicationStartDate
+                      | date: 'dd/MM/yyyy - HH:mm'
+                  }}
+                </div>
+              </div>
+              <div class="information-right">
+                <div class="learner-classrun-item__information">
+                  <div class="learner-classrun-item__title">
+                    Application End Date
+                  </div>
+                  <div class="learner-classrun-item__value">
+                    {{
+                      classrunDetail.applicationEndDate
+                        | date: 'dd/MM/yyyy - HH:mm'
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="learner-classrun-item__information information-two-col">
+              <div class="information-left">
+                <div class="learner-classrun-item__title">
+                  Facilitator's Name
+                </div>
+                <ng-container *ngIf="facilitators && facilitators.length > 0">
+                  <div
+                    class="learner-classrun-item__faciliatator"
+                    *ngFor="let facilitator of facilitators"
+                  >
+                    {{ facilitator.fullName }}
+                  </div>
+                </ng-container>
+              </div>
+              <div class="information-left">
+                <div class="learner-classrun-item__title">Class size</div>
+                <div class="learner-classrun-item__value">
+                  {{ classrunDetail.maxClassSize }} persons
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="learner-classrun-item__section">
+            <div class="learner-classrun-item__title section-title">
+              Sessions
+            </div>
+            <div
+              class="learner-classrun-item__empty-session"
+              *ngIf="!sessions || !sessions.length"
+            >
+              There is no session.
+            </div>
+            <ng-container *ngIf="sessions && sessions.length">
+              <div *ngFor="let session of sessions">
+                <div
+                  class="learner-classrun-item__session"
+                  [ngClass]="{
+                    'learner-classrun-item__session--active':
+                      expandingSessions[session.id] ||
+                      (upcomingSession && session.id === upcomingSession.id)
+                  }"
+                  *ngIf="session.classRunId === classrunDetail.id"
+                >
+                  <div class="learner-classrun-item__session-info">
+                    <div
+                      class="learner-classrun-item__icon"
+                      [ngClass]="{
+                        normal: !expandingSessions[session.id],
+                        expanding: expandingSessions[session.id]
+                      }"
+                      (click)="onToggleSession(session.id)"
+                    ></div>
+
+                    <div class="learner-classrun-item__session-info-title">
+                      <img src="assets/images/book-blue.svg" />
+                      {{ session.sessionTitle }}
+                    </div>
+                    <div class="learner-classrun-item__session-info-date">
+                      <ng-template #startTimeTemplate="">
+                        {{ session.startTime | date: 'dd/MM/yyyy' }}
+                      </ng-template>
+                      <!-- <status-indicator
+                      *ngIf="
+                        attendanceTrackingDict[session.id] &&
+                          (attendanceTrackingDict[session.id].status != null ||
+                            attendanceTrackingDict[session.id].isCodeScanned ===
+                              true);
+                        else startTimeTemplate
+                      "
+                      [currentStatus]="
+                        currentStatusMapping(attendanceTrackingDict[session.id])
+                      "
+                      [mapping]="sessionMapping"
+                    ></status-indicator> -->
+                    </div>
+                  </div>
+                  <div
+                    class="learner-classrun-item__session-detail"
+                    [hidden]="!expandingSessions[session.id]"
+                  >
+                    <div class="learner-classrun-item__session-item">
+                      <div class="learner-classrun-item__group-date">
+                        <div
+                          class="learner-classrun-item__title learner-classrun-item__title--icon"
+                        >
+                          <img src="assets/images/time.svg" />
+                          Start Time
+                        </div>
+                        <div class="learner-classrun-item__value">
+                          {{ session.startTime | date: 'HH:mm' }}
+                        </div>
+                      </div>
+                      <div class="learner-classrun-item__group-date">
+                        <div
+                          class="learner-classrun-item__title learner-classrun-item__title--icon"
+                        >
+                          <img src="assets/images/time.svg" />
+                          End Time
+                        </div>
+                        <div class="learner-classrun-item__value">
+                          {{ session.endTime | date: 'HH:mm' }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="learner-classrun-item__info">
+                      <div class="learner-classrun-item__info-left">
+                        <div
+                          class="learner-classrun-item__title learner-classrun-item__title--icon"
+                        >
+                          <img src="assets/images/location.svg" />
+                          Venue
+                        </div>
+                        <div class="learner-classrun-item__value">
+                          {{ session.venue }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

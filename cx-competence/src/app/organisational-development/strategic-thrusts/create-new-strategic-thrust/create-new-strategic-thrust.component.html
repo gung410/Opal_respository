@@ -1,0 +1,19 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+  [isShowingMandatoryText]="true"
+>
+  <modal-header>
+    <h3>{{ dialogHeaderText }}</h3>
+  </modal-header>
+  <content>
+    <cx-surveyjs
+      [json]="formConfigJson"
+      [submitName]="btnSubmitName"
+      [data]="dataAnswer"
+      (submitting)="onCreateOrEditST($event)"
+      (valueChanged)="onDataFormChanged($event)"
+    >
+    </cx-surveyjs>
+  </content>
+</cx-dialog-template>

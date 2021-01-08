@@ -1,0 +1,72 @@
+<!-- <div class="cx-page-container">
+  <div class="staff-detail-container">
+
+    <header>
+      <div class="actions">
+        <cx-button [type]="'light'" class="menu-action__button" size="sm">
+            {{ 'Common.Action.Nominate' | translate}}
+          </cx-button>
+        <cx-button [type]="'light'" class="menu-action__button" size="sm">
+          {{ 'Common.Action.Reminder' | translate}}
+        </cx-button>
+        <cx-button [type]="'light'" class="menu-action__button" size="sm">
+          {{ 'Common.Action.Export' | translate}}
+        </cx-button>
+        <cx-button [type]="'light'" class="menu-action__button" size="sm" (clicked)="onReturnStaffList()">
+          {{ 'Staff.Detail.ReturnToStaffList' | translate}}
+        </cx-button>
+      </div>
+  
+    </header>
+  
+    <div *ngIf="staffDetail" class="general-info">
+      <div class="avatar"><img src="{{ getAvatarUrl(staffDetail.email) }}" alt="{{ staffDetail.fullName }}"></div>
+      <div class="content">
+        <h3>{{ staffDetail.fullName | titlecase}}</h3>
+        <div class="status">
+          <div class="status__progress">
+            <cx-progress [progressClass]="pDPlanProcessClass[staffDetail.assessmentInfos.LearningNeed.statusInfo.assessmentStatusCode]"
+              [progressValue]="100"
+              [progressText]="'LNA: ' + staffDetail.assessmentInfos.LearningNeed.statusInfo.assessmentStatusName">
+            </cx-progress>
+          </div>
+          <div class="status__progress" *ngIf="pdplanStatusCode">
+            <cx-progress [progressClass]="pDPlanProcessClass[pdplanStatusCode]"
+              [progressValue]="100"
+              [progressText]="'PD Plan: ' + staffDetail.assessmentInfos.LearningPlan.statusInfo.assessmentStatusName">
+            </cx-progress>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="staff-detail__periods-container">
+      <div class="staff-detail__period" *ngFor="let lnaResult of lnaNoAnswerResults">
+        <input id="period_{{lnaResult.resultIdentity.id}}" (change)="onPeriodChange($event, lnaResult)" type="radio" name="periods_group"
+          [value]="lnaResult.resultIdentity.id"
+          [checked]="lnaResult.resultIdentity.id === currentLnaResult.resultIdentity.id" />
+        <label class="staff-detail__period-label" for="period_{{lnaResult.resultIdentity.id}}">{{lnaResult.surveyInfo.displayName}}</label>
+      </div>
+    </div>
+    <div *ngIf="showApprovingOfficerActions === true" class="staff-detail__approving-officer-actions">
+      <div class="staff-detail__action-button">
+        <cx-button [type]="buttonType.primary" (clicked)="onApproveLNA()">
+            {{"Common.Action.Approve" | translate}}
+        </cx-button>
+      </div>
+      <div class="staff-detail__action-button">
+        <cx-button [type]="buttonType.danger" (clicked)="onRejectLNA()">
+          {{"Common.Action.Reject" | translate}}
+        </cx-button>
+      </div>
+    </div>
+  </div>
+  <cx-surveyjs *ngIf="configLna" [json]="configLna" [data]="currentLnaResult?.answer" [variables]="surveyVariables"></cx-surveyjs>
+</div> -->
+
+<!-- TODO: Use cx-angular-common to render the bread crumb? -->
+<ng-container *ngIf="staffDetail && mode">
+  <individual-development
+    [mode]="mode"
+    [user]="staffDetail"
+  ></individual-development>
+</ng-container>

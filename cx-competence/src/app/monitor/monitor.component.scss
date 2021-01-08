@@ -1,0 +1,19 @@
+monitor {
+  .monitor {
+    padding: 20px;
+    &__header {
+    }
+    &__content {
+    }
+    &__api-list {
+    }
+    &__route {
+      cursor: pointer;
+    }
+  }
+  .app-header-middle-area {
+    &__middle-area {
+      padding-left: 20px;
+    }
+  }
+}

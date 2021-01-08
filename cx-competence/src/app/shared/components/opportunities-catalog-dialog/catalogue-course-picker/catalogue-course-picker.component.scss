@@ -1,0 +1,42 @@
+@import '~assets/styles/variables.scss';
+
+.catalogue-course-picker {
+  &__title {
+    color: #2d3469;
+    margin-top: 20px;
+    font-size: 22px;
+  }
+
+  ::ng-deep {
+    .cx-dialog-template {
+      padding: 2px;
+      min-height: unset;
+      max-height: unset;
+      height: unset;
+      .modal-close-button {
+        display: none;
+      }
+      .catalog-title {
+        margin-top: 20px;
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+::ng-deep .external-pdo-dialog {
+  .cx-surveyjs {
+    .sv_bootstrap_css .sv_qstn {
+      padding: 0.5em 1em 1em;
+      h5 {
+        margin-bottom: 0.3rem;
+      }
+    }
+    .cx-question-content {
+      margin-top: 0;
+      .form-group {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

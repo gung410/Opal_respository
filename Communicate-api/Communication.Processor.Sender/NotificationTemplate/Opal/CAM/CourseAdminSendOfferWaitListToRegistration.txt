@@ -1,0 +1,2 @@
+Thank you for your interest in our course - {{CourseTitle}}. We are pleased to offer you a place in our course. Please view your course details and accept/ decline the offer
+

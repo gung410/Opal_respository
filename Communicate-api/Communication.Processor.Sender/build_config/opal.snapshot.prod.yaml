@@ -1,0 +1,63 @@
+---
+format_version: 3
+environments:
+  docker-publish: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-snapshot-build
+  development: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-development
+  uat-next: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-uat-next
+pipelines:
+  cx-datahub-communication-sender-processor-snapshot-build: 
+    group: cx-datahub-communication-sender-processor-snapshot
+    label_template: "release-1.2.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Processor.Sender/
+      SONAR_PROJECTKEY: cx-datahub-communication-sender-processor-snapshot
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: develop
+        git: "https://bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - Communication.Processor.Sender/**/*.*
+  cx-datahub-communication-sender-processor-development:
+    group:  cx-datahub-communication-sender-processor-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-snapshot-build
+        stage: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    template: ansible-deploy-fetch-upstream-auto
+  cx-datahub-communication-sender-processor-uat-next:
+    group: cx-datahub-communication-sender-processor-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-development
+        stage: deploy-stage
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-development
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream

@@ -1,0 +1,56 @@
+<div class="cx-page-container">
+  <cx-universal-toolbar
+    [buttonCondition]="buttonCondition"
+    [breadCrumbNavigation]="breadCrumbNavigation"
+    [departmentModel]="departmentModel"
+    (searchDepartment)="onSearch($event)"
+    (expandChildDepartment)="expandChildDepartment($event)"
+    (selectDepartmentTree)="onSelectDepartmentNode($event)"
+    (breadcrumbNavigationClick)="onSelectedDepartmentLabel($event)"
+    (searchResultClick)="onClickSearchResult($event)"
+    [userActions]="null"
+  >
+  </cx-universal-toolbar>
+
+  <ng-container *ngIf="opjDepartmentId">
+    <div class="grid-toolbar" [cxFloatingToolbar]="gridToolbarAttribute">
+      <div class="grid-toolbar__title">
+        {{ 'Odp.LearningPlan.ListTitle' | translate }} {{ opjDepartmentName }}
+      </div>
+      <div class="grid-toolbar__actions">
+        <button
+          *ngIf="hasSubmitRight && showSubmitBtn && enableSubmit"
+          class="cx-btn menu-action__button"
+          (click)="onClickSubmit()"
+        >
+          {{ 'Common.Action.Submit' | translate }}
+        </button>
+        <button
+          *ngIf="showStartNewLearningPlan"
+          class="cx-btn menu-action__button"
+          (click)="onClickStartNewPlan()"
+        >
+          {{ 'Common.Action.StartNewPlan' | translate }}
+        </button>
+      </div>
+    </div>
+    <ag-grid-angular
+      #grid
+      class="ag-grid-header-floatable ag-theme-material styled-grid learning-plan-list-table"
+      domLayout="autoHeight"
+      [rowData]="rowData"
+      [rowHeight]="70"
+      [headerHeight]="64"
+      [columnDefs]="columnDefs"
+      [suppressRowClickSelection]="true"
+      [rowSelection]="rowSelection"
+      [defaultColDef]="defaultColDef"
+      [context]="context"
+      [overlayNoRowsTemplate]="noRowsTemplate"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)"
+      (selectionChanged)="onSelectionChanged($event)"
+      (firstDataRendered)="onFirstDataRendered($event)"
+    ></ag-grid-angular>
+  </ng-container>
+</div>

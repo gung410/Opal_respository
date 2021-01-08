@@ -1,0 +1,3 @@
+The learner {{SenderName}} has accepted your offer to participate in the course - {{CourseTitle}}.
+
+

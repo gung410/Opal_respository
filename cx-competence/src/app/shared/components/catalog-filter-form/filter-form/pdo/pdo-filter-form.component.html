@@ -1,0 +1,231 @@
+<div *ngIf="metadataTagModel" class="filter-form">
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.TypeOfPDActivity' | translate
+    }}</label>
+    <cx-select
+      class="form-selector"
+      [(selectedItems)]="metadataTagModel.pdActivityType"
+      [itemObs]="getMetaDataTagObs(metadataTagGroupCode.PDO_TYPES)"
+      [config]="singleSelectorConfig"
+    ></cx-select>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.ModeOfLearning' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.learningMode"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.PDO_MODES)"
+        [config]="singleSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.Category' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.categorySelectedItems"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.PDO_CATEGORIES)"
+        [config]="multipleSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.ServiceScheme' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.serviceSchemeSelectedItems"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.SERVICE_SCHEMES)"
+        [config]="multipleSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.DevelopmentalRole' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.developmentalRoleSelectedItems"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.DEVROLES)"
+        [config]="multipleSelectorConfig"
+        [disabled]="
+          !(
+            metadataTagModel.developmentalRoleSelectItems &&
+            metadataTagModel.developmentalRoleSelectItems.length > 0
+          )
+        "
+      ></cx-select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.TeachingLevel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.teachingLevelSelectedItems"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.TEACHING_LEVELS)"
+        [config]="multipleSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="input">{{
+      'MyPdJourney.FilterSlidebar.CourseLevel' | translate
+    }}</label>
+    <div class="">
+      <cx-select
+        class="form-selector"
+        [(selectedItems)]="metadataTagModel.courseLevel"
+        [itemObs]="getMetaDataTagObs(metadataTagGroupCode.COURSE_LEVELS)"
+        [config]="singleSelectorConfig"
+      ></cx-select>
+    </div>
+  </div>
+  <ng-container *ngIf="showMore">
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.Subject' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.subjectAreaSelectedItems"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.PDO_TAXONOMY)"
+          [config]="multipleSelectorConfig"
+        ></cx-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.LearningFramework' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.learningFrameworkSelectedItems"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.LEARNING_FXS)"
+          [config]="multipleSelectorConfig"
+          [disabled]="
+            !(
+              metadataTagModel.learningFrameworkSelectItems &&
+              metadataTagModel.learningFrameworkSelectItems.length > 0
+            )
+          "
+        ></cx-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.LearningDimension' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.learningDimensionSelectedItems"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.LEARNING_DIMENSION)"
+          [config]="multipleSelectorConfig"
+          [disabled]="
+            !(
+              metadataTagModel.learningFrameworkSelectedItems &&
+              metadataTagModel.learningFrameworkSelectedItems.length > 0
+            ) &&
+            !(
+              metadataTagModel.learningDimensionSelectItems &&
+              metadataTagModel.learningDimensionSelectItems.length > 0
+            )
+          "
+        ></cx-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.LearningArea' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.learningAreaSelectedItems"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.LEARNING_AREA)"
+          [config]="multipleSelectorConfig"
+          [disabled]="
+            !(
+              metadataTagModel.learningDimensionSelectedItems &&
+              metadataTagModel.learningDimensionSelectedItems.length > 0
+            ) &&
+            !(
+              metadataTagModel.learningAreaSelectItems &&
+              metadataTagModel.learningAreaSelectItems.length > 0
+            )
+          "
+        ></cx-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.LearningSubArea' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.learningSubAreaSelectedItems"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.LEARNING_SUB_AREA)"
+          [config]="multipleSelectorConfig"
+          [disabled]="
+            !(
+              metadataTagModel.learningAreaSelectedItems &&
+              metadataTagModel.learningAreaSelectedItems.length > 0
+            ) &&
+            !(
+              metadataTagModel.learningSubAreaSelectItems &&
+              metadataTagModel.learningSubAreaSelectItems.length > 0
+            )
+          "
+        ></cx-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input">{{
+        'MyPdJourney.FilterSlidebar.NatureOfCourse' | translate
+      }}</label>
+      <div class="">
+        <cx-select
+          class="form-selector"
+          [(selectedItems)]="metadataTagModel.natureOfCourse"
+          [itemObs]="getMetaDataTagObs(metadataTagGroupCode.PDO_NATURES)"
+          [config]="singleSelectorConfig"
+        ></cx-select>
+      </div>
+    </div>
+  </ng-container>
+
+  <div
+    class="filter-form__show-more"
+    (click)="toggleShowMore()"
+    *ngIf="!showMore"
+  >
+    {{ 'MyPdJourney.FilterSlidebar.ShowMore' | translate }}
+  </div>
+  <div
+    class="filter-form__show-less"
+    (click)="toggleShowMore()"
+    *ngIf="showMore"
+  >
+    {{ 'MyPdJourney.FilterSlidebar.ShowLess' | translate }}
+  </div>
+</div>

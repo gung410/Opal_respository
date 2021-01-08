@@ -1,0 +1,5 @@
+﻿mongo_db_name: prod-communication-opal-db
+mongo_db_auth: prod-communication-opal:opal-communication-prod
+https_proxy: http://proxy.opal:3128
+ses_configuration_set: ""
+enable_mail_log: false

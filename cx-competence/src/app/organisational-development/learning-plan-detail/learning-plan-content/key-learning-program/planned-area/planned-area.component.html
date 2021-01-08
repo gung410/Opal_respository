@@ -1,0 +1,25 @@
+<div *ngIf="areaModel" class="klp-area-item">
+  <i
+    *ngIf="allowRemove"
+    class="icon-close klp-area-item__remove-button"
+    (click)="onClickRemove()"
+  ></i>
+  <div class="klp-area-item__box">
+    <div class="klp-area-item__title">Learning Framework</div>
+    <div class="klp-area-item__content">
+      {{ areaModel.framework ? areaModel.framework.displayText : 'N/A' }}
+    </div>
+  </div>
+  <div class="klp-area-item__box">
+    <div class="klp-area-item__title">Learning Dimension</div>
+    <div class="klp-area-item__content">
+      {{ areaModel.dimension ? areaModel.dimension.displayText : 'N/A' }}
+    </div>
+  </div>
+  <div class="klp-area-item__box">
+    <div class="klp-area-item__title">Learning Area</div>
+    <div class="klp-area-item__content">
+      {{ areaModel.area ? areaModel.area.displayText : 'N/A' }}
+    </div>
+  </div>
+</div>

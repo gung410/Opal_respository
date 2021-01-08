@@ -1,0 +1,5 @@
+Dear {{RecipientName}},
+Your OPAL2.0 account application has been rejected.
+Please contact your administrator.
+Thank You.
+

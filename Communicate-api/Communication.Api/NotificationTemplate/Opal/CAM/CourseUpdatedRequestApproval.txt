@@ -1,0 +1,3 @@
+{{SenderName}} has updated a course and needs your approval.
+
+

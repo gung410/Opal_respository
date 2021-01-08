@@ -1,0 +1,72 @@
+<div *ngIf="pdoDetail" class="planned-pdo-content">
+  <div class="cx-panel planned-pdo-content__about">
+    <div class="planned-pdo-about">
+      <div class="cx-panel__label">
+        {{ 'Odp.LearningPlan.PlannedPDODetail.About' | translate }}
+        <button
+          *ngIf="
+            isExternalPDO &&
+            keyLearningProgrammePermission.externalPDO.allowEdit
+          "
+          class="cx-btn cx-btn-secondary cx-btn-icon"
+          (click)="onClickEdit()"
+        >
+          <i class="icon-pencil"></i>
+          {{ 'Common.Action.Edit' | translate }}
+        </button>
+      </div>
+      <div class="planned-pdo-about__content mt-2">
+        {{ pdoDetail.description }}
+      </div>
+    </div>
+
+    <div *ngIf="pdoDetail" class="planned-pdo-metadata mt-4">
+      <div class="cx-panel__label">INFORMATION</div>
+
+      <div class="planned-pdo-metadata__items mt-2">
+        <ng-container *ngIf="pdoDetail.infos as pdoInfos">
+          <div *ngFor="let item of pdoInfos" class="metadata-item">
+            <p class="metadata-item__name">{{ item.title }}</p>
+            <p class="metadata-item__value">{{ item.value }}</p>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- <div class="cx-panel__label show-more">
+        SHOW MORE
+      </div> -->
+    </div>
+  </div>
+
+  <!-- TODO: show detail of PDO -->
+  <!-- <div class="cx-panel planned-pdo-content__content">
+    <div class="cx-panel__label">CONTENT</div>
+    <div *ngFor="let content of [1,2,3]; let contentIndex = index" class="pdo-content-item">
+      <div class="pdo-content-item__title">
+        {{(contentIndex + 1) + '.' }} 50 Signs You Might Be an Entrepreneur
+      </div>
+      <div class="pdo-content-item__chapters">
+        <div *ngFor="let chapter of [1, 2, 3, 4, 5]; let chaperIndex = index" class="pdo-content-chapter">
+          <span class="pdo-content-chapter__number">{{chaperIndex}}</span>
+          <span class="pdo-content-chapter__text">Is There A 'Right Way' To Think About Things?</span>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngFor="let item of [1,2,3]; contentIndex=$index" class="pdo-content-item">
+      <div class="pdo-content-item__title">
+        {{contentIndex + '.' }} 50 Signs You Might Be an Entrepreneur
+      </div>
+
+      <div class="pdo-content-item__chapters">
+        <div ngFor="let item of [1, 2, 3, 4, 5]; chaperIndex=$index" class="pdo-content-chapter">
+          <span class="pdo-content-chapter__number">{{chaperIndex}}</span>
+          <span class="pdo-content-chapter_text">Is There A 'Right Way' To Think About Things?</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="cx-panel__label  show-more">
+      SHOW MORE
+    </div>
+  </div> -->
+</div>

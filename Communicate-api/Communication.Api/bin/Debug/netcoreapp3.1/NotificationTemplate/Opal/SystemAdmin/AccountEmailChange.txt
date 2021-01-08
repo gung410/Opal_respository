@@ -1,0 +1,7 @@
+Your email changed
+{{EmailContent}}.
+{{AlertText}}.
+Thanks,
+The OPAL2.0 account team.
+{{CallBackText}}
+

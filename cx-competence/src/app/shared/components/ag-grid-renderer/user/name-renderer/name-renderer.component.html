@@ -1,0 +1,19 @@
+<div *ngIf="email" class="staff-table__items--avatar">
+  <a target="_blank" routerLink="{{ detailLink }}"
+    ><img class="staff-table__items--avatar-image" [src]="getAvatar()"
+  /></a>
+</div>
+<div class="staff-table__items-info">
+  <div
+    class="staff-table__items-info-data staff-table__items-info-data--main"
+    title="{{ fullName }}"
+  >
+    <a target="_blank" routerLink="{{ detailLink }}">{{ fullName }}</a>
+  </div>
+  <div
+    class="staff-table__items-info-data staff-table__items-info-data--secondary"
+    title="{{ email }}"
+  >
+    {{ email }}
+  </div>
+</div>

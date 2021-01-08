@@ -1,0 +1,1 @@
+﻿{{SenderName}} has invited you to an event {{NotificationContent}}.

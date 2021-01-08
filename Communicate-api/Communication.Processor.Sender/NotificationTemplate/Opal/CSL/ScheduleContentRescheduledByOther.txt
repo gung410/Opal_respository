@@ -1,0 +1,1 @@
+{{OriginatorName}} has rescheduled your post in the community {{CommunityName}}.

@@ -1,0 +1,70 @@
+<div class="catalog">
+  <div *ngIf="!isSearching">
+    <ng-container *ngIf="!pickCourseMode">
+      <div class="label">
+        {{ 'MyPdJourney.Catalog.Recommended' | translate }}
+      </div>
+      <div *ngIf="!noRecommendedCourse" class="row">
+        <opportunity-card
+          *ngFor="let recommendedCourse of recommendedCourses"
+          class="col-12 col-md-6 col-lg-4 col-xl-3"
+          [courseModel]="recommendedCourse"
+          [enableBookmark]="enableBookmark"
+          (bookmark)="onSelectBookmark($event)"
+          (selected)="onSelectOpportunity($event)"
+        ></opportunity-card>
+      </div>
+      <div *ngIf="showLoadMoreRecommendCourse" class="catalogue-load-more">
+        <button
+          class="cx-btn cx-btn-secondary"
+          (click)="loadMoreRecommendCourses.emit()"
+        >
+          {{ 'MyPdJourney.Catalog.ShowMore' | translate }}
+        </button>
+      </div>
+      <div *ngIf="noRecommendedCourse" class="no-data-label">
+        There no recommended courses
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="isSearching || showPDCatalogueCourses">
+    <div
+      *ngIf="searchCourses && searchCourses.length > 0"
+      class="opportunities"
+    >
+      <div class="label">
+        <span *ngIf="isSearching">{{
+          'MyPdJourney.Catalog.SearchResults' | translate
+        }}</span>
+        <span *ngIf="showPDCatalogueCourses">{{
+          'MyPdJourney.Catalog.PDOpportunities' | translate
+        }}</span>
+      </div>
+      <div class="row opportunities__search-results">
+        <opportunity-card
+          *ngFor="let courseModel of searchCourses"
+          class="col-12 col-md-6 col-lg-4 col-xl-3"
+          [courseModel]="courseModel"
+          [enableBookmark]="enableBookmark"
+          (bookmark)="onSelectBookmark($event)"
+          (selected)="onSelectOpportunity($event)"
+        ></opportunity-card>
+      </div>
+      <div *ngIf="showLoadMoreSearchCourse" class="catalogue-load-more">
+        <button
+          class="cx-btn cx-btn-secondary"
+          (click)="loadMoreSearchCourses.emit()"
+        >
+          {{ 'MyPdJourney.Catalog.ShowMore' | translate }}
+        </button>
+      </div>
+    </div>
+    <div
+      *ngIf="searchCourses && searchCourses.length === 0"
+      class="no-data-label"
+    >
+      {{ 'MyPdJourney.Catalog.Empty' | translate }}
+    </div>
+  </ng-container>
+</div>

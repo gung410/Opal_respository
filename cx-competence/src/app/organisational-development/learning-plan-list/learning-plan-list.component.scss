@@ -1,0 +1,27 @@
+@import '~assets/styles/variables.scss';
+
+learning-plan-list {
+  .cx-page-container {
+    min-height: 100vh;
+
+    .ag-header.ag-grid-header-fixed {
+      top: 128px;
+    }
+
+    .styled-grid .ag-header {
+      border-radius: 0 0 5px 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  learning-plan-list {
+    .cx-page-container {
+      .grid-toolbar {
+        &__title {
+          font-size: 1.125rem;
+        }
+      }
+    }
+  }
+}

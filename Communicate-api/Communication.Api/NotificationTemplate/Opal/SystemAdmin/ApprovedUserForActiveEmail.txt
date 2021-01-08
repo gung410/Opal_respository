@@ -1,0 +1,8 @@
+Hi {{FullName}},
+Your OPAL2.0 account has been Approved.
+However, you are not able to use your account at the moment because your administrator has set up a date for your account to be activated automatically on {{ActiveDate}}.
+Please contact your administrator if you need further information.
+You can continue using the system now by clicking the link below.
+System Administration
+
+

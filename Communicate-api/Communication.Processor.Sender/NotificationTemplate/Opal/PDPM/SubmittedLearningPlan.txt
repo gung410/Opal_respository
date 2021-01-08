@@ -1,0 +1,2 @@
+A new learning plan for {{LearningPlanPeriod}} has been submitted for your acknowledgement.
+

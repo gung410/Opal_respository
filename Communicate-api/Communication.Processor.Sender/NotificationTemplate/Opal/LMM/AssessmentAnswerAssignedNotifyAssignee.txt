@@ -1,0 +1,1 @@
+{{CourseTitle}} - {{ClassRunTitle}}  - {{AssignmentName}} : {{AssignorName}}  had selected you as the assessor for {{LearnerName}} 

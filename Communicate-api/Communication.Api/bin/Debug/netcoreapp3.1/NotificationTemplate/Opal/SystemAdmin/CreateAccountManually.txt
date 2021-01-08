@@ -1,0 +1,4 @@
+Your account has been created manually.
+Your OTP: {{OtpCode}}
+{{CallBackText}}
+

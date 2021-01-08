@@ -1,0 +1,9 @@
+Dear {{RecipientName}},
+Welcome to OPAL2.0!
+Your username is {{Email}} and you can use this email to setup your password.
+Please click on the link below to launch OPAL2.0.
+OPAL2.0
+To activate your account, please click on Claim OTP button for a one-time password to be sent to you via email.
+
+
+

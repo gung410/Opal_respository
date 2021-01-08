@@ -1,0 +1,9 @@
+@import '~assets/styles/variables.scss';
+staff-export {
+  .staff-export {
+    color: $main-color;
+  }
+  .cx-dialog-template .modal-body {
+    padding-bottom: 0;
+  }
+}

@@ -1,0 +1,46 @@
+---
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-conexus-api-queuemanager-release
+  systemtest-conexus: 
+    pipelines: 
+      - systemtest-datahub-conexus-api-queuemanager-release 
+format_version: 3
+pipelines: 
+  build-datahub-conexus-api-queuemanager-release: 
+    group: datahub-conexus-api-queuemanager-release
+    label_template: "release-1.1.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      SONAR_PROJECTKEY: datahub-conexus-api-queuemanager-release
+      SONAR_SOLUTION_FILE: Datahub.Queue.Manager.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: linux-docker-build-sonar-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/1.1
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-datahub-queue-manager.git"
+  systemtest-datahub-conexus-api-queuemanager-release:
+    group: datahub-conexus-api-queuemanager-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-conexus-api-queuemanager-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-datahub-conexus-api-queuemanager-release
+      DOCKER_DEPLOY_DIR : systemtest-conexus
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:Rw05Jb7GcDhESTN9WPVddQ==:ySCzBYSBc7K9NNPoASJnDFB8Peo71OM04XzKdMYYWqo=
+      IDM_CLIENT_ID: AES:UepIoNovj0ZFY0fI+yDCjg==:NdOMq4cHLEUFWEtBDpIsENDpM13ZYkzvZsmD4bqRIlo=

@@ -1,0 +1,24 @@
+<div class="klp-pdo-container overall-planned-list-pdo">
+  <div class="cx-panel__label mb-2">PD OPPORTUNITIES</div>
+  <div *ngIf="klpAddedPDOs" class="klp-pdos">
+    <div *ngFor="let pdo of klpAddedPDOs; let k = index">
+      <pdo-long-card
+        class="klp-pdos__item"
+        [pdoAnswer]="pdo"
+        [allowRemove]="false"
+      ></pdo-long-card>
+      <overall-planned-pdo-nominations
+        class="cx-tab-body"
+        [pdoAnswer]="klpResultDto.answer.listLearningOpportunity[k]"
+        [pdoDetail]="klpResultDto"
+        [klpDto]="klpResultDto"
+      ></overall-planned-pdo-nominations>
+    </div>
+    <div
+      *ngIf="klpAddedPDOs && klpAddedPDOs.length === 0"
+      class="no-data-label"
+    >
+      <div style="max-width: 480px">There is no PD Opportunities</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="lna-survey-link">
+  <h3 class="lna-survey-link__header mb-4">
+    {{ 'MyPdJourney.LNA.LNASurveyLinkHeader' | translate }}
+  </h3>
+  <p class="lna-survey-link__greeting">
+    {{ 'MyPdJourney.LNA.LNASurveyLinkGreeting' | translate }}
+  </p>
+  <p class="lna-survey-link__content">
+    {{ 'MyPdJourney.LNA.LNASurveyLinkContent' | translate }}
+  </p>
+  <p class="lna-survey-link__thank">
+    {{ 'MyPdJourney.LNA.LNASurveyLinkThank' | translate }}
+  </p>
+  <div *ngIf="link" class="text-center">
+    <a
+      class="cx-btn lna-survey-link__button"
+      href="{{ link }}"
+      target="blank"
+      (click)="clickStart.emit()"
+    >
+      {{ 'Common.Navigation.Start' | translate }}
+    </a>
+  </div>
+</div>

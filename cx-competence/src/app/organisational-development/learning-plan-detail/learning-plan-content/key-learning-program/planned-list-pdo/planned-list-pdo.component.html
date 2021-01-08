@@ -1,0 +1,30 @@
+<div class="klp-pdo-container">
+  <div class="cx-panel__label mb-2">PD OPPORTUNITIES</div>
+  <div class="d-flex align-items-center">
+    <button
+      *ngIf="isEditing && allowAddingPDOPermission"
+      class="cx-btn cx-btn-secondary cx-btn-icon add-pdo-btn"
+      (click)="onClickedAddPDO()"
+    >
+      <i class="icon icon-add font-weight-bold"></i>
+      {{ 'Odp.Button.AddPDO' | translate }}
+    </button>
+  </div>
+  <div *ngIf="klpAddedPDOs" class="klp-pdos">
+    <!-- TODO: Enable remove PDO feature when complete handle relevant logic -->
+    <pdo-long-card
+      *ngFor="let pdo of klpAddedPDOs"
+      class="klp-pdos__item"
+      [pdoAnswer]="pdo"
+      [allowRemove]="checkAllowRemove(pdo)"
+      (clickedItem)="onClickedPDO(pdo)"
+      (clickedRemove)="onClickedRemovePDO($event)"
+    ></pdo-long-card>
+    <div
+      *ngIf="klpAddedPDOs && klpAddedPDOs.length === 0"
+      class="no-data-label"
+    >
+      <div style="max-width: 480px">There is no PD Opportunities</div>
+    </div>
+  </div>
+</div>

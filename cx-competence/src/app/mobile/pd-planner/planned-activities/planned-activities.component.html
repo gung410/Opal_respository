@@ -1,0 +1,19 @@
+<div class="planned-activities-view page full-view">
+  <pd-planner-page-header
+    [title]="pageNameTranslatePath | translate"
+    [backRoute]="backRoute"
+  ></pd-planner-page-header>
+  <div class="planned-activities-view__body full-view">
+    <pd-opportunities
+      *ngIf="user"
+      [user]="user"
+      [needsResults]="learningNeedsResults"
+    >
+    </pd-opportunities>
+  </div>
+</div>
+
+<!-- TODO: <alert-dialog [message]="submittedPlanSuccessMessage">
+</alert-dialog> -->
+<!-- <action-dialog [title]="addedPDOSuccessMessage" [actionMessage]="backToPlanMessage" (action)="onAddedAPDO(selectedPDO)">
+</action-dialog> -->

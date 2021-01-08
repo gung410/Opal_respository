@@ -1,0 +1,33 @@
+@import 'assets/mobile/styles/mixins.scss';
+@import 'assets/mobile/styles/common.scss';
+
+.pd-planner-action-dialog {
+  #action-dialog {
+    .submit {
+      &__icon {
+        color: #57d596;
+        font-size: 70px;
+      }
+
+      &__message {
+        @include font(normal, 20px, 23px);
+        margin-top: 20px;
+        padding: 1rem;
+      }
+
+      &__back-to-plan-btn {
+        text-align: center;
+        margin: 0;
+        border-radius: 0;
+        position: relative;
+
+        .icon-down-arrow {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          transform: rotate(-270deg);
+        }
+      }
+    }
+  }
+}

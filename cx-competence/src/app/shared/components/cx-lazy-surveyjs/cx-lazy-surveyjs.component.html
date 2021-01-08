@@ -1,0 +1,11 @@
+<div *ngIf="loadingData">{{ 'Common.Message.LoadingData' | translate }}</div>
+
+<ng-container *ngIf="!loadingData">
+  <cx-surveyjs
+    [json]="json"
+    [data]="data"
+    [hideFooter]="hideFooter"
+    (afterQuestionsRender)="afterQuestionsRendered($event)"
+  >
+  </cx-surveyjs>
+</ng-container>

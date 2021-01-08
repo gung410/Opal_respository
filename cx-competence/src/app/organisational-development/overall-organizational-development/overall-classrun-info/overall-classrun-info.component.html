@@ -1,0 +1,8 @@
+<div
+  *ngIf="classRunInfo.name"
+  class="nominate-classrun-info__title"
+  style="text-transform: capitalize"
+  [attr.title]="'Class run:' + classRunInfo.name + ' - ' + classRunInfo.code"
+>
+  Class run: {{ classRunInfo.name }}
+</div>

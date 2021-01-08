@@ -1,0 +1,83 @@
+@import '~assets/styles/variables.scss';
+:host {
+  display: block;
+}
+.approval-grid-toolbar {
+  &__approval-targets {
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 20px -4px rgba(0, 0, 0, 0.05);
+    .approval-target-item {
+      padding: 20px 32px;
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      &--active {
+        background: #1dcec1;
+        color: #fff;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__approval-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .cx-btn {
+      box-shadow: none;
+      border: 1px solid #d8dce6;
+      font-size: 14px;
+      max-height: 32px;
+      min-height: 32px;
+      line-height: 16px;
+      &:not(.single-btn) {
+        &:first-child {
+          border-radius: 5px 0 0 5px;
+        }
+        &:last-child {
+          border-left: none;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+
+      &:disabled,
+      &[disabled] {
+        background: #fff;
+        color: rgba($cx-color-text-main, 0.2);
+      }
+    }
+  }
+
+  .cx-tabs {
+    display: flex;
+    background: #fff;
+    margin-top: 20px;
+    border: 1px solid #d8dce6;
+    border-radius: 5px 5px 0px 0px;
+    line-height: 16px;
+    &__tab {
+      padding: 24px 0px;
+      margin: 0 32px;
+      cursor: pointer;
+      &.tab-active {
+        border-bottom: 5px solid #303450;
+        font-weight: 500;
+        line-height: 16px;
+      }
+
+      &:first-child {
+        margin-left: 24px;
+      }
+
+      &:last-child {
+        margin-right: 24px;
+      }
+    }
+  }
+}

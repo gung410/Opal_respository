@@ -1,0 +1,42 @@
+<div class="learning-need-page page full-view">
+  <pd-planner-page-header
+    [title]="pageNameTranslatePath | translate"
+    [backRoute]="backRoute"
+  ></pd-planner-page-header>
+  <div class="learning-need-body full-view">
+    <ng-container *ngIf="learningNeedList">
+      <learning-needs
+        *ngIf="user && learningNeedList.length > 0"
+        [user]="user"
+        [needsResults]="learningNeedList"
+      >
+      </learning-needs>
+      <div *ngIf="learningNeedList.length === 0" class="no-result">
+        {{ 'MyPdJourney.LearningNeeds.NoLearningNeed' | translate }}
+      </div>
+    </ng-container>
+    <!-- TODO: Remove not implement feature
+    <div class="learning-need-label text-center">
+      Career Aspiration
+    </div>
+    <div class="box-item career-aspiration">
+      <div class="career-aspiration__header">
+        <div class="row">
+          <div class="col-8">Goals made in 2018</div>
+          <div class="col-4 text-right">Ends in</div>
+        </div>
+      </div>
+      <div class="career-aspiration__divider"> </div>
+      <div class="career-aspiration__body">
+        <div class="row career-aspiration-item">
+          <div class="col-8 career-aspiration-item__title">Teacher</div>
+          <div class="col-4 career-aspiration-item__year text-right">2020</div>
+        </div>
+        <div class="row career-aspiration-item">
+          <div class="col-8 career-aspiration-item__title">Basketball Coach</div>
+          <div class="col-4 career-aspiration-item__year text-right">2021</div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

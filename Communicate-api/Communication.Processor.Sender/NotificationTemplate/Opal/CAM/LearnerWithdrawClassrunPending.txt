@@ -1,0 +1,3 @@
+{{SenderName}}'s request to withdraw from {{CourseRunTitle}} of {{CourseTitle}} has been approved by his/her Course Approving Officer and is now awaiting your confirmation.
+
+

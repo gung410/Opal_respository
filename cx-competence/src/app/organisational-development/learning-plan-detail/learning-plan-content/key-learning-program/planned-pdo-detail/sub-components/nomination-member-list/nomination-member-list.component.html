@@ -1,0 +1,54 @@
+<div class="member-list">
+  <ng-container *ngIf="pagingLearnerResultModel; else groupNoDataTemplate">
+    <div class="leaner-items">
+      <div
+        *ngFor="let membersNominatedItem of pagingLearnerResultModel.items"
+        class="nominate-item"
+      >
+        <div
+          *ngIf="membersNominatedItem.learner as learnerInfo"
+          class="nominate-learner-info"
+        >
+          <div
+            class="nominate-learner-info__avatar"
+            [style.background-image]="
+              'url(' + getAvatar(learnerInfo.email) + ')'
+            "
+          ></div>
+          <div class="nominate-learner-info__text">
+            <div class="nominated-learner-name">
+              {{ learnerInfo.name }}
+            </div>
+            <div class="nominated-learner-email">
+              {{ learnerInfo.email }}
+            </div>
+          </div>
+        </div>
+        <!-- TODO: Disable remove nomination for now -->
+        <!-- <i
+    *ngIf="allowManagePDO"
+    class="icon icon-close nominate-item__icon-close"
+    (click)="onClickedRemoveNominationItem(membersNominatedItem)"
+  ></i> -->
+      </div>
+    </div>
+
+    <div class="pagging">
+      <cx-paging
+        [pageSizes]="[5, 10, 25, 50, 100, 150, 200]"
+        [isShowFirstOrLastNavigation]="false"
+        [currentPageSize]="pageSize"
+        [totalRecords]="pagingLearnerResultModel.totalItems"
+        [recordsPerPage]="pagingLearnerResultModel.pageSize"
+        [currentPage]="pagingLearnerResultModel.pageIndex"
+        (currentPageChange)="onPagingChange($event, pageSize)"
+        (pageSizeChange)="onPagingChange(1, $event)"
+      ></cx-paging>
+    </div>
+  </ng-container>
+  <ng-template #groupNoDataTemplate>
+    <div class="member-list no-data text-center">
+      {{ 'Odp.LearningPlan.PlannedPDODetail.GroupStatusNoData' | translate }}
+    </div>
+  </ng-template>
+</div>

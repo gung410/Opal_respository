@@ -1,0 +1,99 @@
+@import '~assets/styles/variables.scss';
+
+.review-panel {
+  border: solid 1px;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+  .title {
+    display: flex;
+    align-items: center;
+    &[aria-expanded='true'] {
+      .arrow-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .arrow-icon {
+    margin-right: 10px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+  }
+
+  .panel-body {
+    .chart-container {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.review-panel-mobile {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: #fff;
+  border: 1px solid rgba(155, 199, 230, 0.24);
+  padding: 15px;
+  .panel-title {
+    font-size: 18px;
+    font-weight: 400;
+    position: relative;
+    i.arrow-icon {
+      right: 0;
+      display: unset;
+      position: absolute;
+      margin-right: 10px;
+      font-size: 0.7rem;
+      transition: transform 0.3s;
+    }
+  }
+  .title {
+    display: flex;
+    align-items: center;
+    &[aria-expanded='true'] {
+      .arrow-icon {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}
+
+.review-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.guide-line-text {
+  font-weight: 500;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .review-panel-mobile {
+    display: block;
+  }
+  .review-panel {
+    display: none;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .review-panel {
+    :host learning-area-chart {
+      .header,
+      .sub-title {
+        display: none;
+      }
+    }
+  }
+
+  .review-panel-mobile {
+    display: none;
+  }
+
+  .review-panel {
+    display: block;
+  }
+}

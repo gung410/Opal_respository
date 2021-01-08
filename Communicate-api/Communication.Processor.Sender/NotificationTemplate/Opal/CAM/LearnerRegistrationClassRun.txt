@@ -1,0 +1,3 @@
+The learner, {{SenderName}} - {{SenderEmail}}, has registered to participate in your course, {{CourseTitle}} - {{ClassrunTitle}}. Please review the application
+
+

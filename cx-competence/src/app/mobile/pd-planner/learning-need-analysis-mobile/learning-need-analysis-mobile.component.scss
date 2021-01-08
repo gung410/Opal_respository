@@ -1,0 +1,15 @@
+@import 'assets/mobile/styles/mixins.scss';
+@import 'assets/mobile/styles/common.scss';
+$progress-circle-color: #57d596;
+$progress-line-color: #e5e5e5;
+
+.learning-need-analysis-page {
+  overflow: hidden;
+  .learning-need-analysis-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: $main-body-text;
+    padding: 15px;
+    padding-top: 52px;
+  }
+}

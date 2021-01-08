@@ -1,0 +1,10 @@
+<div class="pd-planner-page-header text-center">
+  <div
+    *ngIf="backRoute || isPopup"
+    class="pd-planner-page-header__button"
+    (click)="goBack()"
+  >
+    <i [ngClass]="isPopup ? 'icon-close' : 'icon-chevron-right-bold'"></i>
+  </div>
+  <span (click)="goBack()">{{ title }}</span>
+</div>

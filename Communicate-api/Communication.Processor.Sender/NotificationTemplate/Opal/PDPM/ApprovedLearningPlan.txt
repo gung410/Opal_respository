@@ -1,0 +1,3 @@
+The organisational learning plan for {{LearningPlanPeriod}} has been approved by the Approving Officer {{SenderName}}.
+
+

@@ -1,0 +1,1 @@
+{{SenderName}} has submitted the assigment for the course - {{CourseName}} {{ClassRunTitle}}. 

@@ -1,0 +1,1 @@
+﻿You have been recommended for a Professional Development Opportunity ({{CourseName}}) by {{Recommendor}}.

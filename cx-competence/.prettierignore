@@ -1,0 +1,10 @@
+package.json
+package-lock.json
+dist
+.angulardoc.json
+.vscode/*
+src/assets/*
+tsconfig.json
+tslint.json
+angular.json
+e2e/*

@@ -1,0 +1,1 @@
+Your course - {{CourseTitle}} - for the course planning cycle of {{PlanningCyclePeriod}} has been verified by the course planning coordinator, {{CPCName}}. Please fill in the necessary information for the course.

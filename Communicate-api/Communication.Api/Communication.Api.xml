@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communication.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Communication.Api.Controllers.NotificationController.SendNotification(Communication.Api.Models.Email.EmailNotificationModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Communication.Api.Controllers.NotificationController.SendNotification(Communication.Api.Models.PushNotificationModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Communication.Api.Models.TopicPrefix">
+            <summary>
+            Prefix format for cloud message topics
+            </summary>
+        </member>
+    </members>
+</doc>

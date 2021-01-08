@@ -1,0 +1,75 @@
+{
+  "editor.detectIndentation": false,
+  "multiCommand.commands": [
+    {
+      "command": "multiCommand.formatTypescript",
+      "sequence": [
+        "typescriptHero.imports.organize",
+        "editor.action.formatDocument"
+      ]
+    },
+    {
+      "command": "multiCommand.formatHtml",
+      "sequence": ["attrsSorter.execute", "editor.action.formatDocument"]
+    }
+  ],
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "files.encoding": "utf8",
+  "editor.wordWrapColumn": 140,
+  "typescriptHero.imports.multiLineTrailingComma": false,
+  "typescriptHero.imports.removeTrailingIndex": true,
+  "typescriptHero.imports.stringQuoteStyle": "'",
+  "attrsSorter.order": [
+    "\\#\\w+",
+    "\\*ngIf",
+    "\\*\\w+",
+    "class",
+    "id",
+    "name",
+    "data-.+",
+    "src",
+    "for",
+    "type",
+    "href",
+    "values",
+    "title",
+    "alt",
+    "role",
+    "aria-.+",
+    "\\[ngClass]",
+    "\\[class.[\\w\\-]+\\]",
+    "\\[ngStyle]",
+    "\\[style.[\\w\\-]+\\]",
+    "\\[\\(\\w+\\)\\]",
+    "\\[\\w+\\]",
+    "\\(\\w+\\)",
+    "let-.+",
+    "$unknown$"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "html.format.wrapAttributes": "force-expand-multiline",
+  "editor.wordWrap": "wordWrapColumn",
+}

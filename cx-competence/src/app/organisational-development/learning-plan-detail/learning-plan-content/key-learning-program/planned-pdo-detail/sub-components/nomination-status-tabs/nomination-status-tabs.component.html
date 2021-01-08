@@ -1,0 +1,127 @@
+<div class="nominate-status-tabs" *ngIf="approvalResultModel">
+  <div
+    *ngIf="approvalResultModel.totalApproved"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Approved }"
+    (click)="openTab(nominateStatus.Approved)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Approved }
+      }"
+      [isExternalPDO]="isExternalPDO"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalPendingLv1"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.PendingForApproval }"
+    (click)="openTab(nominateStatus.PendingForApproval)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.PendingForApproval }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalPendingLv2"
+    class="nominate-tab"
+    [ngClass]="{
+      active: activeStatus === nominateStatus.PendingForApproval2nd
+    }"
+    (click)="openTab(nominateStatus.PendingForApproval2nd)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.PendingForApproval2nd }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalPendingLv3"
+    class="nominate-tab"
+    [ngClass]="{
+      active: activeStatus === nominateStatus.PendingForApproval3rd
+    }"
+    (click)="openTab(nominateStatus.PendingForApproval3rd)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.PendingForApproval3rd }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalRejectedLv1"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Rejected }"
+    (click)="openTab(nominateStatus.Rejected)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Rejected }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalRejectedLv2"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Rejected2nd }"
+    (click)="openTab(nominateStatus.Rejected2nd)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Rejected2nd }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalRejectedLv3"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Rejected3nd }"
+    (click)="openTab(nominateStatus.Rejected3nd)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Rejected3nd }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalRejectedLv4"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Rejected4th }"
+    (click)="openTab(nominateStatus.Rejected4th)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Rejected4th }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    *ngIf="approvalResultModel.totalRejectedLv5"
+    class="nominate-tab"
+    [ngClass]="{ active: activeStatus === nominateStatus.Rejected5th }"
+    (click)="openTab(nominateStatus.Rejected5th)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.Rejected5th }
+      }"
+    ></nominate-status>
+  </div>
+  <div
+    class="nominate-tab"
+    *ngIf="approvalResultModel.totalNotNominated"
+    [ngClass]="{ active: activeStatus === nominateStatus.NotNominated }"
+    (click)="openTab(nominateStatus.NotNominated)"
+  >
+    <nominate-status
+      [nominateItem]="{
+        status: { assessmentStatusCode: nominateStatus.NotNominated }
+      }"
+    ></nominate-status>
+  </div>
+</div>

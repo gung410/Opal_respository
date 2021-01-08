@@ -1,0 +1,189 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "array-type": false,
+    "arrow-parens": false,
+    "deprecation": {
+      "severity": "warn"
+    },
+    "import-blacklist": [true, "rxjs/Rx"],
+    "interface-name": false,
+    "max-classes-per-file": false,
+    "max-line-length": [true, 140],
+    "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-static-field",
+          "public-static-method",
+          "protected-static-field",
+          "protected-static-method",
+          "private-static-field",
+          "private-static-method",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-instance-field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "no-consecutive-blank-lines": false,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-empty": false,
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": true,
+    "no-switch-case-fall-through": true,
+    "no-use-before-declare": true,
+    "no-var-requires": false,
+    "object-literal-key-quotes": [true, "as-needed"],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single"],
+    "trailing-comma": false,
+    "no-output-on-prefix": true,
+    "no-inputs-metadata-property": true,
+    "no-outputs-metadata-property": true,
+    "no-host-metadata-property": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "use-lifecycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "directive-selector": [true, "attribute", "", "camelCase"],
+    "component-selector": [true, "element", "", "kebab-case"],
+    "file-name-casing": [true, "kebab-case"],
+    "switch-final-break": [true, "always"],
+    "no-attribute-decorator": true,
+    "no-forward-ref": false,
+    "no-unsafe-any": true,
+    "no-duplicate-imports": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-for-in-array": true,
+    "no-magic-numbers": [true, -1, 0, 1],
+    "encoding": true,
+    "max-file-line-count": [true, 500],
+    "newline-before-return": true,
+    "no-var-keyword": true,
+    "pipe-naming": ["camelCase"],
+    "align": [true, "statements"],
+    "ban": false,
+    "class-name": true,
+    "comment-format": [false, "check-space", "check-lowercase"],
+    "curly": true,
+    "eofline": true,
+    "forin": true,
+    "indent": [true, "spaces"],
+    "jsdoc-format": true,
+    "label-position": true,
+    "no-any": false,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-construct": true,
+    "no-parameter-properties": false,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-internal-module": true,
+    "no-require-imports": false,
+    "no-shadowed-variable": true,
+    "no-string-literal": true,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": true,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "radix": true,
+    // Do not too strict with semicolon check because formatOnSave was turned on.
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "switch-default": true,
+    "triple-equals": [true, "allow-null-check"],
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration"
+    ],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore",
+      "ban-keywords"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ],
+    "rxjs-no-add": {
+      "severity": "error"
+    },
+    "rxjs-no-unused-add": {
+      "severity": "error"
+    },
+    "rxjs-no-wholesale": {
+      "severity": "error"
+    },
+    "rxjs-no-operator": {
+      "severity": "error"
+    },
+    "rxjs-no-patched": {
+      "options": [
+        {
+          "allowObservables": ["never", "throw"],
+          "allowOperators": false
+        }
+      ],
+      "severity": "error"
+    },
+    "max-params": [true, 3],
+    "ext-variable-name": [
+      true,
+      ["class", "pascal"],
+      ["interface", "pascal"],
+      ["parameter", "camel"],
+      ["property", "private", "camel", "allow-leading-underscore"],
+      ["property", "protected", "camel", "allow-leading-underscore"],
+      ["variable", "local", "camel"],
+      ["variable", "const", "upper"],
+      ["method", "private", "camel", "allow-leading-underscore"],
+      ["method", "protected", "camel", "allow-leading-underscore"],
+      ["method", "public", "camel", "allow-leading-underscore"],
+      ["function", "camel"],
+      ["default", "camel"]
+    ],
+    "no-deprecated-source-file": true,
+    "disallow-full-import-rxjs-operators": true,
+    "default-module": true,
+    "no-deprecated-import": true,
+    "mjs-domain": true,
+    "no-duplicate-attribute": true,
+    "no-i18n-attribute": true,
+    "disallow-deprecated-import": true
+  }
+}

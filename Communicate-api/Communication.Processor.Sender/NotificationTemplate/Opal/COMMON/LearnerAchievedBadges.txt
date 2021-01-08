@@ -1,0 +1,1 @@
+﻿Congratulations! We are very pleased to inform you that you are well qualified for the {{ParamBadgeText}}. A downloadable badge will be added to your OPAL2.0 E-portfolio as well as achievement storage. Please continue to learn and collaborate more to further develop yourself and also to get more badges.

@@ -1,0 +1,336 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.classrun-detail {
+  .cx-panel {
+    box-shadow: none;
+    padding: 0;
+    padding-top: 25px;
+  }
+  &__about {
+    .planned-pdo-about {
+      line-height: 160%;
+      white-space: pre-wrap;
+      .cx-panel__label {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .learner-classrun {
+        width: 100%;
+        border-bottom: 1px solid $panel-border-color;
+        box-sizing: border-box;
+
+        &-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-sizing: border-box;
+
+          &__row {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding-bottom: 15px;
+          }
+
+          &__icon {
+            width: 39px;
+            height: 39px;
+            border: 1px solid $panel-border-color;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 15px;
+            flex-shrink: 0;
+
+            &.expanding {
+              background: url('assets/images/arrow-down.svg') no-repeat center;
+            }
+
+            &.normal {
+              background: url('assets/images/arrow-right.svg') no-repeat center;
+            }
+          }
+
+          &__class-name {
+            width: calc(25% - 10px);
+          }
+
+          &__group-date {
+            width: 25%;
+            min-width: 100px;
+            position: relative;
+          }
+
+          &__expand {
+            display: flex;
+            border-left: 1px solid $panel-border-color;
+            margin-left: 20px;
+            flex-direction: column;
+          }
+
+          &__detail {
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px 20px 20px;
+            box-sizing: border-box;
+          }
+
+          &__info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            &:not(:first-child) {
+              margin-top: 10px;
+            }
+
+            &-button-check-in {
+              display: flex;
+              margin-left: auto;
+            }
+          }
+
+          &__information {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0 0 20px;
+            width: 100%;
+
+            &.information-two-col {
+              flex-direction: row;
+
+              .information-left {
+                width: 40%;
+              }
+
+              .learner-classrun-item__information {
+                padding: 0;
+              }
+            }
+          }
+
+          &__faciliatator {
+            margin-top: 10px;
+          }
+
+          &__value {
+            color: $main-font-color;
+            font-size: $main-font-size;
+            margin-top: 5px;
+            box-sizing: border-box;
+
+            &--uppercase {
+              text-transform: uppercase;
+            }
+          }
+
+          &__title {
+            text-transform: uppercase;
+            font-size: $main-font-size;
+            color: $cx-color-text-secondary;
+            font-weight: $font-weight-medium;
+            position: relative;
+            display: flex;
+
+            &.section-title {
+              padding: 0px 20px;
+            }
+
+            img {
+              margin-right: 10px;
+              display: none;
+            }
+          }
+
+          &__button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+
+            button {
+              width: fit-content;
+            }
+          }
+
+          &__btn-link {
+            border: none;
+            font-weight: normal;
+            padding: 0;
+            text-decoration: underline !important;
+            background: none !important;
+            color: #313552 !important;
+            box-shadow: none !important;
+          }
+
+          &__cant-participate {
+            text-decoration: underline;
+            color: $main-font-color;
+            font-size: $main-font-size;
+            cursor: pointer;
+          }
+
+          &__section {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            margin-top: 20px;
+          }
+
+          &__session {
+            display: flex;
+            flex-grow: 1;
+            border: 1px solid $panel-border-color;
+            border-left: none;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+
+            .learner-classrun-item__title img {
+              display: block;
+            }
+
+            .learner-classrun-item__value {
+              padding-left: 27px;
+            }
+          }
+
+          &__check-in-completed {
+            color: $main-font-color;
+            font-size: $main-font-size;
+            font-weight: $font-weight-medium;
+            display: flex;
+            align-items: center;
+
+            > img {
+              margin-right: 8px;
+              width: 23px;
+            }
+          }
+
+          &__session--upcoming {
+            border: none;
+            background: none !important;
+            position: relative;
+
+            .learner-classrun-item__session-info-title {
+              color: $main-font-color;
+              font-size: $main-font-size;
+              font-weight: $font-weight-medium;
+            }
+
+            .learner-classrun-item__session-detail {
+              border-left: 1px solid $panel-border-color;
+              padding-top: 0;
+              margin-top: 20px;
+            }
+
+            .learner-classrun-item__info {
+              border-top: 1px solid $panel-border-color;
+              padding-top: 10px;
+            }
+
+            .learner-classrun-item__info-button-check-in {
+              right: 20px;
+              top: 20px;
+              position: absolute;
+            }
+          }
+
+          &__session-item {
+            display: flex;
+            margin-bottom: 10px;
+          }
+
+          &__session-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            &-title {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+
+              img {
+                margin-right: 10px;
+              }
+            }
+
+            &-date {
+              margin-left: auto;
+              font-size: $main-font-size;
+            }
+
+            .learner-classrun-item__icon {
+              border: none;
+              width: 16px;
+              height: 16px;
+              flex-shrink: 0;
+            }
+          }
+
+          &__session-detail {
+            flex-grow: 1;
+            padding: 20px 0 0 30px;
+          }
+
+          &__empty-session {
+            margin-top: 10px;
+            padding: 0 20px;
+          }
+
+          &__header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 20px 0 0 20px;
+            box-sizing: border-box;
+
+            img {
+              margin-right: 10px;
+              height: 16px;
+              width: 16px;
+            }
+
+            .learner-classrun-item {
+              &__icon {
+                border: none;
+                width: 16px;
+                height: 16px;
+              }
+            }
+          }
+        }
+
+        &-item-explain {
+          display: flex;
+          flex-direction: row;
+          margin-left: 57px;
+          position: relative;
+        }
+      }
+
+      .learner-withdraw-confirmation {
+        margin-right: 50px;
+        min-width: 400px;
+        margin-top: 10px;
+
+        &__input {
+          border: 1px solid $panel-border-color;
+          border-radius: 5px;
+          width: 100%;
+          padding: 20px;
+          min-height: 120px;
+          font-size: $main-font-size;
+        }
+      }
+    }
+  }
+}

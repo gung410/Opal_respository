@@ -1,0 +1,6 @@
+aspnetcore_environment: systemtest
+mongo_db_name: systemtest-datahub-opal-db
+mongo_db_auth: systemtest-datahub-opal:opal-datahub-systemtest
+mongo_db_host: mongodb-01.opal/systemtest-datahub-opal-db
+mongo_db_ssl_enabled: false
+rabbitmq_ssl_enabled: false

@@ -1,0 +1,3 @@
+{{OriginatorDisplayName}} is now following you. {{OriginatorDisplayName}} {{OriginatorDescription}}
+
+

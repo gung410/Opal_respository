@@ -1,0 +1,1 @@
+{{AOName}} has rejected {{ContentName}} with the following comments: {{Comment}}

@@ -1,0 +1,1 @@
+Your application for the class run, {{CourseTitle}} - {{ClassrunTitle}} has been rejected by your course approving officer.

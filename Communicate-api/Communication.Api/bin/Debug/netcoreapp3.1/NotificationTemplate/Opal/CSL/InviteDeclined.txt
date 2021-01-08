@@ -1,0 +1,1 @@
+{{OriginatorName}} declined your invitation to join the community {{CommunityName}}.

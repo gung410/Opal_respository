@@ -1,0 +1,62 @@
+<div *ngIf="needsResults && currentNeedsResult" class="la-header-container">
+  <div class="la-header">
+    <div class="la-header__group-item">
+      <div class="la-header__item">
+        <div class="la-header__label">
+          {{ 'MyPdJourney.PlannedActivities.SelectedYear' | translate }}
+        </div>
+        <mat-select
+          [value]="currentNeedsResult.resultIdentity.extId"
+          (selectionChange)="onPeriodChanged($event)"
+          [disabled]="needsResults.length === 1"
+        >
+          <mat-option
+            *ngFor="let result of needsResults"
+            [value]="result.resultIdentity.extId"
+          >
+            {{ result.surveyInfo.displayName }}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div class="la-header__item idp-status">
+        <div class="la-header__label">
+          {{ 'MyPdJourney.PlannedActivities.Status' | translate }}
+        </div>
+        <idp-status-block
+          [idpStatusInfo]="currentNeedsResult.assessmentStatusInfo"
+        ></idp-status-block>
+      </div>
+      <div class="la-header__item">
+        <div class="la-header__label">
+          {{ 'MyPdJourney.LearningNeeds.CompletionRate' | translate }}
+        </div>
+        <div class="la-header__completion-rate">{{ completionRate }}%</div>
+      </div>
+      <div class="la-header__item">
+        <div class="la-header__label">
+          {{ 'MyPdJourney.User.CutOffDate' | translate }}
+        </div>
+        <div class="la-header__cutoff-date-block">
+          {{ cutoffDate }}
+        </div>
+      </div>
+      <div class="la-header__actions">
+        <ng-container *ngTemplateOutlet="reviewLNA"></ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-lna-mobile">
+    <ng-container *ngTemplateOutlet="reviewLNA"></ng-container>
+  </div>
+</div>
+
+<ng-template #reviewLNA>
+  <button
+    *ngIf="showReviewButton && allowReviewLNA"
+    (click)="onReviewLNAClicked()"
+    class="cx-btn cx-btn-sub-primary cx-btn-small la-header__item btn-review"
+  >
+    {{ 'MyPdJourney.LearningNeeds.ReviewLNA' | translate }}
+  </button>
+</ng-template>

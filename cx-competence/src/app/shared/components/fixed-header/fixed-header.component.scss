@@ -1,0 +1,21 @@
+@import '~assets/styles/variables.scss';
+
+fixed-header {
+  .app-header {
+    margin-bottom: 20px;
+  }
+
+  .header-breadcrumb {
+    margin: 0 auto;
+    align-self: flex-end;
+    top: 20px;
+  }
+
+  .hideSearchBar {
+    .cx-header {
+      .general-search-box {
+        display: none;
+      }
+    }
+  }
+}

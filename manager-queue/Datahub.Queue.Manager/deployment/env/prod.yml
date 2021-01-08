@@ -1,0 +1,7 @@
+docker_image: "cx-datahub-api-queuemanager:1.1.1"
+aspnetcore_environment: prod
+mongo_db_name: prod-datahub-opal-db
+mongo_db_auth: prod-datahub-opal:opal-datahub-prod
+mongo_db_host: db-01.opal,db-02.opal,db-03.opal/prod-datahub-opal-db
+mongo_db_ssl_enabled: false
+rabbitmq_ssl_enabled: false

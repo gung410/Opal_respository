@@ -1,0 +1,1 @@
+{{OriginatorName}} has requested to be a member of the community {{CommunityName}}.

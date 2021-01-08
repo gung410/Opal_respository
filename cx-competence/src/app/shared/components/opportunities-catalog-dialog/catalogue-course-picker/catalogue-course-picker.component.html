@@ -1,0 +1,22 @@
+<div class="cx-panel catalogue-course-picker">
+  <cx-back-button
+    class="catalogue-course-picker__back-btn"
+    (click)="onClickBack()"
+  ></cx-back-button>
+  <opportunities-catalog-dialog
+    [dialogTitle]="dialogTitle"
+    [addText]="addText"
+    [tagIds]="tagIds"
+    [personnelGroupsIdsForExternalPDOUsage]="
+      personnelGroupsIdsForExternalPDOUsage
+    "
+    [selectedCourseIds]="selectedCourseIds"
+    [allowPickMultiplePDO]="allowPickMultiplePDO"
+    [pickCourseMode]="pickCourseMode"
+    [allowAddExternalPDOPermission]="allowAddExternalPDOPermission"
+    [enableBookmark]="enableBookmark"
+    [showLoadMoreButton]="showLoadMoreButton"
+    (addToPlan)="addToPlan.emit($event)"
+    (addExternalPDO)="addExternalPDO.emit($event)"
+  ></opportunities-catalog-dialog>
+</div>

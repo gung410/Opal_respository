@@ -1,0 +1,4 @@
+Your email {OldEmail} has changed the new email address {NewEmail} during HRMS synchronization process.
+Please login to the system using your new email address.
+
+

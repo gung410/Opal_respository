@@ -1,0 +1,227 @@
+@import '~assets/styles/variables.scss';
+.learning-area-chart {
+  margin: auto 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #313552;
+  .header {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(228, 232, 252, 0.5);
+  }
+
+  .learning-area-chart-container {
+    padding-top: 10px;
+    ::ng-deep .highcharts-series-hover {
+      cursor: pointer;
+      .highcharts-point:not(.highcharts-point-hover) {
+        opacity: 0.5;
+        transition: 0.2s;
+      }
+    }
+  }
+
+  .legends-container.legend-series-container-hover {
+    cursor: pointer;
+    .legend-series:not(.legend-series-hover) {
+      opacity: 0.5;
+      transition: 0.2s;
+    }
+  }
+  .sub-title {
+    margin-top: 15px;
+    font-size: 1rem;
+    .icon-info {
+      cursor: pointer;
+      color: #51a8f9;
+      margin-left: 4px;
+    }
+  }
+
+  .time-spent {
+    &__length {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  }
+  .legend {
+    &__chart {
+      display: flex;
+      align-items: center;
+    }
+    &__title {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+    }
+    &__serie {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    i {
+      margin-right: 8px;
+      float: left;
+      font-size: 1.2rem;
+      width: 18px;
+      line-height: 40px;
+    }
+    &__name {
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+
+  .legend-mobile {
+    border: 2px solid #d8dfe5;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0 20px;
+    display: none;
+    &__header {
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      font-weight: 500;
+      font-size: 16px;
+      background: #fff;
+      border-bottom: none;
+      text-align: center;
+      > i {
+        font-size: 12px;
+        padding: 5px;
+        margin-right: 5px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &[aria-expanded='true'] {
+        > i {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    &__body {
+      padding: 10px 10px 0px 15px;
+
+      .legend-item {
+        display: flex;
+        margin-bottom: 15px;
+
+        &__color {
+          background: #9341d9;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        &__label {
+          margin-left: 10px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .icon-bottom {
+      display: flex;
+      justify-content: center;
+      .collaspe-icon {
+        transform: rotate(-90deg);
+        margin-top: 0px;
+        margin-bottom: 20px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .prioritisation {
+    min-width: 330px;
+    &__chart {
+      width: 330px;
+    }
+  }
+
+  ::ng-deep .highcharts-container {
+    .highcharts-pane {
+      fill: none;
+      stroke: none;
+    }
+    .highcharts-axis-line {
+      fill: #ebebeb;
+      stroke: none;
+    }
+  }
+
+  .prioritisation,
+  .legend,
+  .time-spent {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .learning-area-chart {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px 0;
+    .header {
+      font-size: 18px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+    }
+
+    .sub-title {
+      margin-top: 10px;
+      font-size: 14px;
+      .icon-info {
+        font-size: 18px;
+        transform: translateY(3px);
+        display: inline-block;
+      }
+    }
+
+    .prioritisation__chart {
+      max-width: 100% !important;
+      margin: 0 auto;
+    }
+
+    > div {
+      margin-left: 0;
+      margin-right: 0;
+      .prioritisation {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .legend-mobile {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  ::ng-deep .highcharts-container {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .legend {
+    display: none !important;
+  }
+  .legend-mobile {
+    display: block !important;
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+}

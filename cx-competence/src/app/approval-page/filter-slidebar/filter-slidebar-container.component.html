@@ -1,0 +1,51 @@
+<div class="filter-slidebar-container">
+  <div class="action-group">
+    <button
+      class="cx-btn filter-btn single-btn btn-filter"
+      (click)="openFilterSlidebar()"
+    >
+      {{ 'Common.Action.Filter' | translate }}
+      <i class="icon-controls"></i>
+      <div *ngIf="numberOfActiveFilter" class="indicator">
+        <span class="indicator__number">{{ numberOfActiveFilter }}</span>
+      </div>
+    </button>
+
+    <button
+      *ngIf="numberOfActiveFilter"
+      class="cx-btn cx-btn-big cx-btn-secondary btn-reset"
+      (click)="onResetFilter()"
+    >
+      {{ 'Common.Action.Clear' | translate }}
+    </button>
+  </div>
+
+  <cx-slidebar [height]="'60vh'">
+    <slidebar-header>
+      <div class="filter-header">
+        <div class="filter-header__title">
+          <h4>
+            {{ 'ApprovalPage.FilterSlidebar.Header' | translate }}
+          </h4>
+        </div>
+        <div class="filter-header__group-actions">
+          <button
+            class="cx-btn cx-btn-big cx-btn-secondary btn-reset"
+            (click)="onClearFilter()"
+          >
+            {{ 'Common.Action.Clear' | translate }}
+          </button>
+          <button
+            (click)="onSubmitFilter()"
+            class="action-item cx-btn cx-btn-big"
+          >
+            {{ 'Common.Action.Apply' | translate }}
+          </button>
+        </div>
+      </div>
+    </slidebar-header>
+    <slidebar-body>
+      <div filter-form-placeholder></div>
+    </slidebar-body>
+  </cx-slidebar>
+</div>

@@ -1,0 +1,3 @@
+We regret to inform you that the class - {{ClassTitle}} - in the course - {{CourseName}} - has been cancelled.
+
+

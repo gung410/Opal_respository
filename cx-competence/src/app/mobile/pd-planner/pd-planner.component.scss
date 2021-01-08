@@ -1,0 +1,78 @@
+@import 'assets/mobile/styles/mixins.scss';
+@import 'assets/mobile/styles/common.scss';
+
+.pd-planner-mobile {
+  @include layout(column);
+
+  &__header {
+    text-align: center;
+    @include view-child-ratio(35%);
+    @include layout(column, center);
+    @include font(500, 24px, 28px);
+    padding-top: 80px;
+    .header {
+      &__icon {
+        font-size: 45px;
+        padding-bottom: 10px;
+      }
+      &__text {
+        width: 150px;
+      }
+    }
+  }
+
+  &__menus {
+    padding: 0 3%;
+    padding-top: 30px;
+
+    @include view-child-ratio(40%);
+    @include layout(column, flex-start);
+
+    .menus {
+      margin: 5px 0px;
+      position: relative;
+      padding: 20px;
+
+      &__title {
+        @include font(500, 18px, 21px);
+      }
+
+      &__explanation {
+        @include font(normal, 12px, 14px);
+      }
+
+      &__icon {
+        position: absolute;
+        transform: rotate(90deg);
+        top: 32px;
+        right: 20px;
+        font-size: 10px;
+      }
+
+      &__year {
+        background: #1dcec1;
+        border-radius: 5px;
+        color: #ffffff;
+        padding: 5px 10px;
+        position: absolute;
+        left: 68%;
+        top: -18px;
+        @include font(500, 24px, 28px);
+      }
+    }
+  }
+
+  &__hint {
+    text-align: center;
+    padding: 50px;
+    @include view-child-ratio(25%);
+    @include font(normal, 14px, 16px);
+  }
+}
+
+.pd-planner-web {
+  individual-development {
+    min-height: 100vh;
+    display: block;
+  }
+}

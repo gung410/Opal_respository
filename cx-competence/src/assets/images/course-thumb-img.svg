@@ -1,0 +1,15 @@
+<svg width="75" height="77" viewBox="0 0 75 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M65 15H15V61H65" stroke="#BDC7E2" stroke-width="2"/>
+<circle cx="59.0312" cy="61.0312" r="15.0312" fill="#D8DCE6"/>
+<circle cx="59.0312" cy="61.0312" r="10.4062" fill="#828282"/>
+<circle cx="59.0312" cy="61.0312" r="5.78125" fill="#8799BA"/>
+<circle cx="15.0312" cy="15.0312" r="15.0312" fill="#D8DCE6"/>
+<circle cx="15.0312" cy="15.0312" r="10.4062" fill="#828282"/>
+<circle cx="15.0312" cy="15.0312" r="5.78125" fill="#8799BA"/>
+<rect x="44" width="30.0625" height="30.0625" rx="2" fill="#8799BA"/>
+<rect x="48.625" y="4.625" width="20.8125" height="20.8125" rx="2" fill="#828282"/>
+<rect x="53.25" y="9.25" width="11.5625" height="11.5625" rx="2" fill="#D8DCE6"/>
+<rect y="46" width="30.0625" height="30.0625" rx="2" fill="#8799BA"/>
+<rect x="4.625" y="50.625" width="20.8125" height="20.8125" rx="2" fill="#828282"/>
+<rect x="9.25" y="55.25" width="11.5625" height="11.5625" rx="2" fill="#D8DCE6"/>
+</svg>

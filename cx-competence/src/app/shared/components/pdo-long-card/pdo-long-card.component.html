@@ -1,0 +1,47 @@
+<div *ngIf="pdoDTO" class="pdo-long-card">
+  <div class="pdo-long-card__image">
+    <img
+      class="pdo-long-card__basic-info--image"
+      [src]="imgPath || 'assets/images/default-image.png'"
+      [alt]="pdoDTO.name"
+      (click)="onClickItem()"
+      loading="lazy"
+    />
+  </div>
+  <div class="pdo-long-card-infos" (click)="onClickItem()">
+    <p class="pdo-long-card-infos__name">
+      {{ pdoDTO.name || 'N/A' }}
+    </p>
+    <ng-container *ngIf="pdoDTO.extensions">
+      <div class="pdo-long-card-infos__metadata">
+        <div *ngIf="pdoDTO.extensions.duration" class="pdo-long-card-duration">
+          <i class="icon-clock"></i>
+          {{ pdoDTO.extensions.duration | number: '1.0-1' }}{{ 'H' }}
+        </div>
+        <div *ngIf="pdoDTO.extensions.courseCode" class="pdo-long-card-code">
+          {{ pdoDTO.extensions.courseCode }}
+        </div>
+        <div
+          *ngIf="!pdoDTO.extensions.duration"
+          style="height: 21px; visibility: hidden"
+        ></div>
+      </div>
+
+      <div
+        *ngIf="pdoDTO.extensions.tags as tags"
+        class="pdo-long-card-infos__tags"
+      >
+        <div *ngFor="let tag of tags" class="pdo-tag">
+          {{ tag }}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div
+    *ngIf="allowRemove"
+    class="pdo-long-card__remove-button"
+    (click)="onRemoveItem()"
+  >
+    <i class="icon-close"></i>
+  </div>
+</div>

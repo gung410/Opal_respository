@@ -1,0 +1,30 @@
+<div
+  class="cx-gantt-task"
+  [style.background]="taskData.color"
+  [ngbPopover]="popContent"
+  [popoverTitle]="popTitle"
+  container="body"
+  triggers="mouseenter:mouseleave"
+>
+  <div
+    class="cx-gantt-task__indicator"
+    [style.background]="taskData.indicatorColor"
+  ></div>
+  <div class="cx-gantt-task__title">{{ taskData.title }}</div>
+  <div class="cx-gantt-task__spacer"></div>
+  <div *ngIf="taskData.status" class="cx-gantt-task-content">
+    <div *ngIf="taskData.statusIcon" class="cx-gantt-task-content__icon">
+      <i [ngClass]="'icon ' + taskData.statusIcon"></i>
+    </div>
+    <div class="cx-gantt-task-content__label">
+      {{ taskData.status }}
+    </div>
+  </div>
+</div>
+<ng-template #popTitle>{{ taskData.title }}</ng-template>
+<ng-template #popContent>
+  <div>
+    <div>Start: {{ getStartDate }}</div>
+    <div>End: {{ getEndDate }}</div>
+  </div>
+</ng-template>

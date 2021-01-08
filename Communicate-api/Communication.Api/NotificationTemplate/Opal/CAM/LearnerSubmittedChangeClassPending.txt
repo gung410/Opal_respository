@@ -1,0 +1,1 @@
+﻿The learner {{LearnerName}} has requested to change classes for the course, {{CourseTitle}}, and the request is awaiting your approval.

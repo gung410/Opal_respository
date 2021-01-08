@@ -1,0 +1,182 @@
+<div class="pd-opportunities">
+  <div *ngIf="visibleToolbarActions" class="pd-opportunities__approval-actions">
+    <button
+      class="cx-btn cx-btn-secondary"
+      *ngIf="pdPlanPermission.allowApprove"
+      (click)="onApprove()"
+    >
+      {{ 'MyPdJourney.Action.Acknowledge' | translate }}
+    </button>
+    <button
+      class="cx-btn cx-btn-secondary"
+      *ngIf="pdPlanPermission.allowReject"
+      (click)="onReject()"
+    >
+      {{ 'MyPdJourney.Action.Reject' | translate }}
+    </button>
+  </div>
+  <div class="pd-opportunities__body">
+    <ng-container *ngIf="pdplans && pdplans.length">
+      <div class="pdo-header">
+        <div class="pdo-header__group-item">
+          <div class="pdo-header__item">
+            <div class="pdo-header__label">
+              {{ 'MyPdJourney.PlannedActivities.SelectedYear' | translate }}
+            </div>
+            <mat-select
+              [value]="currentPlan.resultIdentity.extId"
+              [disabled]="pdplans.length === 1"
+              (selectionChange)="onPeriodChanged($event)"
+            >
+              <mat-option
+                *ngFor="let plan of pdplans"
+                [value]="plan.resultIdentity.extId"
+              >
+                {{ plan.surveyInfo.displayName }}
+              </mat-option>
+            </mat-select>
+          </div>
+          <div class="pdo-header__item idp-status">
+            <div class="pdo-header__label">
+              {{ 'MyPdJourney.PlannedActivities.Status' | translate }}
+            </div>
+            <idp-status-block
+              [idpStatusInfo]="currentPlan.assessmentStatusInfo"
+            ></idp-status-block>
+          </div>
+          <!-- TODO: hide for now -->
+          <!-- <button
+            *ngIf="mode === IDPMode.Learner"
+            class="cx-btn cx-btn-secondary cx-btn-icon pdo-header__bookmark"
+            (click)="onBookmarkClicked()">
+            <i class="icon-bookmark"></i>
+            {{"MyPdJourney.PlannedActivities.Bookmarks" | translate}} ({{bookmarkedCourses && bookmarkedCourses.size ? bookmarkedCourses.size : 0}})
+          </button> -->
+        </div>
+        <div class="pdo-header__group-item add-item-actions-group">
+          <!-- TODO: implement later
+          <div class="pdo-header__item">
+            <div class="pdo-header__label">{{"MyPdJourney.PlannedActivities.SortBy" | translate}}</div>
+            <mat-radio-group aria-label="Sort by" [value]="currentSort" (change)="onSortChanged($event)"
+              [disabled]="true">
+              <mat-radio-button [value]="sort.value" *ngFor="let sort of sorts">{{sort.text}}</mat-radio-button>
+            </mat-radio-group>
+          </div> -->
+          <div class="add-item-actions" *ngIf="mode === IDPMode.Learner">
+            <ng-container *ngTemplateOutlet="btnAddFromCatalog"></ng-container>
+            <ng-container *ngTemplateOutlet="btnAddExternalPDO"></ng-container>
+            <ng-container *ngTemplateOutlet="btnSubmitPlan"></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="cx-divider cx-divider-mobile"></div>
+      <div class="add-item-actions-mobile" *ngIf="mode === IDPMode.Learner">
+        <ng-container *ngTemplateOutlet="btnAddExternalPDO"></ng-container>
+      </div>
+      <div
+        class="list-opportunities"
+        *ngIf="
+          learningOpportunitiesResponse.items &&
+          learningOpportunitiesResponse.items.length > 0
+        "
+      >
+        <div
+          *ngFor="
+            let item of learningOpportunitiesResponse.items;
+            let even = even
+          "
+          class="action-item"
+        >
+          <action-item
+            [learningOpportunity]="item"
+            [isEven]="even"
+            [mode]="mode"
+            [allowMarkCompletion]="
+              pdPlanPermission.externalPDOpportunity.allowChangeStatus
+            "
+            (clickedItem)="onClickedPDO($event)"
+            (markAsCompleted)="toogleCompleteExternalPDO($event, true)"
+            (markAsUnCompleted)="toogleCompleteExternalPDO($event, false)"
+            [allowRemove]="allowRemove(item)"
+            (remove)="onRemoveActionItem($event)"
+          >
+          </action-item>
+        </div>
+        <cx-paging
+          [currentPageSize]="pageSize"
+          [totalRecords]="learningOpportunitiesResponse.totalItems"
+          [recordsPerPage]="learningOpportunitiesResponse.pageSize"
+          [currentPage]="learningOpportunitiesResponse.pageIndex"
+          (currentPageChange)="getListActionItem(pageSize, $event)"
+          (pageSizeChange)="getListActionItem($event, 1)"
+        >
+        </cx-paging>
+        <div
+          *ngIf="
+            mode === IDPMode.Learner &&
+            learningOpportunitiesResponse.items &&
+            learningOpportunitiesResponse.items.length > 2
+          "
+          class="add-item-actions add-item-actions--footer"
+        >
+          <ng-container *ngTemplateOutlet="pdPlanActions"></ng-container>
+        </div>
+        <div
+          *ngIf="currentPlan && pdPlanPermission.comment.allowView"
+          class="pd-opportunities__comments"
+        >
+          <cx-comment
+            #commentComponent
+            [(comments)]="comments"
+            [canReply]="pdPlanPermission.comment.allowCreate"
+            [blockExistingComments]="
+              !pdPlanPermission.comment.allowDelete ||
+              !pdPlanPermission.comment.allowEdit
+            "
+            (changeComment)="onChangeComment($event)"
+          >
+          </cx-comment>
+        </div>
+      </div>
+      <div class="add-item-actions-mobile" *ngIf="mode === IDPMode.Learner">
+        <div *ngIf="validToSubmitPDPlan" class="cx-divider"></div>
+        <ng-container *ngTemplateOutlet="btnSubmitPlan"></ng-container>
+      </div>
+    </ng-container>
+    <div class="empty-plan" *ngIf="pdplans && pdplans.length === 0">
+      {{ 'Common.Message.NoData' | translate }}
+    </div>
+  </div>
+</div>
+
+<!-- Button template, for reuse -->
+<ng-template #btnAddFromCatalog>
+  <button
+    *ngIf="
+      currentStatus !== statusCode.PendingForApproval &&
+      pdPlanPermission.pdOpportunity.allowCreate
+    "
+    class="cx-btn cx-btn-big"
+    (click)="addFromCatalog()"
+  >
+    {{ 'MyPdJourney.PlannedActivities.AddFromCatalog' | translate }}
+  </button>
+</ng-template>
+<ng-template #btnAddExternalPDO>
+  <button
+    *ngIf="validToAddPDO && pdPlanPermission.externalPDOpportunity.allowCreate"
+    class="cx-btn cx-btn-big"
+    (click)="onClickAddExternalPDO()"
+  >
+    {{ 'MyPdJourney.Catalog.AddExternalPDO' | translate }}
+  </button>
+</ng-template>
+<ng-template #btnSubmitPlan>
+  <button
+    *ngIf="validToSubmitPDPlan && pdPlanPermission.allowSubmit"
+    class="cx-btn cx-btn-big"
+    (click)="submitForApproval()"
+  >
+    {{ 'MyPdJourney.Action.SubmitForAcknowledgement' | translate }}
+  </button>
+</ng-template>

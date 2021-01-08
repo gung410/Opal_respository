@@ -1,0 +1,71 @@
+@import "variables.scss";
+
+html {
+  font-size: $main-font-size;
+}
+
+body {
+    font-family: $main-font;
+    font-size: $main-font-size;
+    margin: 0;
+    line-height: 1.5;
+    color:$main-font-color;
+    text-align: left;
+    background-color: $app-background-color;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-content {
+    position: relative;
+}
+
+.me-icon {
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: $font-weight-bold;
+}
+
+.button {
+    cursor: pointer;
+    margin: 0 10px 0 0;
+    display: inline-table;
+    text-align: center;
+    height: 35px;
+    line-height: 33px;
+    position: relative;
+}
+
+.menu-action {
+  @extend .cx-button-group;
+}
+
+.cx-button-group {
+  button:not(:last-child) {
+    margin-right: 2px;
+  }
+}
+
+.cx-table {
+    &__actions-container {
+        display: none !important;
+    }
+
+    &__last-data {
+        font-weight: bold;
+        color: #4370c7;
+    }
+}
+// TODO: need to add option later in cx common
+cx-loader .loading:not(:required){
+    z-index: 1100;
+}
+
+.cursor_pointer:hover {
+    cursor: pointer;
+}
+
+.alert {
+  color: $main-text-color;
+  background-color: #FFD7D7;
+}

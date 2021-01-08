@@ -1,0 +1,129 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-learn-api-communication-release
+  uat-learn: 
+    pipelines: 
+      - uat-datahub-learn-api-communication-release-01
+      - uat-datahub-learn-api-communication-release-02
+  prod-learn: 
+    pipelines: 
+      - prod-datahub-learn-api-communication-release-01   
+      - prod-datahub-learn-api-communication-release-02   
+format_version: 3
+pipelines: 
+  build-datahub-learn-api-communication-release: 
+    group: datahub-learn-api-communication-release
+    label_template: "release-1.1.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Api/
+      SONAR_PROJECTKEY: datahub-learn-api-communication-release
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/learn-1.0
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+  uat-datahub-learn-api-communication-release-01:
+    group: datahub-learn-api-communication-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-01
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-learn-api-communication-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-datahub-learn-api-communication-release
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+      DOCKER_DEPLOY_DIR : uat-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      FireBaseCloudMessage_BaseAppInstanceServerUrl: https://iid.googleapis.com/
+      FireBaseCloudMessage_BaseFirebaseClouldMessageUrl: https://fcm.googleapis.com/
+      FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey: AIzaSyCM0ZiKbsMZ21MhZbmvnci7JiAzDE550cw
+      DOCKER_OVERRIDE: uat-learn
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=
+  uat-datahub-learn-api-communication-release-02:
+    group: datahub-learn-api-communication-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-02
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-learn-api-communication-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-datahub-learn-api-communication-release
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+      DOCKER_DEPLOY_DIR : uat-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      FireBaseCloudMessage_BaseAppInstanceServerUrl: https://iid.googleapis.com/
+      FireBaseCloudMessage_BaseFirebaseClouldMessageUrl: https://fcm.googleapis.com/
+      FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey: AIzaSyCM0ZiKbsMZ21MhZbmvnci7JiAzDE550cw
+      DOCKER_OVERRIDE: uat-learn
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=
+  prod-datahub-learn-api-communication-release-01:
+    group: datahub-learn-api-communication-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-01
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: uat-datahub-learn-api-communication-release-02
+        stage: run-deploy-script
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: uat-datahub-learn-api-communication-release-02
+      UP_STREAME_PIPELINE_STAGE: run-deploy-script
+      UP_STREAME_PIPELINE_JOB: run-deploy-script
+      DOCKER_DEPLOY_DIR : prod-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      DOCKER_OVERRIDE: production-learn
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=
+  prod-datahub-learn-api-communication-release-02:
+    group: datahub-learn-api-communication-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-02
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: uat-datahub-learn-api-communication-release-02
+        stage: run-deploy-script
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: uat-datahub-learn-api-communication-release-02
+      UP_STREAME_PIPELINE_STAGE: run-deploy-script
+      UP_STREAME_PIPELINE_JOB: run-deploy-script
+      DOCKER_DEPLOY_DIR : prod-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      DOCKER_OVERRIDE: production-learn
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=

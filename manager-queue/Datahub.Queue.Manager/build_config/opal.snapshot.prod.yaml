@@ -1,0 +1,63 @@
+---
+format_version: 3
+environments:
+  systemtest: 
+    pipelines: 
+      - cx-queuemanager-api-snapshot-build
+  development: 
+    pipelines: 
+      - cx-queuemanager-api-development
+  uat-next: 
+    pipelines: 
+      - cx-queuemanager-api-uat-next
+pipelines:
+  cx-queuemanager-api-snapshot-build: 
+    group: cx-queuemanager-api-snapshot
+    label_template: "snapshot-1.3.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      SONAR_PROJECTKEY: cx-queuemanager-api-snapshot
+      SONAR_SOLUTION_FILE: Datahub.Queue.Manager.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: linux-docker-build-sonar-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: develop-opal
+        git: "https://bitbucket.org/cxdev/cx-datahub-queue-manager.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+  cx-queuemanager-api-development:
+    group: cx-queuemanager-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Accounts/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: ansible-deploy-fetch-upstream
+  cx-queuemanager-api-uat-next:
+    group: cx-queuemanager-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-queuemanager-api-snapshot-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Accounts/
+      UP_STREAME_PIPELINE_NAME: cx-queuemanager-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: ansible-deploy-fetch-upstream

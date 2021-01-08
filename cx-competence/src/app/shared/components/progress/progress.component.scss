@@ -1,0 +1,40 @@
+@import '~assets/styles/mixins.scss';
+
+.cx-progress {
+  width: 200px;
+  height: 30px;
+  border: 1px solid #c4c4c4;
+  @include box-sizing(border-box);
+  border-radius: 20px;
+  border-color: transparent;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  text-transform: capitalize;
+  &__not-started {
+    background-color: #eaeaea;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  &__in-progress {
+    background-color: #56719c;
+  }
+
+  &__pending-for-approval {
+    background-color: #de9000;
+  }
+
+  &__approved {
+    background-color: #5a9051;
+  }
+
+  &__reject {
+    background-color: #a04d4d;
+  }
+
+  &__empty,
+  &__undefined {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

@@ -1,0 +1,14 @@
+<ng-container
+  *ngIf="
+    learningAreaCharts &&
+    learningAreaCharts.length &&
+    learningNeedAnalysisPermission.chart.allowView
+  "
+>
+  <div
+    class="learning-need-preview-chart-container"
+    *ngFor="let chartModel of learningAreaCharts"
+  >
+    <learning-area-chart [learningAreaChart]="chartModel"></learning-area-chart>
+  </div>
+</ng-container>

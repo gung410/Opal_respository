@@ -1,0 +1,48 @@
+@import '~assets/styles/variables.scss';
+
+learning-needs-analysis {
+  .needs-analysis {
+    background: #fff;
+    box-shadow: 0 0 10px #eee;
+    border-radius: 5px;
+
+    .warning-needs-analysis {
+      text-align: center;
+      transition: all 0.8s;
+
+      .retake-button-container {
+        text-align: right;
+        margin-bottom: 20px;
+      }
+    }
+    .learning-need-survey-container {
+      position: relative;
+      width: 70%;
+      margin: 0 auto;
+      padding-top: 70px;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  learning-needs-analysis {
+    .learning-need-survey-container {
+      width: 90% !important;
+      padding-top: 20px !important;
+    }
+    .warning-needs-analysis {
+      margin-top: 20px;
+      .alert-heading {
+        font-size: 1.3rem;
+      }
+      button.retake {
+        width: 100%;
+      }
+    }
+    .needs-analysis {
+      width: 100%;
+      margin-top: 0px;
+      padding: 0px;
+    }
+  }
+}

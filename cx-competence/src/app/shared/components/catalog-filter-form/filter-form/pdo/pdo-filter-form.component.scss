@@ -1,0 +1,14 @@
+.filter-form {
+  &__show-more,
+  &__show-less {
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    text-transform: capitalize;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}

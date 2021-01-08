@@ -1,0 +1,22 @@
+<div class="lna-status">
+  <div class="lna-status__progress-status">
+    <div
+      *ngIf="assessmentInfo && assessmentInfo.statusInfo"
+      class="lna-status__items--info"
+      data-toggle="tooltip"
+      title="{{
+        assessmentInfo && assessmentInfo.dueDate
+          ? 'Complete by: ' + (assessmentInfo.dueDate | date: 'dd/MM/yyyy')
+          : ''
+      }}"
+      (click)="onProgressClick()"
+    >
+      <idp-status-block
+        [idpStatusInfo]="assessmentInfo.statusInfo"
+      ></idp-status-block>
+      <div *ngIf="assessmentInfo.dueDate" class="cutoff-date">
+        {{ assessmentInfo.dueDate | date: 'dd/MM/yyyy' }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+﻿mongo_db_name: pre-prod-communication-opal-db
+mongo_db_auth: pre-prod-communication-opal:opal-communication-pre-prod
+https_proxy: http://proxy.opal:3128
+HangfireDatabase: pre-prod-cx-opal-scheduling-jobs-db
+HangfireDatabaseUsername: pre-prod-cx-opal-scheduling-jobs-db-readwrite
+HangfireDatabasePassword: kUMC8MzTjQYedAs

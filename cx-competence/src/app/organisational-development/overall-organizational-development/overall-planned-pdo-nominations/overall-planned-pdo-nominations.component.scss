@@ -1,0 +1,234 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.planned-pdo-nominations {
+  &__nominate {
+    .nomination-mode-selector {
+      &__selector {
+        margin-top: 15px;
+        display: block;
+      }
+    }
+    .select-classrun {
+      margin-top: 15px;
+      &__info {
+        padding-left: 2px;
+        .classrun-info-primary {
+          margin-top: 20px;
+          display: flex;
+          > div {
+            flex-basis: 33%;
+          }
+          .classrun-info-title {
+            &__title {
+              font-size: 16px;
+            }
+            &__application-date {
+              margin-top: 5px;
+              font-size: 10px;
+              font-weight: bold;
+            }
+          }
+          .classrun-info-start-date,
+          .classrun-info-end-date {
+            margin-left: 40px;
+            .classrun-date {
+              margin-top: 5px;
+            }
+          }
+        }
+        .classrun-info-secondary {
+          margin-top: 20px;
+        }
+      }
+    }
+    .select-learners,
+    .select-user-group,
+    .select-approving-officer {
+      margin-top: 20px;
+    }
+    cx-select {
+      margin-top: 10px;
+      display: block;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .not-available-label {
+      color: #a1a8b6;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 30px;
+      text-align: center;
+    }
+  }
+  &__nominated {
+    margin-top: 20px;
+    .nominated-learners-container {
+      min-height: 110px;
+      position: relative;
+    }
+    .nominated-groups-container,
+    .nominated-department-container {
+      margin-top: 30px;
+      min-height: 110px;
+      position: relative;
+
+      .nominate-item {
+        .nominate-learner-info,
+        .nominate-group-info,
+        .nominate-department-info {
+          cursor: unset;
+        }
+        margin-bottom: 0;
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+      .nominate-group-members {
+        border-radius: 0 0 5px 5px;
+        border: 1px solid #d8dce6;
+        border-top: none;
+        margin-top: 0px;
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .nominate-list {
+    margin-top: 15px;
+  }
+
+  .nominate-item {
+    display: flex;
+    padding: 10px 35px 10px 20px;
+    border: 1px solid #d8dce6;
+    border-radius: 5px;
+    align-items: center;
+    position: relative;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .nominate-learner-info {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      min-width: 220px;
+      &__avatar {
+        width: 35px;
+        height: 35px;
+        background-size: cover;
+        background-position: top center;
+        border-radius: 50%;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+      &__text {
+        width: 100%;
+        .nominated-learner-email {
+          font-size: 12px;
+          color: #8799ba;
+        }
+      }
+    }
+
+    .nominate-group-info {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      min-width: 220px;
+      &:hover {
+        color: #0e409f;
+        font-weight: 500;
+      }
+      &__avatar {
+        margin-right: 18px;
+        display: flex;
+        align-items: center;
+        width: 50px;
+        .nominate-group-avatar {
+          width: 40px;
+          height: 40px;
+          background-size: cover;
+          background-position: top center;
+          border-radius: 50%;
+          flex-shrink: 0;
+          border: 1px solid #fff;
+          &:nth-child(2) {
+            transform: translateX(-80%);
+          }
+          &:nth-child(3) {
+            transform: translateX(-160%);
+          }
+          &:nth-child(4) {
+            transform: translateX(-240%);
+          }
+        }
+      }
+    }
+
+    ::ng-deep .nominate-classrun-info {
+      padding-left: 30px;
+      width: 100%;
+      &__title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        font-weight: 500;
+        padding-top: 8px;
+      }
+    }
+
+    .nominate-learner-invalid {
+      width: 100%;
+      font-size: 12px;
+      font-weight: 500;
+      color: #ff6262;
+    }
+
+    &__by-current-klp {
+      position: absolute;
+      right: 15px;
+      top: -1px;
+      border: 1px solid #d8dce6;
+      border-radius: 0 0 4px 4px;
+      background: #5f92a9;
+      color: #fff;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+
+    &__icon-close {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #b5b5b5;
+      font-size: 10px;
+    }
+  }
+
+  .nominate-department-item {
+    margin-top: 15px;
+    padding: 15px 35px 15px 20px;
+  }
+
+  .nomination-container {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .show-more {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+}

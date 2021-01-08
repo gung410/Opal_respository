@@ -1,0 +1,1 @@
+User with email {{Email}} has registered for a new user account in your organisation {{DepartmentName}} and needs your approval.

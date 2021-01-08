@@ -1,0 +1,118 @@
+<div
+  *ngIf="!isOnMassNominationMode && isActive"
+  [hidden]="currentPlannedPDO || showCatalogue"
+  class="cx-panel plan-content"
+>
+  <div *ngIf="pdplanDto" class="menu-action">
+    <div class="plan-title">
+      <span *ngIf="!isPlanHasValidResult"
+        >{{ 'Odp.LearningPlan.CreateNew' | translate }} {{ title }}</span
+      >
+      <span *ngIf="isPlanHasValidResult">{{ planTitle }}</span>
+    </div>
+  </div>
+
+  <div class="odp-content-container">
+    <div class="odp-content">
+      <div class="odp-content__surveyjs">
+        <div class="odp-content__text-mandatory" style="margin-bottom: 32px">
+          <cx-mandatory-text></cx-mandatory-text>
+        </div>
+        <cx-surveyjs
+          #surveyjsContent
+          *ngIf="formJSON"
+          [json]="formJSON"
+          [data]="clonedPdPlanDto.answer"
+          [variables]="formVariables"
+          [cancelName]="'Cancel'"
+          [submitName]="'Save'"
+          [hideFooter]="true"
+          (submitting)="onSubmitting($event)"
+          (cancel)="onCancel()"
+          (valueChanged)="onChangeValue($event)"
+          (afterQuestionsRender)="afterQuestionsRendered($event)"
+        >
+        </cx-surveyjs>
+      </div>
+
+      <ng-container *ngIf="isKeyLearningProgram">
+        <planned-list-area
+          [klpResultDto]="pdplanDto"
+          [isEditing]="isEditing"
+          [allowAddingAreaPermission]="
+            keyLearningProgrammePermission.learningAreas.allowCreate
+          "
+          [allowDeletingAreaPermission]="
+            keyLearningProgrammePermission.learningAreas.allowDelete
+          "
+          (clickedRemove)="onKLPRemoveArea($event)"
+          (clickedAddAreas)="onClickAddAreas()"
+        ></planned-list-area>
+
+        <planned-list-pdo
+          [klpResultDto]="pdplanDto"
+          [isEditing]="isEditing"
+          [allowAddingPDOPermission]="
+            keyLearningProgrammePermission.PDO.allowCreate
+          "
+          [allowDeletingPDOPermission]="
+            keyLearningProgrammePermission.PDO.allowDelete
+          "
+          (clickedAddPDO)="onOpenPDCatalogue()"
+          (clickedPDO)="onClickPlannedPDO($event)"
+          (clickedRemovePDO)="onKLPRemovePDO($event)"
+        ></planned-list-pdo>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<planned-pdo-detail
+  *ngIf="!isOnMassNominationMode && currentPlannedPDO"
+  [pdoAnswer]="currentPlannedPDO"
+  [klpDto]="pdplanDto"
+  [allowManagePDO]="allowManagePDO"
+  (clickedBackBtn)="onBackFromPlannedPDODetail($event)"
+></planned-pdo-detail>
+
+<planned-pdo-mass-nomination
+  *ngIf="isOnMassNominationMode"
+  class="cx-tab-body"
+  [klpDto]="pdplanDto"
+  (clickedBackBtn)="onBackFromPlannedPDODetail()"
+></planned-pdo-mass-nomination>
+
+<catalogue-course-picker
+  *ngIf="isKeyLearningProgram && showCatalogue"
+  [tagIds]="catalogTagIds"
+  [allowAddExternalPDOPermission]="
+    keyLearningProgrammePermission.externalPDO.allowCreate
+  "
+  [personnelGroupsIdsForExternalPDOUsage]="
+    catalogPersonnelGroupsIdsForExternalPDOUsage
+  "
+  [selectedCourseIds]="catalogSelectedCourse"
+  (addToPlan)="onAddPDOFromCatalogue($event)"
+  (addExternalPDO)="onAddExternalPDOFromCatalogue($event)"
+  (back)="onClickBackOnCatalogue()"
+></catalogue-course-picker>
+
+<div
+  *ngIf="
+    !isOnMassNominationMode &&
+    isPlanHasValidResult &&
+    showCommentSection &&
+    !currentPlannedPDO
+  "
+  class="cx-panel plan-comments"
+>
+  <cx-comment
+    #commentComponent
+    [(comments)]="comments"
+    (changeComment)="onChangeComment($event)"
+    [canReply]="haveCommentPermission"
+    [approveText]="'Common.Label.Approved' | translate"
+    [blockExistingComments]="!haveCommentPermission"
+  >
+  </cx-comment>
+</div>

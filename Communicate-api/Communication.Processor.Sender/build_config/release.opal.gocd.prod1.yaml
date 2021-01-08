@@ -1,0 +1,77 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-opal-processor-communication_sender-release
+  uat-opal: 
+    pipelines: 
+      - uat-datahub-opal-processor-communication_sender-release
+  prod-opal: 
+    pipelines: 
+      - prod-datahub-opal-processor-communication_sender-release       
+format_version: 3
+pipelines: 
+  build-datahub-opal-processor-communication_sender-release: 
+    group: datahub-opal-processor-communication_sender-release
+    label_template: "release-1.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Processor.Sender/
+      SONAR_PROJECTKEY: datahub-opal-processor-communication_sender-release
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    template: linux-docker-multiple-build
+    materials: 
+      bitbuket-git: 
+        branch: release/opal-1.0
+        git: "https://bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+  uat-datahub-opal-processor-communication_sender-release:
+    group: datahub-opal-processor-communication_sender-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-opal-processor-communication_sender-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-datahub-opal-processor-communication_sender-release
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+      DOCKER_DEPLOY_DIR : uat-opal  
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+      USE_CLUSTER : true      
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=
+  prod-datahub-opal-processor-communication_sender-release:
+    group: datahub-opal-processor-communication_sender-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: uat-datahub-opal-processor-communication_sender-release
+        stage: run-deploy-script
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: uat-datahub-opal-processor-communication_sender-release
+      UP_STREAME_PIPELINE_STAGE: run-deploy-script
+      UP_STREAME_PIPELINE_JOB: run-deploy-script-runOnAll-1
+      DOCKER_DEPLOY_DIR : prod-opal
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+      USE_CLUSTER : true      
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=

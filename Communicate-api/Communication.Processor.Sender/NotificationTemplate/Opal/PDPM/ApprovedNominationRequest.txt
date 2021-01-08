@@ -1,0 +1,1 @@
+﻿Your nominated PD opportunity ({{CourseName}}) was approved by {{ApproverName}}.

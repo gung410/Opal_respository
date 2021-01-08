@@ -1,0 +1,36 @@
+.filter-slidebar-container {
+  .btn-filter {
+    position: relative;
+    float: left;
+  }
+
+  .btn-reset {
+    margin-left: 10px;
+    height: 40px;
+    min-height: 40px !important;
+    position: relative;
+    float: left;
+  }
+}
+
+slidebar-body {
+  .slidebar-content__body {
+    height: calc(70vh - 40px);
+  }
+  cx-date-picker .cx-datepicker-container {
+    padding-top: 0;
+    width: 100%;
+
+    &__invalid-text {
+      top: 100%;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    & > input {
+      width: 100%;
+    }
+  }
+  .col-item {
+    width: 49%;
+  }
+}

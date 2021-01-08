@@ -1,0 +1,1 @@
+Your application to register for {{CourseTitle}} - {{ClassrunTitle}} has been approved by your course approving officer and is pending confirmation by the course administrator.

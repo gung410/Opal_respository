@@ -1,0 +1,15 @@
+@import 'assets/mobile/styles/mixins.scss';
+@import 'assets/mobile/styles/common.scss';
+
+.planned-activities-view {
+  overflow: hidden;
+
+  &__body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: $main-body-text;
+    padding: 10px;
+    padding-top: 52px;
+    @include font(400, 14px, 16px);
+  }
+}

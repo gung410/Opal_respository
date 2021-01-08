@@ -1,0 +1,47 @@
+<div class="cx-page-container strategic-thrust">
+  <odp-department-browser
+    [currentUser]="currentUser"
+    (changedDepartment)="changedDepartment($event)"
+  >
+  </odp-department-browser>
+  <div class="grid-toolbar" [cxFloatingToolbar]="gridToolbarAttribute">
+    <div class="grid-toolbar__title">
+      {{ 'Odp.StrategicThrust.ListTitleFor' | translate }}
+      {{ opjDepartmentName }}
+    </div>
+    <div class="grid-toolbar__actions">
+      <button
+        *ngIf="isShowDeleteRecord && strategicThrustPermission.allowDelete"
+        class="cx-btn"
+        (click)="openConfirmDialogDelete()"
+      >
+        {{ 'Common.Action.Delete' | translate }}
+      </button>
+      <button
+        *ngIf="strategicThrustPermission.allowCreate"
+        class="cx-btn"
+        (click)="createOrEditStrategicThrust()"
+      >
+        {{ 'Common.Action.NewStrategicThrust' | translate }}
+      </button>
+    </div>
+  </div>
+  <ag-grid-angular
+    #agGrid
+    class="ag-grid-header-floatable ag-theme-material styled-grid strategic-thrust-table"
+    (gridReady)="onGridReady($event)"
+    domLayout="autoHeight"
+    [rowData]="rowData"
+    [defaultColDef]="defaultColDef"
+    [columnDefs]="columnDefs"
+    [rowSelection]="'multiple'"
+    [frameworkComponents]="frameworkComponents"
+    [suppressRowClickSelection]="true"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+    [rowHeight]="70"
+    [headerHeight]="64"
+    (selectionChanged)="onSelectionChanged($event)"
+    (cellClicked)="onCellFocused($event)"
+  >
+  </ag-grid-angular>
+</div>

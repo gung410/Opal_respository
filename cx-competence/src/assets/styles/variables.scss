@@ -1,0 +1,34 @@
+@import "./../../../node_modules/@conexus/cx-angular-common/lib/styles/variables";
+
+$screen-xxs-max: 479px;
+$screen-xs-min: 480px;
+$screen-xs-max: 767px;
+$screen-sm-min: 768px;
+$screen-sm-max: 991px;
+$screen-md-min: 992px;
+$screen-md-max: 1199px;
+$screen-lg-min: 1200px;
+
+$main-font: $cx-font-family;
+$main-font-size:16px;
+$main-font-color:#303450;
+$cx-color-text-secondary: #8799BA;
+
+$font-weight-bold: 600;
+$font-weight-medium: 500;
+
+$panel-border-radius: 5px;
+$panel-border-color: #D8DCE6;
+$main-control-height: 48px;
+$main-grid-unit:8px;
+
+// Outdate variables
+$main-color-lighter: #657692;
+$main-color-white: #7e90ac;
+$notification-color: #e7472c;
+$mat-tab-font-color:#002046;
+
+// Mobile color variables
+$cx-mobile-background-color: #f2f6fa;
+$app-background-color: #f9f9f9;
+$panel-background-color: #fff;

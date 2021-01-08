@@ -1,0 +1,6 @@
+aspnetcore_environment: uat-next
+mongo_db_name: uat-next-datahub-opal-db
+mongo_db_auth: uat-next-datahub-opal:opal-datahub-uat-next
+mongo_db_host: mongodb-01.opal,mongodb-02.opal/uat-next-datahub-opal-db
+mongo_db_ssl_enabled: true
+rabbitmq_ssl_enabled: true

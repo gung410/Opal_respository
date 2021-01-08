@@ -1,0 +1,34 @@
+<cx-dialog-template
+  (cancel)="onCancel()"
+  (done)="onDone()"
+  [doneButtonText]="
+    'Staff.AssignLearningNeedsDialog.AssignButtonText' | translate
+  "
+  [doneButtonDisabled]="
+    loadingUnassignedEmployees ||
+    (unassignedSelectedEmployees &&
+      unassignedSelectedEmployees.length === 0 &&
+      expiredLNAEmployees &&
+      expiredLNAEmployees.length === 0)
+  "
+  [isShowingMandatoryText]="true"
+>
+  <modal-header>
+    <h3>
+      {{
+        'Staff.AssignLearningNeedsDialog.AssignLearningNeedsAssessmentsToEmployees'
+          | translate
+      }}
+    </h3>
+  </modal-header>
+  <content>
+    <cx-surveyjs
+      #assignLNASurveyJS
+      [data]="data"
+      [json]="jsonForm"
+      [hideSubmitBtn]="true"
+      (submitting)="onSubmitSurvey($event)"
+    >
+    </cx-surveyjs>
+  </content>
+</cx-dialog-template>

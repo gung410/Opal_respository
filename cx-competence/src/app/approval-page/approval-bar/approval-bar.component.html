@@ -1,0 +1,56 @@
+<div class="approval-grid-toolbar">
+  <!-- Approval target -->
+  <div
+    *ngIf="approvalTargets && approvalTargets.length > 0"
+    class="approval-grid-toolbar__approval-targets"
+  >
+    <div
+      *ngFor="let approvalTarget of approvalTargets"
+      class="approval-target-item"
+      [class.approval-target-item--active]="
+        approvalTarget === currentApprovalTarget
+      "
+      (click)="onApprovalTargetClicked(approvalTarget)"
+    >
+      {{ approvalTarget.titleTranslatePath | translate }}
+    </div>
+  </div>
+
+  <!-- Approve reject buttons -->
+  <div class="approval-grid-toolbar__approval-actions">
+    <div *ngIf="showApprovalButton" class="action-group">
+      <button
+        class="cx-btn cx-btn-secondary"
+        [disabled]="!enableApprovalButton"
+        (click)="onClickedApprove()"
+      >
+        {{ approveButtonText | translate }}
+      </button>
+      <button
+        class="cx-btn cx-btn-secondary"
+        [disabled]="!enableApprovalButton"
+        (click)="onClickedReject()"
+      >
+        {{ 'Common.Action.Reject' | translate }}
+      </button>
+    </div>
+    <div *ngIf="showFilter">
+      <filter-slidebar-container></filter-slidebar-container>
+    </div>
+  </div>
+
+  <!-- Approval sub target if needed -->
+  <div
+    *ngIf="subApprovalTargets"
+    class="cx-tabs approval-grid-toolbar__sub-target"
+  >
+    <div
+      *ngFor="let subTarget of subApprovalTargets"
+      class="cx-tabs__tab"
+      [class.tab-active]="currentApprovalSubTarget === subTarget"
+      (click)="onClickedApprovalSubTarget(subTarget)"
+    >
+      {{ subTarget.titleTranslatePath | translate }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+{{OriginatorName}} has changed your role to {{RoleName}} in the community {{CommunityName}}.

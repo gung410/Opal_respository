@@ -1,0 +1,255 @@
+export const environment = {
+  production: true,
+  fallbackLanguage: 'en-US',
+  fallbackLanguageName: 'English',
+  clientId: 'CompetenceSpa',
+  issuer: '${CXID_IDP_URL}',
+  apiGatewayOrigin: '${API_GATEWAY}',
+  systemAdminUrl:
+    'https://${ENVIRONMENT_NAME}-organization-opal-spa.csc.cxs.cloud',
+  apiGatewayResource: {
+    organization: '${ENVIRONMENT_NAME}-competence-opal-api-organization',
+    assessment: '${ENVIRONMENT_NAME}-competence-opal-api-assessment',
+    cxId: '${ENVIRONMENT_NAME}-cxid-opal-idp',
+    portal: '${ENVIRONMENT_NAME}-competence-opal-api-portal',
+    report: '${ENVIRONMENT_NAME}-competence-opal-api-report',
+    competence: '${ENVIRONMENT_NAME}-competence-opal-api',
+    communication: '${ENVIRONMENT_NAME}-datahub-opal-api-communication',
+    learningcatalog: '${ENVIRONMENT_NAME}-competence-opal-api-learningcatalog',
+    courseapi: '${ENVIRONMENT_NAME}-learnapp-opal-api-course',
+    coursepad: '${ENVIRONMENT_NAME}-course-opal-api',
+    apitagging: '${ENVIRONMENT_NAME}-learnapp-opal-api-tagging',
+    learner: '${ENVIRONMENT_NAME}-learnapp-opal-api-learner',
+    lnaSurvey: '${ENVIRONMENT_NAME}-learnapp-opal-api-lnaform',
+  },
+  site: {
+    title: 'PD Planner',
+    logo: {
+      imageUrl: 'assets/images/opal-logo-slogan.png',
+      imageAlt: 'PD Planner',
+      routeLink: '',
+      text: 'PD Planner',
+    },
+    footer: {
+      vulnerabilityUrl: 'https://tech.gov.sg/report_vulnerability',
+      privacyStatementUrl: '${CXID_IDP_URL}/Home/PrivacyPolicy',
+      termsOfUseUrl: '${CXID_IDP_URL}/Home/TermsOfUse',
+    },
+    dateRelease: '12 June 2020',
+  },
+  ItemPerPage: 50,
+  OwnerId: 3001,
+  CustomerId: 2052,
+  ParentDepartmentId: 14350,
+  buildVersion: '${GO_PIPELINE_LABEL}',
+  autoNavigateToIDP: true,
+  pdplanConfig: {
+    permissionConfig: {
+      createLearningDirection: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      createKeyLearningProgram: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      startNewLearningPlan: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      deleteDraftVersion: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      edit: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      submit: {
+        roleExtIds: [
+          'schooltrainingcoordinator',
+          'divisiontrainingcoordinator',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+          'approvingofficer',
+        ],
+      },
+      approveOrReject: {
+        roleExtIds: [
+          'approvingofficer',
+          'overallsystemadministrator',
+          'schooladmin',
+          'divisionadmin',
+        ],
+      },
+      commentOnOPJ: [
+        {
+          opjStatus: ['NotStarted', 'Started'],
+          roleExtIds: ['*'],
+        },
+        {
+          opjStatus: [
+            'PendingForApproval',
+            'Approved',
+            'Rejected',
+            'Completed',
+          ],
+          roleExtIds: [
+            'schooltrainingcoordinator',
+            'divisiontrainingcoordinator',
+            'overallsystemadministrator',
+            'schooladmin',
+            'divisionadmin',
+            'approvingofficer',
+          ],
+        },
+      ],
+      departmentHierarchyBrowser: {
+        includeChildren: {
+          roleExtIds: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'divisiontrainingcoordinator',
+            'schooltrainingcoordinator',
+            'approvingofficer',
+          ],
+        },
+      },
+      approvePendingRequest: {
+        ODP: {
+          learningPlan: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'approvingofficer',
+            'divisionallearningcoordinator',
+            'schooltrainingcoordinator',
+          ],
+          learningDirection: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'approvingofficer',
+            'divisionallearningcoordinator',
+            'schooltrainingcoordinator',
+          ],
+          klpNomination: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'reportingofficer',
+          ],
+        },
+        IDP: {
+          classRegistration: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'reportingofficer',
+          ],
+          classWithdrawal: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'reportingofficer',
+          ],
+          classChangeRequest: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'reportingofficer',
+          ],
+          adhocNominations: [
+            'overallsystemadministrator',
+            'divisionadmin',
+            'branchadmin',
+            'schooladmin',
+            'reportingofficer',
+          ],
+        },
+      },
+    },
+    organizationalUnitTypesHavingOPJ: ['school', 'division', 'ministry'],
+  },
+  lnaResult: {
+    roleCanDecideApprovalExtIds: [
+      'overallsystemadministrator',
+      'schooladmin',
+      'branchadmin',
+      'divisionadmin',
+    ],
+    allowToEditLNAApprovedXTimes: 1,
+  },
+  userIdleTimeOut: 1500, // seconds
+  sessionTimeoutCountdown: 300, // seconds
+  userIdleTimeoutLogout: true,
+  gravatarUrl: 'https://secure.gravatar.com/avatar',
+  uriLearningOpportunityFieldName: 'uriLearningOpportunity',
+  myPdJourneyConfig: {
+    pdPlanTabName: 'PdPlanTab',
+  },
+  firebase: {
+    fcmConfig: {
+      apiKey: '${FIREBASE_API_KEY}',
+      authDomain: 'moe-opal-${FIREBASE_AUTH_DOMAIN}.firebaseapp.com',
+      databaseURL: 'https://moe-opal-${FIREBASE_AUTH_DOMAIN}.firebaseio.com',
+      projectId: 'moe-opal-${FIREBASE_AUTH_DOMAIN}',
+      storageBucket: '',
+      messagingSenderId: '${ENVIRONMENT_FCM_MESSAGING_SENDER_ID}',
+      appId: '${FIREBASE_APP_ID}',
+    },
+    publicVapidKey: '${FIREBASE_PUBLIC_VAPID_KEY}',
+  },
+  VirtualPath: undefined,
+  notification: {
+    enableToggleToFireBase: false,
+    enableShowBellIcon: true,
+    enableBroadCast: true,
+    bellUrl: 'https://www.opal2.moe.edu.sg/opal-account/notifications/bell',
+    alertUrl: 'https://www.opal2.moe.edu.sg/opal-account/notifications/alert',
+  },
+  moduleLink: {
+    report: 'https://www.opal2.moe.edu.sg/report',
+    learner: 'https://www.opal2.moe.edu.sg/app/learner',
+    calendar: 'https://www.opal2.moe.edu.sg/app/calendar',
+  },
+};

@@ -1,0 +1,22 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+.show-more-dropdown {
+  display: inline-block;
+  vertical-align: middle;
+  .show-more-icon {
+    color: black;
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    &.cx-dropdown-menu {
+      top: 30px !important;
+      left: 10px !important;
+      &.show {
+        transform: translate3d(-245px, -11px, 0px) !important;
+        &::after {
+          content: unset !important;
+        }
+      }
+    }
+  }
+}

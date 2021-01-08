@@ -1,0 +1,81 @@
+---
+format_version: 3
+environments:
+  systemtest: 
+    pipelines: 
+      - cx-competence-spa-build
+      - cx-competence-spa-systemtest
+  uat: 
+    pipelines: 
+      - cx-competence-spa-uat
+  production:
+    pipelines:
+      - cx-competence-spa-production
+pipelines:
+  cx-competence-spa-systemtest-build: 
+    group: cx-competence-spa
+    label_template: "release-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: ""
+      SONAR_PROJECTKEY: cx-competence-spa-release
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-competence-spa
+      ENVIRONMENT_NAME: systemtest
+    template: angular-linux-docker-build-sonarqube-scanner
+    materials: 
+      bitbuket-git: 
+        branch: release/opal-1.1
+        git: "https://bitbucket.org/cxdev/cx-competence-spa.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+  
+  cx-competence-spa-systemtest:
+    group: cx-competence-spa
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-competence-spa-build
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-competence-spa-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-competence-spa
+    template: ansible-deploy-fetch-upstream
+
+
+  # cx-competence-spa-uat:
+  #   group: cx-competence-spa
+  #   materials:
+  #     upstream:
+  #       pipeline: cx-competence-spa-systemtest
+  #       stage: deploy-stage
+  #   parameters: # list of parameters that can be configured for a pipeline
+  #     UP_STREAME_PIPELINE_NAME: cx-competence-spa-systemtest
+  #     UP_STREAME_PIPELINE_STAGE: deploy-stage
+  #     UP_STREAME_PIPELINE_JOB: deploy
+  #   environment_variables:
+  #     DOCKER_IMAGE_TAG: 
+  #     DOCKER_IMAGE_REPO: cx-competence-spa
+  #   template: ansible-deploy-fetch-upstream
+
+
+  # cx-competence-spa-production:
+  #   group: cx-competence-spa
+  #   label_template: "${upstream}"
+  #   materials:
+  #     upstream:
+  #       pipeline: cx-competence-spa-uat
+  #       stage: deploy-stage
+  #   parameters: # list of parameters that can be configured for a pipeline
+  #     UP_STREAME_PIPELINE_NAME: cx-competence-spa-uat
+  #     UP_STREAME_PIPELINE_STAGE: deploy-stage
+  #     UP_STREAME_PIPELINE_JOB: deploy
+  #   environment_variables:
+  #     DOCKER_IMAGE_TAG: 
+  #     DOCKER_IMAGE_REPO: cx-competence-spa
+  #   template: ansible-deploy-fetch-upstream

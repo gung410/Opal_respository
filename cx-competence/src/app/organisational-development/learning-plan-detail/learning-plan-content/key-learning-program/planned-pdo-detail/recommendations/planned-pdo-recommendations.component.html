@@ -1,0 +1,401 @@
+<div *ngIf="loadedData" class="planned-pdo-recommendations">
+  <div
+    *ngIf="keyLearningProgrammePermission.allowRecommend"
+    class="planned-pdo-recommendations__recommend cx-panel"
+  >
+    <div *ngIf="!allowManagePDO" class="cx-panel__label-nodata">
+      {{
+        'Odp.LearningPlan.PlannedPDODetail.OnlyAvailableWhenLDApproved'
+          | translate
+      }}
+    </div>
+    <div
+      *ngIf="allowManagePDO && published === false"
+      class="cx-panel__label-nodata"
+    >
+      {{
+        'Odp.LearningPlan.PlannedPDODetail.BlockAssignPDOWhenCourseUnpublished'
+          | translate
+      }}
+    </div>
+    <ng-container *ngIf="allowManagePDO && published">
+      <div class="recommendation-mode-selector">
+        <div class="cx-panel__label">Recommend for *</div>
+        <mat-radio-group
+          class="recommendation-mode-selector__selector"
+          aria-label="Recommendation target:"
+          [value]="recommendationMode"
+          (change)="onChangeRecommendationMode($event)"
+        >
+          <mat-radio-button class="mr-4" [value]="'learner'"
+            >Individual Learners</mat-radio-button
+          >
+          <mat-radio-button class="mr-4" [value]="'group'"
+            >Groups</mat-radio-button
+          >
+          <mat-radio-button [value]="'department'"
+            >Current Organisation Unit</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div *ngIf="isRecommendationLearnerMode" class="select-learners">
+        <div class="cx-panel__label">Select learners *</div>
+        <cx-select
+          *ngIf="selectedLearnerSelectItems && learnerObs"
+          class="learner-selector"
+          [itemObs]="learnerObs"
+          [(selectedItems)]="selectedLearnerSelectItems"
+          [config]="learnerSelectorConfig"
+        ></cx-select>
+        <div
+          *ngIf="
+            selectedLearnerSelectItems && selectedLearnerSelectItems.length > 0
+          "
+          class="selected-learner-container"
+        >
+          <div class="recommend-list">
+            <div
+              *ngFor="let learner of selectedLearnerSelectItems"
+              class="recommend-item"
+            >
+              <div class="recommend-learner-info">
+                <div
+                  class="recommend-learner-info__avatar"
+                  [style.background-image]="'url(' + learner.avatar + ')'"
+                ></div>
+                <div class="recommend-learner-info__text">
+                  <div class="recommended-learner-name">
+                    {{ learner.primaryField }}
+                  </div>
+                  <div class="recommended-learner-email">
+                    {{ learner.secondaryField }}
+                  </div>
+                </div>
+              </div>
+              <i
+                class="icon icon-close recommend-item__icon-close"
+                (click)="onClickedRemoveSelectedLearner(learner)"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isRecommendationGroupMode" class="select-user-group">
+        <div class="cx-panel__label">Select a group *</div>
+        <cx-select
+          *ngIf="userGroupObs"
+          class="select-user-group__selector"
+          [(selectedItems)]="selectedUserGroupSelectItems"
+          [itemObs]="userGroupObs"
+          [config]="userGroupSelectorConfig"
+          (selectedItemsChange)="onSelectUserGroup($event)"
+        ></cx-select>
+      </div>
+      <div *ngIf="isRecommendationDepartmentMode" class="department-section">
+        <div *ngIf="departmentRecommendations" class="not-available-label">
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.DepartmentAlreadyRecommended'
+              | translate
+          }}
+        </div>
+      </div>
+      <div class="action-button mt-4">
+        <button
+          [disabled]="!isValidToRecommend"
+          class="cx-btn"
+          (click)="onClickedRecommend()"
+        >
+          Recommend
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="cx-panel planned-pdo-recommendations__recommended">
+    <div class="recommended-learners-container">
+      <div class="cx-panel__label">
+        RECOMMENDED LEARNERS
+        <span
+          *ngIf="
+            learnerRecommendationItems && learnerRecommendationItems.length > 0
+          "
+        >
+          ({{ learnerRecommendationItems.length }})</span
+        >
+      </div>
+      <div class="recommend-list">
+        <div
+          *ngFor="let recommendationItem of learnerRecommendationItems"
+          class="recommend-item"
+        >
+          <div
+            *ngIf="recommendationItem.learner as learnerInfo"
+            class="recommend-learner-info"
+          >
+            <div
+              class="recommend-learner-info__avatar"
+              [style.background-image]="
+                'url(' + getAvatar(learnerInfo.email) + ')'
+              "
+            ></div>
+            <div class="recommend-learner-info__text">
+              <div class="recommended-learner-name">{{ learnerInfo.name }}</div>
+              <div class="recommended-learner-email">
+                {{ learnerInfo.email }}
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="isAssignedByCurrentKLP(recommendationItem)"
+            class="recommend-item__by-current-klp"
+          >
+            BY CURRENT KLP
+          </div>
+          <i
+            *ngIf="allowManagePDO"
+            class="icon icon-close recommend-item__icon-close"
+            (click)="onClickedRemoveRecommendationItem(recommendationItem)"
+          ></i>
+        </div>
+        <div
+          *ngIf="
+            learnerRecommendationItems &&
+            learnerRecommendationItems.length === 0
+          "
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoRecommendedLearners'
+              | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="recommended-groups-container">
+      <div class="cx-panel__label">
+        RECOMMENDED GROUPS
+        <span
+          *ngIf="
+            groupRecommendationItems && groupRecommendationItems.length > 0
+          "
+        >
+          ({{ groupRecommendationItems.length }})</span
+        >
+      </div>
+      <div class="recommend-list">
+        <div
+          class="recommendation-container"
+          *ngFor="
+            let groupRecommendation of groupRecommendationItems;
+            let i = index
+          "
+        >
+          <div class="recommend-item">
+            <div
+              *ngIf="groupRecommendation.group as groupInfo"
+              class="recommend-group-info"
+              data-toggle="collapse"
+              aria-expanded="false"
+              [attr.data-target]="'#recommend-group-members-' + groupInfo.id"
+              [attr.aria-controls]="'recommend-group-members-' + groupInfo.id"
+              (click)="onClickGroupRecommendItem(groupRecommendation)"
+            >
+              <div class="recommend-group-info__avatar">
+                <div
+                  *ngFor="let item of [1, 1, 1]"
+                  class="recommend-group-avatar"
+                  [style.background-image]="'url(' + defaultAvatar + ')'"
+                ></div>
+              </div>
+              <div class="recommend-group-info__name">{{ groupInfo.name }}</div>
+            </div>
+            <div
+              *ngIf="isAssignedByCurrentKLP(groupRecommendation)"
+              class="recommend-item__by-current-klp"
+            >
+              BY CURRENT KLP
+            </div>
+            <i
+              *ngIf="allowManagePDO"
+              class="icon icon-close recommend-item__icon-close"
+              (click)="onClickedRemoveRecommendationItem(groupRecommendation)"
+            ></i>
+          </div>
+          <div
+            class="collapse recommend-members"
+            id="{{ 'recommend-group-members-' + groupRecommendation.group.id }}"
+          >
+            <div class="member-list">
+              <ng-container
+                *ngIf="
+                  groupRecommendation.pagingMemberAssignedItems as pagingMemberAssignedItem
+                "
+              >
+                <div
+                  *ngFor="
+                    let membersRecommendedItem of pagingMemberAssignedItem.items
+                  "
+                  class="recommend-item"
+                >
+                  <div
+                    *ngIf="membersRecommendedItem.learner as learnerInfo"
+                    class="recommend-learner-info"
+                  >
+                    <div
+                      class="recommend-learner-info__avatar"
+                      [style.background-image]="
+                        'url(' + getAvatar(learnerInfo.email) + ')'
+                      "
+                    ></div>
+                    <div class="recommend-learner-info__text">
+                      <div class="recommended-learner-name">
+                        {{ learnerInfo.name }}
+                      </div>
+                      <div class="recommended-learner-email">
+                        {{ learnerInfo.email }}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- TODO: Disable remove recommendation for now -->
+                  <!-- <i
+                    *ngIf="allowManagePDO"
+                    class="icon icon-close recommend-item__icon-close"
+                    (click)="onClickedRemoveRecommendationItem(membersRecommendedItem)"
+                  ></i> -->
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            groupRecommendationItems && groupRecommendationItems.length === 0
+          "
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoRecommendedGroups' | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="recommended-department-container">
+      <div class="cx-panel__label">RECOMMENDED ORGANISATION UNIT</div>
+      <div class="recommend-list">
+        <div
+          class="recommendation-container"
+          *ngFor="
+            let departmentRecommendation of departmentRecommendationItems;
+            let i = index
+          "
+        >
+          <ng-container *ngIf="departmentRecommendation">
+            <div class="recommend-item recommend-department-item">
+              <div
+                class="recommend-group-info"
+                data-toggle="collapse"
+                aria-expanded="false"
+                [attr.data-target]="
+                  '#recommend-group-members-' +
+                  departmentRecommendation.department.id
+                "
+                [attr.aria-controls]="
+                  'recommend-group-members-' +
+                  departmentRecommendation.department.id
+                "
+                (click)="
+                  onClickDepartmentRecommendItem(departmentRecommendation)
+                "
+              >
+                <div class="recommend-group-info__avatar">
+                  <div
+                    *ngFor="let item of [1, 1, 1, 1]"
+                    class="recommend-group-avatar"
+                    [style.background-image]="'url(' + defaultAvatar + ')'"
+                  ></div>
+                </div>
+                {{ departmentRecommendation.department.name }} ({{
+                  departmentRecommendation.department.totalLearner
+                }})
+              </div>
+              <div
+                *ngIf="isAssignedByCurrentKLP(departmentRecommendation)"
+                class="recommend-item__by-current-klp"
+              >
+                BY CURRENT KLP
+              </div>
+              <i
+                *ngIf="allowManagePDO"
+                class="icon icon-close recommend-item__icon-close"
+                (click)="
+                  onClickedRemoveRecommendationItem(departmentRecommendation)
+                "
+              ></i>
+            </div>
+            <div
+              class="collapse recommend-members"
+              id="{{
+                'recommend-group-members-' +
+                  departmentRecommendation.department.id
+              }}"
+            >
+              <div class="member-list">
+                <ng-container
+                  *ngIf="
+                    departmentRecommendation.pagingMemberAssignedItems as pagingMemberAssignedItem
+                  "
+                >
+                  <div
+                    *ngFor="
+                      let membersRecommendedItem of pagingMemberAssignedItem.items
+                    "
+                    class="recommend-item"
+                  >
+                    <div
+                      *ngIf="membersRecommendedItem.learner as learnerInfo"
+                      class="recommend-learner-info"
+                    >
+                      <div
+                        class="recommend-learner-info__avatar"
+                        [style.background-image]="
+                          'url(' + getAvatar(learnerInfo.email) + ')'
+                        "
+                      ></div>
+                      <div class="recommend-learner-info__text">
+                        <div class="recommended-learner-name">
+                          {{ learnerInfo.name }}
+                        </div>
+                        <div class="recommended-learner-email">
+                          {{ learnerInfo.email }}
+                        </div>
+                      </div>
+                    </div>
+                    <!-- TODO: Disable remove recommendation for now -->
+                    <!-- <i
+                      *ngIf="allowManagePDO"
+                      class="icon icon-close recommend-item__icon-close"
+                      (click)="onClickedRemoveRecommendationItem(membersRecommendedItem)"
+                    ></i> -->
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          departmentNominationItems && departmentNominationItems.length === 0
+        "
+        class="cx-panel__label-nodata"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.NoRecommendedDepartment'
+            | translate
+        }}
+      </div>
+    </div>
+  </div>
+</div>

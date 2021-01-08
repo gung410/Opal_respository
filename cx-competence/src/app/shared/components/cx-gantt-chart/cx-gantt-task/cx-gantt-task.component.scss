@@ -1,0 +1,52 @@
+@import 'assets/styles/variables.scss';
+
+$white-color: #fff;
+
+:host {
+  display: block;
+  overflow: hidden;
+}
+
+.cx-gantt-task {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 8px 0;
+  padding-left: 24px;
+  color: $white-color;
+  line-height: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.2s;
+  &__indicator {
+    width: 17px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  &__title {
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+    text-transform: capitalize;
+  }
+  &__spacer {
+    width: 100%;
+  }
+
+  .cx-gantt-task-content {
+    font-size: 16px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+    &__icon {
+      display: flex;
+      margin-right: 8px;
+    }
+  }
+  &:hover {
+    filter: brightness(105%);
+  }
+}

@@ -1,0 +1,31 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  [cancelButtonText]="'Common.Action.Cancel' | translate"
+  [doneButtonText]="'Common.Action.Export' | translate"
+  (cancel)="onCancel()"
+>
+  <modal-header>
+    <h3>
+      {{
+        (selectedItems && selectedItems.length
+          ? 'Staff.Export.Export_Selected_Title'
+          : 'Staff.Export.Export_All_Title'
+        ) | translate
+      }}
+    </h3>
+  </modal-header>
+  <content>
+    <div class="staff-export">
+      <cx-surveyjs
+        #appliedFilterSurveyJs
+        [json]="exportFormJSON"
+        [cancelName]="'Common.Action.Cancel' | translate"
+        [variables]="surveyVariables"
+        (cancel)="onCancel()"
+        [submitName]="'Common.Action.Export' | translate"
+        (submitting)="onExportClick($event)"
+      >
+      </cx-surveyjs>
+    </div>
+  </content>
+</cx-dialog-template>

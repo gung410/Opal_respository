@@ -1,0 +1,2 @@
+Information: Course: {{CourseName}} - Class: {{ClassName}}
+Your registration had been expired because Class Run have started {{ClassStartDate}}

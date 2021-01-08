@@ -1,0 +1,18 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  [fixedHeight]="true"
+  (cancel)="onCancel()"
+>
+  <modal-header> </modal-header>
+  <content>
+    <learning-needs-analysis-content
+      [user]="user"
+      [learningNeeds]="learningNeeds"
+      [needsResults]="needsResults"
+      [reviewMode]="true"
+      [mode]="mode"
+      (needToReloadLNA)="onNeedToReloadLNA()"
+    >
+    </learning-needs-analysis-content>
+  </content>
+</cx-dialog-template>

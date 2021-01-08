@@ -1,0 +1,4 @@
+You has been marked as "Absent" for {{SessionTitle}} of {{ClassrunTitle}}. Please login to OPAL2.0 to provide the reason for absence.
+
+
+

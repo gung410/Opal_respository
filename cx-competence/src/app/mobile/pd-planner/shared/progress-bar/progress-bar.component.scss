@@ -1,0 +1,23 @@
+@import 'assets/mobile/styles/mixins.scss';
+$progress-bar-color: #3c6df2;
+
+.progress {
+  position: relative;
+  border-radius: 10px;
+  margin: 10px 0px;
+  height: 13px;
+  width: 100%;
+  background-color: #fff;
+
+  .progress-bar {
+    border-radius: 10px;
+    background-color: $progress-bar-color;
+
+    .percentage {
+      position: absolute;
+      left: 50%;
+      color: #313552;
+      @include font(500, 10px, 12px);
+    }
+  }
+}

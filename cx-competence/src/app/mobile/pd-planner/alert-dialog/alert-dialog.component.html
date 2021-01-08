@@ -1,0 +1,20 @@
+<div class="pd-planner-alert-dialog mpj-mobile-modal">
+  <div class="modal fade dialog" id="alert-dialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="submit text-center">
+            <i [ngClass]="icon" class="submit__icon"></i>
+            <p class="submit__thank">
+              {{
+                'Mobile.PDPlan.LearningNeedsAnalysis.Dialog.ThankMessage'
+                  | translate
+              }}
+            </p>
+            <p class="submit__text">{{ message }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

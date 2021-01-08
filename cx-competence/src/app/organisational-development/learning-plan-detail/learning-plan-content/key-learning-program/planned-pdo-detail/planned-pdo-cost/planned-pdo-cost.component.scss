@@ -1,0 +1,56 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+.pdo-trainning-cost {
+  .pdo-cost-title {
+    display: flex;
+    &__planned {
+      width: 100%;
+    }
+
+    &__actual {
+      width: 100%;
+      padding-left: 16px;
+    }
+  }
+  .pdo-cost-form {
+    .tranning-cost-label {
+      line-height: 25px;
+      > i {
+        margin-left: 5px;
+        font-size: 18px;
+        transform: translateY(2px);
+        display: inline-block;
+        cursor: pointer;
+      }
+    }
+
+    cx-surveyjs {
+      display: block;
+      margin: -12px;
+      margin-top: 0;
+      ::ng-deep {
+        input:not([type='button']),
+        .form-control {
+          text-align: left !important;
+          max-width: 500px;
+        }
+        h5 {
+          font-weight: 500;
+        }
+        div.form-control {
+          background: none;
+          font-weight: bold;
+          padding: 0;
+          padding-left: 2px;
+        }
+      }
+    }
+  }
+
+  .planned-pdo-cost .cx-panel__label {
+    margin-bottom: 29px;
+  }
+}

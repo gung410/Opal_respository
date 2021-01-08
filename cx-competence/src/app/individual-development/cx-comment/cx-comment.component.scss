@@ -1,0 +1,296 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+
+cx-comment:host {
+  display: block;
+}
+
+.cx-comment {
+  &__label {
+    margin-bottom: 10px;
+
+    .header-text {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    .header-badges {
+      position: absolute;
+      background: #ff6b81;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: #fff;
+      margin-left: 8px;
+      margin-top: 5px;
+
+      span {
+        font-size: 14px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &.more-than-100 {
+        width: 22px;
+        height: 22px;
+
+        span {
+          left: 56%;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+
+  &__list {
+    .comment-item {
+      margin: 25px 0;
+      text-align: left;
+      display: flex;
+
+      &__avatar {
+        img {
+          width: 40px;
+          height: 40px;
+          margin-top: 4px;
+          border-radius: 50%;
+          object-fit: cover;
+          @include cx-shadow(0 0 2px rgba(0, 0, 0, 0.69));
+        }
+      }
+
+      &__content {
+        padding-left: 15px;
+
+        .comment-owner {
+          font-size: 14px;
+          margin: 0 0 2px;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+
+        .basic-info-mobile {
+          display: none;
+        }
+
+        .comment-text {
+          margin: 0;
+          text-align: justify;
+          white-space: pre-line;
+          word-break: break-word;
+        }
+      }
+
+      .comment-header-content,
+      .comment-header-content-mobile {
+        font-weight: 400;
+        color: #9eaebe;
+        font-size: 14px;
+        > span::before {
+          color: #9eaebe;
+          content: '·';
+          display: inline-block;
+          text-align: center;
+          vertical-align: middle;
+          width: 18px;
+        }
+
+        .owner-action {
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+            &::before {
+              text-decoration: none;
+            }
+          }
+        }
+
+        .comment-tag {
+          > span {
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 5px;
+          }
+
+          &.tag-approved span {
+            background: #6acc8d;
+            color: #fff;
+          }
+
+          &.tag-rejected span {
+            background: #d86875;
+            color: #fff;
+          }
+        }
+      }
+      .comment-header-content-mobile {
+        display: none;
+      }
+    }
+  }
+
+  &__nodata {
+    color: #a1a8b6;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  &__view-more {
+    margin-bottom: 15px;
+
+    button {
+      border: none;
+      color: #5d6888;
+      border-radius: 5px;
+      min-width: 100px;
+      padding: 0;
+      outline: none;
+      background: rgba(255, 255, 255, 0);
+      i {
+        transform: rotate(180deg);
+        display: inline-block;
+        margin-right: 3px;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .reply-box {
+    margin-top: 25px;
+
+    &__input {
+      width: 100%;
+
+      textarea {
+        @include box-sizing(border-box);
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        background-color: #fff;
+        padding: 0px 15px;
+        resize: none;
+        outline: none;
+        height: 45px;
+        transition: 0.3s;
+        line-height: 42px;
+        &::placeholder {
+          font-size: 16px;
+          color: #a1a8b6;
+        }
+        &:focus {
+          border: 1px solid #8db2ec;
+          box-shadow: 0 0 0 1.5px rgba(0, 123, 255, 0.25);
+        }
+        &.input-actived {
+          padding: 12px 15px;
+          line-height: 150%;
+          height: 120px;
+          padding: 15px;
+        }
+        &.invalid-length {
+          border: 1px solid #ff7575 !important;
+          box-shadow: 0 0 0 1.5px rgba(255, 117, 117, 0.25) !important;
+        }
+      }
+    }
+
+    &__invalid-length-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #ff7575;
+    }
+
+    &__counter {
+      font-size: 12px;
+      &.invalid-length {
+        font-weight: 500;
+        color: #ff7575;
+      }
+    }
+
+    &__actions {
+      margin-top: 10px;
+      text-align: right;
+
+      button {
+        border-radius: 5px;
+        margin-left: 16px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .cx-comment {
+    padding: 0;
+    background: #fff;
+    border-radius: 5px;
+    &__label {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+    &__list {
+      .comment-item {
+        &__content {
+          padding-left: 12px;
+          overflow: hidden;
+        }
+        &__avatar img {
+          width: 40px;
+          height: 40px;
+          margin-top: 5px;
+        }
+        .comment-owner {
+          font-size: 14px;
+          margin-bottom: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .basic-info-mobile {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .comment-header-content {
+          display: none;
+        }
+        .comment-header-content-mobile {
+          display: block;
+          font-size: 12px;
+          margin-bottom: 5px;
+          > span:first-child::before {
+            display: none;
+          }
+          .comment-tag {
+            display: block;
+            &::before {
+              display: none;
+            }
+            > span {
+              padding: 3px 5px;
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+    .reply-box {
+      textarea {
+        height: 44px;
+        padding: 10px 20px;
+        background: #fff;
+        border: 1px solid #d8dce6;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+}

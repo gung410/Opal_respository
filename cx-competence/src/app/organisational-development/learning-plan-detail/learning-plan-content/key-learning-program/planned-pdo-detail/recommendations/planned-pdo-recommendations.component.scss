@@ -1,0 +1,212 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.planned-pdo-recommendations {
+  &__recommend {
+    .recommendation-mode-selector {
+      &__selector {
+        margin-top: 15px;
+        display: block;
+      }
+    }
+    .select-learners,
+    .select-user-group {
+      margin-top: 20px;
+    }
+    cx-select {
+      margin-top: 10px;
+      display: block;
+      max-width: 500px;
+      width: 100%;
+    }
+    .not-available-label {
+      color: #a1a8b6;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 30px;
+      text-align: center;
+    }
+  }
+  &__recommended {
+    margin-top: 20px;
+    .recommended-learners-container {
+      min-height: 110px;
+      position: relative;
+    }
+
+    .recommended-groups-container,
+    .recommended-department-container {
+      margin-top: 30px;
+      min-height: 110px;
+      position: relative;
+      .recommend-item {
+        .recommend-learner-info,
+        .recommend-group-info,
+        .recommend-department-info {
+          cursor: pointer;
+        }
+        margin-bottom: 0;
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+      .recommend-members {
+        border-radius: 0 0 5px 5px;
+        border: 1px solid #d8dce6;
+        border-top: none;
+        margin-top: 0px;
+        margin: 0 10px;
+        .member-list {
+          min-height: 61px;
+          max-height: 500px;
+          overflow: overlay;
+          padding: 20px;
+          .recommend-item {
+            .recommend-learner-info,
+            .recommend-group-info,
+            .recommend-department-info {
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .recommend-list {
+    margin-top: 15px;
+  }
+
+  .recommend-item {
+    display: flex;
+    padding: 15px 35px 15px 20px;
+    border: 1px solid #d8dce6;
+    border-radius: 5px;
+    align-items: center;
+    position: relative;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .recommend-learner-info {
+      display: flex;
+      &__avatar {
+        width: 40px;
+        height: 40px;
+        background-size: cover;
+        background-position: top center;
+        border-radius: 50%;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+      &__group-avatar {
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        width: 50px;
+        .recommend-group-avatar {
+          width: 40px;
+          height: 40px;
+          background-size: cover;
+          background-position: top center;
+          border-radius: 50%;
+          flex-shrink: 0;
+          border: 1px solid #fff;
+          &:nth-child(2) {
+            transform: translateX(-80%);
+          }
+          &:nth-child(3) {
+            transform: translateX(-160%);
+          }
+        }
+      }
+      &__text {
+        width: 100%;
+        .recommended-learner-email {
+          font-size: 12px;
+          color: #8799ba;
+        }
+      }
+    }
+
+    .recommend-group-info {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      &__avatar {
+        margin-right: 18px;
+        display: flex;
+        align-items: center;
+        width: 50px;
+        .recommend-group-avatar {
+          width: 40px;
+          height: 40px;
+          background-size: cover;
+          background-position: top center;
+          border-radius: 50%;
+          flex-shrink: 0;
+          border: 1px solid #fff;
+          &:nth-child(2) {
+            transform: translateX(-80%);
+          }
+          &:nth-child(3) {
+            transform: translateX(-160%);
+          }
+          &:nth-child(4) {
+            transform: translateX(-240%);
+          }
+        }
+      }
+      &__name {
+        text-transform: capitalize;
+      }
+    }
+
+    .recommend-classrun-info {
+      margin-left: 100px;
+    }
+
+    &__by-current-klp {
+      position: absolute;
+      right: 40px;
+      top: -1px;
+      border: 1px solid #d8dce6;
+      border-radius: 0 0 4px 4px;
+      background: #5f92a9;
+      color: #fff;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    &__icon-close {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #b5b5b5;
+      font-size: 10px;
+    }
+  }
+
+  .recommend-department-item {
+    margin-top: 15px;
+    padding: 15px 35px 15px 20px;
+  }
+
+  .recommendation-container {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .show-more {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+}

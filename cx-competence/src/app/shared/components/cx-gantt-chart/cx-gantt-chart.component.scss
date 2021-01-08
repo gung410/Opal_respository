@@ -1,0 +1,82 @@
+@import 'assets/styles/variables.scss';
+
+$gantt-chart-scrollbar-background: #f3f3f3;
+$gantt-chart-scrollbar-color: #d8dce6;
+
+.cx-gantt-chart-container {
+  .cx-gantt-chart-header-container {
+    padding-left: 6px;
+  }
+  .cx-gantt-chart-content {
+    display: flex;
+    position: relative;
+    .cx-gantt-chart {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+      .cx-gantt-chart-viewer {
+        height: 100%;
+        position: relative;
+        display: inline-block;
+        .cx-gantt-chart-tasks {
+          top: 80px;
+          position: absolute;
+          padding-left: 20px;
+          width: calc(100% - 40px);
+          min-height: 300px;
+          cx-gantt-task {
+            margin-bottom: 8px;
+          }
+        }
+      }
+      &::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: $gantt-chart-scrollbar-background;
+      }
+
+      &::-webkit-scrollbar {
+        height: 16px;
+        background-color: $gantt-chart-scrollbar-background;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: $gantt-chart-scrollbar-color;
+      }
+    }
+    .cx-gantt-chart-controller {
+      position: absolute;
+      pointer-events: none;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      &__actions {
+        display: flex;
+        justify-content: space-between;
+        user-select: none;
+        > button {
+          width: 50px;
+          height: 50px;
+          background: #fff;
+          border: none;
+          border-radius: 50%;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          flex-shrink: 0;
+          outline: none;
+          font-size: 12px;
+          cursor: pointer;
+          pointer-events: initial;
+          > i {
+            color: $cx-color-main;
+          }
+          &:disabled {
+            > i {
+              opacity: 0.4;
+            }
+          }
+        }
+      }
+    }
+  }
+}

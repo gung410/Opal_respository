@@ -1,0 +1,95 @@
+@import 'assets/styles/variables.scss';
+
+opportunities-catalog-dialog {
+  display: block;
+
+  .catalog-title {
+    font-size: 36px;
+  }
+
+  .catalog-toolbar {
+    margin-top: 30px;
+  }
+
+  .catalog-toolbar-mobile {
+    display: none;
+  }
+
+  modal-header {
+    width: 100%;
+  }
+
+  .filter-search-bar-mobile {
+    display: none;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    .btn-filter {
+      border-radius: 5px;
+      color: inherit;
+      background: #fff;
+    }
+
+    // .filter-action {
+    //   padding: 0px 10px;
+    //   @include layout(row, space-between);
+    //   width: 30%;
+
+    //   .icon {
+    //     @include layout(column, center);
+    //   }
+    // }
+
+    // .search-box {
+    //   width: 65%;
+    //   padding: 10px;
+    //   @include layout(row, space-between);
+
+    //   .icon-search {
+    //     padding-right: 10px;
+    //   }
+
+    //   .search-input {
+    //     border: 0px;
+    //     width: 100%;
+    //     outline: none;
+    //   }
+    // }
+  }
+
+  @media only screen and (max-width: $screen-xs-max) {
+    .cx-dialog-template {
+      .modal-header {
+        .catalog-toolbar {
+          display: none;
+        }
+      }
+      .modal-body {
+        padding: 10px 0;
+        margin: 0;
+      }
+    }
+    .catalog-toolbar-mobile {
+      display: block;
+      margin-bottom: 20px;
+    }
+    catalog-toolbar {
+      .toolbar {
+        &__filtering {
+          .search-box {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  opportunities-catalog-dialog {
+    .cx-dialog-template {
+      .modal-body {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}

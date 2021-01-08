@@ -1,0 +1,97 @@
+---
+format_version: 3
+environments:
+  systemtest: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-build
+      - cx-datahub-communication-sender-processor-systemtest
+  uat: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-uat
+  pre-production: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-pre-production      
+  production: 
+    pipelines: 
+      - cx-datahub-communication-sender-processor-production
+pipelines:
+  cx-datahub-communication-sender-processor-build: 
+    group: cx-datahub-communication-sender-processor
+    label_template: "release-1.2.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Processor.Sender/
+      SONAR_PROJECTKEY: cx-datahub-communication-sender-processor-release
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/opal-0.2
+        git: "https://bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - Communication.Processor.Sender/**/*.*
+  cx-datahub-communication-sender-processor-systemtest:
+    group:  cx-datahub-communication-sender-processor
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-build
+        stage: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO:  cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    template: ansible-deploy-fetch-upstream
+  cx-datahub-communication-sender-processor-uat:
+    group:  cx-datahub-communication-sender-processor
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-systemtest
+        stage: deploy-stage
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO:  cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-systemtest
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream
+  cx-datahub-communication-sender-processor-pre-production:
+    group: cx-datahub-communication-sender-processor
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-uat
+        stage: deploy-stage
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO:  cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream    
+  cx-datahub-communication-sender-processor-production:
+    group: cx-datahub-communication-sender-processor
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-sender-processor-uat
+        stage: deploy-stage
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO:  cx-processor-communication-sender
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-sender-processor-uat
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream

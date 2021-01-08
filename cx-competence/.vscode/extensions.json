@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "mrmlnc.vscode-attrs-sorter",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "CoenraadS.bracket-pair-colorizer",
+    "DavidAnson.vscode-markdownlint",
+    "EditorConfig.editorconfig",
+    "eg2.tslint",
+    "eg2.vscode-npm-script",
+    "hookyqr.beautify",
+    "esbenp.prettier-vscode",
+    "natewallace.angular2-inline",
+    "rbbit.typescript-hero",
+    "ryuta46.multi-command",
+    "Zignd.html-css-class-completion",
+    "vscode-icons-team.vscode-icons"
+  ]
+}

@@ -1,0 +1,6 @@
+aspnetcore_environment: development
+mongo_db_name: development-datahub-opal-db
+mongo_db_auth: development-datahub-opal:opal-datahub-development
+mongo_db_host: mongodb-01.opal/development-datahub-opal-db
+mongo_db_ssl_enabled: true
+rabbitmq_ssl_enabled: true

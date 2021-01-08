@@ -1,0 +1,35 @@
+<div class="search-result" [class.cx-hide]="!showResults">
+  <ag-grid-angular
+    #grid
+    class="ag-theme-material styled-grid staff-table"
+    domLayout="autoHeight"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [rowClassRules]="rowClassRules"
+    [suppressRowClickSelection]="true"
+    [rowSelection]="rowSelection"
+    [defaultColDef]="defaultColDef"
+    [context]="context"
+    [rowHeight]="75"
+    [headerHeight]="64"
+    [frameworkComponents]="frameworkComponents"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+    (gridReady)="onGridReady($event)"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    (sortChanged)="onSortChanged($event)"
+    (selectionChanged)="onSelectionChanged($event)"
+  >
+  </ag-grid-angular>
+
+  <div class="table__paging-area">
+    <cx-paging
+      *ngIf="paginatedList"
+      [currentPageSize]="defaultPageSize"
+      [totalRecords]="paginatedList.totalItems"
+      [recordsPerPage]="paginatedList.pageSize"
+      [currentPage]="paginatedList.pageIndex"
+      (currentPageChange)="onCurrentPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    ></cx-paging>
+  </div>
+</div>

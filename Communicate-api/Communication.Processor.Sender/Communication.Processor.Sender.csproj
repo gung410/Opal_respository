@@ -1,0 +1,1683 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Communication.Processor.Sender</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="EmailTemplate\Opal\CAM\CAChangeClassLearnerManually.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CAOApprovedClassrunCancelation.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CAOApprovedClassrunReschedulation.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CAWithdrawLearnerManually.html" />
+    <None Remove="EmailTemplate\Opal\CAM\ClassrunForNonMicroPublishedNotifyCollaborator.html" />
+    <None Remove="EmailTemplate\Opal\CAM\ClassRunWithdrawalConfirmedByCA.html" />
+    <None Remove="EmailTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCA.html" />
+    <None Remove="EmailTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCAO.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseAdminRejectLearnerRegistration.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseAdminSendOfferWaitListToRegistration.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseArchived.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseInPlanningCyclePending.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseInPlanningCycleRejected.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseInPlanningCycleVerified.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseMLUApprovedNotifyCollaborator.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CoursePlanningCycleStarted.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CoursePublishedNotifyLearner.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseRequestApprovalApproved.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseRequestApprovalRejected.html" />
+    <None Remove="EmailTemplate\Opal\CAM\CourseUpdatedRequestApproval.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerAcceptPlaceOffer.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerChangeClassPending.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerDeclinePlaceOffer.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerInWaitListClassRun.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerPendingApprovalClassRun.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationClassRun.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunApproved.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunConfirm.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunConfirmed.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunRejected.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerRegistrationWaitlistConfirmed.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerSubmittedChangeClassPending.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerSubmitWithdrawClassrunPending.html" />
+    <None Remove="EmailTemplate\Opal\CAM\LearnerWithdrawClassrunPending.html" />
+    <None Remove="EmailTemplate\Opal\CAM\NewCourseRequestApproval.html" />
+    <None Remove="EmailTemplate\Opal\CAM\RegistrationConfirmationReminder.html" />
+    <None Remove="EmailTemplate\Opal\CAM\SessionCancelledByCA.html" />
+    <None Remove="EmailTemplate\Opal\BrokenLink\ContentBrokenLinkLearnerReport.html" />
+    <None Remove="EmailTemplate\Opal\BrokenLink\ContentBrokenLinkSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentApprovedByAO.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentBrokenLinkLearnerReport.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentBrokenLinkSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentGoingExpiredInMonthsSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentExpiredSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentGoingExpiredSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\ContentRejectedByAO.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormApprovedByAO.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormParticipantAssign.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormParticipantRemind.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormParticipantRemindBeforeDueDate.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormParticipantRemove.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormRejectedByAO.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\FormRequestApproval.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\NewContentRequestApproval.html" />
+    <None Remove="EmailTemplate\Opal\Calendar\ContentNotifyNewEventInvitation.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\NotifyTransferOwnershipTemplate.html" />
+    <None Remove="EmailTemplate\Opal\CCPM\SurveyNotifyEndDate.html" />
+    <None Remove="EmailTemplate\Opal\COMMON\LearnerAchievedBadges.html" />
+    <None Remove="EmailTemplate\Opal\CSL\Approval.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ApprovalAccepted.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ApprovalDeclined.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ApprovalRequest.html" />
+    <None Remove="EmailTemplate\Opal\CSL\AutoArchive.html" />
+    <None Remove="EmailTemplate\Opal\CSL\AutoClose.html" />
+    <None Remove="EmailTemplate\Opal\CSL\Comment.html" />
+    <None Remove="EmailTemplate\Opal\CSL\CommentInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\CommentMyPost.html" />
+    <None Remove="EmailTemplate\Opal\CSL\CommentMyPostInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ContentCreated.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ContentCreatedInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ContentPublished.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ExcludeGroupNotification.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\Followed.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowedCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowedUser.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowRequest.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowRequestAccepted.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowRequestDeclined.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FollowUser.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FriendshipApproved.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FriendshipDeclined.html" />
+    <None Remove="EmailTemplate\Opal\CSL\FriendshipRequest.html" />
+    <None Remove="EmailTemplate\Opal\CSL\IncludeGroupNotification.html" />
+    <None Remove="EmailTemplate\Opal\CSL\Invite.html" />
+    <None Remove="EmailTemplate\Opal\CSL\InviteAccepted.html" />
+    <None Remove="EmailTemplate\Opal\CSL\InviteDeclined.html" />
+    <None Remove="EmailTemplate\Opal\CSL\InviteRevoked.html" />
+    <None Remove="EmailTemplate\Opal\CSL\LikeCommentInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\LikeCommentInUserWall.html" />
+    <None Remove="EmailTemplate\Opal\CSL\LikePostInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\LikePostInUserWall.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ManualArchive.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ManualClose.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ManualOwnershipTransfer.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MembershipRolesChanged.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MentionComment.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MentionCommentInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\Mentioned.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MentionedComment.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MentionPost.html" />
+    <None Remove="EmailTemplate\Opal\CSL\MentionPostInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NewComment.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NewLike.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NewMessage.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NewMessageEntry.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NotifyArchive.html" />
+    <None Remove="EmailTemplate\Opal\CSL\NotifyInactive.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ReplyComment.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ReplyCommentInCommunity.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ScheduleContentDeletedByOther.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ScheduleContentPublished.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ScheduleContentPublishedByOther.html" />
+    <None Remove="EmailTemplate\Opal\CSL\ScheduleContentRescheduledByOther.html" />
+    <None Remove="EmailTemplate\Opal\CSL\UserAdded.html" />
+    <None Remove="EmailTemplate\Learn\Logo\logo.png" />
+    <None Remove="EmailTemplate\Opal\CSL\UserRemoved.html" />
+    <None Remove="EmailTemplate\Opal\Digest\DigestEmail.html" />
+    <None Remove="EmailTemplate\Opal\EmailReceipt\FailureEmailReport.html" />
+    <None Remove="EmailTemplate\Opal\LEARNER\CourseArchived.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ApprovingOfficerApprovedCourse.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AssignmentAssignedToLearner.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AssignmentDueDate.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AssignmentExtendedDueDate.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AssignmentFeedback.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AssignmentFeedbackToCF.html" />
+    <None Remove="EmailTemplate\Opal\LMM\AttendanceStatusUpdate.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ChangeLearningMethodToOfflineNotifyInvolvedUser.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ChangeLearningMethodToOnlineNotifyInvolvedUser.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ContentBrokenLinkLearnerReport.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ContentBrokenLinkSystemAlert.html" />
+    <None Remove="EmailTemplate\Opal\LMM\ClassRunNearEndDateNotifyLearners.html" />
+    <None Remove="EmailTemplate\Opal\LMM\CourseContentPendingApproval.html" />
+    <None Remove="EmailTemplate\Opal\LMM\LearnerSubmitAssignment.html" />
+    <None Remove="EmailTemplate\Opal\LMM\NotifyLearnerRegistrationUnsuccessful.html" />
+    <None Remove="EmailTemplate\Opal\LMM\TakeAttendanceRemind.html" />
+    <None Remove="EmailTemplate\Opal\Logo\logo.png" />
+    <None Remove="EmailTemplate\Opal\PDPM\ApprovedLearningDirection.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\ApprovedLearningNeed.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\ApprovedLearningPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\ApprovedPDPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\DownloadExportFile.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RejectedLearningDirection.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RejectedLearningNeed.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RejectedLearningPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RejectedPDPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RemindReviewLearningDirection.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RemindReviewLearningPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RemindStartLearningPlanCycle.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\RemindSubmitLearningPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\SubmittedLearningDirection.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\SubmittedLearningNeed.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\SubmittedLearningPlan.html" />
+    <None Remove="EmailTemplate\Opal\PDPM\SubmittedPDPlan.html" />
+    <None Remove="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantAssign.html" />
+    <None Remove="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemind.html" />
+    <None Remove="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemove.html" />
+    <None Remove="EmailTemplate\Opal\StandaloneSurvey\NotifyTransferOwnershipTemplate.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\AccountDeleted.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\AccountDeletedEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\AccountEmailChange.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\AccountStatusChange.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\AccountSuspended.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ActivateUnlockEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ActivateUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ApprovalProcessEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ApprovalProcessEmail2To3.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ApprovedUserForActiveEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ChangeStatusUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\CreateAccountManually.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\DownloadExportFile.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\DownloadExportUser.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\DownloadExportUserEventLog.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\DownloadFile.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\EmailChangedConfirmation.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\FileDownload.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\MannuallyCreatedUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\RejectUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ResetPassword.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\ResetPasswordEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmailV2.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmailV2.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SignUpEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SignUpEmailPreProd.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SuspendUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SystemErrorReport.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\SystemNotification.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\UnlockUserEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\WelcomeEmail.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\WelcomeEmail_Learner.html" />
+    <None Remove="EmailTemplate\Opal\SystemAdmin\WelcomeEmail_NonLearner.html" />
+    <None Remove="NotificationTemplate\Opal\CAM\CAChangeClassLearnerManually.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CAOApprovedClassrunCancelation.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CAOApprovedClassrunReschedulation.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CAWithdrawLearnerManually.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\ClassrunForNonMicroPublishedNotifyCollaborator.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\ClassRunWithdrawalConfirmedByCA.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCA.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCAO.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseAdminRejectLearnerRegistration.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseAdminSendOfferWaitListToRegistration.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseArchived.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseInPlanningCyclePending.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseInPlanningCycleRejected.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseInPlanningCycleVerified.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseMLUApprovedNotifyCollaborator.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CoursePlanningCycleStarted.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CoursePublishedNotifyLearner.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseRequestApprovalApproved.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseRequestApprovalRejected.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\CourseUpdatedRequestApproval.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerAcceptPlaceOffer.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerChangeClassPending.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerDeclinePlaceOffer.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerInWaitListClassRun.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerPendingApprovalClassRun.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRun.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunApproved.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunConfirm.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunConfirmed.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunRejected.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerRegistrationWaitlistConfirmed.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerSubmittedChangeClassPending.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerSubmitWithdrawClassrunPending.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\LearnerWithdrawClassrunPending.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\NewCourseRequestApproval.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\RegistrationConfirmationReminder.txt" />
+    <None Remove="NotificationTemplate\Opal\CAM\SessionCancelledByCA.txt" />
+    <None Remove="NotificationTemplate\Opal\BrokenLink\ContentBrokenLinkLearnerReport.txt" />
+    <None Remove="NotificationTemplate\Opal\BrokenLink\ContentBrokenLinkSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentApprovedByAO.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentBrokenLinkLearnerReport.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentBrokenLinkSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentExpiredSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentGoingExpiredInMonthsSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentGoingExpiredSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\ContentRejectedByAO.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormApprovedByAO.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormParticipantAssign.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormParticipantRemind.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormParticipantRemindBeforeDueDate.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormParticipantRemove.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormRejectedByAO.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\FormRequestApproval.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\NewContentRequestApproval.txt" />
+    <None Remove="NotificationTemplate\Opal\Calendar\ContentNotifyNewEventInvitation.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\NotifyTransferOwnershipTemplate.txt" />
+    <None Remove="NotificationTemplate\Opal\CCPM\SurveyNotifyEndDate.txt" />
+    <None Remove="NotificationTemplate\Opal\COMMON\LearnerAchievedBadges.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\Approval.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ApprovalAccepted.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ApprovalDeclined.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ApprovalRequest.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\AutoArchive.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\AutoClose.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\Comment.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\CommentInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\CommentMyPost.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\CommentMyPostInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ContentCreated.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ContentCreatedInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ContentPublished.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ExcludeGroupNotification.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\Followed.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowedCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowedUser.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowRequest.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowRequestAccepted.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowRequestDeclined.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FollowUser.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FriendshipApproved.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FriendshipDeclined.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\FriendshipRequest.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\IncludeGroupNotification.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\Invite.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\InviteAccepted.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\InviteDeclined.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\InviteRevoked.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\LikeCommentInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\LikeCommentInUserWall.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\LikePostInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\LikePostInUserWall.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ManualArchive.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ManualClose.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ManualOwnershipTransfer.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MembershipRolesChanged.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MentionComment.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MentionCommentInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\Mentioned.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MentionedComment.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MentionPost.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\MentionPostInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NewComment.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NewLike.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NewMessage.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NewMessageEntry.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NotifyArchive.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\NotifyInactive.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ReplyComment.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ReplyCommentInCommunity.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ScheduleContentDeletedByOther.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ScheduleContentPublished.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ScheduleContentPublishedByOther.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\ScheduleContentRescheduledByOther.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\UserAdded.txt" />
+    <None Remove="NotificationTemplate\Opal\CSL\UserRemoved.txt" />
+    <None Remove="NotificationTemplate\Opal\LEARNER\CourseArchived.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\ApprovingOfficerApprovedCourse.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssessmentAnswerAssignedNotifyAssignee.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssessmentAnswerCompletedNotifyLearner.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssignmentAssignedToLearner.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssignmentDueDate.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssignmentExtendedDueDate.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssignmentFeedback.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AssignmentFeedbackToCF.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\AttendanceStatusUpdate.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\ChangeLearningMethodNotifyInvolvedUser.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\ContentBrokenLinkLearnerReport.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\ContentBrokenLinkSystemAlert.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\ClassRunNearEndDateNotifyLearners.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\CourseContentPendingApproval.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\LearnerSubmitAssignment.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\NotifyLearnerRegistrationUnsuccessful.txt" />
+    <None Remove="NotificationTemplate\Opal\LMM\TakeAttendanceRemind.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\ApprovedLearningDirection.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\ApprovedLearningNeed.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\ApprovedLearningPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\ApprovedPDPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\DownloadExportFile.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\DownloadMassNominationReportFile.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RejectedLearningDirection.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RejectedLearningNeed.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RejectedLearningPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RejectedPDPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RemindReviewLearningDirection.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RemindReviewLearningPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RemindStartLearningPlanCycle.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\RemindSubmitLearningPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\SubmittedLearningDirection.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\SubmittedLearningNeed.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\SubmittedLearningPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\PDPM\SubmittedPDPlan.txt" />
+    <None Remove="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantAssign.txt" />
+    <None Remove="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemind.txt" />
+    <None Remove="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemove.txt" />
+    <None Remove="NotificationTemplate\Opal\StandaloneSurvey\NotifyTransferOwnershipTemplate.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\AccountDeleted.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\AccountDeletedEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\AccountEmailChange.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\AccountStatusChange.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\AccountSuspended.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ActivateUnlockEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ActivateUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ApprovalProcessEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ApprovalProcessEmail2To3.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ApprovedUserForActiveEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ChangeStatusUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\CreateAccountManually.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\DownloadExportFile.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\DownloadExportUser.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\DownloadExportUserEventLog.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\DownloadFile.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\EmailChangedConfirmation.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\FileDownload.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\MannuallyCreatedUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\RejectUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ResetPassword.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\ResetPasswordEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmailV2.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmailV2.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SignUpEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SignUpEmailPreProd.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SuspendUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SystemErrorReport.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\SystemNotification.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\UnlockUserEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail_Learner.txt" />
+    <None Remove="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail_NonLearner.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="EmailTemplate\Opal\CAM\CAChangeClassLearnerManually.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CAOApprovedClassrunCancelation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CAOApprovedClassrunReschedulation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CAWithdrawLearnerManually.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\ClassrunForNonMicroPublishedNotifyCollaborator.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\ClassRunWithdrawalConfirmedByCA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCAO.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseAdminRejectLearnerRegistration.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseAdminSendOfferWaitListToRegistration.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseArchived.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseInPlanningCyclePending.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseInPlanningCycleRejected.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseInPlanningCycleVerified.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CoursePlanningCycleStarted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseMLUApprovedNotifyCollaborator.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CoursePublishedNotifyLearner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseRequestApprovalApproved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseRequestApprovalRejected.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\CourseUpdatedRequestApproval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerAcceptPlaceOffer.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationWaitlistConfirmed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerSubmittedChangeClassPending.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerChangeClassPending.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerDeclinePlaceOffer.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerInWaitListClassRun.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerPendingApprovalClassRun.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationClassRun.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunApproved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunConfirm.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunConfirmed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerRegistrationClassRunRejected.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerSubmitWithdrawClassrunPending.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\LearnerWithdrawClassrunPending.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\NewCourseRequestApproval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\RegistrationConfirmationReminder.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\SessionCancelledByCA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\BrokenLink\ContentBrokenLinkLearnerReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\BrokenLink\ContentBrokenLinkSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentApprovedByAO.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentGoingExpiredInMonthsSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentRejectedByAO.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormApprovedByAO.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormParticipantAssign.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormParticipantRemind.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormParticipantRemindBeforeDueDate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormParticipantRemove.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormRejectedByAO.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\FormRequestApproval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\NewContentRequestApproval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentBrokenLinkLearnerReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentBrokenLinkSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentExpiredSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\ContentGoingExpiredSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\Calendar\ContentNotifyNewEventInvitation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\NotifyTransferOwnershipTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CCPM\SurveyNotifyEndDate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\COMMON\LearnerAchievedBadges.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\Approval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ApprovalAccepted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ApprovalDeclined.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ApprovalRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\AutoArchive.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\AutoClose.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\Comment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\CommentInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\CommentMyPost.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\CommentMyPostInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ContentCreated.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ContentCreatedInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ContentPublished.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ExcludeGroupNotification.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\Followed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowedCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowedUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowRequestAccepted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowRequestDeclined.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FollowUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FriendshipApproved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FriendshipDeclined.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\FriendshipRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\IncludeGroupNotification.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\Invite.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\InviteAccepted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\InviteDeclined.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\InviteRevoked.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\LikeCommentInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\LikeCommentInUserWall.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\LikePostInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\LikePostInUserWall.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ManualArchive.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ManualClose.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ManualOwnershipTransfer.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MembershipRolesChanged.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MentionComment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MentionCommentInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\Mentioned.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MentionedComment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MentionPost.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\MentionPostInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NewComment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NewLike.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NewMessage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NewMessageEntry.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NotifyArchive.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\NotifyInactive.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ReplyComment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ReplyCommentInCommunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ScheduleContentDeletedByOther.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ScheduleContentPublished.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ScheduleContentPublishedByOther.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\ScheduleContentRescheduledByOther.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\UserAdded.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CSL\UserRemoved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\EmailReceipt\FailureEmailReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\Digest\DigestEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LEARNER\CourseArchived.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ApprovingOfficerApprovedCourse.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AssignmentAssignedToLearner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AssignmentDueDate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AssignmentExtendedDueDate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AssignmentFeedback.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AssignmentFeedbackToCF.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\AttendanceStatusUpdate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ChangeLearningMethodToOfflineNotifyInvolvedUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ChangeLearningMethodToOnlineNotifyInvolvedUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ContentBrokenLinkLearnerReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ContentBrokenLinkSystemAlert.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\ClassRunNearEndDateNotifyLearners.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\CourseContentPendingApproval.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\LearnerSubmitAssignment.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\CAM\NotifyLearnerRegistrationUnsuccessful.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\LMM\TakeAttendanceRemind.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\ApprovedLearningDirection.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\ApprovedLearningNeed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\ApprovedLearningPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\ApprovedPDPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\DownloadExportFile.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RejectedLearningDirection.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RejectedLearningNeed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RejectedLearningPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RejectedPDPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RemindReviewLearningDirection.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RemindReviewLearningPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RemindStartLearningPlanCycle.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\RemindSubmitLearningPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\SubmittedLearningDirection.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\SubmittedLearningNeed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\SubmittedLearningPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\SubmittedPDPlan.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantAssign.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemind.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemove.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\StandaloneSurvey\NotifyTransferOwnershipTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ActivateUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ApprovalProcessEmail2To3.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ApprovedUserForActiveEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\DownloadFile.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\DownloadExportFile.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\DownloadExportUserEventLog.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\RejectUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ResetPasswordEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="EmailTemplate\Learn\Logo\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\Logo\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\AccountDeleted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\AccountDeletedEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\AccountEmailChange.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\AccountStatusChange.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\AccountSuspended.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ActivateUnlockEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ApprovalProcessEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ChangeStatusUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\CreateAccountManually.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\DownloadExportUser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\FileDownload.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\MannuallyCreatedUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\ResetPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmailV2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmailV2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SignUpEmailPreProd.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SignUpEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SuspendUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SystemErrorReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\SystemNotification.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\EmailChangedConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\UnlockUserEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\WelcomeEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\WelcomeEmail_Learner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\SystemAdmin\WelcomeEmail_NonLearner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CAChangeClassLearnerManually.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CAOApprovedClassrunCancelation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CAOApprovedClassrunReschedulation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CAWithdrawLearnerManually.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\ClassrunForNonMicroPublishedNotifyCollaborator.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\ClassRunWithdrawalConfirmedByCA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\ClassRunWithdrawalRejectedByCAO.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseAdminRejectLearnerRegistration.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseAdminSendOfferWaitListToRegistration.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseArchived.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseInPlanningCyclePending.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseInPlanningCycleRejected.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseInPlanningCycleVerified.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CoursePlanningCycleStarted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseMLUApprovedNotifyCollaborator.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CoursePublishedNotifyLearner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseRequestApprovalApproved.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseRequestApprovalRejected.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\CourseUpdatedRequestApproval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerAcceptPlaceOffer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerChangeClassPending.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerDeclinePlaceOffer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerInWaitListClassRun.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerPendingApprovalClassRun.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRun.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunApproved.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunConfirm.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunConfirmed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationClassRunRejected.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerRegistrationWaitlistConfirmed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerSubmittedChangeClassPending.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerSubmitWithdrawClassrunPending.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\LearnerWithdrawClassrunPending.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\NewCourseRequestApproval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\RegistrationConfirmationReminder.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\SessionCancelledByCA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\BrokenLink\ContentBrokenLinkLearnerReport.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\BrokenLink\ContentBrokenLinkSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentApprovedByAO.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentBrokenLinkLearnerReport.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentBrokenLinkSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentExpiredSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentGoingExpiredInMonthsSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentGoingExpiredSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\ContentRejectedByAO.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormApprovedByAO.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormParticipantAssign.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormParticipantRemind.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormParticipantRemindBeforeDueDate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormParticipantRemove.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormRejectedByAO.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\FormRequestApproval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\NewContentRequestApproval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\Calendar\ContentNotifyNewEventInvitation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\NotifyTransferOwnershipTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CCPM\SurveyNotifyEndDate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\COMMON\LearnerAchievedBadges.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\Approval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ApprovalAccepted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ApprovalDeclined.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ApprovalRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\AutoArchive.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\AutoClose.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\Comment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\CommentInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\CommentMyPost.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\CommentMyPostInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ContentCreated.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ContentCreatedInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ContentPublished.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ExcludeGroupNotification.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\Followed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowedCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowedUser.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowRequestAccepted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowRequestDeclined.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FollowUser.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FriendshipApproved.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FriendshipDeclined.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\FriendshipRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\IncludeGroupNotification.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\Invite.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\InviteAccepted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\InviteDeclined.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\InviteRevoked.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\LikeCommentInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\LikeCommentInUserWall.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\LikePostInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\LikePostInUserWall.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ManualArchive.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ManualClose.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ManualOwnershipTransfer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MembershipRolesChanged.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MentionComment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MentionCommentInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\Mentioned.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MentionedComment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MentionPost.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\MentionPostInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NewComment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NewLike.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NewMessage.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NewMessageEntry.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NotifyArchive.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\NotifyInactive.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ReplyComment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ReplyCommentInCommunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ScheduleContentDeletedByOther.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ScheduleContentPublished.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ScheduleContentPublishedByOther.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\ScheduleContentRescheduledByOther.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\UserAdded.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CSL\UserRemoved.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LEARNER\CourseArchived.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\ApprovingOfficerApprovedCourse.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssessmentAnswerAssignedNotifyAssignee.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssessmentAnswerCompletedNotifyLearner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssignmentAssignedToLearner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssignmentDueDate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssignmentExtendedDueDate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssignmentFeedback.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AssignmentFeedbackToCF.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\AttendanceStatusUpdate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\ContentBrokenLinkLearnerReport.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\ContentBrokenLinkSystemAlert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\ClassRunNearEndDateNotifyLearners.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\CourseContentPendingApproval.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\LearnerSubmitAssignment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\CAM\NotifyLearnerRegistrationUnsuccessful.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\LMM\TakeAttendanceRemind.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\ApprovedLearningDirection.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\ApprovedLearningNeed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\ApprovedLearningPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\ApprovedPDPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\DownloadExportFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\DownloadMassNominationReportFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RejectedLearningDirection.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RejectedLearningNeed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RejectedLearningPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RejectedPDPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RemindReviewLearningDirection.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RemindReviewLearningPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RemindStartLearningPlanCycle.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\RemindSubmitLearningPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\SubmittedLearningDirection.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\SubmittedLearningNeed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\SubmittedLearningPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\PDPM\SubmittedPDPlan.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantAssign.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemind.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\StandaloneSurvey\LnaFormParticipantRemove.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\StandaloneSurvey\NotifyTransferOwnershipTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\AccountDeleted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\AccountDeletedEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\AccountEmailChange.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\AccountStatusChange.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\AccountSuspended.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ActivateUnlockEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ActivateUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ApprovalProcessEmail2To3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ApprovalProcessEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ApprovedUserForActiveEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ChangeStatusUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\CreateAccountManually.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\DownloadExportFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\DownloadExportUser.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\DownloadExportUserEventLog.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\DownloadFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\EmailChangedConfirmation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\FileDownload.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\MannuallyCreatedUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\RejectUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ResetPassword.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\ResetPasswordEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SendToNewEmailAddressEmailV2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SendToOldEmailAddressEmailV2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SignUpEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplate\Opal\PDPM\DownloadMassNominationReportFile.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SignUpEmailPreProd.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SuspendUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SystemErrorReport.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\SystemNotification.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\UnlockUserEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail_Learner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NotificationTemplate\Opal\SystemAdmin\WelcomeEmail_NonLearner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EmailTemplate\Opal\LEARNER\" />
+    <Folder Include="Models\" />
+    <Folder Include="NotificationTemplate\Opal\LEARNER\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Datahub.Processor.Base" Version="2.2.0" />
+    <PackageReference Include="Handlebars.Net" Version="1.10.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.6.2" />
+    <PackageReference Include="NSwag.SwaggerGeneration" Version="12.3.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.1.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sinks.PeriodicBatching" Version="2.3.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XPath.XDocument" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Communication.Business\Communication.Business.csproj" />
+    <ProjectReference Include="..\Communication.DataAccess\Communication.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EmailTemplate\Opal\PDPM\AdhocMassNominationApprovalRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\AdhocNominationApprovalRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\ApprovedExternalPDOpportunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\ApprovedNominationRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\AssignLearningNeed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\CompletedExternalPDOpportunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\CourseRecommendation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\InCompletedExternalPDOpportunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\MassNominationApprovalRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\NominationApprovalRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\RejectedExternalPDOpportunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\RejectedNominationRequest.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\RemindCompleteLearningNeed.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplate\Opal\PDPM\SubmittedExternalPDOpportunity.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\AdhocMassNominationApprovalRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\AdhocNominationApprovalRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\ApprovedExternalPDOpportunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\ApprovedNominationRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\AssignLearningNeed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\CompletedExternalPDOpportunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\CourseRecommendation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\InCompletedExternalPDOpportunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\MassNominationApprovalRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\NominationApprovalRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\RejectedExternalPDOpportunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\RejectedNominationRequest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\RemindCompleteLearningNeed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NotificationTemplate\Opal\PDPM\SubmittedExternalPDOpportunity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

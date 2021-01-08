@@ -1,0 +1,115 @@
+<div class="course-detail-containter">
+  <div *ngIf="tabs && tabs.length > 1" class="course-detail-tabs-content">
+    <div class="course-detail-tabs">
+      <div *ngIf="tabs && currentTab" ngbDropdown>
+        <div
+          class="course-detail-tabs-dropdown"
+          id="courseDetailTabDropDown"
+          ngbDropdownToggle
+        >
+          {{ currentTab.name }}
+        </div>
+        <div
+          class="course-detail-tabs-dropdown-container"
+          ngbDropdownMenu
+          aria-labelledby="courseDetailTabDropDown"
+        >
+          <ng-container *ngFor="let tab of tabs">
+            <button ngbDropdownItem (click)="scrollToView(tab)">
+              <span
+                [ngClass]="
+                  tab === currentTab
+                    ? 'course-detail-tabs-dropdown-item-selected'
+                    : ''
+                "
+                >{{ tab.name }}</span
+              >
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="course-detail-body">
+    <div class="course-detail-item course-detail-header">
+      <pdo-long-card
+        class="pdo-basic-info pdo-basic-info__no-border"
+        [pdoAnswer]="pdoAnswer"
+        [allowRemove]="false"
+      ></pdo-long-card>
+    </div>
+    <div #courseAboutElement class="course-detail-item course-detail-info">
+      <div class="action" *ngIf="selectCourseMode">
+        <button
+          class="cx-btn-primary cx-btn-icon"
+          (click)="onAddToPlanClicked()"
+          [disabled]="selectCourseModeSelected"
+        >
+          <i class="icon-add"></i>
+          <span *ngIf="selectCourseModeSelected">{{
+            'MyPdJourney.OpportunityDetail.Action.Added' | translate
+          }}</span>
+          <span *ngIf="!selectCourseModeSelected">{{
+            selectCourseModeDisplayText
+          }}</span>
+        </button>
+      </div>
+      <course-info
+        [pdoDetail]="pdoDetail"
+        [pdoAnswer]="pdoAnswer"
+        [allowEditExternalPDO]="allowEditExternalPDO"
+        (updatedExternalPDO)="updatedExternalPDO.emit($event)"
+      ></course-info>
+    </div>
+    <div #courseContentElement class="course-detail-item course-detail-content">
+      <table-of-content [contents]="contents"></table-of-content>
+    </div>
+    <div
+      #courseClassrunElement
+      class="course-detail-item course-detail-classrun"
+    >
+      <div
+        *ngIf="classrunDetail && classrunDetail.length > 0"
+        class="classrun-detail"
+      >
+        <div class="cx-panel classrun-detail__about">
+          <div class="planned-pdo-about">
+            <div class="cx-panel__label">CLASS RUN</div>
+            <ng-container *ngFor="let item of classrunDetail">
+              <classrun-info
+                [classrunDetail]="item"
+                [sessions]="sessions"
+                [isExpanding]="showClassrunDetailDefault()"
+              ></classrun-info>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div #courseReviewElement class="course-detail-item course-detail-review">
+      <course-review
+        [pdoDetail]="pdoDetail"
+        [reviews]="reviews"
+        (loadMoreReview)="onLoadMoreReview($event)"
+      ></course-review>
+    </div>
+
+    <div #courseCommentElement>
+      <div
+        *ngIf="pdPlanMode && commentPermission.allowView"
+        class="cx-panel course-detail-item course-detail-comment"
+      >
+        <cx-comment
+          #commentComponent
+          [(comments)]="comments"
+          (changeComment)="onChangeComment($event)"
+          [canReply]="commentPermission.allowCreate"
+          [blockExistingComments]="
+            !commentPermission.allowDelete || !commentPermission.allowEdit
+          "
+        >
+        </cx-comment>
+      </div>
+    </div>
+  </div>
+</div>

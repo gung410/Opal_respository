@@ -1,0 +1,1 @@
+Your request to withdraw from the class run for {{CourseTitle}} - {{ClassrunTitle}} has been rejected by the course adminstrator.

@@ -1,0 +1,3 @@
+Your submitted LNA has been acknowledged by your Approving Officer {{SenderName}}.
+
+

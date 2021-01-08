@@ -1,0 +1,44 @@
+<div class="cx-panel pdo-trainning-cost">
+  <div class="pdo-cost-title">
+    <div class="pdo-cost-title__planned">
+      <div class="cx-panel__label tranning-cost-label">
+        {{ 'Odp.LearningPlan.PlannedPDODetail.PlannedCost' | translate }}
+        <i
+          *ngIf="
+            !isEditing &&
+            allowManagePDO &&
+            this.keyLearningProgrammePermission.allowEdit
+          "
+          class="icon icon-pencil"
+          (click)="onClickEdit()"
+        ></i>
+      </div>
+    </div>
+    <div *ngIf="isCoursePadPDO" class="pdo-cost-title__actual">
+      <div class="cx-panel__label tranning-cost-label mb-0">
+        {{ 'Odp.LearningPlan.PlannedPDODetail.ActualCost' | translate }}
+      </div>
+      <div
+        *ngIf="formData.numOfOfficers_Actual <= 0"
+        class="cx-panel__sub-label"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.NoCompletedRegistration'
+            | translate
+        }}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="formJson && formData" class="pdo-cost-form">
+    <cx-surveyjs
+      #calculateCostForm
+      [json]="formJson"
+      [data]="formData"
+      [variables]="formVariables"
+      [cancelName]="'Cancel'"
+      (submitting)="onSubmitting($event)"
+      (cancel)="onClickCancel()"
+    >
+    </cx-surveyjs>
+  </div>
+</div>

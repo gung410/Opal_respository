@@ -1,0 +1,67 @@
+@import 'assets/styles/variables.scss';
+
+.cx-gantt-scrubber-container {
+  width: 100px;
+  height: 100%;
+  margin-right: 77px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .cx-gantt-scrubber-content {
+    height: auto;
+    border-left: 1px solid #8799ba;
+    border-top: 1px solid #fefefe;
+    border-bottom: 1px solid #fefefe;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 10px 0 5px -5px #f8f8f8;
+    padding-right: 20px;
+    .cx-gantt-scrubber-selector {
+      height: 20px;
+      width: 32px;
+      border-bottom: 1px solid #8799ba;
+      position: relative;
+      transition: top ease 600ms;
+      transform: translateY(9px);
+
+      .cx-gantt-scrubber-circle {
+        width: 7px;
+        height: 7px;
+        background-color: #8799ba;
+        content: '';
+        position: relative;
+        border-radius: 5px;
+        top: 16px;
+        left: 25px;
+      }
+    }
+
+    .cx-gantt-scrubber-year-list {
+      position: relative;
+      padding-left: 17px;
+      .cx-gantt-scrubber-year {
+        display: flex;
+        flex-direction: row;
+        color: #8799ba;
+        height: 20px;
+        margin: 20px 0;
+        line-height: 20px;
+
+        &:hover {
+          color: $cx-color-main;
+          cursor: pointer;
+          font-weight: 500;
+        }
+      }
+
+      .cx-gantt-scrubber-selected-year {
+        color: $cx-color-main;
+        cursor: none;
+        font-weight: 500;
+        pointer-events: none;
+      }
+    }
+  }
+}

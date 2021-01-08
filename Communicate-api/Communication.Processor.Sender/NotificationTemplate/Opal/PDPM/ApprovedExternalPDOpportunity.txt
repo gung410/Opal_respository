@@ -1,0 +1,1 @@
+﻿Your submitted external PD opportunity ({{ExternalCourseName}}) has been approved by {{SenderName}}.

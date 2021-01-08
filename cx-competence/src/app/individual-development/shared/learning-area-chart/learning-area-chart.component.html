@@ -1,0 +1,103 @@
+<div *ngIf="learningAreaChart" class="learning-area-chart">
+  <div class="header" *ngIf="hasTitle">
+    {{ learningAreaChart.prioritisationChart.header }}
+  </div>
+  <div #learningAreaChartContainer class="row learning-area-chart-container">
+    <div
+      *ngIf="learningAreaChart.prioritisationChart"
+      class="col-12 col-lg-4 prioritisation"
+    >
+      <div
+        class="prioritisation__chart"
+        [chart]="learningAreaChart.prioritisationChart.chart"
+      ></div>
+    </div>
+    <!-- TODO: not implemented yet -->
+    <!-- <div
+    *ngIf="
+      learningAreaChart.timeSpentCharts &&
+      learningAreaChart.timeSpentCharts.length
+    "
+    class="col-12 col-lg-8 time-spent"
+  >
+    <div class="sub-title">TIME SPENT ON EACH LEARNING AREA</div>
+    <div class="row">
+      <div
+        *ngFor="let pieChart of learningAreaChart.timeSpentCharts"
+        class="col-3 col-xl-2"
+      >
+        <div [chart]="pieChart"></div>
+        <p class="time-spent__length">{{ getTimeSpentForPieChart(pieChart) }} hours</p>
+      </div>
+    </div>
+  </div> -->
+    <div
+      *ngIf="learningAreaChart.prioritisationChart"
+      class="col-12 col-xl-8 legend"
+    >
+      <div class="legend__title" *ngIf="hasTitle">LEGEND</div>
+      <div class="row legend__chart legends-container">
+        <ng-container
+          *ngFor="
+            let seriesItem of learningAreaChart.prioritisationChart.series;
+            let i = index
+          "
+        >
+          <div
+            [id]="'legend-series-' + i"
+            class="legend__serie col-12 col-lg-6 legend-series"
+            (mouseenter)="onMouseEnter($event, seriesItem)"
+            (mouseleave)="onMouseLeave($event, seriesItem)"
+          >
+            <i class="fa fa-square" [ngStyle]="{ color: seriesItem.color }"></i>
+            <span class="legend__name" title="{{ seriesItem.name }}">{{
+              seriesItem.name
+            }}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="legend-mobile">
+      <div
+        class="legend-mobile__header"
+        id="headingOne"
+        data-toggle="collapse"
+        data-target="#leaderGrowthModelLegend"
+        aria-expanded="false"
+        aria-controls="leaderGrowthModelLegend"
+      >
+        <i class="icon-chevron-right-bold"></i>
+        <span>LEGEND</span>
+      </div>
+
+      <div
+        id="leaderGrowthModelLegend"
+        class="collapse"
+        aria-labelledby="headingOne"
+      >
+        <div class="legend-mobile__body">
+          <div
+            *ngFor="let legend of learningAreaChart.prioritisationChart.series"
+            class="legend-item"
+          >
+            <div
+              class="legend-item__color"
+              [style.background]="legend.color"
+            ></div>
+            <div class="legend-item__label">
+              {{ legend.name }}
+            </div>
+          </div>
+          <div
+            class="icon-bottom"
+            data-toggle="collapse"
+            data-target="#leaderGrowthModelLegend"
+          >
+            <i class="collaspe-icon icon-chevron-right-bold"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="planned-pdo-nominations__nominated">
+  <div class="nominated-department-container">
+    <div class="cx-panel__label">RESULT REPORT FILES FOR NOMINATION</div>
+    <mass-nomination-result-list
+      #massNominationResultList
+      [items]="massNominationResults"
+    ></mass-nomination-result-list>
+    <cx-paging
+      *ngIf="pagedData"
+      [currentPageSize]="defaultPageSize"
+      [totalRecords]="totalItems"
+      [recordsPerPage]="currentPageSize"
+      [currentPage]="currentPageIndex"
+      (currentPageChange)="onCurrentPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    ></cx-paging>
+  </div>
+</div>

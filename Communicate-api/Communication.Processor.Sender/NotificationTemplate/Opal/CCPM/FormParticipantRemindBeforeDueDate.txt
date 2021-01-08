@@ -1,0 +1,1 @@
+You have a quiz {{FormName}} due in {{RemindBeforeDays}} day(s). Please click this link to access the quiz.

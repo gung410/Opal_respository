@@ -1,0 +1,132 @@
+@import 'assets/styles/variables.scss';
+
+catalog-toolbar {
+  $button-height: 40px;
+  .toolbar {
+    > div:not(:first-child) {
+      margin-top: 20px;
+    }
+
+    &__filtering {
+      display: flex;
+      .search-box {
+        position: relative;
+        height: $button-height;
+        width: 250px;
+        font-size: 0.9rem;
+
+        &__icon {
+          position: absolute;
+          width: 40px;
+          height: 100%;
+          line-height: 40px;
+          z-index: 1;
+          right: 0;
+          color: #323659;
+          cursor: pointer;
+          user-select: none;
+          text-align: center;
+
+          &::before {
+            font-weight: bold;
+          }
+        }
+        &__input {
+          width: 100%;
+          height: 100%;
+          background: #fff;
+          color: #424c64;
+          padding: 0 40px 0 20px;
+          border-radius: 5px;
+          border: 1px solid #d8dce6;
+        }
+        .icon-close {
+          position: absolute;
+          top: 16px;
+          right: 34px;
+          font-size: 9px;
+          color: #8a8a8a;
+          cursor: pointer;
+        }
+      }
+      .filter-btn {
+        margin-left: 10px;
+        font-weight: 500;
+        line-height: 38px;
+      }
+    }
+
+    .show-bookmark-action {
+      margin-left: auto;
+    }
+
+    .show-bookmark-action-mobile {
+      display: none;
+    }
+
+    .bookmark-btn {
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .add-external-icon {
+      font-weight: 500;
+    }
+
+    button {
+      font-size: 14px;
+    }
+
+    .cx-divider {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: $screen-xs-max) {
+    .toolbar {
+      > div:not(:first-child) {
+        margin-top: 12px;
+      }
+      &__filtering {
+        .search {
+          margin-top: 10px;
+          width: 100%;
+          height: 40px;
+          input {
+            border: 1px solid rgba(216, 223, 229, 0.5);
+          }
+        }
+        .show-bookmark-action {
+          display: none;
+        }
+      }
+      &__actions {
+        .cx-btn {
+          width: 100%;
+          background: #fff;
+          color: inherit;
+          border: 1px solid rgba(216, 223, 229, 0.5);
+          border-radius: 5px;
+          height: 40px;
+          &.cx-btn-icon {
+            i {
+              font-size: 18px;
+              transform: translateY(2px);
+            }
+          }
+        }
+        .show-bookmark-action-mobile {
+          display: block;
+          margin-top: 8px;
+        }
+      }
+      .bookmark-btn {
+        text-transform: capitalize;
+        font-weight: 500;
+      }
+      .cx-divider {
+        display: block;
+      }
+    }
+  }
+}

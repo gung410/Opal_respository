@@ -1,0 +1,44 @@
+version: '3.6'
+services:
+  datahub-processor-communication-sender:
+    environment:
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - RABBITMQ_HOSTNAMES=csc-prd-cachequeue-01,csc-prd-cachequeue-02,csc-prd-cachequeue-03
+    - BuildVersion=${GO_PIPELINE_LABEL}
+    - PROJECT_NAME=${PROJECT_NAME}
+    - RABBITMQ_USERNAME=DLAPP101
+    - RABBITMQ_PASSWORD=Three2kill@123
+    - RABBITMQ_PORT=5672
+    - EVENT_EXCHANGE_NAME=event_exchange_topic
+    - COMMAND_EXCHANGE_NAME=command_exchange_topic
+    - QUEUE_MANAGER_API=http://datahub-queuemanager.csc/QueueManager
+    - FireBaseCloudMessage:BaseAppInstanceServerUrl=https://iid.googleapis.com/
+    - FireBaseCloudMessage:BaseFirebaseClouldMessageUrl=https://fcm.googleapis.com/
+    - FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey=AIzaSyBD6mZ5y24M_hr6mmCjCUp9Zt-EmspP4uU
+    - IDM_BASEURL=https://idm.learn.gov.sg/
+    - IDM_GRANT_TYPE=client_credentials
+    - IDM_CLIENT_SECRET=BiOiJKV1QiLCJ4NXQiOiKhM
+    - IDM_CLIENT_ID=udemy.import
+    - IDM_SCOPE=SharedServicesApi CoursepadApi_FullAccess userManagement
+    - MONGO_DATABASENAME=Notification
+    - MONGO_CONNECTIONSTRING=mongodb://DLDBS109:SummerIsC0ming)@csc-prd-mongodb-01,csc-prd-mongodb-02,csc-prd-mongodb-03/Notification?replicaSet=${CSC_ENV}-csc
+    - Email:FromName=LEARN Now
+    - Email:FromAddress=hello@learn.gov.sg
+    - Email:SslEnabled=false
+    - Email:MailServerAddress=smtp.csc
+    - Email:MailServerPort=25
+    - Email:UserName=null
+    - Email:UserPassword=null
+    - HTTP_PROXY=http://proxy.csc:3128
+    - HTTPS_PROXY=http://proxy.csc:3128
+    extra_hosts:
+    - "csc-prd-cachequeue-01:10.192.31.71"
+    - "csc-prd-cachequeue-01:10.192.35.114"
+    - "csc-prd-cachequeue-01:10.192.39.45"
+    - "csc-prd-mongodb-01:10.192.43.190"
+    - "csc-prd-mongodb-02:10.192.44.192"
+    - "csc-prd-mongodb-03:10.192.49.97"
+networks:
+  default:
+    external:
+      name: app_default

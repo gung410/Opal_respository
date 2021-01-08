@@ -1,0 +1,123 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+assign-pdo-result-dialog {
+  .assign-result-label-container {
+    display: flex;
+    .assign-result-label {
+      width: 32.5%;
+      color: #303450;
+      font-size: 16px;
+      font-weight: 500;
+
+      &:first-child {
+        width: 67.5%;
+      }
+    }
+  }
+
+  .assign-results-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .assign-info {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .assign-results {
+    margin-top: 20px;
+    height: 100%;
+    overflow-x: hidden;
+    .assign-result {
+      display: flex;
+      padding: 10px 35px 10px 20px;
+      border: 1px solid #d8dce6;
+      border-radius: 5px;
+      align-items: center;
+      position: relative;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      .assignee-info {
+        display: flex;
+        align-items: center;
+        width: 70%;
+        padding-right: 15px;
+        &__avatar {
+          width: 40px;
+          height: 40px;
+          background-size: cover;
+          background-position: top center;
+          border-radius: 50%;
+          margin-right: 15px;
+          flex-shrink: 0;
+        }
+        &__text {
+          overflow: hidden;
+          .nominated-learner-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .nominated-learner-email {
+            font-size: 12px;
+            color: #8799ba;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        &__status {
+          width: 30%;
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          font-weight: 500;
+          .circle-status {
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: 18px;
+          }
+          &.success-label .circle-status {
+            background: #3bdc87;
+          }
+          &.fail-label .circle-status {
+            color: #fff;
+            font-size: 13px;
+            text-align: center;
+            padding-left: 0.5px;
+            background: #efdc33;
+          }
+        }
+      }
+    }
+  }
+
+  .cx-dialog-template--fixed {
+    max-height: calc(95vh - 62px);
+    height: unset;
+  }
+
+  .cx-dialog-template .modal-header + .modal-body {
+    margin-top: 15px;
+  }
+
+  .cx-dialog-template .modal-footer {
+    border-top: 1px solid #d8dce6;
+    padding-top: 24px;
+  }
+
+  .cx-dialog-template .modal-footer button {
+    width: 124px;
+    height: 48px;
+    font-size: 16px;
+    margin-left: 16px;
+  }
+}

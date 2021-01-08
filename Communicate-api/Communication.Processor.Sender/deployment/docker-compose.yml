@@ -1,0 +1,52 @@
+version: '3.6'
+services:
+  datahub-processor-communication-sender:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - BuildVersion=${GO_PIPELINE_LABEL}
+    - PROJECT_NAME=${PROJECT_NAME}
+    - RABBITMQ_HOSTNAMES=${RABBITMQ_HOSTNAMES}
+    - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+    - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+    - RABBITMQ_SSL_ENABLED=${RABBITMQ_SSL_ENABLED}
+    - QUEUE_MANAGER_API=http://${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-queuemanager.${DOMAIN_POSTFIX}/QueueManager
+    - EVENT_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-event
+    - COMMAND_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-command
+    - QUEUE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-queue-communication-sender
+    - FireBaseCloudMessage:BaseAppInstanceServerUrl=https://iid.googleapis.com/
+    - FireBaseCloudMessage:BaseFirebaseClouldMessageUrl=https://fcm.googleapis.com/
+    - FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey=${COMMUNICATION_API_FIREBASE_SERVER_KEY}
+    - IDM_BASEURL=${IDM_INTERNAL_URL}
+    - IDM_GRANT_TYPE=client_credentials
+    - IDM_CLIENT_SECRET=AiOiJKV1QiLCJ4NXQiOiJhM
+    - IDM_CLIENT_ID=cxDomainInternalApi
+    - IDM_SCOPE=userManagement cxDomainInternalApi
+    - MONGO_DATABASENAME={{ mongo_db_name }}
+    - MONGO_SSL_ENABLED=${MONGO_SSL_ENABLED}
+    - MONGO_CONNECTIONSTRING=mongodb://{{ mongo_db_auth }}@${MONGODB_HOSTNAMES}/{{ mongo_db_name }} 
+    - Email:FromName=OPAL2.0
+    - Email:FromAddress=${DISPLAY_EMAIL}
+    - Email:SslEnabled=false
+    - Email:MailServerAddress=${SMTP_SERVER}
+    - Email:MailServerPort=${SMTP_PORT}
+    - Email:UserName=${SMTP_USERNAME}
+    - Email:UserPassword=${SMTP_PASSWORD}
+    - MailLogConfiguration:Enable={{ enable_mail_log }}
+    - MailLogConfiguration:ExchangeName=${ENVIRONMENT_NAME}-${PROJECT_NAME}-topic-integration
+    - MailLogConfiguration:ConfigurationSet={{ ses_configuration_set }}
+{% if https_proxy is defined %}
+    - HTTPS_PROXY={{ https_proxy }}
+{% endif %}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+    - 0:80
+networks:
+  default:
+    external:
+      name: ${PROJECT_NAME}_default

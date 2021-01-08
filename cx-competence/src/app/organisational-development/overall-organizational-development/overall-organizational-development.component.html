@@ -1,0 +1,59 @@
+<div *ngIf="planCxNode" class="learning-plan-detail-viewmode">
+  <div class="cx-panel breadcrum-container">
+    <cx-breadcrumb-simple
+      [simpleStyle]="true"
+      [breadCrumbItems]="currentBreadcrumb"
+      (clickedItem)="onClickBreadcrumbItem($event)"
+    ></cx-breadcrumb-simple>
+  </div>
+  <div class="plan-toolbar-container" *ngIf="planNode">
+    <div class="cx-toolbar plan-toolbar row">
+      <div class="plan-name">
+        <h1>{{ planNode.name }}</h1>
+      </div>
+      <div class="plan-toolbar__plan-modification-info">
+        <metadata-modification-info
+          [odpDto]="planNode.dataObject.pdplanDto"
+        ></metadata-modification-info>
+      </div>
+      <div class="plan-toolbar__plan-actions col p-0">
+        <button *ngIf="canEdit" class="cx-btn" (click)="onClickEdit()">
+          {{ 'Common.Action.Edit' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- *ngIf="odpContents && odpContents.length; else noRecords" -->
+  <div #cxSplitView class="cx-split-view">
+    <div #viewLeftSide class="cx-split-view__left-side">
+      <div class="cx-panel left-side-content">
+        <cx-node
+          id="cxPlanTree"
+          [node]="planCxNode"
+          [selectedNodeComponent]="selectedNodeComponent"
+          (ready)="onCxNodeReady($event)"
+        ></cx-node>
+      </div>
+    </div>
+
+    <div
+      #viewDivider
+      id="divider"
+      class="cx-split-view__divider"
+      (mousedown)="onMouseDown($event)"
+    ></div>
+
+    <div #viewRightSide class="cx-split-view__right-side">
+      <overall-organizational-development-content
+        *ngIf="planNode"
+        [planNode]="planNode"
+        [planFormJSON]="planFormJSON"
+        [directionFormJSON]="directionFormJSON"
+        [programmeFormJSON]="programmeFormJSON"
+      ></overall-organizational-development-content>
+    </div>
+  </div>
+  <ng-template #noRecords>
+    <div class="no-records-container">No records</div>
+  </ng-template>
+</div>

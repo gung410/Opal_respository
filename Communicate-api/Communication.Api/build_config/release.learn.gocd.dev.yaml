@@ -1,0 +1,54 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-learn-api-communication-release
+  systemtest-learn: 
+    pipelines: 
+      - systemtest-datahub-learn-api-communication-release     
+format_version: 3
+pipelines: 
+  build-datahub-learn-api-communication-release: 
+    group: datahub-learn-api-communication-release
+    label_template: "release-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Api/
+      SONAR_PROJECTKEY: datahub-learn-api-communication-release
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-release
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/opal-1.0
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+  systemtest-datahub-learn-api-communication-release:
+    group: datahub-learn-api-communication-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-learn-api-communication-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: systemtest-learn
+      UP_STREAME_PIPELINE_NAME: build-datahub-learn-api-communication-release
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:Rw05Jb7GcDhESTN9WPVddQ==:ySCzBYSBc7K9NNPoASJnDFB8Peo71OM04XzKdMYYWqo=
+      IDM_CLIENT_ID: AES:UepIoNovj0ZFY0fI+yDCjg==:NdOMq4cHLEUFWEtBDpIsENDpM13ZYkzvZsmD4bqRIlo=
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-release
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      PUBLIC_DNS: ",systemtest-datahub-learn-api-communication.csc.cxs.cloud"
+      FireBaseCloudMessage_BaseAppInstanceServerUrl: https://iid.googleapis.com/
+      FireBaseCloudMessage_BaseFirebaseClouldMessageUrl: https://fcm.googleapis.com/
+      FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey: AIzaSyB4_phE4NhU-nQQVK5aRr6x43nY8ddP1DQ
+      RABBITMQ_SSL_ENABLED: true
+      MONGO_SSL_ENABLED: true
+
+ 

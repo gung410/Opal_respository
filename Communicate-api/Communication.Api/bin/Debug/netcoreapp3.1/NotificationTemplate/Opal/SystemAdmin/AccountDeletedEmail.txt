@@ -1,0 +1,4 @@
+Hi {{FullName}},
+Your OPAL2.0 account has been archived.
+
+

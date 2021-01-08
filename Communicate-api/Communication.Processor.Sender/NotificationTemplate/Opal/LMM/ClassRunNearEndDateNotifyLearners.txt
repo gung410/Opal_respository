@@ -1,0 +1,1 @@
+﻿Your Class: {{ClassRunTitle}} it will be finished at {{ClassRunEndDate}}. Please start your learning at this class

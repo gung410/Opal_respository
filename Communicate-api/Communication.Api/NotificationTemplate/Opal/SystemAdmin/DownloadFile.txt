@@ -1,0 +1,6 @@
+Hi {{UserFullName}},
+{{Description}}. Please click the link below to download this file:
+{{DownloadUrl}}
+If there are any issues, please contact your administrator for support.
+
+

@@ -1,0 +1,49 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-opal-api-queuemanager-snapshot
+  development-opal: 
+    pipelines: 
+      - development-datahub-opal-api-queuemanager-snapshot
+format_version: 3
+pipelines: 
+  build-datahub-opal-api-queuemanager-snapshot: 
+    group: datahub-opal-api-queuemanager-snapshot
+    label_template: "snapshot-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      SONAR_PROJECTKEY: datahub-opal-api-queuemanager-snapshot
+      SONAR_SOLUTION_FILE: Datahub.Queue.Manager.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: linux-docker-build-sonar-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: develop
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-datahub-queue-manager.git"
+  development-datahub-opal-api-queuemanager-snapshot:
+    group: datahub-opal-api-queuemanager-snapshot
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-opal-api-queuemanager-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-opal
+      UP_STREAME_PIPELINE_NAME: build-datahub-opal-api-queuemanager-snapshot
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:Rw05Jb7GcDhESTN9WPVddQ==:ySCzBYSBc7K9NNPoASJnDFB8Peo71OM04XzKdMYYWqo=
+      IDM_CLIENT_ID: AES:UepIoNovj0ZFY0fI+yDCjg==:NdOMq4cHLEUFWEtBDpIsENDpM13ZYkzvZsmD4bqRIlo=
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+      RABBITMQ_SSL_ENABLED: true
+      MONGO_SSL_ENABLED: true
+ 

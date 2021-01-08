@@ -1,0 +1,61 @@
+@import 'assets/styles/variables.scss';
+
+$year-highlight-color: $cx-color-main;
+$year-cursor-color: #d8dce6;
+$month-cursor-color: #a1a8b6;
+$year-text-color: #8799ba;
+.cx-gantt-timeline {
+  display: inline-block;
+  white-space: nowrap;
+  height: 100%;
+
+  .cx-gantt-timeline-year-container {
+    display: inline-block;
+    height: 100%;
+    &.cx-gantt-timeline-year-container-actived {
+      .cx-gantt-timeline-year {
+        &__text {
+          font-weight: 500;
+          color: $cx-color-main;
+        }
+      }
+    }
+  }
+
+  .cx-gantt-timeline-year {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &__text {
+      font-size: 16px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      color: $year-text-color;
+    }
+    &__line {
+      transform: translate(19px, -3px);
+      width: 1px;
+      height: 100%;
+      background: $year-cursor-color;
+    }
+  }
+
+  .cx-gantt-timeline-months {
+    display: flex;
+    align-items: flex-end;
+    &__item {
+      margin: 0 16px;
+      width: 5px;
+      height: 8px;
+      border-radius: 5px;
+      display: block;
+      background: $month-cursor-color;
+      &:first-child {
+        width: 7px;
+        height: 16px;
+        background: $year-cursor-color;
+        z-index: 1;
+      }
+    }
+  }
+}

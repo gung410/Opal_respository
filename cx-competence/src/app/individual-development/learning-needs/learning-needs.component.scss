@@ -1,0 +1,169 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+
+learning-needs {
+  .learning-needs {
+    &__approval-actions {
+      display: inline-block;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      .cx-btn {
+        box-shadow: none;
+        border: 1px solid #d8dce6;
+        font-size: 14px;
+        &:first-child {
+          border-radius: 5px 0 0 5px;
+        }
+        &:last-child {
+          border-left: none;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+    }
+    &__body {
+      background: #fff;
+      box-shadow: 0px 0px 10px #eeeeee;
+      @include rounded-corners(5px);
+    }
+    &__empty {
+      width: 40%;
+      height: 200px;
+      margin: auto;
+      margin-top: 0px;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+    }
+    &__section-title {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 28px;
+    }
+  }
+  .la-content {
+    padding: 0 32px;
+    .career-aspiration-chart {
+      &__title {
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
+      &__nodata {
+        color: #a1a8b6;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+        margin: 50px 0;
+      }
+    }
+    .cx-gantt-chart-header {
+      .gantt-chart-types {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 55px;
+        .gantt-chart-type-item {
+          display: flex;
+          margin-right: 76px;
+          align-items: center;
+          white-space: nowrap;
+          padding-bottom: 5px;
+          &__square {
+            width: 24px;
+            height: 24px;
+            margin-right: 16px;
+            border-radius: 3px;
+            border: 1px solid #d8dce6;
+            flex-shrink: 0;
+          }
+        }
+      }
+    }
+    cx-gantt-chart i.icon.icon-circle {
+      font-size: 12px;
+    }
+  }
+  .la-comments {
+    padding: 32px 0;
+    textarea {
+      border: 1px solid $panel-border-color !important;
+    }
+  }
+  .title {
+    padding: 40px 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: #313552;
+    margin-bottom: 0;
+  }
+  .learning-area {
+    padding: 20px 0;
+  }
+
+  .idp-status-block {
+    text-transform: capitalize !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    font-variant: none !important;
+    height: 38px;
+    line-height: 38px;
+  }
+
+  .la-header {
+    &__completion-rate,
+    &__cutoff-date-block {
+      height: 38px;
+      line-height: 38px;
+      padding-top: 0 !important;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  learning-needs {
+    .learning-needs {
+      &__empty {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+      }
+      &__approval-actions {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .la-content {
+        padding: 0;
+      }
+    }
+    .title {
+      font-size: 1.3rem;
+      padding-top: 0px;
+      margin-top: 25px;
+    }
+    .la-comments {
+      padding: 0;
+    }
+
+    learning-area-chart {
+      display: block;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  learning-needs {
+    .learning-needs {
+      .la-content {
+        float: left;
+        width: 100%;
+      }
+    }
+  }
+  .cx-comment {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

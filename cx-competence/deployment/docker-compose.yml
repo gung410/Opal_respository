@@ -1,0 +1,15 @@
+version: '2'
+services:
+  competence-opal-spa:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+      - PROJECT_NAME=${PROJECT_NAME}
+      - VIRTUAL_HOST={{ public_dns_name }}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80

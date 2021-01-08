@@ -1,0 +1,1 @@
+﻿The owner for the course {{CourseTitle}} has archived the course. Please contact the course owner if you wish to have access to the materials.

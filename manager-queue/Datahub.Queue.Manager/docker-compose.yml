@@ -1,0 +1,57 @@
+version: '2.4'
+
+services:
+  cx-queue-manager:
+    build: .
+    container_name: local-queue-manager
+    environment:
+      - ASPNETCORE_ENVIRONMENT=development
+      - PROJECT_NAME=opal
+      - RABBITMQ_HOSTNAMES=local-rabbit
+      - BuildVersion=1.0
+      - RABBITMQ_USERNAME=cctadmin
+      - RABBITMQ_PASSWORD=Three2kill
+      - RABBITMQ_SSL_ENABLED=false
+      - MONGO_DATABASENAME=datahub
+      - MONGO_CONNECTIONSTRING=mongodb://local-mongo:27017
+      - MONGO_SSL_ENABLED=false
+    restart: always
+    command: ["./wait-for-it.sh", "local-rabbit:5672", "--","./wait-for-it.sh", "local-mongo:27017", "--", "dotnet", "Datahub.Queue.Manager.dll"]
+    ports:
+      - 44346:80
+  local-rabbit:
+    image: heidiks/rabbitmq-delayed-message-exchange:latest
+    container_name: local-rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=cctadmin
+      - RABBITMQ_DEFAULT_PASS=Three2kill
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672  
+  local-mongo:
+    image: mongo:latest
+    container_name: local-mongo
+    restart: always
+    ports:
+      - 27017:27017
+  local-redis:
+    image: redis:latest
+    container_name: local-redis
+    restart: always
+    ports:
+      - 6379:6379    
+  local-redis-admin:
+    image: rediscommander/redis-commander:latest
+    container_name: local-redis-admin
+    environment:
+      - REDIS_HOSTS=local:local-redis:6379    
+    restart: always
+    ports:
+      - 8081:8081                        
+networks:
+  default:
+    external:
+      name: local_default
+
+ 

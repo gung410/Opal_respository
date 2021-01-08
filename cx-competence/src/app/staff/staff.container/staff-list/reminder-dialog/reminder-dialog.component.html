@@ -1,0 +1,40 @@
+<cx-dialog-template
+  (cancel)="onCancel()"
+  (done)="onDone()"
+  class="reminder"
+  [doneButtonText]="'Common.Action.Submit' | translate"
+>
+  <modal-header>
+    <h3>{{ 'Staff.ReminderDialog.Title' | translate }}</h3>
+  </modal-header>
+  <content>
+    <div class="reminder__content">
+      <div class="reminder__immediate">
+        <cx-checkbox
+          [selected]="remindNow"
+          (selectedChange)="onSelectImmediateReminder($event)"
+          >{{ 'Staff.ReminderDialog.ImmediateLabel' | translate }}</cx-checkbox
+        >
+      </div>
+      <div class="reminder__schedule">
+        <div class="reminder__title">
+          <div class="reminder__label">
+            {{ 'Staff.ReminderDialog.ScheduleLabel' | translate }}
+          </div>
+          <div class="reminder__hint">
+            {{ 'Staff.ReminderDialog.ScheduleHintLabel' | translate }}
+          </div>
+        </div>
+        <div class="reminder__date-picker">
+          <cx-date-picker
+            [isDisabled]="remindNow"
+            [(date)]="dateToSend"
+            [minDate]="currentDate"
+            [iconClass]="'material-icons date-range'"
+          >
+          </cx-date-picker>
+        </div>
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

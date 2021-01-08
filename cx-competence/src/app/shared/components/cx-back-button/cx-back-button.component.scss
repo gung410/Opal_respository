@@ -1,0 +1,15 @@
+:host {
+  display: inline-block;
+}
+
+.cx-back-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  > i {
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 10px;
+    height: 10px;
+  }
+}

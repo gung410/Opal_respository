@@ -1,0 +1,1 @@
+{{AOName}} has approved your digital content: {{ContentName}}.

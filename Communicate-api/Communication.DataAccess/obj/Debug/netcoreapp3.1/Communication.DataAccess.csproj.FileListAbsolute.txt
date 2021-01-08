@@ -1,0 +1,13 @@
+C:\hung\communicate-api\Communication.DataAccess\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\hung\communicate-api\Communication.DataAccess\bin\Debug\netcoreapp3.1\Communication.DataAccess.deps.json
+C:\hung\communicate-api\Communication.DataAccess\bin\Debug\netcoreapp3.1\Communication.DataAccess.dll
+C:\hung\communicate-api\Communication.DataAccess\bin\Debug\netcoreapp3.1\Communication.DataAccess.pdb
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.csprojAssemblyReference.cache
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.AssemblyInfoInputs.cache
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.AssemblyInfo.cs
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.csproj.CoreCompileInputs.cache
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.RazorTargetAssemblyInfo.cache
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\staticwebassets\Communication.DataAccess.StaticWebAssets.Manifest.cache
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\staticwebassets\Communication.DataAccess.StaticWebAssets.xml
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.dll
+C:\hung\communicate-api\Communication.DataAccess\obj\Debug\netcoreapp3.1\Communication.DataAccess.pdb

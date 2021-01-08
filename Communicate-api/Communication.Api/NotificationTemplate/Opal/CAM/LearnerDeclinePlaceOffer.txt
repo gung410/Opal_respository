@@ -1,0 +1,3 @@
+The learner {{SenderName}} has declined your offer to participate in the course - {{CourseTitle}}.
+
+

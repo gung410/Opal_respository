@@ -1,0 +1,7 @@
+
+<cx-universal-toolbar [buttonCondition]="buttonCondition"
+  [breadCrumbNavigation]="breadCrumbNavigation" [departmentModel]="departmentModel"
+  (searchDepartment)="onSearch($event)" (expandChildDepartment)="expandChildDepartment($event)"
+  (selectDepartmentTree)="onSelectDepartmentNode($event)" (breadcrumbNavigationClick)="onSelectedDepartmentLabel($event)"
+  (searchResultClick)="onClickSearchResult($event)" [userActions]="null">
+</cx-universal-toolbar>

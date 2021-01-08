@@ -1,0 +1,1 @@
+{{OwnerName}} has created a course during the course planning cycle of {{PlanningCyclePeriod}} that needs your verification.

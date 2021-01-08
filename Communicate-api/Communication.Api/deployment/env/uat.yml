@@ -1,0 +1,7 @@
+mongo_db_name: uat-communication-opal-db
+mongo_db_auth: uat-communication-opal:opal-communication-uat
+idm_base_url: https://idm.uat.opal2.conexus.net
+https_proxy: http://proxy.opal:3128
+HangfireDatabase: uat-cx-opal-scheduling-jobs-db
+HangfireDatabaseUsername: uat-cx-opal-scheduling-jobs-db-readwrite
+HangfireDatabasePassword: kUMC8MzTjQYedAs

@@ -1,0 +1,61 @@
+<cx-dialog-template
+  #cxDialogTemplateElement
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+  [fixedHeight]="true"
+>
+  <modal-header>
+    <h3 class="catalog-title">
+      {{ dialogTitle }}
+    </h3>
+    <div class="catalog-toolbar">
+      <catalog-toolbar
+        [pickCourseMode]="pickCourseMode"
+        [enableBookmark]="enableBookmark"
+        [allowAddExternalPDOPermission]="allowAddExternalPDOPermission"
+        [bookmarkSize]="
+          bookmarkedCourses && bookmarkedCourses.size
+            ? bookmarkedCourses.size
+            : 0
+        "
+        (search)="onSearch($event)"
+        (filter)="onFilter($event)"
+        (bookmark)="onBookmarkClicked()"
+        (addExternal)="onAddExternalClicked()"
+      ></catalog-toolbar>
+    </div>
+  </modal-header>
+  <content>
+    <div class="catalog-toolbar-mobile">
+      <ng-container *ngTemplateOutlet="catalogToolbar"></ng-container>
+    </div>
+    <opportunities-catalog
+      [enableBookmark]="enableBookmark"
+      [searchCourses]="searchCourses"
+      [recommendedCourses]="recommendedCourses"
+      [pickCourseMode]="pickCourseMode"
+      [addText]="addText"
+      [isSearching]="isSearching"
+      [showLoadMoreButton]="showLoadMoreButton"
+      [hasMoreSearchCourse]="hasMoreDataSearchCourse"
+      [hasMoreRecommendCourse]="hasMoreDataRecommendCourse"
+      (selected)="onOpportunityClicked($event)"
+      (bookmark)="onBookmarked($event)"
+      (loadMoreSearchCourses)="onClickLoadMoreButton()"
+      (loadMoreRecommendCourses)="onClickLoadMoreButton()"
+    ></opportunities-catalog>
+  </content>
+</cx-dialog-template>
+
+<ng-template #catalogToolbar>
+  <catalog-toolbar
+    [bookmarkSize]="
+      bookmarkedCourses && bookmarkedCourses.size ? bookmarkedCourses.size : 0
+    "
+    (search)="onSearch($event)"
+    (filter)="onFilter($event)"
+    (bookmark)="onBookmarkClicked()"
+    (addExternal)="onAddExternalClicked()"
+  >
+  </catalog-toolbar>
+</ng-template>

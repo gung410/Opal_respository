@@ -1,0 +1,45 @@
+version: '3.6'
+
+services: 
+  datahub-processor-communication-sender:
+    environment:
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - RABBITMQ_HOSTNAMES=csc-uat-cachequeue-01,csc-uat-cachequeue-02,csc-uat-cachequeue-03
+    - BuildVersion=${GO_PIPELINE_LABEL}
+    - PROJECT_NAME=${PROJECT_NAME}
+    - RABBITMQ_USERNAME=DLAPP901
+    - RABBITMQ_PASSWORD=Three2kill
+    - EVENT_EXCHANGE_NAME=event_exchange_topic
+    - COMMAND_EXCHANGE_NAME=command_exchange_topic
+    - QUEUE_MANAGER_API=http://datahub-queuemanager.csc/QueueManager
+    - FireBaseCloudMessage:BaseAppInstanceServerUrl=https://iid.googleapis.com/
+    - FireBaseCloudMessage:BaseFirebaseClouldMessageUrl=https://fcm.googleapis.com/
+    - FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey=AIzaSyCM0ZiKbsMZ21MhZbmvnci7JiAzDE550cw
+    - IDM_BASEURL=https://idm.uat-csc.cxs.cloud/
+    - IDM_GRANT_TYPE=client_credentials
+    - IDM_CLIENT_SECRET=BiOiJKV1QiLCJ4NXQiOiKhM
+    - IDM_CLIENT_ID=5bc44b4547a20100015cde02
+    - IDM_SCOPE=SharedServicesApi CoursepadApi_FullAccess
+    - MONGO_DATABASENAME=Notification
+    - MONGO_CONNECTIONSTRING=mongodb://DLDBS903:Three2kill@csc-uat-mongodb-01,csc-uat-mongodb-02,csc-uat-mongodb-03/datahub?replicaSet=uat-csc
+    - Email:FromName=LEARN Now
+    - Email:FromAddress=hello@uat-csc.cxs.cloud
+    - Email:SslEnabled=false
+    - Email:MailServerAddress=smtp.csc
+    - Email:MailServerPort=25
+    - Email:UserName=null
+    - Email:UserPassword=null
+    - HTTP_PROXY=http://proxy.csc:3128
+    - HTTPS_PROXY=http://proxy.csc:3128
+    extra_hosts:
+    - "csc-uat-cachequeue-01:10.128.30.6"
+    - "csc-uat-cachequeue-02:10.128.33.35"
+    - "csc-uat-cachequeue-03:10.128.36.18"
+    - "csc-uat-mongodb-01:10.128.31.13"
+    - "csc-uat-mongodb-02:10.128.34.123"
+    - "csc-uat-mongodb-03:10.128.37.36"
+networks:
+  default:
+    external:
+      name: app_default
+

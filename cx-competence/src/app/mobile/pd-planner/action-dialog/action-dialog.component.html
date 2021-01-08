@@ -1,0 +1,21 @@
+<div class="pd-planner-action-dialog mobile-modal">
+  <div class="modal fade dialog" id="action-dialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="submit text-center">
+            <p class="submit__message">
+              {{ title }}
+            </p>
+            <p
+              (click)="doAction()"
+              class="btn btn-blue submit__back-to-plan-btn"
+            >
+              <i class="icon-down-arrow"></i><span>{{ actionMessage }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

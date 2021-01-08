@@ -1,0 +1,9 @@
+<div class="progress cx-progress">
+  <div
+    [ngClass]="'progress-bar ' + 'cx-progress__' + progressClass"
+    role="progressbar"
+    [style.width]="progressValue ? progressValue + '%' : '100%'"
+  >
+    {{ progressText }}
+  </div>
+</div>

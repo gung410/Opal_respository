@@ -1,0 +1,100 @@
+<div
+  *ngIf="allAnswers && learningNeedsConfig"
+  class="needs-analysis-container"
+  [class.review-mode]="reviewMode"
+>
+  <div class="needs-analysis-content">
+    <div class="needs-analysis-title">{{ steps[currentStep] }}</div>
+    <ul class="survey-progress-bar">
+      <li
+        #liElement
+        *ngFor="let step of steps; let i = index"
+        [ngClass]="{
+          passed: i <= currentCompletedStep,
+          selected: currentStep === i && currentStep < currentCompletedStep
+        }"
+        (click)="onStepClicked(i)"
+      >
+        <hr
+          class="progress-bar-line"
+          [style.background-position-x.px]="-liElement.offsetWidth - 1"
+        />
+      </li>
+    </ul>
+    <div class="needs-analysis-title-mobile">{{ steps[currentStep] }}</div>
+    <div
+      [hidden]="!surveySteps.includes(currentStep)"
+      class="needs-analysis-survey"
+    >
+      <cx-surveyjs
+        #survey
+        [data]="allAnswers"
+        [hideSubmitBtn]="true"
+        [json]="learningNeedsConfig"
+        [variables]="surveyVariables"
+        (submitting)="onSubmit($event)"
+        (changeValue)="onSurveyDataChanging($event)"
+        (afterSurveyRender)="onAfterSurveyRendered($event)"
+      >
+      </cx-surveyjs>
+    </div>
+    <div [hidden]="currentStep !== reviewStep">
+      <learning-needs-review
+        [needsResults]="needsResults"
+        [mode]="mode"
+      ></learning-needs-review>
+    </div>
+    <div [hidden]="currentStep !== previewStep" class="needs-analysis-preview">
+      <learning-needs-preview
+        [learningNeeds]="learningNeeds"
+        [mode]="mode"
+      ></learning-needs-preview>
+    </div>
+    <div
+      [hidden]="currentStep !== previewStep"
+      class="needs-analysis-preview-answer"
+    >
+      <learning-needs-preview-answer
+        [learningNeeds]="learningNeeds"
+        [learningNeedsConfig]="learningNeedsConfig"
+      ></learning-needs-preview-answer>
+    </div>
+  </div>
+  <div class="actions">
+    <button
+      *ngIf="isEditable && currentStep > 0"
+      class="cx-btn btn-save-draft"
+      (click)="saveDraft()"
+      [disabled]="!isEnableSaveDraft"
+    >
+      {{ 'MyPdJourney.Action.SaveDraft' | translate }}
+    </button>
+    <button
+      *ngIf="canEditOnReviewMode"
+      class="cx-btn"
+      (click)="onClickEditOnReviewMode()"
+    >
+      {{ 'MyPdJourney.Action.Edit' | translate }}
+    </button>
+    <button
+      *ngIf="!isLatestStep"
+      class="cx-btn"
+      (click)="clickNext(currentStep)"
+    >
+      {{ 'MyPdJourney.Action.Next' | translate }}
+    </button>
+    <button
+      *ngIf="isEditable && isLatestStep"
+      class="cx-btn"
+      (click)="clickSubmit($event)"
+      [disabled]="!isSubmittable"
+      [title]="
+        isSubmittable
+          ? ''
+          : 'Your LNA are rejected, so you have to update your LNA.'
+      "
+    >
+      {{ 'MyPdJourney.Action.SubmitLNA' | translate }}
+    </button>
+  </div>
+</div>

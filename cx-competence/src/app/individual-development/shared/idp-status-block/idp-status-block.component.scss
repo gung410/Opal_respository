@@ -1,0 +1,56 @@
+@import '~assets/styles/variables.scss';
+
+.idp-status-block {
+  display: flex;
+  font-size: 12px;
+  font-weight: 500;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  align-items: center;
+  line-height: 16px;
+  .dot-container {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 4px;
+    flex-shrink: 0;
+    margin-right: 6px;
+  }
+}
+
+.not-started {
+  background: #d8dce6;
+}
+.started {
+  background: #d8dce6;
+}
+.pending-for-approval {
+  background: #efdc33;
+}
+.completed,
+.approved {
+  background: #3bdc87;
+}
+.incompleted,
+.rejected {
+  background: #ff6262;
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .idp-status-block {
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    background: none;
+    text-transform: capitalize;
+    max-width: 150px;
+    height: unset;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    .dot-container {
+      display: inline-block;
+    }
+  }
+}

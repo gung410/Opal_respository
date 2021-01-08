@@ -1,0 +1,19 @@
+<div class="step-submitted">
+  <div class="greeting">
+    <div class="greeting__icon">
+      <i class="icon-check-mark"></i>
+    </div>
+    <div class="greeting__content">
+      {{ 'Mobile.PDPlan.LearningNeedsAnalysis.SubmittedGreeting' | translate }}
+    </div>
+  </div>
+  <div class="step-image text-center">
+    <img src="assets/mobile/images/planner-pic-1.png" />
+  </div>
+  <div class="text-center text-label">
+    {{ 'Mobile.PDPlan.LearningNeedsAnalysis.BeginPDPlan' | translate }}
+  </div>
+  <button class="cx-btn-big btn-pd-plan" (click)="onOpenPDPlan()">
+    {{ 'Mobile.PDPlan.LearningNeedsAnalysis.OpenPDPlan' | translate }}
+  </button>
+</div>

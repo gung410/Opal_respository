@@ -1,0 +1,1 @@
+The learning direction ({{LearningDirectionTitle}}) of the learning plan for {{LearningPlanPeriod}} has been rejected by the Approving Officer {{SenderName}}.

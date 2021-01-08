@@ -1,0 +1,68 @@
+.member-list {
+  min-height: 61px;
+  overflow: overlay;
+  padding: 20px;
+  .leaner-items {
+    overflow: scroll;
+    max-height: 353px;
+    min-height: 353px;
+  }
+  .nominate-item {
+    .nominate-learner-info,
+    .nominate-group-info,
+    .nominate-department-info {
+      cursor: default;
+    }
+  }
+  .pagging {
+    padding-top: 20px;
+  }
+  &.no-data {
+    padding: 20px;
+  }
+}
+
+.nominate-item {
+  display: flex;
+  padding: 10px 35px 10px 20px;
+  border: 1px solid #d8dce6;
+  border-radius: 5px;
+  align-items: center;
+  position: relative;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  .nominate-learner-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 220px;
+    &__avatar {
+      width: 35px;
+      height: 35px;
+      background-size: cover;
+      background-position: top center;
+      border-radius: 50%;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    &__text {
+      width: 100%;
+      .nominated-learner-email {
+        font-size: 12px;
+        color: #8799ba;
+      }
+    }
+  }
+
+  &__icon-close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #b5b5b5;
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,119 @@
+<div class="cx-page-container">
+  <cx-universal-toolbar
+    [buttonCondition]="buttonCondition"
+    [breadCrumbNavigation]="breadCrumbNavigation"
+    [departmentModel]="departmentModel"
+    (searchDepartment)="onSearch($event)"
+    (expandChildDepartment)="expandChildDepartment($event)"
+    (selectDepartmentTree)="onSelectDepartmentNode($event)"
+    (breadcrumbNavigationClick)="onClickBreadcrumbNavigation($event)"
+    (searchResultClick)="onClickSearchResult($event)"
+    [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+  >
+    <universal-toolbar-actions>
+      <div class="toolbar-actions">
+        <button
+          class="cx-btn cx-btn-secondary cx-btn-icon-right filter-btn"
+          (click)="onFilterButtonClick()"
+        >
+          {{ 'Common.Label.Filter' | translate }}
+          <i class="icon-filter"></i>
+          <a
+            *ngIf="filterDataApplied?.appliedFilter?.length"
+            class="filter-btn__number"
+          >
+            {{ filterDataApplied.appliedFilter.length }}
+          </a>
+        </button>
+        <div class="w-100"></div>
+        <div ngbDropdown class="d-inline-block">
+          <button class="cx-btn" id="exportBtn" ngbDropdownToggle>
+            {{ 'Common.Action.Export' | translate }}
+          </button>
+          <div
+            class="cx-dropdown-menu"
+            ngbDropdownMenu
+            aria-labelledby="exportBtn"
+          >
+            <div class="cx-dropdown-menu__item" (click)="onClickExport(true)">
+              {{ 'Common.Action.Export_All' | translate }}
+            </div>
+            <div
+              class="cx-dropdown-menu__item"
+              (click)="onClickExportLearningNeedsAnalysis()"
+            >
+              {{ 'Common.Action.Export_Learning_Needs_Analysis' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </universal-toolbar-actions>
+    <extend-footer-department-tree>
+      <div
+        *ngIf="this.isDisplayOrganisationSearch"
+        class="checkbox-sub-organisation-container"
+      >
+        <cx-checkbox
+          [selected]="isSearchedAcrossSubOrg"
+          (selectedChange)="searchSubOrg($event)"
+          class="checkbox-sub-organisation"
+        >
+          {{ 'Common.Action.SearchSubOrganisation' | translate }}
+        </cx-checkbox>
+        <div class="cx-tree-dropdown-divider"></div>
+      </div>
+    </extend-footer-department-tree>
+  </cx-universal-toolbar>
+
+  <div
+    class="action-group-container"
+    [cxFloatingToolbar]="gridToolbarAttribute"
+  >
+    <cx-action-toolbar
+      [actions]="userActions"
+      [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+      (menuActionClick)="onButtonGroupActionClick($event)"
+    ></cx-action-toolbar>
+    <button
+      class="cx-btn cx-btn-secondary cx-btn-icon btn-show-hide-colums"
+      (click)="openDialogToEnableColumns()"
+    >
+      <i class="icon icon-colums"></i>
+    </button>
+  </div>
+  <ag-grid-angular
+    #grid
+    class="ag-grid-header-floatable ag-grid-scroll-floatable ag-theme-material styled-grid staff-table"
+    domLayout="autoHeight"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [suppressRowClickSelection]="true"
+    [rowSelection]="rowSelection"
+    [defaultColDef]="defaultColDef"
+    [context]="context"
+    [rowHeight]="82"
+    [headerHeight]="64"
+    [frameworkComponents]="frameworkComponents"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+    [gridOptions]="{ suppressMovableColumns: true }"
+    (gridReady)="onGridReady($event)"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    (sortChanged)="onSortChanged($event)"
+    (selectionChanged)="onGridSelectionChanged()"
+    (rowDataChanged)="onGridRowDataChanged()"
+  >
+  </ag-grid-angular>
+
+  <!-- Apply paging later when finish deploying endpoint -->
+  <div class="staff-table__paging-area">
+    <cx-paging
+      *ngIf="pagedStaffsList"
+      [currentPageSize]="defaultPageSize"
+      [totalRecords]="pagedStaffsList.totalItems"
+      [recordsPerPage]="pagedStaffsList.pageSize"
+      [currentPage]="pagedStaffsList.pageIndex"
+      (currentPageChange)="onCurrentStaffPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    ></cx-paging>
+  </div>
+</div>

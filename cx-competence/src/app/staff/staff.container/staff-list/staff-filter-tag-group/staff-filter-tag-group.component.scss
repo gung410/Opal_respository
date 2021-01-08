@@ -1,0 +1,49 @@
+@import '../../../../../assets/styles/variables.scss';
+
+staff-filter-tag-group {
+  .staff-filter-tag-group {
+    &__filtered-item {
+      height: 35px;
+      display: inline-block;
+      background: #cfdbe5;
+      margin: 5px;
+      border-radius: 5px;
+      &--sub {
+        background: #bac5ce;
+      }
+      &--third {
+        background: #aeb6bd;
+      }
+    }
+
+    &__text {
+      height: 100%;
+      float: left;
+      padding: 9px;
+    }
+
+    &__icon {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      margin-top: 4px;
+      &:before {
+        font-size: 20px !important;
+      }
+      &:hover {
+        color: white !important;
+      }
+    }
+
+    &__sub-item {
+      clear: both;
+      position: relative;
+      display: inline-block;
+    }
+  }
+
+  i.close-icon-global::before {
+    content: 'close';
+    color: $main-color;
+  }
+}

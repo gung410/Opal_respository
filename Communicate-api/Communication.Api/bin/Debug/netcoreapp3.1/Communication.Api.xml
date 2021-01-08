@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communication.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Communication.Api.Controllers.CommunicationController.SendNotification(Communication.Business.Models.Email.EmailModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Communication.Api.Extensions.HttpRequestExtensions.GetRawBodyStringAsync(Microsoft.AspNetCore.Http.HttpRequest,System.Text.Encoding,System.IO.Stream)">
+            <summary>
+            Retrieve the raw body as a string from the Request.Body stream
+            </summary>
+            <param name="request">Request instance to apply to</param>
+            <param name="encoding">Optional - Encoding, defaults to UTF8</param>
+            <param name="inputStream">Optional - Pass in the stream to retrieve from. Other Request.Body</param>
+            <returns></returns>
+        </member>
+        <member name="M:Communication.Api.Extensions.HttpRequestExtensions.GetRawBodyBytesAsync(Microsoft.AspNetCore.Http.HttpRequest,System.IO.Stream)">
+            <summary>
+            Retrieves the raw body as a byte array from the Request.Body stream
+            </summary>
+            <param name="request"></param>
+            <param name="inputStream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Communication.Api.Extensions.HttpRequestExtensions.MapPath(Microsoft.AspNetCore.Http.HttpRequest,System.String,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,System.String)">
+            <summary>
+            Maps a virtual or relative path to a physical path in a Web site
+            </summary>
+            <param name="request"></param>
+            <param name="relativePath"></param>
+            <param name="host">Optional - IWebHostEnvironment instance. If not passed retrieved from RequestServices DI</param>
+            <param name="basePath">Optional - Optional physical base path. By default host.WebRootPath</param>
+            <returns></returns>
+        </member>
+        <member name="M:Communication.Api.Extensions.HttpRequestExtensions.GetUrl(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            Returns the absolute Url of the current request as a string.
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="M:Communication.Api.Extensions.HttpRequestExtensions.Params(Microsoft.AspNetCore.Http.HttpRequest,System.String)">
+            <summary>
+            Returns a value based on a key against the Form, Query and Session collections
+            </summary>
+            <param name="request"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Datahub.Content.Api.Controllers.MonitorController.CheckStatus">
+            <summary>
+            Get status of application
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

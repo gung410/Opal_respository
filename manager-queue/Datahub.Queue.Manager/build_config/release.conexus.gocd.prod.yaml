@@ -1,0 +1,73 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-conexus-api-queuemanager-release
+  uat-conexus: 
+    pipelines: 
+      - uat-datahub-conexus-api-queuemanager-release
+  prod-conexus: 
+    pipelines: 
+      - prod-datahub-conexus-api-queuemanager-release       
+format_version: 3
+pipelines: 
+  build-datahub-conexus-api-queuemanager-release: 
+    group: datahub-conexus-api-queuemanager-release
+    label_template: "release-1.1.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Datahub.Queue.Manager/
+      SONAR_PROJECTKEY: datahub-conexus-api-queuemanager-release
+      SONAR_SOLUTION_FILE: Datahub.Queue.Manager.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    template: linux-docker-build-sonar-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/1.1
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-datahub-queue-manager.git"
+  uat-datahub-conexus-api-queuemanager-release:
+    group: datahub-conexus-api-queuemanager-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-conexus-api-queuemanager-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-datahub-conexus-api-queuemanager-release
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+      DOCKER_DEPLOY_DIR : uat-conexus 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=
+  prod-datahub-conexus-api-queuemanager-release:
+    group: datahub-conexus-api-queuemanager-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: uat-datahub-conexus-api-queuemanager-release
+        stage: run-deploy-script
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: uat-datahub-conexus-api-queuemanager-release
+      UP_STREAME_PIPELINE_STAGE: run-deploy-script
+      UP_STREAME_PIPELINE_JOB: run-deploy-script-runOnAll-1
+      DOCKER_DEPLOY_DIR : prod-conexus 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.1.1
+      DOCKER_IMAGE_REPO: cx-datahub-api-queuemanager
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:GYghCOHB3PTYQK38U3GuYw==:VHZWRRrAdCIUYYLmRvTwJf0awB8SCVQxDekXy5Yw+x4=
+      IDM_CLIENT_ID: AES:eT7LGXMeVkrX4LusNc7/yQ==:Yt25/l1aagCX6FjtqdEJ8IaQD9LF7JXi05kSIKCohxM=

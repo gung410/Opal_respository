@@ -1,0 +1,148 @@
+@import '~assets/styles/mixins.scss';
+@import '~assets/styles/variables.scss';
+$progress-circle-color: #5a6981;
+$progress-border-color: #7ec8fd;
+$progress-line-color: #a0a0a0;
+
+.menu-action {
+  margin-bottom: 10px;
+  .plan-title {
+    font-weight: bold;
+    color: #6c73a0;
+    font-size: 1.5em;
+  }
+}
+
+.odp-content-container {
+  justify-content: center;
+  font-size: 14px;
+  .odp-content {
+    width: 100%;
+
+    &__surveyjs {
+      background-color: #fff;
+      border-radius: 10px;
+    }
+
+    &__message {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      width: 600px;
+      height: 300px;
+      border: 3px solid #c4c4c4;
+    }
+
+    &__message-content {
+      font-size: 3em;
+    }
+  }
+
+  ::ng-deep .check::before {
+    color: $main-color-lighter !important;
+  }
+
+  ::ng-deep h3 {
+    font-size: 1.5rem !important;
+  }
+
+  ::ng-deep h2 {
+    font-size: 1.6rem !important;
+  }
+
+  ::ng-deep .button {
+    color: #ffffff;
+    background-color: $main-color-lighter;
+    border-color: transparent;
+    border-radius: 5px;
+    padding: 0 10px;
+
+    &:hover {
+      background-color: $main-color-white;
+      color: #ffffff !important;
+    }
+  }
+
+  ::ng-deep .cx-surveyjs {
+    margin: 0 -12px;
+    .sv_p_title {
+      font-weight: bold;
+      color: #6c73a0;
+      font-size: 1.5em;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+    h5 {
+      color: #8799ba;
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .odp-content-buttons {
+    padding: 10px 50px;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: transparent;
+    outline: none;
+  }
+
+  .odp-content-controls {
+    display: flex;
+
+    &__save-button {
+      background-color: #c4c4c4;
+
+      &.odp-content-controls__save-button--push-right {
+        margin-left: auto;
+      }
+    }
+  }
+
+  ::ng-deep .cx-surveyjs {
+    margin: 0 -12px;
+  }
+
+  .no-data-label {
+    color: #a1a8b6;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    div {
+      max-width: 480px;
+    }
+  }
+  .disabled-label {
+    color: #8799ba;
+    opacity: 0.8;
+    font-size: 12px;
+  }
+}
+
+.plan-comments {
+  margin-top: 30px;
+  padding: 30px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  margin: 0 5px;
+}
+
+.border-top {
+  border-top: solid 1px #ccc;
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  .plan-comments {
+    .cx-comment {
+      padding: 0;
+    }
+  }
+}

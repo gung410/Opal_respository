@@ -1,0 +1,52 @@
+<div *ngIf="contents" class="table-of-content">
+  <div class="cx-panel table-of-content__about">
+    <div class="planned-pdo-about">
+      <div class="cx-panel__label">CONTENT</div>
+      <div
+        class="learner-course-content"
+        *ngIf="contents && contents.length > 0"
+      >
+        <div
+          class="learner-course-content__content-item"
+          *ngFor="let content of contents; index as index"
+        >
+          <div
+            class="learner-course-content__content-unit"
+            *ngIf="content.type === contentType.Section"
+          >
+            {{ index + 1 }}. {{ content.title }}
+          </div>
+          <div
+            class="learner-course-content__content-lecture"
+            *ngIf="content.type === contentType.Lecture"
+          >
+            <span class="learner-course-content__content-item-number">{{
+              index + 1
+            }}</span>
+            <span class="learner-course-content__content-item-title">
+              {{ content.title }}</span
+            >
+          </div>
+          <div *ngIf="content.type === contentType.Section && content.items">
+            <div
+              class="learner-course-content__content-lecture learner-course-content__content-child"
+              *ngFor="let child of content.items; index as i"
+            >
+              <span class="learner-course-content__content-item-number">{{
+                i + 1
+              }}</span>
+              <span> {{ child.title }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="learner-course-detail__no-content"
+        *ngIf="contents && contents.length == 0"
+      >
+        The course content is under maintenance
+      </div>
+    </div>
+  </div>
+</div>

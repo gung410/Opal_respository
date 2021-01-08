@@ -1,0 +1,1 @@
+﻿{{SenderName}} ({{Email}}) has just submitted {{Pronoun}} external PD opportunity for your approval.

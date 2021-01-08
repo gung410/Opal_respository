@@ -1,0 +1,9 @@
+aspnetcore_environment: localdev
+mongo_db_name: localdev-datahub-vagrant-db
+mongo_db_auth: localdev-datahub-vagrant:vagrant-datahub-localdev
+mongo_db_host: mongodb-01.vagrant/localdev-datahub-vagrant-db
+mongo_db_ssl_enabled: false
+rabbitmq_username: queuemanager
+rabbitmq_password: queuemanager
+rabbitmq_hostnames: rabbitmq-01.vagrant
+rabbitmq_ssl_enabled: false

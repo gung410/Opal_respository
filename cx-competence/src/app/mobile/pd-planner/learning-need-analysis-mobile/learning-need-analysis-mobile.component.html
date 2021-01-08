@@ -1,0 +1,19 @@
+<div class="learning-need-analysis-page page full-view">
+  <pd-planner-page-header
+    [title]="pageNameTranslatePath | translate"
+    [backRoute]="backRoute"
+  ></pd-planner-page-header>
+  <div class="learning-need-analysis-body full-view">
+    <ng-container *ngIf="!isSubmitted">
+      <learning-needs-analysis
+        *ngIf="lnaResult && user && lnaResults"
+        [user]="user"
+        [learningNeeds]="lnaResult"
+        [needsResults]="lnaResults"
+        (submit)="onSubmittedLearningNeeds()"
+      >
+      </learning-needs-analysis>
+    </ng-container>
+    <step-submitted *ngIf="isSubmitted"> </step-submitted>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div
+  *ngIf="item$ && config"
+  class="cx-select"
+  [class.cx-hide-selected]="config.hideSelected"
+  [class.searchable]="config.searchable"
+>
+  <ng-select
+    #cxSelect
+    [items]="items"
+    [(ngModel)]="selectedItems"
+    [trackByFn]="trackByFn"
+    [typeahead]="itemInput$"
+    [loading]="itemLoading"
+    bindLabel="primaryField"
+    [addTag]="config.addItem"
+    [multiple]="config.multiple"
+    [clearable]="config.clearable"
+    [searchable]="config.searchable"
+    [closeOnSelect]="config.closeOnSelect"
+    [placeholder]="config.placeholder"
+    [virtualScroll]="false"
+    [disabled]="disabled"
+    typeToSearchText="{{ config.searchText }}"
+    (change)="onSelectItem($event)"
+    (focus)="onFocusSelect()"
+    (scrollToEnd)="onScrollToEnd()"
+  >
+    <ng-template
+      ng-option-tmp
+      let-item="item"
+      let-index="index"
+      let-search="searchTerm"
+    >
+      <div class="cx-select-item">
+        <div *ngIf="item.avatar" class="cx-select-item__avatar">
+          <img [src]="item.avatar" />
+        </div>
+        <div class="cx-select-item__full-info item-full-info">
+          <div class="item-full-info__primary" [title]="item.primaryField">
+            {{ item.primaryField }}
+          </div>
+          <div class="item-full-info__secondary" [title]="item.secondaryField">
+            {{ item.secondaryField }}
+          </div>
+          <div class="item-full-info__third" [title]="item.thirdField">
+            {{ item.thirdField }}
+          </div>
+        </div>
+        <div
+          *ngIf="config.disableItemText"
+          class="cx-select-item__disable-mark"
+        >
+          {{ config.disableItemText }}
+        </div>
+      </div>
+    </ng-template>
+  </ng-select>
+</div>

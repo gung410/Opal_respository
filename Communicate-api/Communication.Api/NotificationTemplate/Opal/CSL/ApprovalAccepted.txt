@@ -1,0 +1,1 @@
+{{OriginatorName}} has approved your membership request for the community {{CommunityName}}.

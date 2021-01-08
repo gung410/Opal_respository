@@ -1,0 +1,53 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-learn-processor-communication_sender-snapshot
+  development-learn: 
+    pipelines: 
+      - development-datahub-learn-processor-communication_sender-snapshot     
+format_version: 3
+pipelines: 
+  build-datahub-learn-processor-communication_sender-snapshot: 
+    group: datahub-learn-processor-communication_sender-snapshot
+    label_template: "snapshot-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Processor.Sender/
+      SONAR_PROJECTKEY: datahub-learn-processor-communication_sender-snapshot
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: develop
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+  development-datahub-learn-processor-communication_sender-snapshot:
+    group: datahub-learn-processor-communication_sender-snapshot
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-learn-processor-communication_sender-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-learn
+      UP_STREAME_PIPELINE_NAME: build-datahub-learn-processor-communication_sender-snapshot
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:Rw05Jb7GcDhESTN9WPVddQ==:ySCzBYSBc7K9NNPoASJnDFB8Peo71OM04XzKdMYYWqo=
+      IDM_CLIENT_ID: AES:UepIoNovj0ZFY0fI+yDCjg==:NdOMq4cHLEUFWEtBDpIsENDpM13ZYkzvZsmD4bqRIlo=
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-processor-communication-sender
+      PUBLIC_DNS: ",development-datahub-learn-processor-communication_sender.csc.cxs.cloud"
+      FireBaseCloudMessage_BaseAppInstanceServerUrl: https://iid.googleapis.com/
+      FireBaseCloudMessage_BaseFirebaseClouldMessageUrl: https://fcm.googleapis.com/
+      FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey: AIzaSyB4_phE4NhU-nQQVK5aRr6x43nY8ddP1DQ
+      RABBITMQ_SSL_ENABLED: true
+      MONGO_SSL_ENABLED: true
+ 

@@ -1,0 +1,10 @@
+@import '~assets/styles/variables.scss';
+
+.report-page {
+  padding: 0 ($main-grid-unit * 6) 100px;
+  width: 100%;
+  iframe {
+    width: 100%;
+    min-height: 100vh;
+  }
+}

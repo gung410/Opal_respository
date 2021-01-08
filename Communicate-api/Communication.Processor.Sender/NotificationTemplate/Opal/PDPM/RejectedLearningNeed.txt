@@ -1,0 +1,2 @@
+Your submitted LNA has been rejected by your Approving Officer {{SenderName}}.
+

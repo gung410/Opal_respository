@@ -1,0 +1,27 @@
+<div class="planned-pdo-mass-nominations">
+  <div class="planned-pdo-mass-nominations__nominate cx-panel">
+    <ng-container>
+      <div class="pdo-title-container">
+        <cx-back-button
+          class="pdo-title-container__back-btn"
+          (click)="onClickBack()"
+        ></cx-back-button>
+      </div>
+      <mass-nomination-panel
+        [klpDto]="klpDto"
+        [departmentId]="departmentId"
+        (onCompleteToNominate)="loadReportFileResults()"
+      ></mass-nomination-panel>
+    </ng-container>
+  </div>
+  <div class="cx-panel planned-pdo-nominations__nominated">
+    <div class="nominated-results-container">
+      <mass-nomination-results
+        #massNominationResult
+        [klpExtId]="klpExtId"
+        [departmentId]="departmentId"
+        [assignMode]="assignMode"
+      ></mass-nomination-results>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div
+  class="idp"
+  *ngIf="user"
+  [class.reporting-officer-mode]="isReportingOfficerMode"
+  [style.visibility]="learningNeedsResults ? 'visible' : 'hidden'"
+>
+  <ng-container *ngIf="isReportingOfficerMode">
+    <idp-toolbar [user]="user"></idp-toolbar>
+    <div class="learner-info cx-panel">
+      <cx-back-button
+        class="learner-info__back-btn"
+        (click)="onClickBack()"
+      ></cx-back-button>
+      <div
+        class="learner-info__avatar"
+        [style.background-image]="'url(' + userAvatar + ')'"
+      ></div>
+      <div class="learner-info__text">
+        <div class="learner-name">{{ user.firstName }}</div>
+        <div class="learner-email">{{ user.email }}</div>
+      </div>
+    </div>
+  </ng-container>
+  <h4 *ngIf="isLearnerMode" class="idp__title">Plan your activities</h4>
+  <div class="idp__content" [@.disabled]="true">
+    <mat-tab-group
+      *ngIf="loadedData"
+      [selectedIndex]="matTabIndex"
+      (selectedTabChange)="selectedTabChange($event)"
+    >
+      <mat-tab
+        #learningNeedsAnalysisTab
+        label="Learning Needs Analysis {{ lnaPeriod }}"
+        *ngIf="
+          mode === IDPMode.Learner &&
+          showLearningNeedsAnalysisTab &&
+          learningNeedAnalysisPermission.allowView
+        "
+      >
+        <ng-container *ngIf="showLearningNeedsAnalysisContentTab">
+          <learning-needs-analysis
+            [user]="user"
+            [learningNeeds]="learningNeedsAnalysis"
+            [needsResults]="learningNeedsResults"
+            (submit)="onSubmittedLearningNeeds($event)"
+          ></learning-needs-analysis>
+        </ng-container>
+      </mat-tab>
+      <mat-tab
+        #learningNeedsTab
+        label="Learning Needs"
+        *ngIf="learningNeedPermission.allowView"
+      >
+        <ng-container *ngIf="showLearningNeedsContentTab">
+          <learning-needs
+            [user]="user"
+            [needsResults]="learningNeedsResults"
+            [mode]="mode"
+            (needToReloadLNA)="onNeedToReloadLNA()"
+          ></learning-needs>
+        </ng-container>
+      </mat-tab>
+      <mat-tab
+        #pdPlanTab
+        *ngIf="pdPlanPermission.allowView"
+        label="{{ mode === IDPMode.Learner ? 'Your ' : '' }} PD Plan"
+      >
+        <ng-container *ngIf="showPdPlanContentTab">
+          <pd-opportunities
+            [user]="user"
+            [mode]="mode"
+            [needsResults]="learningNeedsResults"
+          ></pd-opportunities>
+        </ng-container>
+      </mat-tab>
+      <mat-tab
+        #ePortfolioTab
+        *ngIf="
+          mode !== IDPMode.Learner &&
+          ePortfolioUrl &&
+          ePortfolioPermission.allowView
+        "
+        label="E-Portfolio"
+      >
+        <ng-container *ngIf="showEPortfolioContentTab">
+          <iframe
+            appIframeResizer
+            [src]="ePortfolioUrl"
+            style="width: 100%; min-height: 100vh"
+            frameborder="0"
+            scrolling="no"
+            (load)="onIframeLoad()"
+          ></iframe>
+        </ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+The organisational learning plan for {{LearningPlanPeriod}} has been rejected by the Approving Officer {{SenderName}}.
+
+

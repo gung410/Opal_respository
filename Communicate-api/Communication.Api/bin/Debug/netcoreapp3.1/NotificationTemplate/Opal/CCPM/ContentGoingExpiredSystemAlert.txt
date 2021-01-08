@@ -1,0 +1,3 @@
+Your digital content: {{ContentName}} is going to expire on {{Date}}.
+
+

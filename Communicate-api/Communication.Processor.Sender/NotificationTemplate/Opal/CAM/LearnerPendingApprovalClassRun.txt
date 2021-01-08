@@ -1,0 +1,1 @@
+The learner {{LearnerName}} - {{LearnerEmail}}, has registered to participate in the course, {{CourseTitle}} - {{ClassrunTitle}} and the application is awaiting your approval.

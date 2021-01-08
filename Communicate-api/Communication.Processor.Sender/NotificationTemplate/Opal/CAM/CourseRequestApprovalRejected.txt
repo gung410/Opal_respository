@@ -1,0 +1,2 @@
+Your course - {{CourseTitle}} - has been rejected by the Approving Officer, {{SenderName}}.
+

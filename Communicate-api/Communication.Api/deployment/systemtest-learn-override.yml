@@ -1,0 +1,34 @@
+version: '3.6'
+services:
+  datahub-communication-api:
+    environment:   
+    - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+    - RABBITMQ_HOSTNAMES=rabbitmq-01.csc
+    - BuildVersion=${GO_PIPELINE_LABEL}
+    - PROJECT_NAME=${PROJECT_NAME}
+    - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+    - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+    - RABBITMQ_PORT=5672
+    - QUEUE_MANAGER_API=http://${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-queueManager.csc/QueueManager
+    - FireBaseCloudMessage:BaseAppInstanceServerUrl=https://iid.googleapis.com/
+    - FireBaseCloudMessage:BaseFirebaseClouldMessageUrl=https://fcm.googleapis.com/
+    - FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey=AAAAiyImTOQ:APA91bFIm3J3P1zNARVv6goUtlmp0a1DawkxD-UKvVLfVk4yUYFsgtXaRpO3BJ8ey0bKrl040CZhFCcIUDgDJA2uyexTp0-Eggf0uBfdXKktDnFaNuusZ-32Kbg-A5_1qL2EwHsy4d7w
+    - IDM_BASEURL=https://systemtest-idm-web.csc.cxs.cloud/
+    - IDM_GRANT_TYPE=client_credentials
+    - IDM_CLIENT_SECRET=BiOiJKV1QiLCJ4NXQiOiKhM
+    - IDM_CLIENT_ID=udemy.import
+    - IDM_SCOPE=SharedServicesApi CoursepadApi_FullAccess userManagement
+    - MONGO_DATABASENAME=${ENVIRONMENT_NAME}-${PROJECT_NAME}-notification
+    - MONGO_CONNECTIONSTRING=mongodb://${PROJECT_NAME}-notification-${ENVIRONMENT_NAME}:${MONGODB_PASSWORD}@mongodb-01.csc/${ENVIRONMENT_NAME}-${PROJECT_NAME}-notification-db
+    - VIRTUAL_HOST=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-communication.csc${PUBLIC_DNS}
+    - Email:FromName=${PROJECT_NAME}.gov.sg
+    - Email:FromAddress=noreply@mail.csc.cxs.cloud
+    - Email:SslEnabled=true
+    - Email:MailServerAddress=email-smtp.eu-west-1.amazonaws.com
+    - Email:MailServerPort=587
+    - Email:UserName=AKIAIMC6OTNRLYOFBU6A
+    - Email:UserPassword=Au1cWZbsn3Lel9AWxSolVgt+DU1e1jOlRljyY18uRH83
+networks:
+  default:
+    external:
+      name: app_default

@@ -1,0 +1,1 @@
+Your scheduled post has been published in the community {{CommunityName}}.

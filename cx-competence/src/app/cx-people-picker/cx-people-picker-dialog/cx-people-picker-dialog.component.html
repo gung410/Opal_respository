@@ -1,0 +1,36 @@
+<cx-dialog-template
+  [showFooterActionButtons]="true"
+  [cancelButtonText]="'Common.Label.Cancel' | translate"
+  [doneButtonText]="'Common.Action.Add' | translate"
+  [doneButtonDisabled]="selectedRowCount === 0"
+  (cancel)="onCancel()"
+  (done)="onDone()"
+  [fixedHeight]="true"
+>
+  <modal-header>
+    <h3>
+      {{ dialogTitle }}
+    </h3>
+  </modal-header>
+  <content>
+    <div class="people-picker-dialog-content">
+      <cx-surveyjs
+        #filterSurveyJs
+        [json]="filterSurveyFormJSON"
+        [variables]="filterSurveyVariables"
+        (afterQuestionsRender)="afterFilterQuestionsRendered($event)"
+        (valueChanged)="onFilterChanged($event)"
+        [submitName]="'Search'"
+        [disableSubmitBtn]="disableSearchBtn"
+        (submitting)="onSearchClick($event)"
+      >
+      </cx-surveyjs>
+      <cx-people-list
+        [listType]="listType"
+        [filterParams]="filterParams"
+        [showResults]="false"
+        (selectionChanged)="onSelectionChanged($event)"
+      ></cx-people-list>
+    </div>
+  </content>
+</cx-dialog-template>

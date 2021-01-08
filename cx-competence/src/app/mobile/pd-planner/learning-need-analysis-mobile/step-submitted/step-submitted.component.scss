@@ -1,0 +1,41 @@
+.step-submitted {
+  font-size: 1rem;
+  .greeting {
+    display: flex;
+    background: #57d596;
+    color: #fff;
+    margin: 0 -15px;
+    padding: 10px 40px;
+    &__icon {
+      font-size: 2.5rem;
+    }
+    &__content {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      font-weight: 500;
+      line-height: 18px;
+      font-size: 14px;
+    }
+  }
+
+  .step-image {
+    margin-top: 100px;
+    > img {
+      width: 75vw;
+    }
+  }
+
+  .text-label {
+    margin-top: 40px;
+    font-weight: 500;
+  }
+
+  .btn-pd-plan {
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 5px;
+    background: #3c6df2;
+    padding: 10px 20px;
+  }
+}

@@ -1,0 +1,26 @@
+<cx-dialog-template
+  [showFooterActionButtons]="false"
+  [cancelButtonText]="'Common.Label.Cancel' | translate"
+  [doneButtonText]="'Common.Label.OK' | translate"
+  (cancel)="onCancel()"
+>
+  <modal-header>
+    <h3>
+      {{ 'Export_Learning_Needs_Analysis.Dialog.Title' | translate }}
+    </h3>
+  </modal-header>
+  <content>
+    <div class="export-learning-needs-analysis">
+      <cx-surveyjs
+        #appliedFilterSurveyJs
+        [json]="surveyFormJSON"
+        [cancelName]="'Common.Action.Cancel' | translate"
+        [variables]="surveyVariables"
+        (cancel)="onCancel()"
+        [submitName]="'Common.Label.OK' | translate"
+        (submitting)="onConfirmClick($event)"
+      >
+      </cx-surveyjs>
+    </div>
+  </content>
+</cx-dialog-template>

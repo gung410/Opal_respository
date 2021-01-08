@@ -1,0 +1,30 @@
+.nominate-status-tabs {
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+  .nominate-tab {
+    padding: 5px 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    margin-bottom: -1px;
+
+    nominate-status {
+      min-width: auto;
+    }
+
+    &:first-child {
+      border-left: none;
+    }
+    &.active {
+      background-color: #fff;
+      border-color: #dee2e6 #dee2e6 #fff;
+      font-weight: 500;
+      margin-bottom: -2px;
+    }
+  }
+}

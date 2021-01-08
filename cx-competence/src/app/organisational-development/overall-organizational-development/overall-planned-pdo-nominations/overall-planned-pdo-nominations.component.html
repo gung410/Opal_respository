@@ -1,0 +1,315 @@
+<div *ngIf="!loadedData">{{ 'Common.Message.LoadingData' | translate }}</div>
+<div *ngIf="loadedData" class="planned-pdo-nominations">
+  <div class="cx-panel planned-pdo-nominations__nominated">
+    <div class="nominated-learners-container">
+      <div class="cx-panel__label">
+        NOMINATED LEARNERS
+        <span
+          *ngIf="learnerNominationItems && learnerNominationItems.length > 0"
+        >
+          ({{ learnerNominationItems.length }})</span
+        >
+      </div>
+      <div class="nominate-list">
+        <div
+          *ngFor="let nominationItem of learnerNominationItems"
+          class="nominate-item"
+        >
+          <div
+            *ngIf="nominationItem.learner as learnerInfo"
+            class="nominate-learner-info"
+          >
+            <div
+              class="nominate-learner-info__avatar"
+              [style.background-image]="
+                'url(' + getAvatar(learnerInfo.email) + ')'
+              "
+            ></div>
+            <div class="nominate-learner-info__text">
+              <div class="nominated-learner-name">{{ learnerInfo.name }}</div>
+              <div class="nominated-learner-email">{{ learnerInfo.email }}</div>
+            </div>
+          </div>
+          <nominate-status
+            [nominateItem]="nominationItem"
+            [isExternalPDO]="isExternalPDO"
+          ></nominate-status>
+          <overall-classrun-info
+            class="nominate-classrun-info"
+            *ngIf="nominationItem.classRun as classRunInfo"
+            [classRunInfo]="classRunInfo"
+          ></overall-classrun-info>
+
+          <div
+            *ngIf="isAssignedByCurrentKLP(nominationItem)"
+            class="nominate-item__by-current-klp"
+          >
+            BY CURRENT KLP
+          </div>
+        </div>
+        <div
+          *ngIf="learnerNominationItems && learnerNominationItems.length === 0"
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoNominatedLearners' | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="nominated-groups-container">
+      <div class="cx-panel__label">
+        NOMINATED GROUPS
+        <span *ngIf="groupNominationItems && groupNominationItems.length > 0">
+          ({{ groupNominationItems.length }})</span
+        >
+      </div>
+
+      <div class="nominate-list">
+        <div
+          class="nomination-container"
+          *ngFor="let nominationItem of groupNominationItems; let i = index"
+        >
+          <div class="nominate-item">
+            <div
+              *ngIf="nominationItem.group as groupInfo"
+              class="nominate-group-info"
+              data-toggle="collapse"
+              aria-expanded="false"
+              [attr.data-target]="
+                '#nominate-group-members-' +
+                groupInfo.id +
+                '-' +
+                nominationItem.classRun.id
+              "
+              [attr.aria-controls]="
+                'nominate-group-members-' +
+                groupInfo.id +
+                '-' +
+                nominationItem.classRun.id
+              "
+              (click)="onClickGroupNominateItem(nominationItem)"
+            >
+              <div class="nominate-group-info__avatar">
+                <div
+                  *ngFor="let item of [1, 1, 1]"
+                  class="nominate-group-avatar"
+                  [style.background-image]="'url(' + defaultAvatar + ')'"
+                ></div>
+              </div>
+              <div class="nominate-group-info__name">
+                {{ groupInfo.name }} ({{ groupInfo.totalLearner }})
+              </div>
+            </div>
+            <nominate-status
+              [nominateItem]="nominationItem"
+              (openDetailNominateStatus)="
+                openDetailNominateStatus(nominationItem, $event)
+              "
+              [isExternalPDO]="isExternalPDO"
+            ></nominate-status>
+            <overall-classrun-info
+              class="nominate-classrun-info"
+              *ngIf="nominationItem.classRun as classRunInfo"
+              [classRunInfo]="classRunInfo"
+            ></overall-classrun-info>
+            <div
+              *ngIf="isAssignedByCurrentKLP(nominationItem)"
+              class="nominate-item__by-current-klp"
+            >
+              BY CURRENT KLP
+            </div>
+          </div>
+
+          <div
+            class="collapse nominate-group-members"
+            *ngIf="
+              nominationGroupDataById[
+                nominationItem.group.id + '-' + nominationItem.classRun.id
+              ]
+            "
+            id="{{
+              'nominate-group-members-' +
+                nominationItem.group.id +
+                '-' +
+                nominationItem.classRun.id
+            }}"
+          >
+            <nomination-status-tabs
+              [approvalResultModel]="nominationItem.group"
+              [activeStatus]="
+                nominationGroupDataById[
+                  nominationItem.group.id + '-' + nominationItem.classRun.id
+                ].status
+              "
+              [isExternalPDO]="isExternalPDO"
+              (onOpenTab)="openDetailNominateStatus(nominationItem, $event)"
+            ></nomination-status-tabs>
+
+            <nomination-member-list
+              [pagingLearnerResultModel]="
+                nominationGroupDataById[
+                  nominationItem.group.id + '-' + nominationItem.classRun.id
+                ].data
+              "
+              (pagingChanged)="
+                onPagingGroupChanged(
+                  nominationItem,
+                  nominationGroupDataById[
+                    nominationItem.group.id + '-' + nominationItem.classRun.id
+                  ].status,
+                  $event
+                )
+              "
+            ></nomination-member-list>
+          </div>
+        </div>
+        <div
+          *ngIf="groupNominationItems && groupNominationItems.length === 0"
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoNominatedGroups' | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="nominated-department-container">
+      <div class="cx-panel__label">NOMINATED ORGANISATION UNIT</div>
+      <div class="nominate-list">
+        <div
+          class="nomination-container"
+          *ngFor="
+            let nominationItem of departmentNominationItems;
+            let i = index
+          "
+        >
+          <ng-container *ngIf="nominationItem">
+            <div class="nominate-item nominate-department-item">
+              <div
+                class="nominate-group-info"
+                data-toggle="collapse"
+                aria-expanded="false"
+                [attr.data-target]="
+                  '#nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+                "
+                [attr.aria-controls]="
+                  'nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+                "
+                (click)="onClickDepartmentNominateItem(nominationItem, null)"
+              >
+                <div class="nominate-group-info__avatar">
+                  <div
+                    *ngFor="let item of [1, 1, 1, 1]"
+                    class="nominate-group-avatar"
+                    [style.background-image]="'url(' + defaultAvatar + ')'"
+                  ></div>
+                </div>
+                {{ nominationItem.department.name }} ({{
+                  nominationItem.department.totalLearner
+                }})
+              </div>
+              <nominate-status
+                [nominateItem]="nominationItem"
+                (openDetailNominateStatus)="
+                  openDetailNominateDepartmentStatus(nominationItem, $event)
+                "
+              ></nominate-status>
+              <overall-classrun-info
+                class="nominate-classrun-info"
+                *ngIf="nominationItem.classRun as classRunInfo"
+                [classRunInfo]="classRunInfo"
+              ></overall-classrun-info>
+
+              <div
+                *ngIf="isAssignedByCurrentKLP(nominationItem)"
+                class="nominate-item__by-current-klp"
+              >
+                BY CURRENT KLP
+              </div>
+            </div>
+
+            <div
+              class="collapse nominate-group-members"
+              id="{{
+                'nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+              }}"
+            >
+              <nomination-status-tabs
+                *ngIf="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ]
+                "
+                [approvalResultModel]="nominationItem.department"
+                [activeStatus]="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ].status
+                "
+                [isExternalPDO]="isExternalPDO"
+                (onOpenTab)="
+                  openDetailNominateDepartmentStatus(nominationItem, $event)
+                "
+              ></nomination-status-tabs>
+
+              <nomination-member-list
+                *ngIf="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ]
+                "
+                [pagingLearnerResultModel]="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ].data
+                "
+                (pagingChanged)="
+                  onPagingDepartmentChanged(
+                    nominationItem,
+                    nominationDepartmentDataById[
+                      nominationItem.department.id +
+                        '-' +
+                        nominationItem.classRun.id
+                    ].status,
+                    $event
+                  )
+                "
+              ></nomination-member-list>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          departmentNominationItems && departmentNominationItems.length === 0
+        "
+        class="cx-panel__label-nodata"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.NoNominatedDepartment' | translate
+        }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+Your registration for the course - {{CourseTitle}} - has been withdrawn by the course administrator. If you have any queries, please contact {{CAName}} at {{CAEmail}}.

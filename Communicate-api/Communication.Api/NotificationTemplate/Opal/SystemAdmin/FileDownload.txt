@@ -1,0 +1,7 @@
+Your account has been created manually.
+Your OTP: {{OtpCode}}
+{{DowloadText}}
+{{Kian}}
+{{Sam}}
+{{Hoa}}
+

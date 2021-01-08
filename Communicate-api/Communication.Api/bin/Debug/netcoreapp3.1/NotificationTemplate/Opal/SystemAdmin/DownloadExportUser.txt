@@ -1,0 +1,6 @@
+Hi {{UserFullName}},
+The report of user accounts has been exported successfully. Please click link below to download the file:
+{{DownloadUrl}}
+If there are any issues, please contact your administrator for support.
+
+

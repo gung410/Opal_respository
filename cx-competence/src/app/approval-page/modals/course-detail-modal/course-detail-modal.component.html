@@ -1,0 +1,25 @@
+<div class="course-detail-modal">
+  <course-detail
+    *ngIf="dataLoaded"
+    class="cx-tab-body"
+    [pdoDetail]="plannedPDODetail"
+    [pdoModel]="pdoModel"
+    [classrunDetail]="classrunDetail"
+    [sessions]="sessions"
+    [contents]="contents"
+    [selectedTab]="selectedTab"
+    [reviews]="reviews"
+    [pdPlanMode]="pdPlanMode"
+    [allowEditExternalPDO]="allowEditExternalPDO"
+    [selectCourseMode]="selectCourseMode"
+    [selectCourseModeDisplayText]="selectCourseModeDisplayText"
+    [selectCourseModeSelected]="selectCourseModeSelected"
+    [commentPermission]="commentPermission"
+    (addToPlan)="onAddToPlanClicked($event)"
+    (loadMoreReview)="onLoadMoreReview($event)"
+    (updatedExternalPDO)="updatedExternalPDO.emit($event)"
+  ></course-detail>
+  <div class="close-button" (click)="onClose()">
+    <i class="icon icon-close"></i>
+  </div>
+</div>

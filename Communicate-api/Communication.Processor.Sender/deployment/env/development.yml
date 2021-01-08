@@ -1,0 +1,6 @@
+mongo_db_name: development-communication-opal-db
+mongo_db_auth: development-communication-opal:opal-communication-development
+idm_base_url: https://idm.development.opal2.conexus.net
+https_proxy: http://proxy.opal:3128
+ses_configuration_set: sendingreport
+enable_mail_log: true

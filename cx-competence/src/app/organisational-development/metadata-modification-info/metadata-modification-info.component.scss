@@ -1,0 +1,38 @@
+@import '~assets/styles/variables.scss';
+
+.metadata-modification-info {
+  display: flex;
+  padding-left: 10px;
+  ::ng-deep .avatar {
+    .cx-avatar {
+      width: 30px;
+      height: 30px;
+    }
+    img {
+      border: 2px solid #e6e6e6;
+
+      &:hover {
+        border-color: #7ec8fd;
+      }
+    }
+
+    &:first-child {
+      margin-right: 2px;
+    }
+  }
+
+  &__text {
+    margin-left: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    p {
+      margin: 0;
+      color: rgb(107, 119, 140);
+      font-size: 0.8em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

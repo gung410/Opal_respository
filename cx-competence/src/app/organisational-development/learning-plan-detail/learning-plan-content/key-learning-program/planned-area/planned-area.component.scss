@@ -1,0 +1,60 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.klp-area-item {
+  display: flex;
+  padding-left: 15px;
+  padding-right: 25px;
+  margin-bottom: 25px;
+  position: relative;
+  border-left: 4px solid $cx-color-main;
+  &__box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 300px;
+    &:not(:last-child) {
+      padding-right: 30px;
+      position: relative;
+      &::after {
+        content: '\e90c';
+        font-family: 'opal' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        position: absolute;
+        right: 8px;
+        top: 0;
+        font-size: 18px;
+        transform: translateY(-50%);
+        margin-top: 26px;
+      }
+    }
+  }
+  &__title {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #8799ba;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  &__content {
+    font-size: 1rem;
+  }
+  &__remove-button {
+    right: 0;
+    top: 50%;
+    cursor: pointer;
+    font-size: 10px;
+    position: absolute;
+    transform: translateY(-50%);
+  }
+}

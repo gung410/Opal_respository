@@ -1,0 +1,115 @@
+@import 'node_modules/@conexus/cx-angular-common/lib/styles/variables';
+
+/* TODO: This CSS was copied from staff-list.component. We may need to filter out the unnecessary code */
+.lna-status {
+  cursor: pointer;
+  .cutoff-date {
+    font-size: 10px;
+    margin-left: 18px;
+    line-height: 20px;
+  }
+
+  &__items-info {
+    display: inline-flex;
+    align-items: flex-start;
+    vertical-align: middle;
+    flex-direction: column;
+  }
+
+  &__items-user-group {
+    line-height: normal;
+  }
+
+  &__items-info-data {
+    &--main {
+      color: $main-color;
+      line-height: normal;
+      a {
+        color: $main-color;
+      }
+    }
+
+    &--secondary {
+      color: $disabled-text-color;
+      line-height: normal;
+    }
+  }
+
+  &__items {
+    &--avatar {
+      cursor: pointer;
+      width: 40px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+
+      &-image {
+        width: inherit;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+
+    &--info {
+      position: relative;
+      padding-top: 5px;
+      &-item {
+        display: table;
+      }
+
+      &-item-sub {
+        font-size: 1em;
+        color: #909090;
+        margin: 0;
+      }
+
+      &-action-hover:hover {
+        cursor: pointer;
+        color: #0052cc;
+      }
+
+      .cx-progress {
+        cursor: pointer;
+      }
+    }
+
+    &--due-date {
+      text-align: center;
+      color: #ca3c3c;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+
+  &__status {
+    &--logged-label {
+      color: #909090;
+    }
+
+    &--logged-in {
+      color: #5db31f;
+    }
+  }
+
+  &__roles {
+    color: #909090;
+  }
+
+  &__paging-area {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid-header-centered {
+    .ag-header-cell-label {
+      justify-content: center;
+    }
+  }
+  .grid-cell-centered {
+    .ag-cell-wrapper {
+      justify-content: center;
+    }
+  }
+}

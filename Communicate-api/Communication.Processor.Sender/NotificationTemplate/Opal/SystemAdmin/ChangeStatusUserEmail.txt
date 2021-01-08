@@ -1,0 +1,7 @@
+Hi {{FullName}},
+Your OPAL2.0 account has been {{StatusChanged}}.
+Reason: {{RejectReason}}
+You can continue using the system now by clicking the link below:
+System Administration
+
+

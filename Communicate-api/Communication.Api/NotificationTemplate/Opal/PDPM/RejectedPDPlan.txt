@@ -1,0 +1,2 @@
+Your submitted PD Plan has been rejected by your Approving Officer {{SenderName}}.
+

@@ -1,0 +1,125 @@
+@import "assets/mobile/styles/mixins.scss";
+@import "~assets/styles/mixins.scss";
+@import "~assets/styles/variables.scss";
+
+$main-body-text: #313552;
+
+.full-view {
+  height: 100vh;
+  width: 100vw;
+}
+
+.approved {
+  background-color: #97f5c4 !important;
+}
+
+.rejected {
+  background-color: #ff5261 !important;
+}
+
+.draft {
+  background-color: #c5c5c5 !important;
+}
+
+.started {
+  background-color: #D1D1D1 !important;
+}
+
+.pending-approval {
+  background-color: #F5DD8B !important;
+}
+
+.not-started {
+  background-color: #D1D1D1 !important;
+}
+
+.icon-success {
+  color: #57D596;
+}
+
+.devide-line {
+  border: 1px solid #d8dfe5;
+}
+
+.btn-blue {
+  background-color: #3c6df2;
+  color: #fff;
+}
+
+.btn {
+  width: 100%;
+  @include layout(row, center);
+}
+
+.page {
+  background-color: $cx-mobile-background-color;
+}
+
+.element-background {
+  background-color: #fff;
+}
+
+.text {
+  @include layout(column, center);
+}
+
+.box {
+  background: #ffffff;
+  border: 1px solid rgba(216, 223, 229, 0.5);
+  @include box-sizing(border-box);
+  border-radius: 5px;
+}
+
+.align-horizontal-center {
+  margin: 0 auto;
+}
+
+.read {
+  background-color: #70A1FF;
+}
+
+.unread {
+  background-color: #FF6375;
+}
+
+.popup-transition-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(100%);
+  transition: 0.5s ease-in-out;
+  overflow: hidden;
+  z-index: 99;
+
+  &.show {
+    transform: translateX(0%);
+  }
+}
+
+.mpj-mobile-modal {
+  text-align: center;
+  padding: 0 16px !important;
+
+  .dialog {
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    .modal-dialog {
+      display: inline-block;
+      text-align: left;
+      vertical-align: middle;
+
+      .modal-content {
+        border: none;
+
+        .modal-body {
+          padding: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+Please submit your attendance for {{SessionTitle}} of {{ClassrunTitle}} by the end of the day.
+

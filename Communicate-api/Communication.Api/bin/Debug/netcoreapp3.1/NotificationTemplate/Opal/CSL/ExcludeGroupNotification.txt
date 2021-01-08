@@ -1,0 +1,1 @@
+{{OriginatorName}} removed you from group {{GroupName}}.

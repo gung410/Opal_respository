@@ -1,0 +1,1 @@
+Your registration for the course - {{CourseTitle}} - has been rejected by the course administrator.

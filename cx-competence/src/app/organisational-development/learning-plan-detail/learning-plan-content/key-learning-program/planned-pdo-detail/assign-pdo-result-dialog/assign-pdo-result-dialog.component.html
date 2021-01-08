@@ -1,0 +1,139 @@
+<cx-dialog-template
+  *ngIf="invalidResults"
+  [showFooterActionButtons]="true"
+  [fixedHeight]="true"
+  [showConfirmButton]="isConfirmMode && validLearnersCount > 0"
+  [doneButtonText]="'Proceed'"
+  (done)="onConfirm()"
+  (cancel)="onClose()"
+>
+  <modal-header>
+    <h3 *ngIf="!isConfirmMode">
+      <span>{{ headerContentTranslatePath | translate }}</span>
+    </h3>
+    <h3 *ngIf="isConfirmMode">Confirmation</h3>
+  </modal-header>
+  <content>
+    <div class="assign-results-container">
+      <div class="assign-info">
+        <!-- Case show result mode -->
+        <span *ngIf="!isConfirmMode">
+          <!-- Case hasn't valid learner -->
+          <span *ngIf="validLearnersCount === 0">
+            <span *ngIf="!approvalMode && isNominate">
+              None of the learners have been nominated successfully due to the
+              following reasons.
+            </span>
+
+            <ng-container *ngIf="approvalMode || !isNominate">
+              <span>
+                All of your {{ objectiveName(false) }} is unsuccessful.
+              </span>
+              <span *ngIf="invalidResults.length > 0">
+                {{
+                  ' The ' + objectiveName(invalidResults.length > 1) + ' below '
+                }}
+                {{ invalidResults.length > 1 ? 'are' : 'is' }}
+                {{ ' invalid.' }}
+              </span>
+            </ng-container>
+          </span>
+
+          <!-- Case has valid learner -->
+          <span *ngIf="validLearnersCount > 0">
+            <span
+              >{{ validLearnersCount }}
+              {{ objectiveName(validLearnersCount > 1) }}
+              {{ validLearnersCount > 1 ? 'are' : 'is' }}
+              {{ subHeaderActionName }} successfully.</span
+            >
+            <span *ngIf="!approvalMode"
+              >{{ ' ' + validLearnersCount }}
+              {{ validLearnersCount > 1 ? 'requests' : 'request' }} have been
+              submitted for approval.</span
+            >
+            <span *ngIf="invalidResults.length > 0"
+              >{{
+                ' The ' + objectiveName(invalidResults.length > 1) + ' below '
+              }}
+              {{ invalidResults.length > 1 ? 'are' : 'is' }}
+              {{ ' invalid.' }}</span
+            >
+          </span>
+        </span>
+
+        <!-- Case cofirm proceed mode -->
+        <span *ngIf="isConfirmMode">
+          <!-- Case has valid learner -->
+          <span *ngIf="validLearnersCount > 0">
+            <ng-container *ngIf="approvalMode || !isNominate">
+              <span>
+                {{ validLearnersCount }}
+                {{ objectiveName(validLearnersCount > 1) }} will be
+                {{ subHeaderActionName }}.
+              </span>
+              <span *ngIf="invalidResults.length > 0">
+                {{
+                  ' The ' + objectiveName(invalidResults.length > 1) + ' below '
+                }}
+                {{ invalidResults.length > 1 ? 'are' : 'is' }}
+                {{ ' invalid and won’t be proceeded.' }}
+              </span>
+            </ng-container>
+
+            <ng-container *ngIf="!approvalMode && isNominate">
+              <div>
+                <b>{{ validLearnersCount }}</b>
+                {{ validLearnersCount > 1 ? 'Learners' : 'Learner' }} will be
+                nominated.
+              </div>
+              <div *ngIf="invalidResults.length > 0">
+                Nomination was unsuccessful for the learners below with the
+                following reasons.
+              </div>
+            </ng-container>
+          </span>
+        </span>
+      </div>
+      <div
+        class="assign-result-label-container"
+        *ngIf="invalidResults && invalidResults.length > 0"
+      >
+        <div class="assign-result-label">
+          Exceptions ({{ invalidResults.length }})
+        </div>
+        <div class="assign-result-label">Reason</div>
+      </div>
+
+      <div class="assign-results">
+        <div *ngFor="let assignResult of invalidResults" class="assign-result">
+          <div class="assignee-info">
+            <div
+              class="assignee-info__avatar"
+              [style.background-image]="'url(' + assignResult.avatar + ')'"
+            ></div>
+            <div class="assignee-info__text">
+              <div class="nominated-learner-name">{{ assignResult.name }}</div>
+              <div class="nominated-learner-email">
+                {{ assignResult.email }}
+              </div>
+            </div>
+          </div>
+          <div
+            class="assignee-info__status"
+            [class.success-label]="assignResult.isSuccess"
+            [class.fail-label]="!assignResult.isSuccess"
+          >
+            <span class="icon circle-status">{{
+              !assignResult.isSuccess ? '!' : ''
+            }}</span>
+            <span *ngIf="assignResult.isSuccess">SUCCESS</span>
+            <span *ngIf="!assignResult.isSuccess">{{
+              assignResult.reason
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </content>
+</cx-dialog-template>

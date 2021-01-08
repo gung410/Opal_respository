@@ -1,0 +1,31 @@
+@import '~assets/styles/mixins.scss';
+@import '~assets/styles/variables.scss';
+.staff-table {
+    &__items-info-data {
+        &--main {
+            color: $main-color;
+            line-height: normal;
+            a {
+                color: $main-color;
+            }
+        }
+        &--secondary {
+            color: $disabled-text-color;
+            line-height: normal;
+        }
+    }
+    &__items {
+        &--avatar {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+            &-image {
+                width: inherit;
+                height: 40px;
+                border-radius: 50%;
+            }
+        }
+    }
+}

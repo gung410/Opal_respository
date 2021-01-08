@@ -1,0 +1,608 @@
+<div
+  *ngIf="loadedData"
+  class="cx-page-container adhoc-nominations"
+  [hidden]="showCatalogue"
+>
+  <div class="adhoc-nominations__nominate cx-panel">
+    <div class="nomination-mode-selector">
+      <div class="cx-panel__label">NOMINATE FOR *</div>
+      <mat-radio-group
+        class="nomination-mode-selector__selector"
+        aria-label="Nomination target:"
+        [value]="nominationMode"
+        (change)="onChangeNominationMode($event)"
+      >
+        <mat-radio-button
+          *ngIf="adhocNominationPermission.allowIndividualNominate"
+          class="mr-4"
+          [value]="'learner'"
+          >Individual Learners</mat-radio-button
+        >
+        <mat-radio-button
+          *ngIf="adhocNominationPermission.allowGroupNominate"
+          class="mr-4"
+          [value]="'group'"
+          >Groups</mat-radio-button
+        >
+        <mat-radio-button
+          *ngIf="adhocNominationPermission.allowCurrentOrganisationUnitNominate"
+          class="mr-4"
+          [value]="'department'"
+          >Current Organisation Unit</mat-radio-button
+        >
+
+        <mat-radio-button
+          *ngIf="adhocNominationPermission.allowMassNominate"
+          [value]="'massnomination'"
+          >Mass nomination</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+    <ng-container *ngIf="!isMassNominationMode">
+      <div class="select-course">
+        <div class="cx-panel__label">Select a course *</div>
+        <button
+          class="cx-btn cx-btn-secondary cx-btn-icon add-pdo-btn"
+          (click)="onOpenPDCatalogue()"
+        >
+          <i class="icon icon-add font-weight-bold"></i>
+          PD Opportunity
+        </button>
+
+        <div *ngIf="selectedPDOAnswer" class="selected-course-info">
+          <pdo-long-card
+            class="klp-pdos__item"
+            [pdoAnswer]="selectedPDOAnswer"
+            [allowRemove]="true"
+            (clickedRemove)="onClickRemovePDO()"
+          ></pdo-long-card>
+        </div>
+      </div>
+      <div
+        *ngIf="published === false"
+        class="cx-panel__label-nodata unpublished-label"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.SelectedPDOUnpublished' | translate
+        }}
+      </div>
+      <div
+        *ngIf="!hasValidClassRunToNominate && published"
+        class="cx-panel__label-nodata no-classrun-label"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.NoClassRunToAdhocNominate'
+            | translate
+        }}
+      </div>
+      <div
+        *ngIf="selectedPDOAnswer && published && hasValidClassRunToNominate"
+        class="select-classrun"
+      >
+        <div class="cx-panel__label">Select a class run *</div>
+        <cx-select
+          *ngIf="classRunObs"
+          class="select-classrun__selector"
+          [(selectedItems)]="selectedClassRunSelectItem"
+          [itemObs]="classRunObs"
+          [config]="classrunSelectorConfig"
+          (selectedItemsChange)="onSelectClassRunChange($event)"
+        ></cx-select>
+        <div *ngIf="selectedClassRun" class="select-classrun__info">
+          <div class="classrun-info-primary">
+            <div class="classrun-info-title">
+              <div class="classrun-info-title__title">
+                {{ selectedClassRun.classTitle }}
+              </div>
+              <div class="classrun-info-title__application-date">
+                <div>APPLICATION DATE</div>
+                <div *ngIf="selectedClassRun.applicationStartDate">
+                  {{ getDateTimeString(selectedClassRun.applicationStartDate) }}
+                </div>
+                <div *ngIf="selectedClassRun.applicationEndDate">
+                  {{ getDateTimeString(selectedClassRun.applicationEndDate) }}
+                </div>
+              </div>
+            </div>
+            <div class="classrun-info-start-date">
+              <div class="cx-panel__label">START DATE</div>
+              <div *ngIf="selectedClassRun.startDateTime" class="classrun-date">
+                {{ getDateTimeString(selectedClassRun.startDateTime) }}
+              </div>
+            </div>
+            <div class="classrun-info-end-date">
+              <div class="cx-panel__label">END DATE</div>
+              <div *ngIf="selectedClassRun.endDateTime" class="classrun-date">
+                {{ getDateTimeString(selectedClassRun.endDateTime) }}
+              </div>
+            </div>
+          </div>
+          <div class="classrun-info-secondary">
+            <div class="cx-panel__label">CLASS SIZE</div>
+            <div>{{ selectedClassRun.maxClassSize + ' people' }}</div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="showSetApprovingOfficerField"
+        class="select-approving-officer"
+      >
+        <div class="cx-panel__label">SET APPROVING OFFICER *</div>
+        <mat-radio-group
+          class="select-approving-officer__selector mt-2"
+          aria-label="Approving officer target:"
+          [value]="approvingOfficerMode"
+          (change)="onChangeApprovingOfficerMode($event)"
+        >
+          <mat-radio-button class="mr-4" [value]="'admin'">
+            Pick a Division/Branch/School Admin
+          </mat-radio-button>
+          <mat-radio-button class="mr-4" [value]="'cao'">
+            Route to individual learner’s CAO
+          </mat-radio-button>
+        </mat-radio-group>
+        <cx-select
+          *ngIf="isApprovingAdminMode"
+          class="learner-selector"
+          [itemObs]="approvingAdminObs"
+          [(selectedItems)]="selectedApprovingOfficerSelectItem"
+          [config]="adminSelectorConfig"
+        ></cx-select>
+      </div>
+      <div
+        *ngIf="
+          isNominationLearnerMode &&
+          selectedPDOAnswer &&
+          published &&
+          hasValidClassRunToNominate
+        "
+        class="select-learners"
+      >
+        <div class="cx-panel__label">Select learners *</div>
+        <cx-select
+          *ngIf="learnerObs"
+          class="learner-selector"
+          [itemObs]="learnerObs"
+          [(selectedItems)]="selectedLearnerSelectItems"
+          [config]="learnerSelectorConfig"
+        ></cx-select>
+        <div
+          *ngIf="
+            selectedLearnerSelectItems && selectedLearnerSelectItems.length > 0
+          "
+          class="selected-learner-container"
+        >
+          <div class="nominate-list">
+            <div
+              *ngFor="let learnerCxSelectItem of selectedLearnerSelectItems"
+              class="nominate-item"
+            >
+              <div class="nominate-learner-info">
+                <div
+                  class="nominate-learner-info__avatar"
+                  [style.background-image]="
+                    'url(' + learnerCxSelectItem.avatar + ')'
+                  "
+                ></div>
+                <div class="nominate-learner-info__text">
+                  <div class="nominated-learner-name">
+                    {{ learnerCxSelectItem.primaryField }}
+                  </div>
+                  <div class="nominated-learner-email">
+                    {{ learnerCxSelectItem.secondaryField }}
+                  </div>
+                </div>
+              </div>
+              <i
+                class="icon icon-close nominate-item__icon-close"
+                (click)="onClickedRemoveSelectedLearner(learnerCxSelectItem)"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="isNominationGroupMode && selectedPDOAnswer"
+        class="select-user-group"
+      >
+        <div class="cx-panel__label">Select a group *</div>
+        <cx-select
+          *ngIf="userGroupObs"
+          class="select-user-group__selector"
+          [(selectedItems)]="selectedUserGroupSelectItems"
+          [itemObs]="userGroupObs"
+          [config]="userGroupSelectorConfig"
+          (selectedItemsChange)="onSelectUserGroup($event)"
+        ></cx-select>
+      </div>
+      <div *ngIf="allowNominate" class="action-button mt-4">
+        <button
+          [disabled]="!isValidToNominate"
+          class="cx-btn"
+          (click)="onClickedNominate()"
+        >
+          Nominate
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isMassNominationMode">
+      <mass-nomination-panel
+        [isAdHoc]="true"
+        [departmentId]="departmentId"
+        (onCompleteToNominate)="loadReportFileResults()"
+      ></mass-nomination-panel>
+    </ng-container>
+  </div>
+
+  <div
+    *ngIf="selectedPDOAnswer || isMassNominationMode"
+    class="cx-panel adhoc-nominations__nominated"
+  >
+    <div *ngIf="!isMassNominationMode" class="nominated-learners-container">
+      <div class="cx-panel__label">
+        NOMINATED LEARNERS
+        <span
+          *ngIf="learnerNominationItems && learnerNominationItems.length > 0"
+        >
+          ({{ learnerNominationItems.length }})</span
+        >
+      </div>
+      <div class="nominate-list">
+        <div
+          *ngFor="let nominationItem of learnerNominationItems"
+          class="nominate-item"
+        >
+          <div
+            *ngIf="nominationItem.learner as learnerInfo"
+            class="nominate-learner-info"
+          >
+            <div
+              class="nominate-learner-info__avatar"
+              [style.background-image]="
+                'url(' + getAvatar(learnerInfo.email) + ')'
+              "
+            ></div>
+            <div class="nominate-learner-info__text">
+              <div class="nominated-learner-name">{{ learnerInfo.name }}</div>
+              <div class="nominated-learner-email">{{ learnerInfo.email }}</div>
+            </div>
+          </div>
+          <nominate-status
+            [nominateItem]="nominationItem"
+            (openDetailNominateStatus)="
+              openDetailNominateDepartmentStatus(
+                departmentNominationItem,
+                $event
+              )
+            "
+          ></nominate-status>
+          <div *ngIf="nominationItem.classRun" class="nominate-course-info">
+            <div
+              *ngIf="nominationItem.course.name"
+              class="nominate-course-info__course-name"
+              style="text-transform: capitalize"
+              [attr.title]="'Course:' + nominationItem.course.name"
+            >
+              Course: {{ nominationItem.course.name }}
+            </div>
+            <div
+              *ngIf="nominationItem.classRun.name"
+              class="nominate-course-info__classrun-name"
+              style="text-transform: capitalize"
+              [attr.title]="'Class run:' + nominationItem.classRun.name"
+            >
+              Class run: {{ nominationItem.classRun.name }}
+            </div>
+          </div>
+          <!-- TODO: Disable remove nomination for now -->
+          <!-- <i
+            class="icon icon-close nominate-item__icon-close"
+            (click)="onClickedRemoveNominationItem(nominationItem)"
+          ></i> -->
+        </div>
+        <div
+          *ngIf="learnerNominationItems && learnerNominationItems.length === 0"
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoNominatedLearners' | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isMassNominationMode" class="nominated-groups-container">
+      <div class="cx-panel__label">
+        NOMINATED GROUPS
+        <span *ngIf="groupNominationItems && groupNominationItems.length > 0">
+          ({{ groupNominationItems.length }})</span
+        >
+      </div>
+      <div class="nominate-list">
+        <div
+          class="nomination-container"
+          *ngFor="let nominationItem of groupNominationItems; let i = index"
+        >
+          <div class="nominate-item">
+            <div
+              *ngIf="nominationItem.group as groupInfo"
+              class="nominate-group-info"
+              data-toggle="collapse"
+              aria-expanded="false"
+              [attr.data-target]="
+                '#nominate-group-members-' +
+                groupInfo.id +
+                '-' +
+                nominationItem.classRun.id
+              "
+              [attr.aria-controls]="
+                'nominate-group-members-' +
+                groupInfo.id +
+                '-' +
+                nominationItem.classRun.id
+              "
+              (click)="onClickGroupNominateItem(nominationItem)"
+            >
+              <div class="nominate-group-info__avatar">
+                <div
+                  *ngFor="let item of [1, 1, 1]"
+                  class="nominate-group-avatar"
+                  [style.background-image]="'url(' + defaultAvatar + ')'"
+                ></div>
+              </div>
+              <div class="nominate-group-info__name">
+                {{ groupInfo.name }} ({{ groupInfo.totalLearner }})
+              </div>
+            </div>
+            <nominate-status
+              [nominateItem]="nominationItem"
+              [groupType]="'group'"
+              (openDetailNominateStatus)="
+                openDetailNominateStatus(nominationItem, $event)
+              "
+            ></nominate-status>
+            <div *ngIf="nominationItem.classRun" class="nominate-course-info">
+              <div
+                *ngIf="nominationItem.course.name"
+                class="nominate-course-info__course-name"
+                style="text-transform: capitalize"
+                [attr.title]="'Course:' + nominationItem.course.name"
+              >
+                Course: {{ nominationItem.course.name }}
+              </div>
+              <div
+                *ngIf="nominationItem.classRun.name"
+                class="nominate-course-info__classrun-name"
+                style="text-transform: capitalize"
+                [attr.title]="'Class run:' + nominationItem.classRun.name"
+              >
+                Class run: {{ nominationItem.classRun.name }}
+              </div>
+            </div>
+            <!-- TODO: Disable remove nomination for now -->
+            <!-- <i
+              class="icon icon-close nominate-item__icon-close"
+              (click)="onClickedRemoveNominationItem(nominationItem)"
+            ></i> -->
+          </div>
+
+          <div
+            class="collapse nominate-group-members"
+            id="{{
+              'nominate-group-members-' +
+                nominationItem.group.id +
+                '-' +
+                nominationItem.classRun.id
+            }}"
+          >
+            <div
+              *ngIf="
+                nominationGroupDataById[
+                  nominationItem.group.id + '-' + nominationItem.classRun.id
+                ]
+              "
+            >
+              <nomination-status-tabs
+                [approvalResultModel]="nominationItem.group"
+                [activeStatus]="
+                  nominationGroupDataById[
+                    nominationItem.group.id + '-' + nominationItem.classRun.id
+                  ].status
+                "
+                (onOpenTab)="openDetailNominateStatus(nominationItem, $event)"
+              ></nomination-status-tabs>
+              <nomination-member-list
+                [pagingLearnerResultModel]="
+                  nominationGroupDataById[
+                    nominationItem.group.id + '-' + nominationItem.classRun.id
+                  ].data
+                "
+                (pagingChanged)="
+                  onPagingGroupChanged(
+                    nominationItem,
+                    nominationGroupDataById[
+                      nominationItem.group.id + '-' + nominationItem.classRun.id
+                    ].status,
+                    $event
+                  )
+                "
+              ></nomination-member-list>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="groupNominationItems && groupNominationItems.length === 0"
+          class="cx-panel__label-nodata"
+        >
+          {{
+            'Odp.LearningPlan.PlannedPDODetail.NoNominatedGroups' | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isMassNominationMode" class="nominated-department-container">
+      <div class="cx-panel__label">NOMINATED ORGANISATION UNIT</div>
+      <div class="nominate-list">
+        <div
+          class="nomination-container"
+          *ngFor="
+            let nominationItem of departmentNominationItems;
+            let i = index
+          "
+        >
+          <ng-container *ngIf="nominationItem">
+            <div class="nominate-item nominate-department-item">
+              <div
+                class="nominate-group-info"
+                data-toggle="collapse"
+                aria-expanded="false"
+                [attr.data-target]="
+                  '#nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+                "
+                [attr.aria-controls]="
+                  'nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+                "
+                (click)="
+                  openDetailNominateDepartmentStatus(nominationItem, null)
+                "
+              >
+                <div class="nominate-group-info__avatar">
+                  <div
+                    *ngFor="let item of [1, 1, 1, 1]"
+                    class="nominate-group-avatar"
+                    [style.background-image]="'url(' + defaultAvatar + ')'"
+                  ></div>
+                </div>
+                {{ nominationItem.department.name }} ({{
+                  nominationItem.department.totalLearner
+                }})
+              </div>
+              <nominate-status
+                [groupType]="'department'"
+                [nominateItem]="nominationItem"
+                (openDetailNominateStatus)="
+                  openDetailNominateDepartmentStatus(nominationItem, $event)
+                "
+              ></nominate-status>
+              <div *ngIf="nominationItem.classRun" class="nominate-course-info">
+                <div
+                  *ngIf="nominationItem.course.name"
+                  class="nominate-course-info__course-name"
+                  style="text-transform: capitalize"
+                  [attr.title]="'Course:' + nominationItem.course.name"
+                >
+                  Course: {{ nominationItem.course.name }}
+                </div>
+                <div
+                  *ngIf="nominationItem.classRun.name"
+                  class="nominate-course-info__classrun-name"
+                  style="text-transform: capitalize"
+                  [attr.title]="'Class run:' + nominationItem.classRun.name"
+                >
+                  Class run: {{ nominationItem.classRun.name }}
+                </div>
+              </div>
+              <!-- <i
+                class="icon icon-close nominate-item__icon-close"
+                (click)="onClickedRemoveNominationItem(nominationItem)"
+              ></i> -->
+            </div>
+            <div
+              class="collapse nominate-group-members"
+              id="{{
+                'nominate-department-members-' +
+                  nominationItem.department.id +
+                  '-' +
+                  nominationItem.classRun.id
+              }}"
+            >
+              <nomination-status-tabs
+                *ngIf="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ]
+                "
+                [approvalResultModel]="nominationItem.department"
+                [activeStatus]="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ].status
+                "
+                (onOpenTab)="
+                  openDetailNominateDepartmentStatus(nominationItem, $event)
+                "
+              ></nomination-status-tabs>
+
+              <nomination-member-list
+                *ngIf="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ]
+                "
+                [pagingLearnerResultModel]="
+                  nominationDepartmentDataById[
+                    nominationItem.department.id +
+                      '-' +
+                      nominationItem.classRun.id
+                  ].data
+                "
+                (pagingChanged)="
+                  onPagingDepartmentChanged(
+                    nominationItem,
+                    nominationDepartmentDataById[
+                      nominationItem.department.id +
+                        '-' +
+                        nominationItem.classRun.id
+                    ].status,
+                    $event
+                  )
+                "
+              ></nomination-member-list>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          departmentNominationItems && departmentNominationItems.length === 0
+        "
+        class="cx-panel__label-nodata"
+      >
+        {{
+          'Odp.LearningPlan.PlannedPDODetail.NoNominatedDepartment' | translate
+        }}
+      </div>
+    </div>
+    <div *ngIf="isMassNominationMode" class="mass-nominated-container">
+      <mass-nomination-results
+        #massNominationResult
+        [departmentId]="departmentId"
+        [assignMode]="assignPDOType"
+      ></mass-nomination-results>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showCatalogue" class="catalogue-course-picker-container">
+  <catalogue-course-picker
+    [dialogTitle]="catalogueTitle"
+    [addText]="selectCourseText"
+    [pickCourseMode]="true"
+    (addToPlan)="onSelectPDOFromCatalogue($event)"
+    (back)="onClickBackFromCatalogue()"
+  ></catalogue-course-picker>
+</div>

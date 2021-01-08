@@ -1,0 +1,19 @@
+<cx-dialog-template
+  #elementRef
+  [showFooterActionButtons]="false"
+  (cancel)="onCancel()"
+  [fixedHeight]="true"
+>
+  <modal-header>
+    <h3 class="title">
+      {{ 'ApprovalPage.PendingLearnerDialog.Header' | translate }}
+    </h3>
+  </modal-header>
+  <content>
+    <nomination-member-list
+      [pageSize]="pageSize"
+      [pagingLearnerResultModel]="learnerPagingData"
+      (pagingChanged)="onPagingChanged($event)"
+    ></nomination-member-list>
+  </content>
+</cx-dialog-template>

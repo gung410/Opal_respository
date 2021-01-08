@@ -1,0 +1,1 @@
+{{CourseTitle}} - {{ClassRunTitle}} - {{AssignmentName}}: {{AssessorName}} had completed the assessment

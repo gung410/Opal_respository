@@ -1,0 +1,26 @@
+<div class="klp-learning-area-container">
+  <div class="cx-panel__label mb-2">Learning Areas</div>
+  <button
+    *ngIf="isEditing && allowAddingAreaPermission"
+    class="cx-btn cx-btn-secondary cx-btn-icon add-area-btn"
+    (click)="onClickAddAreas()"
+  >
+    <i class="icon icon-add font-weight-bold"></i>
+    {{ 'Odp.Button.AddArea' | translate }}
+  </button>
+  <div class="klp-areas">
+    <planned-area
+      *ngFor="let areaModel of klpAddedAreas"
+      class="klp-areas__item"
+      [areaModel]="areaModel"
+      [allowRemove]="isEditing && allowDeletingAreaPermission"
+      (clickedRemove)="onClickedRemoveArea($event)"
+    ></planned-area>
+    <div
+      *ngIf="klpAddedAreas && klpAddedAreas.length === 0"
+      class="no-data-label"
+    >
+      There is no Learning Areas
+    </div>
+  </div>
+</div>

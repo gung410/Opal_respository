@@ -1,0 +1,2 @@
+You have just been reminded that {{StartDate}} is the start date of planning cycle.
+

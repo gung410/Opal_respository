@@ -1,0 +1,59 @@
+.cx-container {
+  margin: 0;
+  min-height: calc(100vh - 255px);
+  .notification-alert {
+    padding: 0 40px;
+
+    iframe {
+      width: 100%;
+      border: none;
+    }
+
+    &.empty {
+      padding: 0;
+      margin: 0;
+      height: 0;
+
+      iframe {
+        height: 0 !important;
+      }
+    }
+  }
+  .breadcrum-container {
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 25px;
+    ::ng-deep cx-breadcrumb-simple {
+      display: block;
+      .cx-breadcrumb {
+        &__list {
+          &__item {
+            font-size: 0.8rem !important;
+
+            &__text {
+              padding: 2px 0 2px 30px;
+            }
+            &:nth-child(1) a {
+              padding-left: 8px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .container-content {
+    height: 100%;
+    margin: 0px;
+    > div {
+      height: 100%;
+      padding: 0px;
+    }
+  }
+
+  ::ng-deep #app-spinner {
+    .loading:before {
+      background-color: #f4f4f4 !important;
+    }
+  }
+}

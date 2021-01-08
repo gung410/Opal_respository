@@ -1,0 +1,60 @@
+<div class="view-plan-detail" *ngIf="planNode && titleNode">
+  <div class="plan-node">
+    <!-- Learning Plan detail -->
+    <cx-node [node]="titleNode"></cx-node>
+    <cx-surveyjs
+      *ngIf="planFormJSON"
+      [json]="planFormJSON"
+      [data]="planNode.dataObject.pdplanDto.answer"
+      [variables]="formVariables"
+      [hideFooter]="true"
+    >
+    </cx-surveyjs>
+    <!-- List Learning Direction detail -->
+  </div>
+  <div
+    *ngIf="planNode.children && planNode.children.length > 0"
+    class="list-learning-direcion-detail"
+  >
+    <div
+      class="learning-direction-detail"
+      *ngFor="let ldNode of planNode.children; let i = index"
+    >
+      <cx-node [node]="titleNode.children[i]"></cx-node>
+      <cx-lazy-surveyjs
+        [id]="ldNode.dataObject.pdplanDto.resultIdentity.id"
+        [json]="directionFormJSON"
+        [data]="ldNode.dataObject.pdplanDto.answer"
+        [hideFooter]="true"
+      >
+      </cx-lazy-surveyjs>
+
+      <!-- List KLP detail -->
+      <div
+        *ngIf="ldNode.children && ldNode.children.length > 0"
+        class="list-klp-detail"
+      >
+        <div
+          class="klp-detail"
+          *ngFor="let klpNode of ldNode.children; let j = index"
+        >
+          <cx-node [node]="titleNode.children[i].children[j]"></cx-node>
+          <cx-lazy-surveyjs
+            [id]="ldNode.dataObject.pdplanDto.resultIdentity.id"
+            [json]="programmeFormJSON"
+            [data]="klpNode.dataObject.pdplanDto.answer"
+            [hideFooter]="true"
+            (afterQuestionsRender)="afterQuestionsRendered($event)"
+          >
+          </cx-lazy-surveyjs>
+          <planned-list-area
+            [klpResultDto]="klpNode.dataObject.pdplanDto"
+          ></planned-list-area>
+          <overall-planned-list-pdo
+            [klpResultDto]="klpNode.dataObject.pdplanDto"
+          ></overall-planned-list-pdo>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

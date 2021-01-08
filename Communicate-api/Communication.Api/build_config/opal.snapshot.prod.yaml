@@ -1,0 +1,63 @@
+---
+format_version: 3
+environments:
+  docker-publish: 
+    pipelines: 
+      - cx-datahub-communication-api-snapshot-build
+  development: 
+    pipelines: 
+      - cx-datahub-communication-api-development
+  uat-next: 
+    pipelines: 
+      - cx-datahub-communication-api-uat-next
+pipelines:
+  cx-datahub-communication-api-snapshot-build: 
+    group: cx-datahub-communication-api-snapshot
+    label_template: "release-1.2.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Api/
+      SONAR_PROJECTKEY: cx-datahub-communication-api-snapshot
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: develop
+        git: "https://bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+        username: samnguyenn
+        encrypted_password: AES:Gl+5mhjKWgWeGW5TCVLRlA==:xT2hvR8chS49PNkvuN2xhw==
+        whitelist:
+          - Communication.Api/**/*.*
+  cx-datahub-communication-api-development:
+    group:  cx-datahub-communication-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-api-snapshot-build
+        stage: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-api-snapshot-build
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    template: ansible-deploy-fetch-upstream-auto
+  cx-datahub-communication-api-uat-next:
+    group: cx-datahub-communication-api-snapshot
+    label_template: "${upstream}"
+    materials:
+      upstream:
+        pipeline: cx-datahub-communication-api-development
+        stage: deploy-stage
+    environment_variables:
+      DOCKER_IMAGE_TAG: 
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: cx-datahub-communication-api-development
+      UP_STREAME_PIPELINE_STAGE: deploy-stage
+      UP_STREAME_PIPELINE_JOB: deploy
+    template: ansible-deploy-fetch-upstream

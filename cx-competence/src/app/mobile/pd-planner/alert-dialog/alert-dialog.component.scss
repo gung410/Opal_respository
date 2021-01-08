@@ -1,0 +1,29 @@
+@import 'assets/mobile/styles/mixins.scss';
+@import 'assets/mobile/styles/common.scss';
+
+.pd-planner-alert-dialog {
+  #alert-dialog {
+    .modal-content {
+      padding: 20px 50px;
+
+      .submit {
+        &__icon {
+          color: #57d596;
+          font-size: 70px;
+        }
+
+        &__thank {
+          margin-top: 20px;
+          @include font(500, 20px, 23px);
+          color: $main-body-text;
+        }
+
+        &__text {
+          @include font(normal, 14px, 18px);
+          text-align: center;
+          color: $main-body-text;
+        }
+      }
+    }
+  }
+}

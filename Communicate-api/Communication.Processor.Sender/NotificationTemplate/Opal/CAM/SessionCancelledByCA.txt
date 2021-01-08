@@ -1,0 +1,1 @@
+﻿We would like to inform you that the session on {{SessionDate}} in the course, {{CourseTitle}} - {{ClassrunTitle}} has been cancelled by the course adminstrator.

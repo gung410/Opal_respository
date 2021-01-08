@@ -1,0 +1,322 @@
+@import '~assets/styles/variables.scss';
+@import '~assets/styles/mixins.scss';
+
+individual-development {
+  $banner-color: #ecf3f8;
+  $border-color: #e4e8fc;
+
+  .idp {
+    padding: 0 ($main-grid-unit * 6) 100px;
+
+    opportunities-catalog {
+      display: block;
+    }
+
+    .learner-info {
+      display: flex;
+      min-height: unset;
+      z-index: 1;
+      border-radius: 5px 5px 0px 0px;
+      border-bottom: 1px solid #eeeeee;
+      align-items: center;
+      padding: 24px;
+      &__back-btn {
+        margin-right: 24px;
+      }
+      &__avatar {
+        width: 60px;
+        height: 60px;
+        background-size: cover;
+        background-position: top center;
+        border-radius: 50%;
+        margin-right: 16px;
+        flex-shrink: 0;
+      }
+      &__text {
+        width: 100%;
+        line-height: 24px;
+        .learner-name {
+          font-size: 24px;
+          font-weight: 500;
+        }
+        .learner-email {
+          font-size: 14px;
+          color: #8799ba;
+        }
+      }
+    }
+
+    &__title {
+      padding: 20px 0 24px;
+      margin: 0;
+      font-size: 2.25rem;
+    }
+
+    &__content {
+      min-height: 100vh;
+
+      mat-tab-group.mat-tab-group.mat-primary {
+        .mat-tab-header {
+          height: 60px;
+          border: none;
+          box-shadow: 0 0 10px #eee;
+          .mat-tab-label-container {
+            .mat-tab-list {
+              @include rounded-corners(5px);
+              background: #fff;
+            }
+          }
+
+          .mat-tab-labels .mat-tab-label.mat-ripple {
+            padding: 20px 32px;
+            opacity: 1;
+            &:first-child {
+              @include rounded-corners(4px 0 0 4px);
+            }
+            .mat-tab-label-content {
+              font-size: 16px;
+              line-height: 16px;
+              color: $cx-color-main;
+              font-weight: 400;
+            }
+          }
+
+          .mat-tab-labels .mat-tab-label.mat-ripple.mat-tab-label-active {
+            background: $completed-color;
+            .mat-tab-label-content {
+              color: #fff;
+              font-weight: 500;
+            }
+          }
+
+          mat-ink-bar.mat-ink-bar {
+            display: none;
+          }
+
+          .mat-tab-labels {
+            height: 100%;
+            > .mat-tab-label {
+              height: 100%;
+              padding-left: 20px;
+              padding-right: 20px;
+
+              .mat-tab-label-content {
+                font-size: 1rem;
+                color: $mat-tab-font-color;
+              }
+            }
+          }
+        }
+
+        .mat-tab-body-wrapper {
+          margin-top: 24px;
+          margin-bottom: 100px;
+
+          pd-opportunities {
+            .pdo-header {
+              margin: 0;
+              padding: 40px 40px 0;
+              display: flex;
+              box-shadow: 0 10px 10px -8px #eee;
+
+              &__group-item {
+                display: flex;
+                align-self: center;
+
+                &:last-of-type {
+                  margin-left: auto;
+                }
+              }
+
+              &__item {
+                .mat-select {
+                  border: none;
+
+                  .mat-select-trigger {
+                    padding: 10px 0;
+                  }
+                }
+              }
+
+              &__label {
+                text-transform: none;
+              }
+            }
+
+            .list-opportunities {
+              .action-item {
+                border-bottom: 1px solid #d8dce6;
+              }
+            }
+          }
+
+          .la-header {
+            box-shadow: 0 0 10px #eee;
+            &__label {
+              text-transform: initial;
+              font-weight: 500;
+              font-size: 1rem;
+            }
+            &__cutoff-date-block {
+              font-weight: 400;
+              font-size: 1rem;
+            }
+            &__item {
+              .mat-select {
+                border: 0;
+                font-size: 1rem;
+                font-weight: 500;
+                height: 38px;
+                line-height: 38px;
+                .mat-select-trigger {
+                  padding: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    idp-toolbar {
+      margin-top: 15px;
+      margin-bottom: 16px;
+      padding-left: 3px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      min-width: 350px;
+      box-shadow: none;
+      .idp-toolbar {
+        padding: 0 !important;
+        min-height: unset;
+      }
+    }
+  }
+
+  .next-period {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    right: 5%;
+    display: flex;
+    color: #4d5ba1;
+    cursor: pointer;
+
+    i {
+      font-size: 15px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    &__text {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23px;
+      width: 150px;
+      text-align: right;
+      margin-right: 15px;
+    }
+
+    &__period {
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 42px;
+    }
+  }
+
+  .reporting-officer-mode {
+    mat-tab-group.mat-tab-group.mat-primary
+      .mat-tab-header
+      .mat-tab-label-container
+      .mat-tab-list {
+      border-radius: 0 0 5px 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  individual-development {
+    .idp {
+      &__banner {
+        height: 160px;
+      }
+
+      &__content {
+        mat-tab-group {
+          .mat-tab-label {
+            height: 44px;
+            min-width: 100px;
+            padding: 0 15px;
+
+            &.mat-tab-label-active {
+              border-radius: 5px 5px 0 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  individual-development {
+    .idp {
+      padding-left: $main-grid-unit * 2;
+      padding-right: $main-grid-unit * 2;
+      padding-bottom: $main-grid-unit * 2;
+      &__content {
+        mat-tab-group {
+          &.mat-tab-group {
+            &.mat-primary {
+              .mat-tab-body-wrapper {
+                margin-bottom: 0;
+                pd-opportunities {
+                  .pdo-header {
+                    margin: 0;
+
+                    &__item {
+                      display: flex;
+                      align-items: center;
+
+                      .mat-select {
+                        .mat-select-trigger {
+                          padding: 13px 0;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .mat-tab-group {
+          .mat-tab-body-wrapper {
+            .pdo-header {
+              padding: 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $screen-xxs-max) {
+  individual-development {
+    .idp {
+      idp-toolbar {
+        padding-right: 20px;
+        min-width: auto;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+    }
+    .cx-breadcrumb__list {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-datahub-learn-api-communication-snapshot
+  development-learn: 
+    pipelines: 
+      - development-datahub-learn-api-communication-snapshot     
+format_version: 3
+pipelines: 
+  build-datahub-learn-api-communication-snapshot: 
+    group: datahub-learn-api-communication-snapshot
+    label_template: "snapshot-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: Communication.Api/
+      SONAR_PROJECTKEY: datahub-learn-api-communication-snapshot
+      SONAR_SOLUTION_FILE: Communication.Api.sln
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+    template: linux-docker-multiple-build-sonarqube-dotnetcore
+    materials: 
+      bitbuket-git: 
+        branch: release/learn-1.0
+        git: "https://samnguyenn:123456Aa@bitbucket.org/cxdev/cx-sharedservices-communication-api.git"
+  development-datahub-learn-api-communication-snapshot:
+    group: datahub-learn-api-communication-snapshot
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-datahub-learn-api-communication-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-learn
+      UP_STREAME_PIPELINE_NAME: build-datahub-learn-api-communication-snapshot
+    secure_variables:
+      IDM_CLIENT_SECRET: AES:Rw05Jb7GcDhESTN9WPVddQ==:ySCzBYSBc7K9NNPoASJnDFB8Peo71OM04XzKdMYYWqo=
+      IDM_CLIENT_ID: AES:UepIoNovj0ZFY0fI+yDCjg==:NdOMq4cHLEUFWEtBDpIsENDpM13ZYkzvZsmD4bqRIlo=
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-sharedservices-communication-api
+      PUBLIC_DNS: ",development-datahub-learn-api-communication.csc.cxs.cloud"
+      FireBaseCloudMessage_BaseAppInstanceServerUrl: https://iid.googleapis.com/
+      FireBaseCloudMessage_BaseFirebaseClouldMessageUrl: https://fcm.googleapis.com/
+      FireBaseCloudMessage_FirebaseCloudMessageLegacyServerKey: AAAAiyImTOQ:APA91bFIm3J3P1zNARVv6goUtlmp0a1DawkxD-UKvVLfVk4yUYFsgtXaRpO3BJ8ey0bKrl040CZhFCcIUDgDJA2uyexTp0-Eggf0uBfdXKktDnFaNuusZ-32Kbg-A5_1qL2EwHsy4d7w
+      RABBITMQ_SSL_ENABLED: true
+      MONGO_SSL_ENABLED: true
+      DOCKER_OVERRIDE: systemtest-learn
+
+ 

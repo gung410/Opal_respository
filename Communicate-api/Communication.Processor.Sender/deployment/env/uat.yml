@@ -1,0 +1,5 @@
+mongo_db_name: uat-communication-opal-db
+mongo_db_auth: uat-communication-opal:opal-communication-uat
+https_proxy: http://proxy.opal:3128
+ses_configuration_set: ""
+enable_mail_log: false

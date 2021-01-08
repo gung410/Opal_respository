@@ -1,0 +1,66 @@
+<div *ngIf="pdoDTO" class="opportunity-item-container row">
+  <div
+    class="col-12 opportunity-card"
+    [class.even]="isEven"
+    [class.unpublished-pdo]="unPublished"
+  >
+    <!-- <div class="row opportunity-card__header-mobile">
+      <idp-status-block [idpStatusInfo]="learningOpportunityModel?.assessmentStatusInfo"></idp-status-block>
+    </div> -->
+    <div class="row opportunity-content">
+      <div class="col-12 col-md-8 opportunity-content__left-side">
+        <pdo-long-card
+          class="pdo-basic-info"
+          [pdoAnswer]="pdoAnswerDTO"
+          [allowRemove]="false"
+          (clickedItem)="onClickItem()"
+        ></pdo-long-card>
+      </div>
+      <div class="col-12 col-md-4 opportunity-content__right-side">
+        <div class="opportunity-advanced-info">
+          <div
+            *ngIf="isNominated"
+            class="opportunity-advanced-info__card card-nominated"
+          >
+            {{ 'MyPdJourney.PlannedActivities.Nominated' | translate }}
+          </div>
+
+          <!-- TODO: Hide PDO Status OP-6736 -->
+          <!-- <div class="opportunity-advanced-info__card"
+            [ngClass]="'card-' + (learningOpportunityModel?.assessmentStatusInfo?.assessmentStatusCode | lowercase)">
+            {{ learningOpportunityModel?.assessmentStatusInfo?.assessmentStatusName }}
+          </div> -->
+        </div>
+        <div class="opportunity-actions">
+          <button
+            *ngIf="allowViewComment"
+            class="cx-btn cx-btn-secondary"
+            (click)="onClickItem()"
+          >
+            {{ 'MyPdJourney.PlannedActivities.ViewComment' | translate }}
+          </button>
+          <div class="action-meatball-container">
+            <ng-template
+              [ngIf]="isApproved && isExternalPDO && allowMarkCompletion"
+            >
+              <meat-ball-action-dropdown
+                [actions]="actions"
+              ></meat-ball-action-dropdown>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <i
+      *ngIf="allowRemove"
+      class="icon-close delete-button"
+      (click)="onRemoveItem(learningOpportunity)"
+    ></i>
+  </div>
+  <div *ngIf="unPublished" class="opportunity-item-overlay">
+    <div class="unpublished-tag">UNPUBLISHED</div>
+  </div>
+  <div *ngIf="showStatus" class="opportunity-item-status">
+    <idp-status-block [idpStatusInfo]="actionItemStatus"> </idp-status-block>
+  </div>
+</div>

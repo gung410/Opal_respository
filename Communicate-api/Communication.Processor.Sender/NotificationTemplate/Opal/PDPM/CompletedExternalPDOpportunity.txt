@@ -1,0 +1,1 @@
+﻿Your external PD opportunity ({{ExternalCourseName}}) has been marked completed by {{SenderName}}.

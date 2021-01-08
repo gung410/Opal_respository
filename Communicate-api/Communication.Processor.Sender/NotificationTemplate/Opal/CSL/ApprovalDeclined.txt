@@ -1,0 +1,1 @@
+{{OriginatorName}} has declined your membership request for the community {{CommunityName}}.

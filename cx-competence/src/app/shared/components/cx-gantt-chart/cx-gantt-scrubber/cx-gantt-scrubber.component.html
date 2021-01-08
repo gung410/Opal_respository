@@ -1,0 +1,13 @@
+<div class="cx-gantt-scrubber-container">
+	<div class="cx-gantt-scrubber-content">
+		<div class="cx-gantt-scrubber-selector" #scrubberSelector>
+			<div class="cx-gantt-scrubber-circle"></div>
+		</div>
+		<div class="cx-gantt-scrubber-year-list">
+			<div class="cx-gantt-scrubber-year" [ngClass]="{'cx-gantt-scrubber-selected-year': year === selectedYear}"
+				*ngFor="let year of scrubberYearList" (click)="onYearClicked(year)">
+				{{ year }}
+			</div>
+		</div>
+	</div>
+</div>

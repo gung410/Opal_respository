@@ -1,0 +1,4 @@
+System notification
+{{Subject}}
+{{{Body}}}
+

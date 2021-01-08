@@ -1,0 +1,1 @@
+User with email {{Email}} has been created in your organisation {{DepartmentName}} by an respective administrator and needs your approval.

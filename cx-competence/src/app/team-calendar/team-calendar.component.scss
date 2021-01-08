@@ -1,0 +1,10 @@
+@import '~assets/styles/variables.scss';
+
+.team-calendar-page {
+  padding: 0 ($main-grid-unit * 6) 16px;
+  width: 100%;
+  iframe {
+    width: 100%;
+    min-height: calc(100vh - 275px);
+  }
+}

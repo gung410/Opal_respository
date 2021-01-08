@@ -1,0 +1,42 @@
+assign-ln-assessments-dialog {
+  .assign-ln-assessments-dialog {
+    &__cut-off-date {
+      width: 300px;
+      margin-bottom: 30px;
+    }
+
+    &__dialog-content-title {
+      margin-bottom: 10px;
+    }
+
+    &__selected-employees-list {
+      ul {
+        list-style: unset;
+      }
+    }
+  }
+
+  cx-surveyjs {
+    .sv_qstn {
+      hr {
+        display: none;
+      }
+
+      .sv_p_container .sv_row {
+        .sv_qstn {
+          padding: 1px;
+          margin-left: 10px;
+
+          .cx-question-content {
+            margin-top: 0px;
+          }
+
+          .list-item {
+            display: list-item;
+            margin-left: 1em;
+          }
+        }
+      }
+    }
+  }
+}

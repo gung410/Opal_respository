@@ -1,0 +1,53 @@
+<div class="error-container col-12 col-md-8 col-lg-10">
+  <div class="error">
+    <div
+      *ngIf="currentUser && currentUser.avatarUrl && currentUser.fullName"
+      class="user-info"
+    >
+      <img class="user-info__image" src="{{ currentUser.avatarUrl }}" />
+      <p class="user-info__name">{{ currentUser.fullName }}</p>
+      <p class="user-info__email">{{ currentUser.emails }}</p>
+    </div>
+    <div
+      *ngIf="!currentUser || !currentUser.avatarUrl || !currentUser.fullName"
+    >
+      <div class="error__circle">
+        <img src="{{ errorImage }}" />
+      </div>
+    </div>
+    <p class="error__description">{{ errorMessageDescription }}</p>
+    <p
+      *ngIf="listModule && listModule.length > 0"
+      class="error__sub-description"
+    >
+      {{ moduleMessageDescription }}
+    </p>
+    <div
+      *ngIf="listModule && listModule.length > 0"
+      class="err-apps-switcher row"
+    >
+      <div
+        *ngFor="let module of listModule"
+        class="err-apps-switcher__item col-4 col-md-2"
+        (click)="onAppClick(module.mainUrl)"
+      >
+        <div class="text-center">
+          <img class="err-apps-switcher__item-image" [src]="opalLogo" />
+          <p class="err-apps-switcher__item-label">{{ module.label }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="error-container__action-container">
+      <p
+        *ngIf="errorMessageAction && !isInIframe"
+        class="error__action"
+        (click)="tryAgain()"
+      >
+        <span>{{ errorMessageAction }}</span>
+      </p>
+      <p *ngIf="canLogOut" class="error__action" (click)="onLogout()">
+        <span>Sign out</span>
+      </p>
+    </div>
+  </div>
+</div>

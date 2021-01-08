@@ -1,0 +1,2 @@
+docker_image: "cx-competence-spa:1.0.1"
+public_dns_name: pdplanner.opal

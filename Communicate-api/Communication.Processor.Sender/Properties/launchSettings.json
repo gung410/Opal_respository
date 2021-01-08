@@ -1,0 +1,64 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:52059",
+      "sslPort": 44384
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey": "AAAAjjhkDw0:APA91bFUFptrQKZRygybdjZs0DY9ZMkJi3KpiWJloMkN1FcNfcTPY1oSDfFPXTbmg9IuAHCuLjZ8-um2FTqWF0VSs-VGlAuA7yqJ_ULUFTH4RxU49G5jg3YXbP00PsqF6UwIFmeAGoAt",
+        "IDM_CLIENT_SECRET": "BiOiJKV1QiLCJ4NXQiOiKhM",
+        "FireBaseCloudMessage:BaseAppInstanceServerUrl": "https://iid.googleapis.com/",
+        "FireBaseCloudMessage:BaseFirebaseClouldMessageUrl": "https://fcm.googleapis.com/",
+        "IDM_GRANT_TYPE": "client_credentials",
+        "RABBITMQ_PORT": "5672",
+        "QUEUE_MANAGER_API": "https://localhost:44346/QueueManager",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "IDM_SCOPE": "SharedServicesApi CoursepadApi_FullAccess userManagement",
+        "RABBITMQ_PASSWORD": "guest",
+        "IDM_CLIENT_ID": "udemy.import",
+        "PROJECT_NAME": "learn",
+        "IDM_BASEURL": "https://systemtest-idm-web.csc.cxs.cloud/",
+        "RABBITMQ_USERNAME": "guest",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Communication.Processor.Sender": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "COMMAND_EXCHANGE_NAME": "uat-datahub-opal-topic-command",
+        "FireBaseCloudMessage:FirebaseCloudMessageLegacyServerKey": "AAAAjjhkDw0:APA91bFUFptrQKZRygybdjZs0DY9ZMkJi3KpiWJloMkN1FcNfcTPY1oSDfFPXTbmg9IuAHCuLjZ8-um2FTqWF0VSs-VGlAuA7yqJ_ULUFTH4RxU49G5jg3YXbP00PsqF6UwIFmeAGoAt",
+        "IDM_CLIENT_SECRET": "BiOiJKV1QiLCJ4NXQiOiKhM",
+        "FireBaseCloudMessage:BaseAppInstanceServerUrl": "https://iid.googleapis.com/",
+        "FireBaseCloudMessage:BaseFirebaseClouldMessageUrl": "https://fcm.googleapis.com/",
+        "IDM_GRANT_TYPE": "client_credentials",
+        "RABBITMQ_PORT": "5672",
+        "QUEUE_MANAGER_API": "http://localhost:44346/QueueManager",
+        "QUEUE_NAME": "uat-datahub-opal-queue-communication-sender",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "IDM_SCOPE": "userManagement",
+        "ORG_DOMAIN_API": "https://api.development.opal2.conexus.net/development-competence-opal-api-organization/",
+        "RABBITMQ_PASSWORD": "Three2kill",
+        "EVENT_EXCHANGE_NAME": "opal-datahub-opal-topic-event",
+        "IDM_CLIENT_ID": "OrganizationSpa",
+        "PROJECT_NAME": "opal",
+        "IDM_BASEURL": "https://idm.development.opal2.conexus.net/",
+        "RABBITMQ_USERNAME": "cctadmin",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:44386"
+    }
+  }
+}

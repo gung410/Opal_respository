@@ -1,0 +1,1 @@
+﻿{{ObjectiveType}} ({{ObjectiveName}}) was nominated for {{CourseName}} in {{LearningProgrammeTitle}} by {{Nominator}}, who has submitted it for your approval.

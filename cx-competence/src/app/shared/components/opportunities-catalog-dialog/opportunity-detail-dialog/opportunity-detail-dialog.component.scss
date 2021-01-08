@@ -1,0 +1,72 @@
+@import '~assets/styles/variables.scss';
+
+.header {
+  .catalog-back {
+    font-size: 24px;
+    padding-left: 25px;
+    cursor: pointer;
+
+    .back-icon {
+      position: absolute;
+      transform: rotate(90deg) translate(50%, 120%);
+      font-size: 18px;
+    }
+  }
+
+  .catalog-title {
+    font-size: 36px;
+  }
+}
+
+opportunity-detail-dialog {
+  @media only screen and (max-width: $screen-xs-max) {
+    .cx-dialog-template {
+      .modal-header {
+        .header {
+          .catalog-back {
+            padding-left: 0;
+            transform: translateY(-2px);
+            .back-icon {
+              display: none;
+            }
+          }
+          .catalog-title {
+            display: none;
+          }
+        }
+      }
+
+      .modal-body {
+        padding: 0 !important;
+        .opportunity-detail {
+          &__image {
+            > img {
+              border-radius: 0;
+            }
+          }
+          &__info {
+            margin-top: 0;
+            mat-tab-group {
+              .mat-tab-header {
+                box-shadow: 0 5px 6px -4px rgba(0, 0, 0, 0.14);
+                background: #fff;
+                padding: 0 10px;
+              }
+              .mat-tab-body-content {
+                padding: 0 10px;
+              }
+            }
+            .action {
+              right: 10px;
+              top: 6px;
+              .cx-btn {
+                padding: 0 10px;
+                min-width: 80px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

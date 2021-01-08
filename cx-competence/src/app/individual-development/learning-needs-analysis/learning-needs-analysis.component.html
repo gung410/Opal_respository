@@ -1,0 +1,46 @@
+<div *ngIf="learningNeeds" class="needs-analysis">
+  <div
+    *ngIf="isRejected"
+    id="warning-needs-analysis"
+    class="warning-needs-analysis collapse show"
+  >
+    <div class="retake-button-container">
+      <button
+        class="cx-btn-big retake"
+        (click)="onClickRetake()"
+        aria-expanded="false"
+        data-toggle="collapse"
+        data-target="#warning-needs-analysis"
+        aria-controls="warning-needs-analysis"
+      >
+        {{ 'MyPdJourney.LNA.RejectedWarning.RetakeButton' | translate }}
+      </button>
+    </div>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">
+        {{ 'MyPdJourney.LNA.RejectedWarning.WarningHeader' | translate }}
+      </h4>
+      <p>{{ 'MyPdJourney.LNA.RejectedWarning.WarningBody' | translate }}</p>
+    </div>
+    <div *ngIf="isRejected" class="la-comments">
+      <cx-comment
+        #commentComponent
+        [(comments)]="learningNeedsAnalysisComments"
+        (changeComment)="onChangeComment($event)"
+      >
+      </cx-comment>
+    </div>
+  </div>
+  <div
+    class="learning-need-survey-container"
+    [style.display]="isRejected ? 'none' : 'block'"
+  >
+    <learning-needs-analysis-content
+      [user]="user"
+      [learningNeeds]="learningNeeds"
+      [needsResults]="needsResults"
+      (submit)="onSubmittedLearningNeeds($event)"
+    >
+    </learning-needs-analysis-content>
+  </div>
+</div>

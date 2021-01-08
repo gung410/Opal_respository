@@ -1,0 +1,197 @@
+<div *ngIf="planCxNode" class="learning-plan-detail">
+  <div class="cx-panel breadcrum-container">
+    <cx-breadcrumb-simple
+      [simpleStyle]="true"
+      [breadCrumbItems]="currentBreadcrumb"
+      (clickedItem)="onClickBreadcrumbItem($event)"
+    ></cx-breadcrumb-simple>
+  </div>
+
+  <div class="plan-toolbar-container">
+    <div class="cx-toolbar plan-toolbar row" cxFloatingToolbar>
+      <div *ngIf="activePdplan" class="plan-toolbar__current-plan-name col p-0">
+        <span *ngIf="isCreating">
+          {{ 'Odp.LearningPlan.CreateNew' | translate }}
+          {{ currentActivePlanTypeName }}
+        </span>
+        <span
+          *ngIf="!isCreating"
+          [title]="activePdplan.pdplanDto?.answer?.Title"
+          class="plan-title"
+          >{{ activePdplan.pdplanDto?.answer?.Title }}</span
+        >
+      </div>
+      <div class="plan-toolbar__plan-modification-info">
+        <metadata-modification-info
+          *ngIf="activePdplan"
+          [odpDto]="activePdplan.pdplanDto"
+        ></metadata-modification-info>
+      </div>
+      <div class="plan-toolbar__plan-actions col p-0">
+        <button
+          *ngIf="showOverallViewButton"
+          class="cx-btn"
+          (click)="onClickOverallView()"
+        >
+          {{ 'Common.Action.OverallView' | translate }}
+        </button>
+        <button
+          *ngIf="canEditContent && !disableEditOnMassNominationMode"
+          class="cx-btn"
+          (click)="onClickEdit()"
+        >
+          {{ 'Common.Action.Edit' | translate }}
+        </button>
+        <button
+          *ngIf="canSubmitContent"
+          class="cx-btn"
+          (click)="onClickSubmit()"
+        >
+          {{ 'Common.Action.Submit' | translate }}
+        </button>
+        <!-- Approve reject buttons -->
+        <ng-container *ngIf="canApproveRejectContent">
+          <button (click)="onClickApprove()" class="cx-btn">
+            {{ 'Common.Action.Approve' | translate }}
+          </button>
+          <button (click)="onClickReject()" class="cx-btn">
+            {{ 'Common.Action.Reject' | translate }}
+          </button>
+        </ng-container>
+        <!-- *ngIf="isEditingContent" -->
+        <ng-container *ngIf="isEditingContent">
+          <button
+            (click)="onClickCancelEdited()"
+            class="cx-btn cx-btn-secondary"
+          >
+            {{ 'Common.Action.Cancel' | translate }}
+          </button>
+          <button (click)="onClickSaveEdtied()" class="cx-btn">
+            {{ 'Common.Action.Save' | translate }}
+          </button>
+        </ng-container>
+        <div
+          autoClose="outside"
+          class="show-more-dropdown dropdown"
+          *ngIf="
+            canMassNominate ||
+            canDeleteDraft ||
+            canDeleteAllVersions ||
+            canDuplicateLearningDirection
+          "
+        >
+          <i
+            id="customActionDropdown"
+            class="show-more-icon material-icons"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            more_vert
+          </i>
+          <div
+            class="dropdown-menu cx-dropdown-menu"
+            aria-labelledby="customActionDropdown"
+          >
+            <div
+              class="cx-dropdown-menu__item"
+              *ngIf="canMassNominate"
+              (click)="onClicMassNominate()"
+            >
+              {{ 'Common.Action.Mass_Nominate' | translate }}
+            </div>
+            <div
+              class="cx-dropdown-menu__item"
+              *ngIf="canDeleteDraft"
+              (click)="onClickDeleteDraft()"
+            >
+              {{ 'Common.Action.DeleteDraft' | translate }}
+            </div>
+            <div
+              class="cx-dropdown-menu__item"
+              *ngIf="canDeleteAllVersions"
+              (click)="onClickDeleteAllVersions()"
+            >
+              {{ 'Common.Action.Delete' | translate }}
+            </div>
+            <div
+              class="cx-dropdown-menu__item"
+              *ngIf="canDuplicateLearningDirection"
+              (click)="onClickDuplicateLearningDirection()"
+            >
+              Duplicate
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- *ngIf="odpContents && odpContents.length; else noRecords" -->
+  <div #cxSplitView class="cx-split-view">
+    <div #viewLeftSide class="cx-split-view__left-side">
+      <div class="cx-panel left-side-content">
+        <cx-node
+          #cxPlanTree
+          id="cxPlanTree"
+          [node]="planCxNode"
+          [selectedNodeComponent]="selectedNodeComponent"
+          (nodeClicked)="nodeClickedHandler($event)"
+          (createNodeClicked)="createNodeClickedHandler($event)"
+          (newNodeCreated)="newNodeCreatedHandler($event)"
+          (ready)="onCxNodeReady($event)"
+        ></cx-node>
+        <div
+          *ngIf="
+            hasRightCreateLearningDirection && showAddLearningDirectionButton
+          "
+          class="add-new-ld"
+          (click)="createLearningDirectionClickedHandler()"
+        >
+          <div class="add-new-ld__icon">
+            <i class="icon icon-add-ld"></i>
+          </div>
+          <div class="add-new-ld__text">
+            <span>{{ 'Odp.Button.AddLearningDirection' | translate }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      #viewDivider
+      id="divider"
+      class="cx-split-view__divider"
+      (mousedown)="onMouseDown($event)"
+    >
+      <div
+        #viewToggler
+        id="toggler"
+        class="cx-split-view__divider__toggler"
+        (click)="onClicktoggleButton()"
+      >
+        <i id="icon-toggler" class="icon icon-down-arrow"></i>
+      </div>
+    </div>
+
+    <div #viewRightSide class="cx-split-view__right-side">
+      <learning-plan-content
+        #planContent
+        *ngIf="activePdplan"
+        [formJSON]="activePdplan.formJSON"
+        [pdplanDto]="activePdplan.pdplanDto"
+        [parentDTO]="activeParentPdplanDTO"
+        [successMessage]="successMessage"
+        (save)="onSave($event)"
+        (submit)="onClickSubmit($event)"
+        (approve)="onApprove($event)"
+        (reject)="onReject($event)"
+        (delete)="onDelete($event)"
+        (cancelCreateNode)="onCancelCreateNode($event)"
+        (updateFormAction)="onupdateFormAction()"
+      ></learning-plan-content>
+    </div>
+  </div>
+  <ng-template #noRecords>
+    <div class="no-records-container">No records</div>
+  </ng-template>
+</div>

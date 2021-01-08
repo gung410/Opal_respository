@@ -1,0 +1,3 @@
+Your course - {{CourseTitle}} - has been approved by the Approving Officer, {{SenderName}}.
+
+

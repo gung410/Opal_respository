@@ -1,0 +1,1 @@
+{{OriginatorName}} has deleted your post from the community {{CommunityName}}.

@@ -1,0 +1,62 @@
+@import '~assets/styles/variables.scss';
+
+.course-detail-containter {
+  padding: 0 30px;
+  margin-right: -8px;
+  max-height: 80vh;
+  .course-detail-tabs-content {
+    background: #fff;
+    border-radius: 5px;
+  }
+  .course-detail-tabs {
+    .course-detail-tabs-dropdown {
+      display: inline-block;
+      padding: 12px 0;
+      min-width: 256px;
+      font-weight: 500;
+      text-align: center;
+      border-bottom: 7px solid #303450;
+      border-radius: 0px 0px 5px 5px;
+      &::after {
+        transform: translateX(30px);
+      }
+    }
+    .course-detail-tabs-dropdown-container {
+      .course-detail-tabs-dropdown-item-selected {
+        border-bottom: 4px solid #303450;
+      }
+    }
+    .dropdown-menu.show {
+      min-width: 256px;
+      padding: 0;
+    }
+    .dropdown-item {
+      min-height: 42px;
+      outline: none;
+    }
+  }
+  .course-detail-body {
+    background: $app-background-color;
+    padding-top: 15px;
+    overflow-y: scroll;
+    max-height: 70vh;
+    margin-right: -8px;
+
+    .course-detail-header {
+      background: $panel-background-color;
+      padding: 25px;
+      border-radius: 5px;
+    }
+
+    .course-detail-item {
+      margin-bottom: 20px;
+      position: relative;
+      .action {
+        position: absolute;
+        z-index: 1;
+        right: 20px;
+        top: 20px;
+      }
+    }
+  }
+}

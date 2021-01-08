@@ -1,0 +1,25 @@
+<div class="tabs-container {{ containerClass }}">
+  <ul class="nav nav-pills mb-3" role="tablist">
+    <li *ngFor="let tab of tabs" class="nav-item">
+      <a
+        class="nav-link"
+        [class.active]="tab.active == true"
+        href="#{{ tab.header | titleAsKey }}"
+        data-toggle="pill"
+        role="tab"
+        >{{ tab.header }}</a
+      >
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div
+      *ngFor="let tab of tabs"
+      class="tab-pane fade"
+      [ngClass]="{ 'show active': tab.active == true }"
+      id="{{ tab.header | titleAsKey }}"
+      role="tabpanel"
+    >
+      <ng-template [ngTemplateOutlet]="tab.content"></ng-template>
+    </div>
+  </div>
+</div>

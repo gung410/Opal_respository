@@ -1,0 +1,4 @@
+Dear {{RecipientName}},
+User with email {{Email}} from your organisation unit {{DepartmentName}} has submitted a request for a new OPAL2.0 user account. Please process this request for a new OPAL2.0 user account.
+Thank You.
+

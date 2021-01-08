@@ -1,0 +1,68 @@
+<div *ngIf="courseDetail" class="opportunity-detail">
+  <div class="opportunity-detail__image">
+    <img class="poster" [src]="courseDetail.thumbnail" />
+  </div>
+  <div class="opportunity-detail__info">
+    <div class="action">
+      <button
+        class="cx-btn-primary cx-btn-icon"
+        (click)="onAddToPlanClicked()"
+        [disabled]="courseModel.isSelected"
+      >
+        <i class="icon-add"></i>
+        <span *ngIf="courseModel.isSelected">{{
+          'MyPdJourney.OpportunityDetail.Action.Added' | translate
+        }}</span>
+        <span *ngIf="!courseModel.isSelected">{{ addTextButton }}</span>
+      </button>
+      <!-- Disable for now OP-7023 -->
+      <!-- <div class="cx-btn-secondary bookmark" (click)="onBookmarkClicked()">
+        <i class="bookmark__icon" [ngClass]="
+              opportunity.isBookmarked ? 'icon-bookmark-check' : 'icon-bookmark'
+            "></i>
+      </div> -->
+    </div>
+    <mat-tab-group>
+      <mat-tab
+        label="{{ 'MyPdJourney.OpportunityDetail.Tab.Content' | translate }}"
+      >
+        <div class="tab-content">
+          <div class="opportunity-detail">
+            <div class="opportunity-detail__name">
+              {{ courseDetail.name }}
+            </div>
+            <!-- TODO: Show real data of PD Opportunity -->
+            <!-- <div class="rating">
+              <i class="icon-star"></i>
+              <i class="icon-star"></i>
+              <i class="icon-star"></i>
+              <i class="icon-star-half"></i>
+              <i class="icon-star-outline"></i>
+            </div> -->
+            <div class="duration">
+              <i class="icon-clock"></i>
+              {{ 'MyPdJourney.OpportunityDetail.Duration' | translate }}:
+              {{ courseDetail.duration + ' hour(s)' }}
+            </div>
+            <!-- TODO: Show real data of PD Opportunity -->
+            <!-- <div class="tags">
+              <opportunity-tag [tag]="'Seminar'"></opportunity-tag>
+              <opportunity-tag [tag]="'E-learning'"></opportunity-tag>
+            </div> -->
+            <div class="description">
+              <div class="description__title">
+                {{ 'MyPdJourney.OpportunityDetail.AboutLabel' | translate }}
+              </div>
+              {{ courseDetail.description }}
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab
+        label="{{ 'MyPdJourney.OpportunityDetail.Tab.Review' | translate }}"
+      >
+        <div class="tab-review"></div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

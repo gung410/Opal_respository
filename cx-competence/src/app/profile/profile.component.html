@@ -1,0 +1,15 @@
+<div class="profile-container col-8 offset-2" *ngIf="!isLoading">
+  <div class="profile-header">
+    <h4>Edit your personal information</h4>
+  </div>
+  <cx-surveyjs
+    (submit)="onSubmit($event)"
+    [data]="profileFormData"
+    [cancelName]="'Common.Action.Cancel' | translate"
+    [variables]="profileInfoSurveyVariables"
+    [json]="profileFormJson"
+    (valueChanged)="profileInfoChanged($event)"
+    (cancel)="onCancel()"
+  >
+  </cx-surveyjs>
+</div>

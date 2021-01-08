@@ -1,0 +1,42 @@
+<div class="opportunity-card" *ngIf="courseDetail">
+  <div class="opportunity-image">
+    <img
+      class="opportunity-image__image"
+      src="{{ courseDetail.thumbnail }}"
+      alt=""
+      (click)="onClick()"
+    />
+
+    <div class="opportunity-added-tag" *ngIf="courseModel.isSelected">
+      <i class="icon-check-mark"></i>
+      <span class="opportunity-added-tag__text">Added to plan</span>
+    </div>
+    <div
+      *ngIf="enableBookmark"
+      class="cx-btn-secondary bookmark"
+      (click)="onBookmarkClicked()"
+    >
+      <i
+        class="bookmark__icon"
+        [ngClass]="
+          courseModel.isBookmarked ? 'icon-bookmark-solid' : 'icon-bookmark'
+        "
+      ></i>
+    </div>
+  </div>
+  <div class="opportunity-info">
+    <div class="opportunity-name" title="{{ courseDetail.name }}">
+      {{ courseDetail.name }}
+    </div>
+    <div class="opportunity-advanced-info">
+      <div class="tags">
+        <ng-container *ngIf="courseDetail.tags">
+          <opportunity-tag
+            *ngFor="let tag of courseDetail.tags"
+            [tag]="tag"
+          ></opportunity-tag>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+@import '~assets/styles/variables.scss';
+
+.course-review {
+  &__about {
+    .planned-pdo-about {
+      line-height: 160%;
+      white-space: pre-wrap;
+      .cx-panel__label {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .learner-course-detail {
+        &__stars-average-num-container {
+          display: flex;
+        }
+        &__rating-container {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          width: 100%;
+          -ms-flex-align: center;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+
+        &__rating-stars {
+          display: flex;
+          align-items: center;
+          .icon {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 4px;
+            &.sm {
+              width: 16px;
+              height: 16px;
+            }
+            &.star-outline {
+              background-image: url('assets/images/star-outline.svg');
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+
+            &.star {
+              background-image: url('assets/images/star.svg');
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          }
+        }
+        &__show-more {
+          color: $cx-color-text-secondary;
+          font-weight: $font-weight-medium;
+          margin-top: 10px;
+          text-transform: uppercase;
+          width: 100%;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

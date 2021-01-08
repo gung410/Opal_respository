@@ -1,0 +1,746 @@
+{
+  "LoginPage": {
+    "IntroText": "The Professional Development Planner Module (PDPM) supports MOE staff to identify their Learning Needs and to plan their professional development activities (e.g. courses, seminars, conferences, learning journeys etc.). The planning is done in collaboration with the Learner's Approving/Reporting Officer, and the goal is to develop and enhance job competencies of each member of the staff. This is called MPJ - My Professional Development Journey. Division Learning Coordinators and School Staff Developers uses the PDPM to perform Learning Needs Analysis and can chart the learning directions of each organisation (schools and HQ divisions), plan the Organisational PD Journey and then cascade the Organisational PD Journey to the relevant staff members. This is called OPJ - Organisation Professional Development Journey.",
+    "Title": "Professional Development Planner Module"
+  },
+  "SessionTimeoutPage": {
+    "Header": "Oops, as time flies!",
+    "Content": "For security reasons, you have been logged out of the system. This happens automatically after you have been inactive for too long.",
+    "ReturnText": "Please login again."
+  },
+  "SessionTimeoutPopup": {
+    "Content": "Your session is about to end in 5 minutes. Please click OK to continue your session."
+  },
+  "Language": {
+    "PreferedLanguage": "Preferred language:",
+    "CurrentLanguage": "Current",
+    "MoreLanguages": "More languages"
+  },
+  "ErrorPage": {
+    "Oops": "Oops!",
+    "SomeTrouble": "It looks like our systems are having some trouble at the moment.",
+    "TryAgain": "Try again",
+    "PagePermission": "You don't have permission to access this page.",
+    "SitePermission": "You don't have permission to access this site.",
+    "ModuleDescription": "Please navigate to one of the following apps:",
+    "PendingUserDescription": "Your account is not activated yet, please wait for approval."
+  },
+  "Profile": {
+    "Logout": "Logout to continue your work"
+  },
+  "RequestErrorMessage": {
+    "401": "Oops, Server detected you don't have right to access current system, please contact your admin.",
+    "403": "Oops, You don't have permission to do this action, please check again.",
+    "404": "Oops, Your request not found on this server.",
+    "408": "Oops, Request time out.",
+    "500": "Oops, Unexpected error occurred, please try later.",
+    "502": "Oops, Server can't complete your request now, please try later.",
+    "503": "Oops, Server unavailable, please try later.",
+    "504": "Oops, Something went wrong, please try later.",
+    "InvalidSession": "You have been logged out of the OPAL2.0 session as your account has been logged in from another device/location. If you have not authorised the login, please reset your password and/or contact your administrator.",
+    "Common": "Oops, Something went wrong, please try again.",
+    "FileNotFound": "File not found."
+  },
+  "Footer": {
+    "ReportVulnerability": "Report Vulnerability",
+    "PrivacyStatement": "Privacy Statement",
+    "TermsOfUse": "Terms of Use",
+    "CopyRight": "Copyright © {{ year }} Ministry of Education. Singapore.",
+    "AllRightReserved": "All rights reserved.",
+    "LastUpdated": "Last updated"
+  },
+  "Common": {
+    "Confirmation": {
+      "Yes": "Yes",
+      "No": "No"
+    },
+    "Navigation": {
+      "Back": "Back",
+      "Select": "Select",
+      "Start": "Start",
+      "Continue": "Continue",
+      "Resume": "Resume",
+      "Next": "Next",
+      "Help": "Help",
+      "Pause": "Pause",
+      "ConfirmPause": "Yes, Pause",
+      "ContinueAnswer": "No, continue to answer",
+      "Previous": "Previous",
+      "Complete": "Complete",
+      "MoveOn": "Move on",
+      "View": "View",
+      "Logout": "Sign out"
+    },
+    "Action": {
+      "AssignLearningNeeds": "Assign LNA",
+      "Nominate": "Nominate",
+      "Reminder": "Set Reminder",
+      "Export": "Export",
+      "Export_Selected": "Export",
+      "Export_All": "Export for all users",
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "StartNewPlan": "Start new plan",
+      "Submit": "Submit",
+      "Approve": "Approve",
+      "Acknowledge": "Acknowledge",
+      "Reject": "Reject",
+      "Filter": "Filter",
+      "Clear": "Clear",
+      "Apply": "Apply",
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "DeleteDraft": "Restore Last Version",
+      "AddExternalPDO": "Add External PD Opportunity",
+      "StrategicThrusts": "Strategic Thrusts",
+      "NewStrategicThrust": "Create New Strategic Thrust",
+      "EditStrategicThrust": "Edit Strategic Thrust",
+      "ViewStrategicThrust": "View Strategic Thrust",
+      "SearchSubOrganisation": "Include sub-organisations",
+      "Add": "Add",
+      "Export_Learning_Needs_Analysis": "Export LNA",
+      "ConfirmDeletion": "Confirm Deletion",
+      "Close": "Close",
+      "Mass_Nominate": "Mass Nominate",
+      "OverallView": "Overall View"
+    },
+    "Label": {
+      "AssignLearningNeeds": "Assign Learning Needs Analysis",
+      "LastActive": "Last Active",
+      "MPJStatus": "LNA status",
+      "Overview": "Overview",
+      "Filter": "Filter",
+      "Export": "Export",
+      "Department": "Department",
+      "Group": "Group",
+      "PDPlanner": "PD Planner",
+      "DueDate": "Due Date",
+      "Apply": "Apply",
+      "Cancel": "Cancel",
+      "NoRecords": "No Records",
+      "EnableColumns": "Show/Hide columns",
+      "Created": "Created",
+      "LastUpdated": "Last updated",
+      "By": "by",
+      "OrganisationUnit": "Organisation Unit",
+      "You": "You",
+      "OK": "OK",
+      "Chars": "chars",
+      "Content": "Content",
+      "Review": "Reviews",
+      "Approved": "Approved",
+      "About": "About",
+      "ClassRun": "Class Run",
+      "Comment": "Comments"
+    },
+    "Header": {
+      "Title": "PD Planner",
+      "PlaceHolder": "Search in Staff Development",
+      "Logo": {
+        "Alt": "PD Planner"
+      },
+      "UserMenu": {
+        "Profile": "My Profile",
+        "Settings": "Settings",
+        "Support": "Support",
+        "SignOut": "Sign Out"
+      },
+      "Notification": "Notifications"
+    },
+    "Message": {
+      "APINotCompatible": "API version is not compatible",
+      "Successfully": "Successfully",
+      "SubmitSuccess": "Submitted Successfully",
+      "CreateSuccessfully": "Created Successfully",
+      "UpdateSuccessfully": "Updated Successfully",
+      "DeleteSuccessfully": "Deleted successfully",
+      "AcknowledgeSuccessfully": "Acknowledge successfully",
+      "AcknowledgeFail": "Acknowledge fail",
+      "ApproveSuccessfully": "Approval successful",
+      "ApproveFail": "Approve fail",
+      "RejectSuccessfully": "Rejection successful",
+      "RejectFail": "Reject fail",
+      "NoData": "No data",
+      "LoadingData": "Loading data..."
+    },
+    "Comment": {
+      "DeleteConfirm": "Delete this comment?",
+      "PreviousComments": "View previous comments",
+      "Reply": "Reply",
+      "Post": "Post",
+      "EnterComment": "Enter comment",
+      "NoComments": "No comments",
+      "InvalidLength": "Comment must equal or less than 1000 character"
+    },
+    "Mandatory_Text": "* refers to mandatory fields",
+    "StatusMapping": {
+      "ClassRegistration": {
+        "PendingConfirmation" : "Pending Approval",
+        "Approved" : "Approved",
+        "Rejected" : "Rejected",
+        "ConfirmedByCA" : "Confirmed by CA",
+        "RejectedByCA" : "Rejected by CA",
+        "WaitlistPendingApprovalByLearner" : "Waitlist pending approval by Learner",
+        "WaitlistConfirmed" : "Waitlist confirmed",
+        "WaitlistRejected" : "Waitlist rejected",
+        "OfferPendingApprovalByLearner" : "Offer pending approval by Learner",
+        "OfferRejected" : "Offer rejected",
+        "OfferConfirmed" : "Offer confirmed",
+        "AddedByCAConflict" : "Added by CA conflict",
+        "AddedByCAClassfull" : "Added by CA classfull",
+        "OfferExpired" : "Offer expired"
+      },
+      "WithrawalRequest": {
+        "PendingConfirmation" : "Pending Approval",
+        "Approved" : "Approved",
+        "Rejected" : "Rejected",
+        "ConfirmedByCA" : "Confirmed by CA",
+        "RejectedByCA" : "Rejected by CA"
+      },
+      "ClassRunChangeRequest": {
+        "PendingConfirmation" : "Pending Approval",
+        "Approved" : "Approved",
+        "Rejected" : "Rejected",
+        "ConfirmedByCA" : "Confirmed by CA",
+        "RejectedByCA" : "Rejected by CA"
+      }
+    },
+    "StatusText": {
+      "Pending": "Pending Approval",
+      "Approved": "Approved",
+      "Rejected": "Rejected"
+    }
+  },
+  "Staff": {
+    "Title": "Staff",
+    "Detail": {
+      "ReturnToStaffList": "Return to Staff List",
+      "StrengthsAndImprovements": "Strengths and Improvements",
+      "LearningArea": "Learning Area",
+      "CareerAspirations": "Career Aspiration",
+      "CareerAspirationsNoData": "There is no Career Aspiration data",
+
+      "ProfessionalDevelopmentPlan": "Professional Development (PD) Plan"
+    },
+    "AssignLearningNeedsAnalysis": {
+      "ValidationMessage": {
+        "NoItemSelected": "Select at least 1 employee to assign Learning Needs Analysis.",
+        "NotLearners": "User is not a Learner. Learning Needs Analysis can only be assigned to Learners.",
+        "InvalidAccountStatus": "Employee must have account status either New or Active. These employees don't have correct account status: {{ invalidUsers }}.",
+        "NoServiceScheme": "All selected employee(s) must have Service Scheme.",
+        "NoApprovingOfficer": "Some selected employee(s) don't have an Approving Officer.",
+        "HasBeenAssigned": "Some selected employee(s) have already been assigned Learning Needs Analysis."
+      }
+    },
+    "AssignLearningNeedsDialog": {
+      "AssignLearningNeedsAssessmentsToEmployees": "Assign Learning Needs Analysis to employees",
+      "AssignButtonText": "Assign"
+    },
+    "ReminderDialog": {
+      "Title": "Set Reminder",
+      "DateToSend": "Date To Send",
+      "ImmediateLabel": "Send an immediate reminder",
+      "ScheduleLabel": "Schedule a reminder",
+      "ScheduleHintLabel": "Cannot exceed cut off date",
+      "Alert": {
+        "Success": "Reminder has been sent successfully to the selected employee(s) who haven't yet completed Learning Needs Analysis.",
+        "Warning": {
+          "SelectOneRow": "Select at least 1 employee to set reminder.",
+          "GreaterThenCutOffDate": "Unable to send reminder as the reminder date is greater than some selected employees' LNA cut-off-date.",
+          "SendReminderFail": "Unable to send reminder due to some unexpected reason. Please try again.",
+          "UnableToSendReminder": "Unable to send reminder. Please only select the learner(s) having LNA status as \"Not-Started\" or \"Started\""
+        }
+      }
+    },
+    "ApproveLearningNeedsResultDialog": {
+      "Header": "Learning Needs Analysis",
+      "CommentPlaceholder": "Feedback to learner",
+      "ValidationEmptyText": "The feedback cannot be blank."
+    },
+    "Filter": {
+      "Title": "Filter User Account"
+    },
+    "Export": {
+      "Export_All_Title": "Export For All Users",
+      "Export_Selected_Title": "Export Selected User(s)",
+      "Not_Selected_Users": "No records selected on the user list."
+    },
+    "Search_Result_Dialog": {
+      "No_Result_Message": "We can’t find any staffs that match to your search"
+    }
+  },
+  "ApprovalPage": {
+    "LearningPlanTabName": "Learning Plan",
+    "LearningDirectionTabName": "Learning Direction",
+    "NominationsTabName": "Nominations",
+    "AdhocNominationsTabName": "Adhoc Nominations",
+    "LNATabName": "Learning Needs",
+    "PDPlanTabName": "PD Plan",
+    "SelfAssignPDOTabName": "External PD Opportunity",
+    "ClassRegistrationTabName": "Class Registration",
+    "ClassWithdrawalTabName": "Class Withdrawal",
+    "ClassChangeRequestTabName": "Class Change Request",
+    "NominationLearner": "Individuals",
+    "NominationGroup": "Groups",
+    "NominationDepartment": "Organisation Units",
+    "MassNomination": "Mass Nominations",
+    "PendingLearnerDialog":{
+      "Header": "Pending learner(s)"
+    },
+    "FilterSlidebar":{
+      "Header": "Filter",
+
+      "ClassRegistration":{
+        "LearnersLabel": "Learners",
+        "CourseLabel": "Course",
+        "ClassRunsLabel": "Class runs",
+        "RegistrationStatusLabel": "Registration status",
+        "ApplicationStartDateLabel": "Application start date",
+        "ApplicationEndDateLabel": "Application end date",
+
+        "SelectLearnerPlaceholher": "Select learners",
+        "SelectCoursePlaceholher": "Select course",
+        "SelectClassRunPlaceholher": "Select class runs",
+        "SelectStatusPlaceholher": "Select status",
+
+        "LearnerSearchText": "Enter at least a character to search",
+        "CourseSearchText": "Enter at least a character to search"
+      },
+      "WithrawalRequest": {
+        "LearnersLabel": "Learners",
+        "CourseLabel": "Course",
+        "ClassRunsLabel": "Class runs",
+        "WithrawalStatusLabel": "Withrawal status",
+        "SubmitStartDateLabel": "Submit start date",
+        "SubmitEndDateLabel": "Submit end date",
+
+        "SelectLearnerPlaceholher": "Select learners",
+        "SelectCoursePlaceholher": "Select course",
+        "SelectClassRunPlaceholher": "Select class runs",
+        "SelectStatusPlaceholher": "Select status",
+
+
+        "LearnerSearchText": "Enter at least a character to search",
+        "CourseSearchText": "Enter at least a character to search"
+      }
+      ,
+      "ClassRunChangeRequest": {
+        "LearnersLabel": "Learners",
+        "CourseLabel": "Course",
+        "ClassRunsLabel": "Class runs",
+        "ClassRunChangeStatusLabel": "Class run change status",
+        "RequestStartDateLabel": "Submit start date",
+        "RequestEndDateLabel": "Submit end date",
+
+        "SelectLearnerPlaceholher": "Select learners",
+        "SelectCoursePlaceholher": "Select course",
+        "SelectClassRunPlaceholher": "Select class runs",
+        "SelectStatusPlaceholher": "Select status",
+
+
+        "LearnerSearchText": "Enter at least a character to search",
+        "CourseSearchText": "Enter at least a character to search"
+      }
+    }
+  },
+  "Odp": {
+    "ConfirmationDialog": {
+      "Header": "Confirmation",
+      "Content": "You have unsaved changes. Are you sure you want to cancel it?",
+      "Confirm": "Yes",
+      "No": "No",
+      "ConfirmOK": "OK",
+      "Add": "Add",
+      "Cancel": "Cancel",
+      "AddLAPopupTitle": "Add Learning Areas",
+      "AddLOPopupTitle": "Add Learning Opportunities",
+      "DeleteDraftWithPreviousSavedVersion": "You are about to delete this draft version, we will restore the last approved/rejected version content of this {{odpActivityName}}. Do you still want to proceed?",
+      "DeleteAllVersionConfirmation": "You are about to delete the {{odpTitle}} permanently. Do you wish to proceed?",
+      "Deactive": "Are you sure that you want to delete the selected record(s)?",
+      "DeletePDOOnKLPConfirmation": "You are about to remove {{pdoTitle}} from {{klpTitle}}. Do you want to proceed?"
+    },
+    "Button": {
+      "AddLA": "Add LAs",
+      "AddLO": "Add LOs",
+      "AddKLP": "Add KLP",
+      "AddPDO": "Add PD Opportunity",
+      "AddArea": "Add Learning Areas",
+      "AddLearningDirection": "Add Learning Direction"
+    },
+    "LearningPlan": {
+      "ListTitle": "Organisational PD Journey for",
+      "Status": "Status",
+      "CreateNew": "Creating New",
+      "PlannedPDODetail": {
+        "About": "About",
+        "Nominations": "Nominations",
+        "Recommendations": "Recommendations",
+        "Cost": "Training Cost",
+        "PlannedCost": "Planned Training Cost",
+        "ActualCost": "Actual Training Cost",
+        "MassNomination": "Mass Nomination",
+        "LearnerSelectPlaceholder": "Search and pick learners...",
+        "RecommendSelectPlaceholder": "Search and pick learners...",
+        "LearnerSearchText": "Please enter name or email of learner to search",
+        "ClassRunSelectPlaceholder": "Pick a class run...",
+        "UserGroupSelectPlaceholder": "Pick a group...",
+        "AOSelectPlaceholder": "Pick a Course Approving Officer...",
+        "AdminSelectPlaceholder": "Pick an Administrator...",
+        "RemoveNominationResult": "You are going to remove this item out of nominations.",
+        "RemoveRecommendationResult": "You are going to remove this item out of recommendations.",
+        "OnlyAvailableWhenLDApproved": "This feature is only available when the parent Learning Direction is approved.",
+        "BlockAssignPDOWhenCourseUnpublished": "This course was unpublished and this feature is unavailable",
+        "NoClassRunToNominate": "Currently there is no classrun available to nominate.",
+        "NoClassRunToAdhocNominate": "Selected PD Opportunity hasn't classrun available to nominate.",
+        "SelectedPDOUnpublished": "Selected PD Opportunity was unpublished",
+        "NoNominatedLearners": "No learner has been nominated.",
+        "NoRecommendedLearners": "No learner has been recommended.",
+        "NoNominatedGroups": "No group has been nominated.",
+        "NoRecommendedGroups": "No group has been recommended.",
+        "NoNominatedDepartment": "Current Organisation Unit hasn't been nominated.",
+        "NoRecommendedDepartment": "Current Organisation Unit hasn't been recommended.",
+        "DepartmentAlreadyNominated": "This Organisation Unit already nominated.",
+        "DepartmentAlreadyRecommended": "This Organisation Unit already recommended.",
+        "NoMassNominationResult": "No result has been nominated.",
+        "GroupStatusNoData": "No learner found",
+        "NoCompletedRegistration": "Course participation has not been updated by the Course Admin.",
+        "NominateIndividualConfirmation": "{{selectedLearners}} learner{{pluralCharacter}} will be nominated for the selected PD Opportunity.",
+        "NominateGroupConfirmation": "The user group will be nominated for the selected PD Opportunity.",
+        "NominateDepartmentConfirmation": "The Organisation Unit will be nominated for the selected PD Opportunity.",
+        "NominateELearningPublicCourseConfirmation": "Please note that all E-Learning courses that have Public mode will not need any approval.",
+        "NominateSuccess": "Nomination Details",
+        "NominateUnSuccess": "Nomination Unsuccessful",
+        "RecommendSuccess": "Recommend Completely",
+        "RecommendUnSuccess": "Recommend Unsuccessful",
+        "ApproveSuccess": "Approve Completely",
+        "ApproveUnSuccess": "Approve Unsuccessful"
+      },
+      "FailedToRetrieveData": "Can't get Organisational PD Journey data."
+    },
+    "StartNewPlan": {
+      "PopupHeader": "Start new plan",
+      "MissingConfiguration": "Unable to start the Organisational PD Journey because of missing configuration",
+      "CreateFailedBecauseOfExistingOne": "You have created the Organisational PD Journey for the year.",
+      "SubmitSuccess": "Saved Organisational PD Journey successfully"
+    },
+    "NewStrategicThrust": {
+      "PopupHeader": "Start new plan",
+      "MissingConfiguration": "Unable to create the strategic thrust because of missing configuration",
+      "CreateFailedBecauseOfExistingOne": "Failed to create the strategic thrust because there is existing one created before.",
+      "NoRowsTemplate": "<span>No rows to show</span>",
+      "DeleteFailBecauseAlreadyUsedInLP": "There are a few records have already used in Organisational PD Journey",
+      "DeleteSuccessButNotAll": "Delete Successfully, But there are a few records have already used in Organisational PD Journey"
+    },
+    "StrategicThrust": {
+      "ListTitleFor": "Strategic Thrust for"
+    },
+    "DuplicateLearningDirection": {
+      "SubmitSuccess": "Learning Direction has been duplicated successfully.",
+      "SubmitFail": "Learning Direction has been failed."
+    }
+  },
+  "MyPdJourney": {
+    "PlannedActivities": {
+      "SelectedYear": "Selected Year",
+      "Status": "Status",
+      "SortBy": "Sort By",
+      "Sort": {
+        "Upcoming": "Upcoming",
+        "Nominated": "Nominated",
+        "Completed": "Completed"
+      },
+      "AddExternalPDO": "Add External PD Opportunity",
+      "AddFromCatalog": "Add PD Opportunity",
+      "PlanNextYear": "Plan for Next Year",
+      "Bookmarks": "Bookmarks",
+      "Completed": "Completed",
+      "Nominated": "Nominated",
+      "PDODetail": "Detail of PD Opportunity",
+      "ConfirmDeletePDO": "Are you sure you want to remove this PD Opportunity?",
+      "ConfirmDeleteArea": "Are you sure to delete selected Learning Area?",
+      "ViewComment": "View comments",
+      "MarkAsCompleted": "Mark as complete",
+      "MarkAsUnCompleted": "Mark as incomplete",
+      "ConfirmMarkAsCompleted": "Are you sure to mark as completed?",
+      "ConfirmMarkAsUnCompleted": "Are you sure to mark as incompleted?",
+      "EditExternalPDO": "Edit External PD Opportunity",
+      "ExternalPDOFields": {
+        "Date": "Date",
+        "Mode": "Mode",
+        "Venue": "Venue",
+        "Type": "Type",
+        "Nature": "Nature",
+        "Cost": "Cost",
+        "Capacity": "Capacity of Attendee",
+        "Organiser": "Organiser",
+        "PublishToEPortfolio": "Publish To EPortfolio",
+        "LearningAreas": "Learning Areas",
+        "SubjectAreas": "Subject Areas"
+      }
+    },
+    "Catalog": {
+      "SearchPlaceholder": "Search",
+      "Empty": "No PD Opportunities found",
+      "Suggestions": "Suggestions for you",
+      "Recommended": "Recommended",
+      "PDOpportunities": "PD Opportunities",
+      "SearchResults": "Search PD Opportunities",
+      "AddExternalPDO": "Add External PD Opportunity",
+      "Bookmarks": "Bookmarks",
+      "Filter": "Filter",
+      "ShowMore":"Show more",
+      "Titles": {
+        "AddCatalog": "Add PD Opportunity",
+        "Bookmarks": "Bookmarks",
+        "Detail": "Detail",
+        "AddExternal": "Add External PD Opportunity"
+      },
+      "Navigation": "Back to {{ title }}"
+    },
+    "FilterSlidebar": {
+      "TypeOfPDActivity": "Type Of PD Activity",
+      "ModeOfLearning": "Mode Of Learning",
+      "Category": "Category",
+      "ServiceScheme": "Service Scheme",
+      "DevelopmentalRole": "Developmental Role",
+      "TeachingLevel": "Teaching Level",
+      "CourseLevel": "Course Level",
+      "Subject": "Subject",
+      "LearningFramework": "Learning Framework",
+      "LearningDimension": "Learning Dimension",
+      "LearningArea": "Learning Area",
+      "LearningSubArea": "Learning Sub-Area",
+      "NatureOfCourse": "Nature of Course",
+      "ShowMore": "Show more",
+      "ShowLess": "Show less"
+    },
+    "OpportunityDetail": {
+      "Action": {
+        "Added": "Added",
+        "AddToPlan": "Add to plan"
+      },
+      "Tab": {
+        "Content": "Content",
+        "Review": "Review"
+      },
+      "AboutLabel": "About",
+      "Duration": "Duration"
+    },
+    "Bookmark": {
+      "Title": "Bookmarks",
+      "Empty": "Looks like you haven't bookmarked any courses."
+    },
+    "Action": {
+      "SaveDraft": "Save draft",
+      "Next": "Next",
+      "Edit": "Edit",
+      "Submitted": "Submitted",
+      "SubmitLNA": "Submit LNA",
+      "SubmitForAcknowledgement": "Submit for Acknowledgement",
+      "Acknowledge": "Acknowledge",
+      "Reject": "Reject",
+      "Acknowledged": "Acknowledged",
+      "Rejected": "Rejected",
+      "RejectSubHeader": "(State some changes for learner when rejecting)"
+    },
+    "User": {
+      "CutOffDate": "Complete by"
+    },
+    "LearningNeeds": {
+      "Status": "LNA Status",
+      "NoLearningNeed": "There are no Learning Needs",
+      "ReviewLNA": "Review LNA",
+      "ConfirmEditingApprovedLNA": "Changes to the LNA must be submitted to your Approving Officer for acknowledgement. Proceed to edit?",
+      "ConflictEditingLNA": "Conflict! There is another version. Please fresh the page and try again.",
+      "CompletionRate":"Completion Rate",
+      "CurrentGoal": "Current goal",
+      "PreviousGoal": "Previous goal"
+    },
+    "PlanNextYear": "Plan Your Upcoming Year",
+    "Greeting": {
+      "Morning": "Good Morning",
+      "Afternoon": "Good Afternoon",
+      "Evening": "Good Evening"
+    },
+    "SuggestNavigatingToPdplan": {
+      "Content": "You've successfully submitted your LNA for acknowledgement. Do you want to continue with your PD Plan?",
+      "Header": "Continue with your PD Plan"
+    },
+    "Message": {
+      "SubmitWithUnassignAO": "Unable to submit application. Please contact your Division/Branch / School Administrator to assign the approving officer.",
+      "SubmitPlanWithUnacknowledgedLNA": "You cannot submit your PD Plan unless your Learning Needs Analysis has already been acknowledged.",
+      "NoServiceScheme": "Service Scheme Not Applicable",
+      "SubmitExpiredLNA": "It has been expired on {DueDate} so you cannot submit it."
+    },
+    "LNA": {
+      "GettingStartedGuideText": "Take a look at your last {{ years }} year(s)",
+      "ReviewEmpty": "There is no previous learning need data to review, click 'Next' to go to next page",
+      "RejectedWarning": {
+        "WarningHeader": "Your Learning Needs Analysis has been rejected.",
+        "WarningBody": "Please resubmit it with the suggested changes.",
+        "RetakeButton": "Retake Learning Needs Analysis"
+      },
+      "LNASurveyLinkHeader": "Continue with Survey",
+      "LNASurveyLinkGreeting": "You have successfully submitted your LNA for acknowledgement.",
+      "LNASurveyLinkThank": "Thank you.",
+      "LNASurveyLinkContent": "We would like to know your Learning Needs Analysis experience and request your participation in our survey. Your feedback is greatly appreciated to help us improve our services better."
+    },
+    "EditLNAConfirmation": {
+      "Content": "Are you sure you want to edit this step? This action will affect other steps.",
+      "Yes": "YES, I WANT TO EDIT",
+      "Cancel": "CANCEL"
+    }
+  },
+  "Mobile": {
+    "PDPlan": {
+      "PageHeader": {
+        "LearningNeedsAnalysis": "Learning Needs Analysis",
+        "LearningNeeds": "Learning Needs",
+        "PlannedActivities": "PD Plan",
+        "AddLearningOpportunity": "Add PD opportunity",
+        "DetailLearningOpportunity": "Learning Opportunity",
+        "Bookmarks": "Bookmarks",
+        "SetDate": "Set a date"
+      },
+      "LandingPage": {
+        "Title": "Professional Development Planner",
+        "Menu": {
+          "LearningNeedsAnalysis": {
+            "Title": "Learning Needs Analysis",
+            "Description": "Get to know more of yourself"
+          },
+          "LearningNeeds": {
+            "Title": "Learning Needs",
+            "Description": "Get to know more of yourself"
+          },
+          "PlannedActivities": {
+            "Title": "PD Plan",
+            "Description": "Get to know more of yourself"
+          }
+        },
+        "Hint": "The progress you make on your plan will automatically be saved. Feel free to pause your planning at any point."
+      },
+      "PlannedActivities": {
+        "Dialog": {
+          "ThankMessage": "Thank you!",
+          "SuccessMessage": "Your plan was submitted for acknowledgement.",
+          "AddPDOToPlanConfirmation": "Added {{title}} to your plan",
+          "BackToPlan": "Back to PD Plan"
+        },
+        "Button": {
+          "AddLearningOpportunities": "Add PD Opportunity",
+          "SubmitPlanForAcknowledgement": "Submit plan for acknowledgement",
+          "Send": "Send"
+        },
+        "Text": {
+          "CommentOnPlan": "Comments",
+          "AddPDOToStartPlanning": "Add some PD Opportunities to start planning",
+          "NoPlan": "You don’t have any plan"
+        },
+        "Placeholder": {
+          "Comment": "Add comment"
+        },
+        "Alert": {
+          "Success": {
+            "AddActionItem": "PD Opportunity Added",
+            "RemoveActionItem": "PD Opportunity Removed"
+          }
+        }
+      },
+      "LearningOpportunity": {
+        "Button": {
+          "AddToPlan": "Add to Plan",
+          "Bookmarks": "Bookmarks",
+          "AddExternalPDO": "Add External PD Opportunity",
+          "Confirm": "Confirm",
+          "Remove": "Remove"
+        },
+        "Action": {
+          "ShowMore": "Show More"
+        },
+        "Text": {
+          "Filter": "Filter",
+          "Suggestion": "Suggestions for you",
+          "Recommendation": "Recommended",
+          "Comments": "Comments",
+          "LearningFramework": "Learning Framework",
+          "Duration": "Duration",
+          "Hours": "hours"
+        },
+        "Placeholder": {
+          "Search": "Search"
+        }
+      },
+      "LearningNeedsAnalysis": {
+        "GettingStarted": "Getting started",
+        "Import": "Import",
+        "LNAPreviousYear": "LNA from previous years",
+        "PreviewMyLNA": "Preview my LNA",
+        "SubmittedGreeting": "Your Learning Needs Analysis has been submited for acknowledgement.",
+        "BeginPDPlan": "Begin your planning journey here:",
+        "OpenPDPlan": "Open PD Plan",
+        "Dialog": {
+          "ThankMessage": "Thank you!",
+          "SuccessMessage": "You have submitted your Learning Needs Analysis for acknowledgement"
+        },
+        "Alert": {
+          "Success": {
+            "Submit": "Submitted successfully!"
+          }
+        }
+      }
+    }
+  },
+  "Export_Learning_Needs_Analysis": {
+    "Dialog": {
+      "Title": "Export Learning Needs Analysis for all users",
+      "EmailSentMessage": "The report is being generated and will be sent via email shortly."
+    }
+  },
+  "People_List": {
+    "Dialog": {
+      "WarningMessage": {
+        "MaxRowCountIsReached": "Maximum is reached. Please remove {{numberOfOverflowedPeople}} learners from the selection and try again!"
+      }
+    }
+  },
+  "MassNomination": {
+    "Warning": {
+      "Header": "Warning",
+      "Content": "The file contains invalid information. Please check the file and upload it again. Please click on ‘See More’ to view further details.",
+      "ConfirmButton": "See More"
+    },
+    "UploadFile": {
+      "Header": "Warning",
+      "Content": "The file is not in correct format. Please check and upload again."
+    },
+    "EmptyFile": {
+      "Header": "Warning",
+      "Content": "File is empty."
+    },
+    "LimitRecord": {
+      "Header": "Warning",
+      "Content": "The file exceeds 1000 records and cannot be proceeded. Please check and upload again."
+    },
+    "AsyncProcessing": {
+      "Header": "Info",
+      "Content": "The result file is being generated and will be sent to your email address shortly."
+    },
+    "GeneralError": {
+      "Header": "Warning",
+      "Content": "Oops, Something went wrong, please try again."
+    },
+    "FileIsNotSelected": {
+      "Header": "Warning",
+      "Content": "The file is not selected. Please select file before uploading."
+    },
+    "InvalidTemplate": {
+      "Header": "Warning",
+      "Content": "An incorrect file was selected. Please select a valid template file."
+    },
+    "FileContainsEmptyRecord": {
+      "Header": "Warning",
+      "Content": "Some rows are empty. Please check and upload again."
+    }
+  }
+}

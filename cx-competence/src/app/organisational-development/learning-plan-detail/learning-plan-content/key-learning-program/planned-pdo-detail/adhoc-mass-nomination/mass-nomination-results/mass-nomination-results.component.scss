@@ -1,0 +1,23 @@
+.planned-pdo-mass-nominations {
+  &__nominated {
+    margin-top: 20px;
+
+    .nominated-department-container {
+      margin-top: 30px;
+      min-height: 110px;
+      position: relative;
+
+      .nominate-item {
+        .nominate-department-info {
+          cursor: pointer;
+        }
+
+        margin-bottom: 0;
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

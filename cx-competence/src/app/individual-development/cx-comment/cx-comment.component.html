@@ -1,0 +1,157 @@
+<div class="cx-comment">
+  <div class="cx-comment__label">
+    <span class="header-text">Comments</span>
+
+    <!-- TODO: Use this code when implement unread comment -->
+    <!-- <ng-container *ngIf="comments && comments.length > 0">
+        <span *ngIf="comments.length < 100" class="header-badges">
+          <span>{{comments.length}}</span>
+        </span>
+        <span *ngIf="comments.length >= 100" class="header-badges more-than-100">
+          <span>99+</span>
+        </span>
+    </ng-container> -->
+  </div>
+  <div *ngIf="canReply" class="reply-box">
+    <div class="reply-box__input">
+      <div *ngIf="invalidLength" class="reply-box__invalid-length-label">
+        {{ 'Common.Comment.InvalidLength' | translate }}
+      </div>
+      <textarea
+        #textBox
+        placeholder="{{ 'Common.Comment.EnterComment' | translate }}"
+        [class.input-actived]="isFocusingTextBox"
+        [class.invalid-length]="invalidLength"
+        [(ngModel)]="commentTextModel"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      >
+      </textarea>
+      <div
+        *ngIf="isFocusingTextBox"
+        class="reply-box__counter text-right"
+        [class.invalid-length]="invalidLength"
+      >
+        {{ commentText.length + '/' + maxLength }}
+      </div>
+    </div>
+    <div *ngIf="isFocusingTextBox" class="reply-box__actions cx-button-group">
+      <button
+        class="cx-btn-secondary cancel-edit-button"
+        (click)="onClickCancelEdit()"
+      >
+        {{ 'Common.Action.Cancel' | translate }}
+      </button>
+      <button
+        *ngIf="editMode"
+        class="cx-btn-sub-primary save-button"
+        [disabled]="isCommentTextEmpty"
+        (click)="onClickSaveEdit()"
+      >
+        {{ 'Common.Action.Save' | translate }}
+      </button>
+      <button
+        *ngIf="!editMode"
+        class="cx-btn-sub-primary reply-button"
+        [disabled]="isCommentTextEmpty || invalidLength"
+        (click)="onClickReply()"
+      >
+        {{ 'Common.Action.Submit' | translate }}
+      </button>
+    </div>
+  </div>
+  <div *ngIf="comments && comments.length > 0" class="cx-comment__list">
+    <ng-container *ngFor="let comment of comments; let i = index">
+      <!-- Comment item -->
+      <div *ngIf="checkShowItemByIndex(i)" class="comment-item">
+        <div class="comment-item__avatar">
+          <img src="{{ getAvatar(comment.owner.avatarUrl) }}" />
+        </div>
+        <div class="comment-item__content">
+          <!-- Comment owner info -->
+          <p class="comment-owner">
+            {{ comment.owner?.fullName || 'n/a' }}
+            <span class="comment-header-content">
+              <span *ngIf="comment.created">{{
+                getTimeFromNow(comment.created)
+              }}</span>
+              <span
+                *ngIf="!blockExistingComments && comment.allowEdit"
+                class="owner-action"
+                (click)="onClickEdit(comment)"
+                >{{ 'Common.Action.Edit' | translate }}</span
+              >
+              <span
+                *ngIf="!blockExistingComments && comment.allowDelete"
+                class="owner-action"
+                (click)="onClickDelete(comment)"
+                >{{ 'Common.Action.Delete' | translate }}</span
+              >
+              <ng-container *ngIf="comment.tag">
+                <span
+                  *ngIf="isTagApproved(comment.tag)"
+                  class="comment-tag tag-approved"
+                >
+                  <span>{{ approveText }}</span>
+                </span>
+                <span
+                  *ngIf="isTagRejected(comment.tag)"
+                  class="comment-tag tag-rejected"
+                >
+                  <span>{{ rejectText }}</span>
+                </span>
+              </ng-container>
+            </span>
+          </p>
+          <div class="comment-header-content-mobile">
+            <span *ngIf="comment.created">{{
+              getTimeFromNow(comment.created)
+            }}</span>
+            <span
+              *ngIf="!blockExistingComments && comment.allowEdit"
+              class="owner-action"
+              (click)="onClickEdit(comment)"
+              >{{ 'Common.Action.Edit' | translate }}</span
+            >
+            <span
+              *ngIf="!blockExistingComments && comment.allowDelete"
+              class="owner-action"
+              (click)="onClickDelete(comment)"
+              >{{ 'Common.Action.Delete' | translate }}</span
+            >
+            <ng-container *ngIf="comment.tag">
+              <span
+                *ngIf="isTagApproved(comment.tag)"
+                class="comment-tag tag-approved"
+              >
+                <span>{{ 'MyPdJourney.Action.Acknowledged' | translate }}</span>
+              </span>
+              <span
+                *ngIf="isTagRejected(comment.tag)"
+                class="comment-tag tag-rejected"
+              >
+                <span>{{ 'MyPdJourney.Action.Rejected' | translate }}</span>
+              </span>
+            </ng-container>
+          </div>
+
+          <!-- End of Comment owner info -->
+          <p class="comment-text">
+            {{ comment.content }}
+          </p>
+        </div>
+      </div>
+      <!-- End of comment item -->
+    </ng-container>
+    <ng-container *ngIf="comments && comments.length > 1">
+      <div *ngIf="canLoadMore" class="cx-comment__view-more">
+        <button class="btn-load-more" (click)="onClickLoadMore()">
+          {{ 'Common.Comment.PreviousComments' | translate }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="!comments || comments.length === 0" class="cx-comment__nodata">
+    {{ 'Common.Comment.NoComments' | translate }}
+  </div>
+</div>

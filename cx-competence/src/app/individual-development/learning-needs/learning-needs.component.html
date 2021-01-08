@@ -1,0 +1,115 @@
+<div class="learning-needs">
+  <div *ngIf="visibleToolbarActions" class="learning-needs__approval-actions">
+    <button
+      *ngIf="learningNeedPermission.allowApprove"
+      class="cx-btn cx-btn-secondary"
+      (click)="onApprove()"
+    >
+      {{ 'MyPdJourney.Action.Acknowledge' | translate }}
+    </button>
+    <button
+      *ngIf="learningNeedPermission.allowReject"
+      class="cx-btn cx-btn-secondary"
+      (click)="onReject()"
+    >
+      {{ 'MyPdJourney.Action.Reject' | translate }}
+    </button>
+  </div>
+  <div class="learning-needs__body">
+    <ng-container *ngIf="needsResults && currentNeedsResult">
+      <learning-needs-header
+        [needsResults]="needsResults"
+        [defaultResult]="currentNeedsResult"
+        [allowReviewLNA]="learningNeedAnalysisPermission.allowReview"
+        (periodChange)="onPeriodChanged($event)"
+        (reviewLNA)="onReviewLNA($event)"
+      >
+      </learning-needs-header>
+    </ng-container>
+
+    <div class="la-content">
+      <div *ngIf="learningAreaCharts">
+        <div
+          *ngIf="
+            learningAreaCharts.length > 0 &&
+            learningNeedPermission.chart.allowView
+          "
+        >
+          <h1 class="title">Learning Areas</h1>
+          <div
+            class="learning-area"
+            *ngFor="let chartModel of learningAreaCharts"
+          >
+            <learning-area-chart
+              [learningAreaChart]="chartModel"
+            ></learning-area-chart>
+          </div>
+        </div>
+        <ng-container *ngIf="learningNeedPermission.careerAspiration.allowView">
+          <div class="career-aspiration-chart">
+            <h1 class="title">
+              {{ 'Staff.Detail.CareerAspirations' | translate }}
+            </h1>
+            <div
+              *ngIf="!isValidCarrerAspirationChartData"
+              class="career-aspiration-chart__nodata"
+            >
+              {{ 'Staff.Detail.CareerAspirationsNoData' | translate }}
+            </div>
+            <cx-gantt-chart
+              *ngIf="isValidCarrerAspirationChartData"
+              [data]="carrerChartData"
+            >
+              <cx-gantt-chart-header>
+                <div class="cx-gantt-chart-header">
+                  <div class="gantt-chart-types">
+                    <div class="gantt-chart-type-item">
+                      <div
+                        class="gantt-chart-type-item__square"
+                        style="background: #8799ba"
+                      ></div>
+                      <span class="gantt-chart-type-item__text">{{
+                        'MyPdJourney.LearningNeeds.PreviousGoal' | translate
+                      }}</span>
+                    </div>
+                    <div class="gantt-chart-type-item">
+                      <div
+                        class="gantt-chart-type-item__square"
+                        style="background: #7bdeaa"
+                      ></div>
+                      <span class="gantt-chart-type-item__text">{{
+                        'MyPdJourney.LearningNeeds.CurrentGoal' | translate
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </cx-gantt-chart-header>
+            </cx-gantt-chart>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="currentNeedsResult && learningNeedPermission.comment.allowView"
+        >
+          <div class="la-comments">
+            <cx-comment
+              #commentComponent
+              [(comments)]="comments"
+              [canReply]="learningNeedPermission.comment.allowCreate"
+              [blockExistingComments]="
+                !learningNeedPermission.comment.allowDelete ||
+                !learningNeedPermission.comment.allowEdit
+              "
+              (changeComment)="onChangeComment($event)"
+            >
+            </cx-comment>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="!currentNeedsResult">
+        <div class="learning-needs__empty">
+          {{ 'MyPdJourney.LearningNeeds.NoLearningNeed' | translate }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

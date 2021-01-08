@@ -1,0 +1,11 @@
+<div class="idp-toolbar">
+  <i class="icon icon-block"></i>
+  <cx-breadcrumb-simple
+    [simpleStyle]="true"
+    [breadCrumbItems]="breadcrumb"
+    (clickedItem)="onClickBreadcrumbItem($event)"
+  ></cx-breadcrumb-simple>
+  <div class="idp-toolbar__actions">
+    <ng-content select="idp-toolbar-actions"></ng-content>
+  </div>
+</div>

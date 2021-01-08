@@ -1,0 +1,70 @@
+@import '~assets/styles/variables.scss';
+
+.course-review-item {
+  display: flex;
+  width: 100%;
+  font-size: $main-font-size;
+  margin-bottom: 10px;
+  &__avatar {
+    width: 60px;
+    height: 55px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: gray;
+  }
+
+  &__details-container {
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+
+  &__rating-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: $cx-color-text-secondary;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__comment {
+    line-height: 1.6;
+  }
+
+  &__comment-action {
+    color: $cx-color-text-secondary;
+    cursor: pointer;
+  }
+
+  &__rating-stars {
+    display: flex;
+    align-items: center;
+    .icon {
+      display: inline-block;
+      padding: 10px;
+      border-radius: 4px;
+      &.sm {
+        width: 16px;
+        height: 16px;
+      }
+      &.star-outline {
+        background-image: url('assets/images/star-outline.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      &.star {
+        background-image: url('assets/images/star.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+}

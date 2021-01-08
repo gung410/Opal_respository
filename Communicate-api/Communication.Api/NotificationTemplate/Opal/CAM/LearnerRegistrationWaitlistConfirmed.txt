@@ -1,0 +1,1 @@
+﻿Your application to join a class run of the course {{CourseTitle}} - {{ClassRunTitle}} has been put on the waitlist due to the class run is currently full.

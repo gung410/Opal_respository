@@ -1,0 +1,53 @@
+<div class="cx-gantt-chart-container">
+  <div #cxGanttChartHeader class="cx-gantt-chart-header-container">
+    <ng-content select="cx-gantt-chart-header"></ng-content>
+  </div>
+  <div class="cx-gantt-chart-content">
+    <cx-gantt-scrubber
+      #cxGanttChartScrubber
+      [selectedYear]="currentYear"
+      [yearList]="yearList"
+      (changeYear)="onScrubberChangeYear($event)"
+    >
+    </cx-gantt-scrubber>
+    <div
+      #cxGanttChartScrollDiv
+      class="cx-gantt-chart"
+      (scroll)="onScroll()"
+      (mousewheel)="onScroll()"
+      (mousedown)="onMouseDown()"
+      (mouseup)="onMouseUp()"
+      (pointerdown)="onMouseDown()"
+      (pointerup)="onMouseUp()"
+    >
+      <div #cxGanttChartViewer class="cx-gantt-chart-viewer">
+        <cx-gantt-timeline
+          #cxGanttChartTimeline
+          [currentYear]="currentYear"
+          [yearList]="yearList"
+        >
+        </cx-gantt-timeline>
+        <div #cxGanttChartTasksList class="cx-gantt-chart-tasks">
+          <ng-container *ngIf="taskRenderDataList"
+            ><ng-container *ngFor="let taskRenderer of taskRenderDataList">
+              <cx-gantt-task
+                [data]="taskRenderer.data"
+                [style.margin-left]="taskRenderer.offset + 'px'"
+                [style.width]="taskRenderer.width + 'px'"
+              ></cx-gantt-task> </ng-container
+          ></ng-container>
+        </div>
+      </div>
+    </div>
+    <div #cxGanttChartController class="cx-gantt-chart-controller">
+      <div class="cx-gantt-chart-controller__actions">
+        <button (click)="onBackward()" [disabled]="!enableBackward">
+          <i class="icon icon-arrow-left"></i>
+        </button>
+        <button (click)="onForward()" [disabled]="!enableForward">
+          <i class="icon icon-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

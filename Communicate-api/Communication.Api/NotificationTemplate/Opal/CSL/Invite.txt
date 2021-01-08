@@ -1,0 +1,1 @@
+{{OriginatorName}} has invited you to the community {{CommunityName}}.

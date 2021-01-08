@@ -1,0 +1,33 @@
+<cx-dialog-template [showFooterActionButtons]="false" (cancel)="onCancel()">
+  <modal-header>
+    <h3>{{ 'Staff.Filter.Title' | translate }}</h3>
+  </modal-header>
+  <content>
+    <div class="mandatory-text">
+      <cx-mandatory-text></cx-mandatory-text>
+    </div>
+    <cx-surveyjs
+      class="filter-criteria"
+      #filterSurveyJs
+      [json]="filterFormJSON"
+      [submitName]="'Add new filter criteria'"
+      (submitting)="onAddNewFilter($event)"
+      (valueChanged)="onAddCriteriaChanged($event)"
+    >
+    </cx-surveyjs>
+    <cx-surveyjs
+      #appliedFilterSurveyJs
+      [json]="appliedFilterFormJSON"
+      [data]="appliedData"
+      [submitName]="'Done'"
+      [cancelName]="'Cancel'"
+      (changeValue)="onChanged($event)"
+      (submit)="onApplyFilter($event)"
+      (cancel)="onCancel()"
+      [disableSubmitBtn]="
+        !adjustAppliedData && appliedData.appliedFilter.length === 0
+      "
+    >
+    </cx-surveyjs>
+  </content>
+</cx-dialog-template>

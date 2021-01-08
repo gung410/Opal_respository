@@ -1,0 +1,1 @@
+{{PostOwnerName}} mentioned you in the post {{PostContentPreview}} in the community {{CommunityName}}.

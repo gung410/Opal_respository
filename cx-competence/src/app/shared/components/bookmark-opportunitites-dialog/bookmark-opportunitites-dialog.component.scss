@@ -1,0 +1,59 @@
+@import '~assets/styles/variables.scss';
+
+.header {
+  .catalog-back {
+    font-size: 24px;
+    padding-left: 25px;
+    cursor: pointer;
+
+    .back-icon {
+      position: absolute;
+      transform: rotate(90deg) translate(50%, 120%);
+      font-size: 18px;
+    }
+  }
+
+  .catalog-title {
+    font-size: 36px;
+  }
+}
+
+bookmark-opportunitites-dialog {
+  @media only screen and (max-width: $screen-xs-max) {
+    .cx-dialog-template {
+      .modal-header {
+        .header {
+          .catalog-back {
+            padding-left: 0;
+            transform: translateY(-2px);
+            .back-icon {
+              display: none;
+            }
+          }
+          .catalog-title {
+            display: none;
+          }
+        }
+      }
+
+      .modal-body {
+        padding: 0 !important;
+      }
+    }
+  }
+
+  @media only screen and (max-width: $screen-xxs-max) {
+    .cx-dialog-template {
+      .modal-body {
+        margin-left: 0;
+        margin-right: 0;
+        .bookmark-opportunities {
+          &--empty {
+            margin-left: 0;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

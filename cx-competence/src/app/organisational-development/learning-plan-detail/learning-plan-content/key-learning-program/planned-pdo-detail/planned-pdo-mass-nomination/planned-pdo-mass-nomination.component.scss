@@ -1,0 +1,148 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.planned-pdo-mass-nominations {
+  &__nominate {
+    .file-template-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .pdo-title-container {
+      &__title {
+        color: #2d3469;
+        margin-top: 20px;
+        font-size: 22px;
+      }
+    }
+
+    .mass-nomination-heading {
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 22px;
+      line-height: 105.69%;
+      color: #2d3469;
+      padding: 30px 0px;
+    }
+
+    .upload-file {
+      padding: 15px 0px;
+      .description {
+        padding: 8px 0px;
+      }
+      .upload-zone {
+        display: flex;
+        align-items: center;
+        .upload-btn {
+          padding: 5px 12px 0px 0px;
+          input[type='file'] {
+            height: 0;
+            overflow: hidden;
+            width: 0;
+          }
+
+          input[type='file'] + label {
+            background: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            outline: none;
+            padding: 8px 15px;
+            position: relative;
+            transition: all 0.3s;
+            vertical-align: middle;
+            border: 1px solid #d8dce6;
+
+            &:hover {
+              background-color: $cx-color-main;
+              color: #fff;
+            }
+          }
+          & > label > i {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 16px;
+            transform: translateY(1px);
+          }
+        }
+      }
+    }
+
+    .select-approving-officer {
+      margin-top: 20px;
+    }
+
+    cx-select {
+      margin-top: 10px;
+      display: block;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .not-available-label {
+      color: #a1a8b6;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 30px;
+      text-align: center;
+    }
+  }
+
+  &__nominated {
+    margin-top: 20px;
+
+    .nominated-department-container {
+      margin-top: 30px;
+      min-height: 110px;
+      position: relative;
+
+      .nominate-item {
+        .nominate-department-info {
+          cursor: pointer;
+        }
+
+        margin-bottom: 0;
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  .nominate-list {
+    margin-top: 15px;
+  }
+
+  .nominate-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 35px 10px 20px;
+    border: 1px solid #d8dce6;
+    border-radius: 5px;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .nomination-container {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .show-more {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+}

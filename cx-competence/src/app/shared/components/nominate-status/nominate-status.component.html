@@ -1,0 +1,169 @@
+<div class="nominate-status-container">
+  <div *ngIf="!isGroupOrDepartment" class="nominate-status">
+    <div class="nominate-status__circle" [ngClass]="statusClass"></div>
+    <div class="nominate-status__status">
+      <p>{{ statusName || 'N/A' | translate }}</p>
+      <p class="nominate-status-sub-name" *ngIf="statusSubName">
+        {{ statusSubName | translate }}
+      </p>
+    </div>
+  </div>
+  <ng-container *ngIf="isGroupOrDepartment">
+    <div
+      *ngIf="totalApproved > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Approved)"
+    >
+      <div class="nominate-status__circle nominate-status-approved"></div>
+      <div class="nominate-status__status">
+        {{ totalApproved }} {{ objectiveName(totalApproved) }}
+        {{ totalApproved > 1 ? 'are' : 'is' }} {{ confirmedStatusName }}
+      </div>
+    </div>
+    <div
+      *ngIf="totalPendingLv1 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.PendingForApproval)"
+    >
+      <div class="nominate-status__circle nominate-status-pending"></div>
+      <div class="nominate-status__status">
+        {{ totalPendingLv1 }} {{ objectiveName(totalPendingLv1) }}
+        {{ totalPendingLv1 > 1 ? 'are' : 'is' }} pending approval
+      </div>
+    </div>
+    <div
+      *ngIf="totalPendingLv2 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.PendingForApproval2nd)"
+    >
+      <div class="nominate-status__circle nominate-status-pending"></div>
+      <div class="nominate-status__status">
+        {{ totalPendingLv2 }} {{ objectiveName(totalPendingLv2) }}
+        {{ totalPendingLv2 > 1 ? 'are' : 'is' }} approved and pending CAM
+        confirmation
+      </div>
+    </div>
+    <div
+      *ngIf="totalPendingLv3 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.PendingForApproval3rd)"
+    >
+      <div class="nominate-status__circle nominate-status-pending"></div>
+      <div class="nominate-status__status">
+        {{ totalPendingLv3 }} {{ objectiveName(totalPendingLv3) }}
+        {{ totalPendingLv3 > 1 ? 'are' : 'is' }} on Waitlist
+      </div>
+    </div>
+    <div
+      *ngIf="totalRejectedLv1 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Rejected)"
+    >
+      <div class="nominate-status__circle nominate-status-rejected"></div>
+      <div class="nominate-status__status">
+        {{ totalRejectedLv1 }} {{ objectiveName(totalRejectedLv1) }}
+        {{ totalRejectedLv1 > 1 ? 'are' : 'is' }} rejected
+      </div>
+    </div>
+
+    <div
+      *ngIf="totalRejectedLv2 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Rejected2nd)"
+    >
+      <div class="nominate-status__circle nominate-status-rejected"></div>
+      <div class="nominate-status__status">
+        {{ totalRejectedLv2 }} {{ objectiveName(totalRejectedLv2) }}
+        {{ totalRejectedLv2 > 1 ? 'are' : 'is' }} rejected by CAM
+      </div>
+    </div>
+
+    <div
+      *ngIf="totalRejectedLv3 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Rejected3nd)"
+    >
+      <div class="nominate-status__circle nominate-status-rejected"></div>
+      <div class="nominate-status__status">
+        {{ totalRejectedLv3 }} {{ objectiveName(totalRejectedLv3) }}
+        {{ totalRejectedLv3 > 1 ? 'are' : 'is' }} withdrawn
+      </div>
+    </div>
+
+    <div
+      *ngIf="totalRejectedLv4 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Rejected4th)"
+    >
+      <div class="nominate-status__circle nominate-status-rejected"></div>
+      <div class="nominate-status__status">
+        {{ totalRejectedLv4 }} {{ objectiveName(totalRejectedLv4) }}
+        {{ totalRejectedLv4 > 1 ? 'are' : 'is' }} rejected by Learner
+      </div>
+    </div>
+
+    <div
+      *ngIf="totalRejectedLv5 > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.Rejected5th)"
+    >
+      <div class="nominate-status__circle nominate-status-rejected"></div>
+      <div class="nominate-status__status">
+        {{ totalRejectedLv5 }} {{ objectiveName(totalRejectedLv5) }}
+        {{ totalRejectedLv5 > 1 ? 'are' : 'is' }} nomination unsuccessful
+      </div>
+    </div>
+
+    <div
+      *ngIf="unAssignedLearner > 0"
+      class="nominate-status"
+      data-toggle="collapse"
+      aria-expanded="false"
+      [attr.data-target]="'#' + getTargetAttr()"
+      [attr.aria-controls]="getTargetAttr()"
+      (click)="nominateStatusClick(nominateStatusCode.NotNominated)"
+    >
+      <div class="nominate-status__circle nominate-status-notnominated"></div>
+      <div class="nominate-status__status">
+        {{ unAssignedLearner }} {{ objectiveName(unAssignedLearner) }}
+        {{ unAssignedLearner > 1 ? 'are' : 'is' }} not nominated
+      </div>
+    </div>
+  </ng-container>
+</div>

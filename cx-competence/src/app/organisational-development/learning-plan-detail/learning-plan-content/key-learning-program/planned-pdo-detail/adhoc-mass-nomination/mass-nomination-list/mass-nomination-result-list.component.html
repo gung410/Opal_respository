@@ -1,0 +1,16 @@
+<ag-grid-angular
+  #grid
+  class="ag-theme-material styled-grid learning-plan-list-table"
+  domLayout="autoHeight"
+  [rowData]="rowData"
+  [rowHeight]="70"
+  [headerHeight]="64"
+  [columnDefs]="columnDefs"
+  [suppressRowClickSelection]="true"
+  [defaultColDef]="defaultColDef"
+  [context]="context"
+  [overlayNoRowsTemplate]="noRowsTemplate"
+  [frameworkComponents]="frameworkComponents"
+  (gridReady)="onGridReady($event)"
+  (firstDataRendered)="onFirstDataRendered($event)"
+></ag-grid-angular>

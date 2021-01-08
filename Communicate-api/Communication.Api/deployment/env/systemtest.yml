@@ -1,0 +1,7 @@
+mongo_db_name: systemtest-communication-opal-db
+mongo_db_auth: systemtest-communication-opal:opal-communication-systemtest
+https_proxy: http://proxy.opal:3128
+idm_base_url: https://idm.systemtest.opal2.conexus.net
+HangfireDatabase: systemtest-cx-opal-scheduling-jobs-db
+HangfireDatabaseUsername: systemtest-cx-opal-scheduling-jobs-db-readwrite
+HangfireDatabasePassword: kUMC8MzTjQYedAs

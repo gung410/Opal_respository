@@ -1,0 +1,1 @@
+{{PostOwnerName}} creates new post on your wall.

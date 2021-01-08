@@ -1,0 +1,3 @@
+The learning direction ({{LearningDirectionTitle}}) of the learning plan for {{LearningPlanPeriod}} has been approved by the Approving Officer {{SenderName}}.
+
+

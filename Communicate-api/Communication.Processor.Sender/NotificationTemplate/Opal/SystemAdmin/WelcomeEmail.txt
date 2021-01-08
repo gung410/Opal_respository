@@ -1,0 +1,9 @@
+{{AlertText}}
+Welcome to OPAL2.0. Your account has been activated successfully.
+{{OtpCode}}
+{{GuideText}}
+{{Web1LinkText}}
+{{Web2LinkText}}
+{{FirstLinkText}}
+{{SecondLinkText}}
+

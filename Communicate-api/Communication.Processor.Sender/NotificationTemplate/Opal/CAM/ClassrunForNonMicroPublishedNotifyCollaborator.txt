@@ -1,0 +1,3 @@
+A new class run for the course - {{CourseTitle}} - has been published. Please proceed to add content to the class run
+
+

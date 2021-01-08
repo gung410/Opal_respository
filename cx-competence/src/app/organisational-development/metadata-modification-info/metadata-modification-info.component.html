@@ -1,0 +1,50 @@
+<div
+  class="metadata-modification-info"
+  *ngIf="odpDto && (odpDto.created || odpDto.lastUpdated)"
+>
+  <avatar
+    *ngIf="odpDto.createdBy"
+    class="avatar"
+    [avatarUrl]="odpDto.createdBy.avatar"
+    data-toggle="tooltip"
+    title="{{ odpDto.createdBy.name }}"
+  ></avatar>
+  <avatar
+    *ngIf="
+      odpDto.lastUpdatedBy &&
+      odpDto.createdBy &&
+      odpDto.lastUpdatedBy.email != odpDto.createdBy.email
+    "
+    class="avatar"
+    [avatarUrl]="odpDto.lastUpdatedBy.avatar"
+    data-toggle="tooltip"
+    title="{{ odpDto.lastUpdatedBy.name }}"
+  ></avatar>
+  <div class="metadata-modification-info__text">
+    <p>
+      <span>{{ 'Common.Label.Created' | translate }}</span>
+      <span title="{{ getDateTimeFormat(odpDto.created) }}">{{
+        ' ' + getDateTimeFromNow(odpDto.created) + ' '
+      }}</span>
+      <span *ngIf="odpDto.createdBy">
+        {{ 'Common.Label.By' | translate }} {{ odpDto.createdBy.name }}</span
+      >
+    </p>
+    <p *ngIf="odpDto.created != odpDto.lastUpdated">
+      <span>{{ 'Common.Label.LastUpdated' | translate }}</span>
+      <span title="{{ getDateTimeFormat(odpDto.lastUpdated) }}">{{
+        ' ' + getDateTimeFromNow(odpDto.lastUpdated) + ' '
+      }}</span>
+      <span
+        *ngIf="
+          odpDto.lastUpdatedBy &&
+          odpDto.createdBy &&
+          odpDto.lastUpdatedBy.email != odpDto.createdBy.email
+        "
+      >
+        {{ 'Common.Label.By' | translate }}
+        {{ odpDto.lastUpdatedBy.name }}</span
+      >
+    </p>
+  </div>
+</div>

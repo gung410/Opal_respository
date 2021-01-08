@@ -1,0 +1,56 @@
+@import '~assets/styles/variables.scss';
+
+:host {
+  display: block;
+}
+
+.planned-pdo-detail {
+  &__header {
+    border-radius: $panel-border-radius;
+    background: $main-bg-container;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    min-height: unset;
+    .pdo-title-container {
+      border-bottom: 1px solid #d8dce6;
+      padding: 25px;
+      &__title {
+        color: #2d3469;
+        margin-top: 20px;
+        font-size: 22px;
+      }
+    }
+
+    .pdo-tabs {
+      display: flex;
+
+      &__tab {
+        padding: 10px 30px;
+        cursor: pointer;
+        white-space: nowrap;
+        &.tab-active {
+          border-bottom: 5px solid #303450;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .pdo-title-unpublished {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      background: #ff6262;
+      color: #fff;
+      padding: 5px 8px;
+      border-radius: 0 0 5px 5px;
+    }
+  }
+
+  &__body {
+    border-radius: $panel-border-radius;
+    margin-top: 20px;
+    width: 100%;
+  }
+}
