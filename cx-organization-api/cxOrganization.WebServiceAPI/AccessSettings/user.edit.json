@@ -1,0 +1,686 @@
+{
+  "accessSettings": {
+    "editUserAccess": {
+      "overallsystemadministrator": {
+        "hasFullAccessOnHierarchy":true,
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": true,
+            "allowedValues": [
+              "overallsystemadministrator",
+              "useraccountadministrator",
+              "divisionadmin",
+              "branchadmin",
+              "schooladmin",
+              "divisiontrainingcoordinator",
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "courseplanningcoordinator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false,
+            "restrictForExternallyMasteredUserOnly": true
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedSelfChangeEntityStatuses": [
+              {
+                "from": "All",
+                "to": "All"
+              }
+            ],
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "All",
+                "to": "All"
+              }
+
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false,
+            "allowedValues": [ "true" ]
+          },
+          "ssn": {
+            "allowSelfAccess": false,
+            "allowedValues": []
+          } 
+        }
+      },
+      "useraccountadministrator": {
+        "hasFullAccessOnHierarchy":true,
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": true,
+            "allowedValues": [
+              "divisionadmin",
+              "branchadmin",
+              "schooladmin",
+              "divisiontrainingcoordinator",
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "courseplanningcoordinator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false,
+            "restrictForExternallyMasteredUserOnly": true
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "All",
+                "to": "All"
+              }
+
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false,
+            "allowedValues": [ "true" ]
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "divisionadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "division", "branch", "cluster", "OrganizationUnit" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": true,
+            "allowedValues": [
+              "divisiontrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false,
+            "restrictForExternallyMasteredUserOnly": true
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "IdentityServerLocked",
+                "to": "Active"
+              },
+              {
+                "from": "IdentityServerLocked",
+                "to": "New"
+              },
+              {
+                "from": "Active",
+                "to": "Inactive"
+              },
+              {
+                "from": "New",
+                "to": "Inactive"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "PendingApproval2nd"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "Rejected"
+              }
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false,
+            "allowedValues": [ "true" ]
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "branchadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "branch", "cluster", "OrganizationUnit" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": true,
+
+            "allowedValues": [
+              "divisiontrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false,
+            "restrictForExternallyMasteredUserOnly": true
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "IdentityServerLocked",
+                "to": "Active"
+              },
+              {
+                "from": "IdentityServerLocked",
+                "to": "New"
+              },
+              {
+                "from": "Active",
+                "to": "Inactive"
+              },
+              {
+                "from": "New",
+                "to": "Inactive"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "PendingApproval2nd"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "Rejected"
+              }
+
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false,
+            "allowedValues": [ "true" ]
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "schooladmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": true,
+            "allowedValues": [
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false,
+            "restrictForExternallyMasteredUserOnly": true
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "IdentityServerLocked",
+                "to": "Active"
+              },
+              {
+                "from": "IdentityServerLocked",
+                "to": "New"
+              },
+              {
+                "from": "Active",
+                "to": "Inactive"
+              },
+              {
+                "from": "New",
+                "to": "Inactive"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "PendingApproval2nd"
+              },
+              {
+                "from": "PendingApproval1st",
+                "to": "Rejected"
+              }
+
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false,
+            "allowedValues": [ "true" ]
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "reportingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "ApprovalGroup" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "approvingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "ApprovalGroup" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "learner": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "divisiontrainingcoordinator": {
+        "onlyMoveUpOneAncestor": true,
+        "inSameDepartment": true,
+        "inAncestorDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inRelativeDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false,
+
+            "allowedValues": [
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "IdentityServerLocked",
+                "to": "Active"
+              },
+              {
+                "from": "IdentityServerLocked",
+                "to": "New"
+              },
+              {
+                "from": "Active",
+                "to": "Inactive"
+              },
+              {
+                "from": "New",
+                "to": "Inactive"
+              }
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "schoolcontentapprovingofficer": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "MOEHQcontentapprovingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "webpageeditor": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "courseplanningcoordinator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "coursecontentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "courseadmin": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "coursefacilitator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "contentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "schooltrainingcoordinator": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [ "*" ],
+        "inOwnedUserGroupArchetypes": [ "*" ],
+        "inDepartmentUserGroupArchetypes": [ "*" ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false,
+            "allowedValues": [
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "schoolcontentapprovingofficer",
+              "reportingofficer"
+            ]
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false,
+            "allowedChangeEntityStatuses": [
+              {
+                "from": "IdentityServerLocked",
+                "to": "Active"
+              },
+              {
+                "from": "IdentityServerLocked",
+                "to": "New"
+              },
+              {
+                "from": "Active",
+                "to": "Inactive"
+              },
+              {
+                "from": "New",
+                "to": "Inactive"
+              }
+            ]
+          },
+          "delete": {
+            "allowSelfAccess": false
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      }
+    }
+  }
+}

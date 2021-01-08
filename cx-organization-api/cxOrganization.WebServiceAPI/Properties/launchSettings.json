@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:49431",
+      "sslPort": 44365
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "IDM_CLIENT_SECRET": "IEvgIBADANLgkqhkiG9w0BAQEFAASCR",
+        "IDM_GRANT_TYPE": "password",
+        "RABBITMQ_PORT": "5672",
+        "QUEUE_MANAGER_API": "https://localhost:44346/QueueManager",
+        "IDM_USERNAME": "Admin",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "IDM_SCOPE": "userManagement cxDomainInternalApi",
+        "RABBITMQ_PASSWORD": "Three2kill",
+        "IDM_CLIENT_ID": "actionstarter",
+        "IDM_PASSWORD": "123456",
+        "PROJECT_NAME": "opal",
+        "IDM_BASEURL": "https://idm.development.opal2.conexus.net",
+        "RABBITMQ_USERNAME": "cctadmin",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SECRETBOX_KEY": "12345678901234567890123456789012",
+        "SECRETBOX_NONCE": "ABCDEFGHIJKLMNOPQRSTUVWX",
+        "QUEUE_NAME": "development-datahub-opal-queue-organizationdomainapi",
+        "REDIS_CONNECTIONSTRING": "localhost:6379",
+        "Idm_ApiName": "cxDomainInternalApi",
+        "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
+
+      }
+    },
+    "cxOrganization.WebServiceAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "IDM_CLIENT_SECRET": "AiOiJKV1QiLCJ4NXQiOiJhM",
+        "DatahubLog:Enable": "true",
+        "IDM_GRANT_TYPE": "client_credentials",
+        "RABBITMQ_PORT": "5672",
+        "QUEUE_MANAGER_API": "https://localhost:44346/QueueManager",
+        "IDM_USERNAME": "Admin",
+        "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
+        "DatahubLog:EventChannel:Enable": "true",
+        "DatahubLog:EventChannel:Exchange": "uat-datahub-opal-topic-event",
+        "RABBITMQ_HOSTNAMES": "localhost",
+        "IDM_SCOPE": "userManagement cxDomainInternalApi",
+        "RABBITMQ_PASSWORD": "Three2kill",
+        "IDM_CLIENT_ID": "cxDomainInternalApi",
+        "IDM_PASSWORD": "123456",
+        "PROJECT_NAME": "opal",
+        "IDM_BASEURL": "https://idm.development.opal2.conexus.net",
+        "RABBITMQ_USERNAME": "cctadmin",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SECRETBOX_KEY": "12345678901234567890123456789012",
+        "SECRETBOX_NONCE": "ABCDEFGHIJKLMNOPQRSTUVWX",
+        "QUEUE_NAME": "uat-datahub-opal-queue-organization-domain-api",
+        "EVENT_EXCHANGE_NAME": "uat-datahub-opal-topic-event",
+        "COMMAND_EXCHANGE_NAME": "uat-datahub-opal-topic-command",
+        "REDIS_CONNECTIONSTRING": "localhost:6379",
+        "Idm_ApiName": "cxDomainInternalApi",
+        "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
+
+      },
+      "applicationUrl": "https://localhost:44365"
+    }
+  }
+}

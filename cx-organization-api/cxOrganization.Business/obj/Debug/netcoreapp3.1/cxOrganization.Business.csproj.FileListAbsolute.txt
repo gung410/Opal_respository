@@ -1,0 +1,15 @@
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\NuGet.Config
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Business.deps.json
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Business.dll
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Business.pdb
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Adapter.dll
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Domain.dll
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Adapter.pdb
+C:\hung\cx-organization-api\cxOrganization.Business\bin\Debug\netcoreapp3.1\cxOrganization.Domain.pdb
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.csprojAssemblyReference.cache
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.AssemblyInfoInputs.cache
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.AssemblyInfo.cs
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.csproj.CoreCompileInputs.cache
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.csproj.CopyComplete
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.dll
+C:\hung\cx-organization-api\cxOrganization.Business\obj\Debug\netcoreapp3.1\cxOrganization.Business.pdb

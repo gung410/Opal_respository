@@ -1,0 +1,384 @@
+{
+  "accessSettings": {
+    "createUserAccess": {
+      "overallsystemadministrator": {
+        "hasFullAccessOnHierarchy":true,
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "overallsystemadministrator",
+              "useraccountadministrator",
+              "divisionadmin",
+              "branchadmin",
+              "schooladmin",
+              "divisiontrainingcoordinator",
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "courseplanningcoordinator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "useraccountadministrator": {
+        "hasFullAccessOnHierarchy":true,
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "divisionadmin",
+              "branchadmin",
+              "schooladmin",
+              "divisiontrainingcoordinator",
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "courseplanningcoordinator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "divisionadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "division",
+          "branch",
+          "cluster",
+          "OrganizationUnit"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "divisiontrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "branchadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "branch",
+          "cluster",
+          "OrganizationUnit"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "divisiontrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "schooladmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "schooltrainingcoordinator",
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "schoolcontentapprovingofficer",
+              "approvingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "reportingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+
+      },
+      "learner": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "divisiontrainingcoordinator": {
+        "onlyMoveUpOneAncestor": true,
+        "inSameDepartment": true,
+        "inAncestorDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inRelativeDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "contentcreator",
+              "webpageeditor",
+              "MOEHQcontentapprovingofficer",
+              "reportingofficer",
+              "learner"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      },
+      "schoolcontentapprovingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "MOEHQcontentapprovingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "webpageeditor": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "courseplanningcoordinator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "coursecontentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "courseadmin": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "coursefacilitator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "contentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "schooltrainingcoordinator": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inOwnedUserGroupArchetypes": [
+          "*"
+        ],
+        "inDepartmentUserGroupArchetypes": [
+          "*"
+        ],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowedValues": [
+              "courseadmin",
+              "coursefacilitator",
+              "coursecontentcreator",
+              "schoolcontentapprovingofficer",
+              "reportingofficer"
+            ]
+          },
+          "entityStatus": {
+            "allowedValues": [
+              "All"
+            ]
+          },
+          "externallyMastered": {
+            "allowedValues": [
+              "false"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

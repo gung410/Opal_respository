@@ -1,0 +1,288 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\hung\\cx-organization-api\\cxOrganization.Business\\cxOrganization.Business.csproj": {}
+  },
+  "projects": {
+    "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj",
+        "projectName": "cxOrganization.Adapter",
+        "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj",
+        "packagesPath": "C:\\Users\\hung.doan\\.nuget\\packages\\",
+        "outputPath": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\hung\\cx-organization-api\\.nuget\\NuGet.Config",
+          "C:\\Users\\hung.doan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/pre-release": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/release": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "cxPlatform.Core": {
+              "target": "Package",
+              "version": "[1.0.84-beta, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\hung\\cx-organization-api\\cxOrganization.Business\\cxOrganization.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\hung\\cx-organization-api\\cxOrganization.Business\\cxOrganization.Business.csproj",
+        "projectName": "cxOrganization.Business",
+        "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Business\\cxOrganization.Business.csproj",
+        "packagesPath": "C:\\Users\\hung.doan\\.nuget\\packages\\",
+        "outputPath": "C:\\hung\\cx-organization-api\\cxOrganization.Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\hung\\cx-organization-api\\.nuget\\NuGet.Config",
+          "C:\\Users\\hung.doan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/pre-release": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/release": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj": {
+                "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj"
+              },
+              "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\cxOrganization.Domain.csproj": {
+                "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\cxOrganization.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\cxOrganization.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\cxOrganization.Domain.csproj",
+        "projectName": "cxOrganization.Domain",
+        "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\cxOrganization.Domain.csproj",
+        "packagesPath": "C:\\Users\\hung.doan\\.nuget\\packages\\",
+        "outputPath": "C:\\hung\\cx-organization-api\\cxOrganization.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\hung\\cx-organization-api\\.nuget\\NuGet.Config",
+          "C:\\Users\\hung.doan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/pre-release": {},
+          "http://cxp-deploy05.westeurope.cloudapp.azure.com:81/nuget/release": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj": {
+                "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "AWSSDK.S3": {
+              "target": "Package",
+              "version": "[3.3.111.21, )"
+            },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[15.0.5, )"
+            },
+            "IdentityServer4.AccessTokenValidation": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "LinqKit.Core": {
+              "target": "Package",
+              "version": "[1.1.17, )"
+            },
+            "Microsoft.AspNetCore.WebUtilities": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.5.1, )"
+            },
+            "Sodium.Core": {
+              "target": "Package",
+              "version": "[1.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.7.1, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.2.6, )"
+            },
+            "cxPlatform.Core": {
+              "target": "Package",
+              "version": "[1.0.84-beta, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

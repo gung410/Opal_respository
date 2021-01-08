@@ -1,0 +1,9 @@
+{
+  "accessSettings": {
+    "disableReadUserAccessChecking": false,
+    "disableEditUserAccessChecking": false,
+    "disableCreateUserAccessChecking": false
+
+  }
+
+}

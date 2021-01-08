@@ -1,0 +1,65 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-competence-learn-api-organization-release
+  uat-learn: 
+    pipelines: 
+      - uat-competence-learn-api-organization-release
+  prod-learn: 
+    pipelines: 
+      - prod-competence-learn-api-organization-release       
+format_version: 3
+pipelines: 
+  build-competence-learn-api-organization-release: 
+    group: competence-learn-api-organization-release
+    label_template: "release-1.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: cxOrganization.WebServiceAPI/
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+    template: linux-docker-multiple-build
+    materials: 
+      bitbuket-git: 
+        branch: release/1.0
+        git: "git@bitbucket.org:cxdev/cx-organization-api.git"
+  uat-competence-learn-api-organization-release:
+    group: competence-learn-api-organization-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-competence-learn-api-organization-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-competence-learn-api-organization-release
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+      DOCKER_DEPLOY_DIR : uat-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+  prod-competence-learn-api-organization-release:
+    group: competence-learn-api-organization-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: uat-competence-learn-api-organization-release
+        stage: run-deploy-script
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: uat-competence-learn-api-organization-release
+      UP_STREAME_PIPELINE_STAGE: run-deploy-script
+      UP_STREAME_PIPELINE_JOB: run-deploy-script-runOnAll-1
+      DOCKER_DEPLOY_DIR : prod-learn 
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.1
+      DOCKER_IMAGE_REPO: cx-domain-api-organization

@@ -1,0 +1,68 @@
+version: '2.4'
+
+services:
+  domain-api-organization:
+    image: ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+      - BuildVersion=${GO_PIPELINE_LABEL}
+      - VIRTUAL_HOST=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization.${DOMAIN_POSTFIX}${PUBLIC_DNS}
+      - AppSettings:AuthorityUrl=https://${ENVIRONMENT_NAME}-cxid-${PROJECT_NAME}-idp.${DOMAIN}
+      - AppSettings:ServiceUsername=${ENVIRONMENT_NAME}user
+      - AppSettings:ServicePassword=${ENVIRONMENT_NAME}password
+      - AppSettings:AdminUsername=Admin
+      - AppSettings:AdminPassword=Three2kill
+      - AppSettings:OwnerId=3001
+      - AppSettings:SiteId=1
+      - AppSettings:HDId=2
+      - AppSettings:CurrentUserId=1
+      - AppSettings:SSN_REGEX=^[a-zA-Z0-9._-]+$$
+      - AppSettings:EnableMigration=${ENABLE_MIGRATION}
+      - DatahubLog:EventChannel:Enable=true
+      - DatahubLog:EventChannel:Exchange=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-event
+      - DatahubLog:Enable=true
+      - PROJECT_NAME=${PROJECT_NAME}
+      - ConnectionStrings:DefaultConnection=Data Source=mssql.${DOMAIN_POSTFIX};Initial Catalog=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-at6qr;Persist Security Info=True;User ID=${MSSQL_USERNAME}; Password=${MSSQL_PASSWORD}
+      - IDM_SCOPE=userManagement
+      - IDM_GRANT_TYPE=password
+      - IDM_USERNAME=Admin
+      - RABBITMQ_HOSTNAMES=rabbitmq-01.${DOMAIN_POSTFIX}
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_PORT=5672
+      - QUEUE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-queue-organization_api
+      - EVENT_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-event
+      - COMMAND_EXCHANGE_NAME=${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-topic-command
+      - RABBITMQ_SSL_ENABLED=${RABBITMQ_SSL_ENABLED}
+      - QUEUE_MANAGER_API=http://${ENVIRONMENT_NAME}-datahub-${PROJECT_NAME}-api-queuemanager.${DOMAIN_POSTFIX}/QueueManager
+      - IDM_PASSWORD=123456
+      - IDM_BASEURL=https://${ENVIRONMENT_NAME}-cxid-${PROJECT_NAME}-idp.csc.cxs.cloud/
+      - MONGO_CONNECTIONSTRING=mongodb://localhost:27017/Notification
+      - IDM_CLIENT_ID=actionstarter
+      - IDM_CLIENT_SECRET=IEvgIBADANLgkqhkiG9w0BAQEFAASCR
+      - Serilog:WriteTo:0:Args:indexFormat=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization-{0:yyyy-MM}
+      - Serilog:Properties:sitename=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization
+      - BusinessConfigs:UserNotification:UserTypePending2ndNotification=${BusinessConfigs_UserNotification_UserTypePending2ndNotification}
+      - BusinessConfigs:UserNotification:UserTypePending3ndNotification=${BusinessConfigs_UserNotification_UserTypePending3ndNotification}
+      - BusinessConfigs:UserNotification:UserTypeSyncIdpNotification=${BusinessConfigs_UserNotification_UserTypeSyncIdpNotification}
+      - SECRETBOX_KEY=${SECRETBOX_KEY}
+      - SECRETBOX_NONCE=${SECRETBOX_NONCE}
+      - AwsSettings:AccessKey={{ aws_access_key }}
+      - AwsSettings:SecretKey={{ aws_secret_key }}
+      - AwsSettings:Region={{ aws_region }}
+      - AwsSettings:BucketName={{ aws_bucket_name }}
+    container_name: ${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "10"
+    ports:
+      - 0:80
+    mem_limit: 500m
+    mem_reservation: 200m
+networks:
+  default:
+    external:
+      name: app_default

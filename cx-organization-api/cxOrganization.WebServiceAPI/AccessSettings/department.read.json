@@ -1,0 +1,127 @@
+{
+  "accessSettings": {
+    "readDepartmentAccess": {
+      "overallsystemadministrator": {
+        "hasFullAccessOnHierarchy": false,
+        "inSameDepartment": true,
+        "inAncestorDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ]
+      },
+      "useraccountadministrator": {
+        "hasFullAccessOnHierarchy": false,
+        "inSameDepartment": true,
+        "inAncestorDepartmentTypeExtIds": [
+          "*"
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ]
+      },
+      "divisionadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "division",
+          "branch",
+          "cluster",
+          "OrganizationUnit"
+        ]
+      },
+      "branchadmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "branch",
+          "cluster",
+          "OrganizationUnit"
+        ]
+      },
+      "schooladmin": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ]
+      },
+      "reportingofficer": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+
+      },
+      "approvingofficer": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "learner": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "divisiontrainingcoordinator": {
+        "inSameDepartment": true,
+        "onlyMoveUpOneAncestor": true,
+        "inAncestorDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inRelativeDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+          "division",
+          "branch"
+        ]
+      },
+      "schoolcontentapprovingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "MOEHQcontentapprovingofficer": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "webpageeditor": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "courseplanningcoordinator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "coursecontentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "courseadmin": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "coursefacilitator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "contentcreator": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "schooltrainingcoordinator": {
+        "inSameDepartment": true,
+        "inDescendantDepartmentTypeExtIds": [
+          "*"
+        ]
+      }
+    }
+  }
+}

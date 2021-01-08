@@ -1,0 +1,2548 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cxOrganization.Client</name>
+    </assembly>
+    <members>
+        <member name="M:cxOrganization.Client.ClientServiceHelper.AddFiltersToUriParamList``1(System.Collections.Generic.List{``0},System.String,System.Collections.Generic.List{cxOrganization.Client.UriParam})">
+            <summary>
+            Add list of optional filter to list of UriParam object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="listItem"></param>
+            <param name="name"></param>
+            <param name="paramList"></param>
+        </member>
+        <member name="M:cxOrganization.Client.ClientServiceHelper.GenarateUri(System.String@,System.Collections.Generic.List{cxOrganization.Client.UriParam})">
+            <summary>
+            Genarate request uri base on list of UriParam
+            </summary>
+            <param name="requestUri"></param>
+            <param name="paramList"></param>
+        </member>
+        <member name="M:cxOrganization.Client.ClientServiceHelper.InitMemberDto(System.Int32,cxPlatform.Client.ConexusBase.EntityStatusEnum,cxPlatform.Client.ConexusBase.ArchetypeEnum,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create memberDto 
+            </summary>
+            <param name="memberId"></param>
+            <param name="entityStatus"></param>
+            <param name="archetype"></param>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:cxOrganization.Client.UriParam">
+            <summary>
+            This class holds name and value of optional filter on requestUri
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.UriParam.Name">
+            <summary>
+            Name of optional filter on requestUri
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.UriParam.Value">
+            <summary>
+            value of optional filter on requestUri
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateDepartmentClientService.GetCandidateDepartments(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get candidate department with optional filters
+            </summary>
+            <param name="parentDepartmentId"></param>
+            <param name="requestContext"></param>
+            <param name="candidateDepartmentIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="queryOptions"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateDepartmentClientService.InsertCandidateDepartment(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.CandidateDepartmentDto)">
+            <summary>
+            Insert candidate department
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateDepartmentDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateDepartmentClientService.GetCandidateDepartment(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get candidate department by identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatedepartmentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateDepartmentClientService.UpdateCandidateDepartment(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.CandidateDepartmentDto)">
+            <summary>
+            Update candidate department
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatedepartmentId"></param>
+            <param name="candidateDepartmentDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.GetCandidatePools(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get candidate pools
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatepoolIds"></param>
+            <param name="userIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="departmentIds"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.InsertCandidatePool(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.UserGroups.CandidatePoolDto)">
+            <summary>
+            Insert candidate pool
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatePoolDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.GetCandidatePool(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get candidate pool
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatepoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.UpdateCandidatePool(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.UserGroups.CandidatePoolDto)">
+            <summary>
+            Update candidate pool
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatepoolId"></param>
+            <param name="candidatePoolDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.GetCandidatePoolCandidates(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Boolean,System.Int32,System.Int32,System.String)">
+            <summary>
+            Get candidate pool's candidates
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatepoolId"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="selectIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidatePoolClientService.GetCandidatePoolCandidate(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get candidate pool's candidate
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidatepoolId"></param>
+            <param name="candidateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCandidates(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get candidate
+            </summary>
+            <param name="requestContext"></param>
+            <param name="parentDepartmentIds"></param>
+            <param name="candidateIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="ssnList"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="getDynamicProperties"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.InsertCandidate(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Users.CandidateDto)">
+            <summary>
+            Insert candidate
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCandidate(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get candidate by id
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.UpdateCandidate(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Users.CandidateDto)">
+            <summary>
+            Update Candidate
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="candidateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCandidatepools(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get candidate pools
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCandidatepool(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get candidate pool
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="candidatepoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.Getcountries(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get countries
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCountry(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get country
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="countryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.GetCandidateMemberships(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.ArchetypeEnum},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String})">
+            <summary>
+             Get candidate memberships
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="archetypeIds">membership Archetype enum</param>
+            <param name="statusIds">membership status enum</param>
+            <param name="membershipIds"></param>
+            <param name="membershipExtIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.AddCandidatePoolMembership(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Add candidate pool candidate membership
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="candidatepPoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICandidateClientSerive.RemoveCandidatePoolMembership(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Remove candidate pool candidate membership
+            </summary>
+            <param name="requestContext"></param>
+            <param name="candidateId"></param>
+            <param name="candidatepPoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetClasses(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get classes with optional parameters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolDepartmentId"></param>
+            <param name="userIds"></param>
+            <param name="classIds"></param>
+            <param name="extIds"></param>
+            <param name="statusEnums"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="queryOptions"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="selectIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.InsertClass(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.ClassDto)">
+            <summary>
+            Insert Class
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetClass(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get class by identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.UpdateClass(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.ClassDto)">
+            <summary>
+            Update class
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <param name="classDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetLearnersInClass(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.String)">
+            <summary>
+            Get class's learners
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <param name="statusEnums"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetLearnerInClass(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get class's learner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <param name="learnerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetSchool(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get class's school
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetLevel(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get class's level
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.GetClassMemberships(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            get class's memberships
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.UpdateClassLevelMembership(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Add class level membership
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <param name="levelId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IClassClientService.RemoveClassLevelMembership(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Remove membership between class and level
+            </summary>
+            <param name="requestContext"></param>
+            <param name="classId"></param>
+            <param name="levelId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCompanies(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Boolean,System.String)">
+            <summary>
+            get companies with optional filters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="parentDepartmentId"></param>
+            <param name="childrenDepartmentId"></param>
+            <param name="companyIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="selectIdentity"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.InsertCompany(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.CompanyDto)">
+            <summary>
+            Insert company
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get company by identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.UpdateCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.CompanyDto)">
+            <summary>
+            Update cpmpany
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyid"></param>
+            <param name="companyDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCandidatePoolsOnCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.String)">
+            <summary>
+            get company's candidatepools
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyId"></param>
+            <param name="statusEnums"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCandidatesOnCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.String)">
+            <summary>
+            get company's canidates
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyId"></param>
+            <param name="statusEnums"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCandidatePoolOnCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            get a candidate pool of company by company and candidate pool identifier 
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyId"></param>
+            <param name="candidatepoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICompanyClientService.GetCandidateOnCompany(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            get a candidate pool of company by company and candidate identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="companyId"></param>
+            <param name="candidateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.GetCountries(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Boolean,System.String)">
+            <summary>
+            Get countries by optional filters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="parentDepartmentId"></param>
+            <param name="childrenDepartmentId"></param>
+            <param name="countryIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="selectIdentity"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.InsertCountry(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.CountryDto)">
+            <summary>
+            Insert country
+            </summary>
+            <param name="requestContext"></param>
+            <param name="countryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.GetCountry(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get country by country identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="countryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.UpdateCountry(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.CountryDto)">
+            <summary>
+            Update country
+            </summary>
+            <param name="requestContext"></param>
+            <param name="countryId"></param>
+            <param name="countryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.GetCandidates(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.String)">
+            <summary>
+            Get country's candidates
+            </summary>
+            <param name="requestContext"></param>
+            <param name="countryId"></param>
+            <param name="statusEnums"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICountryClientService.GetCandidate(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get country's candidate by country and candidate identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="countryId"></param>
+            <param name="candidateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICustomerClientService.GetCustomers(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Get customer by optional filter
+            </summary>
+            <param name="requestContext"></param>
+            <param name="customerIds"></param>
+            <param name="extIds"></param>
+            <param name="createdBefore"></param>
+            <param name="createdAfter"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICustomerClientService.InsertCustomer(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Customers.CustomerDto)">
+            <summary>
+            insert customer
+            </summary>
+            <param name="customerDto"></param>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICustomerClientService.UpdateCustomer(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Customers.CustomerDto)">
+            <summary>
+            Update customer
+            </summary>
+            <param name="requestContext"></param>
+            <param name="customerDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ICustomerClientService.GetCustomer(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Get Customer
+            </summary>
+            <param name="requestContext">Base on current owner and current customer id to get customer</param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDataOwnerClientService.GetDataOwners(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get DataOwners by optional filters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="dataownerIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDataOwnerClientService.InsertDataOwner(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.DataOwnerDto)">
+            <summary>
+            Insert Data Owner
+            </summary>
+            <param name="dataOwnerDto"></param>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDataOwnerClientService.GetDataOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get data owner by identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="dataownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDataOwnerClientService.UpdateDataOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.DataOwnerDto)">
+            <summary>
+            Update Data Owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="dataownerid"></param>
+            <param name="dataOwnerDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDepartmentClientService.GetDepartments(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get department without cxToken
+            </summary>
+            <param name="requestcontext"></param>
+            <param name="customerIds"></param>
+            <param name="departmentIds"></param>
+            <param name="departmentStatusEnums"></param>
+            <param name="archetypeIds"></param>
+            <param name="userIds"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDepartmentClientService.GetDepartment(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get department by owner and department id without cxToken
+            </summary>
+            <param name="requestcontext"></param>
+            <param name="departmentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDepartmentClientService.GetUsers(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get department's users
+            </summary>
+            <param name="requestcontext"></param>
+            <param name="departmentId"></param>
+            <param name="customerIds"></param>
+            <param name="userStatusEnums"></param>
+            <param name="userArchetypeIds"></param>
+            <param name="userIds"></param>
+            <param name="ssnList"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDepartmentClientService.GetUserGroups(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            get department' usergroups
+            </summary>
+            <param name="requestcontext"></param>
+            <param name="departmentId"></param>
+            <param name="customerIds"></param>
+            <param name="userIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="userGroupStatusEnums"></param>
+            <param name="userGroupArchetypeIds"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="queryOptions"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IDepartmentClientService.GetHierachyDepartmentsByDepartmentId(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get hierarchy department by department id
+            </summary>
+            <param name="requestcontext"></param>
+            <param name="departmentid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserGroupClientService.GetUserGroups(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get user groups
+            </summary>
+            <param name="requestContext"></param>
+            <param name="customerIds"></param>
+            <param name="departmentIds"></param>
+            <param name="userGroupStatusEnums"></param>
+            <param name="userGroupArchetypeIds"></param>
+            <param name="userIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserGroupClientService.GetUserGroup(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get user group
+            </summary>
+            <param name="requestContext"></param>
+            <param name="userGroupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserGroupClientService.GetUserGroupTypes(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get user group's types
+            </summary>
+            <param name="requestContext"></param>
+            <param name="userGroupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserGroupClientService.GetUsers(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Collections.Generic.List{System.String},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get usergroup's users
+            </summary>
+            <param name="requestContext"></param>
+            <param name="userGroupId"></param>
+            <param name="customerIds"></param>
+            <param name="parentDepartmentIds"></param>
+            <param name="userStatusEnums"></param>
+            <param name="userArchetypeIds"></param>
+            <param name="userIds"></param>
+            <param name="ssnList"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ILearnerClientService.GetLearners(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get learners
+            </summary>
+            <param name="requestContext"></param>
+            <param name="learnerIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="parentDepartmentIds"></param>
+            <param name="statusEnums"></param>
+            <param name="extIds"></param>
+            <param name="ssnList"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ILearnerClientService.InsertLearner(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Users.LearnerDto)">
+            <summary>
+            Insert Learner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="learnerDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ILevelClientService.GetByExtId(cxPlatform.Client.ConexusBase.IRequestContext,System.String)">
+            <summary>
+            get learner by ExtID
+            </summary>
+            <param name="requestContext"></param>
+            <param name="levelId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ILevelClientService.GetLearnersByLevel(cxPlatform.Client.ConexusBase.IRequestContext,System.String,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get Learners By Level and some optional filters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="levelId"></param>
+            <param name="learnerIds"></param>
+            <param name="parentDepartmentIds"></param>
+            <param name="learnerExtIds"></param>
+            <param name="learnerStatusEnums"></param>
+            <param name="learnerSsnList"></param>
+            <param name="learnerLastUpdatedBefore"></param>
+            <param name="learnerLastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ILevelClientService.GetLearnerByLevel(cxPlatform.Client.ConexusBase.IRequestContext,System.String,System.Int32)">
+            <summary>
+            Get learner by level ExtID and LearnerID
+            </summary>
+            <param name="requestContext"></param>
+            <param name="levelId"></param>
+            <param name="learnerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.GetOrganizationalUnits(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get OrganizationalUnits with some optional filters
+            </summary>
+            <param name="requestContext"></param>
+            <param name="parentDepartmentId"></param>
+            <param name="userIds"></param>
+            <param name="organizationalUnitIds"></param>
+            <param name="organizationalUnitExtIds"></param>
+            <param name="statusEnums"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.InsertOrganizationalUnit(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.OrganizationalUnitDto)">
+            <summary>
+            Insert OrganizationalUnit
+            </summary>
+            <param name="requestContext"></param>
+            <param name="organizationalUnitDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.GetOrganizationalUnit(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get OrganizationalUnit by identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="organizationalunitId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.UpdateOrganizationalUnit(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.OrganizationalUnitDto)">
+            <summary>
+            Update OrganizationalUnit
+            </summary>
+            <param name="requestContext"></param>
+            <param name="organizationalunitId"></param>
+            <param name="organizationalUnitDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.GetOrganizationalUnitEmployees(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.String)">
+            <summary>
+            Get OrganizationalUnit's employees
+            </summary>
+            <param name="requestContext"></param>
+            <param name="organizationalunitId"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationalUnitClientService.GetOrganizationalUnitEmployee(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get OrganizationalUnit's employee
+            </summary>
+            <param name="requestContext"></param>
+            <param name="organizationalunitId"></param>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationClientService.GetLevelByExtId(cxPlatform.Client.ConexusBase.IRequestContext,System.String)">
+            <summary>
+            Get level identity status dto by extid
+            </summary>
+            <param name="requestContext"></param>
+            <param name="levelExtId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationClientService.GetOrganizationDataByBatchRequest``1(cxPlatform.Client.ConexusBase.IRequestContext,cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest{``0},System.Int32)">
+            <summary>
+            Get list of object by batch request without buiding a dictionary base on request uri
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="requestContext"></param>
+            <param name="batchRequest"></param>
+            <param name="maxItemsInBatchRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IOrganizationClientService.GetOrganizationDataByBatchRequestAsDictionary``1(cxPlatform.Client.ConexusBase.IRequestContext,cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest{``0},System.Int32)">
+            <summary>
+             Get list of object by batch request and return as a dictionary base on request uri, the key will be the request uri
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="requestContext"></param>
+            <param name="batchRequest"></param>
+            <param name="maxItemsInBatchRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IRoleClientService.GetRoles(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Get roles
+            </summary>
+            <param name="requestContext"></param>
+            <param name="extIds"></param>
+            <param name="roleIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IRoleClientService.AddRoleToEmployee(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Add role to employee
+            </summary>
+            <param name="requestContext"></param>
+            <param name="roleId"></param>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IRoleClientService.RemoveEmployeeRole(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            remove employee role
+            </summary>
+            <param name="requestContext"></param>
+            <param name="roleId"></param>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetSchoolOwners(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get school owners
+            </summary>
+            <param name="requestContext"></param>
+            <param name="userIds"></param>
+            <param name="schoolownerIds"></param>
+            <param name="extIds"></param>
+            <param name="statusEnums"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="odataQueryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.InsertSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Departments.SchoolOwnerDto)">
+            <summary>
+            Insert school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolOwnerDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.UpdateSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,cxOrganization.Client.Latest.Departments.SchoolOwnerDto)">
+            <summary>
+            Update school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="schoolOwnerDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetSchools(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            get schools
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetSchool(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get school
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="schoolId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetLearnersInSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get learners in school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="statusEnums"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetLearnerInSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get learner in school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="learnerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetClassesOnSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Boolean,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get classes on school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="statusEnums"></param>
+            <param name="selectIdentity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.ISchoolOwnerClientService.GetClassOnSchoolOwner(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Int32)">
+            <summary>
+            Get class on school owner
+            </summary>
+            <param name="requestContext"></param>
+            <param name="schoolownerId"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetUsers(cxPlatform.Client.ConexusBase.IRequestContext,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get users without cxToken
+            </summary>
+            <param name="requestConetxt"></param>
+            <param name="customerIds"></param>
+            <param name="parentDepartmentIds"></param>
+            <param name="userStatusEnums"></param>
+            <param name="archetypeIds"></param>
+            <param name="userIds"></param>
+            <param name="ssnList"></param>
+            <param name="extIds"></param>
+            <param name="userNames"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="userGroupIds"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetUser(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32)">
+            <summary>
+            Get user without cxToken
+            </summary>
+            <param name="requestConetxt"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetUserDepartments(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get user's departments
+            </summary>
+            <param name="requestConetxt"></param>
+            <param name="userId"></param>
+            <param name="customerIds"></param>
+            <param name="departmentIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="departmentStatusEnums"></param>
+            <param name="archetypeIds"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="queryOptions"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetUserGroupsUser(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{cxPlatform.Client.ConexusBase.EntityStatusEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get user group user
+            </summary>
+            <param name="requestConetxt"></param>
+            <param name="userid"></param>
+            <param name="customerIds"></param>
+            <param name="departmentIds"></param>
+            <param name="userGroupIds"></param>
+            <param name="userGroupStatusEnums"></param>
+            <param name="archetypeIds"></param>
+            <param name="extIds"></param>
+            <param name="lastUpdatedBefore"></param>
+            <param name="lastUpdatedAfter"></param>
+            <param name="queryOptions"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetUserTypesUser(cxPlatform.Client.ConexusBase.IRequestContext,System.Int32,System.Collections.Generic.List{cxPlatform.Client.ConexusBase.ArchetypeEnum},System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Get user types user
+            </summary>
+            <param name="requestConetxt"></param>
+            <param name="userId"></param>
+            <param name="userTypeArchetypeIds"></param>
+            <param name="userTypeIds"></param>
+            <param name="extIds"></param>
+            <param name="queryOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.Logon(cxPlatform.Client.ConexusBase.IRequestContext,cxOrganization.Client.Latest.Account.LogonRequestDto)">
+            <summary>
+            Log on 
+            </summary>
+            <param name="requestContext"></param>
+            <param name="logonRequestDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.IUserClientService.GetHierarchyDepartmentIdentitiesByUserId(cxPlatform.Client.ConexusBase.IRequestContext,System.Int64)">
+            <summary>
+            Get hierarchy department identities by user identifier
+            </summary>
+            <param name="requestContext"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Account.ChangePasswordRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.ChangePasswordRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Account.ChangePasswordResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.ChangePasswordResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Account.LogonRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.LogonRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Account.LogonResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.LogonResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Account.ResetPasswordRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.ResetPasswordRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Account.ResetPasswordResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.ResetPasswordResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.UserId">
+            <summary>
+            The user identifier in database
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.LastName">
+            <summary>
+            The last name of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.FirstName">
+            <summary>
+            The first name of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.MobileNumber">
+            <summary>
+            The mobile number of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.MobileCountryCode">
+            <summary>
+            The mobile country code of the user (ex: 47)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.UserName">
+            <summary>
+            The username of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.Password">
+            <summary>
+            The password of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.Ssn">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.Email">
+            <summary>
+            The email of user
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Account.UserDto.DepartmentId">
+            <summary>
+            The department id that user belong to
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Account.UserDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Account.UserDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.Name">
+            <summary>
+            The name of the customer
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.LanguageID">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.RootMenuID">
+            <summary>
+            Root menu ID
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.CodeName">
+            <summary>
+            Code name
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.LogoUrl">
+            <summary>
+            Logo URL
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.CssVariables">
+            <summary>
+            Css variables
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.HasUserIntegration">
+            <summary>
+            Has user integration
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Customers.CustomerDto.ExtId">
+            <summary>
+            External ID
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.CandidateDepartmentDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.Departments.ClassDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.ClassDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CompanyDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.CompanyDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.CompanyDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Departments.CountryDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CountryDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CountryDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.CountryDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.CountryDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.CountryDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Departments.DataOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DataOwnerDto.Address">
+            <summary>
+            Schoolowner Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DataOwnerDto.PostalCode">
+            <summary>
+            Schoolowner postal code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DataOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.DataOwnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.DataOwnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="T:cxOrganization.Client.Latest.Departments.DepartmentDto">
+            <summary>
+            Class DepartmentDto.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDto.DepartmentID">
+            <summary>
+            Gets or sets the department identifier.
+            </summary>
+            <value>The department identifier.</value>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDto.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDto.DepartmentName">
+            <summary>
+            Gets or sets the department name
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDto.ParentId">
+            <summary>
+            Gets or sets parentId of department
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDto.HdId">
+            <summary>
+            Gets or sets the hd identifier.
+            </summary>
+            <value>
+            The hd identifier.
+            </value>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.ParentDepartmentId">
+            <summary>
+            Parent department Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.Name">
+            <summary>
+            The name of the department 
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.DepartmentDtoBase.CountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.HierachyDepartmentIdentityDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.HierachyDepartmentIdentityDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.OrganizationalUnitDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Ma to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.SchoolDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.SchoolDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.DepartmentType">
+            <summary>
+            Insert a SchoolOwner we need to specify DepartmentType as County or Municipality:
+            3 types are avaiable:
+            1. Unknown
+            2. County
+            3. Municipality
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.Address">
+            <summary>
+            Schoolowner Address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.PostalCode">
+            <summary>
+            Schoolowner postal code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Departments.SchoolOwnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxOrganization.Client.Latest.LevelDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.LevelDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.MemberDto.ValidTo">
+            <summary>
+            Valid to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.ValidFrom">
+            <summary>
+            Valid from
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.MemberRoleId">
+            <summary>
+            member role id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.Created">
+            <summary>
+            Created date time
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.CreatedBy">
+            <summary>
+            Created by user id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.Role">
+            <summary>
+            Membership role (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.Period">
+            <summary>
+            Membership period (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.DisplayName">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.UserGroupMemberId">
+            <summary>
+            Usergroup MemberId
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MemberDto.PeriodId">
+            <summary>
+            Period Id
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.MemberDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.MemberDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.ValidTo">
+            <summary>
+            Valid to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.ValidFrom">
+            <summary>
+            Valid from
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.MemberRoleId">
+            <summary>
+            member role id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.Created">
+            <summary>
+            Created date time
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.CreatedBy">
+            <summary>
+            Created by user id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.Role">
+            <summary>
+            Membership role (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.Period">
+            <summary>
+            Membership period (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.GroupId">
+            <summary>
+            UserGroup Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.MemberId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.DisplayName">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.MembershipDto.PeriodId">
+            <summary>
+            Period Id
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.MembershipDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.MembershipDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.UserGroups.CandidatePoolDto.ParentDepartmentId">
+            <summary>
+            The id of company which candidate pool belong to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.TeachingGroupDto.SubjectCode">
+            <summary>
+            The subject code of the teaching group, can be a list of subject code, seperated by ","
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.TeachingGroupDto.SchoolId">
+            <summary>
+            The id of school which teaching group belong to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.Name">
+            <summary>
+            The name of the user group
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.Type">
+            <summary>
+            The type of the user group
+            Currently 4 types is available: 
+            1. Default 
+            2. Historical
+            3. Connections
+            4. Events
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.Description">
+            <summary>
+            Description for user group
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.UserGroups.UserGroupDtoBase.GetParentDepartmentId">
+            <summary>
+            Set parent department for usergroup
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:cxOrganization.Client.Latest.Users.CandidateDto">
+            <summary>
+            Candidate Resource
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.CandidateDto.ParentDepartmentId">
+            <summary>
+            Parent department that candidate belong to
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.CandidateDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.CandidateDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.EmployeeDto.EmployerDepartmentId">
+            <summary>
+            The current department that employee work at
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.EmployeeDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxOrganization.Client.Latest.Users.EmployeeDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxOrganization.Client.Latest.Users.LearnerDto.ParentDepartmentId">
+            <summary>
+            Parent department that learner belong to
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.LearnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.LearnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="T:cxOrganization.Client.Latest.Users.LoginServiceClaimDto">
+            <summary>
+            A definition that contain claim value in login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceClaimDto.Id">
+            <summary>
+            Get or set login service id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceClaimDto.Value">
+            <summary>
+            Get or set claim value
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceIdentityDto.Id">
+            <summary>The identifier of the DTO in database</summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceIdentityDto.ExtId">
+            The identifier of the DTO in external system
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceIdentityDto.SiteId">
+            <summary>
+            The siteId which login service belong to. If it is has value, login service is identify in this siteId only.
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.Latest.Users.LoginServiceUserDto">
+            <summary>
+            The definition of claim value for the user in a specify login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceUserDto.UserIdentity">
+            <summary>
+            Identity of user. This is used to identify user base on id or extId or both with specify archetype, in given customer and owner.
+            If customer, owner is not set or set with value less than or equal zero, they will be set with current one.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceUserDto.LoginServiceIdentity">
+            <summary>
+            Identity of login service. This is used to identify login service by id or extId, or both. 
+            If siteId has value, login service is identify in this siteId only.
+            In this, ExtId will be mapped with PrimaryClaimValue of login service entity,  since it doesn't have field ExtId yet
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceUserDto.ClaimValue">
+            <summary>
+            Primary claim value of user in login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.LoginServiceUserDto.Created">
+            <summary>
+            Created date-time when claim value is added for user. If is not set value,  it will be set with current date-time 
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.Latest.Users.UserDtoBase">
+            <summary>
+            Base clase for properties that are common for Learner, Emploee
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.FirstName">
+            <summary>
+            First name 
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.LastName">
+            <summary>
+            Last name 
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.MobileCountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.MobileNumber">
+            <summary>
+            Mobile number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.EmailAddress">
+            <summary>
+            Email address, do not need to check vaild format
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.SSN">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.DateOfBirth">
+            <summary>
+            Date of birth
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="M:cxOrganization.Client.Latest.Users.UserDtoBase.GetParentDepartmentId">
+            <summary>
+            Get parent department id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.LoginServiceClaims">
+            <summary>
+            Get or set list of login service claims of users
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.Latest.Users.UserDtoBase.ForceLoginAgain">
+            <summary>
+            Gets or sets the Force User Login Again.
+            </summary>
+            <value>
+            The Force User Login Again.
+            </value>
+        </member>
+        <member name="T:cxOrganization.Client.Mappings.CustomerVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.Mappings.DepartmentVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.Mappings.UserTypeVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of UserType
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.Mappings.UserVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.OrganizationClientService.GetOrganizationDataByBatchRequest``1(cxPlatform.Client.ConexusBase.IRequestContext,cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest{``0},System.Int32)">
+            <summary>
+            Get list of object by batch request without buiding a dictionary base on request uri
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="requestContext"></param>
+            <param name="batchRequest"></param>
+            <param name="maxItemsInBatchRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.OrganizationClientService.GetOrganizationDataByBatchRequestAsDictionary``1(cxPlatform.Client.ConexusBase.IRequestContext,cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest{``0},System.Int32)">
+            <summary>
+             Get list of object by batch request and return as a dictionary base on request uri, the key will be the request uri
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="requestContext"></param>
+            <param name="batchRequest"></param>
+            <param name="maxItemsInBatchRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.Name">
+            <summary>
+            The name of the customer
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.LanguageID">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.RootMenuID">
+            <summary>
+            Root menu ID
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.CodeName">
+            <summary>
+            Code name
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.LogoUrl">
+            <summary>
+            Logo URL
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.CssVariables">
+            <summary>
+            Css variables
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.HasUserIntegration">
+            <summary>
+            Has user integration
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Customers.CustomerDto.ExtId">
+            <summary>
+            External ID
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.Address">
+            <summary>
+            Candidate department address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.PostalCode">
+            <summary>
+            Candidate department postal code
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.Phone">
+            <summary>
+            Candidate department phone
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CandidateDepartmentDto.Email">
+            <summary>
+            Email address
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CompanyDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.CompanyDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.DataOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.DataOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.DepartmentDtoBase.ParentDepartmentId">
+            <summary>
+            Parent department Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.DepartmentDtoBase.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.DepartmentDtoBase.CountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="M:cxOrganization.Client.V1_0.Departments.HierachyDepartmentIdentityDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxOrganization.Client.V1_0.Departments.HierachyDepartmentIdentityDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.OrganizationalUnitDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.OrganizationalUnitDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.SchoolDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.SchoolDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.SchoolOwnerDto.DepartmentType">
+            <summary>
+            Insert a SchoolOwner we need to specify DepartmentType as County or Municipality
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.SchoolOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Departments.SchoolOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.ValidTo">
+            <summary>
+            Valid to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.ValidFrom">
+            <summary>
+            Valid from
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.MemberRoleId">
+            <summary>
+            member role id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.Created">
+            <summary>
+            Created date time
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.CreatedBy">
+            <summary>
+            Created by user id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.DisplayName">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.PeriodId">
+            <summary>
+            Period Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MemberDto.UserGroupMemberId">
+            <summary>
+            Usergroup MemberId
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.ValidTo">
+            <summary>
+            Valid to
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.ValidFrom">
+            <summary>
+            Valid from
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.MemberRoleId">
+            <summary>
+            member role id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.Created">
+            <summary>
+            Created date time
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.CreatedBy">
+            <summary>
+            Created by user id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.Role">
+            <summary>
+            Membership role (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.Period">
+            <summary>
+            Membership period (not in use)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.GroupId">
+            <summary>
+            UserGroup Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.MemberId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.DisplayName">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.MembershipDto.PeriodId">
+            <summary>
+            Period Id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.Name">
+            <summary>
+            The name of the user group
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.Type">
+            <summary>
+            The type of the user group
+            Currently 2 types is available: 
+            1. Default 
+            2. Historical
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.Description">
+            <summary>
+            Description for user group
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.ReferrerToken">
+            <summary>
+            Referrer Token of external system
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.ReferrerResource">
+            <summary>
+            ReferrerResource link to external instance
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.UserGroups.UserGroupDtoBase.ReferrerArchetypeId">
+            <summary>
+            Archetype of external instance
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.V1_0.Users.LoginServiceClaimDto">
+            <summary>
+            A definition that contain claim value in login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceClaimDto.Id">
+            <summary>
+            Get or set login service id
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceClaimDto.Value">
+            <summary>
+            Get or set claim value
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceIdentityDto.Id">
+            <summary>The identifier of the DTO in database</summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceIdentityDto.ExtId">
+            The identifier of the DTO in external system
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceIdentityDto.SiteId">
+            <summary>
+            The siteId which login service belong to. If it is has value, login service is identify in this siteId only.
+            </summary>
+        </member>
+        <member name="T:cxOrganization.Client.V1_0.Users.LoginServiceUserDto">
+            <summary>
+            The definition of claim value for the user in a specify login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceUserDto.UserIdentity">
+            <summary>
+            Identity of user. This is used to identify user base on id or extId or both with specify archetype, in given customer and owner.
+            If customer, owner is not set or set with value less than or equal zero, they will be set with current one.
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceUserDto.LoginServiceIdentity">
+            <summary>
+            Identity of login service. This is used to identify login service by id or extId, or both. 
+            If siteId has value, login service is identify in this siteId only.
+            In this, ExtId will be mapped with PrimaryClaimValue of login service entity,  since it doesn't have field ExtId yet
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceUserDto.ClaimValue">
+            <summary>
+            Primary claim value of user in login service
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.LoginServiceUserDto.Created">
+            <summary>
+            Created date-time when claim value is added for user. If is not set value,  it will be set with current date-time 
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.MobileCountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.EmailAddress">
+            <summary>
+            Email address
+            Do not check valid email format
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.SSN">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.LoginServiceClaims">
+            <summary>
+            Get or set list of login service claims of users
+            </summary>
+        </member>
+        <member name="P:cxOrganization.Client.V1_0.Users.UserDtoBase.ForceLoginAgain">
+            <summary>
+            Gets or sets the Force User Login Again.
+            </summary>
+            <value>
+            The Force User Login Again.
+            </value>
+        </member>
+    </members>
+</doc>

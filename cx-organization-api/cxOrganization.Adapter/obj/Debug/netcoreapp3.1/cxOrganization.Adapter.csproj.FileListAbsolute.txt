@@ -1,0 +1,10 @@
+C:\hung\cx-organization-api\cxOrganization.Adapter\bin\Debug\netcoreapp3.1\NuGet.Config
+C:\hung\cx-organization-api\cxOrganization.Adapter\bin\Debug\netcoreapp3.1\cxOrganization.Adapter.deps.json
+C:\hung\cx-organization-api\cxOrganization.Adapter\bin\Debug\netcoreapp3.1\cxOrganization.Adapter.dll
+C:\hung\cx-organization-api\cxOrganization.Adapter\bin\Debug\netcoreapp3.1\cxOrganization.Adapter.pdb
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.csprojAssemblyReference.cache
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.AssemblyInfoInputs.cache
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.AssemblyInfo.cs
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.csproj.CoreCompileInputs.cache
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.dll
+C:\hung\cx-organization-api\cxOrganization.Adapter\obj\Debug\netcoreapp3.1\cxOrganization.Adapter.pdb

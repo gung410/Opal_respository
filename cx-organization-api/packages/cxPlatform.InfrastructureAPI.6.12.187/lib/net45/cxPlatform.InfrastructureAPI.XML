@@ -1,0 +1,686 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cxPlatform.InfrastructureAPI</name>
+    </assembly>
+    <members>
+        <member name="T:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase">
+            <summary>
+             Shared functionality across WebAPI Endpoint controllers
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponse``1(System.Collections.Generic.List{``0})">
+            <summary>
+            Creates the json response for a given entity/DTO object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponse``1(System.Net.HttpStatusCode,System.Collections.Generic.List{``0})">
+            <summary>
+            Creates the json response for a given entity/DTO object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity">The entity.</param>
+            <param name="httpStatusCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponse``1(``0)">
+            <summary>
+            Creates the json response for a given entity/DTO object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity">The entity.</param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateNoContentResponse">
+            <summary>
+            Creates response NoContent: 204
+            This response is used for getting a list object or PUT/POST which is nothing changed.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateNotFoundResponse(System.String)">
+            <summary>
+            Creates response NotFound: 404
+            This response is used for getting an object which is not found.
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateNotFoundResponse``1">
+            <summary>
+            Creates response NotFound: 404
+            This response is used for getting an object which is not found. This is generic method, so the name of object will get dynamically
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateNoContentResponse``1">
+            <summary>
+            Creates response NoContent: 204
+            This response is used for getting a list object or PUT/POST which is nothing changed. This is generic method, so the name of object will get dynamically
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateSuccessResponse">
+            <summary>
+            Create OK response
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponse(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Create response with passing HttpStatusCode and Message
+            </summary>
+            <param name="httpStatusCode"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateBadRequestResponse(System.String)">
+            <summary>
+            Create response BadRequest: 400
+            This is used for validation cases
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreatePayloadExpectedResponse">
+            <summary>
+            Create response BadRequest: 400
+            This is used for the payload invalid
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponseForBatchRequest(System.String,System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Create response for batch request (This is obsolete)
+            </summary>
+            <param name="id"></param>
+            <param name="httpStatusCode"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponseForBatchRequest(System.Collections.Generic.List{cxPlatform.Client.ResponseDto})">
+            <summary>
+            Create response for batch request (This is obsolete)
+            </summary>
+            <param name="responsesDtos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponseForBatchRequest``1(System.String,System.Net.HttpStatusCode,``0,System.String)">
+            <summary>
+            Create response for batch request (This is obsolete)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="httpStatusCode"></param>
+            <param name="data"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.ApplyODataFilter``1(System.Collections.Generic.List{``0},System.Web.OData.Query.ODataQueryOptions{``0},System.Boolean)">
+            <summary>
+            This will apply the OData filter into your list
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="objectList"></param>
+            <param name="queryOptions"></param>
+            <param name="selectIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.BuildExpressionSelectOnlyFieldsNeed``1(System.String)">
+            <summary>
+            Build LINQ expression to only select the fields needed
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreateResponseUsingODataFilter``1(System.Collections.Generic.List{``0},System.Web.OData.Query.ODataQueryOptions{``0},System.Boolean)">
+            <summary>
+            Call ApplyODataFilter handler exception and returning the result to client 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="resultList"></param>
+            <param name="queryOptions"></param>
+            <param name="selectIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreatePagingResponseUsingODataFilter``1(System.Collections.Generic.List{``0},System.Web.OData.Query.ODataQueryOptions{``0},System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Call ApplyODataFilter handler exception and returning the result to client 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="resultList"></param>
+            <param name="queryOptions"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="hasMoreData"></param>
+            <param name="selectIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiControllerBase.CreatePagingResponse``1(System.Collections.Generic.List{``0},System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Create paging response
+            The return paging information in HTTP response headers:
+            X-Paging-PageIndex
+            X-Paging-PageSize
+            X-Paging-HasMoreData
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="hasMoreData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiVersionsControllerBase.GetDtosSupportedVersions">
+            <summary>
+            Get all supported versions for all Conxeus DTOs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ApiVersionsControllerBase.GetAllConexusDTOs">
+            <summary>
+            Get all conexus DTOs
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:cxPlatform.InfrastructureAPI.Controllers.ElmahControllerBase" -->
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ElmahControllerBase.Index(System.String)">
+            <summary>
+            This is used for elmah error loging stuff
+            this is called when we open this page
+            http://localhost:[port]/elmah
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Controllers.ElmahControllerBase.Detail(System.String)">
+            <summary>
+            This is used for elmah error loging stuff
+            this is called when we open this page
+            http://localhost:[port]/elmah/detail
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.cxRequestContext.#ctor(cxPlatform.Core.Context.IWorkContext)">
+            <summary>
+            constructor
+            </summary>
+            <param name="workContext"></param>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.cxRequestContext.ApplicationName">
+            <summary>
+            Application name get from WorkContext
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.cxRequestContext.CorrelationId">
+            <summary>
+            Correlation Id get from ThreadContext
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.cxRequestContext.CurrentCustomerId">
+            <summary>
+            Current customer Id get from WorkContext
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.cxRequestContext.CurrentOwnerId">
+            <summary>
+            current owner Id get from WorkContext
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.cxRequestContext.CurrentUserId">
+            <summary>
+            Current user Id get from WorkContext
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Formatter.DateTimeConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Always return UTC to client
+            </summary>
+            <param name="writer"></param>
+            <param name="value"></param>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Formatter.DateTimeConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Always bind to server as local time
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="existingValue"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaResponseBuilder.FindUrlRoutesWithSameTemplate(System.Collections.Generic.List{cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint},cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint,System.String)">
+            <summary>
+            Find other operations (GET,PUT,POST etc.) on the same route
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaResponseBuilder.FindTemplatedRoutesFromPropertyAttributes(System.Collections.Generic.List{cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint},cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint,System.String)">
+            <summary>
+            Find routes based on "foreign keys" in the DTOs
+            </summary>
+            <param name="dto"></param>
+            <param name="allRoutes"></param>
+            <param name="currentRoute"></param>
+            <param name="currentRequestUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaResponseBuilder.FindTemplatedRoutesFromClassAttributes(System.Collections.Generic.List{cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint},cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaEndpoint,System.String)">
+            <summary>
+            Find related routes based on DTos that have been marked with Hypermedia Attribute
+            </summary>
+            <param name="allRoutes"></param>
+            <param name="currentRoute"></param>
+            <param name="currentRequestUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.HyperMedia.HyperMediaResponseBuilder.CreateUrlFromLinkedField(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Method parses templates to see how much of the routes overlap. If there is only one remaning
+            parameter that do not match with current request url AND it matches the attribute RouteIdField,
+            a new URL is created based on current request url + template + value of routeId field
+            </summary>
+            <param name="possibleRoute"></param>
+            <param name="currentRoute"></param>
+            <param name="routeIdField"></param>
+            <param name="routeIdValue"></param>
+            <param name="currentRequestUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Formatter.HttpRequestMessageExtensions">
+            <summary>
+            Helper methods for getting query params 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.HDID">
+            <summary>
+            Gets or sets the hdid.
+            </summary>
+            <value>The hdid.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.HierarchyID">
+            <summary>
+            Gets or sets the hierarchy identifier.
+            </summary>
+            <value>The hierarchy identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.DepartmentID">
+            <summary>
+            Gets or sets the department identifier.
+            </summary>
+            <value>The department identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.ParentID">
+            <summary>
+            Gets or sets the parent identifier.
+            </summary>
+            <value>The parent identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.Path">
+            <summary>
+            Gets or sets the path.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.PathName">
+            <summary>
+            Gets or sets the name of the path.
+            </summary>
+            <value>The name of the path.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentEntity.Deleted">
+            <summary>
+            Gets or sets the deleted.
+            </summary>
+            <value>The deleted.</value>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentMap.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:cxPlatform.InfrastructureAPI.Security.DbContext.HierarchyDepartmentMap"/> class.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.UserId">
+            <summary>
+            Gets or sets the user identifier.
+            </summary>
+            <value>The user identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.DepartmentId">
+            <summary>
+            Gets or sets the department identifier.
+            </summary>
+            <value>The department identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.LanguageId">
+            <summary>
+            Gets or sets the language identifier.
+            </summary>
+            <value>The language identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.RoleId">
+            <summary>
+            Gets or sets the role identifier.
+            </summary>
+            <value>The role identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.UserName">
+            <summary>
+            Gets or sets the name of the user.
+            </summary>
+            <value>The name of the user.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Password">
+            <summary>
+            Gets or sets the password.
+            </summary>
+            <value>The password.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+            <value>The last name.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+            <value>The first name.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Email">
+            <summary>
+            Gets or sets the email.
+            </summary>
+            <value>The email.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Mobile">
+            <summary>
+            Gets or sets the mobile.
+            </summary>
+            <value>The mobile.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.ExtID">
+            <summary>
+            Gets or sets the ext identifier.
+            </summary>
+            <value>The ext identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.SSN">
+            <summary>
+            Gets or sets the SSN.
+            </summary>
+            <value>The SSN.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Tag">
+            <summary>
+            Gets or sets the tag.
+            </summary>
+            <value>The tag.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Locked">
+            <summary>
+            Gets or sets the locked.
+            </summary>
+            <value>The locked.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.ChangePassword">
+            <summary>
+            Gets or sets a value indicating whether [change password].
+            </summary>
+            <value><c>true</c> if [change password]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.HashPassword">
+            <summary>
+            Gets or sets the hash password.
+            </summary>
+            <value>The hash password.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.SaltPassword">
+            <summary>
+            Gets or sets the salt password.
+            </summary>
+            <value>The salt password.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.OneTimePassword">
+            <summary>
+            Gets or sets the one time password.
+            </summary>
+            <value>The one time password.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.OTPExpireTime">
+            <summary>
+            Gets or sets the otp expire time.
+            </summary>
+            <value>The otp expire time.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.Gender">
+            <summary>
+            Gets or sets the gender.
+            </summary>
+            <value>The gender.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth.
+            </summary>
+            <value>The date of birth.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.CountryCode">
+            <summary>
+            Gets or sets the country code.
+            </summary>
+            <value>
+            The country code.
+            </value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.ForceUserLoginAgain">
+            <summary>
+            Gets or sets the Force User Login Again.
+            </summary>
+            <value>
+            The Force User Login Again.
+            </value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.LastUpdated">
+            <summary>
+            Gets or sets the last updated.
+            </summary>
+            <value>The last updated.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.LastUpdatedBy">
+            <summary>
+            Gets or sets last updated by.
+            </summary>
+            <value>The last updated by.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.LastSynchronized">
+            <summary>
+            Gets or sets the last synchronized.
+            </summary>
+            <value>The last synchronized.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.ArchetypeId">
+            <summary>
+            Gets or sets the archetype identifier.
+            </summary>
+            <value>The archetype identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserEntity.UserTypes">
+            <summary>
+            Gets or sets the user types.
+            </summary>
+            <value>The user types.</value>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Security.DbContext.UserMap.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:cxPlatform.InfrastructureAPI.Security.DbContext.UserMap"/> class.
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity"/> class.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.UserTypeID">
+            <summary>
+            Gets or sets the user type identifier.
+            </summary>
+            <value>The user type identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.OwnerID">
+            <summary>
+            Gets or sets the owner identifier.
+            </summary>
+            <value>The owner identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.ExtID">
+            <summary>
+            Gets or sets the ext identifier.
+            </summary>
+            <value>The ext identifier.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.No">
+            <summary>
+            Gets or sets the no.
+            </summary>
+            <value>The no.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.ArchetypeId">
+            <summary>
+            Gets or sets the archetype identifier.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.ParentId">
+            <summary>
+            Gets or sets the parent identifier.
+            </summary>
+            <value>The ParentId.</value>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeEntity.Users">
+            <summary>
+            Gets or sets the users.
+            </summary>
+            <value>The users.</value>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeMap.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:cxPlatform.InfrastructureAPI.Security.DbContext.UserTypeMap"/> class.
+            </summary>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Security.DiscoveryCache">
+            <summary>
+            Ref: https://github.com/IdentityModel/IdentityModel2/issues/36
+            </summary>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Security.AsyncLazy`1">
+            <summary>
+            ref: https://blogs.msdn.microsoft.com/pfxteam/2011/01/15/asynclazyt/
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Security.JwtAuthenticationAttribute">
+            <summary>
+            This is use for authentication with Bearer token
+            The IdentityServer will be configure in AppSetting with the key AuthorityUrl
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.SiteSettings.SiteId">
+            <summary>
+            Site Settings
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.SwaggerAttributes.CxTokenHeader.Apply(Swashbuckle.Swagger.Operation,Swashbuckle.Swagger.SchemaRegistry,System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Adds an authorization header to the given operation in Swagger.
+            </summary>
+            <param name="operation">The Swashbuckle operation.</param>
+            <param name="schemaRegistry">The Swashbuckle schema registry.</param>
+            <param name="apiDescription">The Swashbuckle api description.</param>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.SwaggerAttributes.RealeaseNote">
+            <summary>
+            This Enum specify how many version our domain apis have.
+            If the enpoints have a VersionAttribute[this RealeaseNote], it will be listed in the same group
+            </summary>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Unity.UnityResolver">
+            <summary>
+             Class is needed to use Unity together with WebAPI 2. It wrappes the unity container
+            </summary>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Unity.UnityResolver.#ctor(Microsoft.Practices.Unity.IUnityContainer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:cxPlatform.InfrastructureAPI.Unity.UnityResolver"/> class.
+            </summary>
+            <param name="container">The container.</param>
+            <exception cref="T:System.ArgumentNullException">container</exception>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Unity.UnityResolver.GetService(System.Type)">
+            <summary>
+            Retrieves a service from the scope.
+            </summary>
+            <param name="serviceType">The service to be retrieved.</param>
+            <returns>
+            The retrieved service.
+            </returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Unity.UnityResolver.GetServices(System.Type)">
+            <summary>
+            Retrieves a collection of services from the scope.
+            </summary>
+            <param name="serviceType">The collection of services to be retrieved.</param>
+            <returns>
+            The retrieved collection of services.
+            </returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Unity.UnityResolver.BeginScope">
+            <summary>
+            Starts a resolution scope.
+            </summary>
+            <returns>
+            The dependency scope.
+            </returns>
+        </member>
+        <member name="M:cxPlatform.InfrastructureAPI.Unity.UnityResolver.Dispose">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+        </member>
+        <member name="T:cxPlatform.InfrastructureAPI.Unity.WebApiConfigBase">
+            <summary>
+            Used by IIS when starting Webapi
+            </summary>
+        </member>
+        <member name="P:cxPlatform.InfrastructureAPI.WorkContext.CurrentCustomer">
+            <summary>
+            Get all Customer info
+            </summary>
+        </member>
+    </members>
+</doc>

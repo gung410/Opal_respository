@@ -1,0 +1,130 @@
+{
+  "MassUserCreationMessageConfiguration": {
+    "Validation": {
+      "Message": {
+        "Salutation": {
+          "Empty": {
+            "en-US": "Salutation is empty."
+          },
+          "NotExist": {
+            "en-US": "Salutation does not exist."
+          }
+        },
+        "Name": {
+          "Empty": {
+            "en-US": "Name is empty."
+          },
+          "SpecialCharacters": {
+            "en-US": "The following characters are not supported: &, <, >, \\,\",'"
+          },
+          "OutOfLimit": {
+            "en-US": "Name exceeds 100 characters."
+          }
+        },
+        "OfficialEmail": {
+          "Empty": {
+            "en-US": "Official email is empty."
+          },
+          "InvalidFormat": {
+            "en-US": "Format of email address is incorrect."
+          },
+          "InvalidDomainFormat": {
+            "en-US": "Official email is invalid."
+          },
+          "DuplicateSystemData": {
+            "en-US": "There is already an account associated with this email address."
+          },
+          "DuplicateImportedData": {
+            "en-US": "Official email is duplicated."
+          }
+        },
+        "Gender": {
+          "Empty": {
+            "en-US": "Gender is empty"
+          },
+          "NotExist": {
+            "en-US": "Gender does not exist."
+          },
+          "Irrelevance": {
+            "en-US": "Gender and Salutation must be in agreement."
+          }
+        },
+        "PlaceOfWork": {
+          "Empty": {
+            "en-US": "Place of Work is empty"
+          },
+          "NotExist": {
+            "en-US": "Place of Work does not exist."
+          },
+          "NoPermission": {
+            "en-US": "Some Place of Work are based on department of current user."
+          }
+        },
+        "AccountActiveFrom": {
+          "Empty": {
+            "en-US": "Activation Date is empty."
+          },
+          "InPast": {
+            "en-US": "Activation Date is in the past."
+          },
+          "InvalidFormat": {
+            "en-US": "Format of Activation Date must be dd/mm/yyyy."
+          }
+        },
+        "DateOfExpiryAccount": {
+          "Empty": {
+            "en-US": "Expiry Date is empty."
+          },
+          "InPast": {
+            "en-US": "Expiry Date is in the past."
+          },
+          "InvalidFormat": {
+            "en-US": "Format of Expiry Date must be dd/mm/yyyy."
+          },
+          "InvalidDateRange": {
+            "en-US": "Expiry Date must be after Activation Date."
+          }
+        },
+        "ReasonForUserAccountRequest": {
+          "Empty": {
+            "en-US": "Reason for User Account Request is empty."
+          },
+          "OutOfLimit": {
+            "en-US": "Reason for User Account Request exceeds 1000 characters."
+          },
+          "SpecialCharacters": {
+            "en-US": "The following characters are not supported: &, <, >, \\,\",'"
+          }
+        },
+        "SystemRole": {
+          "Empty": {
+            "en-US": "System Role is empty"
+          },
+          "NotExist": {
+            "en-US": "System Role does not exist."
+          },
+          "InvalidFormat": {
+            "en-US": "System Role must be separated by semicolon."
+          },
+          "DuplicateImportedData": {
+            "en-US": "Some System Roles are duplicated."
+          },
+          "NoPermission": {
+            "en-US": "Some System Roles are not authorised to be created by this current user."
+          }
+        },
+        "PersonalSpaceLimitation": {
+          "Empty": {
+            "en-US": "Personal Space Limitation is empty."
+          },
+          "InvalidFormat": {
+            "en-US": "Format of Personal Space Limitation must be integer. (e.g. 10)."
+          },
+          "OutOfLimit": {
+            "en-US": "Personal Space Limitation must be 10 when mass creating users."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>0e364953-b3ae-4ccd-a9e0-231efc476ed2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Attributes\**" />
+    <Compile Remove="Serilog\**" />
+    <Content Remove="Attributes\**" />
+    <Content Remove="Serilog\**" />
+    <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Serilog\**" />
+    <None Remove="Attributes\**" />
+    <None Remove="Serilog\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DbMigration\Scripts\20200508180647_CreatePrcUserListGet.sql" />
+    <None Remove="DbMigration\Scripts\20200527105955_AlterPrcUserListGetFilterStatusTypeLog.sql" />
+    <None Remove="DbMigration\Scripts\20200623034646_CreateFuncGetPathDepartmentID.sql" />
+    <None Remove="DbMigration\Scripts\competence_moe_blank_db_20190704.sql" />
+    <None Remove="DbMigration\Scripts\development_competence_moe_20190905.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DbMigration\Scripts\20200623034646_CreateFuncGetPathDepartmentID.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DbMigration\Scripts\20200527105955_AlterPrcUserListGetFilterStatusTypeLog.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DbMigration\Scripts\20200508180647_CreatePrcUserListGet.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DbMigration\Scripts\competence_moe_blank_db_20190704.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.3.111.21" />
+    <PackageReference Include="cx.datahub.scheduling.jobs.shared" Version="1.0.26" />
+    <PackageReference Include="cxPlatform.Core" Version="1.0.84-beta" />
+    <PackageReference Include="Datahub.Processor.Base" Version="2.2.5" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.11" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.11" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.11" />
+    <PackageReference Include="HtmlSanitizer" Version="5.0.331" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="NPOI" Version="2.5.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.1.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\cxOrganization.Adapter\cxOrganization.Adapter.csproj" />
+    <ProjectReference Include="..\cxOrganization.Business\cxOrganization.Business.csproj" />
+    <ProjectReference Include="..\cxOrganization.Domain\cxOrganization.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

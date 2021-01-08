@@ -1,0 +1,55 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-competence-opal-api-organization-snapshot
+  development-opal: 
+    pipelines: 
+      - development-competence-opal-api-organization-snapshot
+format_version: 3
+pipelines: 
+  build-competence-opal-api-organization-snapshot: 
+    group: competence-opal-api-organization-snapshot
+    label_template: "snapshot-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: cxOrganization.WebServiceAPI/
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+    template: linux-docker-multiple-build
+    materials: 
+      bitbuket-git: 
+        branch: develop-opal
+        git: "git@bitbucket.org:cxdev/cx-organization-api.git"
+  development-competence-opal-api-organization-snapshot:
+    group: competence-opal-api-organization-snapshot
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-02
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-competence-opal-api-organization-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-opal
+      UP_STREAME_PIPELINE_NAME: build-competence-opal-api-organization-snapshot
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: opal-snapshot
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+      PUBLIC_DNS: ",development-competence-opal-api-organization.csc.cxs.cloud"
+      ENABLE_MIGRATION: false
+      BusinessConfigs_UserNotification_UserTypePending2ndNotification: "145"
+      BusinessConfigs_UserNotification_UserTypePending3ndNotification: "112"
+      BusinessConfigs_UserNotification_UserTypeSyncIdpNotification: "87,88,89"
+      sam_link: "https://development-organization-opal-spa.csc.cxs.cloud"
+      pdpm_link: "https://development-competence-opal-spa.csc.cxs.cloud"
+      logo_path: "https://development-organization-opal-spa.csc.cxs.cloud/assets/images/opal.png"
+      opal_main_page_link: "https://development-competence-opal-spa.csc.cxs.cloud"
+      learner_web_app_link: ""
+      learner_android_app_link: ""
+      learner_ios_app_link: ""

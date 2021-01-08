@@ -1,0 +1,2265 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cxPlatform.Client</name>
+    </assembly>
+    <members>
+        <member name="T:cxPlatform.Client.ConexusBase.IConexusBaseDto">
+                Interface used as base for all DTos. 
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.Latest.ConexusBaseDto.MaxVersion">
+            <summary>
+            The current version of DTO
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.ConexusBaseDto.Identity">
+            <summary>
+            The information of DTO indentty: Owner, customer, Identifier, and External Identifier
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.ConexusBaseDto.DynamicAttributes">
+            <summary>
+            Addtional information for the DTO
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.ConexusBaseDto.EntityStatus">
+            <summary>
+            The information about datetime/version of data changes and status of the entity prensent for DTO in database
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentConfigurationDto.Type">
+            <summary>
+            Type of activity
+            For example: NotStarted; Started; NotParticipated; Exempted; Completed and so on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentConfigurationDto.AssessmentStatus">
+            <summary>
+            List status type available for activity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentStatusDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentStatusDto.CodeName">
+            <summary>
+            For example: NotStarted; Started; NotParticipated; Exempted; Completed and so on
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.Standard">
+            <summary>
+            The standard
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.Cv">
+            <summary>
+            The cv
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.DiagnosticTest">
+            <summary>
+            The diagnostic test
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.EvaluationTest">
+            <summary>
+            The evaluation test
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.Assessment">
+            <summary>
+            The assessment
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.Latest.ActivityTypeEnum.External">
+            <summary>
+            The External
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.UserIdentity">
+            <summary>
+            User Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.ReportingDepartmentIdentity">
+            <summary>
+            Reporting Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.ReportingGroupIdentity">
+            <summary>
+            Reporting Group Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.BatchDepartmentIdentity">
+            <summary>
+            Batch Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.SurveyReferenceId">
+            <summary>
+            Survey ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.RoleId">
+            <summary>
+            Role ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.AssessmentEntries">
+            <summary>
+            List assessment entry
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentDto.AllowMutilpleResult">
+            <summary>
+            Allow create multiple result
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentEntry.Uri">
+            <summary>
+            Using URI to find correct combination of Question and Alternative
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentEntry.Value">
+            <summary>
+            Value of assessment entry
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentEntry.SubjectCode">
+            <summary>
+            Subject Code
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto">
+            <summary>
+            AssessmentDto using internal IDs
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.UserIdentity">
+            <summary>
+            User Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.ReportingDepartmentIdentity">
+            <summary>
+            Reporting Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.ReportingGroupIdentity">
+            <summary>
+            Reporting Group Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.BatchDepartmentIdentity">
+            <summary>
+            Batch Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.SurveyReferenceId">
+            <summary>
+            Survey ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.RoleId">
+            <summary>
+            Role ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.AssessmentInternalQuestions">
+            <summary>
+            List assessment question
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.CreateDate">
+            <summary>
+            Create date: only for read
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalDto.AllowMutilpleResult">
+            <summary>
+            Allow create multiple result
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalQuestion.QuestionId">
+            <summary>
+            Question Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalQuestion.AssessmentEntries">
+            <summary>
+            List assessment entry
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalEntry.AlternativeId">
+            <summary>
+            Alternative Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalEntry.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentInternalEntry.ItemId">
+            <summary>
+            Item Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.Uri">
+            <summary>
+            URI for where to store value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.Mandatory">
+            <summary>
+            Mandatory
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.Inverted">
+            <summary>
+            Inverted
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.AvailableValues">
+            <summary>
+            Available Values
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.MinValue">
+            <summary>
+            Min Value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.MaxValue">
+            <summary>
+            Max Value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.Archetype">
+            <summary>
+            Archetype
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.InvertedValue">
+            <summary>
+            Inverted Value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.SingleChoice">
+            <summary>
+            Single Choice
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.Type">
+            <summary>
+            Type
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.DataPointDto.ScaleType">
+            <summary>
+            Scale Type
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.ActivityId">
+            <summary>
+            Activity ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.StartDate">
+            <summary>
+            Start Date
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.EndDate">
+            <summary>
+            End Date
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.LastProcessed">
+            <summary>
+            Last Processed
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.AssessmentSurveyDto.DeleteResultOnUserDelete">
+            <summary>
+            Delete result when user be deleted
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Assessments.Latest.LearnerAssessmentsMoverDto">
+            <summary>
+            Move assessment DTO for learner
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.LearnerAssessmentsMoverDto.LearnerIds">
+            <summary>
+            List learner should be moved
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.Latest.LearnerAssessmentsMoverDto.AllowAssessmentTypes">
+            <summary>
+            Assessment types allow to move
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentConfigurationDto.Type">
+            <summary>
+            Type of activity
+            For example: NotStarted; Started; NotParticipated; Exempted; Completed and so on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentConfigurationDto.AssessmentStatus">
+            <summary>
+            List status type available for activity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentStatusDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentStatusDto.CodeName">
+            <summary>
+            For example: NotStarted; Started; NotParticipated; Exempted; Completed and so on
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.Standard">
+            <summary>
+            The standard
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.Cv">
+            <summary>
+            The cv
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.DiagnosticTest">
+            <summary>
+            The diagnostic test
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.EvaluationTest">
+            <summary>
+            The evaluation test
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.Assessment">
+            <summary>
+            The assessment
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.Assessments.V1_0.ActivityTypeEnum.External">
+            <summary>
+            The External
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.UserIdentity">
+            <summary>
+            User Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.ReportingDepartmentIdentity">
+            <summary>
+            Reporting Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.ReportingGroupIdentity">
+            <summary>
+            Reporting Group Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.BatchDepartmentIdentity">
+            <summary>
+            Batch Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.SurveyReferenceId">
+            <summary>
+            Survey ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.RoleId">
+            <summary>
+            Role ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.AssessmentEntries">
+            <summary>
+            List assessment enty
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentDto.AllowMutilpleResult">
+            <summary>
+            Allow create multiple result
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentEntry.Uri">
+            <summary>
+            Client will specifiy URI for where to store value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentEntry.Value">
+            <summary>
+            Value of assessment entry
+            No need for Valuetype since the Alternative will tell us what kind of value it is
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentEntry.SubjectCode">
+            <summary>
+            Subject Code
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto">
+            <summary>
+            AssessmentDto using internal IDs
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.UserIdentity">
+            <summary>
+            User Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.ReportingDepartmentIdentity">
+            <summary>
+            Reporting Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.ReportingGroupIdentity">
+            <summary>
+            Reporting Group Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.BatchDepartmentIdentity">
+            <summary>
+            Batch Department Identity
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.SurveyReferenceId">
+            <summary>
+            Survey ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.RoleId">
+            <summary>
+            Role ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.AssessmentStatusId">
+            <summary>
+            Status Type ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.AssessmentInternalQuestions">
+            <summary>
+            List assessment question
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.CreateDate">
+            <summary>
+            Create date: only for read
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalDto.AllowMutilpleResult">
+            <summary>
+            Allow create multiple result
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalQuestion.QuestionId">
+            <summary>
+            Question Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalQuestion.AssessmentEntries">
+            <summary>
+            List assessment entry
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalEntry.AlternativeId">
+            <summary>
+            Alternative Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalEntry.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentInternalEntry.ItemId">
+            <summary>
+            Item Id
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Assessments.V1_0.LearnerAssessmentsMoverDto">
+            <summary>
+            Move assessment DTO for learner
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.LearnerAssessmentsMoverDto.LearnerIds">
+            <summary>
+            List learner should be moved
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.LearnerAssessmentsMoverDto.AllowAssessmentTypes">
+            <summary>
+            Assessment types allow to move
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.ActivityId">
+            <summary>
+            Activity ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.StartDate">
+            <summary>
+            Start Date
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.EndDate">
+            <summary>
+            End Date
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.LastProcessed">
+            <summary>
+            Last Processed
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Assessments.V1_0.AssessmentSurveyDto.DeleteResultOnUserDelete">
+            <summary>
+            Delete result when user be deleted
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HealthStatus.IsAlive">
+            <summary>
+            Is alive
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HealthStatus.StatusDetails">
+            <summary>
+            Status details
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HealthStatus.ErrorCode">
+            <summary>
+            Error code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HealthStatus.ErrorMessage">
+            <summary>
+            Error message
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.ClientServiceBase.PostSync(System.String,cxPlatform.Client.ConexusBase.IConexusBaseDto,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            
+            </summary>
+            <param name="requestUri"></param>
+            <param name="conexusBaseDto"></param>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.ClientServiceBaseHelper.GetHeaderValueByName(System.Net.Http.Headers.HttpResponseHeaders,System.String)">
+            <summary>
+            Get header value by name 
+            </summary>
+            <param name="headerSrc"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.HypermediaLinkedAttribute">
+            <summary>
+            Attribute is used to make HypermediaLinks between DTos. Attribute can be placed at class level. Then the 
+            route template is used. Attribute can also be placed at property level on a field that is used to lookup
+            another Dto. The HyperMediaFormatter will try to resolve url if RouteIdField matches the route parameter.
+            If not possible a template will be returned.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HypermediaLinkedAttribute.LinkedResourceType">
+            <summary>
+            Resouretype (Dto-class) that is going to be referenced
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HypermediaLinkedAttribute.LinkGroupName">
+            <summary>
+            Links will be grouped. This typically is a archectype or domain 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.HypermediaLinkedAttribute.RouteIdField">
+            <summary>
+            Property in the class that is a "foreign key" to another resource
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.IMonitoringClientService.GetApplicationStatus">
+            <summary>
+            Get status of application
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.IMonitoringClientService.GetDatabaseStatus">
+            <summary>
+            Get status of database connection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.IMonitoringClientService.GetCacheStatus">
+            <summary>
+            Get status on distributed cache
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.IRequestContext">
+            <summary>
+            Request Context
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.IRequestContext.CurrentOwnerId">
+            <summary>
+            Current owner identifier
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.IRequestContext.CurrentCustomerId">
+            <summary>
+            Current customer identifier
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.IRequestContext.CorrelationId">
+            <summary>
+            Correlation identifier
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.IRequestContext.ApplicationName">
+            <summary>
+            Application name
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.IRequestContext.CurrentUserId">
+            <summary>
+            Current user identifier
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaCollectionResponse">
+            <summary>
+            Class returns collection of Links that can be used to navigate Conexus APIs without
+            hardcoding of urls
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaCollectionResponse.Data">
+            <summary>
+            Contains the List of Conexus DTOs which again contains the data being returned in service
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaCollectionResponse.Operations">
+            <summary>
+            Operations that is possible to perform on the type of data returned in the list
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaCollectionResponse.Relations">
+            <summary>
+            Links to other DTOs that have "foreign keys" in the data returned
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaCollectionResponse.Links">
+            <summary>
+            Links to other endpoints that are not part of data respons, but could be relevant for client
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1">
+            <summary>
+            Used as request object to post batch request. They can contain all types of HTTP Verbs 
+            in same batch request
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.AddGetRequest(System.String,System.String,System.String)">
+            <summary>
+              Convenience method to add a Get request 
+            </summary>
+            <param name="httpVerb">HTTP Verb</param>
+            <param name="uri"> Uri of resource to batch. Same as you would use for single GET</param>
+            <param name="acceptHeader"> Used for controlling which version of Dto/API is returned </param>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.AddPutPostRequest(System.String,System.String,System.String,`0)">
+            <summary>
+              Convenience method to add a Put/Post request 
+            </summary>
+            <param name="httpVerb">HTTP Verb</param>
+            <param name="uri"> Uri of resource to batch. Same as you would use for single PUT/POST </param>
+            <param name="contentType">Used for controlling which version of API is returned </param>
+            <param name="dtos"></param>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.HttpVerb">
+            <summary>
+              HTTP Verb for urls inside Batch request (GET, PUT, POST, DELETE)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.Resources">
+            <summary>
+            Resource to batch (reading (GET) or updating (POST/PUT)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.ContentTypeHeader">
+            <summary>
+             Contentype describing format/version of DTO used for GET
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchRequest`1.AcceptHeader">
+            <summary>
+             Contentype describing requested format/version of DTO
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaResource`1">
+            <summary>
+            Contains a webservice request to a resource. Can be GET, POST, PUT, DELETE
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResource`1.ResourceUri">
+            <summary>
+            Uri of resource to batch
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResource`1.Dto">
+            <summary>
+            DTO
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchResponse`1">
+            <summary>
+            Contain responses to a Batch Request
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchResponse`1.ResponseDtos">
+            <summary>
+            Status of the submitted batch requests
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchStatus`1">
+            <summary>
+            Class gives status on a request send a batch request
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchStatus`1.URI">
+            <summary>
+            Uri of the sent batch request. Can be used by client for matching request/response
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchStatus`1.StatusCode">
+            <summary>
+            HTTP Status Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchStatus`1.Message">
+            <summary>
+            Message 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaBatchStatus`1.Dtos">
+            <summary>
+            Payload for batch request. Contains Conexus DTO.
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.Latest.HyperMediaResponse`1">
+            <summary>
+            Class returns Hypermedia links that can be used to navigate Conexus APIs without
+            hardcoding of urls
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResponse`1.Dto">
+            <summary>
+            Conexus DTO which contains the data being returned in service
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResponse`1.Operations">
+            <summary>
+            Operations that is possible to perform on the type of data returned in the list
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResponse`1.Relations">
+            <summary>
+            Links to other DTOs that have "foreign keys" in the data returned
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.HyperMediaResponse`1.Links">
+            <summary>
+            Links to other endpoints that are not part of data respons, but could be relevant for client
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.IdentityBaseDto.Archetype">
+            <summary>
+            The type of the DTO based on which concept its was used for
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.IdentityBaseDto.Id">
+            <summary>
+            The identifier of the DTO in database
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.IdentityDto.ExtId">
+            The identifier of the DTO in external system
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.IdentityDto.OwnerId">
+            <summary>
+            The identifier of the owner who that the DTO belong to
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.IdentityDto.CustomerId">
+            <summary>
+            The identifier of the customer that the DTO belong to
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.LoggerExtensions">
+            <summary>
+            Log4net extension
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.LoggerExtensions.ToLogString(System.Object)">
+            <summary>
+            Convert ConexusDto to string
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.PaginatedList`1">
+            <summary>
+            The paging is wrap the object in a PaginatedList
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.PaginatedList`1.#ctor">
+            <summary>
+            constructor
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.PaginatedList`1.#ctor(System.Collections.Generic.List{`0},System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="items"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="hasMoreData"></param>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.PaginatedList`1.PageIndex">
+            <summary>
+            The index of the currently displayed page
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.PaginatedList`1.PageSize">
+            <summary>
+            The number of records to display on a single page. The default is MaximumRecordsReturn: 10000
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.PaginatedList`1.HasMoreData">
+            <summary>
+            Still have more data to load
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.PaginatedList`1.Items">
+            <summary>
+            Gets a collection of objects that represent the data
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ConexusBase.PaginatedListExtension">
+            <summary>
+            PaginatedList extension
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.PaginatedListExtension.ToPaginatedListDto``2(cxPlatform.Client.ConexusBase.PaginatedList{``0},System.Func{``0,``1})">
+            <summary>
+            Convert PaginatedList Entity to PaginatedList DTO
+            </summary>
+            <typeparam name="E"></typeparam>
+            <typeparam name="T"></typeparam>
+            <param name="paginatedListEntity"></param>
+            <param name="mapFromEntityToDtoFunction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.PaginatedListExtension.ToPaginatedListDto``2(cxPlatform.Client.ConexusBase.PaginatedList{``0},System.Func{``0,System.Nullable{System.Boolean},``1},System.Nullable{System.Boolean})">
+            <summary>
+            Convert PaginatedList Entity to PaginatedList DTO
+            </summary>
+            <typeparam name="E"></typeparam>
+            <typeparam name="D"></typeparam>
+            <param name="getDynamicProperties"></param>
+            <param name="paginatedListEntity"></param>
+            <param name="mapFromEntityToDtoFunction"></param>
+            <returns></returns>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.NotSet">
+            <summary>
+            The not set
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Survey">
+            <summary>
+            The survey
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Page">
+            <summary>
+            The page
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Question">
+            <summary>
+            The question
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Alternative">
+            <summary>
+            The alternative
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Department">
+            <summary>
+            The department
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Action">
+            <summary>
+            The action
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Batch">
+            <summary>
+            The batch
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Category">
+            <summary>
+            The category
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Choice">
+            <summary>
+            The choice
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Scale">
+            <summary>
+            The scale
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Activity">
+            <summary>
+            The activity
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Result">
+            <summary>
+            The result
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.User">
+            <summary>
+            The user
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Role">
+            <summary>
+            The role
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.LT_Role">
+            <summary>
+            The l t_ role
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.UserGroup">
+            <summary>
+            The user group
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.XCategory">
+            <summary>
+            The x category
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.H_D">
+            <summary>
+            The h_ d
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.MenuItem">
+            <summary>
+            The menu item
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Menu">
+            <summary>
+            The menu
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Owner">
+            <summary>
+            The owner
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.LevelGroup">
+            <summary>
+            The level group
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Process">
+            <summary>
+            The process
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Section">
+            <summary>
+            The section
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ReportPart">
+            <summary>
+            The report part
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.UserType">
+            <summary>
+            The user type
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.DepartmentType">
+            <summary>
+            The department type
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.PortalPart">
+            <summary>
+            The portal part
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ScoreTemplate">
+            <summary>
+            The score template
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ProcessGroup">
+            <summary>
+            The process group
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Report">
+            <summary>
+            The report
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.StatusTypeMapping">
+            <summary>
+            The status type mapping
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.DottedRule">
+            <summary>
+            The dotted rule
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Site">
+            <summary>
+            The site
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ItemListField">
+            <summary>
+            The item list field
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ItemListCommand">
+            <summary>
+            The item list command
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.FormField">
+            <summary>
+            The form field
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.FormCommand">
+            <summary>
+            The form command
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Form">
+            <summary>
+            The form
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.FormRow">
+            <summary>
+            The form row
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.MailTemplate">
+            <summary>
+            The mail template
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ReportFilter">
+            <summary>
+            The report filter
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Customer">
+            <summary>
+            The customer
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.LoginService_User">
+            <summary>
+            The login service_ user
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Period">
+            <summary>
+            The period
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.RelationType">
+            <summary>
+            The relation type
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.AGroup">
+            <summary>
+            A group
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Language">
+            <summary>
+            The language
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Measure">
+            <summary>
+            The Measure
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.AccessGroup">
+            <summary>
+            The AccessGroup
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Provider">
+            <summary>
+            The Provider
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Resource">
+            <summary>
+            The Resource
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ActivityViewType">
+            <summary>
+            The A_VT
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.LevelLimit">
+            <summary>
+            The LevelLimit
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.StatusType">
+            <summary>
+            The status type
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.FormCell">
+            <summary>
+            The form cell
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.ObjectMapping">
+            <summary>
+            The object mapping
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Bulk">
+            <summary>
+            The bulk
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Answer">
+            <summary>
+            Answer
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Note">
+            <summary>
+            Note
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.SiteParameter">
+            <summary>
+            Site parameter
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Gender">
+            <summary>
+            Gender
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.LoginService">
+            <summary>
+            login service
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.MeasureTemplate">
+            <summary>
+            MeasureTemplate 
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Event">
+            <summary>
+            Event 
+            </summary>
+        </member>
+        <member name="F:cxPlatform.Client.ConexusBase.TableTypes.Archetype">
+            <summary>
+            Archetype
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.V1_0.IdentityBaseDto.Archetype">
+            <summary>
+            The type of the DTO based on which concept its was used for
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.V1_0.IdentityBaseDto.Id">
+            <summary>
+            The identifier of the DTO in database
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.VersionInfo.SupportedVersions">
+            <summary>
+            The list supported version and mediatype
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.VersionInfo.DtoFullName">
+            <summary>
+            Gets the fully qualified name of the DTO
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.ChangePasswordRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.ChangePasswordRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.ChangePasswordResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.ChangePasswordResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.LogonRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.LogonRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.ResetPasswordRequestDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.ResetPasswordRequestDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.ResetPasswordResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.ResetPasswordResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.Name">
+            <summary>
+            The name of the customer
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.LanguageID">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.RootMenuID">
+            <summary>
+            Root menu ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.CodeName">
+            <summary>
+            Code name
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.LogoUrl">
+            <summary>
+            Logo URL
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.CssVariables">
+            <summary>
+            Css variables
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Customers.CustomerDto.HasUserIntegration">
+            <summary>
+            Has user integration
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.ParentDepartmentId">
+            <summary>
+            Parent department Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.Name">
+            <summary>
+            The name of the department 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DepartmentDtoBase.CountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.ClassDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.ClassDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Ma to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CandidateDepartmentDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.CountryDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.CountryDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CountryDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CountryDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CountryDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CountryDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.ConexusBase.Latest.IdentityStatusDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.ConexusBase.Latest.IdentityStatusDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.HierachyDepartmentIdentityDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.HierachyDepartmentIdentityDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.Address">
+            <summary>
+            Schoolowner Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.PostalCode">
+            <summary>
+            Schoolowner postal code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.DataOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.CompanyDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Ma to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.OrganizationalUnitDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.LevelDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.LevelDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.MemberDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.MemberDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.MemberDto.Role">
+            <summary>
+            Membership role (not in use)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.MemberDto.Period">
+            <summary>
+            Membership period (not in use)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.PeriodDto.Name">
+            <summary>
+            The name of the period 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.PeriodDto.StartDate">
+            <summary>
+            The start date of the period 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.ConexusBase.Latest.PeriodDto.EndDate">
+            <summary>
+            The end date of the period 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.UserGroupDtoBase.Name">
+            <summary>
+            The name of the user group
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.UserGroupDtoBase.Type">
+            <summary>
+            The type of the user group
+            Currently 4 types is available: 
+            1. Default 
+            2. Historical
+            3. Connections
+            4. Events
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.UserGroupDtoBase.Description">
+            <summary>
+            Description for user group
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.UserGroupDtoBase.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.CandidatePoolDto.ParentDepartmentId">
+            <summary>
+            The id of company which candidate pool belong to
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.TeachingGroupDto.SubjectCode">
+            <summary>
+            The subject code of the teaching group, can be a list of subject code, seperated by ","
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.UserGroups.TeachingGroupDto.SchoolId">
+            <summary>
+            The id of school which teaching group belong to
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Organization.Latest.Users.CandidateDto">
+            <summary>
+            Candidate Resource
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Organization.Latest.Users.UserDtoBase">
+            <summary>
+            Base clase for properties that are common for Learner, Emploee
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.FirstName">
+            <summary>
+            First name 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.LastName">
+            <summary>
+            Last name 
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.AvatarUrl">
+            <summary>
+            Avatar url
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.MobileCountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.MobileNumber">
+            <summary>
+            Mobile number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.EmailAddress">
+            <summary>
+            Email address, do not need to check vaild format
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.SSN">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.DateOfBirth">
+            <summary>
+            Date of birth
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.UserDtoBase.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.CandidateDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.CandidateDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.CandidateDto.ParentDepartmentId">
+            <summary>
+            Parent department that candidate belong to
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.CandidateDto.AvatarUrl">
+            <summary>
+            Avatar url
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Organization.Mappings.CustomerVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Organization.Mappings.UserVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.Organization.Mappings.DepartmentVersionMapping">
+            <summary>
+            Class is responsible for mapping between different versions of Department
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.DepartmentType">
+            <summary>
+            Insert a SchoolOwner we need to specify DepartmentType as County or Municipality:
+            3 types are avaiable:
+            1. Unknown
+            2. County
+            3. Municipality
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.Address">
+            <summary>
+            Schoolowner Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.PostalCode">
+            <summary>
+            Schoolowner postal code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Departments.SchoolDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.LogonResponseDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.LogonResponseDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="M:cxPlatform.Client.Organization.Latest.Account.UserDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version 
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:cxPlatform.Client.Organization.Latest.Account.UserDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)" -->
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.UserId">
+            <summary>
+            The user identifier in database
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.LastName">
+            <summary>
+            The last name of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.FirstName">
+            <summary>
+            The first name of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.MobileNumber">
+            <summary>
+            The mobile number of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.MobileCountryCode">
+            <summary>
+            The mobile country code of the user (ex: 47)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.UserName">
+            <summary>
+            The username of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.Password">
+            <summary>
+            The password of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.Ssn">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.Email">
+            <summary>
+            The email of user
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Account.UserDto.DepartmentId">
+            <summary>
+            The department id that user belong to
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.EmployeeDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.EmployeeDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.EmployeeDto.EmployerDepartmentId">
+            <summary>
+            The current department that employee work at
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.EmployeeDto.AvatarUrl">
+            <summary>
+            Avatar url
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.LearnerDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.Latest.Users.LearnerDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to given version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.Latest.Users.LearnerDto.ParentDepartmentId">
+            <summary>
+            Parent department that learner belong to
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.Name">
+            <summary>
+            The name of the customer
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.LanguageID">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.RootMenuID">
+            <summary>
+            Root menu ID
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.CodeName">
+            <summary>
+            Code name
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.LogoUrl">
+            <summary>
+            Logo URL
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.CssVariables">
+            <summary>
+            Css variables
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Customers.CustomerDto.HasUserIntegration">
+            <summary>
+            Has user integration
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.DepartmentDtoBase.ParentDepartmentId">
+            <summary>
+            Parent department Id
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.DepartmentDtoBase.LanguageId">
+            <summary>
+            List of examples of languages:
+            1	nb-NO
+            2	en-US
+            3	DE
+            4	SA
+            5	AR
+            6	nn-NO
+            10	da-DK
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.DepartmentDtoBase.CountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.V1_0.Departments.HierachyDepartmentIdentityDto.MapToLatest(System.Version,cxPlatform.Client.ConexusBase.IConexusBaseDto)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="fromVersion"></param>
+            <param name="oldVersionDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxPlatform.Client.Organization.V1_0.Departments.HierachyDepartmentIdentityDto.MapToVersion(cxPlatform.Client.ConexusBase.IConexusBaseDto,System.Version)">
+            <summary>
+            Map to latest version of DTO
+            </summary>
+            <param name="latestDto"></param>
+            <param name="toVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.CompanyDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.CompanyDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.CandidateDepartmentDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.CandidateDepartmentDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.Address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.PostalCode">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.Phone">
+            <summary>
+            Phone Number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.OrganizationalUnitDto.Email">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.SchoolDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.SchoolDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.DataOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.DataOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.SchoolOwnerDto.DepartmentType">
+            <summary>
+            Insert a SchoolOwner we need to specify DepartmentType as County or Municipality
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.SchoolOwnerDto.OrganizationNumber">
+            <summary>
+            9 digits. Also known as Business Registration Number. Present on all business documents.
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Departments.SchoolOwnerDto.City">
+            <summary>
+            The name of City
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.UserGroups.UserGroupDtoBase.Name">
+            <summary>
+            The name of the user group
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.UserGroups.UserGroupDtoBase.Type">
+            <summary>
+            The type of the user group
+            Currently 4 types is available: 
+            1. Default 
+            2. Historical
+            3. Connections
+            4. Events
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.UserGroups.UserGroupDtoBase.Description">
+            <summary>
+            Description for user group
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.UserGroups.UserGroupDtoBase.Period">
+            <summary>
+            The period of time that the user group is using on
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.MobileCountryCode">
+            <summary>
+            Numeric value of country code (example: 47)
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.EmailAddress">
+            <summary>
+            Email address
+            Do not check valid email format
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.SSN">
+            <summary>
+            Social Security number
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.Gender">
+            <summary>
+            List of examples of valid gender types:
+              0 = Male
+              1 = Female
+              2 = N/A
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.Tag">
+            <summary>
+            Tag
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.UserDtoBase.Created">
+            <summary>
+            Gets or sets the created.
+            </summary>
+            <value>The created.</value>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.CandidateDto.AvatarUrl">
+            <summary>
+            Avatar url
+            </summary>
+        </member>
+        <member name="P:cxPlatform.Client.Organization.V1_0.Users.EmployeeDto.AvatarUrl">
+            <summary>
+            Avatar url
+            </summary>
+        </member>
+        <member name="T:cxPlatform.Client.ResponseDto`1">
+            <summary>
+            To return a list response including status and body
+            </summary>
+        </member>
+    </members>
+</doc>

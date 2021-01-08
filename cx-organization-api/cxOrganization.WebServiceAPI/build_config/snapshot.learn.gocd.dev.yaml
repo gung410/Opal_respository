@@ -1,0 +1,43 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-competence-learn-api-organization-snapshot
+  development-learn: 
+    pipelines: 
+      - development-competence-learn-api-organization-snapshot  
+format_version: 3
+pipelines: 
+  build-competence-learn-api-organization-snapshot: 
+    group: competence-learn-api-organization-snapshot
+    label_template: "snapshot-1.0.${COUNT}" 
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: cxOrganization.WebServiceAPI/
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+    template: linux-docker-multiple-build
+    materials: 
+      bitbuket-git: 
+        branch: develop-opal
+        git: "git@bitbucket.org:cxdev/cx-organization-api.git"
+  development-competence-learn-api-organization-snapshot:
+    group: competence-learn-api-organization-snapshot
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-competence-learn-api-organization-snapshot
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      DOCKER_DEPLOY_DIR: development-learn
+      UP_STREAME_PIPELINE_NAME: build-competence-learn-api-organization-snapshot
+    environment_variables:
+      DOCKER_IMAGE_TAG: learn-snapshot
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+      PUBLIC_DNS: ",development-competence-learn-api-organization.csc.cxs.cloud"
+      ENABLE_MIGRATION: false

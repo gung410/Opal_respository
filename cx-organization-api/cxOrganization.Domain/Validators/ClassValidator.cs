@@ -1,0 +1,178 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using cxOrganization.Client;
+using cxOrganization.Client.Departments;
+using cxOrganization.Domain.Entities;
+using cxOrganization.Domain.Repositories;
+using cxPlatform.Client.ConexusBase;
+using cxPlatform.Core;
+using cxPlatform.Core.Exceptions;
+
+namespace cxOrganization.Domain.Validators
+{
+    public class ClassValidator : DepartmentValidator
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IWorkContext _workContext;
+        public ClassValidator(IDepartmentRepository departmentRepository,
+            IOwnerRepository ownerRepository,
+            ICustomerRepository customerRepository,
+            ILanguageRepository languageRepository,
+            IHierarchyDepartmentRepository hierarchyDepartmentRepository,
+            IWorkContext workContext,
+            IUserRepository userRepository)
+            :base(ownerRepository, customerRepository, languageRepository, departmentRepository, hierarchyDepartmentRepository, workContext)
+        {
+            _userRepository = userRepository;
+            _workContext = workContext;
+        }
+
+        public override DepartmentEntity Validate(ConexusBaseDto dto)
+        {
+            var classDto = (ClassDto)dto;
+            if (classDto != null && classDto.Identity.Archetype != ArchetypeEnum.Class)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ARCHETYPE_IS_NOT_SUPPORTED);
+            }
+           
+           
+            DepartmentEntity departmentEntity = base.Validate(dto);
+
+            if (departmentEntity != null && departmentEntity.ArchetypeId != (short)ArchetypeEnum.Class)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ARCHETYPE_DB_NOT_MATCH);
+            }
+            
+            return departmentEntity;
+        }
+        public override UserEntity ValidateMemberDtoForUpdating(int departmentId, MemberDto member)
+        { 
+            var includeProperties = QueryExtension.CreateIncludeProperties<UserEntity>(x => x.Department);
+            var user = _userRepository.GetUserByIds(userIds: new List<int>() {(int)member.Identity.Id },includeProperties:includeProperties).FirstOrDefault();
+
+            ValidateMemberDto(user, member);
+
+            if (user.DepartmentId == departmentId)
+            {
+                throw new CXValidationException(cxExceptionCodes.VALIDATION_MEMBER_EXIST_IN_CLASS);
+            }
+            if (user.Department.ArchetypeId!= (short)ArchetypeEnum.Class && user.Department.ArchetypeId != (short)ArchetypeEnum.School)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_DEPARTMENT_PROPERTY_VALIDATION);
+            }
+            //checking department that learner will be inserted must be a class
+            var insertedClass = _departmentRepository.GetById(departmentId);
+            if (insertedClass == null)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_DEPARTMENT_NOT_FOUND);
+            }
+            if (insertedClass.ArchetypeId != (short)ArchetypeEnum.Class)
+            {
+                throw new CXValidationException(cxExceptionCodes.VALIDATION_DEPARTMENT_IS_NOT_CLASS);
+            }
+            //class that learner will be inserted must be in same shool with current user's class
+            if (user.Department.ArchetypeId == (short)ArchetypeEnum.Class)
+            {
+                var currentSchool = _departmentRepository.GetParentDepartment(user.DepartmentId).FirstOrDefault();
+                if (currentSchool == null)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_PARENTDEPARTMENTID_NOT_FOUND);
+                }
+                var insertedSchool = _departmentRepository.GetParentDepartment(departmentId).FirstOrDefault();
+                if (insertedSchool == null)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_PARENTDEPARTMENTID_NOT_FOUND);
+                }
+                if (currentSchool.DepartmentId != insertedSchool.DepartmentId)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_MEMBER_IS_NOT_BELONG_TO_SCHOOL);
+                }
+            }
+            //if learner isn't in any class, the class that learner will be inserted must be same school with user's current school
+            if (user.Department.ArchetypeId == (short)ArchetypeEnum.School)
+            {
+                var insertedSchool = _departmentRepository.GetParentDepartment(departmentId).FirstOrDefault();
+                if (insertedSchool == null)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_PARENTDEPARTMENTID_NOT_FOUND);
+                }
+                if (user.Department.DepartmentId != insertedSchool.DepartmentId)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_MEMBER_IS_NOT_BELONG_TO_SCHOOL);
+                }
+            }
+                  
+            return user;
+            
+        }
+        public override UserEntity ValidateMemberDtoForRemoving(int departmentId, MemberDto member, ref int parentDepartmentId)
+        {
+            var includeProperties = QueryExtension.CreateIncludeProperties<UserEntity>(x => x.Department);
+            var user = _userRepository.GetUserByIds(userIds: new List<int>() { (int)member.Identity.Id }, includeProperties: includeProperties).FirstOrDefault();
+            ValidateMemberDto(user, member);
+            if (user.DepartmentId != departmentId)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_DEPARTMENT);
+            }
+            if (user.Department.ArchetypeId != (short)ArchetypeEnum.Class)
+            {
+                throw new CXValidationException(cxExceptionCodes.VALIDATION_DEPARTMENT_IS_NOT_CLASS);
+            }
+            var learnerSchool = _departmentRepository.GetParentDepartment(departmentId).FirstOrDefault();
+            if (learnerSchool == null )
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_SCHOOL_NOT_FOUND, departmentId);
+            }
+            parentDepartmentId = learnerSchool.DepartmentId;
+            
+            return user;
+        }
+        private void ValidateMemberDto(UserEntity user,MemberDto member)
+        {
+
+            if (user == null)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_MEMBER_NOT_FOUND);
+            }
+            ArchetypeEnum enumMemberArchetypeId = (ArchetypeEnum)user.ArchetypeId;
+            if (member.Identity.Archetype != enumMemberArchetypeId && (member.Identity.Archetype != ArchetypeEnum.Learner || member.Identity.Archetype!=ArchetypeEnum.Employee))
+            {
+                throw new CXValidationException(cxExceptionCodes.VALIDATION_MEMBER_ARCHETYPE_INCORRECTED);
+            }
+
+            if ((int)member.EntityStatus.StatusId != user.EntityStatusId)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_USER_PROPERTY_VALIDATION);
+            }
+            if (member.EntityStatus.StatusId == EntityStatusEnum.Deactive || member.EntityStatus.StatusId == EntityStatusEnum.Unknown)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_USER);
+            }
+            if (user.CustomerId != member.Identity.CustomerId || user.CustomerId != _workContext.CurrentCustomerId)
+            {
+                throw new CXValidationException(cxExceptionCodes.VALIDATION_CUSTOMER_ID_NOT_MATCH);
+            }
+            /*if (!StructuralComparisons.StructuralEqualityComparer.Equals(member.EntityStatus.EntityVersion, user.EntityVersion))
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ENTITY_VERSION_INCORRECTED);
+            }*/
+
+        }
+        public override DepartmentEntity ValidateDepartment(int departmentId)
+        {
+            DepartmentEntity department = _departmentRepository
+                .GetDepartmentsByDepartmentIds(departmentIds: new List<int> { departmentId }, includeDepartmentTypes: true)
+                .FirstOrDefault();
+            if (department == null)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_DEPARTMENT_NOT_FOUND);
+            }
+            if (department.ArchetypeId != (short)ArchetypeEnum.Class)
+            {
+                throw new CXValidationException(cxExceptionCodes.ERROR_ARCHETYPE_DB_NOT_MATCH);
+            }
+            return department;
+        }
+
+    }
+}

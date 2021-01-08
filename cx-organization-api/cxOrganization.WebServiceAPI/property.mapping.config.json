@@ -1,0 +1,134 @@
+{
+  "IntegrationSetting": {
+    "MassUserCreationMappingConfig": {
+      "SkipStartLine": 0,
+      "SkipEndLine": 0,
+      "Encoding": "UTF-8",
+      "ColumnType": "DelimiterWithCaption",
+      "Delimiter": ",",
+      "DateFormat": "yyyyMMdd",
+      "Columns": [
+        {
+          "Name": "Salutation",
+          "Caption": "Salutation",
+          "Order": 1
+        },
+        {
+          "Name": "Name",
+          "Caption": "Name",
+          "Order": 2
+        },
+        {
+          "Name": "OfficialEmail",
+          "Caption": "Official Email",
+          "Order": 3
+        },
+        {
+          "Name": "Gender",
+          "Caption": "Gender",
+          "Order": 4
+        },
+        {
+          "Name": "PlaceOfWork",
+          "Caption": "Place of work",
+          "Order": 5
+        },
+        {
+          "Name": "AccountActiveFrom",
+          "Caption": "Account Active From",
+          "Order": 6
+        },
+        {
+          "Name": "DateOfExpiryAccount",
+          "Caption": "Date of Expiry Account",
+          "Order": 7
+        },
+        {
+          "Name": "ReasonForUserAccountRequest",
+          "Caption": "Reason for User Account Request",
+          "Order": 8
+        },
+        {
+          "Name": "SystemRole",
+          "Caption": "System Role",
+          "Order": 9
+        },
+        {
+          "Name": "PersonalSpaceLimitation",
+          "Caption": "Personal Space Limitation",
+          "Order": 10
+        }
+      ]
+    },
+    "MassUserCreationResultMappingConfig": {
+      "SkipStartLine": 0,
+      "SkipEndLine": 0,
+      "Encoding": "UTF-8",
+      "ColumnType": "Delimiter",
+      "Delimiter": ",",
+      "DateFormat": "yyyyMMdd",
+      "Columns": [
+        {
+          "Name": "Number",
+          "Caption": "S/N",
+          "Order": 1
+        },
+        {
+          "Name": "Salutation",
+          "Caption": "Salutation",
+          "Order": 2
+        },
+        {
+          "Name": "Name",
+          "Caption": "Name",
+          "Order": 3
+        },
+        {
+          "Name": "OfficialEmail",
+          "Caption": "Official Email",
+          "Order": 4
+        },
+        {
+          "Name": "Gender",
+          "Caption": "Gender",
+          "Order": 5
+        },
+        {
+          "Name": "PlaceOfWork",
+          "Caption": "Place of work",
+          "Order": 6
+        },
+        {
+          "Name": "AccountActiveFrom",
+          "Caption": "Account Active From",
+          "Order": 7
+        },
+        {
+          "Name": "DateOfExpiryAccount",
+          "Caption": "Date of Expiry Account",
+          "Order": 8
+        },
+        {
+          "Name": "ReasonForUserAccountRequest",
+          "Caption": "Reason for User Account Request",
+          "Order": 9
+        },
+        {
+          "Name": "SystemRole",
+          "Caption": "System Role",
+          "Order": 10
+        },
+        {
+          "Name": "PersonalSpaceLimitation",
+          "Caption": "Personal Space Limitation",
+          "Order": 11
+        },
+        {
+          "Name": "Status",
+          "Caption": "Status",
+          "Order": 12
+        }
+      ]
+    }
+  }
+}

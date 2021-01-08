@@ -1,0 +1,48 @@
+--- 
+environments: 
+  linux: 
+    pipelines: 
+      - build-competence-opal-api-organization-release
+  systemtest-opal: 
+    pipelines: 
+      - systemtest-competence-opal-api-organization-release
+format_version: 3
+pipelines: 
+  build-competence-opal-api-organization-release: 
+    group: competence-opal-api-organization-release
+    label_template: "release-1.0.${COUNT}"
+    lock_behavior: none
+    parameters: # list of parameters that can be configured for a pipeline
+      PROJECT_DIR: cxOrganization.WebServiceAPI/
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.3
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+    template: linux-docker-multiple-build
+    materials: 
+      bitbuket-git: 
+        branch: release/opal-0.6
+        git: "git@bitbucket.org:cxdev/cx-organization-api.git"
+  systemtest-competence-opal-api-organization-release:
+    group: competence-opal-api-organization-release
+    label_template: "${upstream}"
+    lock_behavior: none
+    template: linux-docker-deploy-02
+    materials: 
+      upstream: # this name does not matter, but there should be no 2 materials with the same name
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: build-competence-opal-api-organization-release
+        stage: docker-push
+    parameters: # list of parameters that can be configured for a pipeline
+      UP_STREAME_PIPELINE_NAME: build-competence-opal-api-organization-release
+      DOCKER_DEPLOY_DIR : systemtest-opal
+      UP_STREAME_PIPELINE_STAGE: docker-push
+      UP_STREAME_PIPELINE_JOB: docker-push
+    environment_variables:
+      DOCKER_IMAGE_TAG: 1.0.3
+      DOCKER_IMAGE_REPO: cx-domain-api-organization
+      PUBLIC_DNS: ",systemtest-competence-opal-api-organization.csc.cxs.cloud"
+      ENABLE_MIGRATION: true
+      BusinessConfigs_UserNotification_UserTypePending2ndNotification: "145"
+      BusinessConfigs_UserNotification_UserTypePending3ndNotification: "112"
+      BusinessConfigs_UserNotification_UserTypeSyncIdpNotification: "87,88,89"

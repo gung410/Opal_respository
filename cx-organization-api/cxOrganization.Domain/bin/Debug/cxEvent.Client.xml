@@ -1,0 +1,1175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cxEvent.Client</name>
+    </assembly>
+    <members>
+        <member name="T:cxEvent.Client.ClientServices.IEventServiceBase`1">
+            <summary>
+            The interface of EventService
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:cxEvent.Client.ClientServices.IEventServiceBase`1.GetEvents(cxPlatform.Client.ConexusBase.IRequestContext,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Search events
+            </summary>
+            <param name="requestContext"></param>
+            <param name="eventTypeName"></param>
+            <param name="departmentId"></param>
+            <param name="userId"></param>
+            <param name="userArchetypeId"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="createdBefore"></param>
+            <param name="createdAfter"></param>
+            <returns></returns>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXCommunicationException">Thrown when exception during processing, if using HttpClient, the response status will not in the range 200-299</exception>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXUnhandledException">Thrown when exception is not caught</exception>
+        </member>
+        <member name="M:cxEvent.Client.ClientServices.IEventServiceBase`1.WriteEvent(`0,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            
+            </summary>
+            <param name="eventDto"></param>
+            <param name="requestContext"></param>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXCommunicationException">Thrown when exception during processing, if using HttpClient, the response status will not in the range 200-299</exception>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXUnhandledException">Thrown when exception is not caught</exception>
+        </member>
+        <member name="M:cxEvent.Client.EventClientService.GetDomainEvents(cxPlatform.Client.ConexusBase.IRequestContext,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Get Domain Event Client Service
+            </summary>
+            <param name="requestContext"> Hold the request information</param>
+            <param name="eventTypeName"></param>
+            <param name="departmentId"></param>
+            <param name="userId"></param>
+            <param name="userArchetypeId"></param>
+            <param name="createdBefore"></param>
+            <param name="createdAfter"></param>
+            <param name="orderBy"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.ClientServices.IFeedService.GetEvents(cxPlatform.Client.ConexusBase.IRequestContext,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Search events
+            </summary>
+            <param name="requestContext"></param>
+            <param name="eventTypeName"></param>
+            <param name="departmentId"></param>
+            <param name="userId"></param>
+            <param name="userArchetypeId"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="orderBy"></param>
+            <param name="createdBefore"></param>
+            <param name="createdAfter"></param>
+            <param name="itemArchetypeId"></param>
+            <param name="itemId"></param>
+            <param name="departmentArchetypeId"></param>
+            <param name="groupArchetypeId"></param>
+            <param name="groupId"></param>
+            <returns></returns>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXCommunicationException">Thrown when exception during processing, if using HttpClient, the response status will not in the range 200-299</exception>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXUnhandledException">Thrown when exception is not caught</exception>
+        </member>
+        <member name="M:cxEvent.Client.ClientServices.IFeedService.EditEvent(cxEvent.Client.Latest.FeedEventDto,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            
+            </summary>
+            <param name="eventDto"></param>
+            <param name="requestContext"></param>
+        </member>
+        <member name="M:cxEvent.Client.ClientServices.IFeedService.WriteEvent(cxEvent.Client.Latest.FeedEventDto,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            
+            </summary>
+            <param name="eventDto"></param>
+            <param name="requestContext"></param>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXCommunicationException">Thrown when exception during processing, if using HttpClient, the response status will not in the range 200-299</exception>
+            <exception cref="T:cxPlatform.Client.ConexusBase.CXUnhandledException">Thrown when exception is not caught</exception>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            Set AdditionalInformation
+            </summary>
+            <param name="additionalInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set customer where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithActivityId(System.Int32)">
+            <summary>
+            Set ActivityId
+            </summary>
+            <param name="activityId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithBatchId(System.Int32)">
+            <summary>
+            Set BatchId
+            </summary>
+            <param name="batchId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithSurveyId(System.Int32)">
+            <summary>
+            Set SurveyId
+            </summary>
+            <param name="surveyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithXCategoryId(System.Int32)">
+            <summary>
+            Set XCategoryId
+            </summary>
+            <param name="xcategoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithExtId(System.String)">
+            <summary>
+            Set External ID
+            </summary>
+            <param name="extId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.WithResultId(System.Int64)">
+            <summary>
+            Set Result ID
+            </summary>
+            <param name="resultId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.CreateWithRequestContext(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create Dto after map the request information to Dto
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.AssessmentEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:cxEvent.Client.Latest.BuilderHelper">
+            <summary>
+            Builder class helper
+            </summary>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BuilderHelper.MapInformationToDto(cxEvent.Client.Latest.EventDtoBase,cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+             get information from IrequestContext and map to Dto
+            </summary>
+            <param name="eventDto"></param>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            Set AdditionalInformation
+            </summary>
+            <param name="additionalInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.CreateWithRequestContext(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create Dto after map the request information to Dto
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.BusinessEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            set Additional Information
+            </summary>
+            <param name="userData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.WithCorrelationId(System.String)">
+            <summary>
+            set CorrelationId
+            </summary>
+            <param name="correlationId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.WithObjectIdentity(System.Int64,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            set ItemId and TableTypeId
+            </summary>
+            <param name="itemId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.CreateWithRequestContext(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create Dto after map the request information to Dto
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.DomainEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.ObjectIdentity">
+            <summary>
+            Represent to object of an event is point to (ex)
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.UserIdentity">
+            <summary>
+            User Identity: who did that?
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.DepartmentIdentity">
+            <summary>
+            Department Identity: Where that happened?
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.CreatedDate">
+            <summary>
+            Created date
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.AdditionalInformation">
+            <summary>
+            Json for the additional information
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.ApplicationName">
+            <summary>
+            Application name
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.EventTypeName">
+            <summary>
+            Event type name.
+            </summary>
+            <value>
+            Event type name.
+            </value>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.CorrelationId">
+            <summary>
+            The correlation identifier.
+            </summary>
+            <value>The correlation identifier.</value>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.GroupIdentity">
+            <summary>
+            Group Identity
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventDtoBase.CreatedBy">
+            <summary>
+            Who created the event
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Title">
+            <summary>
+            Title for displaying on UI
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Summary">
+            <summary>
+            Sumary
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Verd">
+            <summary>
+            Action verd, example: Tyler has "completed" the IP profile
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.ValidTo">
+            <summary>
+            This post will valid to
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Published">
+            <summary>
+            Created date
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Rank">
+            <summary>
+            Rank of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.DisplayingCount">
+            <summary>
+            Displaying count of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.ActorId">
+            <summary>
+            the user who create this feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Target">
+            <summary>
+            Who to send
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.FeedEventDto.Content">
+            <summary>
+            Detail of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.EventTypeNames">
+            <summary>
+            Eventtype name 
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.DepartmentIds">
+            <summary>
+            Department identifiers
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.UserIds">
+            <summary>
+            User identifiers
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.CreatedByIds">
+            <summary>
+            Created by User identifiers
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.PageSize">
+            <summary>
+            Page size
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.PageIndex">
+            <summary>
+            Page index
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.EventFilterObject.OrderBy">
+            <summary>
+            Order by (The default setting is order by EventId descending)
+            Supported fields :EventTypeName, UserIdentity.Id, ApplicationName, CorrelationId, DepartmentIdentity.Id, EntityStatus.StatusId, GroupIdentity.Id, IPNumber
+            Example : UserIdentity.Id desc
+            </summary>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            Set AdditionalInformation
+            </summary>
+            <param name="additionalInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set customer where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithActivityId(System.Int32)">
+            <summary>
+            Set ActivityId
+            </summary>
+            <param name="activityId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithBatchId(System.Int32)">
+            <summary>
+            Set BatchId
+            </summary>
+            <param name="batchId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithSurveyId(System.Int32)">
+            <summary>
+            Set SurveyId
+            </summary>
+            <param name="surveyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.WithXCategoryId(System.Int32)">
+            <summary>
+            Set XCategoryId
+            </summary>
+            <param name="xcategoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.CreateWithRequestContext(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create Dto after map the request information to Dto
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.LearningActivityEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            Set AdditionalInformation
+            </summary>
+            <param name="additionalInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithIPNumber(System.String)">
+            <summary>
+            Set IPNumber
+            </summary>
+            <param name="iPNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithUserName(System.String)">
+            <summary>
+            Set UserName
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithPasswordType(System.String)">
+            <summary>
+            Set PasswordType
+            </summary>
+            <param name="passwordType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithLoginServiceId(System.Int32)">
+            <summary>
+            Set LoginServiceId
+            </summary>
+            <param name="loginServiceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithUrlLogon(System.String)">
+            <summary>
+            Set UrlLogon
+            </summary>
+            <param name="urlLogon"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.WithReason(System.String)">
+            <summary>
+            Set Reason
+            </summary>
+            <param name="reason"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.CreateWithRequestContext(cxPlatform.Client.ConexusBase.IRequestContext)">
+            <summary>
+            Create Dto after map the request information to Dto
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.SecurityEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.WithAdditionalInformation(System.Object)">
+            <summary>
+            Set AdditionalInformation
+            </summary>
+            <param name="additionalInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.ForUserIdentity(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set User Identity
+            </summary>
+            <param name="userId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.CreatedBy(System.Int32)">
+            <summary>
+            Set created by
+            </summary>
+            <param name="createdByUserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.CreatedDate(System.DateTime)">
+            <summary>
+            Set CreatedDate
+            </summary>
+            <param name="createdDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.InDepartment(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="departmentId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.InGroup(System.Int32,cxPlatform.Client.ConexusBase.ArchetypeEnum)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="groupId"></param>
+            <param name="archetype"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.InCustomer(System.Int32)">
+            <summary>
+            Set department where event belong to
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.InOwner(System.Int32)">
+            <summary>
+            Set owner where event belong to
+            </summary>
+            <param name="ownerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.WithApplicationName(System.String)">
+            <summary>
+            Set application name
+            </summary>
+            <param name="applicationName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.WithEventTypeName(System.String)">
+            <summary>
+            Set EventType Name
+            </summary>
+            <param name="eventTypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.FromIPAddress(System.String)">
+            <summary>
+            Set IPAddress
+            </summary>
+            <param name="ipAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:cxEvent.Client.Latest.UserEventBuilder.Create">
+            <summary>
+            Return DTO
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:cxEvent.Client.Latest.AssessmentEventDto.XCategoryId">
+            <summary>
+            The XCategory identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.AssessmentEventDto.ActivityId">
+            <summary>
+            The activity identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.AssessmentEventDto.SurveyId">
+            <summary>
+            The survey identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.AssessmentEventDto.BatchId">
+            <summary>
+            The batch identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.AssessmentEventDto.ResultId">
+            <summary>
+            The result identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.BusinessEventDto.StoreAsXmlFortmat">
+            <summary>
+            If true, AdditionalInformation will store to UserData as XML format
+            else will use Json Format
+            </summary>
+            <value>The correlation identifier.</value>
+        </member>
+        <member name="P:cxEvent.Client.Latest.LearningActivityEventDto.XCategoryId">
+            <summary>
+            The XCategory identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.LearningActivityEventDto.ActivityId">
+            <summary>
+            The activity identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.LearningActivityEventDto.SurveyId">
+            <summary>
+            The survey identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.LearningActivityEventDto.BatchId">
+            <summary>
+            The batch identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.IPNumber">
+            <summary>
+            IP number from client
+            </summary>
+            <value>The ip number.</value>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.UserName">
+            <summary>
+            UserName
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.PasswordType">
+            <summary>
+            PasswordType
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.LoginServiceId">
+            <summary>
+            The login service identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.UrlLogon">
+            <summary>
+            UrlLogon
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.SecurityEventDto.Reason">
+            <summary>
+            Reason
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.Latest.UserEventDto.IPNumber">
+            <summary>
+            IP number from client
+            </summary>
+            <value>The ip number.</value>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.ObjectIdentity">
+            <summary>
+            Represent to object of an event is point to (ex)
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.UserIdentity">
+            <summary>
+            User Identity: who did that?
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.DepartmentIdentity">
+            <summary>
+            Department Identity: Where that happened?
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.CreatedDate">
+            <summary>
+            Created date
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.AdditionalInformation">
+            <summary>
+            Json for the additional information
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.ApplicationName">
+            <summary>
+            Application name
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.EventTypeName">
+            <summary>
+            Event type name.
+            </summary>
+            <value>
+            Event type name.
+            </value>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.CorrelationId">
+            <summary>
+            The correlation identifier.
+            </summary>
+            <value>The correlation identifier.</value>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.GroupIdentity">
+            <summary>
+            Group Identity
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.EventDtoBase.CreatedBy">
+            <summary>
+            Who created the event
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.AssessmentEventDto.XCategoryId">
+            <summary>
+            The XCategory identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.AssessmentEventDto.ActivityId">
+            <summary>
+            The activity identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.AssessmentEventDto.SurveyId">
+            <summary>
+            The survey identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.AssessmentEventDto.BatchId">
+            <summary>
+            The batch identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.AssessmentEventDto.ResultId">
+            <summary>
+            The result identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.BusinessEventDto.StoreAsXmlFortmat">
+            <summary>
+            If true, AdditionalInformation will store to UserData as XML format
+            else will use Json Format
+            </summary>
+            <value>The correlation identifier.</value>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Title">
+            <summary>
+            Title for displaying on UI
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Summary">
+            <summary>
+            Sumary
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Verd">
+            <summary>
+            Action verd, example: Tyler has "completed" the IP profile
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.ValidTo">
+            <summary>
+            This post will valid to
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Published">
+            <summary>
+            Created date
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Rank">
+            <summary>
+            Rank of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.DisplayingCount">
+            <summary>
+            Displaying count of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.ActorId">
+            <summary>
+            the user who create this feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Target">
+            <summary>
+            Who to send
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.FeedEventDto.Content">
+            <summary>
+            Detail of feed
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.LearningActivityEventDto.XCategoryId">
+            <summary>
+            The XCategory identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.LearningActivityEventDto.ActivityId">
+            <summary>
+            The activity identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.LearningActivityEventDto.SurveyId">
+            <summary>
+            The survey identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.LearningActivityEventDto.BatchId">
+            <summary>
+            The batch identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.IPNumber">
+            <summary>
+            IP number from client
+            </summary>
+            <value>The ip number.</value>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.UserName">
+            <summary>
+            UserName
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.PasswordType">
+            <summary>
+            PasswordType
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.LoginServiceId">
+            <summary>
+            The login service identifier
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.UrlLogon">
+            <summary>
+            UrlLogon
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.SecurityEventDto.Reason">
+            <summary>
+            Reason
+            </summary>
+        </member>
+        <member name="P:cxEvent.Client.V1_0.UserEventDto.IPNumber">
+            <summary>
+            IP number from client
+            </summary>
+            <value>The ip number.</value>
+        </member>
+    </members>
+</doc>

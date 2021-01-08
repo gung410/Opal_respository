@@ -1,0 +1,5 @@
+{
+  "accessSettings": {
+    "disableReadUserPoolAccessChecking": false
+  }
+}
