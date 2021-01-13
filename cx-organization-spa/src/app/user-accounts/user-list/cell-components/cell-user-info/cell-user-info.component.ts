@@ -47,20 +47,7 @@ export class CellUserInfoComponent
   }
 
   onEditUserClicked($event: any): void {
-    const isAllowedToEdit = this.checkPermissionToEdit();
-    if (isAllowedToEdit) {
-      this.params.context.componentParent.editUser.emit($event);
-    }
-  }
-
-  private checkPermissionToEdit(): boolean {
-    switch (this.currentTabLabel) {
-      case 'otherPlaceOfWork':
-      case 'userList':
-        return this.params.context.componentParent.isAllowToEditUser();
-      default:
-        return true;
-    }
+    this.params.context.componentParent.editUser.emit($event);
   }
 
   private setupCellUserInfo(params: any): void {

@@ -7,6 +7,8 @@ export class AccessRightRoles {
   accessRightId: number;
   accessRight: string = '';
   roles: IRoleValue[] = [];
+  isHideAccessRight: boolean;
+
   constructor(data?: Partial<AccessRightRoles>) {
     if (!data) {
       return;
@@ -14,5 +16,6 @@ export class AccessRightRoles {
     this.accessRightId = data.accessRightId;
     this.accessRight = data.accessRight;
     this.roles = data.roles;
+    this.isHideAccessRight = data.isHideAccessRight;
   }
 }

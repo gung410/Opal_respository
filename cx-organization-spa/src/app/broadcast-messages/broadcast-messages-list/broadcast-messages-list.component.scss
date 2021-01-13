@@ -429,7 +429,6 @@
         bottom: 0px;
         width: calc(100% - 84px);
         z-index: 1;
-        display: none;
 
         @media only screen and (max-width: $screen-xs-max) {
             width: calc(100% - 32px);

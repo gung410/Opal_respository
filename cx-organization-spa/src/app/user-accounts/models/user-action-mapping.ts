@@ -365,7 +365,7 @@ export function initUserActionsForCreateAccButton(
 
 export function initPendingUserActions(
   translateAdapterService: TranslateAdapterService,
-  isCurrentUserDivAdmin: boolean,
+  isShowEndorseText: boolean,
   canApprove: boolean,
   canEndorse: boolean,
   canReject: boolean
@@ -373,20 +373,24 @@ export function initPendingUserActions(
   const userActions: ActionsModel[] = [];
 
   if (canEndorse || canApprove) {
-    userActions.push(
-      new ActionsModel({
-        text: translateAdapterService.getValueImmediately(
-          `User_Account_Page.User_Context_Menu.${
-            isCurrentUserDivAdmin ? 'Endorse' : 'Approve'
-          }`
-        ),
-        actionType: StatusActionTypeEnum.Accept,
-        allowActionSingle: false,
-        icon: null,
-        message: '',
-        disable: true
-      })
-    );
+    const acceptAction = new ActionsModel({
+      text: translateAdapterService.getValueImmediately(
+        'User_Account_Page.User_Context_Menu.Approve'
+      ),
+      actionType: StatusActionTypeEnum.Accept,
+      allowActionSingle: false,
+      icon: null,
+      message: '',
+      disable: true
+    });
+
+    if (isShowEndorseText) {
+      acceptAction.text = translateAdapterService.getValueImmediately(
+        'User_Account_Page.User_Context_Menu.Endorse'
+      );
+    }
+
+    userActions.push(acceptAction);
   }
 
   if (canReject) {

@@ -258,6 +258,7 @@ export class UserAccountsComponent
   public isHideFilterButton: boolean = false;
   public isHideExportButton: boolean = false;
   public isHideColumnButton: boolean = false;
+  public isHideCreateUserAccountRequestButton: boolean = false;
   private surveyJSEnumerationVariables: any = [];
 
   private fromDateIndex: number = 0;
@@ -2221,6 +2222,8 @@ export class UserAccountsComponent
     this.clearSelectedItems();
     this.currentTabAriaLabel = tabChangeEvent.tab.ariaLabel;
 
+    UserAccountsDataService.setCurrentTabLabel(this.currentTabAriaLabel);
+
     this.isHideFilterButton = !(
       this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts ||
       this.currentTabAriaLabel === UserAccountTabEnum.UserOtherPlace
@@ -2231,6 +2234,13 @@ export class UserAccountsComponent
 
     this.isHideColumnButton = !(
       this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts
+    );
+
+    this.isHideCreateUserAccountRequestButton = !(
+      this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending1st ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending2nd ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending3rd
     );
 
     this.getCurrentTabUserList();
@@ -3726,7 +3736,6 @@ export class UserAccountsComponent
     userDepartment: Department,
     userDepartmentTypes: DepartmentType[]
   ): Promise<CxSurveyjsVariable[]> {
-    console.log(isCurrentUserHasPermissionToEdit);
     let surveyjsVariables = [
       new CxSurveyjsVariable({
         name: SurveyVariableEnum.formDisplayMode,

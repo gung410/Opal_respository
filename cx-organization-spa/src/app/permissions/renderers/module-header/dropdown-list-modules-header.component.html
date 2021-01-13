@@ -2,7 +2,7 @@
   <div>
     <span>Select Module</span>
   </div>
-  <div *ngIf="moduleItems.length">
+  <div *ngIf="moduleItems && moduleItems.length">
     <opal-select
       class="module-select"
       [valueField]="'id'"

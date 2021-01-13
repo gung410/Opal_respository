@@ -27,9 +27,20 @@ import {
   UserManagement,
   UserManagementQueryModel
 } from './models/user-management.model';
+import { UserAccountTabEnum } from './user-accounts.helper';
 
 @Injectable()
 export class UserAccountsDataService {
+  static currentTabLabel: string;
+
+  static setCurrentTabLabel(tabLabel: string): void {
+    UserAccountsDataService.currentTabLabel = tabLabel;
+  }
+
+  static getCurrentTabLabel(): string {
+    return UserAccountsDataService.currentTabLabel;
+  }
+
   constructor(
     private httpHelper: HttpHelpers,
     private http: HttpClient,

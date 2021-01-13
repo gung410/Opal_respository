@@ -23,8 +23,12 @@
           | translate: { selectedItemMapLength: number, newStatus: status }
       }}
     </h5>
-    <div *ngIf="showRejectComment" class="form-group">
+    <div
+      *ngIf="showRejectComment"
+      class="form-group"
+    >
       <textarea
+        cxFocus
         class="form-control"
         [(ngModel)]="rejectReason"
         rows="3"
@@ -36,7 +40,10 @@
     </div>
 
     <!-- First approval form -->
-    <div *ngIf="isFirstLevelApproval" class="first-approval-container">
+    <div
+      *ngIf="isFirstLevelApproval"
+      class="first-approval-container"
+    >
       <p>
         {{
           'User_Account_Page.User_List.Confirm_Dialog.Instruction_First_Level_Approval'
@@ -56,7 +63,10 @@
     <!-- End of first approval form -->
 
     <!-- Final approval form -->
-    <div *ngIf="isFinalApproval" class="final-approval-container">
+    <div
+      *ngIf="isFinalApproval"
+      class="final-approval-container"
+    >
       <p *ngIf="isProcessingSingleUser">
         {{
           'User_Account_Page.User_List.Confirm_Dialog.Instruction_Final_Approval_Single_User'

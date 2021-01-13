@@ -103,6 +103,14 @@ user-accounts {
             top: 118px;
         }
 
+        .ag-header.ag-grid-header-pending-tab-fixed {
+            top: 118px;
+        }
+
+        .ag-header.ag-grid-header-other-place-of-work-tab-fixed {
+            top: 118px;
+        }
+
         .action-group-container {
             display: flex;
             justify-content: space-between;
@@ -150,6 +158,20 @@ user-accounts {
 
     .ag-header.ag-grid-header-fixed {
         top: 118px;
+    }
+
+    .ag-header.ag-grid-header-pending-tab-fixed {
+        top: 118px;
+        position: fixed;
+        width: calc(100% - 82.5px);
+        z-index: 2;
+    }
+
+    .ag-header.ag-grid-header-other-place-of-work-tab-fixed {
+        top: 118px;
+        position: fixed;
+        width: calc(100% - 82.5px);
+        z-index: 2;
     }
 
     .action-group-container {

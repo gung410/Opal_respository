@@ -474,19 +474,11 @@ export class ApprovalInfoComponent
     selectedGroups: ApprovalGroup[]
   ): ApprovalGroup[] {
     let approvalGroupResults: ApprovalGroup[] = [];
+
     if (selectedGroups) {
       approvalGroupResults = [
         ...approvalGroups.filter((approvalGroup: ApprovalGroup) => {
-          const approverId = approvalGroup.approverId;
-
-          return (
-            !this.user ||
-            (approverId !== this.user.identity.id &&
-              !selectedGroups.some(
-                (selectedGroup: ApprovalGroup) =>
-                  selectedGroup && selectedGroup.approverId === approverId
-              ))
-          );
+          return this.filterCurrentApprovalGroups(approvalGroup);
         })
       ];
     }
@@ -600,5 +592,25 @@ export class ApprovalInfoComponent
     return !this.user || (this.user && this.userDepartmentId)
       ? this.userDepartmentId
       : this.user.departmentId;
+  }
+  private filterCurrentApprovalGroups(approvalGroup: ApprovalGroup): boolean {
+    const approverId = approvalGroup.approverId;
+    if (this.primarySelectedGroup) {
+      if (this.alternateSelectedGroup) {
+        return (
+          !this.user &&
+          approverId !== this.alternateSelectedGroup.approverId &&
+          approverId !== this.primarySelectedGroup.approverId
+        );
+      }
+      return !this.user && approverId !== this.primarySelectedGroup.approverId;
+    }
+    if (this.alternateSelectedGroup) {
+      return (
+        !this.user && approverId !== this.alternateSelectedGroup.approverId
+      );
+    }
+
+    return !this.user;
   }
 }

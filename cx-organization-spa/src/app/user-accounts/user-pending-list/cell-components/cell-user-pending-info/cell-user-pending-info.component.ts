@@ -48,10 +48,8 @@ export class CellUserPendingInfoComponent
     if (!this.params.context.componentParent.validateActionsInPendingTabs) {
       return;
     }
-    // const canActions = this.params.context.componentParent.validateActionsInPendingTabs();
-    // if (canActions[PendingActionIndex.Edit]) {
+
     this.params.context.componentParent.editUser.emit($event);
-    // }
   }
 
   private setupUserData(params: any): void {

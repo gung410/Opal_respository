@@ -7,7 +7,7 @@ export interface IUserAction {
   allowActionSingle: boolean;
   message: string;
   currentStatus: string[];
-  hasPermission: boolean;
+  hasPermission?: boolean;
 }
 
 export class UserAction implements IUserAction {
@@ -17,7 +17,7 @@ export class UserAction implements IUserAction {
   allowActionSingle: boolean;
   message: string;
   currentStatus: string[];
-  hasPermission: boolean;
+  hasPermission?: boolean = false;
 
   constructor(data: Partial<IUserAction>) {
     if (data == null) {
@@ -30,6 +30,6 @@ export class UserAction implements IUserAction {
     this.allowActionSingle = data.allowActionSingle;
     this.message = data.message;
     this.currentStatus = data.currentStatus;
-    this.hasPermission = data.hasPermission;
+    this.hasPermission = data.hasPermission ?? false;
   }
 }

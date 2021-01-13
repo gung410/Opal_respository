@@ -16,6 +16,18 @@ export class UserActionsService {
         return this.actionsOnUserListTab(currentUser).filter(
           (action) => action.hasPermission
         );
+      case 'pending1stLevel':
+        return this.actionsOnPending1stLevel(currentUser).filter(
+          (action) => action.hasPermission
+        );
+      case 'pending2ndLevel':
+        return this.actionsOnPending2stLevel(currentUser).filter(
+          (action) => action.hasPermission
+        );
+      case 'pendingSpecialLevel':
+        return this.actionsOnPendingSpecialLevel(currentUser).filter(
+          (action) => action.hasPermission
+        );
       default:
         return [];
     }
@@ -36,7 +48,7 @@ export class UserActionsService {
         allowActionSingle: true,
         message: 'User_Account_Page.User_List.Change_User_Status_Warning',
         currentStatus: [StatusTypeEnum.Inactive.code],
-        hasPermission: isAllowedToManageBasicUserAccountsAction
+        hasPermission: isAllowedToManageAdvancedUserAccounts
       },
       {
         targetAction: StatusActionTypeEnum.Suspend,
@@ -168,6 +180,104 @@ export class UserActionsService {
           StatusTypeEnum.PendingApproval3rd.code
         ],
         hasPermission: isAllowedToManageAdvancedUserAccounts
+      }
+    ];
+
+    return actions;
+  }
+
+  private actionsOnPending1stLevel(currentUser: User): IUserAction[] {
+    return this.actionsOnPendingList(
+      currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending1st),
+      currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st),
+      currentUser.hasPermission(SAM_PERMISSIONS.RejectPending1st),
+      currentUser.hasPermission(SAM_PERMISSIONS.EditPending1st),
+      false
+    );
+  }
+
+  private actionsOnPending2stLevel(currentUser: User): IUserAction[] {
+    return this.actionsOnPendingList(
+      currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending2nd),
+      false,
+      currentUser.hasPermission(SAM_PERMISSIONS.RejectPending2nd),
+      currentUser.hasPermission(SAM_PERMISSIONS.EditPending2nd),
+      currentUser.hasPermission(
+        SAM_PERMISSIONS.RequestSpecialApprovalPending2nd
+      )
+    );
+  }
+
+  private actionsOnPendingSpecialLevel(currentUser: User): IUserAction[] {
+    return this.actionsOnPendingList(
+      currentUser.hasPermission(SAM_PERMISSIONS.ApprovePendingSpecial),
+      false,
+      currentUser.hasPermission(SAM_PERMISSIONS.RejectPendingSpecial),
+      currentUser.hasPermission(SAM_PERMISSIONS.EditPendingSpecial),
+      false
+    );
+  }
+
+  private actionsOnPendingList(
+    isAllowedToApprove: boolean,
+    isAllowedToEndorse: boolean,
+    isAllowedToReject: boolean,
+    isAllowedToEdit: boolean,
+    isAllowedToRequestSpecialApprovalPending2nd: boolean
+  ): IUserAction[] {
+    const actions: IUserAction[] = [
+      {
+        targetAction: StatusActionTypeEnum.Accept,
+        targetIcon: ICON_CONST.ACCEPT,
+        isSimpleAction: true,
+        allowActionSingle: true,
+        message: 'User_Account_Page.User_List.Accept_Warning',
+        currentStatus: [
+          StatusTypeEnum.PendingApproval1st.code,
+          StatusTypeEnum.PendingApproval2nd.code,
+          StatusTypeEnum.PendingApproval3rd.code
+        ],
+        hasPermission: isAllowedToApprove || isAllowedToEndorse
+      },
+      {
+        targetAction: StatusActionTypeEnum.Reject,
+        targetIcon: ICON_CONST.REJECT,
+        isSimpleAction: true,
+        allowActionSingle: true,
+        message: 'User_Account_Page.User_List.Reject_Warning',
+        currentStatus: [
+          StatusTypeEnum.PendingApproval1st.code,
+          StatusTypeEnum.PendingApproval2nd.code,
+          StatusTypeEnum.PendingApproval3rd.code
+        ],
+        hasPermission: isAllowedToReject
+      },
+      {
+        targetAction: StatusActionTypeEnum.Edit,
+        targetIcon: ICON_CONST.EDIT,
+        isSimpleAction: false,
+        allowActionSingle: true,
+        message: '',
+        currentStatus: [
+          StatusTypeEnum.New.code,
+          StatusTypeEnum.Active.code,
+          StatusTypeEnum.Inactive.code,
+          StatusTypeEnum.IdentityServerLocked.code,
+          StatusTypeEnum.PendingApproval1st.code,
+          StatusTypeEnum.PendingApproval2nd.code,
+          StatusTypeEnum.PendingApproval3rd.code,
+          StatusTypeEnum.Archived.code
+        ],
+        hasPermission: isAllowedToEdit
+      },
+      {
+        targetAction: StatusActionTypeEnum.RequestSpecialApproval,
+        targetIcon: ICON_CONST.REQUEST,
+        isSimpleAction: true,
+        allowActionSingle: true,
+        message: 'User_Account_Page.User_List.Request_Special_Approval_Warning',
+        currentStatus: [StatusTypeEnum.PendingApproval2nd.code],
+        hasPermission: isAllowedToRequestSpecialApprovalPending2nd
       }
     ];
 

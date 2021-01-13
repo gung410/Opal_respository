@@ -3,6 +3,7 @@ import { Department } from 'app/department-hierarchical/models/department.model'
 import { GrantedType } from 'app/permissions/enum/granted-type.enum';
 import { AccessRightsModel } from 'app/permissions/models/access-rights.model';
 import { IPermissionDictionary } from '../components/component.abstract';
+import { UserRoleEnum } from '../constants/user-roles.enum';
 import { Header } from './header.model';
 import { Identity } from './identity.model';
 
@@ -29,6 +30,20 @@ export class User {
     const permission: AccessRightsModel = this.permissionDic[permissionKey];
 
     return permission ? permission.grantedType === GrantedType.Allow : false;
+  }
+
+  hasUserAccountAdministrator(): boolean {
+    return this.systemRoles.some(
+      (systemRole: any) =>
+        systemRole.identity.extId === UserRoleEnum.UserAccountAdministrator
+    );
+  }
+
+  hasOverallSystemAdministrator(): boolean {
+    return this.systemRoles.some(
+      (systemRole: any) =>
+        systemRole.identity.extId === UserRoleEnum.OverallSystemAdministrator
+    );
   }
 }
 

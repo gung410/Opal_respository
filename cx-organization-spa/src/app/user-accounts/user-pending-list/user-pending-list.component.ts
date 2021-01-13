@@ -43,6 +43,7 @@ import { CellDropdownPendingActionsComponent } from './cell-components/cell-drop
 import { CellUserPendingInfoComponent } from './cell-components/cell-user-pending-info/cell-user-pending-info.component';
 import { PendingActionIndex } from './constant/pending-actions-index-const.enum';
 import { USER_PENDING_LIST_HEADER_CONST } from './models/user-pending-list.const';
+import { CellExpandableListComponent } from '../user-list/cell-components/cell-expandable-list/cell-expandable-list.component';
 
 @Component({
   selector: 'user-pending-list',
@@ -155,12 +156,14 @@ export class UserPendingListComponent
     if (this.viewOnly) {
       frameworkComponents = {
         cellUserInfo: CellUserPendingInfoComponent,
+        cellExpandableList: CellExpandableListComponent,
         cellUserStatus: CellUserStatusComponent
       };
     } else {
       frameworkComponents = {
         cellUserInfo: CellUserPendingInfoComponent,
         cellUserStatus: CellUserStatusComponent,
+        cellExpandableList: CellExpandableListComponent,
         cellDropdownMenu: CellDropdownPendingActionsComponent
       };
     }
@@ -215,10 +218,19 @@ export class UserPendingListComponent
     // [canApprove, canEndorse, canReject, canEdit]
     const canActions = this.validateActionsInPendingTabs();
 
+    const isShowEndorseButton =
+      (!(this.isCurrentUserAccountAdmin || this.isCurrentUserSuperAdmin) &&
+        this.tabLabel === 'pending1stLevel' &&
+        this.currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st)) ||
+      ((this.isCurrentUserAccountAdmin || this.isCurrentUserSuperAdmin) &&
+        this.tabLabel === 'pending1stLevel' &&
+        this.currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st) &&
+        !this.currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending1st));
+
     if (this.currentSelectedRows > 0) {
       actions.listEssentialActions = initPendingUserActions(
         this.translateAdapterService,
-        this.isCurrentUserDivAdmin,
+        isShowEndorseButton,
         canActions[PendingActionIndex.Approve],
         canActions[PendingActionIndex.Endorse],
         canActions[PendingActionIndex.Reject]
@@ -269,6 +281,22 @@ export class UserPendingListComponent
         sortable: true,
         suppressSizeToFit: false,
         suppressMenu: true
+      }),
+      new ColumDefModel({
+        headerName: this.getImmediatelyLanguage(
+          USER_PENDING_LIST_HEADER_CONST.SystemRoles.text
+        ),
+        field: USER_PENDING_LIST_HEADER_CONST.SystemRoles.fieldName,
+        colId: USER_PENDING_LIST_HEADER_CONST.SystemRoles.colId,
+        minWidth: 180,
+        sortable: false,
+        suppressMenu: true,
+        cellStyle: {},
+
+        cellRendererParams: {},
+
+        cellRenderer: 'cellExpandableList',
+        hide: false
       }),
       new ColumDefModel({
         headerName: this.getImmediatelyLanguage(

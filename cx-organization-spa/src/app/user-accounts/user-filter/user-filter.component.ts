@@ -194,6 +194,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
     }
 
     let optionData = appliedDataWithOption.data;
+    let optionFiltered;
     switch (filterData.filterOptions.data) {
       case GroupFilterConst.STATUS:
         optionData = this.mapData(optionData, filterData.status, (item) => {
@@ -245,7 +246,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
         optionData.text = filterData.typeOU.displayText;
         break;
       case GroupFilterConst.CREATION_DATE:
-        let optionFiltered = this.addFilterDate(
+        optionFiltered = this.addFilterDate(
           filterData.creationDateFrom,
           filterData.creationDateTo
         );

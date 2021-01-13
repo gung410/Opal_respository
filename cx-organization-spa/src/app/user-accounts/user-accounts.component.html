@@ -76,6 +76,7 @@
                 *ngIf="userActionsForCreateAccButton.length"
                 class="cx-btn create-account-request-btn"
                 id="createAccBtn"
+                [hidden]="isHideCreateUserAccountRequestButton"
                 ngbDropdownToggle
               >
                 {{ 'Common.Label.CreateUserAccount' | translate }}

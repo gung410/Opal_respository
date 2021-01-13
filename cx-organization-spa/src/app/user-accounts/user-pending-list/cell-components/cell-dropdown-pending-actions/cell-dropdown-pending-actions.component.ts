@@ -4,9 +4,8 @@ import { User } from 'app-models/auth.model';
 import { findIndexCommon } from 'app/shared/constants/common.const';
 import { SAM_PERMISSIONS } from 'app/shared/constants/sam-permission.constant';
 import { StatusActionTypeEnum } from 'app/shared/constants/status-action-type.enum';
-import { UserAccountsHelper } from 'app/user-accounts/user-accounts.helper';
+import { UserActionsService } from 'app/user-accounts/user-actions.service';
 import { ActionsModel } from 'app/user-accounts/user-actions/models/actions.model';
-import { PendingActionIndex } from 'app/user-accounts/user-pending-list/constant/pending-actions-index-const.enum';
 
 @Component({
   selector: 'cell-dropdown-action',
@@ -20,15 +19,17 @@ export class CellDropdownPendingActionsComponent
   actionList: ActionsModel[];
   item: any;
   currentUser: User;
+  tabLabel: string;
+  isAuthorizedAdmins: boolean = false;
   private translateContext: string = 'User_Account_Page.User_Context_Menu.';
 
-  agInit(params: any): void {
-    this.params = params;
-    this.item = this.params.data;
-    this.currentUser = this.params.context.componentParent.currentUser;
+  constructor(private userActionsService: UserActionsService) {}
 
-    const allowedUserActionMapping = UserAccountsHelper.getAccessibleUserActionMapping(
-      this.params.context.componentParent.currentUserRoles
+  agInit(params: any): void {
+    this.buildData(params);
+    const allowedUserActionMapping = this.userActionsService.getActions(
+      this.tabLabel,
+      this.currentUser
     );
 
     this.actionList = allowedUserActionMapping
@@ -38,33 +39,6 @@ export class CellDropdownPendingActionsComponent
             (stt: string) => stt === this.item.entityStatus.statusId
           ) > findIndexCommon.notFound && item.allowActionSingle === true
         );
-      })
-      .filter((statusMapped: any) => {
-        if (!this.params.context.componentParent.validateActionsInPendingTabs) {
-          return true;
-        }
-        // [canApprove, canEndorse, canReject, canEdit]
-        const canActions = this.params.context.componentParent.validateActionsInPendingTabs();
-        const isUserHasRightsToAccessRequestSpecialApproval = this.currentUser
-          ? this.currentUser.hasPermission(
-              SAM_PERMISSIONS.RequestSpecialApprovalPending2nd
-            )
-          : false;
-        switch (statusMapped.targetAction) {
-          case StatusActionTypeEnum.Accept:
-            return (
-              canActions[PendingActionIndex.Approve] ||
-              canActions[PendingActionIndex.Endorse]
-            );
-          case StatusActionTypeEnum.Reject:
-            return canActions[PendingActionIndex.Reject];
-          case StatusActionTypeEnum.Edit:
-            return canActions[PendingActionIndex.Edit];
-          case StatusActionTypeEnum.RequestSpecialApproval:
-            return isUserHasRightsToAccessRequestSpecialApproval;
-          default:
-            return false;
-        }
       })
       .map((statusMapped: any) => {
         const action = new ActionsModel({
@@ -76,17 +50,39 @@ export class CellDropdownPendingActionsComponent
           statusMapped.targetAction === StatusActionTypeEnum.Accept &&
           this.params.context.componentParent
         ) {
-          action.text = `${this.translateContext}${
-            this.params.context.componentParent.isCurrentUserDivAdmin
-              ? 'Endorse'
-              : 'Approve'
-          }`;
+          action.text = `${this.translateContext}${'Approve'}`;
+          if (
+            !this.isAuthorizedAdmins &&
+            this.tabLabel === 'pending1stLevel' &&
+            this.currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st)
+          ) {
+            action.text = `${this.translateContext}${'Endorse'}`;
+          }
+
+          if (
+            this.isAuthorizedAdmins &&
+            this.tabLabel === 'pending1stLevel' &&
+            this.currentUser.hasPermission(SAM_PERMISSIONS.EndorsePending1st) &&
+            !this.currentUser.hasPermission(SAM_PERMISSIONS.ApprovePending1st)
+          ) {
+            action.text = `${this.translateContext}${'Endorse'}`;
+          }
         } else {
           action.text = `${this.translateContext}${statusMapped.targetAction}`;
         }
 
         return action;
       });
+  }
+
+  buildData(params: any): void {
+    this.params = params;
+    this.item = this.params.data;
+    this.currentUser = this.params.context.componentParent.currentUser;
+    this.tabLabel = this.params.context.componentParent.tabLabel;
+    this.isAuthorizedAdmins =
+      this.currentUser.hasUserAccountAdministrator() ||
+      this.currentUser.hasOverallSystemAdministrator();
   }
 
   refresh(params: any): boolean {
@@ -109,7 +105,5 @@ export class CellDropdownPendingActionsComponent
     ) {
       return;
     }
-
-    // If this record owned by current user. Then remove user action Suspend and Archive in user action list
   }
 }

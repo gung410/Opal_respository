@@ -17,7 +17,7 @@
     align-items: center;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
-    &>div {
+    & > div {
       max-width: 100%;
       min-width: 0;
       flex-shrink: 1;
@@ -164,7 +164,6 @@
       color: #303450;
     }
 
-
     .broadcast-message__body__container__head__title {
       padding: 24px;
       padding-bottom: 0px;
@@ -215,7 +214,8 @@
           border: 1px solid rgb(216, 220, 230);
           position: relative;
           border: 5px;
-          filter: invert(67%) sepia(47%) saturate(225%) hue-rotate(180deg) brightness(84%) contrast(82%);
+          filter: invert(67%) sepia(47%) saturate(225%) hue-rotate(180deg)
+            brightness(84%) contrast(82%);
 
           .mat-icon-button {
             height: 100%;
@@ -228,7 +228,8 @@
         }
 
         .custom-dropdown {
-          filter: invert(17%) sepia(4%) saturate(6081%) hue-rotate(196deg) brightness(87%) contrast(84%);
+          filter: invert(17%) sepia(4%) saturate(6081%) hue-rotate(196deg)
+            brightness(87%) contrast(84%);
         }
       }
 
@@ -254,7 +255,8 @@
           }
 
           .custom-clock {
-            filter: invert(80%) sepia(4%) saturate(3607%) hue-rotate(187deg) brightness(77%) contrast(85%);
+            filter: invert(80%) sepia(4%) saturate(3607%) hue-rotate(187deg)
+              brightness(77%) contrast(85%);
           }
 
           .custom-select {
@@ -277,7 +279,8 @@
         justify-content: space-between;
       }
 
-      &__content {}
+      &__content {
+      }
     }
   }
 
@@ -315,6 +318,15 @@
   display: flex !important;
   padding: 0 0 0.5em 0 !important;
   order: 1;
+}
+
+.mat-dialog-container {
+  .dialog-tree-body {
+    overflow-y: hidden;
+    .cx-extensive-tree {
+      height: 43vh;
+    }
+  }
 }
 
 .configuration-item {
@@ -470,7 +482,7 @@ ngx-material-timepicker-container {
     }
 
     .clock-face__number {
-      >span.active {
+      > span.active {
         background-color: $timepickerThemeColor !important;
       }
     }

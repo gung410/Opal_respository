@@ -1,7 +1,13 @@
 <div class="permissions-table-container">
   <div class="fluid-container">
-    <div class="menu-action">
-      <button (click)="onSystemRoleDialogClicked()" class="cx-btn">
+    <div
+      *ngIf="isButtonCreateEnabled"
+      class="menu-action"
+    >
+      <button
+        (click)="onSystemRoleDialogClicked()"
+        class="cx-btn"
+      >
         {{ 'Common.Button.CreateRole' | translate }}
       </button>
     </div>

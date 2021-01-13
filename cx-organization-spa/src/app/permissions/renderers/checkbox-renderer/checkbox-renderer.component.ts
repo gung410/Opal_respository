@@ -17,6 +17,7 @@ import { Utils } from '../../../shared/utilities/utils';
 export class CheckboxRendererComponent
   implements ICellRendererAngularComp, OnDestroy {
   subscription: Subscription = new Subscription();
+  isCheckboxHidden: boolean = false;
   params: any;
   get checkState(): boolean {
     return this._checkState;
@@ -28,7 +29,9 @@ export class CheckboxRendererComponent
 
     this._checkState = isCheckState;
   }
+
   isDisabled: boolean = true;
+
   private _systemRoleId: string; // also Column Id
   private _accessRightId: number;
   private _currentGrantedAccessRights: GrantedAccessRightsModel = new GrantedAccessRightsModel();
@@ -80,6 +83,15 @@ export class CheckboxRendererComponent
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private setupVariable(params: any): void {
+    this.params = params;
+    this.checkState = Utils.isDefined(params.value) ? params.value : false;
+    this._originCheckState = this.checkState;
+    this._systemRoleId = this.params.column.colId;
+    this._accessRightId = this.params.data.accessRightId;
+    this.isCheckboxHidden = this.params.data.isHideAccessRight;
   }
 
   private checkLastRowRender(): void {
@@ -144,14 +156,6 @@ export class CheckboxRendererComponent
     this._currentGrantedAccessRights.grantedType = isGranted
       ? GrantedType.Allow
       : GrantedType.Deny;
-  }
-
-  private setupVariable(params: any): void {
-    this.params = params;
-    this.checkState = Utils.isDefined(params.value) ? params.value : false;
-    this._originCheckState = this.checkState;
-    this._systemRoleId = this.params.column.colId;
-    this._accessRightId = this.params.data.accessRightId;
   }
 
   private sendCheckboxChange(isGranted: boolean): void {

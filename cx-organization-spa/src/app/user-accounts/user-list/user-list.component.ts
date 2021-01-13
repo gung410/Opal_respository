@@ -545,7 +545,6 @@ export class UserListComponent
         case StatusActionTypeEnum.Suspend:
         case StatusActionTypeEnum.ResetPassword:
         case StatusActionTypeEnum.Edit:
-        case StatusActionTypeEnum.Active:
         case StatusActionTypeEnum.Unlock:
         case StatusActionTypeEnum.SetApprovingOfficers:
         case StatusActionTypeEnum.SetExpirationDate:
@@ -556,6 +555,7 @@ export class UserListComponent
           break;
         case StatusActionTypeEnum.Archive:
         case StatusActionTypeEnum.Unarchive:
+        case StatusActionTypeEnum.Active:
         case StatusActionTypeEnum.Delete:
         case StatusActionTypeEnum.ChangeUserPlaceOfWork:
           isAllowed = this.currentUser.hasPermission(

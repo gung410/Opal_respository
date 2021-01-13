@@ -6,6 +6,7 @@ export enum ModuleType {
   CourseContentSite = 'CourseContentSite',
   CommunitySite = 'CommunitySite',
   Webinar = 'Webinar',
-  ReportingAndAnalytics = 'ReportingAndAnalytics',
-  LearningManagement = 'LearningManagement'
+  ReportingAndAnalytics = 'Analytics&Report',
+  LearningManagement = 'LearningManagement',
+  BatchJobsMonitoring = 'BatchJob'
 }

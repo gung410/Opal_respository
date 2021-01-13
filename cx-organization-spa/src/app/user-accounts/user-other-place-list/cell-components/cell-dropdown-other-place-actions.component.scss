@@ -30,7 +30,7 @@ cell-dropdown-action {
 
     &__disable {
       pointer-events: none;
-      opacity: 0.4;
+      opacity: 0;
     }
 
     @media only screen and (max-width: $screen-xs-max) {

@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalizedDataField } from 'app-models/localized-data-field.model';
-import { LocalizedDataItem } from 'app-models/localized-data-item.model';
 import { HttpHelpers } from 'app-utilities/http-helpers';
 import { AppConstant } from 'app/shared/app.constant';
-import { PagingResponseModel } from 'app/user-accounts/models/user-management.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AccessRightsMatrixModelRequest } from '../dtos/request-dtos/access-rights-matrix-request';
 import { AccessRightsRequest } from '../dtos/request-dtos/access-rights-request';
 import { AccessRightsMatrixModel } from '../models/access-rights-matrix.model';
@@ -53,5 +51,20 @@ export class PermissionsApiService {
       `${this.permissionsApiUrl}/AccessRights/systemrole/${updateAccessRightsRequest.systemRoleId}`,
       updateAccessRightsRequest
     );
+  }
+
+  // Special Case
+  // Because data of AccessRights for CSL don't store at the same place with others
+  getAccessRightsMatrixOfCSL(): Observable<any> {
+    return this.httpHelper
+      .get(`${this.permissionsApiUrl}/sites?includeParameters=true`)
+      .pipe(
+        map(
+          (siteParameter: any) =>
+            JSON.parse(
+              siteParameter.parameters[0].value
+            ) as AccessRightsMatrixModel
+        )
+      );
   }
 }

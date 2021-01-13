@@ -84,7 +84,6 @@ user-pending-list {
     }
 
     .ag-header-cell[aria-colindex*='1'] {
-      width: calc(100% + 2px) !important;
       left: -2px !important;
     }
 
@@ -280,17 +279,24 @@ user-pending-list {
 
 @media only screen and (max-width: $screen-xs-max) {
   .grid-toolbar-fixed {
-    top: 200px !important;
-    z-index: 5;
+    top: 200px;
+    z-index: 3;
   }
 
-  .ag-header.ag-grid-header-fixed {
-    top: 254px !important;
+  .pending-list-toolbar-fixed {
+    top: 166px !important;
+  }
+
+  .ag-header.ag-grid-header-pending-tab-fixed {
+    width: calc(100% - 84px) !important;
+    position: fixed;
+    top: 219px !important;
+    z-index: 1;
   }
 
   .cx-page-container {
     .universal-toolbar {
-      padding: 0 16px !important;
+      padding: 8px 16px !important;
     }
 
     .toolbar-actions {
