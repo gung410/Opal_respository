@@ -45,7 +45,6 @@ export class MassCreateUserImportPanelComponent implements OnInit {
   uploadedFileName: string;
   isUploadedFileValid: boolean = false;
   currentUser: User;
-  isShownInstructionTooltip: boolean = false;
 
   constructor(
     private reportsDataService: ReportsDataService,
@@ -192,12 +191,6 @@ export class MassCreateUserImportPanelComponent implements OnInit {
 
   onBackButtonClicked(): void {
     this.navigateBackToUserAccountList();
-  }
-
-  toggleInstructionTooltip(value: boolean): void {
-    this.isShownInstructionTooltip = value
-      ? value
-      : !this.isShownInstructionTooltip;
   }
 
   private processUploadFile(): Promise<IFileInfo> {

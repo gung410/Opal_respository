@@ -527,7 +527,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             .Create();
 
             userGenericDto.EmailAddress = userGenericDto.EntityStatus.StatusId == EntityStatusEnum.Rejected
-                ? DomainHelper.GenerateDummyEmail(userExtId: userGenericDto.Identity.ExtId)
+                ? DomainHelper.GenerateDummyEmail()
                 : userGenericDto.EmailAddress;
 
             SetEntityActiveDate(userGenericDto);

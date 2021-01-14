@@ -18,14 +18,12 @@ import { TranslateAdapterService } from 'app-services/translate-adapter.service'
 import { BasePresentationComponent } from 'app/shared/components/component.abstract';
 import { StatusActionTypeEnum } from 'app/shared/constants/status-action-type.enum';
 
-import { User } from 'app-models/auth.model';
 import { DateTimeUtil } from 'app-utilities/date-time-utils';
 import { SystemRole } from 'app/core/models/system-role';
 import { AppConstant } from 'app/shared/app.constant';
+import { CellDropdownActionComponent } from 'app/shared/components/cell-dropdown-action/cell-dropdown-action.component';
 import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
 import * as _ from 'lodash';
-import { SAM_PERMISSIONS } from '../../shared/constants/sam-permission.constant';
-import { Utils } from '../../shared/utilities/utils';
 import { USER_ACTION_MAPPING_CONST } from '../models/user-action-mapping';
 import { UserManagement } from '../models/user-management.model';
 import { ActionsModel } from '../user-actions/models/actions.model';
@@ -33,7 +31,6 @@ import { UserActionsModel } from '../user-actions/models/user-actions.model';
 import { CellUserInfoComponent } from '../user-list/cell-components/cell-user-info/cell-user-info.component';
 import { CellUserStatusComponent } from '../user-list/cell-components/cell-user-status/cell-user-status.component';
 import { UserStatusDisplayActionModel } from '../user-list/models/user-selected-status.model';
-import { CellDropdownOtherPlaceOfWorkActionsComponent } from './cell-components/cell-dropdown-other-place-actions.component';
 
 @Component({
   selector: 'user-other-place-list',
@@ -56,9 +53,7 @@ export class UserOtherPlaceListComponent
   get isClearSelected(): boolean {
     return this._isClearSelectedValue;
   }
-  @Input() currentUser: User;
   @Input() currentUserRoles: SystemRole[];
-  @Input() tabLabel: string;
   @Input() userItemsData: UserManagement[];
   @Output() editUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() sortChange: EventEmitter<SortModel> = new EventEmitter<SortModel>();
@@ -105,15 +100,8 @@ export class UserOtherPlaceListComponent
       this.agGridConfig.rowData = this.userItemsData;
     }
 
-    const hasPermissionToCreateOrgUnit = this.currentUser.hasPermission(
-      SAM_PERMISSIONS.CreateOrganisationUnitInOtherPlaceOfWork
-    );
-
     const actions = new UserActionsModel();
-    actions.listEssentialActions = hasPermissionToCreateOrgUnit
-      ? [this.getCreateOrgUnitAction()]
-      : [];
-
+    actions.listEssentialActions = [this.getCreateOrgUnitAction()];
     this.userActions.emit(actions);
   }
 
@@ -143,7 +131,7 @@ export class UserOtherPlaceListComponent
     const frameworkComponents = {
       cellUserInfo: CellUserInfoComponent,
       cellUserStatus: CellUserStatusComponent,
-      cellDropdownMenu: CellDropdownOtherPlaceOfWorkActionsComponent
+      cellDropdownMenu: CellDropdownActionComponent
     };
 
     this.agGridConfig = new AgGridConfigModel({
@@ -179,7 +167,7 @@ export class UserOtherPlaceListComponent
       event.api.deselectAll();
     }
     const createNewOrgUnitAction = this.getCreateOrgUnitAction();
-    let actions = new UserActionsModel({
+    const actions = new UserActionsModel({
       listEssentialActions: [createNewOrgUnitAction]
     });
     const selectedRows = this.agGridConfig.selectedRows;
@@ -194,15 +182,9 @@ export class UserOtherPlaceListComponent
         : [changePlaceOfWorkAction];
     }
 
-    actions = this.filterSatisfiedActionsByPermissions(actions);
-
     this.userActions.emit(actions);
     this.selectedUser.emit(this.agGridConfig.selectedRows);
     this.changeDetectorRef.detectChanges();
-  }
-
-  isAllowToEditUser(): boolean {
-    return this.currentUser.hasPermission(SAM_PERMISSIONS.EditOtherPlaceOfWork);
   }
 
   onGridReady(params: any): void {
@@ -234,69 +216,6 @@ export class UserOtherPlaceListComponent
 
   onEditUserClicked($event: any): void {
     this.editUser.emit($event.data);
-  }
-
-  private filterSatisfiedActionsByPermissions(
-    userActions: UserActionsModel
-  ): UserActionsModel {
-    const filterUserActions = Utils.cloneDeep(userActions);
-
-    if (
-      filterUserActions.listEssentialActions &&
-      filterUserActions.listEssentialActions.length
-    ) {
-      filterUserActions.listEssentialActions = this.filterSatisfiedListActionsByPermissions(
-        filterUserActions.listEssentialActions
-      );
-    }
-
-    if (
-      filterUserActions.listNonEssentialActions &&
-      filterUserActions.listNonEssentialActions.length
-    ) {
-      filterUserActions.listNonEssentialActions = this.filterSatisfiedListActionsByPermissions(
-        filterUserActions.listNonEssentialActions
-      );
-    }
-
-    return filterUserActions;
-  }
-
-  private filterSatisfiedListActionsByPermissions(
-    actions: ActionsModel[]
-  ): ActionsModel[] {
-    const filteredActions: ActionsModel[] = [];
-
-    let isAllowed: boolean;
-
-    actions.forEach((action) => {
-      switch (action.actionType) {
-        case StatusActionTypeEnum.CreateNewOrgUnit:
-          isAllowed = this.currentUser.hasPermission(
-            SAM_PERMISSIONS.CreateOrganisationUnitInOtherPlaceOfWork
-          );
-          break;
-        case StatusActionTypeEnum.Reject:
-          isAllowed = this.currentUser.hasPermission(
-            SAM_PERMISSIONS.RejectInOtherPlaceOfWork
-          );
-          break;
-        case StatusActionTypeEnum.ChangeUserPlaceOfWork:
-          isAllowed = this.currentUser.hasPermission(
-            SAM_PERMISSIONS.ChangePlaceOfWorkInOtherPlaceOfWork
-          );
-          break;
-        default:
-          isAllowed = true;
-          break;
-      }
-
-      if (isAllowed) {
-        filteredActions.push(action);
-      }
-    });
-
-    return filteredActions;
   }
 
   private getChangePlaceOfWorkAction(): ActionsModel {

@@ -23,6 +23,7 @@ import {
 import { FormBuilderService } from 'app-services/form-builder.service';
 import { SystemRolesDataService } from 'app/core/store-data-services/system-roles-data.service';
 import { ConfirmDialogComponent } from 'app/shared/components/confirm-dialog/confirm-dialog.component';
+import { FocusDirective } from 'app/shared/directives/focus.directive';
 import { UserAccountsDataService } from 'app/user-accounts/user-accounts-data.service';
 import { SystemRoleDialogComponent } from './dialogs/system-role-dialog/system-role-dialog.component';
 import { SystemRolesShowHideComponent } from './dialogs/system-roles-show-hide-column/system-roles-show-hide-column.component';
@@ -41,6 +42,7 @@ import { PermissionsTableService } from './services/permissions-table.service';
     PermissionsComponent,
     PermissionsTableComponent,
     CheckboxRendererComponent,
+    FocusDirective,
     DropdownListModulesHeaderComponent,
     SystemRoleDialogComponent,
     SystemRolesShowHideComponent,

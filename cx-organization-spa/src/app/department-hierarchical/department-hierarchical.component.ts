@@ -12,7 +12,6 @@ import {
   CxExtensiveTreeComponent,
   CxFormModal,
   CxGlobalLoaderService,
-  CxSlidebarComponent,
   CxSurveyjsFormModalOptions,
   CxSurveyjsVariable,
   CxTreeButtonCondition,
@@ -35,10 +34,7 @@ import { SurveyVariableEnum } from 'app/shared/constants/survey-variable.enum';
 import * as _ from 'lodash';
 
 import { LocalizedDataItem } from 'app-models/localized-data-item.model';
-import { RunOnNextRender } from 'app-utilities/run-on-next-render';
-import { Utils } from 'app-utilities/utils';
 import { UserAccountsHelper } from 'app/user-accounts/user-accounts.helper';
-import { SAM_PERMISSIONS } from '../shared/constants/sam-permission.constant';
 import { DepartmentFormJSON } from './department-form';
 import { DepartmentHierarchicalService } from './department-hierarchical.service';
 import { FilterDepartmentComponent } from './filter-department/filter-department.component';
@@ -67,9 +63,6 @@ export class DepartmentHierarchicalComponent
   currentDepartmentId: number;
   selectedDepartmentId: number;
   departmentFilterOptions: DepartmentFilterGroupModel[];
-  departmentFilterOptionsId: number[] = [];
-  countDepartmentFilterChoice: number = 0;
-  clearDepartmentFilterOptions: DepartmentFilterGroupModel[];
   departmentQueryObject: DepartmentQueryModel = new DepartmentQueryModel({});
   departmentTagData: DepartmentFilterGroupModel[];
   buttonCondition: CxTreeButtonCondition<any>;
@@ -94,11 +87,7 @@ export class DepartmentHierarchicalComponent
   private departmentForm: any = DepartmentFormJSON;
   private currentSelectedDepartment: Department;
   private departmentSurveyJSHelper: DepartmentSurveyJSFormHelper = new DepartmentSurveyJSFormHelper();
-  @ViewChild(CxSlidebarComponent)
-  private slidebar: CxSlidebarComponent;
 
-  public slidebarPosition: string = 'left';
-  public height: string = '70vh';
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private departmentHierarchicalService: DepartmentHierarchicalService,
@@ -155,12 +144,6 @@ export class DepartmentHierarchicalComponent
     );
   }
 
-  get isUserHasRightsToAccessCRUDOrganisationManagement(): boolean {
-    return this.currentUser.hasPermission(
-      SAM_PERMISSIONS.CRUDinOrganisationManagement
-    );
-  }
-
   displayText(department: any): string {
     if (
       !department ||
@@ -175,6 +158,7 @@ export class DepartmentHierarchicalComponent
 
     return typeOfOrg ? typeOfOrg.displayText : '';
   }
+
   onSearchDepartment(searchKey: string): void {
     this.cxGlobalLoaderService.showLoader();
     this.departmentQueryObject.searchText = searchKey;
@@ -213,14 +197,11 @@ export class DepartmentHierarchicalComponent
         }
       );
   }
+
   onOpenAddDepartmentForm(newDepartmentData: {
     parentObject: Department;
     level: number;
   }): void {
-    if (!this.isUserHasRightsToAccessCRUDOrganisationManagement) {
-      return;
-    }
-
     this.subscription.add(
       this.departmentHierarchicalService
         .getDepartmentInfo(newDepartmentData.parentObject)
@@ -231,6 +212,7 @@ export class DepartmentHierarchicalComponent
         })
     );
   }
+
   initializeNewDepartment(parentDepartmentInfo: Department): void {
     if (!this.formModal.hasOpenModals()) {
       const surveyJsFormOptionObject: any = this.departmentSurveyJSHelper.openAddDepartmentSurveyJSForm(
@@ -250,7 +232,7 @@ export class DepartmentHierarchicalComponent
         surveyJsFormOptionObject.dataJson,
         [],
         surveyJsFormOptionObject.options,
-        { size: 'lg', backdrop: 'static', centered: true }
+        { size: 'lg', backdrop: 'static' }
       );
       const submitObserver = this.formModal.submit.subscribe(
         (submitData: any) => {
@@ -331,10 +313,6 @@ export class DepartmentHierarchicalComponent
   }
 
   onUpdateDepartment(editedDepartmentData: Department): void {
-    if (!this.isUserHasRightsToAccessCRUDOrganisationManagement) {
-      return;
-    }
-
     if (editedDepartmentData) {
       this.subscription.add(
         this.departmentHierarchicalService
@@ -350,14 +328,9 @@ export class DepartmentHierarchicalComponent
   }
 
   onDeleteItem(departmentData: any): void {
-    if (!this.isUserHasRightsToAccessCRUDOrganisationManagement) {
-      return;
-    }
-
     const modalRef = this.ngbModal.open(CxConfirmationDialogComponent, {
       size: 'lg',
-      centered: true,
-      windowClass: 'delete-modal'
+      centered: true
     });
     const modalComponent = modalRef.componentInstance as CxConfirmationDialogComponent;
     modalComponent.cancelButtonText = this.translateService.instant(
@@ -453,7 +426,7 @@ export class DepartmentHierarchicalComponent
         fixedButtonsFooter: true,
         modalHeaderText: 'Edit Organisation Unit',
         cancelName: 'Cancel',
-        submitName: 'Save',
+        submitName: 'Ok',
         variables: surveyjsVariables
       } as CxSurveyjsFormModalOptions;
       const dataJson: any = {
@@ -496,7 +469,7 @@ export class DepartmentHierarchicalComponent
         dataJson,
         [],
         options,
-        { size: 'lg', backdrop: 'static', centered: true }
+        { size: 'lg', backdrop: 'static' }
       );
       const submitObserver = this.formModal.submit.subscribe(
         (submitData: any) => {
@@ -645,18 +618,14 @@ export class DepartmentHierarchicalComponent
   }
 
   onClickFilter(): void {
-    const departmentFilterGroup = Utils.cloneDeep(
-      this.departmentFilterOptions[0]
-    );
     const modalRef = this.ngbModal.open(FilterDepartmentComponent, {
       size: 'lg',
       backdrop: 'static',
-      centered: false,
-      windowClass: 'filter-slidebar'
+      centered: true
     });
-
     const instanceComponent = modalRef.componentInstance as FilterDepartmentComponent;
     instanceComponent.departmentFilterOptions = this.departmentFilterOptions;
+
     this.subscription.add(
       instanceComponent.done.subscribe(
         (departmentFilterOptions: DepartmentFilterGroupModel[]) => {
@@ -667,32 +636,23 @@ export class DepartmentHierarchicalComponent
     );
     this.subscription.add(
       instanceComponent.cancel.subscribe(() => {
-        this.departmentFilterOptions[0] = departmentFilterGroup;
         modalRef.close();
       })
     );
   }
+
   changeOrganisationWithFilterData(
     departmentFilterOptions: DepartmentFilterGroupModel[]
   ): void {
     const departmentTypeFilterOption = departmentFilterOptions.find(
       (filterOption) => filterOption.name === this.departmentTypeTitle
     );
-    RunOnNextRender(() => {
-      const selectedOption = this.departmentFilterOptions[0].options.filter(
-        (option) => option.isSelected
-      );
-
-      this.countDepartmentFilterChoice = selectedOption.length
-        ? selectedOption.length
-        : 0;
-      this.changeDetectorRef.detectChanges();
-    });
 
     this.cxGlobalLoaderService.showLoader();
     this.departmentQueryObject.departmentTypeIds = departmentTypeFilterOption.options
-      .filter((option) => option.isSelected)
+      .filter((option) => option.isSelected === true)
       .map((option) => option.objectId);
+
     this.departmentQueryObject.maxChildrenLevel = undefined;
 
     this.departmentHierarchicalService
@@ -729,6 +689,11 @@ export class DepartmentHierarchicalComponent
 
           const isSearchAction = false;
           this.openDialog(filterResult, isSearchAction);
+          this.departmentFilterOptions.forEach((filterOption) => {
+            filterOption.options.forEach((option) => {
+              option.isSelected = false;
+            });
+          });
         },
         () => {
           this.toastr.error('There is something wrong, Please try again.');
@@ -884,13 +849,11 @@ export class DepartmentHierarchicalComponent
     this.departmentTypeTitle = this.translateAdapterService.getValueImmediately(
       `Department_Page.Filter_Section.Filter_Options.Education_Level`
     );
-
     this.departmentFilterOptions = [
       new DepartmentFilterGroupModel({
         name: this.departmentTypeTitle,
         options: this.departmentTypes.map((departmentType) => {
           return new DepartmentFilterOption({
-            isSelected: false,
             value: this.getLocalizedText(departmentType.localizedData),
             objectId: departmentType.identity.id
           });
@@ -927,19 +890,15 @@ export class DepartmentHierarchicalComponent
         if (
           department &&
           department.entityStatus &&
-          this.hasPermissionToActionsOnDepartmentHierachy &&
           !department.entityStatus.externallyMastered &&
           department.parentDepartmentId === departmentRootId
         ) {
           return !department.entityStatus.externallyMastered;
         }
-
-        return false;
       },
       enableEdit: (department: Department) => {
         return (
           department &&
-          this.hasPermissionToActionsOnDepartmentHierachy &&
           department.identity &&
           department.identity.archetype &&
           department.identity.archetype !== 'Unknown'
@@ -950,22 +909,13 @@ export class DepartmentHierarchicalComponent
         if (
           department.entityStatus &&
           !department.entityStatus.externallyMastered &&
-          this.hasPermissionToActionsOnDepartmentHierachy &&
           department.userCount === 0 &&
           department.childrenCount === 0
         ) {
           return !department.entityStatus.externallyMastered;
         }
-
-        return false;
       }
     });
-  }
-
-  private get hasPermissionToActionsOnDepartmentHierachy(): boolean {
-    return this.currentUser.hasPermission(
-      SAM_PERMISSIONS.CRUDinOrganisationManagement
-    );
   }
 
   private getDepartments(fromDepartmentId: number): void {
@@ -1018,22 +968,13 @@ export class DepartmentHierarchicalComponent
     languageCode: string,
     field: string = 'Name'
   ): string[] {
-    return levels
-      .map((data) => {
-        return SurveyUtils.getPropLocalizedData(
-          data.localizedData,
-          field,
-          languageCode
-        );
-      })
-      .map((stringData: string) => {
-        return stringData
-          .trim()
-          .toLowerCase()
-          .replace(/\w\S*/g, (word) =>
-            word.replace(/^\w/, (character) => character.toUpperCase())
-          );
-      });
+    return levels.map((data) => {
+      return SurveyUtils.getPropLocalizedData(
+        data.localizedData,
+        field,
+        languageCode
+      );
+    });
   }
 
   private checkEmptyFilter(): boolean {

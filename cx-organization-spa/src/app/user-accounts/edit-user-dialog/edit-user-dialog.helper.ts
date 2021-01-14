@@ -1,4 +1,4 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
 import { cloneDeep, isEmpty } from 'lodash';
 import * as Survey from 'survey-angular';
@@ -9,7 +9,6 @@ import { findIndexCommon } from 'app/shared/constants/common.const';
 import { UserRoleEnum } from 'app/shared/constants/user-roles.enum';
 import { UserManagement } from '../models/user-management.model';
 import { EditUserDialogModeEnum } from './edit-user-dialog.model';
-import { UserAccountTabEnum } from '../user-accounts.helper';
 
 const getArrayFromDropdownAndTagbox = (params: any[]) => {
   if (!params || params.length < 2) {
@@ -82,25 +81,19 @@ Survey.ChoicesRestfull['unregisterSameRequests'] = unregisterSameRequests;
 @Injectable()
 export class EditUserDialogHelper {
   // This is requirement for default expiration date from OP-4074
-  @Input() isCurrentUserHasPermissionToEdit: boolean = false;
   readonly defaultExpirationDate: string = '01/12/2099';
-
   user: UserManagement;
   currentUser: UserManagement;
   init(user?: UserManagement, currentUser?: UserManagement): void {
     this.user = user;
     this.currentUser = currentUser;
   }
-  getDialogMode(
-    isUserHasRightsToAccessPendingApprovalEdit: boolean = false
-  ): EditUserDialogModeEnum {
+  getDialogMode(): EditUserDialogModeEnum {
     if (!this.user) {
       return EditUserDialogModeEnum.Create;
     }
     if (this.user) {
-      const isViewMode = this.isViewMode(
-        isUserHasRightsToAccessPendingApprovalEdit
-      );
+      const isViewMode = this.isViewMode();
 
       return isViewMode
         ? EditUserDialogModeEnum.View
@@ -342,9 +335,7 @@ export class EditUserDialogHelper {
     );
   }
 
-  private isViewMode(
-    isUserHasRightsToAccessPendingApprovalEdit: boolean = false
-  ): boolean {
+  private isViewMode(): boolean {
     if (!this.user && !this.user.entityStatus) {
       return false;
     }
@@ -353,6 +344,21 @@ export class EditUserDialogHelper {
       return true;
     }
 
-    return !isUserHasRightsToAccessPendingApprovalEdit;
+    if (
+      this.user.entityStatus.statusId === StatusTypeEnum.PendingApproval3rd.code
+    ) {
+      return !UserManagement.hasSystemAdminRole(this.currentUser.systemRoles);
+    }
+
+    if (
+      this.user.entityStatus.statusId === StatusTypeEnum.PendingApproval2nd.code
+    ) {
+      return !(
+        UserManagement.hasSystemAdminRole(this.currentUser.systemRoles) ||
+        UserManagement.hasUserAccountAdminRole(this.currentUser.systemRoles)
+      );
+    }
+
+    return false;
   }
 }

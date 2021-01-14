@@ -1,32 +1,12 @@
 .dialog-container {
   height: 100%;
-  color: #303450;
-  .mat-dialog-title {
-    margin-bottom: 42px;
-
-    .dialog-title {
-      font-size: 24px;
-      font-weight: normal;
-    }
-  }
 
   .mat-dialog-content {
     min-height: 450px;
 
     .header-name {
       .role-label {
-        font-size: 16px;
-      }
-    }
-
-    ::ng-deep textarea {
-      resize: none;
-      border-color: #d8dce6;
-
-      &:focus {
-        border-color: #d8dce6;
-        box-shadow: none;
-        outline: none;
+        margin: 10px;
       }
     }
 
@@ -35,13 +15,12 @@
     }
 
     .description {
-      margin: 10px 10px 10px 0;
+      margin: 10px;
     }
 
     .checkbox-section {
       display: flex;
       flex-wrap: wrap;
-      overflow: hidden;
 
       &__left-container {
         width: 50%;
@@ -68,22 +47,17 @@
   }
 
   .mat-dialog-actions {
-    padding: 0px;
     .buttons-container {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 24px 0px;
-      border-top: 1px solid #d8dce6;
 
       .cx-btn {
-        padding: 0px 32px;
       }
 
       .cx-sub-btn {
         background-color: white !important;
         color: rgba(48, 52, 80, 1) !important;
-        margin-right: 16px;
       }
     }
   }

@@ -1,7 +1,6 @@
 export const SAM_PERMISSIONS = {
   // USER MANAGEMENT
   SeeMenuUserManagement: 'OrganizationSpa.UserManagement.SeeMenu',
-  SingleUserCreation: 'OrganizationSpa.UserManagement.SingleUserCreation',
   MassUserCreation: 'OrganizationSpa.UserManagement.MassUserCreation',
   ExportUsers: 'OrganizationSpa.UserManagement.ExportUsers',
   BasicUserAccountsManagement:
@@ -32,7 +31,6 @@ export const SAM_PERMISSIONS = {
   RejectPendingSpecial: 'OrganizationSpa.UserManagement.PendingSpecial.Reject',
 
   // USER MANAGEMENT - OTHER PLACE OF WORK
-  ViewOtherPlaceOfWork: 'OrganizationSpa.UserManagement.OtherPlaceOfWork.View',
   ChangePlaceOfWorkInOtherPlaceOfWork:
     'OrganizationSpa.UserManagement.OtherPlaceOfWork.ChangePlaceOfWork',
   RejectInOtherPlaceOfWork:
@@ -48,7 +46,7 @@ export const SAM_PERMISSIONS = {
 
   // USER GROUP MANAGEMENT
   SeeMenuUserGroupManagement: 'OrganizationSpa.UserGroupManagement.SeeMenu',
-  CUDinUserGroupManagement: 'OrganizationSpa.UserGroupManagement.CUD',
+  CRUDinUserGroupManagement: 'OrganizationSpa.UserGroupManagement.CRUD',
 
   // BROADCAST
   SeeMenuBroadcastMessages: 'OrganizationSpa.BroadcastMessages.SeeMenu',

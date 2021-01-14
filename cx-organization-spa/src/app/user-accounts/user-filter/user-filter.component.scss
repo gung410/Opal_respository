@@ -1,43 +1,6 @@
 @import '../../../assets/styles/variables.scss';
 
 user-filter {
-  cx-surveyjs {
-    .cx-surveyjs {
-      margin: 0 !important;
-    }
-
-    &:first-child {
-      @media only screen and (max-width: $screen-md-min) {
-        .cx-surveyjs-container {
-          .sv_row {
-            .sv_qstn {
-              max-width: unset !important;
-              flex: 1 1 100% !important;
-            }
-
-            .sv_qstn:first-child:nth-last-child(n + 3)
-              ~ .sv_qstn:not(:first-child) {
-              max-width: unset !important;
-              flex: 1 1 50% !important;
-            }
-          }
-        }
-      }
-    }
-
-    &:nth-child(2) {
-      .cx-surveyjs-container {
-        .sv_row {
-          .sv_qstn {
-            .cx-question-content {
-              width: min-content;
-            }
-          }
-        }
-      }
-    }
-  }
-
   .sv_main.sv_main {
     .sv-paneldynamic__remove-btn {
       margin-top: 0em;

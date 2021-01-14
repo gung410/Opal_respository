@@ -22,6 +22,7 @@ import { CommonHelpers } from 'app/shared/common.helpers';
 import { BasePresentationComponent } from 'app/shared/components/component.abstract';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { SAM_PERMISSIONS } from '../../shared/constants/sam-permission.constant';
 import { SystemRoleDialogComponent } from '../dialogs/system-role-dialog/system-role-dialog.component';
 import { SystemRolesShowHideComponent } from '../dialogs/system-roles-show-hide-column/system-roles-show-hide-column.component';
 import { ActionSignal } from '../dtos/action-signal.dto';
@@ -61,8 +62,6 @@ export class PermissionsTableComponent
   originSystemRoleListColumnDef: ColumDefModel[];
   showHideColumns: ShowHideColumnModel;
   systemRoleListColumnDef: ColumDefModel[];
-  defaultLetterSize: number = 9;
-  leftAndRightMarginSize: number = 30;
 
   get currentGrantedAccessRights(): GrantedAccessRightsModel[] {
     return this._currentGrantedAccessRights;
@@ -77,27 +76,13 @@ export class PermissionsTableComponent
     this._currentGrantedAccessRights = Utils.cloneDeep(newGrantedAccessRights);
   }
 
-  get currentModuleId(): number {
-    return this._currentModuleId;
-  }
-  set currentModuleId(newModuleId: number) {
-    if (newModuleId == null) {
-      return;
-    }
-
-    this._currentModuleId = newModuleId;
-    this.permissionsTableSvc.currentModuleId = newModuleId;
-  }
-
-  private readonly FORCE_TIME: number = 30000;
-  private _currentModuleId: number;
-  private _communitySiteModuleId: number; // CSL module
+  private readonly DEFAULT_MODULE_ID: number = 5; // System Admin Module ID
+  private _currentModuleId: number = this.DEFAULT_MODULE_ID;
   private _selectedSystemRoleId: number | string | null = null;
   private _selectedSystemRoleName: string | null = null;
   private columnDataChangeSubscription: Subscription;
   private _currentGrantedAccessRights: GrantedAccessRightsModel[] = [];
   private _permissionTableSubscription: Subscription = new Subscription();
-  private _lastRowRenderSubscription: Subscription;
 
   constructor(
     private translateAdapterService: TranslateAdapterService,
@@ -116,10 +101,8 @@ export class PermissionsTableComponent
     super(changeDetectorRef);
   }
 
-  async ngOnInit(): Promise<void> {
-    this.currentModuleId = await this.permissionsTableSvc.getDefaultModuleId();
-    this._communitySiteModuleId = this.permissionsTableSvc.communitySiteModuleId;
-    this.getPermissionMatrixByModuleId(true, this.currentModuleId);
+  ngOnInit(): void {
+    this.getPermissionMatrixByModuleId(true);
     this.addScrollEventListener();
   }
 
@@ -175,7 +158,7 @@ export class PermissionsTableComponent
 
   onSystemRoleDialogClicked(): void {
     const dialogRef = this.dialog.open(SystemRoleDialogComponent, {
-      width: '930px',
+      width: '850px',
       minHeight: '600px'
     });
 
@@ -197,7 +180,7 @@ export class PermissionsTableComponent
               this.toastrService.success(
                 `${createSystemRoleRequest.localizedData[0].fields[0].localizedText} was successfully created`
               );
-              this.getPermissionMatrixByModuleId(true, this.currentModuleId);
+              this.getPermissionMatrixByModuleId(true, this._currentModuleId);
             },
             (err) => {
               this.toastrService.error(
@@ -263,9 +246,6 @@ export class PermissionsTableComponent
   ngOnDestroy(): void {
     this.refreshPermissionsColumnService();
     this._permissionTableSubscription.unsubscribe();
-    if (this._lastRowRenderSubscription) {
-      this._lastRowRenderSubscription.unsubscribe();
-    }
   }
 
   onColumnShowHideDef(systemRoleListColumnDef: ColumDefModel[]): void {
@@ -288,14 +268,6 @@ export class PermissionsTableComponent
     );
     this.agGridConfig.gridApi.sizeColumnsToFit();
     this.changeDetectorRef.detectChanges();
-  }
-
-  sizeColumnToFit(): void {
-    this.agGridConfig.gridApi.sizeColumnsToFit();
-  }
-
-  get isButtonCreateEnabled(): boolean {
-    return this._communitySiteModuleId !== this.currentModuleId;
   }
 
   private initGridColumnShowHideForAgGridConfig(): void {
@@ -351,12 +323,12 @@ export class PermissionsTableComponent
 
   private getPermissionMatrixByModuleId(
     isFirstInit: boolean,
-    moduleId: number
+    moduleId: number = this.DEFAULT_MODULE_ID
   ): void {
     this.cxGlobalLoaderService.showLoader();
     this._permissionTableSubscription.add(
-      this.permissionsTableSvc
-        .getAccessRightsMatrixByModuleId(
+      this.permissionsApiSvc
+        .getAccessRightsMatrix(
           new AccessRightsMatrixModelRequest({
             objectTypes: [ObjectType.NormalMenuItem, ObjectType.PageAction],
             parentAccessRightIds: [moduleId],
@@ -386,38 +358,15 @@ export class PermissionsTableComponent
           );
 
           if (isFirstInit) {
-            this.permissionsTableSvc.resetTableService();
             this.initGridConfig();
             this.initGridData();
-            this.hideLoader();
+            this.cxGlobalLoaderService.hideLoader();
 
             return;
           }
           this.refreshGridData();
         })
     );
-  }
-
-  private hideLoader(): void {
-    // this.cxGlobalLoaderService.hideLoader();
-    if (this._lastRowRenderSubscription) {
-      this._lastRowRenderSubscription.unsubscribe();
-    }
-    let isForceHideLoader: boolean = true;
-    this._lastRowRenderSubscription = this.permissionsTableSvc.lastRowRender$.subscribe(
-      (isLastRow) => {
-        if (isLastRow) {
-          isForceHideLoader = false;
-          this.cxGlobalLoaderService.hideLoader();
-        }
-      }
-    );
-
-    setTimeout(() => {
-      if (isForceHideLoader) {
-        this.cxGlobalLoaderService.hideLoader();
-      }
-    }, this.FORCE_TIME);
   }
 
   // private printAccessRights(accessRights: AccessRightsModel[]): void {
@@ -447,9 +396,7 @@ export class PermissionsTableComponent
       this.accessRightsMatrixData
     );
 
-    this.agGridConfig.gridApi.sizeColumnsToFit();
-
-    this.hideLoader();
+    this.cxGlobalLoaderService.hideLoader();
     // this.agGridConfig.gridApi.refreshCells({ force: true });
   }
 
@@ -476,11 +423,9 @@ export class PermissionsTableComponent
 
       systemRoleCol.cellRenderer = 'checkboxRenderer';
 
-      systemRoleCol.resizable = false;
+      systemRoleCol.resizable = true;
 
-      systemRoleCol.minWidth =
-        this.defaultLetterSize * systemRoleCol.headerName.length +
-        this.leftAndRightMarginSize;
+      systemRoleCol.minWidth = 350;
 
       systemRoleCol.cellClassRules = {
         // tslint:disable-next-line:object-literal-shorthand
@@ -535,19 +480,7 @@ export class PermissionsTableComponent
       return;
     }
     // Call Api to reload the permission table based on new moduleId
-    const prevCurrentModuleId = this.currentModuleId;
-    this.currentModuleId = moduleId;
-
-    if (
-      moduleId === this.permissionsTableSvc.communitySiteModuleId ||
-      prevCurrentModuleId === this.permissionsTableSvc.communitySiteModuleId
-    ) {
-      // this.refreshPermissionsColumnService();
-      this.destroyAgGridConfig();
-      this.getPermissionMatrixByModuleId(true, moduleId);
-
-      return;
-    }
+    this._currentModuleId = moduleId;
     this.getPermissionMatrixByModuleId(false, moduleId);
   }
 
@@ -597,13 +530,13 @@ export class PermissionsTableComponent
       name: ''
     });
     const dialogRef = this.dialog.open(SystemRoleDialogComponent, {
-      width: '930px',
+      width: '800px',
       minHeight: '600px',
       data: systemRoleInfo
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result.isDeleted) {
+      if (result.isDeleted) {
         this.systemRolesDataService
           .deleteSystemRole(this._selectedSystemRoleId)
           .subscribe((_) => {
@@ -613,7 +546,7 @@ export class PermissionsTableComponent
 
             this.refreshPermissionsColumnService();
             this.destroyAgGridConfig();
-            this.getPermissionMatrixByModuleId(true, this.currentModuleId);
+            this.getPermissionMatrixByModuleId(true, this._currentModuleId);
           });
 
         return;
@@ -635,10 +568,8 @@ export class PermissionsTableComponent
             this.toastrService.success(
               `${updateSystemRoleInfoRequest.localizedData[0].fields[0].localizedText} was successfully updated.`
             );
-
-            this.refreshPermissionsColumnService();
             this.destroyAgGridConfig();
-            this.getPermissionMatrixByModuleId(true, this.currentModuleId);
+            this.getPermissionMatrixByModuleId(true, this._currentModuleId);
           })
       );
     });
@@ -662,7 +593,7 @@ export class PermissionsTableComponent
         );
 
         updateAccessRightPayload = AccessRightMatrixHelper.addModuleInfo(
-          this.currentModuleId,
+          this._currentModuleId,
           updateAccessRightPayload
         );
 
@@ -692,13 +623,13 @@ export class PermissionsTableComponent
               ]);
             })
         );
-
-        // Unsubscribe the previous data from selected column
-        this.columnDataChangeSubscription.unsubscribe();
       },
       'Save',
       'Are you sure you want to apply the new permissions to this role?'
     );
+
+    // Unsubscribe the previous data from selected column
+    this.columnDataChangeSubscription.unsubscribe();
   }
 
   private processCloneSystemRole(): void {
@@ -718,7 +649,7 @@ export class PermissionsTableComponent
 
               this.refreshPermissionsColumnService();
               this.destroyAgGridConfig();
-              this.getPermissionMatrixByModuleId(true, this.currentModuleId);
+              this.getPermissionMatrixByModuleId(true, this._currentModuleId);
             },
             (err) => {
               if (err.error.title) {

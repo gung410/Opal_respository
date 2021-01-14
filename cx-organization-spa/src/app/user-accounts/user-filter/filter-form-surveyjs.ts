@@ -211,11 +211,11 @@ export const FilterFormJSON = {
           title: 'System Role',
           otherPlaceHolder: 'Please select system role',
           choicesByUrl: {
-            url: `{organizationApi_BaseUrl}/usertypes?archetypeEnums=SystemRole&includeLocalizedData=true&timestamp={replaceTS}`,
-            valueName: 'identity.id',
+            url: `${AppConstant.api.organization}/usertypes?archetypeEnums=SystemRole&includeLocalizedData=true`,
+            valueName: 'identity.extId',
             titleName: 'localizedData.0.fields.0.localizedText'
           },
-          choicesVisibleIf: `{currentUser_visibleRolePermission} contains {item}`
+          choicesVisibleIf: `{currentUser_assignRolePermission} contains {item}`
         },
         {
           type: 'cxtagbox',

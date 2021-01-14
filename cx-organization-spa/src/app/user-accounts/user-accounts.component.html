@@ -1,7 +1,4 @@
-<div
-  *ngIf="!isLoadingEmployee && !isLoadingDepartments"
-  class="user-accounts"
->
+<div *ngIf="!isLoadingEmployee && !isLoadingDepartments" class="user-accounts">
   <div class="cx-page-container">
     <cx-universal-toolbar
       [buttonCondition]="buttonCondition"
@@ -31,15 +28,8 @@
             </a>
           </button>
           <div class="w-100"></div>
-          <div
-            *hasPermission="[[samPermissions.ExportUsers]]"
-            ngbDropdown
-            class="d-inline-block actions-items-container"
-          >
-            <div
-              class="actions-items-float-right"
-              style="float: right"
-            >
+          <div ngbDropdown class="d-inline-block actions-items-container">
+            <div class="actions-items-float-right" style="float: right">
               <button
                 class="cx-btn cx-btn-secondary"
                 id="exportBtn"
@@ -64,19 +54,11 @@
               </div>
             </div>
           </div>
-          <div
-            ngbDropdown
-            class="d-inline-block actions-items-container"
-          >
-            <div
-              class="actions-items-float-right"
-              style="float: right"
-            >
+          <div ngbDropdown class="d-inline-block actions-items-container">
+            <div class="actions-items-float-right" style="float: right">
               <button
-                *ngIf="userActionsForCreateAccButton.length"
                 class="cx-btn create-account-request-btn"
                 id="createAccBtn"
-                [hidden]="isHideCreateUserAccountRequestButton"
                 ngbDropdownToggle
               >
                 {{ 'Common.Label.CreateUserAccount' | translate }}
@@ -143,7 +125,6 @@
         *ngIf="userItemsData"
         [userItemsData]="userItemsData.items"
         [currentUser]="currentUser"
-        [tabLabel]="'userList'"
         [currentUserRoles]="currentUser.systemRoles"
         [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
         [showHideColumns]="showHideColumns"
@@ -159,10 +140,7 @@
         (gridApi)="onGridApiReady($event)"
       >
       </user-list>
-      <div
-        *ngIf="userItemsData"
-        class="user-accounts__paging-area"
-      >
+      <div *ngIf="userItemsData" class="user-accounts__paging-area">
         <cx-paging
           [currentPage]="userItemsData.pageIndex"
           [recordsPerPage]="userItemsData.pageSize"
@@ -173,9 +151,9 @@
         ></cx-paging>
       </div>
     </mat-tab>
-    <div class="user-accounts__pending-list">
+    <div *ngIf="!noneAdminRole.length" class="user-accounts__pending-list">
       <mat-tab
-        *hasPermission="[[samPermissions.ViewPending1st]]"
+        *ngIf="!noneAdminRole.length || divisionBranchSchoolRoles.length"
         label="{{
           'User_Account_Page.User_List.Pending_1st_Level_List_Label' | translate
         }}"
@@ -197,8 +175,6 @@
         <user-pending-list
           [isClearSelected]="isClearSelected"
           *ngIf="pending1stLevelApprovalList"
-          [currentUser]="currentUser"
-          [tabLabel]="'pending1stLevel'"
           [currentUserRoles]="currentUser.systemRoles"
           [isCurrentUserDivAdmin]="divisionBranchSchoolRoles.length > 0"
           [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
@@ -214,7 +190,7 @@
         </user-pending-list>
       </mat-tab>
       <mat-tab
-        *hasPermission="[[samPermissions.ViewPending2nd]]"
+        *ngIf="!noneAdminRole.length || divisionBranchSchoolRoles.length"
         label="{{
           'User_Account_Page.User_List.Pending_2nd_Level_List_Label' | translate
         }}"
@@ -236,12 +212,11 @@
         <user-pending-list
           [isClearSelected]="isClearSelected"
           *ngIf="pending2ndLevelApprovalList"
-          [currentUser]="currentUser"
-          [tabLabel]="'pending2ndLevel'"
           [currentUserRoles]="currentUser.systemRoles"
           [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
           [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
-           [userItemsData]="pending2ndLevelApprovalList"
+          [viewOnly]="divisionBranchSchoolRoles.length > 0"
+          [userItemsData]="pending2ndLevelApprovalList"
           [superAdminRole]="superAdminRole.length > 0"
           (userActions)="onPendingActionChanged($event)"
           (singleAction)="onPendingSingleActionClicked($event)"
@@ -251,7 +226,7 @@
         </user-pending-list>
       </mat-tab>
       <mat-tab
-        *hasPermission="[[samPermissions.ViewPendingSpecial]]"
+        *ngIf="!noneAdminRole.length"
         label="{{
           'User_Account_Page.User_List.Pending_3rd_Level_List_Label' | translate
         }}"
@@ -273,13 +248,12 @@
         <user-pending-list
           [isClearSelected]="isClearSelected"
           *ngIf="pendingSpecialLevelApprovalList"
-          [currentUser]="currentUser"
-          [tabLabel]="'pendingSpecialLevel'"
           [currentUserRoles]="currentUser.systemRoles"
           [isCurrentUserAccountAdmin]="userAccountAdminRole.length > 0"
           [isCurrentUserSuperAdmin]="superAdminRole.length > 0"
           [viewOnly]="
-            userAccountAdminRole.length > 0 
+            userAccountAdminRole.length > 0 ||
+            divisionBranchSchoolRoles.length > 0
           "
           [userItemsData]="pendingSpecialLevelApprovalList"
           (userActions)="onPendingActionChanged($event)"
@@ -289,9 +263,8 @@
         >
         </user-pending-list>
       </mat-tab>
-
       <mat-tab
-        *hasPermission="[[samPermissions.ViewOtherPlaceOfWork]]"
+        *ngIf="userAccountAdminRole.length > 0 || superAdminRole.length > 0"
         label="{{ 'User_Account_Page.User_List.OtherPlaceOfWork' | translate }}"
         [aria-label]="userAccountTabEnum.UserOtherPlace"
       >
@@ -308,9 +281,7 @@
         <user-other-place-list
           *ngIf="userOtherPlaceList"
           [currentUserRoles]="currentUser.systemRoles"
-          [tabLabel]="'otherPlaceOfWork'"
           [userItemsData]="userOtherPlaceList"
-          [currentUser]="currentUser"
           [isClearSelected]="isClearSelected"
           (userActions)="onPendingActionChanged($event)"
           (singleAction)="onPendingSingleActionClicked($event)"

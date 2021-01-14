@@ -1480,30 +1480,30 @@ namespace cxOrganization.Domain.Services
             }
             if (!ignoreCheckReadUserAccess && !isCrossOrganizationalUnit)
             {
-                var userAccessChecking = await _userAccessService.CheckReadUserAccessAsync(workContext: _workContext,
-                    ownerId: ownerId,
-                    customerIds: customerIds,
-                    userExtIds: extIds,
-                    loginServiceClaims: loginServiceClaims,
-                    userIds: userIds,
-                    userGroupIds: userGroupIds,
-                    parentDepartmentIds: parentDepartmentIds,
-                    multiUserGroupFilters: multiUserGroupFilters,
-                    userTypeIdsFilter: userTypeIds,
-                    userTypeExtIdsFilter: userTypeExtIds,
-                    multipleUserTypeIdsFilter: multiUserTypefilters,
-                    multipleUserTypeExtIdsFilter: multiUserTypeExtIdFilters);
+                //var userAccessChecking = await _userAccessService.CheckReadUserAccessAsync(workContext: _workContext,
+                //    ownerId: ownerId,
+                //    customerIds: customerIds,
+                //    userExtIds: extIds,
+                //    loginServiceClaims: loginServiceClaims,
+                //    userIds: userIds,
+                //    userGroupIds: userGroupIds,
+                //    parentDepartmentIds: parentDepartmentIds,
+                //    multiUserGroupFilters: multiUserGroupFilters,
+                //    userTypeIdsFilter: userTypeIds,
+                //    userTypeExtIdsFilter: userTypeExtIds,
+                //    multipleUserTypeIdsFilter: multiUserTypefilters,
+                //    multipleUserTypeExtIdsFilter: multiUserTypeExtIdFilters);
 
-                if (!userAccessChecking.IsAllowedAccess)
-                {
-                    return new PaginatedList<T>();
-                }
+                ////if (!userAccessChecking.IsAllowedAccess)
+                ////{
+                ////    return new PaginatedList<T>();
+                ////}
 
-                userIds = userAccessChecking.UserIds;
-                userGroupIds = userAccessChecking.UserGroupIds;
-                parentDepartmentIds = userAccessChecking.ParentDepartmentIds;
-                multiUserGroupFilters = userAccessChecking.MultiUserGroupFilters;
-                multiUserTypefilters = userAccessChecking.MultiUserTypeFilters;
+                //userIds = userIds;
+                //userGroupIds = userAccessChecking.UserGroupIds;
+                //parentDepartmentIds = userAccessChecking.ParentDepartmentIds;
+                //multiUserGroupFilters = userAccessChecking.MultiUserGroupFilters;
+                //multiUserTypefilters = userAccessChecking.MultiUserTypeFilters;
 
                 //We already union filter userTypeIds,  userTypeExtIds, multiUserTypeExtIdFilters into multiUserTypefilters. so we don't need filter on this.
                 userTypeIds = null;

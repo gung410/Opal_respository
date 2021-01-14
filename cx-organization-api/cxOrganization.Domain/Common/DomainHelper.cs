@@ -375,10 +375,10 @@ namespace cxOrganization.Domain.Common
                 Version = "1.0"
             };
         }
-        public static string GenerateDummyEmail(string userExtId)
+        public static string GenerateDummyEmail()
         {
-            if (string.IsNullOrEmpty(userExtId)) userExtId = Guid.NewGuid().ToString();
-            return string.Format("{0}@dummy.net", userExtId.Replace("-", ".").Replace("@", "."));
+            var dummyEmailAddress = Guid.NewGuid().ToString();
+            return string.Format("{0}@dummy.net", dummyEmailAddress.Replace("-", ".").Replace("@", "."));
         }
         private static LogMessagePayload BuildLogMessagePayload(
             dynamic recipient,

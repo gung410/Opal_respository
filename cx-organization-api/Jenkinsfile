@@ -1,0 +1,47 @@
+pipeline {
+	agent any 
+
+	options {
+	    skipDefaultCheckout(true)
+	}
+
+	stages {
+		stage('clean') {
+			steps {
+				deleteDir()
+			}
+		}
+		stage('checkout') {
+			steps {				
+				checkout scm
+			}
+		}
+		stage('build') {
+		    steps {
+		        bat 'dotnet clean'
+		        bat 'dotnet restore --configfile .nuget/NuGet.Config'
+		        bat 'dotnet publish -c Release -o out'
+	        }
+	    }
+	}
+	post {
+		success {
+			slackSend (
+				color: '#00FF00', 
+				message: "SUCCESSFUL: Job `${env.JOB_NAME} [${env.BUILD_NUMBER}]` ${env.BUILD_URL}",
+				baseUrl: "https://vip24.slack.com/services/hooks/jenkins-ci/",
+				channel: "#jenkins",
+				teamDomain: "vip24",
+				token: "${CX_SLACK_VIP24_TOKEN}")
+		}
+		failure {
+			slackSend (
+				color: '#FF0000', 
+				message: "FAILED: Job `${env.JOB_NAME} [${env.BUILD_NUMBER}]` ${env.BUILD_URL}",
+				baseUrl: "https://vip24.slack.com/services/hooks/jenkins-ci/",
+				channel: "#jenkins",
+				teamDomain: "vip24",
+				token: "${CX_SLACK_VIP24_TOKEN}")
+		}
+	}	
+}

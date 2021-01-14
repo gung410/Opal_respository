@@ -475,7 +475,7 @@
       "MOE_Identifier": "MOE Identifier",
       "Level_Of_Education": "Level Of Education",
       "Is_MOE_OU": "Is MOE OU",
-      "Type_Of_School_Organisation": "Type of School / Organisation",
+      "Type_Of_School_Organisation": "Type of School/Organisation",
       "Address_Information": "Address Information",
       "Department_Is_Empty": "Department Is Empty."
     },
@@ -490,7 +490,7 @@
       "No_Result_Message": "We can’t find any results that match to your filter"
     },
     "Department_Delete": {
-      "Deactivate": "Are you sure want to delete \"{{departmentName}}\" organisation unit?",
+      "Deactivate": "Do you sure want to delete \"{{departmentName}}\" organisation unit?",
       "Successfully": "{{departmentName}} organisation unit has been deleted",
       "Error": "There is something wrong, Please try again."
     }
@@ -603,7 +603,7 @@
     },
     "LimitRecord": {
       "Header": "Warning",
-      "Content": "The file exceeds 50 records. Uploading cannot proceed. Please check the file and upload it again."
+      "Content": "The file exceeds 50 records and cannot be proceeded. Please check and upload again."
     },
     "UserRowEmpty": {
       "Header": "Warning",

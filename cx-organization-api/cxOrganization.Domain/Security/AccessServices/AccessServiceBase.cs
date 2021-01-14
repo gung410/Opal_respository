@@ -251,7 +251,11 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             var departmentTypes = await _departmentTypeRepository.GetAllDepartmentTypesInCacheAsync();
 
-            var ancestorHierarchyInfos  = await GetAccessibleAncestorHierarchyInfosAsync(executorDepartmentId, accessSetting, currentHd, departmentTypes);
+            var ancestorHierarchyInfos  = await GetAccessibleAncestorHierarchyInfosAsync(
+                executorDepartmentId,
+                accessSetting,
+                currentHd,
+                departmentTypes);
 
             // Process for DLC in Division
             if (accessSetting.OnlyMoveUpOneAncestor)
@@ -496,8 +500,11 @@ namespace cxOrganization.Domain.Security.AccessServices
 
 
 
-        private async Task<(HierarchyInfo CurrentHierarchyInfo, List<HierarchyInfo> AccessibleAncestorHierarchyInfos)> GetAccessibleAncestorHierarchyInfosAsync(int executorDepartmentId, 
-            AccessSettingElement accessSetting, HierarchyDepartmentEntity currentHd, List<DepartmentTypeEntity> departmentTypeEntities)
+        private async Task<(HierarchyInfo CurrentHierarchyInfo, List<HierarchyInfo> AccessibleAncestorHierarchyInfos)> GetAccessibleAncestorHierarchyInfosAsync(
+            int executorDepartmentId, 
+            AccessSettingElement accessSetting,
+            HierarchyDepartmentEntity currentHd,
+            List<DepartmentTypeEntity> departmentTypeEntities)
         {
             var isAccessibleOnAllAncestorDepartmentType = AccessSettingElement.ContainsAllSymbol(accessSetting.InAncestorDepartmentTypeExtIds);
             var hasAnyAccessOnAncestorDepartmentType = isAccessibleOnAllAncestorDepartmentType || !accessSetting.InAncestorDepartmentTypeExtIds.IsNullOrEmpty();

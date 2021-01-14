@@ -138,7 +138,7 @@ export class AuthService {
               currentUser.topAccessibleDepartment =
                 userInfo.topAccessibleDepartment;
               currentUser.permissionDic = this.getPermissionDic(permissions);
-              // console.info(JSON.stringify(currentUser.permissionDic));
+              console.info(currentUser.permissionDic);
               this.userSubject.next(currentUser);
               this.isAuthenticating.next(false);
 
@@ -298,7 +298,7 @@ export class AuthService {
         case OAuthEventConstant.SESSION_TERMINATED:
         case OAuthEventConstant.CODE_ERROR:
           console.error('Session terminated', JSON.stringify(e));
-          //   this.logout(true);
+          this.logout(true);
           break;
         default:
           break;

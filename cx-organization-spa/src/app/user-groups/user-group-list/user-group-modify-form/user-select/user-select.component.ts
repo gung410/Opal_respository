@@ -53,6 +53,7 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
 
   userList: UserManagement[] = [];
   belongingUserInUserGroup: UserManagement[] = [];
+  userDepartmentId: number;
   defaultAvatar: string = `../../../../../assets/images/default-avatar.png`;
   agGridConfig: AgGridConfigModel;
   selectedUserIds: string[] = [];
@@ -240,7 +241,7 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
           new UserManagementQueryModel({
             searchKey: searchText,
             orderBy: 'firstName asc',
-            parentDepartmentId: [this.currentUser.departmentId],
+            parentDepartmentId: [this.userDepartmentId],
             userEntityStatuses: this.defaultStatusFilter,
             pageIndex:
               maxResultCount === 0 ? 1 : skipCount / maxResultCount + 1,

@@ -35,7 +35,7 @@ ul {
   padding: 20px !important;
 }
 
-.no-padding-childs > div {
+.no-padding-childs>div {
   padding: 0 !important;
 }
 
@@ -43,7 +43,7 @@ ul {
   padding-right: 0 !important;
 }
 
-.no-padding-right-childs > div {
+.no-padding-right-childs>div {
   padding-right: 0 !important;
 }
 
@@ -120,7 +120,7 @@ ul {
 }
 
 .container-full-page {
-  > div {
+  >div {
     float: left;
     width: 100%;
     position: relative;
@@ -160,17 +160,17 @@ ul {
 
 table {
   &.vertical-middle {
-    > thead {
-      > tr {
-        > th {
+    >thead {
+      >tr {
+        >th {
           vertical-align: middle;
         }
       }
     }
 
-    > tbody {
-      > tr {
-        > td {
+    >tbody {
+      >tr {
+        >td {
           vertical-align: middle;
         }
       }
@@ -597,7 +597,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .material-icons {
-  color: #313552 !important;
+  color: $main-color !important;
 
   &::before {
     font-size: 20px !important;
@@ -622,7 +622,7 @@ input[type='number']::-webkit-outer-spin-button {
   white-space: pre-wrap; // Whitespace is preserved by the browser. Text will wrap when necessary, and on line breaks
 }
 
-.modal-size-xl > div {
+.modal-size-xl>div {
   width: 90vw;
   max-width: 900px !important;
 }
@@ -633,6 +633,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 ag-grid-angular {
+
   .ag-root-wrapper {
     background-color: #f9f9f9 !important;
   }
@@ -650,10 +651,6 @@ ag-grid-angular {
       justify-content: center;
     }
   }
-}
-
-.editing-column-color {
-  background-color: #8bc9ea;
 }
 
 ng-dropdown-panel.cx-people-picker {

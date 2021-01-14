@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import {
   CxSurveyjsComponent,
-  CxSurveyjsEventModel,
-  CxSurveyjsVariable
+  CxSurveyjsEventModel
 } from '@conexus/cx-angular-common';
 import { AuthService } from 'app-auth/auth.service';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
@@ -48,7 +47,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   filterFormJSON: any = FilterFormJSON;
   appliedFilterFormJSON: any = AppliedFilterFormJSON;
   appliedData: FilterModel = new FilterModel();
-  filterVariables: CxSurveyjsVariable[] = [];
+  filterVariables: any[] = [];
   filterParams: UserGroupFilterParams;
 
   @ViewChild('filterSurveyJs') filterSurveyJs: CxSurveyjsComponent;
@@ -89,13 +88,6 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   }
 
   initFilterData(): void {
-    this.filterVariables.push(
-      new CxSurveyjsVariable({
-        name: 'replaceTS',
-        value: Math.random().toString()
-      })
-    );
-
     this.subscription.add(
       this.systemRolesStoreService.get().subscribe((systemRoles) => {
         if (!systemRoles) {
@@ -194,7 +186,6 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
     }
 
     let optionData = appliedDataWithOption.data;
-    let optionFiltered;
     switch (filterData.filterOptions.data) {
       case GroupFilterConst.STATUS:
         optionData = this.mapData(optionData, filterData.status, (item) => {
@@ -246,7 +237,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
         optionData.text = filterData.typeOU.displayText;
         break;
       case GroupFilterConst.CREATION_DATE:
-        optionFiltered = this.addFilterDate(
+        let optionFiltered = this.addFilterDate(
           filterData.creationDateFrom,
           filterData.creationDateTo
         );

@@ -223,58 +223,41 @@ export const USER_ACTION_MAPPING_CONST = [
 export function initUserActions(
   translateAdapterService: TranslateAdapterService,
   isMoreAction: boolean = false,
-  hasRightToAccess: boolean = false,
-  hasRightToAccessBasicUserAccountsManagement: boolean = false,
-  hasRightToAccessExportUsers: boolean = false
+  hasRightToAccess: boolean = false
 ): ActionToolbarModel {
   const essentialActions: ActionsModel[] = [];
   const specifyActions: ActionsModel[] = [];
 
-  //These user actions follow this order: Add to Group - Export - Set Approving Officers.
-  if (hasRightToAccessBasicUserAccountsManagement) {
-    essentialActions.push(
-      new ActionsModel({
-        text: translateAdapterService.getValueImmediately(
-          `Common.Button.Add_To_Group`
-        ),
-        actionType: StatusActionTypeEnum.AddToGroup,
-        allowActionSingle: false,
-        icon: null,
-        message: '',
-        disable: true
-      })
-    );
-  }
-
-  if (hasRightToAccessExportUsers) {
-    essentialActions.push(
-      new ActionsModel({
-        text: translateAdapterService.getValueImmediately(
-          `Common.Button.Export`
-        ),
-        actionType: StatusActionTypeEnum.Export,
-        allowActionSingle: false,
-        icon: null,
-        message: '',
-        disable: true
-      })
-    );
-  }
-
-  if (hasRightToAccessBasicUserAccountsManagement) {
-    essentialActions.push(
-      new ActionsModel({
-        text: translateAdapterService.getValueImmediately(
-          `Common.Button.Set_Approving_Officers`
-        ),
-        actionType: StatusActionTypeEnum.SetApprovingOfficers,
-        allowActionSingle: false,
-        icon: null,
-        message: '',
-        disable: true
-      })
-    );
-  }
+  essentialActions.push(
+    new ActionsModel({
+      text: translateAdapterService.getValueImmediately(
+        `Common.Button.Add_To_Group`
+      ),
+      actionType: StatusActionTypeEnum.AddToGroup,
+      allowActionSingle: false,
+      icon: null,
+      message: '',
+      disable: true
+    }),
+    new ActionsModel({
+      text: translateAdapterService.getValueImmediately(`Common.Button.Export`),
+      actionType: StatusActionTypeEnum.Export,
+      allowActionSingle: false,
+      icon: null,
+      message: '',
+      disable: true
+    }),
+    new ActionsModel({
+      text: translateAdapterService.getValueImmediately(
+        `Common.Button.Set_Approving_Officers`
+      ),
+      actionType: StatusActionTypeEnum.SetApprovingOfficers,
+      allowActionSingle: false,
+      icon: null,
+      message: '',
+      disable: true
+    })
+  );
 
   if (isMoreAction) {
     if (hasRightToAccess) {
@@ -322,14 +305,10 @@ export function initUserActionsForExportButton(
 
 export function initUserActionsForCreateAccButton(
   translateAdapterService: TranslateAdapterService,
-  isAllowToSingleCreateUserAccountRequest: boolean = true,
-  isAllowToMassCreateUserAccountRequest: boolean = true
+  isAllowToMassCreateUserAccountRequest: boolean
 ): ActionsModel[] {
   const userActions: ActionsModel[] = [];
-  if (
-    environment.userAccounts.enableCreateUserAccountRequest &&
-    isAllowToSingleCreateUserAccountRequest
-  ) {
+  if (environment.userAccounts.enableCreateUserAccountRequest) {
     userActions.push(
       new ActionsModel({
         text: translateAdapterService.getValueImmediately(
@@ -365,46 +344,32 @@ export function initUserActionsForCreateAccButton(
 
 export function initPendingUserActions(
   translateAdapterService: TranslateAdapterService,
-  isShowEndorseText: boolean,
-  canApprove: boolean,
-  canEndorse: boolean,
-  canReject: boolean
+  isCurrentUserDivAdmin: boolean
 ): ActionsModel[] {
   const userActions: ActionsModel[] = [];
 
-  if (canEndorse || canApprove) {
-    const acceptAction = new ActionsModel({
+  userActions.push(
+    new ActionsModel({
       text: translateAdapterService.getValueImmediately(
-        'User_Account_Page.User_Context_Menu.Approve'
+        `User_Account_Page.User_Context_Menu.${
+          isCurrentUserDivAdmin ? 'Endorse' : 'Approve'
+        }`
       ),
       actionType: StatusActionTypeEnum.Accept,
       allowActionSingle: false,
       icon: null,
       message: '',
       disable: true
-    });
-
-    if (isShowEndorseText) {
-      acceptAction.text = translateAdapterService.getValueImmediately(
-        'User_Account_Page.User_Context_Menu.Endorse'
-      );
-    }
-
-    userActions.push(acceptAction);
-  }
-
-  if (canReject) {
-    userActions.push(
-      new ActionsModel({
-        text: StatusActionTypeEnum.Reject,
-        actionType: StatusActionTypeEnum.Reject,
-        allowActionSingle: false,
-        icon: null,
-        message: '',
-        disable: true
-      })
-    );
-  }
+    }),
+    new ActionsModel({
+      text: StatusActionTypeEnum.Reject,
+      actionType: StatusActionTypeEnum.Reject,
+      allowActionSingle: false,
+      icon: null,
+      message: '',
+      disable: true
+    })
+  );
 
   return userActions;
 }

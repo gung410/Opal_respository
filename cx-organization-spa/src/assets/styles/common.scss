@@ -1,7 +1,7 @@
 @import 'variables.scss';
 
 body.body-contain {
-  font-size: 16px;
+  font-size: 14px;
   font-family: $main-font;
   margin: 0;
   font-weight: 400;
@@ -67,7 +67,6 @@ body.body-contain {
 
 .ag-header-cell {
   background-color: #fff;
-  z-index: 1;
 }
 
 .ag-theme-material

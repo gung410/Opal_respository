@@ -54,7 +54,6 @@ import {
   EditUserDialogSubmitModel
 } from './edit-user-dialog.model';
 import { auditHistoryTabIndexOnPendingUser, TabIndex } from './tab-index-enum';
-import { SAM_PERMISSIONS } from 'app/shared/constants/sam-permission.constant';
 
 Survey.JsonObject.metaData.addProperty('questionbase', 'keepIncorrectValues');
 
@@ -80,7 +79,6 @@ export class EditUserDialogComponent
   @Input() isPendingUser: boolean = false;
   @Input() fullUserInfoJsonData: any;
   @Input() surveyjsOptions: CxSurveyjsFormModalOptions;
-  @Input() isCurrentUserHasPermissionToEdit: boolean = false;
   @Output()
   submit: EventEmitter<EditUserDialogSubmitModel> = new EventEmitter<EditUserDialogSubmitModel>();
   @Output() cancel: EventEmitter<any> = new EventEmitter();
@@ -112,6 +110,7 @@ export class EditUserDialogComponent
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private el: ElementRef,
+    private systemRolesDataService: SystemRolesDataService,
     private translateAdapterService: TranslateAdapterService,
     private userAccountsDataService: UserAccountsDataService,
     private editUserDialogHelper: EditUserDialogHelper,
@@ -131,6 +130,7 @@ export class EditUserDialogComponent
 
   ngOnInit(): void {
     this.initHelper();
+    // this.changeTimeStampToClearCache();
     this.editUserDialogHelper.addCustomProperties(
       this.userFormJSON,
       this.user,
@@ -140,15 +140,6 @@ export class EditUserDialogComponent
     this.userData = this.editUserDialogHelper.processSurveyJsonData(
       this.fullUserInfoJsonData
     );
-
-    // Add random timestamp value to add to the api in order  to by pass cache.
-    this.surveyjsOptions.variables.push(
-      new CxSurveyjsVariable({
-        name: 'replaceTS',
-        value: Math.random().toString()
-      })
-    );
-
     this.basicInfoSurveyVariables = _.cloneDeep(this.surveyjsOptions.variables);
     this.validationFunctions = [this.validateEmail.bind(this)];
 
@@ -162,6 +153,15 @@ export class EditUserDialogComponent
       '[aria-label="professionalDevelopmentTab"]'
     );
     this.checkShowHideProfessionalDevelopmentTab(this.userData.personnelGroups);
+  }
+
+  changeTimeStampToClearCache(): void {
+    this.userFormJSON = JSON.parse(
+      JSON.stringify(this.userFormJSON).replace(
+        'replaceTS',
+        Math.random().toString()
+      )
+    );
   }
 
   onUserFormChanged(surveyEvent: CxSurveyjsEventModel): void {
@@ -554,10 +554,7 @@ export class EditUserDialogComponent
 
   private initHelper(): void {
     this.editUserDialogHelper.init(this.user, this.currentUser);
-    this.mode = this.editUserDialogHelper.getDialogMode(
-      this.isCurrentUserHasPermissionToEdit
-    );
-
+    this.mode = this.editUserDialogHelper.getDialogMode();
     if (this.mode === EditUserDialogModeEnum.View) {
       this.userFormJSON = {
         ...this.userFormJSON,

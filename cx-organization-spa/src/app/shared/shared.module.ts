@@ -23,7 +23,6 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { PeoplePickerComponent } from './components/people-picker/people-picker.component';
 import { OpalSelectComponent } from './components/select/select.component';
 import { OpalTextareaComponent } from './components/textarea/textarea.component';
-import { FocusDirective } from './directives/focus.directive';
 import { PermissionDirective } from './directives/permission.directive';
 
 @NgModule({
@@ -36,7 +35,6 @@ import { PermissionDirective } from './directives/permission.directive';
     ConfirmDialogComponent,
     OpalSelectComponent,
     OpalTextareaComponent,
-    FocusDirective,
     CellHeaderCustomComponent,
     CellDropdownActionComponent,
     PermissionDirective,
@@ -60,7 +58,6 @@ import { PermissionDirective } from './directives/permission.directive';
     CommonModule,
     OpalSelectComponent,
     OpalTextareaComponent,
-    FocusDirective,
     PermissionDirective,
     FormsModule,
     TranslateModule,

@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CxCommonModule } from '@conexus/cx-angular-common';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'app/shared/shared.module';
-import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { DepartmentHierarchicalComponent } from './department-hierarchical.component';
 import { FilterDepartmentComponent } from './filter-department/filter-department.component';
@@ -19,7 +18,6 @@ import { SearchDepartmentHierarchicalComponent } from './search-department-hiera
     SharedModule,
     CxCommonModule,
     NgbDropdownModule,
-    MatSidenavModule,
     RouterModule.forChild([
       { path: '', component: DepartmentHierarchicalComponent },
       { path: '', component: SearchDepartmentHierarchicalComponent }

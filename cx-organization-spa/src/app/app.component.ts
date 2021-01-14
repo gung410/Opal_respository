@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -34,6 +35,7 @@ import { TranslateAdapterService } from 'app-services/translate-adapter.service'
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ToastrService } from 'ngx-toastr';
 import { reject } from 'q';
 import Swal from 'sweetalert2';
 
@@ -42,6 +44,7 @@ import { AppService } from './app.service';
 import { AppConstant, RouteConstant } from './shared/app.constant';
 import { BaseScreenComponent } from './shared/components/component.abstract';
 import { findIndexCommon } from './shared/constants/common.const';
+import { ErrorModel } from './user-accounts/models/http.model';
 
 @Component({
   selector: 'app-root',
@@ -76,7 +79,9 @@ export class AppComponent
     changeDetectorRef: ChangeDetectorRef,
     private userIdle: UserIdleService,
     private notificationService: NotificationService,
+    private appService: AppService,
     private notificationDataService: NotificationDataService,
+    private toastrService: ToastrService,
     private cxSurveyjsExtendedService: CxSurveyjsExtendedService,
     private globalModal: NgbModal,
     private informationDialogService: CxInformationDialogService,

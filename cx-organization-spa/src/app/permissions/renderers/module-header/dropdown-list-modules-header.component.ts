@@ -1,11 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { IHeaderAngularComp } from 'ag-grid-angular';
 import { IAfterGuiAttachedParams, IHeaderParams } from 'ag-grid-community';
-import { ModuleType } from 'app/permissions/enum/module-type.enum';
+import { AccessRightsRequest } from 'app/permissions/dtos/request-dtos/access-rights-request';
+import { ObjectType } from 'app/permissions/enum/object-type.enum';
+import { AccessRightsModel } from 'app/permissions/models/access-rights.model';
 import { PermissionsApiService } from 'app/permissions/services/permissions-api.service';
-import { PermissionsTableService } from 'app/permissions/services/permissions-table.service';
 import { AccessRightsViewModel } from 'app/permissions/viewmodels/acessrights.viewmodel';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'dropdown-list-modules-header',
@@ -16,17 +18,10 @@ export class DropdownListModulesHeaderComponent
   implements IHeaderAngularComp, OnDestroy {
   params: any;
   moduleSelectionEventEmitter: (event: number) => void;
-  selectedModuleId: number = 0;
-  batchJobsMonitoringModule: ModuleType = ModuleType.BatchJobsMonitoring;
-  organizationSpaModule: ModuleType = ModuleType.OrganizationSpa;
+  selectedModuleId: number = 5; // Id of Module SAM
   moduleItems: AccessRightsViewModel[] = [];
-  moduleSubscription: Subscription;
-  cslModuleId: number;
 
-  constructor(
-    private permissionsApiSvc: PermissionsApiService,
-    private permissionsTableSvc: PermissionsTableService
-  ) {
+  constructor(private permissionsApiSvc: PermissionsApiService) {
     this.getModules();
   }
   agInit(params: any): void {
@@ -48,16 +43,24 @@ export class DropdownListModulesHeaderComponent
   }
 
   ngOnDestroy(): void {
-    if (this.moduleSubscription) {
-      this.moduleSubscription.unsubscribe();
-    }
+    // throw new Error('Method not implemented.');
   }
 
-  private getModules(): void {
-    if (this.permissionsTableSvc.moduleItems) {
-      this.selectedModuleId = this.permissionsTableSvc.currentModuleId;
-      this.moduleItems = this.permissionsTableSvc.moduleItems;
-      this.cslModuleId = this.permissionsTableSvc.communitySiteModuleId;
-    }
+  getModules(): void {
+    this.permissionsApiSvc
+      .getAccessRights(
+        new AccessRightsRequest({
+          objectTypes: [ObjectType.Module],
+          includeLocalizedData: true
+        })
+      )
+      .pipe(
+        map((modules) => {
+          return modules.map((module) => new AccessRightsViewModel(module));
+        })
+      )
+      .subscribe((modules) => {
+        this.moduleItems.push(...modules);
+      });
   }
 }

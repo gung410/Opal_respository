@@ -17,11 +17,6 @@ export const USER_PENDING_LIST_HEADER_CONST = {
     fieldName: 'departmentName',
     colId: 'departmentName'
   },
-  SystemRoles: {
-    text: 'SystemRoles',
-    fieldName: 'systemRoles',
-    colId: 'systemRoles'
-  },
   Created: {
     text: 'Registered',
     fieldName: 'created',

@@ -80,6 +80,7 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.fileName.fieldName,
         colId: MassUserCreationFileGridHeader.fileName.colId,
+        minWidth: 450,
         checkboxSelection: false,
         cellRenderer: 'fileInfoRenderer'
       },
@@ -89,6 +90,7 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.CreatedBy.fieldName,
         colId: MassUserCreationFileGridHeader.CreatedBy.colId,
+        minWidth: 250,
         checkboxSelection: false
       },
       {
@@ -97,6 +99,7 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.createdDate.fieldName,
         colId: MassUserCreationFileGridHeader.createdDate.colId,
+        minWidth: 200,
         checkboxSelection: false
       },
       {
@@ -105,6 +108,7 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.numberOfAccountRequest.fieldName,
         colId: MassUserCreationFileGridHeader.numberOfAccountRequest.colId,
+        minWidth: 50,
         checkboxSelection: false
       }
     ];

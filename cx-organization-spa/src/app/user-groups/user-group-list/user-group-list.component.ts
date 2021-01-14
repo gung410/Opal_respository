@@ -45,8 +45,7 @@ import {
 } from '../user-groups.model';
 import { CellDropdownMenuComponent } from './cell-dropdown-menu/cell-dropdown-menu.component';
 import { UserGroupModifyFormComponent } from './user-group-modify-form/user-group-modify-form.component';
-import { SAM_PERMISSIONS } from '../../shared/constants/sam-permission.constant';
-import { ColDef } from 'ag-grid-community';
+import { Utils } from 'app-utilities/utils';
 
 @Component({
   selector: 'user-group-list',
@@ -145,12 +144,6 @@ export class UserGroupListComponent
     );
   }
 
-  get isCurrentAllowToActionOnUserGroup(): boolean {
-    return this.currentUser.hasPermission(
-      SAM_PERMISSIONS.CUDinUserGroupManagement
-    );
-  }
-
   initGridConfig(): void {
     this.agGridConfig = new AgGridConfigModel({
       columnDefs: this.setColumnDef(),
@@ -180,7 +173,7 @@ export class UserGroupListComponent
   }
 
   setColumnDef(): any {
-    const colsDef: ColDef[] = [
+    return [
       {
         headerName: this.getImmediatelyLanguage(
           UserGroupHeaderConstant.Name.text
@@ -188,8 +181,8 @@ export class UserGroupListComponent
         field: UserGroupHeaderConstant.Name.fieldName,
         colId: UserGroupHeaderConstant.Name.colId,
         minWidth: 200,
-        checkboxSelection: this.isCurrentAllowToActionOnUserGroup,
-        headerCheckboxSelection: this.isCurrentAllowToActionOnUserGroup,
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
         sortable: true
       },
       {
@@ -211,11 +204,8 @@ export class UserGroupListComponent
         minWidth: 200,
         sortable: false,
         suppressMenu: true
-      }
-    ];
-
-    if (this.isCurrentAllowToActionOnUserGroup) {
-      colsDef.push({
+      },
+      {
         headerName: '',
         cellRenderer: 'cellDropdownMenu',
         maxWidth: 50,
@@ -231,10 +221,8 @@ export class UserGroupListComponent
           onClick: this.onClickDropdownMenuAction.bind(this),
           label: 'OnClick'
         }
-      });
-    }
-
-    return colsDef;
+      }
+    ];
   }
 
   onGridReady(params: any): void {

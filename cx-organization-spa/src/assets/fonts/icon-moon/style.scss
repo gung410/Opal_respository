@@ -1,18 +1,23 @@
-@import "variables";
+@import 'variables';
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?bijxyp');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?bijxyp#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?bijxyp') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?bijxyp') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?bijxyp##{$icomoon-font-family}') format('svg');
+  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?23o3yu');
+  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?23o3yu#iefix')
+      format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?23o3yu')
+      format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?23o3yu')
+      format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?23o3yu##{$icomoon-font-family}')
+      format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
   speak: never;
@@ -27,402 +32,396 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-create-new-folder {
-  &:before {
-    content: $icon-create-new-folder; 
-  }
-}
 .icon-sync .path1 {
   &:before {
-    content: $icon-sync-path1;  
+    content: $icon-sync-path1;
     color: rgb(64, 127, 255);
   }
 }
 .icon-sync .path2 {
   &:before {
-    content: $icon-sync-path2;  
-    margin-left: -1em;  
+    content: $icon-sync-path2;
+    margin-left: -1em;
     color: rgb(64, 106, 239);
   }
 }
 .icon-sync .path3 {
   &:before {
-    content: $icon-sync-path3;  
-    margin-left: -1em;  
+    content: $icon-sync-path3;
+    margin-left: -1em;
     color: rgb(227, 250, 255);
   }
 }
 .icon-sync .path4 {
   &:before {
-    content: $icon-sync-path4;  
-    margin-left: -1em;  
+    content: $icon-sync-path4;
+    margin-left: -1em;
     color: rgb(204, 244, 255);
   }
 }
 .icon-sync .path5 {
   &:before {
-    content: $icon-sync-path5;  
-    margin-left: -1em;  
+    content: $icon-sync-path5;
+    margin-left: -1em;
     color: rgb(227, 250, 255);
   }
 }
 .icon-sync .path6 {
   &:before {
-    content: $icon-sync-path6;  
-    margin-left: -1em;  
+    content: $icon-sync-path6;
+    margin-left: -1em;
     color: rgb(204, 244, 255);
   }
 }
 .icon-add-group {
   &:before {
-    content: $icon-add-group; 
+    content: $icon-add-group;
   }
 }
 .icon-mark-user {
   &:before {
-    content: $icon-mark-user; 
+    content: $icon-mark-user;
   }
 }
 .icon-caution {
   &:before {
-    content: $icon-caution; 
+    content: $icon-caution;
   }
 }
 .icon-cancel {
   &:before {
-    content: $icon-cancel; 
+    content: $icon-cancel;
   }
 }
 .icon-accept {
   &:before {
-    content: $icon-accept; 
+    content: $icon-accept;
   }
 }
 .icon-checklist {
   &:before {
-    content: $icon-checklist; 
+    content: $icon-checklist;
   }
 }
 .icon-unlock {
   &:before {
-    content: $icon-unlock; 
+    content: $icon-unlock;
   }
 }
 .icon-pause {
   &:before {
-    content: $icon-pause; 
+    content: $icon-pause;
   }
 }
 .icon-edit {
   &:before {
-    content: $icon-edit; 
+    content: $icon-edit;
   }
 }
 .icon-delete-light {
   &:before {
-    content: $icon-delete-light; 
+    content: $icon-delete-light;
   }
 }
 .icon-revert {
   &:before {
-    content: $icon-revert; 
+    content: $icon-revert;
   }
 }
 .icon-change-department {
   &:before {
-    content: $icon-change-department; 
+    content: $icon-change-department;
   }
 }
 .icon-lion {
   &:before {
-    content: $icon-lion; 
+    content: $icon-lion;
   }
 }
 .icon-apps {
   &:before {
-    content: $icon-apps; 
+    content: $icon-apps;
   }
 }
 .icon-bookmark-check {
   &:before {
-    content: $icon-bookmark-check; 
+    content: $icon-bookmark-check;
   }
 }
 .icon-book-plus {
   &:before {
-    content: $icon-book-plus; 
+    content: $icon-book-plus;
   }
 }
 .icon-check-mark {
   &:before {
-    content: $icon-check-mark; 
+    content: $icon-check-mark;
   }
 }
 .icon-info {
   &:before {
-    content: $icon-info; 
+    content: $icon-info;
   }
 }
 .icon-calendar-clock {
   &:before {
-    content: $icon-calendar-clock; 
+    content: $icon-calendar-clock;
   }
 }
 .icon-filter {
   &:before {
-    content: $icon-filter; 
+    content: $icon-filter;
   }
 }
 .icon-paper-plane {
   &:before {
-    content: $icon-paper-plane; 
+    content: $icon-paper-plane;
   }
 }
 .icon-star {
   &:before {
-    content: $icon-star; 
+    content: $icon-star;
   }
 }
 .icon-star-half {
   &:before {
-    content: $icon-star-half; 
+    content: $icon-star-half;
   }
 }
 .icon-star-outline {
   &:before {
-    content: $icon-star-outline; 
+    content: $icon-star-outline;
   }
 }
 .icon-comment {
   &:before {
-    content: $icon-comment;     
+    content: $icon-comment;
     color: #313552;
   }
 }
 .icon-notebook {
   &:before {
-    content: $icon-notebook;     
+    content: $icon-notebook;
     color: #313552;
   }
 }
 .icon-clock {
   &:before {
-    content: $icon-clock; 
+    content: $icon-clock;
   }
 }
 .icon-map-marker {
   &:before {
-    content: $icon-map-marker; 
+    content: $icon-map-marker;
   }
 }
 .icon-block {
   &:before {
-    content: $icon-block; 
+    content: $icon-block;
   }
 }
 .icon-meatball {
   &:before {
-    content: $icon-meatball; 
+    content: $icon-meatball;
   }
 }
 .icon-right-arrow {
   &:before {
-    content: $icon-right-arrow; 
+    content: $icon-right-arrow;
   }
 }
 .icon-bookmark {
   &:before {
-    content: $icon-bookmark; 
+    content: $icon-bookmark;
   }
 }
 .icon-development-selected {
   &:before {
-    content: $icon-development-selected; 
+    content: $icon-development-selected;
   }
 }
 .icon-development {
   &:before {
-    content: $icon-development; 
+    content: $icon-development;
   }
 }
 .icon-chevron-right-bold {
   &:before {
-    content: $icon-chevron-right-bold; 
+    content: $icon-chevron-right-bold;
   }
 }
 .icon-odp-plan {
   &:before {
-    content: $icon-odp-plan; 
+    content: $icon-odp-plan;
   }
 }
 .icon-odp-direction {
   &:before {
-    content: $icon-odp-direction; 
+    content: $icon-odp-direction;
   }
 }
 .icon-odp-program {
   &:before {
-    content: $icon-odp-program; 
+    content: $icon-odp-program;
   }
 }
 .icon-delete {
   &:before {
-    content: $icon-delete; 
+    content: $icon-delete;
   }
 }
 .icon-duplicate {
   &:before {
-    content: $icon-duplicate; 
+    content: $icon-duplicate;
   }
 }
 .icon-pencil {
   &:before {
-    content: $icon-pencil; 
+    content: $icon-pencil;
   }
 }
 .icon-klp {
   &:before {
-    content: $icon-klp; 
+    content: $icon-klp;
   }
 }
 .icon-add-ld {
   &:before {
-    content: $icon-add-ld; 
+    content: $icon-add-ld;
   }
 }
 .icon-add {
   &:before {
-    content: $icon-add; 
+    content: $icon-add;
   }
 }
 .icon-down-arrow {
   &:before {
-    content: $icon-down-arrow; 
+    content: $icon-down-arrow;
   }
 }
 .icon-sort-down {
   &:before {
-    content: $icon-sort-down; 
+    content: $icon-sort-down;
   }
 }
 .icon-sort-up {
   &:before {
-    content: $icon-sort-up; 
+    content: $icon-sort-up;
   }
 }
 .icon-sortable {
   &:before {
-    content: $icon-sortable; 
+    content: $icon-sortable;
   }
 }
 .icon-calendar {
   &:before {
-    content: $icon-calendar; 
+    content: $icon-calendar;
   }
 }
 .icon-calendar-selected {
   &:before {
-    content: $icon-calendar-selected; 
+    content: $icon-calendar-selected;
   }
 }
 .icon-staff {
   &:before {
-    content: $icon-staff; 
+    content: $icon-staff;
   }
 }
 .icon-staff-selected {
   &:before {
-    content: $icon-staff-selected; 
+    content: $icon-staff-selected;
   }
 }
 .icon-growth {
   &:before {
-    content: $icon-growth; 
+    content: $icon-growth;
   }
 }
 .icon-growth-selected {
   &:before {
-    content: $icon-growth-selected; 
+    content: $icon-growth-selected;
   }
 }
 .icon-pie-chart {
   &:before {
-    content: $icon-pie-chart; 
+    content: $icon-pie-chart;
   }
 }
 .icon-pie-chart-selected {
   &:before {
-    content: $icon-pie-chart-selected; 
+    content: $icon-pie-chart-selected;
   }
 }
 .icon-controls {
   &:before {
-    content: $icon-controls; 
+    content: $icon-controls;
   }
 }
 .icon-hamburger {
   &:before {
-    content: $icon-hamburger; 
+    content: $icon-hamburger;
   }
 }
 .icon-print {
   &:before {
-    content: $icon-print; 
+    content: $icon-print;
   }
 }
 .icon-chevron-right {
   &:before {
-    content: $icon-chevron-right; 
+    content: $icon-chevron-right;
   }
 }
 .icon-logout {
   &:before {
-    content: $icon-logout; 
+    content: $icon-logout;
   }
 }
 .icon-headphones {
   &:before {
-    content: $icon-headphones; 
+    content: $icon-headphones;
   }
 }
 .icon-settings {
   &:before {
-    content: $icon-settings; 
+    content: $icon-settings;
   }
 }
 .icon-search {
   &:before {
-    content: $icon-search; 
+    content: $icon-search;
   }
 }
 .icon-close {
   &:before {
-    content: $icon-close; 
+    content: $icon-close;
   }
 }
 .icon-bell {
   &:before {
-    content: $icon-bell; 
+    content: $icon-bell;
   }
 }
 .icon-grid {
   &:before {
-    content: $icon-grid; 
+    content: $icon-grid;
   }
 }
 .icon-folder {
   &:before {
-    content: $icon-folder; 
+    content: $icon-folder;
   }
 }
 .icon-folder-empty {
   &:before {
-    content: $icon-folder-empty; 
+    content: $icon-folder-empty;
   }
 }
 .icon-colums {
   &:before {
-    content: $icon-colums; 
+    content: $icon-colums;
   }
 }
-

@@ -11,7 +11,6 @@ export class AccessRightsModel {
   grantedType: GrantedType;
   parentId?: number;
   no?: number;
-  hideConfiguration?: boolean;
   localizedData?: LocalizedDataItem[];
 
   constructor(data?: AccessRightsModel) {
@@ -27,6 +26,5 @@ export class AccessRightsModel {
     this.parentId = data.parentId;
     this.no = data.no;
     this.localizedData = Utils.cloneDeep(data.localizedData);
-    this.hideConfiguration = data.hideConfiguration;
   }
 }

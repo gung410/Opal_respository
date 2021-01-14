@@ -1,64 +1,48 @@
 <div class="user-group-list">
-  <div
-    [ngClass]="{'prevent-actions': !isCurrentAllowToActionOnUserGroup}"
-    class="fluid-container menu-action"
-  >
+  <div class="fluid-container menu-action">
     <div class="menu-action__left">
-        <div *ngIf="isCurrentAllowToActionOnUserGroup">
-            <button
-            [disabled]="
-              agGridConfig === undefined || agGridConfig.selectedRows.length === 0
-            "
-            class="remove-btn"
-            (click)="onDeleteUserGroupClicked()"
-          >
-            {{ 'Common.Button.Remove' | translate }}
-          </button>
-        </div>
+      <button
+        [disabled]="
+          agGridConfig === undefined || agGridConfig.selectedRows.length === 0
+        "
+        class="remove-btn"
+        (click)="onDeleteUserGroupClicked()"
+      >
+        {{ 'Common.Button.Remove' | translate }}
+      </button>
     </div>
     <div class="menu-action__right">
-     <div *ngIf="isCurrentAllowToActionOnUserGroup">
-        <button
-        class="cx-btn create-btn"
-        (click)="onCreateUserGroupClicked()"
-      >
+      <button class="cx-btn create-btn" (click)="onCreateUserGroupClicked()">
         {{ 'Common.Button.CreateGroup' | translate }}
       </button>
-     </div>
-     
     </div>
   </div>
 
   <div>
-    <div [ngClass]="{'prevent-actions': !isCurrentAllowToActionOnUserGroup}">
-      <ag-grid-angular
-        *ngIf="agGridConfig"
-        #grid
-        class="ag-grid-header-floatable ag-grid-scroll-floatable ag-theme-material styled-grid user-group-table"
-        domLayout="autoHeight"
-        [defaultColDef]="agGridConfig.defaultColDef"
-        [columnDefs]="agGridConfig.columnDefs"
-        [context]="agGridConfig.context"
-        [rowHeight]="82"
-        [rowData]="agGridConfig.rowData"
-        [rowMultiSelectWithClick]="true"
-        [rowSelection]="'multiple'"
-        [frameworkComponents]="agGridConfig.frameworkComponents"
-        [suppressRowClickSelection]="true"
-        [suppressMenuHide]="true"
-        [gridOptions]="{ suppressMovableColumns: true }"
-        (cellClicked)="onEditUserGroupClicked($event)"
-        (sortChanged)="onSortChange($event)"
-        (firstDataRendered)="onFirstDataRendered($event)"
-        (gridReady)="onGridReady($event)"
-        (selectionChanged)="onSelectionChanged($event)"
-      >
-      </ag-grid-angular>
-    </div>
-    <div
-      *ngIf="userGroupData"
-      class="user-group-list__paging-area"
+    <ag-grid-angular
+      *ngIf="agGridConfig"
+      #grid
+      class="ag-grid-header-floatable ag-grid-scroll-floatable ag-theme-material styled-grid user-group-table"
+      domLayout="autoHeight"
+      [defaultColDef]="agGridConfig.defaultColDef"
+      [columnDefs]="agGridConfig.columnDefs"
+      [context]="agGridConfig.context"
+      [rowHeight]="82"
+      [rowData]="agGridConfig.rowData"
+      [rowMultiSelectWithClick]="true"
+      [rowSelection]="'multiple'"
+      [frameworkComponents]="agGridConfig.frameworkComponents"
+      [suppressRowClickSelection]="true"
+      [suppressMenuHide]="true"
+      [gridOptions]="{ suppressMovableColumns: true }"
+      (cellClicked)="onEditUserGroupClicked($event)"
+      (sortChanged)="onSortChange($event)"
+      (firstDataRendered)="onFirstDataRendered($event)"
+      (gridReady)="onGridReady($event)"
+      (selectionChanged)="onSelectionChanged($event)"
     >
+    </ag-grid-angular>
+    <div *ngIf="userGroupData" class="user-group-list__paging-area">
       <cx-paging
         [currentPage]="userGroupData.pageIndex"
         [recordsPerPage]="userGroupData.pageSize"

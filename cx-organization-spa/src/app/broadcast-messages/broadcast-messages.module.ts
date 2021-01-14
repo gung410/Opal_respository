@@ -39,7 +39,6 @@ import { CellBroadcastMessageStatusComponent } from './cell-components/cell-user
 import { DepartmentsDialogComponent } from './departments-dialog/departments-dialog.component';
 import { BroadcastMessagesApiService } from './services/broadcast-messages-api.service';
 import { BroadcastMessagesService } from './services/broadcast-messages.service';
-import { CellBroadcastMessageUserInfoComponent } from './cell-components/cell-broadcast-message-user-info/cell-broadcast-message-user-info.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { CellBroadcastMessageUserInfoComponent } from './cell-components/cell-br
     HeaderCustomComponent,
     BroadcastMessagesListComponent,
     CellBroadcastMessageStatusComponent,
-    CellBroadcastMessageUserInfoComponent,
     BroadcastMessageStatusComponent,
     BroadcastMessagesDetailComponent,
     BroadcastMessageRecurringDialogComponent,

@@ -5,8 +5,6 @@ using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Settings;
 using cxPlatform.Core;
-using cxPlatform.Core.Extentions.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;

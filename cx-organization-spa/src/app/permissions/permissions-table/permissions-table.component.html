@@ -1,9 +1,6 @@
 <div class="permissions-table-container">
   <div class="fluid-container">
-    <div
-      *ngIf="isButtonCreateEnabled"
-      class="menu-action"
-    >
+    <div class="menu-action">
       <button
         (click)="onSystemRoleDialogClicked()"
         class="cx-btn"
@@ -21,7 +18,7 @@
     </div>
   </div>
   <ag-grid-angular
-    style="height: 100%; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05)"
+    style="height: 100%;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);"
     class="ag-grid-header-floatable ag-grid-scroll-floatable ag-theme-material styled-grid permission-matrix-table"
     *ngIf="agGridConfig"
     #grid
@@ -35,7 +32,6 @@
     [rowBuffer]="40"
     [rowClassRules]="agGridConfig.rowClassRules"
     [frameworkComponents]="agGridConfig.frameworkComponents"
-    [gridOptions]="{ suppressMovableColumns: true }"
     [suppressColumnVirtualisation]="true"
     [suppressRowClickSelection]="true"
     [suppressMenuHide]="true"

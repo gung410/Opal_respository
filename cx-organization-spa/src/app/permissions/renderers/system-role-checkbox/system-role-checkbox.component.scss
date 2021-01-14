@@ -1,54 +1,48 @@
 .check-box-container {
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
 
-  ::ng-deep
-    .mat-checkbox-checked.mat-accent
-    .mat-checkbox-ripple
-    .mat-ripple-element {
-    opacity: 0.03 !important;
-    background-color: #313552 !important;
-    background: #313552 !important;
-  }
-
-  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #313552;
-    background: #313552 !important;
-  }
-
-  ::ng-deep
-    .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
-    .mat-ripple-element {
-    background: #313552 !important;
-  }
-
-  .checkbox-title {
-    white-space: nowrap;
-    mat-checkbox {
-      .title-description {
-        padding-left: 10px;
-        color: #88a2b5;
-      }
+    ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+        opacity: 0.03 !important;
+        background-color: #313552 !important;
+        background: #313552 !important;
     }
-  }
 
-  .arrow-icon {
-    transition: 0.2s;
-    margin-bottom: 5px;
-  }
-
-  .role-arrow-icon-collapse {
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-  }
-
-  .radio-buttons-container {
-    padding-left: 50px;
-
-    .mat-radio-button ~ .mat-radio-button {
-      margin-left: 16px;
+    ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+    .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+        background-color: #313552;
+        background: #313552 !important;
     }
-  }
+
+    ::ng-deep .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+        background: #313552 !important;
+    }
+
+    .checkbox-title {
+        mat-checkbox {
+            .title-description {
+                padding-left: 10px;
+                color: #88a2b5;
+            }
+        }
+    }
+
+    .arrow-icon {
+        transition: 0.2s;
+        margin-bottom: 5px;
+    }
+
+    .role-arrow-icon-collapse {
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .radio-buttons-container {
+        padding-left: 50px;
+
+        .mat-radio-button~.mat-radio-button {
+            margin-left: 16px;
+        }
+    }
 }

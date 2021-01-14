@@ -38,7 +38,7 @@ export const userFormJSON = {
             { value: 'Ms', text: 'Ms' }
           ],
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -50,7 +50,7 @@ export const userFormJSON = {
           requiredErrorText: 'Please fill in your full name.',
           maxLength: 66,
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`,
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`,
           validators: [
             {
               type: 'regex',
@@ -71,7 +71,7 @@ export const userFormJSON = {
           width: '20%',
           choices: ['NRIC', 'FIN', 'Other'],
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -97,7 +97,7 @@ export const userFormJSON = {
             }
           ],
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -123,7 +123,7 @@ export const userFormJSON = {
             }
           ],
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -135,7 +135,7 @@ export const userFormJSON = {
           startWithNewLine: false,
           requiredErrorText: 'Identity No is required',
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -152,7 +152,7 @@ export const userFormJSON = {
             }
           ],
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           name: 'dateOfBirth',
@@ -188,7 +188,7 @@ export const userFormJSON = {
           enableIf: `{currentObject_isExternallyMastered}==false
             and ({formDisplayMode}!='edit'
               or ({formDisplayMode}=='edit'
-                and ({currentUser_hasPermissionToEdit}==true or {currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper}==true)))`,
+                and ({currentUser_isAdministrator}==true or {currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper}==true)))`,
           validators: [
             {
               type: 'expression',
@@ -218,19 +218,17 @@ export const userFormJSON = {
               value: 0,
               text: 'Male',
               enableIf: `{titleSalutation} empty
-            or ['Dr', 'Mr'] contains {titleSalutation}
-            or {currentUser_hasPermissionToEdit}==true`
+            or ['Dr', 'Mr'] contains {titleSalutation}`
             },
             {
               value: 1,
               text: 'Female',
               enableIf: `{titleSalutation} empty
-            or ['Dr', 'Mdm', 'Miss', 'Mrs', 'Ms'] contains {titleSalutation}
-            or {currentUser_hasPermissionToEdit}==true`
+            or ['Dr', 'Mdm', 'Miss', 'Mrs', 'Ms'] contains {titleSalutation}`
             }
           ],
           enableIf: `{currentObject_isExternallyMastered}==false
-              and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           name: 'activeDate',
@@ -242,7 +240,7 @@ export const userFormJSON = {
           startWithNewLine: false,
           width: '50%',
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`,
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`,
           visibleIf: '{isVisibleActivateDate}==true'
         },
         {
@@ -265,7 +263,7 @@ export const userFormJSON = {
           visibleIf:
             "{formDisplayMode}=='edit' && {currentObject_isExternallyMastered}==true",
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           name: 'entityStatus',
@@ -298,7 +296,7 @@ export const userFormJSON = {
           },
           visibleIf: "{formDisplayMode}=='edit' and {isPendingUser}==false",
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           name: 'personalStorageSize',
@@ -364,7 +362,7 @@ export const userFormJSON = {
           choices: JobKeys,
           startWithNewLine: false,
           enableIf: `{currentObject_isExternallyMastered}==false
-            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`,
+            and ({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`,
           storeOthersAsComment: false,
           visible: false
         },
@@ -418,7 +416,7 @@ export const userFormJSON = {
                 or  ({personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.EAS}' and {currentObject_isExternallyMastered}==false)
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'tagbox',
@@ -435,7 +433,7 @@ export const userFormJSON = {
             and {isPendingUser}==false
             and {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.EO}'
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'expression',
@@ -469,7 +467,7 @@ export const userFormJSON = {
                     )
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         // {
         //   type: 'dropdown',
@@ -519,7 +517,7 @@ export const userFormJSON = {
           and {currentObject_isExternallyMastered}==false
           and {personnelGroups.codingScheme}!='${ServiceSchemeCodeEnum.NA}'
           `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'text',
@@ -567,7 +565,7 @@ export const userFormJSON = {
                 or  {designation}=='${DesignationEnum.Master_Teacher}'
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'tagbox',
@@ -593,7 +591,7 @@ export const userFormJSON = {
                     )
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'checkbox',
@@ -605,7 +603,7 @@ export const userFormJSON = {
             'Please select the appropriate System Role(s) for this user.',
           choicesByUrl: {
             url:
-              '{organizationApi_BaseUrl}/usertypes?archetypeEnums=SystemRole&includeLocalizedData=true&timestamp={replaceTS}',
+              '{organizationApi_BaseUrl}/usertypes?archetypeEnums=SystemRole&includeLocalizedData=true&timestamp=replaceTS',
             titleName: 'localizedData.0.fields.0.localizedText'
           },
           keepIncorrectValues: true,
@@ -649,7 +647,7 @@ export const userFormJSON = {
             )
             and ({formDisplayMode}!='edit'
               or ({formDisplayMode}=='edit'
-                and ({currentUser_hasPermissionToEdit}==true or {currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper}==true)))
+                and ({currentUser_isAdministrator}==true or {currentUser_isDivisionLearningCoordinatorOrSchoolStaffDeveloper}==true)))
           `,
           choicesVisibleIf: `   {currentUser_visibleRolePermission} contains {item.identity.id}
             or  (
@@ -680,7 +678,7 @@ export const userFormJSON = {
                 or  {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.AED}'
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'tagbox',
@@ -709,7 +707,7 @@ export const userFormJSON = {
                     )
                 )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           name: 'roleSpecificProficiencies',
@@ -727,7 +725,7 @@ export const userFormJSON = {
             and {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.EO}'
             and {currentObject_isExternallyMastered}==true
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'tagbox',
@@ -746,7 +744,7 @@ export const userFormJSON = {
           and {isPendingUser}==false
           and {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.EAS}'
           `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         }
       ]
     },
@@ -768,7 +766,7 @@ export const userFormJSON = {
           and {personnelGroups} notempty
           and {personnelGroups.codingScheme}!='${ServiceSchemeCodeEnum.NA}'
           `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'dropdown',
@@ -788,7 +786,7 @@ export const userFormJSON = {
             and {developmentalRoles} notempty
             and {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.AED}'
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'tagbox',
@@ -812,7 +810,7 @@ export const userFormJSON = {
                 or  {personnelGroups.codingScheme}=='${ServiceSchemeCodeEnum.MKE}'
             )
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         },
         {
           type: 'expression',
@@ -836,7 +834,7 @@ export const userFormJSON = {
             and {personnelGroups} notempty
             and {personnelGroups.codingScheme}!='${ServiceSchemeCodeEnum.NA}'
             `,
-          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_hasPermissionToEdit}==true))`
+          enableIf: `({formDisplayMode}!='edit' or ({formDisplayMode}=='edit' and {currentUser_isAdministrator}==true))`
         }
       ]
     }
