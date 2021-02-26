@@ -18,6 +18,6 @@ namespace cxOrganization.Domain.Dtos.Users
         public bool IsIncludeOrg { get; set; } = false;
         public bool IsIncludeAccessPlan { get; set; } = false;
         public DateTime? LastLoginDateBefore { get; set; }
-        public IdmUserStatus? Status { get; set; }
+        public int? Status { get; set; }
     }
 }

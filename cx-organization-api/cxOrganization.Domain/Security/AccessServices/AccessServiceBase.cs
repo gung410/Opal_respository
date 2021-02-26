@@ -22,7 +22,7 @@ namespace cxOrganization.Domain.Security.AccessServices
         protected readonly IDepartmentTypeRepository _departmentTypeRepository;
         protected readonly List<DepartmentTypeEntity> _departmentTypeEntities;
         protected AccessServiceBase(ILogger logger,
-            IHierarchyDepartmentRepository hierarchyDepartmentRepository, 
+            IHierarchyDepartmentRepository hierarchyDepartmentRepository,
             IDTDEntityRepository dtdEntityRepository,
             IDepartmentTypeRepository departmentTypeRepository)
         {
@@ -32,7 +32,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             _departmentTypeRepository = departmentTypeRepository;
         }
 
-     
+
 
         protected AccessSettingElement GetFinalAccessSettingOfRoles(IList<UserRole> executorRoles, Dictionary<string, AccessSettingElement> accessSettingByRole)
         {
@@ -109,7 +109,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 foreach (var readUserAccessSetting in readUserAccessSettings)
                 {
                     //If there is no config access for any archetype or this archetype in this readUserAccessSetting, we consider this readUserAccessSetting is allow access all user type 
-                  
+
                     List<string> configuredUserTypeExtIds = null;
 
                     if (readUserAccessSetting.OnlyUserWithUserTypeExtIds?.TryGetValue(archetype, out configuredUserTypeExtIds) == true)
@@ -175,7 +175,7 @@ namespace cxOrganization.Domain.Security.AccessServices
         protected List<HierarchyInfo> GetAccessibleHierarchyInfos(IWorkContext workContext, int executorDepartmentId, AccessSettingElement accessSetting)
         {
             var accessibleHierarchyInfos = new List<HierarchyInfo>();
-            var currentHd =  _hierarchyDepartmentRepository.GetById(workContext.CurrentHdId);
+            var currentHd = _hierarchyDepartmentRepository.GetById(workContext.CurrentHdId);
 
             var departmentTypes = _departmentTypeRepository.GetAllDepartmentTypesInCache();
 
@@ -207,7 +207,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             var currentHierarchyInfo = ancestorHierarchyInfos.CurrentHierarchyInfo;
 
 
-            var descendantHierarchyInfos =  GetAccessibleDescendantHierarchyInfos(executorDepartmentId,
+            var descendantHierarchyInfos = GetAccessibleDescendantHierarchyInfos(executorDepartmentId,
                 accessSetting, currentHd, departmentTypes, topToBelowHierarchyInfos);
 
             if (!descendantHierarchyInfos.AccessibleDescendantHierarchyInfos.IsNullOrEmpty())
@@ -226,7 +226,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 if (currentHierarchyInfo == null)
                 {
                     currentHierarchyInfo = _hierarchyDepartmentRepository.GetHierarchyInfos(currentHd.HDId,
-                            new List<int> {executorDepartmentId}, false, hierarchyId: currentHd.HierarchyId)
+                            new List<int> { executorDepartmentId }, false, hierarchyId: currentHd.HierarchyId)
                         .FirstOrDefault();
                 }
 
@@ -251,11 +251,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             var departmentTypes = await _departmentTypeRepository.GetAllDepartmentTypesInCacheAsync();
 
-            var ancestorHierarchyInfos  = await GetAccessibleAncestorHierarchyInfosAsync(
-                executorDepartmentId,
-                accessSetting,
-                currentHd,
-                departmentTypes);
+            var ancestorHierarchyInfos = await GetAccessibleAncestorHierarchyInfosAsync(executorDepartmentId, accessSetting, currentHd, departmentTypes);
 
             // Process for DLC in Division
             if (accessSetting.OnlyMoveUpOneAncestor)
@@ -271,8 +267,8 @@ namespace cxOrganization.Domain.Security.AccessServices
                         .AccessibleAncestorHierarchyInfos
                         .Where(hierarchy => hierarchy.HdId == ancestorHierarchyInfos.CurrentHierarchyInfo.ParentHdId.Value)
                         .ToList();
-                }    
-            }    
+                }
+            }
 
             List<HierarchyInfo> topToBelowHierarchyInfos = null;
 
@@ -325,7 +321,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 if (currentHierarchyInfo == null)
                 {
                     currentHierarchyInfo = (await _hierarchyDepartmentRepository.GetHierarchyInfosAsync(currentHd.HDId,
-                            new List<int> {executorDepartmentId}, false, hierarchyId: currentHd.HierarchyId))
+                            new List<int> { executorDepartmentId }, false, hierarchyId: currentHd.HierarchyId))
                         .FirstOrDefault();
                 }
 
@@ -342,6 +338,14 @@ namespace cxOrganization.Domain.Security.AccessServices
                     .Distinct()
                     .ToList();
             }
+
+            var currentUserHierarchyInfo = _hierarchyDepartmentRepository.GetHierarchyInfo(workContext.CurrentHdId,
+                executorDepartmentId, null, false);
+
+            if (!accessibleHierarchyInfos.Any(hierarchyInfo => hierarchyInfo.HdId == currentUserHierarchyInfo.HdId))
+            {
+                accessibleHierarchyInfos.Add(currentUserHierarchyInfo);
+            }    
 
             return accessibleHierarchyInfos;
         }
@@ -360,7 +364,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 var topToBelowHierarchyInfos = accessibleTopDepartmentId == null
                     ? new List<HierarchyInfo>()
                     : _hierarchyDepartmentRepository.GetAllHierarchyInfoFromAHierachyDepartmentToBelow(
-                        currentHd.HierarchyId, parentDepartmentIds: new List<int> {accessibleTopDepartmentId.Value});
+                        currentHd.HierarchyId, parentDepartmentIds: new List<int> { accessibleTopDepartmentId.Value });
 
                 var relativeHierarchyInfos = topToBelowHierarchyInfos
                     .Where(hd => hd.Path.StartsWith(ancestorHierarchyInfos.CurrentHierarchyInfo.Path)).ToList();
@@ -378,7 +382,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
                     if (departmentTypeIds.Count > 0)
                     {
-                        var validDtdEntities =  _dtdEntityRepository.GetDepartmentDepartmentTypes(
+                        var validDtdEntities = _dtdEntityRepository.GetDepartmentDepartmentTypes(
                             departmentIds: relativeHierarchyInfos.Select(h => h.DepartmentId).ToList(),
                             departmentTypeIds: departmentTypeIds);
 
@@ -409,7 +413,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 var topToBelowHierarchyInfos = accessibleTopDepartmentId == null
                     ? new List<HierarchyInfo>()
                     : await _hierarchyDepartmentRepository.GetAllHierarchyInfoFromAHierachyDepartmentToBelowAsync(
-                        currentHd.HierarchyId, parentDepartmentIds: new List<int> {accessibleTopDepartmentId.Value});
+                        currentHd.HierarchyId, parentDepartmentIds: new List<int> { accessibleTopDepartmentId.Value });
 
                 var relativeHierarchyInfos = topToBelowHierarchyInfos
                     .Where(hd => hd.Path.StartsWith(ancestorHierarchyInfos.CurrentHierarchyInfo.Path))
@@ -423,7 +427,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                         .ToList());
                     relativeHierarchyInfos.Distinct();
                 }
-                
+
                 if (AccessSettingElement.ContainsAllSymbol(accessSetting.InRelativeDepartmentTypeExtIds))
                 {
                     accessibleRelativeHierarchyInfos = relativeHierarchyInfos;
@@ -448,7 +452,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
                 return (accessibleRelativeHierarchyInfos, topToBelowHierarchyInfos);
             }
-         
+
             return (null, null);
         }
 
@@ -482,7 +486,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
                 if (departmentTypeIds.Count > 0)
                 {
-                    var validDtdEntities =  _dtdEntityRepository.GetDepartmentDepartmentTypes(
+                    var validDtdEntities = _dtdEntityRepository.GetDepartmentDepartmentTypes(
                         departmentIds: ancestorHierarchyInfos.Select(h => h.DepartmentId).ToList(),
                         departmentTypeIds: departmentTypeIds);
 
@@ -500,11 +504,8 @@ namespace cxOrganization.Domain.Security.AccessServices
 
 
 
-        private async Task<(HierarchyInfo CurrentHierarchyInfo, List<HierarchyInfo> AccessibleAncestorHierarchyInfos)> GetAccessibleAncestorHierarchyInfosAsync(
-            int executorDepartmentId, 
-            AccessSettingElement accessSetting,
-            HierarchyDepartmentEntity currentHd,
-            List<DepartmentTypeEntity> departmentTypeEntities)
+        private async Task<(HierarchyInfo CurrentHierarchyInfo, List<HierarchyInfo> AccessibleAncestorHierarchyInfos)> GetAccessibleAncestorHierarchyInfosAsync(int executorDepartmentId,
+            AccessSettingElement accessSetting, HierarchyDepartmentEntity currentHd, List<DepartmentTypeEntity> departmentTypeEntities)
         {
             var isAccessibleOnAllAncestorDepartmentType = AccessSettingElement.ContainsAllSymbol(accessSetting.InAncestorDepartmentTypeExtIds);
             var hasAnyAccessOnAncestorDepartmentType = isAccessibleOnAllAncestorDepartmentType || !accessSetting.InAncestorDepartmentTypeExtIds.IsNullOrEmpty();
@@ -512,7 +513,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             var allCurrentToTopHierarchyInfos =
                 await _hierarchyDepartmentRepository.GetAllHierarchyInfoFromAHierachyDepartmentToTheTopAsync(
-                    currentHd.HierarchyId, new List<int> {executorDepartmentId});
+                    currentHd.HierarchyId, new List<int> { executorDepartmentId });
 
             var currentHierarchyInfo = allCurrentToTopHierarchyInfos.FirstOrDefault(hd => hd.DepartmentId == executorDepartmentId);
 
@@ -618,7 +619,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return (currentHierarchyInfo, accessibleDescendantHierarchyInfos);
         }
         private async Task<(HierarchyInfo CurrentHierarchyInfo, List<HierarchyInfo> AccessibleDescendantHierarchyInfos)> GetAccessibleDescendantHierarchyInfosAsync(int executorDepartmentId, AccessSettingElement accessSetting,
-                HierarchyDepartmentEntity currentHd , List<DepartmentTypeEntity> departmentTypeEntities, List<HierarchyInfo> topToBelowHierarchyInfos)
+                HierarchyDepartmentEntity currentHd, List<DepartmentTypeEntity> departmentTypeEntities, List<HierarchyInfo> topToBelowHierarchyInfos)
         {
             var isAccessibleOnAllDescendantDepartmentType =
                 AccessSettingElement.ContainsAllSymbol(accessSetting.InDescendantDepartmentTypeExtIds);
@@ -632,13 +633,13 @@ namespace cxOrganization.Domain.Security.AccessServices
             {
                 var allCurrentToBelowHierarchyInfos =
                     await _hierarchyDepartmentRepository.GetAllHierarchyInfoFromAHierachyDepartmentToBelowAsync(
-                        currentHd.HierarchyId, new List<int> {executorDepartmentId});
+                        currentHd.HierarchyId, new List<int> { executorDepartmentId });
 
-                 currentHierarchyInfo =
-                    allCurrentToBelowHierarchyInfos.FirstOrDefault(hd => hd.DepartmentId == executorDepartmentId);
+                currentHierarchyInfo =
+                   allCurrentToBelowHierarchyInfos.FirstOrDefault(hd => hd.DepartmentId == executorDepartmentId);
 
-                 descendantHierarchyInfos = allCurrentToBelowHierarchyInfos
-                    .Where(hd => hd.DepartmentId != executorDepartmentId).ToList();
+                descendantHierarchyInfos = allCurrentToBelowHierarchyInfos
+                   .Where(hd => hd.DepartmentId != executorDepartmentId).ToList();
             }
             else
             {

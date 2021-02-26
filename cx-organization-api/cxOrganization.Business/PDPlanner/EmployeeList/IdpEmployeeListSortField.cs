@@ -26,6 +26,7 @@ namespace cxOrganization.Business.PDPlanner.EmployeeList
         PersonnelGroup = 15,
         DevelopmentalRole = 16,
         CareerPath = 17,
-        ExperienceCategory = 18
+        ExperienceCategory = 18,
+        LNACompletionRate = 19
     }    
 }

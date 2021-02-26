@@ -57,6 +57,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="pageSize"></param>
         /// <param name="orderBy"></param>
         /// <returns></returns>
+        [Obsolete("This method is obsolete, we need to implement POST method. Call organizationalunits/v2 instead.", false)]
         [Route("organizationalunits", Name = "organizationalunits:find_organizationalunit_by_parameters")]
         [HttpGet]
         [ProducesResponseType(typeof(List<OrganizationalUnitDto>), 200)]
@@ -113,6 +114,52 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 pagingDto.PageSize,
                 pagingDto.HasMoreData,
                 selectIdentity);
+        }
+
+        /// <summary>
+        /// Get organizationalunits by POST method to avoid the query parameters's length limitation.
+        /// </summary>
+        /// <param name="organizationalUnitDtoV2"></param>
+        /// <returns>List<OrganizationalUnitDto></returns>
+        [Route("organizationalunits/v2", Name = "organizationalunitsV2:find_organizationalunit_by_payload")]
+        [HttpPost]
+        [ProducesResponseType(typeof(List<OrganizationalUnitDto>), 200)]
+        public async Task<IActionResult> GetOrganizationalUnitsV2(OrganizationalUnitDtoV2 organizationalUnitDtoV2)
+        {
+            if (!ValidateMinimalFilter(organizationalUnitDtoV2.ParentDepartmentId,
+                                       organizationalUnitDtoV2.ParentDepartmentIds,
+                                       organizationalUnitDtoV2.ParentDepartmentExtId,
+                                       organizationalUnitDtoV2.OrganizationalUnitIds,
+                                       organizationalUnitDtoV2.OrganizationalUnitExtIds,
+                                       organizationalUnitDtoV2.DepartmentTypeExtIds,
+                                       organizationalUnitDtoV2.ExternallyMastered) && !organizationalUnitDtoV2.IsByPassFilter)
+            {
+                return CreateNoContentResponse();
+            }
+
+            var pagingDto = await _departmentService.GetDepartmentsAsync<OrganizationalUnitDto>(userIds: organizationalUnitDtoV2.UserIds,
+                parentDepartmentId: organizationalUnitDtoV2.ParentDepartmentId,
+                parentDepartmentIds: organizationalUnitDtoV2.ParentDepartmentIds,
+                parentDepartmentExtId: organizationalUnitDtoV2.ParentDepartmentExtId,
+                departmentIds: organizationalUnitDtoV2.OrganizationalUnitIds,
+                statusIds: organizationalUnitDtoV2.StatusEnums,
+                extIds: organizationalUnitDtoV2.OrganizationalUnitExtIds,
+                archetypeIds: new List<int>() { (int)ArchetypeEnum.OrganizationalUnit },
+                departmentTypeExtIds: organizationalUnitDtoV2.DepartmentTypeExtIds,
+                lastUpdatedBefore: organizationalUnitDtoV2.LastUpdatedBefore,
+                lastUpdatedAfter: organizationalUnitDtoV2.LastUpdatedAfter,
+                externallyMastered: organizationalUnitDtoV2.ExternallyMastered,
+                includeDepartmentType: false,   // Set to False to not include in the query into database but still map into DTOs.
+                searchText: organizationalUnitDtoV2.SearchText,
+                pageSize: organizationalUnitDtoV2.PageSize,
+                pageIndex: organizationalUnitDtoV2.PageIndex,
+                orderBy: organizationalUnitDtoV2.OrderBy);
+
+            return CreatePagingResponse(pagingDto.Items,
+                pagingDto.PageIndex,
+                pagingDto.PageSize,
+                pagingDto.HasMoreData,
+                organizationalUnitDtoV2.SelectIdentity);
         }
 
         private bool ValidateMinimalFilter(int parentDepartmentId,

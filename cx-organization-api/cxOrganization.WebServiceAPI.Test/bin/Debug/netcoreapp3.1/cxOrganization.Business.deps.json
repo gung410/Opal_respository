@@ -68,7 +68,7 @@
           "Newtonsoft.Json": "12.0.3",
           "RabbitMQ.Client": "6.1.0",
           "StackExchange.Redis": "2.1.58",
-          "System.Linq.Dynamic.Core": "1.1.5"
+          "System.Linq.Dynamic.Core": "1.2.6"
         },
         "runtime": {
           "lib/netcoreapp3.1/cxPlatform.Core.dll": {
@@ -932,11 +932,11 @@
           "System.Runtime.Extensions": "4.3.0"
         }
       },
-      "System.Linq.Dynamic.Core/1.1.5": {
+      "System.Linq.Dynamic.Core/1.2.6": {
         "runtime": {
           "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.1.5.0",
-            "fileVersion": "1.1.5.0"
+            "assemblyVersion": "1.2.6.0",
+            "fileVersion": "1.2.6.0"
           }
         }
       },
@@ -1354,7 +1354,7 @@
           "NPOI": "2.5.1",
           "Sodium.Core": "1.2.3",
           "System.IdentityModel.Tokens.Jwt": "6.7.1",
-          "System.Linq.Dynamic.Core": "1.1.5",
+          "System.Linq.Dynamic.Core": "1.2.6",
           "cxOrganization.Adapter": "1.0.0",
           "cxPlatform.Core": "1.0.84-beta"
         },
@@ -1965,12 +1965,12 @@
       "path": "system.linq/4.3.0",
       "hashPath": "system.linq.4.3.0.nupkg.sha512"
     },
-    "System.Linq.Dynamic.Core/1.1.5": {
+    "System.Linq.Dynamic.Core/1.2.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VxPRhLUvdALtBE6vdO83LxjSc3RQ9CPYwLofqKg3BkOxgz8xb4Z4vr/YhoSQ5NGHR7m6yhMDzUNUWUEeSTCHmA==",
-      "path": "system.linq.dynamic.core/1.1.5",
-      "hashPath": "system.linq.dynamic.core.1.1.5.nupkg.sha512"
+      "sha512": "sha512-npaX0wSt/Q/b54m5yfDR5t7H2L68jP/iFBHYX/sfoQfEip2x1e9wi7qoV6A0UjXIiIVAW1AfpUae++FJth9GNw==",
+      "path": "system.linq.dynamic.core/1.2.6",
+      "hashPath": "system.linq.dynamic.core.1.2.6.nupkg.sha512"
     },
     "System.Memory/4.5.4": {
       "type": "package",

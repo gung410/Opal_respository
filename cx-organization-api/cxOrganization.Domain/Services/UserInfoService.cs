@@ -279,10 +279,10 @@ namespace cxOrganization.Domain.Services
                 multipleUserTypeExtIdsFilter: multiUserTypeExtIdFilters,
                 accessPolicy: "basicInfoPolicy");
 
-            //if (userAccessChecking.AccessStatus != AccessStatus.AccessGranted)
-            //{
-            //    return new PaginatedList<UserBasicInfo>();
-            //}
+            if (userAccessChecking.AccessStatus != AccessStatus.AccessGranted)
+            {
+                return new PaginatedList<UserBasicInfo>();
+            }
 
             userIds = userAccessChecking.UserIds;
             departmentIds = userAccessChecking.ParentDepartmentIds;

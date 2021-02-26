@@ -68,7 +68,7 @@
           "lib/netstandard2.1/CsvHelper.dll": {}
         }
       },
-      "cx.datahub.scheduling.jobs.shared/1.0.26": {
+      "cx.datahub.scheduling.jobs.shared/1.0.34": {
         "type": "package",
         "dependencies": {
           "Hangfire.Core": "1.7.11"
@@ -5061,13 +5061,13 @@
         "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
-    "cx.datahub.scheduling.jobs.shared/1.0.26": {
-      "sha512": "3eQ5yy+9Ff/pXSaqLG2HbfA0JJOx31fyhy1zcGV75EmXmOEzukvKcEfLBAo9eoBJjGNOGY9iyinUwUfFpVg8Rg==",
+    "cx.datahub.scheduling.jobs.shared/1.0.34": {
+      "sha512": "AWjMV8QIj8Qn33IA/Gg6adU8fViJl2R7Q3VB061PBtupacGmBf35GyU+EYiqKYY+dQ+jOE4O2oqKI6tYltA31Q==",
       "type": "package",
-      "path": "cx.datahub.scheduling.jobs.shared/1.0.26",
+      "path": "cx.datahub.scheduling.jobs.shared/1.0.34",
       "files": [
         ".nupkg.metadata",
-        "cx.datahub.scheduling.jobs.shared.1.0.26.nupkg.sha512",
+        "cx.datahub.scheduling.jobs.shared.1.0.34.nupkg.sha512",
         "cx.datahub.scheduling.jobs.shared.nuspec",
         "lib/netstandard2.0/cx.datahub.scheduling.jobs.shared.dll"
       ]
@@ -13837,7 +13837,7 @@
       "Serilog.Sinks.RollingFile >= 3.3.0",
       "Swashbuckle.AspNetCore >= 5.5.1",
       "Swashbuckle.AspNetCore.Newtonsoft >= 5.5.1",
-      "cx.datahub.scheduling.jobs.shared >= 1.0.26",
+      "cx.datahub.scheduling.jobs.shared >= 1.0.34",
       "cxOrganization.Adapter >= 1.0.0",
       "cxOrganization.Business >= 1.0.0",
       "cxOrganization.Domain >= 1.0.0",
@@ -13845,7 +13845,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hung.doan\\.nuget\\packages\\": {}
+    "C:\\Users\\hung.doan\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -13856,10 +13857,14 @@
       "packagesPath": "C:\\Users\\hung.doan\\.nuget\\packages\\",
       "outputPath": "C:\\hung\\cx-organization-api\\cxOrganization.WebServiceAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
         "C:\\hung\\cx-organization-api\\.nuget\\NuGet.Config",
         "C:\\Users\\hung.doan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -13872,6 +13877,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
             "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj": {
               "projectPath": "C:\\hung\\cx-organization-api\\cxOrganization.Adapter\\cxOrganization.Adapter.csproj"
@@ -13893,6 +13899,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "AWSSDK.S3": {
             "target": "Package",
@@ -13976,7 +13983,7 @@
           },
           "cx.datahub.scheduling.jobs.shared": {
             "target": "Package",
-            "version": "[1.0.26, )"
+            "version": "[1.0.34, )"
           },
           "cxPlatform.Core": {
             "target": "Package",
@@ -14001,7 +14008,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

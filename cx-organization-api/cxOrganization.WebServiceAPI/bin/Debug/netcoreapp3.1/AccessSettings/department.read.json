@@ -60,6 +60,11 @@
         "inDescendantDepartmentTypeExtIds": [
         ]
       },
+      "customrole": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
       "divisiontrainingcoordinator": {
         "inSameDepartment": true,
         "onlyMoveUpOneAncestor": true,

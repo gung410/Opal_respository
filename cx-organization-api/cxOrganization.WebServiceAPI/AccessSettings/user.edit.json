@@ -2,7 +2,7 @@
   "accessSettings": {
     "editUserAccess": {
       "overallsystemadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inDescendantDepartmentTypeExtIds": [ "*" ],
         "inOwnedUserGroupArchetypes": [ "*" ],
@@ -28,7 +28,8 @@
               "schoolcontentapprovingofficer",
               "approvingofficer",
               "reportingofficer",
-              "learner"
+              "learner",
+              "customrole"
             ]
           },
           "emailAddress": {
@@ -58,11 +59,11 @@
           "ssn": {
             "allowSelfAccess": false,
             "allowedValues": []
-          } 
+          }
         }
       },
       "useraccountadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inDescendantDepartmentTypeExtIds": [ "*" ],
         "inOwnedUserGroupArchetypes": [ "*" ],
@@ -86,7 +87,8 @@
               "schoolcontentapprovingofficer",
               "approvingofficer",
               "reportingofficer",
-              "learner"
+              "learner",
+              "customrole"
             ]
           },
           "emailAddress": {
@@ -130,7 +132,8 @@
               "MOEHQcontentapprovingofficer",
               "approvingofficer",
               "reportingofficer",
-              "learner"
+              "learner",
+              "customrole"
             ]
           },
           "emailAddress": {
@@ -193,7 +196,8 @@
               "webpageeditor",
               "MOEHQcontentapprovingofficer",
               "reportingofficer",
-              "learner"
+              "learner",
+              "customrole"
             ]
           },
           "emailAddress": {
@@ -255,7 +259,8 @@
               "schoolcontentapprovingofficer",
               "approvingofficer",
               "reportingofficer",
-              "learner"
+              "learner",
+              "customrole"
             ]
           },
           "emailAddress": {
@@ -353,6 +358,32 @@
         }
       },
       "learner": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [],
+        "inOwnedUserGroupArchetypes": [],
+        "inDepartmentUserGroupArchetypes": [],
+        "restrictedProperties": {
+          "systemRoles": {
+            "allowSelfAccess": false
+
+          },
+          "emailAddress": {
+            "allowSelfAccess": false
+
+          },
+          "entityStatus": {
+            "allowSelfAccess": false
+          },
+          "delete": {
+            "allowSelfAccess": false
+
+          },
+          "ssn": {
+            "allowSelfAccess": false
+          }
+        }
+      },
+      "customrole": {
         "inSameDepartment": false,
         "inDescendantDepartmentTypeExtIds": [],
         "inOwnedUserGroupArchetypes": [],

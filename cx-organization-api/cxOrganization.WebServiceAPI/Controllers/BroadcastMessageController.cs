@@ -22,9 +22,24 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBroadcastMessagesAsync([FromQuery] BroadcastMessageSearchRequest request)
         {
-            var result = await _broadcastMessageService.GetBroadcastMessagesAsync(request);
+            var token = HttpContext.Request.Headers["Authorization"][0];
 
-            return Ok(result);
+            if (token is null)
+            {
+                return BadRequest();
+            }
+
+            var broadcastMessage = await _broadcastMessageService.GetBroadcastMessagesAsync(
+                request,
+                _workContext,
+                token);
+
+            if (broadcastMessage is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(broadcastMessage);
         }
 
         [Route("{id}")]
@@ -34,7 +49,17 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBroadcastMessageByIdAsync(int id)
         {
-            var broadcastMessage = await _broadcastMessageService.GetBroadcastMessageByIdAsync(id);
+            var token = HttpContext.Request.Headers["Authorization"][0];
+
+            if (token is null)
+            {
+                return BadRequest();
+            }
+
+            var broadcastMessage = await _broadcastMessageService.GetBroadcastMessageByIdAsync(
+                id,
+                _workContext,
+                token);
 
             if (broadcastMessage is null)
             {
@@ -51,12 +76,20 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateBroadcastMessageAsync(int id, [FromBody] BroadcastMessageDto broadcastMessageUpdateDto)
         {
-            if (broadcastMessageUpdateDto.BroadcastMessageId is null || id != broadcastMessageUpdateDto.BroadcastMessageId)
+            var token = HttpContext.Request.Headers["Authorization"][0];
+
+            if (broadcastMessageUpdateDto.BroadcastMessageId is null
+                || id != broadcastMessageUpdateDto.BroadcastMessageId
+                || token is null)
             {
                 return BadRequest();
             }
 
-            var updatedBroadcastMessage = await _broadcastMessageService.UpdateBroadcastMessageAsync(broadcastMessageUpdateDto, _workContext);
+            var updatedBroadcastMessage = await _broadcastMessageService.UpdateBroadcastMessageAsync(
+                broadcastMessageUpdateDto,
+                _workContext,
+                token);
+
             if (updatedBroadcastMessage is null)
             {
                 return NotFound();
@@ -70,7 +103,17 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBroadcastMessageAsync([FromBody] BroadcastMessageCreationDto broadcastMessageDto)
         {
-            var createdBroadcastMessage = await _broadcastMessageService.CreateBroadcastMessageAsync(broadcastMessageDto, _workContext);
+            var token = HttpContext.Request.Headers["Authorization"][0];
+
+            if (token is null)
+            {
+                return BadRequest();
+            }
+
+            var createdBroadcastMessage = await _broadcastMessageService.CreateBroadcastMessageAsync(
+                broadcastMessageDto,
+                _workContext,
+                token);
 
             if (createdBroadcastMessage is null)
             {
@@ -87,7 +130,17 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBroadcastMessageAsync(int id)
         {
-            var deletedBroadcastMessage = await _broadcastMessageService.DeleteBroadcastMessageAsync(id);
+            var token = HttpContext.Request.Headers["Authorization"][0];
+
+            if (token is null)
+            {
+                return BadRequest();
+            }
+
+            var deletedBroadcastMessage = await _broadcastMessageService.DeleteBroadcastMessageAsync(
+                id,
+                _workContext,
+                token);
 
             if (deletedBroadcastMessage is null)
             {
@@ -103,11 +156,21 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ChangeBroadcastMessageStatusAsync(int id, [FromBody] BroadcastMessageChangeStatusDto broadcastMessageChangeStatusDto)
         {
+            var token = HttpContext.Request.Headers["Authorization"][0];
+
+            if (token is null)
+            {
+                return BadRequest();
+            }
+
             if (id != broadcastMessageChangeStatusDto.BroadcastMessageId)
             {
                 return BadRequest();
             }
-            var changeResult = await _broadcastMessageService.ChangeBroadcastMessageStatusAsync(broadcastMessageChangeStatusDto, _workContext);
+            var changeResult = await _broadcastMessageService.ChangeBroadcastMessageStatusAsync(
+                broadcastMessageChangeStatusDto,
+                _workContext,
+                token);
 
             if (changeResult is null)
             {

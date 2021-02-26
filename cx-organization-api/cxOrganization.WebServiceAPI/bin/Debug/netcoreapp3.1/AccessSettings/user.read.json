@@ -98,8 +98,10 @@
           "inDescendantDepartmentTypeExtIds": [
           ],
           "inOwnedUserGroupArchetypes": [
+            "*"
           ],
           "inDepartmentUserGroupArchetypes": [
+            "*"
           ]
         },
         "divisiontrainingcoordinator": {
@@ -297,6 +299,15 @@
           ]
         },
         "learner": {
+          "inSameDepartment": false,
+          "inDescendantDepartmentTypeExtIds": [
+          ],
+          "inOwnedUserGroupArchetypes": [
+          ],
+          "inDepartmentUserGroupArchetypes": [
+          ]
+        },
+        "customrole": {
           "inSameDepartment": false,
           "inDescendantDepartmentTypeExtIds": [
           ],

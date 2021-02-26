@@ -15,6 +15,9 @@ using Microsoft.Extensions.Logging;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Entities;
 using cxPlatform.Core;
+using cxOrganization.Domain.Settings;
+using Microsoft.Extensions.Options;
+using cxOrganization.Domain.HttpClients;
 
 namespace cxOrganization.Domain.Services
 {
@@ -24,22 +27,35 @@ namespace cxOrganization.Domain.Services
         private readonly IDatahubLogger _datahubLogger;
         private readonly ILogger<BroadcastMessageService> _logger;
         private readonly IUserRepository _userRepository;
+        private IOptions<AppSettings> _appSettingOption;
+        private readonly IInternalHttpClientRequestService _internalHttpClientRequestService;
 
         public BroadcastMessageService(
             IBroadcastMessageRepository broadcastMessageRepository,
             IUserRepository userRepository,
             IDatahubLogger datahubLogger,
-            ILogger<BroadcastMessageService> logger
+            ILogger<BroadcastMessageService> logger,
+            IOptions<AppSettings> appSettingOption,
+            IInternalHttpClientRequestService internalHttpClientRequestService
         )
         {
             _broadcastMessageRepository = broadcastMessageRepository;
             _userRepository = userRepository;
             _datahubLogger = datahubLogger;
             _logger = logger;
+            _appSettingOption = appSettingOption;
+            _internalHttpClientRequestService = internalHttpClientRequestService;
         }
 
-        public async Task<BroadcastMessageDto> GetBroadcastMessageByIdAsync(int broadcastMessageId)
+        public async Task<BroadcastMessageDto> GetBroadcastMessageByIdAsync(int broadcastMessageId,
+            IWorkContext workContext,
+            string token = null)
         {
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new BroadcastMessageDto();
+            }
+
             var broadcastMessage = await _broadcastMessageRepository.GetBroadcastMessageByIdAsync(broadcastMessageId);
             if (broadcastMessage is null)
             {
@@ -50,8 +66,15 @@ namespace cxOrganization.Domain.Services
         }
 
         public async Task<PaginatedList<BroadcastMessageDto>> GetBroadcastMessagesAsync(
-            BroadcastMessageSearchRequest broadcastMessageSearchRequest)
+            BroadcastMessageSearchRequest broadcastMessageSearchRequest,
+            IWorkContext workContext,
+            string token = null)
         {
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new PaginatedList<BroadcastMessageDto>();
+            }
+
             // Get queryable
             var broadcastMessageListQueryable = _broadcastMessageRepository.GetBroadcastMessagesAsNoTracking();
 
@@ -100,9 +123,17 @@ namespace cxOrganization.Domain.Services
             };
         }
 
-        public async Task<BroadcastMessageDto> CreateBroadcastMessageAsync(BroadcastMessageCreationDto broadcastMessageCreationDto, IWorkContext workContext)
+        public async Task<BroadcastMessageDto> CreateBroadcastMessageAsync(
+            BroadcastMessageCreationDto broadcastMessageCreationDto,
+            IWorkContext workContext,
+            string token = null)
         {
             const string logHeader = "CreateBroadcastMessageAsync";
+
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new BroadcastMessageDto();
+            }
 
             var broadcastMessageEntity = BroadcastMessageEntity.MapToBroadcastMessageEntity(broadcastMessageCreationDto, new Guid(workContext.UserIdCXID));
             var createdBroadcastMessage = await _broadcastMessageRepository.CreateBroadcastMessageAsync(broadcastMessageEntity);
@@ -114,15 +145,33 @@ namespace cxOrganization.Domain.Services
             return sendingMessageResult ? BroadcastMessageDto.MapToBroadcastMessageDto(createdBroadcastMessage) : null;
         }
 
-        public async Task<BroadcastMessageDto> UpdateBroadcastMessageAsync(BroadcastMessageDto broadcastMessage, IWorkContext workContext)
+        public async Task<BroadcastMessageDto> UpdateBroadcastMessageAsync(
+            BroadcastMessageDto broadcastMessage,
+            IWorkContext workContext,
+            string token = null)
         {
             const string logHeader = "UpdateBroadcastMessageAsync";
+
+            // Checking for permission to create broadcast message.
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new BroadcastMessageDto();
+            }
 
             var existingBroadcastMessageEntity = await _broadcastMessageRepository.GetBroadcastMessageByIdAsync(broadcastMessage.BroadcastMessageId.Value);
 
             if (existingBroadcastMessageEntity is null)
             {
                 _logger.LogInformation($"{logHeader}: Broadcast message with Id: {broadcastMessage.BroadcastMessageId} is not found!");
+                return null;
+            }
+
+            // We will not allow to edit broadcast message while the message is active.
+            var currentDateTime = DateTime.Now;
+            if (existingBroadcastMessageEntity is null
+                || (existingBroadcastMessageEntity.ValidFromDate <= currentDateTime
+                    && currentDateTime < existingBroadcastMessageEntity.ValidToDate))
+            {
                 return null;
             }
 
@@ -142,7 +191,6 @@ namespace cxOrganization.Domain.Services
             existingBroadcastMessageEntity.SendMode = broadcastMessage.SendMode;
             existingBroadcastMessageEntity.RecurrenceType = broadcastMessage.RecurrenceType;
             existingBroadcastMessageEntity.NumberOfRecurrence = broadcastMessage.NumberOfRecurrence;
-            existingBroadcastMessageEntity.OwnerId = broadcastMessage.OwnerId;
             existingBroadcastMessageEntity.Title = broadcastMessage.Title;
             existingBroadcastMessageEntity.LastUpdatedBy = new Guid(workContext.UserIdCXID);
 
@@ -156,10 +204,23 @@ namespace cxOrganization.Domain.Services
             return null;
         }
 
-        public async Task<BroadcastMessageDto> ChangeBroadcastMessageStatusAsync(BroadcastMessageChangeStatusDto broadcastMessageChangeStatusDto, IWorkContext workContext)
+        public async Task<BroadcastMessageDto> ChangeBroadcastMessageStatusAsync(
+            BroadcastMessageChangeStatusDto broadcastMessageChangeStatusDto,
+            IWorkContext workContext,
+            string token = null)
         {
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new BroadcastMessageDto();
+            }
+
             var existingBroadcastMessageEntity = await _broadcastMessageRepository.GetBroadcastMessageByIdAsync(broadcastMessageChangeStatusDto.BroadcastMessageId);
-            if (existingBroadcastMessageEntity is null)
+
+            // We will not allow to edit broadcast message while the message is active.
+            var currentDateTime = DateTime.Now;
+            if (existingBroadcastMessageEntity is null
+                || (existingBroadcastMessageEntity.ValidFromDate <= currentDateTime
+                    && currentDateTime < existingBroadcastMessageEntity.ValidToDate))
             {
                 return null;
             }
@@ -173,8 +234,16 @@ namespace cxOrganization.Domain.Services
             return BroadcastMessageDto.MapToBroadcastMessageDto(updatedEntity);
         }
 
-        public async Task<BroadcastMessageDto> DeleteBroadcastMessageAsync(int broadcastMessageId)
+        public async Task<BroadcastMessageDto> DeleteBroadcastMessageAsync(
+            int broadcastMessageId,
+            IWorkContext workContext,
+            string token = null)
         {
+            if (!(await HasAccessOnBroadcastMessages(token, workContext)))
+            {
+                return new BroadcastMessageDto();
+            }
+
             var existingBroadcastMessageEntity = await _broadcastMessageRepository.GetBroadcastMessageByIdAsync(broadcastMessageId);
             if (existingBroadcastMessageEntity is null)
             {
@@ -302,6 +371,22 @@ namespace cxOrganization.Domain.Services
             var json = JsonConvert.SerializeObject(broadcastMessageCommand, jsonSerializerSettings);
             _logger.LogInformation($"{logHeader}: Datahub logger has not writtten command message of sending broadcast message '{broadcastMessage.BroadcastMessageId}' with response: {json}");
             return false;
+        }
+
+        private async Task<bool> HasAccessOnBroadcastMessages(string token, IWorkContext workContext)
+        {
+            // Checking for permission to CRUD broadcast message
+            List<string> broadcastMessagePermissions = new List<string> { "OrganizationSpa.BroadcastMessages.CRUD" };
+            var baseUrl = _appSettingOption.Value.PortalAPI + "/SystemRoles/FindByPermissionKeys";
+            var systemRoleIdsWithBroadcastMessagePermissions = await _internalHttpClientRequestService.GetAsync<List<int>>(token,
+                                                                                   baseUrl,
+                                                                                   ("PermissionKeys", broadcastMessagePermissions),
+                                                                                   ("LogicalOperator", new List<string>() { "AND" }));
+            var executorRoles = await _userRepository.GetOrSetUserRoleFromWorkContext(workContext);
+
+            var currentSystemRoleIds = executorRoles.Select(executorRole => executorRole.Id);
+
+           return currentSystemRoleIds.Any(currentSystemRoleId => systemRoleIdsWithBroadcastMessagePermissions.Contains(currentSystemRoleId));
         }
     }
 }

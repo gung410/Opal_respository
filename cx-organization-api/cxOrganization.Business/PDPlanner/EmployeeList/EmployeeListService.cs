@@ -49,7 +49,8 @@ namespace cxOrganization.Business.PDPlanner.EmployeeList
                 {IdpEmployeeListSortField.ExperienceCategory, new[] {"ExperienceCategories"}},
                 {IdpEmployeeListSortField.PersonnelGroup, new[] {"PersonnelGroups"}},
                 {IdpEmployeeListSortField.Role, new[] {"RoleInfos"}},
-                {IdpEmployeeListSortField.SystemRole, new[] {"SystemRoleInfos"}}
+                {IdpEmployeeListSortField.SystemRole, new[] {"SystemRoleInfos"}},
+                {IdpEmployeeListSortField.LNACompletionRate, new[] {"NeedResultCompletionRate"}}
             };
 
         private readonly ILogger _logger;

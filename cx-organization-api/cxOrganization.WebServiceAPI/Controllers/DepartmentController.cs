@@ -647,15 +647,19 @@ namespace cxOrganization.WebServiceAPI.Controllers
             [FromQuery] List<string> jsonDynamicData = null)
         {
             //Set includeParent is true as default to keep backward compatible with existing consumer
+            
 
             var (AccessDeniedOnRootDepartment, KeepTheRootDepartment) = await CheckDepartmentIdParameterAsync(departmentId);
 
-            //if (AccessDeniedOnRootDepartment)
-            //{
-            //    _logger.LogWarning($"Logged-in user with sub '{_workContext.Sub}' does not have access on the root department id '{departmentId}'.");
-            //    return AccessDenied();
+            // NOTE: As discussed with all sides before releasing R 3.0, we will consider the department hierarchy as public to see since people can easily go for googling it.
+            /*
+            if (AccessDeniedOnRootDepartment)
+            {
+                _logger.LogWarning($"Logged-in user with sub '{_workContext.Sub}' does not have access on the root department id '{departmentId}'.");
+                return AccessDenied();
 
-            //}
+            }
+            */
 
             var hierarchyDepartmentIdentities = await GetHierarchyDepartmentIdentitiesAsync(
                 departmentId, departmentName,
@@ -693,7 +697,8 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<HierachyDepartmentIdentityDto>), 200)]
 
-        public async Task<IActionResult> GetHierarchyDepartments(int departmentId,
+        public async Task<IActionResult> GetHierarchyDepartments(
+            int departmentId,
             string departmentName = null,
             [FromQuery] List<EntityStatusEnum> departmentEntityStatuses = null,
             [FromQuery] List<int> departmentTypeIds = null,
@@ -710,10 +715,19 @@ namespace cxOrganization.WebServiceAPI.Controllers
             var currentHD = _hierarchyDepartmentRepository.GetById(_workContext.CurrentHdId);
 
             var department = await _hierarchyDepartmentService.GetHierachyDepartmentAsync(currentHD.HierarchyId, departmentId);
-            if (department == null)
+            if (department is null)
+            {
                 return CreateNotFoundResponse(string.Format("Department not found: DepartmentId({0})", departmentId));
+            }
 
-            var items = await _hierarchyDepartmentService.GetAllHdsByPathAsync(department.Path, departmentName, pageIndex, pageSize, orderBy, jsonDynamicData, getDetailDepartment,
+            var items = await _hierarchyDepartmentService.GetAllHdsByPathAsync(
+                department.Path,
+                departmentName,
+                pageIndex,
+                pageSize,
+                orderBy,
+                jsonDynamicData,
+                getDetailDepartment,
                 departmentEntityStatuses: departmentEntityStatuses,
                 departmentTypeIds: departmentTypeIds,
                 includeDepartmentType: includeDepartmentType,
@@ -1002,67 +1016,31 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return CreateResponse(topHierarchyDepartmentIdentityDto);
         }
 
-       
+
 
         private async Task<List<HierachyDepartmentIdentityDto>> GetHierarchyDepartmentIdentitiesAsync(
-            int departmentId,
-            string departmentName,
-            List<EntityStatusEnum> departmentEntityStatuses,
-            int? maxChildrenLevel,
-            List<int> departmentTypeIds,
-            bool getParentNode,
-            List<string> jsonDynamicData,
-            bool includeParent,
-            bool includeChildren,
-            bool includeDepartmentType,
-            bool countChildren,
-            bool countUser,
-            List<EntityStatusEnum> countUserEntityStatuses,
-            bool keepTheRootDepartment)
+            int departmentId, string departmentName,
+            List<EntityStatusEnum> departmentEntityStatuses, int? maxChildrenLevel,
+            List<int> departmentTypeIds, bool getParentNode, List<string> jsonDynamicData,
+            bool includeParent, bool includeChildren, bool includeDepartmentType,
+            bool countChildren, bool countUser,
+            List<EntityStatusEnum> countUserEntityStatuses, bool keepTheRootDepartment)
         {
             var shouldCheckSecurity = !(await _hierarchyDepartmentPermissionService.IgnoreSecurityCheckAsync());
-            bool onlyHasAccessToCurrentDepartment = false;
-
-            if (_workContext.Sub is object)
-            {
-                var currentUserRoles = await _userRepository.GetOrSetUserRoleFromWorkContext(_workContext);
-                var currentAdminRoleExtIds = currentUserRoles.Select(currentUserRole => currentUserRole.ExtId);
-                var adminRoleExtIds = new List<string> {
-                "overallsystemadministrator",
-                "useraccountadministrator",
-                "divisionadmin",
-                "branchadmin",
-                "schooladmin",
-                "divisiontrainingcoordinator",
-                "schooltrainingcoordinator",
-                "approvingofficer"};
-                 onlyHasAccessToCurrentDepartment = adminRoleExtIds
-                    .TrueForAll(adminRoleExtId
-                    => !currentAdminRoleExtIds.Contains(adminRoleExtId));
-            }       
 
             var customerids = _workContext.CurrentCustomerId > 0 ? new List<int> { _workContext.CurrentCustomerId } : null;
             var hierarchyDepartmentIdentities = await _departmentService.GetDepartmentHierachyDepartmentIdentitiesAsync(
                 departmentId,
                 includeParent,
-                onlyHasAccessToCurrentDepartment ? true : includeChildren,
+                includeChildren,
                 _workContext.CurrentOwnerId,
                 customerids,
                 departmentEntityStatuses, maxChildrenLevel, countChildren, departmentTypeIds, departmentName, includeDepartmentType, getParentNode: getParentNode,
                 countUser: countUser, countUserEntityStatuses: countUserEntityStatuses,
                 jsonDynamicData: jsonDynamicData,
-                checkPermission: shouldCheckSecurity);  
+                checkPermission: shouldCheckSecurity);
 
-            if (!keepTheRootDepartment)
-            {
-                hierarchyDepartmentIdentities = _hierarchyDepartmentPermissionService.ProcessRemovingTheRootDepartment(hierarchyDepartmentIdentities);
-            }
-
-            if (onlyHasAccessToCurrentDepartment)
-            {
-                hierarchyDepartmentIdentities = new List<HierachyDepartmentIdentityDto>{ hierarchyDepartmentIdentities.First() };
-            }
-
+            if (!keepTheRootDepartment) hierarchyDepartmentIdentities = _hierarchyDepartmentPermissionService.ProcessRemovingTheRootDepartment(hierarchyDepartmentIdentities);
             return hierarchyDepartmentIdentities;
         }
 

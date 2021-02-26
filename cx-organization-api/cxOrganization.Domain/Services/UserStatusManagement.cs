@@ -34,6 +34,8 @@ namespace cxOrganization.Domain.Services
 
         protected abstract EntityStatusEnum GetDestinationStatus();
 
+        protected abstract string GetJobName();
+
         public async Task UpdateUserStatus()
         {
             using (var insideBackgroundTaskScope = _serviceProvider.CreateScope())
@@ -63,12 +65,15 @@ namespace cxOrganization.Domain.Services
 
                 try
                 {
+                    _logger.LogWarning($"START TO CHANGE IDM USER TO {GetDestinationStatus().ToString()} STATUS FOR THE NUMBER OF {idmUsers.Count} USERS");
                     var successUpdatedStatusIdmUsers = await UpdateUserStatusInIdm(GetDestinationStatus(), identityServerClientService, workContext, idmUsers);
-
+                    
+                    _logger.LogWarning($"THE NUMBER OF {successUpdatedStatusIdmUsers.Count} IDM USERS STATUS ARE AUTOMATICALLY CHANGED TO {GetDestinationStatus().ToString()} BY {GetJobName()}");
                     var neededUpdatedOrgUsers = orgUsers.Where(u => successUpdatedStatusIdmUsers.Any(idmUser => idmUser.User.Id == u.Identity.ExtId)).ToList();
-
+                   
+                    _logger.LogWarning($"START TO CHANGE ORG USER TO {GetDestinationStatus().ToString()} STATUS FOR THE NUMBER OF {orgUsers.Count} USERS");
                     var successSuspendedOrgUsers = UpdateUserStatusInOrg(GetDestinationStatus(), userService, workContext, neededUpdatedOrgUsers);
-
+                    _logger.LogWarning($"THE NUMBER OF {successSuspendedOrgUsers.Count} ORG USERS STATUS ARE AUTOMATICALLY CHANGED TO {GetDestinationStatus().ToString()} BY {GetJobName()}");
                 }
                 catch (Exception ex)
                 {
@@ -111,14 +116,22 @@ namespace cxOrganization.Domain.Services
                     if (destinationStatus == EntityStatusEnum.Inactive)
                     {
                         user.EntityStatus.StatusReasonId = EntityStatusReasonEnum.Inactive_Automatically_Inactivity;
+                        user.AddJsonPropertyIfNotExisting($"Automatically_Inactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToUniversalTime());
+                    }
+
+                    if (destinationStatus == EntityStatusEnum.Deactive)
+                    {
+                        user.EntityStatus.StatusReasonId = EntityStatusReasonEnum.Deactive_AutomaticallySetDeactive;
+                        user.AddJsonPropertyIfNotExisting($"Automatically_Deactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToUniversalTime());
                     }
 
                     var updatedUser = userService.UpdateUser(validationSpecification, user);
                     successChangingStatusUsers.Add(updatedUser);
+                    _logger.LogWarning($"SUCCESS TO UPDATE ORG USER {user.Identity.ExtId} TO {GetDestinationStatus().ToString()} STATUS BY {GetJobName()}");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"THERE IS AN ERROR WHEN CHANGING USER {user.Identity.ExtId} STATUS IN ORGANIZATION TO {GetDestinationStatus().ToString()}");
+                    _logger.LogError(ex, $"THERE IS AN ERROR WHEN CHANGING ORG USER {user.Identity.ExtId} TO {GetDestinationStatus().ToString()} STATUS BY {GetJobName()}");
                 }
             }
 
@@ -146,14 +159,13 @@ namespace cxOrganization.Domain.Services
                     var updatedUsers = await identityServerClientService.UpdateUserStatusAsync(user.Id, MapIdmToOrgStatus(destinationStatus));
                     user.Status = (int)MapIdmToOrgStatus(destinationStatus);
                     successChangingStatusUsers.Add(updatedUsers);
+                    _logger.LogWarning($"SUCCESS TO UPDATE IDM USER {user.Id} TO {GetDestinationStatus().ToString()} STATUS BY {GetJobName()}");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"THERE IS AN ERROR WHEN CHANGING USER {user.Id} STATUS IN IDM TO {GetDestinationStatus().ToString()}");
+                    _logger.LogError(ex, $"THERE IS AN ERROR WHEN CHANGING IDM USER {user.Id} TO {GetDestinationStatus().ToString()} STATUS BY {GetJobName()}");
                 }
             }
-
-
             return successChangingStatusUsers.Distinct().ToList();
         }
 

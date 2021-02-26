@@ -20,7 +20,7 @@
         "IDM_USERNAME": "Admin",
         "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
         "RABBITMQ_HOSTNAMES": "localhost",
-        "IDM_SCOPE": "userManagement cxDomainInternalApi",
+        "IDM_SCOPE": "userManagement",
         "RABBITMQ_PASSWORD": "Three2kill",
         "IDM_CLIENT_ID": "actionstarter",
         "IDM_PASSWORD": "123456",
@@ -35,6 +35,8 @@
         "Idm_ApiName": "cxDomainInternalApi",
         "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
 
+
+
       }
     },
     "cxOrganization.WebServiceAPI": {
@@ -45,13 +47,13 @@
         "DatahubLog:Enable": "true",
         "IDM_GRANT_TYPE": "client_credentials",
         "RABBITMQ_PORT": "5672",
-        "QUEUE_MANAGER_API": "https://localhost:44346/QueueManager",
+        "QUEUE_MANAGER_API": "http://localhost:44346/QueueManager",
         "IDM_USERNAME": "Admin",
         "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
         "DatahubLog:EventChannel:Enable": "true",
         "DatahubLog:EventChannel:Exchange": "uat-datahub-opal-topic-event",
         "RABBITMQ_HOSTNAMES": "localhost",
-        "IDM_SCOPE": "userManagement cxDomainInternalApi",
+        "IDM_SCOPE": "userManagement",
         "RABBITMQ_PASSWORD": "Three2kill",
         "IDM_CLIENT_ID": "cxDomainInternalApi",
         "IDM_PASSWORD": "123456",
@@ -67,6 +69,8 @@
         "REDIS_CONNECTIONSTRING": "localhost:6379",
         "Idm_ApiName": "cxDomainInternalApi",
         "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
+
+
 
       },
       "applicationUrl": "https://localhost:44365"

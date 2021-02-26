@@ -512,10 +512,10 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 return StatusCode((int)HttpStatusCode.NotFound, $"User with id {userId} is not found.");
             }
 
-            //if (checkAccessResult.AccessStatus == AccessStatus.AccessDenied)
-            //{
-            //    return AccessDenied();
-            //}
+            if (checkAccessResult.AccessStatus == AccessStatus.AccessDenied)
+            {
+                return AccessDenied();
+            }
 
             var executor = checkAccessResult.ExecutorUser;
 
@@ -591,10 +591,10 @@ namespace cxOrganization.WebServiceAPI.Controllers
         {
             userGenericDto.Identity.Id = 0;
 
-            //if (!(await _userAccessService.CheckCreateUserAccessAsync(_workContext, userGenericDto)))
-            //{
-            //    return AccessDenied();
-            //}
+            if (!(await _userAccessService.CheckCreateUserAccessAsync(_workContext, userGenericDto)))
+            {
+                return AccessDenied();
+            }
 
             var validationSpecification = (new HierarchyDepartmentValidationBuilder())
             .ValidateDepartment(userGenericDto.DepartmentId, ArchetypeEnum.Unknown)
@@ -941,7 +941,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <returns></returns>
         [Route("send-userinfor-to-datahub")]
         [HttpPost]
-        public async Task SendUserinforToDatahub()
+        public async Task SendUserinforToDatahub([FromQuery] int pageIndex = 1)
         {
             var appSetting = _appSettings.Value;
 
@@ -956,26 +956,11 @@ namespace cxOrganization.WebServiceAPI.Controllers
             };
 
             var usersList = new List<UserEntity>();
-            var hasMoreData = true;
-            int pageIndex = 1;
-            do
+            var paginatedUserEntities = await _userService.GetAllUsers(pageIndex);
+            if (paginatedUserEntities.Items.Count > 0)
             {
-                try
-                {
-                    var paginatedUserEntities = await _userService.GetAllUsers(pageIndex);
-                    hasMoreData = paginatedUserEntities.HasMoreData;
-                    pageIndex++;
-                    if (paginatedUserEntities.Items.Count > 0)
-                    {
-                        usersList.AddRange(paginatedUserEntities.Items);
-                    }
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Error for getting users at index: {pageIndex}' {ex.Message}'");
-                }
-            } while (hasMoreData);
+                usersList.AddRange(paginatedUserEntities.Items);
+            }
 
             foreach (var user in usersList)
             {

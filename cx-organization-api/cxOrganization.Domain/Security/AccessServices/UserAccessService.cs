@@ -27,7 +27,6 @@ namespace cxOrganization.Domain.Security.AccessServices
         private readonly IUserTypeRepository _userTypeRepository;
 
         private readonly AccessSettings _accessSettings;
-        const string SystemRolesCustomDataKey = "systemRoles";
         private const string defaultReadUserAccessPolicy = "defaultPolicy";
 
         public UserAccessService(ILogger<UserAccessService> logger,
@@ -474,14 +473,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                             if (!ValidateRestrictedExternalMasteredWhenCreating(editingUserDto, restrictedProperty,
                                 executorUser))
                                 return false;
-                        }
-                        else if (MatchProperty(propertyName, "systemRoles"))
-                        {
-                            if (!ValidateRestrictedSystemRolesWhenCreating(executorUser, restrictedProperty, editingUserDto))
-                                return false;
-                        }
-                      
-
+                        }                     
                     }
                 }
 
@@ -514,12 +506,6 @@ namespace cxOrganization.Domain.Security.AccessServices
                             {
                                 if (!ValidateRestrictedDelete(editingUserDto, currentUserDto, restrictedProperty,
                                     executorUser, isSelfAccess))
-                                    return false;
-                            }
-                            else if (MatchProperty(propertyName, "systemRoles"))
-                            {
-                                if (!ValidateRestrictedSystemRolesWhenEditing(executorUser, restrictedProperty,
-                                    editingUserDto, currentUserDto, isSelfAccess))
                                     return false;
                             }
                             else if (MatchProperty(propertyName, "emailAddress"))
@@ -698,102 +684,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return true;
         }
-        private bool ValidateRestrictedSystemRolesWhenEditing<T>(UserEntity executorUser,
-            RestrictedProperty restrictedProperty, T editingUserDto, T currentUserDto, bool isSelfAccess) where T : UserDtoBase
-        {
-            var restrictAnyValue = restrictedProperty.AllowedValues.IsNullOrEmpty();
 
-            var existingSystemRoles = GetUserTypeFromCustomData(SystemRolesCustomDataKey, currentUserDto);
-
-            var givenSystemRoles = GetUserTypeFromCustomData(SystemRolesCustomDataKey, editingUserDto);
-
-
-            if (givenSystemRoles == null || (existingSystemRoles.IsNullOrEmpty() && givenSystemRoles.IsNullOrEmpty()))
-            {
-                return true;
-            }
-
-            var hasInvalidValue = false;
-
-            var violateSelfEdit = isSelfAccess && !restrictedProperty.AllowSelfAccess;
-
-            foreach (var editingItem in givenSystemRoles)
-            {
-                var isAddingItem = existingSystemRoles == null ||
-                                   existingSystemRoles.All(r => r.Identity.Id != editingItem.Identity.Id);
-
-                // Temp: remove  || !restrictedProperty.AllowedValues.Contains(editingItem.Identity.ExtID for permission ticket.
-                if (isAddingItem && (violateSelfEdit || restrictAnyValue))
-                {
-                    hasInvalidValue = true;
-                    break;
-                }
-            }
-
-            if (!hasInvalidValue)
-            {
-                if (!existingSystemRoles.IsNullOrEmpty())
-                {
-                    foreach (var currentValue in existingSystemRoles)
-                    {
-                        var isRemovingItem = givenSystemRoles.All(r => r.Identity.Id != currentValue.Identity.Id);
-
-                        // Temp: remove  || !restrictedProperty.AllowedValues.Contains(currentValue.Identity.ExtID) for permission ticket.
-                        if (isRemovingItem && (violateSelfEdit || restrictAnyValue))
-                        {
-                            hasInvalidValue = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-
-            if (hasInvalidValue)
-            {
-                _logger.LogWarning(
-                    $"Logged-in user with extId {executorUser.ExtId} (id {executorUser.UserId}) is not allowed to change system roles of user {currentUserDto.Identity.Id} (extId '{currentUserDto.Identity.ExtId}') .");
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool ValidateRestrictedSystemRolesWhenCreating<T>(UserEntity executorUser, RestrictedProperty restrictedProperty, T editingUserDto) where T : UserDtoBase
-        {
-            var restrictAnyValue = restrictedProperty.AllowedValues.IsNullOrEmpty();
-
-
-            var givenSystemRoles = GetUserTypeFromCustomData(SystemRolesCustomDataKey, editingUserDto);
-
-
-            if (givenSystemRoles.IsNullOrEmpty())
-            {
-                return true;
-            }
-
-            var hasInvalidValue = false;
-
-            foreach (var editingItem in givenSystemRoles)
-            {
-
-                if(restrictAnyValue)
-                {
-                    hasInvalidValue = true;
-                    break;
-                }
-            }
-
-
-            if (hasInvalidValue)
-            {
-                _logger.LogWarning(
-                    $"Logged-in user with extId {executorUser.ExtId} (id {executorUser.UserId}) is not allowed to create user with given system roles");
-                return false;
-            }
-
-            return true;
-        }
         private List<UserTypeDto> GetUserTypeFromCustomData<T>(string customDataKey, T userDto) where T : UserDtoBase
         {
             if (userDto.CustomData != null && userDto.CustomData.ContainsKey(customDataKey))
@@ -1446,74 +1337,79 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return UserAccessResult.CreateAccessGrantedResult(userIds, userGroupIds, parentDepartmentIds, multiUserGroupFilters, multipleUserTypeIdsFilter, executorUser);
         }
-        private (bool AllowAccess, List<int> UserGroupIds, List<List<int>> MultiUserGroupFilters) GetAccessibleUserGroupIds(int ownerId, List<int> customerIds,   List<int> userGroupIds,
-            List<List<int>> multiUserGroupFilters, AccessSettingElement accessSetting, int executorUserId,
+        private (bool AllowAccess, List<int> UserGroupIds, List<List<int>> MultiUserGroupFilters) GetAccessibleUserGroupIds(
+            int ownerId,
+            List<int> customerIds,
+            List<int> userGroupIds,
+            List<List<int>> multiUserGroupFilters,
+            AccessSettingElement accessSetting,
+            int executorUserId,
             List<int> accessibleDepartmentIds)
         {
-            var isAccessibleOnAllOwnedUserGroupArchetype =
-                AccessSettingElement.ContainsAllSymbol(accessSetting.InOwnedUserGroupArchetypes);
-            var isAccessibleOnAllDepartmentUserGroupArchetype =
-                AccessSettingElement.ContainsAllSymbol(accessSetting.InDepartmentUserGroupArchetypes);
+            //var isAccessibleOnAllOwnedUserGroupArchetype =
+            //    AccessSettingElement.ContainsAllSymbol(accessSetting.InOwnedUserGroupArchetypes);
+            //var isAccessibleOnAllDepartmentUserGroupArchetype =
+            //    AccessSettingElement.ContainsAllSymbol(accessSetting.InDepartmentUserGroupArchetypes);
 
-            if (!isAccessibleOnAllOwnedUserGroupArchetype
-                || !isAccessibleOnAllDepartmentUserGroupArchetype)
-            {
-                var accessibleOwnedUserGroupArchetypeIds = accessSetting.InOwnedUserGroupArchetypes
-                    .Select(DomainHelper.ParseToArchetype)
-                    .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int) a).ToList();
+            //if (!isAccessibleOnAllOwnedUserGroupArchetype
+            //    || !isAccessibleOnAllDepartmentUserGroupArchetype)
+            //{
+            //    var accessibleOwnedUserGroupArchetypeIds = accessSetting.InOwnedUserGroupArchetypes
+            //        .Select(DomainHelper.ParseToArchetype)
+            //        .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int) a).ToList();
 
-                var accessibleDepartmentUserGroupArchetypeIds = accessSetting.InDepartmentUserGroupArchetypes
-                    .Select(DomainHelper.ParseToArchetype)
-                    .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int) a).ToList();
+            //    var accessibleDepartmentUserGroupArchetypeIds = accessSetting.InDepartmentUserGroupArchetypes
+            //        .Select(DomainHelper.ParseToArchetype)
+            //        .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int) a).ToList();
 
-                List<int> givenUserGroupIds = new List<int>();
-                if (userGroupIds != null)
-                {
-                    givenUserGroupIds.AddRange(userGroupIds);
-                }
+            //    List<int> givenUserGroupIds = new List<int>();
+            //    if (userGroupIds != null)
+            //    {
+            //        givenUserGroupIds.AddRange(userGroupIds);
+            //    }
 
-                if (multiUserGroupFilters != null)
-                {
-                    foreach (var userGroupFilters in multiUserGroupFilters)
-                    {
-                        if (userGroupFilters != null)
-                        {
-                            givenUserGroupIds.AddRange(userGroupFilters);
-                        }
-                    }
-                }
+            //    if (multiUserGroupFilters != null)
+            //    {
+            //        foreach (var userGroupFilters in multiUserGroupFilters)
+            //        {
+            //            if (userGroupFilters != null)
+            //            {
+            //                givenUserGroupIds.AddRange(userGroupFilters);
+            //            }
+            //        }
+            //    }
 
-                if (!givenUserGroupIds.IsNullOrEmpty())
-                {  
-                    var userGroupAccess = GetAccessibleUserGroupIdsFromArgument(ownerId, customerIds, executorUserId,
-                        givenUserGroupIds,
-                        userGroupIds, multiUserGroupFilters,
-                        accessibleDepartmentIds, isAccessibleOnAllOwnedUserGroupArchetype,
-                        accessibleOwnedUserGroupArchetypeIds, isAccessibleOnAllDepartmentUserGroupArchetype,
-                        accessibleDepartmentUserGroupArchetypeIds);
+            //    if (!givenUserGroupIds.IsNullOrEmpty())
+            //    {  
+            //        var userGroupAccess = GetAccessibleUserGroupIdsFromArgument(ownerId, customerIds, executorUserId,
+            //            givenUserGroupIds,
+            //            userGroupIds, multiUserGroupFilters,
+            //            accessibleDepartmentIds, isAccessibleOnAllOwnedUserGroupArchetype,
+            //            accessibleOwnedUserGroupArchetypeIds, isAccessibleOnAllDepartmentUserGroupArchetype,
+            //            accessibleDepartmentUserGroupArchetypeIds);
                   
-                    userGroupIds = userGroupAccess.UserGroupIds;
-                    multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
+            //        userGroupIds = userGroupAccess.UserGroupIds;
+            //        multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
 
-                    if (!userGroupAccess.AllowAccess)
-                    {
-                        return (false, userGroupIds, multiUserGroupFilters);
-                    }
+            //        if (!userGroupAccess.AllowAccess)
+            //        {
+            //            return (false, userGroupIds, multiUserGroupFilters);
+            //        }
 
-                }
-                else
-                {
-                    var userGroupAccess = GetAccessibleUserGroupIdsFromConfiguration(ownerId, customerIds,
-                        executorUserId, accessibleDepartmentIds, multiUserGroupFilters,
-                        isAccessibleOnAllOwnedUserGroupArchetype, accessibleOwnedUserGroupArchetypeIds,
-                        isAccessibleOnAllDepartmentUserGroupArchetype, accessibleDepartmentUserGroupArchetypeIds);
+            //    }
+            //    else
+            //    {
+            //        var userGroupAccess = GetAccessibleUserGroupIdsFromConfiguration(ownerId, customerIds,
+            //            executorUserId, accessibleDepartmentIds, multiUserGroupFilters,
+            //            isAccessibleOnAllOwnedUserGroupArchetype, accessibleOwnedUserGroupArchetypeIds,
+            //            isAccessibleOnAllDepartmentUserGroupArchetype, accessibleDepartmentUserGroupArchetypeIds);
                 
-                    multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
+            //        multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
                    
-                    if (!userGroupAccess.AllowAccess)
-                       return (false, userGroupIds, multiUserGroupFilters);
-                }
-            }
+            //        if (!userGroupAccess.AllowAccess)
+            //           return (false, userGroupIds, multiUserGroupFilters);
+            //    }
+            //}
 
             return (true, userGroupIds, multiUserGroupFilters);
         }
@@ -1521,70 +1417,70 @@ namespace cxOrganization.Domain.Security.AccessServices
            List<List<int>> multiUserGroupFilters, AccessSettingElement accessSetting, int executorUserId,
            List<int> accessibleDepartmentIds)
         {
-            var isAccessibleOnAllOwnedUserGroupArchetype =
-                AccessSettingElement.ContainsAllSymbol(accessSetting.InOwnedUserGroupArchetypes);
-            var isAccessibleOnAllDepartmentUserGroupArchetype =
-                AccessSettingElement.ContainsAllSymbol(accessSetting.InDepartmentUserGroupArchetypes);
+            //var isAccessibleOnAllOwnedUserGroupArchetype =
+            //    AccessSettingElement.ContainsAllSymbol(accessSetting.InOwnedUserGroupArchetypes);
+            //var isAccessibleOnAllDepartmentUserGroupArchetype =
+            //    AccessSettingElement.ContainsAllSymbol(accessSetting.InDepartmentUserGroupArchetypes);
 
-            if (!isAccessibleOnAllOwnedUserGroupArchetype
-                || !isAccessibleOnAllDepartmentUserGroupArchetype)
-            {
-                var accessibleOwnedUserGroupArchetypeIds = accessSetting.InOwnedUserGroupArchetypes
-                    .Select(DomainHelper.ParseToArchetype)
-                    .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int)a).ToList();
+            //if (!isAccessibleOnAllOwnedUserGroupArchetype
+            //    || !isAccessibleOnAllDepartmentUserGroupArchetype)
+            //{
+            //    var accessibleOwnedUserGroupArchetypeIds = accessSetting.InOwnedUserGroupArchetypes
+            //        .Select(DomainHelper.ParseToArchetype)
+            //        .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int)a).ToList();
 
-                var accessibleDepartmentUserGroupArchetypeIds = accessSetting.InDepartmentUserGroupArchetypes
-                    .Select(DomainHelper.ParseToArchetype)
-                    .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int)a).ToList();
+            //    var accessibleDepartmentUserGroupArchetypeIds = accessSetting.InDepartmentUserGroupArchetypes
+            //        .Select(DomainHelper.ParseToArchetype)
+            //        .Where(archetype => archetype != ArchetypeEnum.Unknown).Select(a => (int)a).ToList();
 
-                List<int> givenUserGroupIds = new List<int>();
-                if (userGroupIds != null)
-                {
-                    givenUserGroupIds.AddRange(userGroupIds);
-                }
+            //    List<int> givenUserGroupIds = new List<int>();
+            //    if (userGroupIds != null)
+            //    {
+            //        givenUserGroupIds.AddRange(userGroupIds);
+            //    }
 
-                if (multiUserGroupFilters != null)
-                {
-                    foreach (var userGroupFilters in multiUserGroupFilters)
-                    {
-                        if (userGroupFilters != null)
-                        {
-                            givenUserGroupIds.AddRange(userGroupFilters);
-                        }
-                    }
-                }
+            //    if (multiUserGroupFilters != null)
+            //    {
+            //        foreach (var userGroupFilters in multiUserGroupFilters)
+            //        {
+            //            if (userGroupFilters != null)
+            //            {
+            //                givenUserGroupIds.AddRange(userGroupFilters);
+            //            }
+            //        }
+            //    }
 
-                if (!givenUserGroupIds.IsNullOrEmpty())
-                {
-                    var userGroupAccess = await GetAccessibleUserGroupIdsFromArgumentAsync(ownerId, customerIds, executorUserId,
-                        givenUserGroupIds,
-                        userGroupIds, multiUserGroupFilters,
-                        accessibleDepartmentIds, isAccessibleOnAllOwnedUserGroupArchetype,
-                        accessibleOwnedUserGroupArchetypeIds, isAccessibleOnAllDepartmentUserGroupArchetype,
-                        accessibleDepartmentUserGroupArchetypeIds);
+            //    if (!givenUserGroupIds.IsNullOrEmpty())
+            //    {
+            //        var userGroupAccess = await GetAccessibleUserGroupIdsFromArgumentAsync(ownerId, customerIds, executorUserId,
+            //            givenUserGroupIds,
+            //            userGroupIds, multiUserGroupFilters,
+            //            accessibleDepartmentIds, isAccessibleOnAllOwnedUserGroupArchetype,
+            //            accessibleOwnedUserGroupArchetypeIds, isAccessibleOnAllDepartmentUserGroupArchetype,
+            //            accessibleDepartmentUserGroupArchetypeIds);
 
-                    userGroupIds = userGroupAccess.UserGroupIds;
-                    multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
+            //        userGroupIds = userGroupAccess.UserGroupIds;
+            //        multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
 
-                    if (!userGroupAccess.AllowAccess)
-                    {
-                        return (false, userGroupIds, multiUserGroupFilters);
-                    }
+            //        if (!userGroupAccess.AllowAccess)
+            //        {
+            //            return (false, userGroupIds, multiUserGroupFilters);
+            //        }
 
-                }
-                else
-                {
-                    var userGroupAccess = await GetAccessibleUserGroupIdsFromConfigurationAsync(ownerId, customerIds,
-                        executorUserId, accessibleDepartmentIds, multiUserGroupFilters,
-                        isAccessibleOnAllOwnedUserGroupArchetype, accessibleOwnedUserGroupArchetypeIds,
-                        isAccessibleOnAllDepartmentUserGroupArchetype, accessibleDepartmentUserGroupArchetypeIds);
+            //    }
+            //    else
+            //    {
+            //        var userGroupAccess = await GetAccessibleUserGroupIdsFromConfigurationAsync(ownerId, customerIds,
+            //            executorUserId, accessibleDepartmentIds, multiUserGroupFilters,
+            //            isAccessibleOnAllOwnedUserGroupArchetype, accessibleOwnedUserGroupArchetypeIds,
+            //            isAccessibleOnAllDepartmentUserGroupArchetype, accessibleDepartmentUserGroupArchetypeIds);
 
-                    multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
+            //        multiUserGroupFilters = userGroupAccess.MultiUserGroupFilters;
 
-                    if (!userGroupAccess.AllowAccess)
-                        return (false, userGroupIds, multiUserGroupFilters);
-                }
-            }
+            //        if (!userGroupAccess.AllowAccess)
+            //            return (false, userGroupIds, multiUserGroupFilters);
+            //    }
+            //}
 
             return (true, userGroupIds, multiUserGroupFilters);
         }

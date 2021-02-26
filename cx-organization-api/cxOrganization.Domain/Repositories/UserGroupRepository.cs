@@ -114,6 +114,7 @@ namespace cxOrganization.Domain.Repositories
          int pageIndex = 0,
          int pageSize = 0,
          string orderBy = "",
+         int? assigneeDepartmentId = null,
          List<string> referrerTokens = null,
          List<string> referrerResources = null,
          List<ArchetypeEnum> referrerArchetypes = null,
@@ -154,8 +155,17 @@ namespace cxOrganization.Domain.Repositories
             {
                 query = query.Include(q => q.User);
             }
-            //Query must be ordered before apply paging
-            query = query.ApplyOrderBy(p => p.UserGroupId, orderBy);
+
+            if (assigneeDepartmentId is object)
+            {
+                //Query must be ordered before apply paging
+                query = query
+                    .OrderByDescending(userGroup => userGroup.Department.DepartmentId == assigneeDepartmentId)
+                    .ThenBy(userGroup => userGroup.Department.Name)
+                    .ThenBy(userGroup => userGroup.User.FirstName);
+            }
+
+
 
             var hasMoreData = false;
             //Build paging from IQueryable

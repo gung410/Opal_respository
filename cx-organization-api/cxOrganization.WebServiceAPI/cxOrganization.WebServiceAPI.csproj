@@ -45,7 +45,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.3.111.21" />
-    <PackageReference Include="cx.datahub.scheduling.jobs.shared" Version="1.0.26" />
+    <PackageReference Include="cx.datahub.scheduling.jobs.shared" Version="1.0.34" />
     <PackageReference Include="cxPlatform.Core" Version="1.0.84-beta" />
     <PackageReference Include="Datahub.Processor.Base" Version="2.2.5" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.11" />

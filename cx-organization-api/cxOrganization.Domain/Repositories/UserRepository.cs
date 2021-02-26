@@ -1325,10 +1325,23 @@ namespace cxOrganization.Domain.Repositories
                 var userTypes = _userTypeRepository.GetAllUserTypesInCache()
                     .Where(ut => ut.ArchetypeId == (int)ArchetypeEnum.SystemRole || ut.ArchetypeId == (int)ArchetypeEnum.Role).ToList();
 
-                workContext.CurrentUserRoles =
+                var currentUserRoles = 
                     (from utu in userEntity.UT_Us
                      join userType in userTypes on utu.UserTypeId equals userType.UserTypeId
-                     select new UserRole { Id = utu.UserTypeId, ExtId = userType.ExtId }).ToList();
+                     select new UserRole { Id = utu.UserTypeId, ExtId = userType.ExtId });
+
+                // in case current user has current roles, we will remove them after retrieved from DB (extId is empty) and add the default one.
+                var hasCustomRoles = currentUserRoles.Any(currentUserRole => string.IsNullOrEmpty(currentUserRole.ExtId));
+                if (hasCustomRoles)
+                {
+                    currentUserRoles = currentUserRoles.Where(currentUserRole => !string.IsNullOrEmpty(currentUserRole.ExtId));
+                    currentUserRoles = currentUserRoles.Append(new UserRole
+                    {
+                        ExtId = "customrole",
+                        Id = 9999
+                    });
+                }
+                workContext.CurrentUserRoles = currentUserRoles.ToList();
             }
             return workContext.CurrentUserRoles;
         }

@@ -44,7 +44,7 @@ namespace cxOrganization.Domain.Services
             {
                 HandleToken(_httpClient, token);
 
-                var response = _httpClient.GetAsync($"development-competence-opal-api-portal/SystemRoles/?" +
+                var response = _httpClient.GetAsync($"{_appSettings.PortalAPI}/SystemRoles/?" +
                     $"includeLocalizedData={getSystemRolesInfoRequest.includeLocalizedData}" +
                     $"&includeSystemRolePermissionSubjects={getSystemRolesInfoRequest.includeSystemRolePermissionSubjects}");
 

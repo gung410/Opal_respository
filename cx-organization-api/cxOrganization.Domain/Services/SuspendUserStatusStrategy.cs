@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using cxOrganization.Domain.BaseEnums;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.HttpClients;
 using cxOrganization.Domain.Settings;
@@ -27,7 +28,7 @@ namespace cxOrganization.Domain.Services
             if (changeUserStatusSetting.TryGetValue(Policy, out var suspendPolicy) && suspendPolicy != null)
             {
                 var expiredDate = DateTime.UtcNow.AddHours(-suspendPolicy.LimitAbsenceHours);
-                users = await identityServerClientService.GetUsersAsync(new UserFilterParams { LastLoginDateBefore = expiredDate});
+                users = await identityServerClientService.GetUsersAsync(new UserFilterParams { LastLoginDateBefore = expiredDate, Status = (int)IdmUserStatus.Active });
 
                 return users;
             }
@@ -46,6 +47,11 @@ namespace cxOrganization.Domain.Services
         protected override EntityStatusEnum GetDestinationStatus()
         {
             return EntityStatusEnum.Inactive;
+        }
+
+        protected override string GetJobName()
+        {
+            return nameof(SuspendUserStatusStrategy);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace cxOrganization.Domain.Services
             if (changeUserStatusSettings.TryGetValue(Policy, out var deactivatePolicy) && deactivatePolicy != null)
             {
                 var expiredDate = DateTime.UtcNow.AddHours(-deactivatePolicy.LimitAbsenceHours);
-                users = await identityServerClientService.GetUsersAsync(new UserFilterParams { LastLoginDateBefore = expiredDate, Status = IdmUserStatus.Suspended });
+                users = await identityServerClientService.GetUsersAsync(new UserFilterParams { LastLoginDateBefore = expiredDate, Status = (int)IdmUserStatus.Suspended });
 
                 return users;
             }
@@ -46,7 +46,12 @@ namespace cxOrganization.Domain.Services
 
         protected override EntityStatusEnum GetDestinationStatus()
         {
-            return EntityStatusEnum.Inactive;
+            return EntityStatusEnum.Deactive;
+        }
+
+        protected override string GetJobName()
+        {
+            return nameof(DeActiveUserStatusStrategy);
         }
     }
 }

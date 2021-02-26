@@ -225,7 +225,7 @@ namespace cxOrganization.Domain.Common
             dynamic recipient)
         {
             dynamic body = null;
-            if (emailSubject == "OPAL2.0 - Change of Email and Username")
+            if (emailSubject == "OPAL2.0 - Change of Email and Username" || emailSubject == "OPAL2.0 - Account Email Change")
             {
                 body = new
                 {
@@ -441,7 +441,7 @@ namespace cxOrganization.Domain.Common
                             },
                             ReferenceData = new { }
                         },
-                        Channel = "email",
+                        Channel = "Email",
                         Message = new
                         {
                             ClientId = "organization_api",
@@ -469,12 +469,13 @@ namespace cxOrganization.Domain.Common
                             },
                             ReferenceData = new { }
                         },
-                        Channel = "email",
+                        Channel = "Email",
                         Message = new
                         {
                             ClientId = "organization_api",
                             ExternalId = externalId,
                             Subject = subject,
+                            DisplayMessage = displayMessage,
                             StartDate = validFromDate,
                             EndDate = validToDate,
                             MessageType = "Banner",

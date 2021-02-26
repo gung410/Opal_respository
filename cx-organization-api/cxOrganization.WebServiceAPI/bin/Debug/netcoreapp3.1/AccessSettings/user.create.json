@@ -2,7 +2,7 @@
   "accessSettings": {
     "createUserAccess": {
       "overallsystemadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inDescendantDepartmentTypeExtIds": [
           "*"
@@ -49,7 +49,7 @@
         }
       },
       "useraccountadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inDescendantDepartmentTypeExtIds": [
           "*"
@@ -220,6 +220,15 @@
 
       },
       "learner": {
+        "inSameDepartment": false,
+        "inDescendantDepartmentTypeExtIds": [
+        ],
+        "inOwnedUserGroupArchetypes": [
+        ],
+        "inDepartmentUserGroupArchetypes": [
+        ]
+      },
+      "customrole": {
         "inSameDepartment": false,
         "inDescendantDepartmentTypeExtIds": [
         ],

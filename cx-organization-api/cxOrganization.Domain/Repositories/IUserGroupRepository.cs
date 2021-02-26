@@ -58,6 +58,7 @@ namespace cxOrganization.Domain.Repositories
             int pageIndex = 0,
             int pageSize = 0,
             string orderBy = "",
+            int? assigneeDepartmentId = null,
             List<string> referrerTokens = null,
             List<string> referrerResources = null,
             List<ArchetypeEnum> referrerArchetypes = null,

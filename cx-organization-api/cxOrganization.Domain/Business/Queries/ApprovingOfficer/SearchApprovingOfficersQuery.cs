@@ -72,6 +72,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
 
             if (query.IsCrossOrganizationalUnit)
             {
+                // 15813 - Testing only, should be replaced by ExtId
                 var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToBelow(15813);
                 parentDepartmentIds.AddRange(ids);
             }
@@ -114,7 +115,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
         }
         public async Task<PaginatedList<ApprovalGroupDto>> HandleAsync(SearchApprovingOfficersQuery query)
         {
-            if (query.SearchInSameDepartment || query.SearchFromDepartmentToTop)
+            if ((query.SearchInSameDepartment || query.SearchFromDepartmentToTop) && !query.IsCrossOrganizationalUnit)
             {
                 {
                     if (!query.AssigneeDepartmentId.HasValue || query.AssigneeDepartmentId == 0)
@@ -131,7 +132,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
 
             if (query.IsCrossOrganizationalUnit)
             {
-                // 15813 - Testing only.
+                // 15813 - Testing only, should be replaced by ExtId
                 var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToBelow(15813);
                 parentDepartmentIds.AddRange(ids);
             } else if(query.SearchFromDepartmentToTop)
@@ -172,6 +173,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
                 pageIndex: query.PageIndex,
                 pageSize: query.PageSize,
                 orderBy: query.OrderBy,
+                assigneeDepartmentId: query.AssigneeDepartmentId,
                 searchKey: query.SearchKey,
                 includeDepartment: true,
                 includeUser: true);

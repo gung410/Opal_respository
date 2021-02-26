@@ -1,16 +1,12 @@
 ﻿using cxOrganization.Domain.Dtos.Users;
-using cxOrganization.Domain.Entities;
-using cxOrganization.Domain.HttpClients;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
-using cxOrganization.WebServiceAPI.Processor;
 using cxOrganization.WebServiceAPI.Processor.Event;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
 using Datahub.Processor.Base.ProcessorRegister;
-using Datahub.Processor.Base.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

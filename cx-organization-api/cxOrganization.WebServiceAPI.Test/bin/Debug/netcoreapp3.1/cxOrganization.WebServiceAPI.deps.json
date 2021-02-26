@@ -44,7 +44,7 @@
           "Serilog.Sinks.RollingFile": "3.3.0",
           "Swashbuckle.AspNetCore": "5.5.1",
           "Swashbuckle.AspNetCore.Newtonsoft": "5.5.1",
-          "cx.datahub.scheduling.jobs.shared": "1.0.26",
+          "cx.datahub.scheduling.jobs.shared": "1.0.33",
           "cxOrganization.Adapter": "1.0.0",
           "cxOrganization.Business": "1.0.0",
           "cxOrganization.Domain": "1.0.0",
@@ -396,14 +396,14 @@
           "lib/netstandard2.1/CsvHelper.dll": {}
         }
       },
-      "cx.datahub.scheduling.jobs.shared/1.0.26": {
+      "cx.datahub.scheduling.jobs.shared/1.0.33": {
         "dependencies": {
           "Hangfire.Core": "1.7.11"
         },
         "runtime": {
           "lib/netstandard2.0/cx.datahub.scheduling.jobs.shared.dll": {
-            "assemblyVersion": "1.0.0.26",
-            "fileVersion": "1.0.0.26"
+            "assemblyVersion": "1.0.33.0",
+            "fileVersion": "1.0.33.0"
           }
         },
         "compile": {
@@ -422,7 +422,7 @@
           "Newtonsoft.Json": "12.0.3",
           "RabbitMQ.Client": "6.1.0",
           "StackExchange.Redis": "2.1.58",
-          "System.Linq.Dynamic.Core": "1.1.5"
+          "System.Linq.Dynamic.Core": "1.2.6"
         },
         "runtime": {
           "lib/netcoreapp3.1/cxPlatform.Core.dll": {
@@ -3362,11 +3362,11 @@
           "System.Runtime.Extensions": "4.3.0"
         }
       },
-      "System.Linq.Dynamic.Core/1.1.5": {
+      "System.Linq.Dynamic.Core/1.2.6": {
         "runtime": {
           "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.1.5.0",
-            "fileVersion": "1.1.5.0"
+            "assemblyVersion": "1.2.6.0",
+            "fileVersion": "1.2.6.0"
           }
         },
         "compile": {
@@ -4124,7 +4124,7 @@
           "NPOI": "2.5.1",
           "Sodium.Core": "1.2.3",
           "System.IdentityModel.Tokens.Jwt": "6.7.1",
-          "System.Linq.Dynamic.Core": "1.1.5",
+          "System.Linq.Dynamic.Core": "1.2.6",
           "cxOrganization.Adapter": "1.0.0",
           "cxPlatform.Core": "1.0.84-beta"
         },
@@ -5751,12 +5751,12 @@
       "path": "csvhelper/15.0.5",
       "hashPath": "csvhelper.15.0.5.nupkg.sha512"
     },
-    "cx.datahub.scheduling.jobs.shared/1.0.26": {
+    "cx.datahub.scheduling.jobs.shared/1.0.33": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3eQ5yy+9Ff/pXSaqLG2HbfA0JJOx31fyhy1zcGV75EmXmOEzukvKcEfLBAo9eoBJjGNOGY9iyinUwUfFpVg8Rg==",
-      "path": "cx.datahub.scheduling.jobs.shared/1.0.26",
-      "hashPath": "cx.datahub.scheduling.jobs.shared.1.0.26.nupkg.sha512"
+      "sha512": "sha512-xmCA7KDZv9pY1VT+yuyr8m2lFmeD6KWpOTkCcwPOu0IIplzaqiGFgIZxMgDj5swJ530g9s8EJhrStul57msNxw==",
+      "path": "cx.datahub.scheduling.jobs.shared/1.0.33",
+      "hashPath": "cx.datahub.scheduling.jobs.shared.1.0.33.nupkg.sha512"
     },
     "cxPlatform.Core/1.0.84-beta": {
       "type": "package",
@@ -7375,12 +7375,12 @@
       "path": "system.linq/4.3.0",
       "hashPath": "system.linq.4.3.0.nupkg.sha512"
     },
-    "System.Linq.Dynamic.Core/1.1.5": {
+    "System.Linq.Dynamic.Core/1.2.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VxPRhLUvdALtBE6vdO83LxjSc3RQ9CPYwLofqKg3BkOxgz8xb4Z4vr/YhoSQ5NGHR7m6yhMDzUNUWUEeSTCHmA==",
-      "path": "system.linq.dynamic.core/1.1.5",
-      "hashPath": "system.linq.dynamic.core.1.1.5.nupkg.sha512"
+      "sha512": "sha512-npaX0wSt/Q/b54m5yfDR5t7H2L68jP/iFBHYX/sfoQfEip2x1e9wi7qoV6A0UjXIiIVAW1AfpUae++FJth9GNw==",
+      "path": "system.linq.dynamic.core/1.2.6",
+      "hashPath": "system.linq.dynamic.core.1.2.6.nupkg.sha512"
     },
     "System.Linq.Expressions/4.3.0": {
       "type": "package",

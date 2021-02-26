@@ -2,7 +2,7 @@
   "accessSettings": {
     "readUserPoolAccess": {
       "overallsystemadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inAncestorDepartmentTypeExtIds": [
         ],
@@ -10,7 +10,7 @@
         ]
       },
       "useraccountadministrator": {
-        "hasFullAccessOnHierarchy":true,
+        "hasFullAccessOnHierarchy": true,
         "inSameDepartment": true,
         "inAncestorDepartmentTypeExtIds": [
         ],
@@ -53,6 +53,13 @@
         ]
       },
       "learner": {
+        "inSameDepartment": false,
+        "inAncestorDepartmentTypeExtIds": [
+        ],
+        "inDescendantDepartmentTypeExtIds": [
+        ]
+      },
+      "customrole": {
         "inSameDepartment": false,
         "inAncestorDepartmentTypeExtIds": [
         ],

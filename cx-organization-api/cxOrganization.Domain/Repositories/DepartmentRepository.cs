@@ -74,6 +74,9 @@ namespace cxOrganization.Domain.Repositories
                 searchText: searchText,
                 orderBy: orderBy);
 
+            // Additional order
+            query = query.OrderBy(department => department.Name);
+
             var pagingResult = await query.ToPagingAsync(pageIndex, pageSize);
 
             return new PaginatedList<DepartmentEntity>(pagingResult.Items, pageIndex, pageSize, pagingResult.HasMoreData);

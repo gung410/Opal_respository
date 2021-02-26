@@ -11,7 +11,8 @@ C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\AccessSettings\userpool.read.json
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\appsettings.systemtest.json
-C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\mass.user.creation.message.json
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\property.mapping.config.json
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.exe
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\appsettings.json
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\DbMigration\Scripts\20200623034646_CreateFuncGetPathDepartmentID.sql
@@ -250,12 +251,11 @@ C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.csproj.CoreCompileInputs.cache
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.RazorTargetAssemblyInfo.cache
-C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.csproj.CopyComplete
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\staticwebassets\cxOrganization.WebServiceAPI.StaticWebAssets.Manifest.cache
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\staticwebassets\cxOrganization.WebServiceAPI.StaticWebAssets.xml
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\scopedcss\bundle\cxOrganization.WebServiceAPI.styles.css
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.RazorTargetAssemblyInfo.cache
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.csproj.CopyComplete
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.dll
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.pdb
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.genruntimeconfig.cache
-C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\mass.user.creation.message.json
-C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\property.mapping.config.json

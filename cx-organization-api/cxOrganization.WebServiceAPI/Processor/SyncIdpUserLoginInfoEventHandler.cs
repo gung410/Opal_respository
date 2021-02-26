@@ -17,17 +17,16 @@ namespace cxOrganization.WebServiceAPI.Processor
         public override string Action => AcceptedAction;
         protected override void SetUpdatingValueForUser(UserGenericDto userDb, IdpEvent eventData)
         {
-            if (userDb.GetJsonPropertyValue(UserJsonDynamicAttributeName.FirstLoginDate) == null)
-            {
-                if (userDb.EntityStatus.StatusId == EntityStatusEnum.New)
-                    userDb.EntityStatus.StatusId = EntityStatusEnum.Active;
-
-                userDb.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.FirstLoginDate, eventData.Created);
-            }
-            if (userDb.EntityStatus.StatusId == EntityStatusEnum.IdentityServerLocked)
+            if (userDb.EntityStatus.StatusId == EntityStatusEnum.IdentityServerLocked || userDb.EntityStatus.StatusId == EntityStatusEnum.New)
             {
                 userDb.EntityStatus.StatusId = EntityStatusEnum.Active;
             }
+
+            if (userDb.GetJsonPropertyValue(UserJsonDynamicAttributeName.FirstLoginDate) == null)
+            {
+                userDb.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.FirstLoginDate, eventData.Created);
+            }
+
             userDb.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.LastLoginDate, eventData.Created);
         }
     }
