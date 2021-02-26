@@ -53,7 +53,6 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
 
   userList: UserManagement[] = [];
   belongingUserInUserGroup: UserManagement[] = [];
-  userDepartmentId: number;
   defaultAvatar: string = `../../../../../assets/images/default-avatar.png`;
   agGridConfig: AgGridConfigModel;
   selectedUserIds: string[] = [];
@@ -142,6 +141,8 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
   }
 
   isUserSelected(user: UserManagement): boolean {
+    this.sizeColumnToFit();
+
     return this.agGridConfig.rowData.includes(user);
   }
 
@@ -210,6 +211,10 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
     // Without it, dropdown would not be shown... Must have second click on search bar to make dropdown happens!
   }
 
+  sizeColumnToFit(): void {
+    this.agGridConfig.gridApi.sizeColumnsToFit();
+  }
+
   private getUsers(): void {
     this.userAccountsDataService
       .getUsers(
@@ -241,7 +246,7 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
           new UserManagementQueryModel({
             searchKey: searchText,
             orderBy: 'firstName asc',
-            parentDepartmentId: [this.userDepartmentId],
+            parentDepartmentId: [this.currentUser.departmentId],
             userEntityStatuses: this.defaultStatusFilter,
             pageIndex:
               maxResultCount === 0 ? 1 : skipCount / maxResultCount + 1,
@@ -291,23 +296,17 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
         checkboxSelection: true,
         headerCheckboxSelection: true,
         sortable: true,
-        cellRenderer: 'cellUserInfo',
-        minWidth: 353,
-        maxWidth: 353
+        cellRenderer: 'cellUserInfo'
       }),
       new ColumDefModel({
         headerName: 'Place of Work',
         field: USER_LIST_HEADER_CONST.OrganisationUnit.fieldName,
         colId: USER_LIST_HEADER_CONST.OrganisationUnit.colId,
-        sortable: false,
-        minWidth: 240,
-        maxWidth: 240
+        sortable: false
       }),
       new ColumDefModel({
         headerName: '',
         cellRenderer: 'cellRemoveButton',
-        minWidth: 100,
-        maxWidth: 100,
         sortable: false,
         suppressSizeToFit: false,
         suppressMenu: true,

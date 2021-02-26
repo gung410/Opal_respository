@@ -1,9 +1,7 @@
 @import '../../../assets/styles/variables.scss';
 @import '../../../assets/styles/mixins.scss';
 
-
 .broadcast-messages-list {
-
     ::ng-deep .dropdown-toggle::after {
         display: none;
     }
@@ -256,13 +254,20 @@
         border-radius: 5px;
     }
 
-    .ag-header.ag-grid-header-fixed {
-        top: 0px !important;
+    .ag-grid-header-fixed {
+        top: 0px;
+        width: calc(100% - 85px);
+
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        width: calc(100% - 85px) !important;
+
+        @media only screen and (max-width: $screen-xs-max) {
+            & {
+                left: 24px;
+            }
+        }
     }
 }
 
@@ -429,7 +434,6 @@
         bottom: 0px;
         width: calc(100% - 84px);
         z-index: 1;
-        display: none;
 
         @media only screen and (max-width: $screen-xs-max) {
             width: calc(100% - 32px);
@@ -496,7 +500,6 @@
         box-shadow: none;
     }
 }
-
 
 cx-dialog-template {
     .cx-dialog-template .modal-body {

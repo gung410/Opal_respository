@@ -19,7 +19,8 @@ export const environment = {
     event: 'pre-prod-competence-opal-api-event',
     communication: 'pre-prod-datahub-opal-api-communication',
     dataHub: 'pre-prod-datahub-opal-api-query',
-    learningCatalog: 'pre-prod-competence-opal-api-learningcatalog'
+    learningCatalog: 'pre-prod-competence-opal-api-learningcatalog',
+    tagging: 'pre-prod-learnapp-opal-api-tagging'
   },
   site: {
     title: 'System Admin',
@@ -38,7 +39,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.pre-prod.opal2.conexus.net',
-  auditLogAppUrl: 'https://admin.pre-prod.opal2.conexus.net',
+  baseProfileUrl: 'https://admin.pre-prod.opal2.conexus.net',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',

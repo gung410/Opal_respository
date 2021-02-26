@@ -6,8 +6,6 @@ import { IAfterGuiAttachedParams, IHeaderParams } from 'ag-grid-community';
 
 import { EditingSignal } from 'app/permissions/dtos/editing-signal.dto';
 
-import { HeaderComparison } from 'app/permissions/dtos/header-comparison.dto';
-
 import { SystemRoleAction } from 'app/permissions/enum/permission-action.enum';
 
 import { ColumnItemModel } from 'app/permissions/models/column-item.model';
@@ -20,9 +18,9 @@ import { PermissionsColumnService } from 'app/permissions/services/permissions-c
 
 import { PermissionsTableService } from 'app/permissions/services/permissions-table.service';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'system-role-header',
@@ -34,6 +32,8 @@ export class SystemRoleHeaderComponent
   subscription: Subscription = new Subscription();
   originColName: string = '';
   colName: string = '';
+  isHidden$: Observable<boolean>;
+  communitySiteModuleId: number;
 
   colId: number | string;
   isEditing: boolean = false;
@@ -53,8 +53,10 @@ export class SystemRoleHeaderComponent
       ColumnItemModel<GrantedAccessRightsModel>
     >
   ) {
+    this.communitySiteModuleId = this.permissionsTableSvc.communitySiteModuleId;
     this.createEditObserver();
     this.createActionsObserver();
+    this.checkCurrentModuleToHide();
   }
 
   agInit(params: any): void {
@@ -142,6 +144,12 @@ export class SystemRoleHeaderComponent
         }
       });
     this.subscription.add(actionSubscription);
+  }
+
+  private checkCurrentModuleToHide(): void {
+    this.isHidden$ = this.permissionsTableSvc.moduleSelectionSignal$.pipe(
+      map((moduleId) => this.communitySiteModuleId === moduleId)
+    );
   }
 
   private createEditObserver(): void {

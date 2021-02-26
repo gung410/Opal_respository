@@ -1,3 +1,4 @@
+import { BatchJobsMonitoringModule } from './batch-jobs-monitoring/batch-jobs-monitoring.module';
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
@@ -54,6 +55,7 @@ import { ReportsModule } from './reports/reports.module';
 import { SessionTimeoutPageComponent } from './session-timeout-page/session-timeout-page.component';
 import { AppConstant } from './shared/app.constant';
 import { AppSettingService } from './shared/services/app-setting.service';
+import { TaxonomyManagementModule } from './taxonomy-management/taxonomy-management.module';
 import { UserAccountsModule } from './user-accounts/user-accounts.module';
 import { UserGroupsModule } from './user-groups/user-groups.module';
 
@@ -108,8 +110,10 @@ export function loaderConfigFactory(): CxLoaderModuleConfig {
     BroadcastMessagesModule,
     PermissionsModule,
     SystemAuditLogModule,
+    BatchJobsMonitoringModule,
     ReportsModule,
     UserGroupsModule,
+    TaxonomyManagementModule,
     AngularFireModule.initializeApp(AppConstant.firebase.fcmConfig),
     AngularFireAuthModule,
     UserIdleModule.forRoot({

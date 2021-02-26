@@ -90,14 +90,15 @@
       <section class="recurring mb-4">
         <mat-checkbox
           [checked]="isRecurring"
-          (click)="checkRecurring()"
+          style="cursor: pointer;"
+          (click)="onMessageTypeChanged()"
           class="config-label recurring-checked"
         >Message Type</mat-checkbox>
         <div class="mb-2 mt-3">
           <mat-radio-group
             [disabled]="isEditMode"
             class="recurring-select"
-            (change)="checkRecurring()"
+            (change)="onMessageTypeChanged()"
             aria-label="Select an option"
           >
             <mat-radio-button
@@ -255,6 +256,13 @@
           class="warning-container"
         >
           <span class="date-range-warning">Show until must be after Show from.</span>
+        </div>
+        <div
+          *ngIf="isDateRangeOnTheSameDate && isRecurring"
+          class="warning-container"
+        >
+          <span class="date-range-warning">This is a recurring broadcast message. It cannot start and end on the same
+            day.</span>
         </div>
         <div
           [hidden]="!isRecurring"

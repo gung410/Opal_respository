@@ -10,11 +10,7 @@
     [notificationList]="notifications"
     [isShowNotificationBell]="isShowNotificationBell"
     [bellUrl]="notificationBellUrl"
-    [placeholderText]="
-      isInUserManagement
-        ? 'Search in User Management'
-        : ('Search in Organisation Management' | translate)
-    "
+    [placeholderText]="generatePlaceholderText()"
     (clickedHamburger)="onClickedHamburger()"
     (clickedNotification)="onClickNotification($event)"
     (openNotificationPopUp)="onOpenNotificationPopUp($event)"

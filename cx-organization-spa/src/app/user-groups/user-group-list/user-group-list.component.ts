@@ -45,7 +45,8 @@ import {
 } from '../user-groups.model';
 import { CellDropdownMenuComponent } from './cell-dropdown-menu/cell-dropdown-menu.component';
 import { UserGroupModifyFormComponent } from './user-group-modify-form/user-group-modify-form.component';
-import { Utils } from 'app-utilities/utils';
+import { SAM_PERMISSIONS } from '../../shared/constants/sam-permission.constant';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'user-group-list',
@@ -56,30 +57,6 @@ import { Utils } from 'app-utilities/utils';
 export class UserGroupListComponent
   extends BaseScreenComponent
   implements OnInit {
-  static freezeMenuActions(): any {
-    const headerHeight = 128;
-    const freezeFunction = () => {
-      const menuAction = document.querySelector('.fluid-container.menu-action');
-
-      if (!menuAction) {
-        return;
-      }
-
-      const fixedClassName = 'menu-action-fixed';
-      const currentScrollHeight =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
-      if (currentScrollHeight > headerHeight) {
-        menuAction.classList.add(fixedClassName);
-      } else {
-        menuAction.classList.remove(fixedClassName);
-      }
-    };
-
-    return freezeFunction;
-  }
   userDepartmentId: number; // The identifier of the department of the current logged-in user.
   currentDepartmentId: number = -1; // The identifier of the viewing-department.
   filterParams: UserGroupFilterParams;
@@ -137,10 +114,12 @@ export class UserGroupListComponent
 
     window.addEventListener('scroll', CommonHelpers.freezeAgGridHeader(), true);
     window.addEventListener('scroll', CommonHelpers.freezeAgGridScroll(), true);
-    window.addEventListener(
-      'scroll',
-      UserGroupListComponent.freezeMenuActions(),
-      true
+    window.addEventListener('scroll', CommonHelpers.freezeMenuActions(), true);
+  }
+
+  get isCurrentAllowToActionOnUserGroup(): boolean {
+    return this.currentUser.hasPermission(
+      SAM_PERMISSIONS.CUDinUserGroupManagement
     );
   }
 
@@ -173,7 +152,7 @@ export class UserGroupListComponent
   }
 
   setColumnDef(): any {
-    return [
+    const colsDef: ColDef[] = [
       {
         headerName: this.getImmediatelyLanguage(
           UserGroupHeaderConstant.Name.text
@@ -181,8 +160,8 @@ export class UserGroupListComponent
         field: UserGroupHeaderConstant.Name.fieldName,
         colId: UserGroupHeaderConstant.Name.colId,
         minWidth: 200,
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
+        checkboxSelection: this.isCurrentAllowToActionOnUserGroup,
+        headerCheckboxSelection: this.isCurrentAllowToActionOnUserGroup,
         sortable: true
       },
       {
@@ -204,8 +183,11 @@ export class UserGroupListComponent
         minWidth: 200,
         sortable: false,
         suppressMenu: true
-      },
-      {
+      }
+    ];
+
+    if (this.isCurrentAllowToActionOnUserGroup) {
+      colsDef.push({
         headerName: '',
         cellRenderer: 'cellDropdownMenu',
         maxWidth: 50,
@@ -221,8 +203,10 @@ export class UserGroupListComponent
           onClick: this.onClickDropdownMenuAction.bind(this),
           label: 'OnClick'
         }
-      }
-    ];
+      });
+    }
+
+    return colsDef;
   }
 
   onGridReady(params: any): void {

@@ -2,6 +2,7 @@ import { Dictionary, Utils } from 'app-utilities/utils';
 import { findIndexCommon } from 'app/shared/constants/common.const';
 import { GrantedType } from '../enum/granted-type.enum';
 import { ObjectType } from '../enum/object-type.enum';
+import { AccessRightsLevel } from '../models/access-rights-level.model';
 import { AccessRightsMatrixModel } from '../models/access-rights-matrix.model';
 import { AccessRightsModel } from '../models/access-rights.model';
 import { GrantedAccessRightsModel } from '../models/granted-access-rights.model';
@@ -93,67 +94,101 @@ export class AccessRightMatrixHelper {
     return accessRightsMatrixModel;
   }
 
-  // static reorderLevelsOfAccessRights(
-  //   accessRights: AccessRightsModel[],
-  //   moduleId: number
-  // ): void {
-  //   const orderedAccessRights: AccessRightsModel[] = [];
+  static sortAccessRightsHierarchically(
+    accessRights: AccessRightsModel[]
+  ): AccessRightsLevel[] {
+    const originalNodes = {}; // the original values
+    const nodeIndex = {}; // tree nodes
 
-  //   const mainAccessRights = accessRights.filter(
-  //     (accessRight) => accessRight.parentId === moduleId
-  //   );
+    let i: number;
+    for (i = 0; i < accessRights.length; i++) {
+      const accessRightId = accessRights[i].id;
+      const unsortedNode = {
+        id: accessRightId,
+        level: 1,
+        children: [],
+        sorted: false
+      };
+      originalNodes[accessRightId] = accessRights[i];
+      nodeIndex[accessRightId] = unsortedNode;
+    }
 
-  //   mainAccessRights.forEach((accessRight) => {
-  //     const hierarchyOfAccessRight = this.getHierarchyOfAccessRight(
-  //       accessRights.slice(mainAccessRights.length),
-  //       accessRight
-  //     );
+    // populate tree
+    for (i = 0; i < accessRights.length; i++) {
+      const node = nodeIndex[accessRights[i].id];
+      let pNode = node;
+      let j: number;
+      let nextId = originalNodes[pNode.id].parentId;
+      for (j = 0; nextId in nodeIndex; j++) {
+        pNode = nodeIndex[nextId];
+        if (j === 0) {
+          pNode.children.push(node.id);
+        }
+        node.level++;
+        nextId = originalNodes[pNode.id].parentId;
+      }
+    }
 
-  //     orderedAccessRights.push(accessRight, ...hierarchyOfAccessRight);
-  //   });
+    // extract nodes then sort by level
+    const nodes = [];
+    for (const key in nodeIndex) {
+      if (nodeIndex[key]) {
+        nodes.push(nodeIndex[key]);
+      }
+    }
+    nodes.sort((nodeA, nodeB) => {
+      return nodeA.level - nodeB.level;
+    });
 
-  //   // return orderedAccessRights;
-  //   console.log('re-order:');
-  //   // console.log(orderedAccessRights);
-  //   this.printAccessRights(orderedAccessRights);
-  // }
+    // sort array hierarchically
+    const hierarchicalNodes = [];
 
-  // static getHierarchyOfAccessRight(
-  //   accessRights: AccessRightsModel[],
-  //   parentAccessRight: AccessRightsModel
-  // ): AccessRightsModel[] {
-  //   const orderedAccessRights: AccessRightsModel[] = [];
+    nodes.forEach((node) => {
+      this.sortNodeHierarchically(node, nodes, hierarchicalNodes);
+    });
 
-  //   const accessRightsByParentId = accessRights.filter(
-  //     (accessRight) => accessRight.parentId === parentAccessRight.id
-  //   );
-
-  //   if (accessRightsByParentId.length > 0) {
-  //     accessRightsByParentId.forEach((accessRight) => {
-  //       const result = this.getHierarchyOfAccessRight(
-  //         accessRights,
-  //         accessRight
-  //       );
-
-  //       orderedAccessRights.push(...result);
-  //     });
-
-  //     return orderedAccessRights;
-  //   }
-
-  //   return [parentAccessRight];
-  // }
-
-  static printAccessRights(accessRights: AccessRightsModel[]): void {
-    accessRights.forEach((r) => {
-      console.log(
-        '---------------------------------------------------------------------'
+    // sort the nodes hierarchically
+    const finalSortedNotes: AccessRightsLevel[] = new Array();
+    hierarchicalNodes.forEach((indexedNode) => {
+      const originalNode = accessRights.find(
+        (node: AccessRightsModel) => node.id === indexedNode.id
       );
-      console.log('Id: ' + r.id);
-      console.log('Name: ' + r.localizedData[0].fields[0].localizedText);
-      console.log('Type: ' + r.objectType);
-      console.log('No: ' + r.no);
-      console.log('Parent id: ' + r.parentId);
+      const originalAccessRightsLevel = new AccessRightsLevel({
+        ...originalNode,
+        level: indexedNode.level
+      });
+      finalSortedNotes.push(originalAccessRightsLevel);
+    });
+
+    return finalSortedNotes;
+  }
+
+  private static sortNodeHierarchically(
+    node: any,
+    originalNodes: any[],
+    sortedNode: any[]
+  ): any[] {
+    // STOP CONDITION
+    if (!node.children.length) {
+      if (!sortedNode.includes(node)) {
+        sortedNode.push(node);
+      }
+
+      return;
+    }
+
+    if (
+      !sortedNode.includes(node) ||
+      !node.children.some((childNode: any) => !sortedNode.includes(childNode))
+    ) {
+      sortedNode.push(node);
+    }
+
+    node.children.forEach((childNodeId) => {
+      const originalNode = originalNodes.find(
+        (existingNode: any) => existingNode.id === childNodeId
+      );
+      this.sortNodeHierarchically(originalNode, originalNodes, sortedNode);
     });
   }
 }

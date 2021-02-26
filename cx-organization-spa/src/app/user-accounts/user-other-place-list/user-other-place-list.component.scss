@@ -84,7 +84,6 @@ user-other-place-list {
     }
 
     .ag-header-cell[aria-colindex*='1'] {
-      width: calc(100% + 2px) !important;
       left: -2px !important;
     }
 
@@ -242,22 +241,6 @@ user-other-place-list {
     }
   }
 
-  @media only screen and (max-width: $screen-xs-max) {
-    .cx-page-container {
-      .universal-toolbar {
-        padding: 0 16px !important;
-      }
-
-      .toolbar-actions {
-        padding-left: 0px;
-      }
-
-      .ag-header.ag-grid-header-fixed {
-        top: 174px;
-      }
-    }
-  }
-
   .user-other-place-list {
     ::-webkit-scrollbar {
       -webkit-appearance: none;
@@ -291,5 +274,24 @@ user-other-place-list {
 .cx-paging {
   i {
     color: $main-color-dark !important;
+  }
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .other-place-of-work-list-toolbar-fixed {
+    top: 181px !important;
+  }
+
+  .ag-header.ag-grid-header-other-place-of-work-tab-fixed {
+    width: calc(100% - 84px) !important;
+    position: fixed;
+    top: 236px !important;
+    z-index: 1;
+  }
+
+  .cx-page-container {
+    .toolbar-actions {
+      padding-left: 0px;
+    }
   }
 }

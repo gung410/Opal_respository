@@ -7,5 +7,5 @@ import { environment } from 'app-environments/environment';
   styleUrls: ['./system-audit-log.component.scss']
 })
 export class SystemAuditLogComponent {
-  baseProfileUrl: string = environment.auditLogAppUrl;
+  baseProfileUrl: string = environment.baseProfileUrl;
 }

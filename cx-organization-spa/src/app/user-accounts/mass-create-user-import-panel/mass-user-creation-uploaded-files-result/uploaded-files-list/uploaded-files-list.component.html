@@ -1,11 +1,13 @@
 <ag-grid-angular
   #grid
-  class="ag-theme-material styled-grid learning-plan-list-table"
+  class="ag-theme-material learning-plan-list-table"
   domLayout="autoHeight"
   [rowData]="agGridConfig.rowData"
   [rowHeight]="70"
   [columnDefs]="agGridConfig.columnDefs"
   [suppressRowClickSelection]="true"
+  [suppressMenuHide]="true"
+  [gridOptions]="{ suppressMovableColumns: true }"
   [defaultColDef]="agGridConfig.defaultColDef"
   [context]="agGridConfig.context"
   [overlayNoRowsTemplate]="noRowsTemplate"

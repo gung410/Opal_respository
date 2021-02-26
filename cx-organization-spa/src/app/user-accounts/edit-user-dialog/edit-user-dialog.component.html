@@ -106,7 +106,9 @@
       *ngIf="!isPendingUser"
     >
       <approval-info
-        [disabled]="mode === EditUserDialogModeEnum.View"
+        [disabled]="mode === EditUserDialogModeEnum.View ||
+        disableCurrentApprovalInfo
+        "
         [(approvalData)]="editUserSubmitModel.approvalData"
         [user]="user"
         *ngIf="user"
@@ -128,7 +130,10 @@
         mode !== EditUserDialogModeEnum.Create
       "
     >
-      <user-audit-history [user]="user" *ngIf="user"></user-audit-history>
+      <user-audit-history
+        [user]="user"
+        *ngIf="user"
+      ></user-audit-history>
     </div>
     <div
       class="edit-user-dialog__tab"

@@ -19,7 +19,8 @@ export const environment = {
     event: 'prod-competence-opal-api-event',
     communication: 'prod-datahub-opal-api-communication',
     dataHub: 'prod-datahub-opal-api-query',
-    learningCatalog: 'prod-competence-opal-api-learningcatalog'
+    learningCatalog: 'prod-competence-opal-api-learningcatalog',
+    tagging: 'prod-learnapp-opal-api-tagging'
   },
   site: {
     title: 'System Admin',
@@ -37,7 +38,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.opal2.moe.edu.sg',
-  auditLogAppUrl: 'https://admin.opal2.moe.edu.sg',
+  baseProfileUrl: 'https://admin.opal2.moe.edu.sg',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',

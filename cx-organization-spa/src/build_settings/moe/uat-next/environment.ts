@@ -19,7 +19,8 @@ export const environment = {
     event: 'uat-next-competence-opal-api-event',
     communication: 'uat-next-datahub-opal-api-communication',
     dataHub: 'uat-next-datahub-opal-api-query',
-    learningCatalog: 'uat-next-competence-opal-api-learningcatalog'
+    learningCatalog: 'uat-next-competence-opal-api-learningcatalog',
+    tagging: 'uat-next-learnapp-opal-api-tagging'
   },
   site: {
     title: 'System Admin',
@@ -38,7 +39,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.uat-next.opal2.conexus.net',
-  auditLogAppUrl: 'https://admin.uat-next.opal2.conexus.net',
+  baseProfileUrl: 'https://admin.uat-next.opal2.conexus.net',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',

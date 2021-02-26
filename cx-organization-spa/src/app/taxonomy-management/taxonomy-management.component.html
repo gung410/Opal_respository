@@ -1,0 +1,185 @@
+<div class="taxonomy-management">
+  <div class="fluid-container menu-action">
+    <div class="menu-action__left">
+      <div class="action-group-container">
+        <cx-action-toolbar
+          [actions]="taxonomyActions"
+          [isVerticalToShowMenuAction]="isVerticalToShowMenuAction"
+          (menuActionClick)="onMenuActionClick($event)"
+          *ngIf="!tabThatDoNotShowAction.includes(currentTabAriaLabel)"
+        ></cx-action-toolbar>
+      </div>
+    </div>
+    <div class="menu-action__right">
+      <button
+        *hasPermission="[[samPermissions.SuggestMetadataChange]]"
+        class="cx-btn suggest-metadata-change-btn"
+        (click)="onSuggestMetadataChangeClicked()"
+      >
+        Suggest metadata change
+      </button>
+    </div>
+  </div>
+  <div class="cx-page-container">
+    <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+      label="{{
+        'Taxonomy_Management_Page.Taxonomy_Management_List.Pending_1st_Level_List_Label'
+          | translate
+      }}"
+      <mat-tab
+        [aria-label]="taxonomyRequestStatusLabel.pendingLevel1"
+        *hasPermission="[[samPermissions.MetadataViewPending1st]]"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="pending1stLevelApprovalList"
+            [checkHasDataFn]="
+              checkMetadataHasDataFnCreator(
+                taxonomyRequestStatusLabel.pendingLevel1
+              )
+            "
+          >
+            Pending 1st Level Approval
+          </data-check-indicator>
+        </ng-template>
+        <ng-template matTabContent>
+          <taxonomy-management-list
+            *ngIf="pending1stLevelApprovalList"
+            [taxonomyItemsData]="pending1stLevelApprovalList"
+            [taxonomyRequestedByUserInfo]="pending1stLevelApprovalUserInfoList"
+            [currentUser]="currentUser"
+            [currentUserRoles]="currentUser.systemRoles"
+            [currentTab]="taxonomyRequestStatusLabel.pendingLevel1"
+            [searchText]="searchParam"
+            (gridApi)="onGridApiReady($event)"
+            (editMetadataRequest)="onEditMetadataRequest($event)"
+            (taxonomyActions)="onActionChanged($event)"
+            (singleAction)="onDropdownActionClick($event)"
+            (selectedMetadatas)="onMetadatasSelected($event)"
+          >
+          </taxonomy-management-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        [aria-label]="taxonomyRequestStatusLabel.pendingLevel2"
+        *hasPermission="[[samPermissions.MetadataViewPending2nd]]"
+      >
+        <ng-template mat-tab-label>
+          <data-check-indicator
+            [data]="pending2ndLevelApprovalList"
+            [dependencyData]="[pending1stLevelApprovalList]"
+            [checkHasDataFn]="
+              checkMetadataHasDataFnCreator(
+                taxonomyRequestStatusLabel.pendingLevel2
+              )
+            "
+          >
+            Pending 2nd Level Approval
+          </data-check-indicator>
+        </ng-template>
+        <ng-template matTabContent>
+          <taxonomy-management-list
+            *ngIf="pending2ndLevelApprovalList"
+            [taxonomyItemsData]="pending2ndLevelApprovalList"
+            [taxonomyRequestedByUserInfo]="pending2ndLevelApprovalUserInfoList"
+            [currentUser]="currentUser"
+            [currentUserRoles]="currentUser.systemRoles"
+            [currentTab]="taxonomyRequestStatusLabel.pendingLevel2"
+            [searchText]="searchParam"
+            (gridApi)="onGridApiReady($event)"
+            (editMetadataRequest)="onEditMetadataRequest($event)"
+            (taxonomyActions)="onActionChanged($event)"
+            (singleAction)="onDropdownActionClick($event)"
+            (selectedMetadatas)="onMetadatasSelected($event)"
+          >
+          </taxonomy-management-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        [aria-label]="taxonomyRequestStatusLabel.approved"
+        *hasPermission="[[samPermissions.MetadataViewApprovedList]]"
+      >
+        <ng-template mat-tab-label>
+          <div class="mat-tab-title">Approved</div>
+        </ng-template>
+        <ng-template matTabContent>
+          <taxonomy-management-list
+            *ngIf="approvedList"
+            [taxonomyItemsData]="approvedList"
+            [taxonomyRequestedByUserInfo]="approvedUserInfoList"
+            [currentUser]="currentUser"
+            [currentUserRoles]="currentUser.systemRoles"
+            [currentTab]="taxonomyRequestStatusLabel.approved"
+            [searchText]="searchParam"
+            (editMetadataRequest)="onEditMetadataRequest($event)"
+            (gridApi)="onGridApiReady($event)"
+            (taxonomyActions)="onActionChanged($event)"
+            (singleAction)="onDropdownActionClick($event)"
+            (selectedMetadatas)="onMetadatasSelected($event)"
+          >
+          </taxonomy-management-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        [aria-label]="taxonomyRequestStatusLabel.rejected"
+        *hasPermission="[[samPermissions.MetadataViewRejectedList]]"
+      >
+        <ng-template mat-tab-label>
+          <div class="mat-tab-title">Rejected</div>
+        </ng-template>
+        <ng-template matTabContent>
+          <taxonomy-management-list
+            *ngIf="rejectedList"
+            [taxonomyItemsData]="rejectedList"
+            [taxonomyRequestedByUserInfo]="rejectedUserInfoList"
+            [currentUser]="currentUser"
+            [currentUserRoles]="currentUser.systemRoles"
+            [currentTab]="taxonomyRequestStatusLabel.rejected"
+            [searchText]="searchParam"
+            (gridApi)="onGridApiReady($event)"
+            (editMetadataRequest)="onEditMetadataRequest($event)"
+            (taxonomyActions)="onActionChanged($event)"
+            (singleAction)="onDropdownActionClick($event)"
+            (selectedMetadatas)="onMetadatasSelected($event)"
+          >
+          </taxonomy-management-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        [aria-label]="taxonomyRequestStatusLabel.completed"
+        *hasPermission="[[samPermissions.MetadataViewCompletedList]]"
+      >
+        <ng-template mat-tab-label>
+          <div class="mat-tab-title">Completed</div>
+        </ng-template>
+        <ng-template matTabContent>
+          <taxonomy-management-list
+            *ngIf="completedList"
+            [taxonomyItemsData]="completedList"
+            [taxonomyRequestedByUserInfo]="completedUserInfoList"
+            [currentUser]="currentUser"
+            [currentUserRoles]="currentUser.systemRoles"
+            (editMetadataRequest)="onEditMetadataRequest($event)"
+            [currentTab]="taxonomyRequestStatusLabel.completed"
+            [searchText]="searchParam"
+            (gridApi)="onGridApiReady($event)"
+            (taxonomyActions)="onActionChanged($event)"
+            (singleAction)="onDropdownActionClick($event)"
+            (selectedMetadatas)="onMetadatasSelected($event)"
+          >
+          </taxonomy-management-list>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div *ngIf="taxonomyItemsData" class="taxonomy-management__paging-area">
+      <cx-paging
+        [currentPage]="currentPageIndex"
+        [recordsPerPage]="defaultPageSize"
+        [currentPageSize]="defaultPageSize"
+        [totalRecords]="taxonomyItemsData.totalCount"
+        (currentPageChange)="onTaxonomyManagementPageChange($event)"
+      ></cx-paging>
+    </div>
+  </div>
+</div>

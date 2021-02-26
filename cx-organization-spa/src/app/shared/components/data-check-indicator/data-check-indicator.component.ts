@@ -28,11 +28,22 @@ export class DataCheckIndicatorComponent implements OnInit, OnDestroy {
     this._data = data;
   }
 
+  @Input() set dependencyData(dependencyData: unknown[]) {
+    if (!dependencyData) {
+      return;
+    }
+    if (Utils.isDifferent(dependencyData, this._dependencyData)) {
+      this.checkHasData();
+    }
+    this._dependencyData = dependencyData;
+  }
+
   hasDataChangeEvent: EventEmitter<boolean> = new EventEmitter();
   numberOfRemainingData: number = 0;
 
   private _checkHasDataSub: Subscription = new Subscription();
   private _data: unknown = null;
+  private _dependencyData: unknown[] = null;
 
   constructor(protected changeDetectorRef: ChangeDetectorRef) {}
 

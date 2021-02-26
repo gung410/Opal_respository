@@ -5,8 +5,14 @@
     </div>
     <!-- <span>{{colId}}</span> -->
   </div>
-  <div class="default-action">
-    <ng-template [ngIf]="!isEditing" [ngIfElse]="systemRoleActions">
+  <div
+    [hidden]="isHidden$ | async"
+    class="default-action"
+  >
+    <ng-template
+      [ngIf]="!isEditing"
+      [ngIfElse]="systemRoleActions"
+    >
       <img
         class="role-action"
         *ngIf="isShow"
@@ -19,7 +25,10 @@
         #systemRoleMenu="matMenu"
         xPosition="after"
       >
-        <button (click)="onDuplicateClicked()" mat-menu-item>Duplicate</button>
+        <button
+          (click)="onDuplicateClicked()"
+          mat-menu-item
+        >Duplicate</button>
         <button
           *ngIf="!extraAttributes.isDefaultSystemRole"
           (click)="onEditRoleClicked()"
@@ -27,7 +36,10 @@
         >
           Edit Role
         </button>
-        <button (click)="onEditPermissionsClicked()" mat-menu-item>
+        <button
+          (click)="onEditPermissionsClicked()"
+          mat-menu-item
+        >
           Edit Permissions
         </button>
       </mat-menu>

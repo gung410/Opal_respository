@@ -208,7 +208,7 @@ export class ApprovalInfoComponent
       getRoles: false,
       getDeapartments: true,
       getUserGroups: false,
-      isCrossOrganizationalUnit: false
+      isCrossOrganizationalUnit: true
     });
 
     return this.userAccountService
@@ -249,7 +249,7 @@ export class ApprovalInfoComponent
       getRoles: false,
       getDeapartments: true,
       getUserGroups: false,
-      isCrossOrganizationalUnit: false
+      isCrossOrganizationalUnit: true
     });
 
     if (!this.isSchoolDepartment) {
@@ -388,7 +388,7 @@ export class ApprovalInfoComponent
   ): Promise<void> {
     const queryParams = new ApprovalGroupQueryModel({
       assigneeDepartmentId: this.getUserDepartmentId(),
-      isCrossOrganizationalUnit: false,
+      isCrossOrganizationalUnit: true,
       searchInSameDepartment: true,
       statusEnums: [StatusTypeEnum.Active.code],
       pageIndex,
@@ -474,18 +474,17 @@ export class ApprovalInfoComponent
     selectedGroups: ApprovalGroup[]
   ): ApprovalGroup[] {
     let approvalGroupResults: ApprovalGroup[] = [];
+
     if (selectedGroups) {
       approvalGroupResults = [
         ...approvalGroups.filter((approvalGroup: ApprovalGroup) => {
           const approverId = approvalGroup.approverId;
-
           return (
-            !this.user ||
-            (approverId !== this.user.identity.id &&
-              !selectedGroups.some(
-                (selectedGroup: ApprovalGroup) =>
-                  selectedGroup && selectedGroup.approverId === approverId
-              ))
+            this.filterCurrentApprovalGroups(approvalGroup) ||
+            !selectedGroups.some(
+              (selectedGroup: ApprovalGroup) =>
+                selectedGroup && selectedGroup.approverId === approverId
+            )
           );
         })
       ];
@@ -600,5 +599,25 @@ export class ApprovalInfoComponent
     return !this.user || (this.user && this.userDepartmentId)
       ? this.userDepartmentId
       : this.user.departmentId;
+  }
+  private filterCurrentApprovalGroups(approvalGroup: ApprovalGroup): boolean {
+    const approverId = approvalGroup.approverId;
+    if (this.primarySelectedGroup) {
+      if (this.alternateSelectedGroup) {
+        return (
+          !this.user &&
+          approverId !== this.alternateSelectedGroup.approverId &&
+          approverId !== this.primarySelectedGroup.approverId
+        );
+      }
+      return !this.user && approverId !== this.primarySelectedGroup.approverId;
+    }
+    if (this.alternateSelectedGroup) {
+      return (
+        !this.user && approverId !== this.alternateSelectedGroup.approverId
+      );
+    }
+
+    return !this.user;
   }
 }

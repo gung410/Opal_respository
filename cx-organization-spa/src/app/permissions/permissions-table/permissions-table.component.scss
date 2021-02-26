@@ -24,14 +24,12 @@ $column-cell-color: #f9f9f9;
       align-items: center;
       justify-content: center;
 
-      >i {
+      > i {
         margin: 0;
         transform: unset;
       }
     }
   }
-
-
 
   ag-grid-angular {
     ::ng-deep .high-light-column {
@@ -55,12 +53,26 @@ $column-cell-color: #f9f9f9;
     }
   }
 
+  ::ng-deep .ag-row {
+    height: 60px !important;
+  }
+
+  ::ng-deep .ag-center-cols-clipper {
+    .ag-row {
+      margin-left: 7px;
+    }
+  }
+
   ::ng-deep .ag-row:nth-child(even) {
     background-color: $column-cell-color;
   }
 
   .ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after {
     color: var(--ag-checkbox-checked-color, #313552);
+  }
+
+  ::ng-deep .styled-grid .ag-header {
+    border: none;
   }
 
   .cx-page-container .ag-theme-material.permission-matrix-table {
@@ -92,15 +104,21 @@ $column-cell-color: #f9f9f9;
             width: 30px;
             height: 30px;
             background: rgba(255, 255, 255, 0);
-            background: -moz-linear-gradient(90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 1) 100%);
-            background: -webkit-linear-gradient(90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 1) 100%);
-            background: linear-gradient(90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 1) 100%);
+            background: -moz-linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 1) 100%
+            );
+            background: -webkit-linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 1) 100%
+            );
+            background: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 1) 100%
+            );
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ffffff", GradientType=1);
             position: absolute;
             right: 0px;
@@ -129,6 +147,7 @@ $column-cell-color: #f9f9f9;
 
     ::ng-deep .ag-header-cell {
       justify-content: center;
+      border: 1px solid #e2e2e2;
     }
 
     ::ng-deep .ag-header {
@@ -143,21 +162,37 @@ $column-cell-color: #f9f9f9;
           }
         }
       }
+
+      .ag-header-viewport {
+        background-color: #f9f9f9;
+        .ag-header-container .ag-header-row {
+          margin-left: 7px;
+        }
+      }
     }
 
     ::ng-deep .ag-grid-header-fixed {
-      width: 100%;
-      display: flex;
-      position: relative;
-      top: unset;
-      left: unset;
-      margin: 0;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      top: 0;
+      width: calc(100% - 79.5px);
+
+      @media only screen and (max-width: $screen-xs-max) {
+        & {
+          left: 24px;
+        }
+      }
+    }
+
+    ::ng-deep .ag-body-viewport {
+      overflow-y: hidden !important;
+
+      .ag-pinned-left-cols-container .ag-row .ag-cell {
+        display: inline-block !important;
+      }
     }
 
     ::ng-deep .ag-center-cols-clipper .ag-cell {
       justify-content: center;
+      border: 1px solid #e2e2e2 !important;
     }
 
     .ag-pinned-right-header {
@@ -287,7 +322,7 @@ $column-cell-color: #f9f9f9;
       text-transform: capitalize;
     }
 
-    .ag-body-horizontal-scroll {
+    ::ng-deep .ag-body-horizontal-scroll {
       background: #fff;
       height: 36px !important;
       min-height: unset !important;
@@ -298,7 +333,7 @@ $column-cell-color: #f9f9f9;
       border-radius: 5px;
       position: fixed;
       bottom: 0px;
-      width: calc(100% - 83px);
+      width: calc(100% - 80px);
       z-index: 1;
 
       @media only screen and (max-width: $screen-xs-max) {
@@ -313,6 +348,4 @@ $column-cell-color: #f9f9f9;
       }
     }
   }
-
-
 }

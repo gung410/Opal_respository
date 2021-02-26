@@ -1,3 +1,6 @@
+@import '../../../../../assets/styles/variables.scss';
+@import '../../../../../assets/styles/mixins.scss';
+
 .cell-remove-button-action {
     width: 100%;
 
@@ -17,6 +20,13 @@
             background-color: #ff6262;
             padding: 5px 3px 4px 3.25px;
             margin-right: 10px;
+        }
+    }
+
+    @media only screen and (max-width: $screen-sm-max) {
+        .remove-btn {
+            width: 100%;
+            padding: 8px 5px;
         }
     }
 }

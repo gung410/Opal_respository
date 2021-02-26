@@ -77,7 +77,7 @@ export const AddMemberToGroupFormJSON = {
       choicesByUrl: {
         url:
           '{organizationApi_BaseUrl}/userpools?departmentIds={currentDepartment_id}&countActiveMembers' +
-          '=false&orderBy=name&timestamp=replaceTS',
+          '=false&orderBy=name&timestamp={replaceTS}',
         path: 'items',
         titleName: 'name'
       }

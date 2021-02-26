@@ -84,7 +84,6 @@ user-pending-list {
     }
 
     .ag-header-cell[aria-colindex*='1'] {
-      width: calc(100% + 2px) !important;
       left: -2px !important;
     }
 
@@ -285,13 +284,14 @@ user-pending-list {
   }
 
   .pending-list-toolbar-fixed {
-    top: 145px !important;
+    top: 164px !important;
   }
-  .ag-grid-header-pending-tab-fixed {
-    top: 130px !important;
-  }
-  .ag-header.ag-grid-header-fixed {
-    top: 254px !important;
+
+  .ag-header.ag-grid-header-pending-tab-fixed {
+    width: calc(100% - 84px) !important;
+    position: fixed;
+    top: 216px !important;
+    z-index: 1;
   }
 
   .cx-page-container {

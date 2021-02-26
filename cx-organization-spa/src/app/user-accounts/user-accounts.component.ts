@@ -116,6 +116,7 @@ import {
   UserManagementQueryModel
 } from './models/user-management.model';
 
+import { SAM_PERMISSIONS } from 'app/shared/constants/sam-permission.constant';
 import { map } from 'rxjs/operators';
 import { moveUserAccountFormJSON } from './move-user-form';
 import { UserAccountConfirmationDialogComponent } from './user-account-confirmation-dialog/user-account-confirmation-dialog.component';
@@ -128,7 +129,6 @@ import { UserExportComponent } from './user-export/user-export.component';
 import { FilterModel } from './user-filter/applied-filter.model';
 import { UserFilterComponent } from './user-filter/user-filter.component';
 import { UserShowHideComponent } from './user-show-hide-column/user-show-hide-column.component';
-import { CommonHelpers } from 'app/shared/common.helpers';
 
 @Component({
   selector: 'user-accounts',
@@ -190,12 +190,19 @@ export class UserAccountsComponent
   departmentModel: DepartmentHierarchiesModel = new DepartmentHierarchiesModel();
   breadCrumbNavigation: any[] = [];
   isSearchedAcrossSubOrg: boolean;
-  userActions: UserActionsModel;
+  get userActions(): UserActionsModel {
+    return this._userActions;
+  }
+  set userActions(v: UserActionsModel) {
+    this._userActions = v;
+  }
   userActionsForExportButton: ActionsModel[] = [];
   userActionsForCreateAccButton: ActionsModel[] = [];
   isVerticalToShowMenuAction: boolean;
   userAccountTabEnum: object = UserAccountTabEnum;
   gridToolbarAttribute: object = commonCxFloatAttribute;
+
+  samPermissions = SAM_PERMISSIONS;
 
   private currentTabAriaLabel: string = UserAccountTabEnum.UserAccounts;
   private userListSearchKeyHistory: Map<string, string> = new Map([
@@ -212,6 +219,7 @@ export class UserAccountsComponent
     [UserAccountTabEnum.Pending3rd, StatusTypeEnum.PendingApproval3rd.code]
   ]);
 
+  private _userActions: UserActionsModel;
   private pdCataloguePersonnelGroups: PDCatalogueEnumerationDto[] = [];
   private pdCatalogueCareerPaths: PDCatalogueEnumerationDto[] = [];
   private pdCatalogueDevelopmentalRoles: PDCatalogueEnumerationDto[] = [];
@@ -250,6 +258,7 @@ export class UserAccountsComponent
   public isHideFilterButton: boolean = false;
   public isHideExportButton: boolean = false;
   public isHideColumnButton: boolean = false;
+  public isHideCreateUserAccountRequestButton: boolean = false;
   private surveyJSEnumerationVariables: any = [];
 
   private fromDateIndex: number = 0;
@@ -561,9 +570,11 @@ export class UserAccountsComponent
               const userDepartment = await this.departmentStoreService.getDepartmentByIdToPromise(
                 userBeingEdited.departmentId
               );
-              const surveyjsVariables = this.buildSurveyVariablesForEditUser(
+              const isCurrentUserHasPermissionToEdit = this.hasPermissionToEdit();
+              const surveyjsVariables = await this.buildSurveyVariablesForEditUser(
                 userBeingEdited,
                 isEditNormalUser,
+                isCurrentUserHasPermissionToEdit,
                 userDepartment,
                 userDepartmentTypes
               );
@@ -585,6 +596,7 @@ export class UserAccountsComponent
               editUserDialogComponent.fullUserInfoJsonData = dataJson;
               editUserDialogComponent.surveyjsOptions = options;
               editUserDialogComponent.isPendingUser = !isEditNormalUser;
+              editUserDialogComponent.isCurrentUserHasPermissionToEdit = isCurrentUserHasPermissionToEdit;
               this.subscription.add(
                 // tslint:disable-next-line: no-unsafe-any
                 editUserDialogComponent.submit.subscribe(
@@ -1036,7 +1048,7 @@ export class UserAccountsComponent
           const newUserDepartmentTypes = await this.departmentStoreService.getDepartmentTypesByDepartmentIdToPromise(
             newUserDepartmentId
           );
-          const surveyjsVariables = this.buildSurveyVariablesForCreateNewUser(
+          const surveyjsVariables = await this.buildSurveyVariablesForCreateNewUser(
             newUserDepartment,
             newUserDepartmentTypes
           );
@@ -1054,6 +1066,7 @@ export class UserAccountsComponent
           });
 
           const editUserDialogComponent = modalRef.componentInstance as EditUserDialogComponent;
+          editUserDialogComponent.isCurrentUserHasPermissionToEdit = true;
           editUserDialogComponent.fullUserInfoJsonData = {
             gender: GenderEnum.Male,
             systemRoles: DefaultSystemRoleData,
@@ -1317,6 +1330,10 @@ export class UserAccountsComponent
         new CxSurveyjsVariable({
           name: 'selectedUserCount',
           value: dataJson.users.length
+        }),
+        new CxSurveyjsVariable({
+          name: 'replaceTS',
+          value: Math.random().toString()
         })
       ];
       const options = {
@@ -1327,12 +1344,7 @@ export class UserAccountsComponent
         submitName: 'Confirm',
         variables: surveyjsVariables
       } as CxSurveyjsFormModalOptions;
-      const form = JSON.parse(
-        JSON.stringify(AddMemberToGroupFormJSON).replace(
-          'replaceTS',
-          Math.random().toString()
-        )
-      );
+      const form = AddMemberToGroupFormJSON;
 
       // Open modal.
       const modalRef = this.formModal.openSurveyJsForm(
@@ -1418,6 +1430,7 @@ export class UserAccountsComponent
     const modalRef = this.ngbModal.open(UserFilterComponent, {
       size: 'lg',
       backdrop: 'static',
+      centered: true,
       windowClass: 'filter-dialog-custom-size'
     });
     const userFilterComponentDialog = modalRef.componentInstance as UserFilterComponent;
@@ -2138,11 +2151,12 @@ export class UserAccountsComponent
   }
 
   onPendingActionChanged($event: UserActionsModel): void {
+    this.userActions = $event;
+
     if (!$event) {
       return;
     }
 
-    this.userActions = $event;
     const listNonEssentialActionsLength = $event.listNonEssentialActions
       ? $event.listNonEssentialActions.length
       : 0;
@@ -2210,6 +2224,8 @@ export class UserAccountsComponent
     this.clearSelectedItems();
     this.currentTabAriaLabel = tabChangeEvent.tab.ariaLabel;
 
+    UserAccountsDataService.setCurrentTabLabel(this.currentTabAriaLabel);
+
     this.isHideFilterButton = !(
       this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts ||
       this.currentTabAriaLabel === UserAccountTabEnum.UserOtherPlace
@@ -2221,7 +2237,14 @@ export class UserAccountsComponent
     this.isHideColumnButton = !(
       this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts
     );
-    window.addEventListener('scroll', CommonHelpers.freezeAgGridHeader(), true);
+
+    this.isHideCreateUserAccountRequestButton = !(
+      this.currentTabAriaLabel === UserAccountTabEnum.UserAccounts ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending1st ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending2nd ||
+      this.currentTabAriaLabel === UserAccountTabEnum.Pending3rd
+    );
+
     this.getCurrentTabUserList();
 
     this.initUserActionsListBasedOnRoles();
@@ -2236,6 +2259,29 @@ export class UserAccountsComponent
 
   onGridApiReady(gridApi: GridApi): void {
     this.gridApi = gridApi;
+  }
+
+  private hasPermissionToEdit(): boolean {
+    switch (this.currentTabAriaLabel) {
+      case UserAccountTabEnum.UserAccounts:
+        return this.currentUser.hasPermission(
+          SAM_PERMISSIONS.BasicUserAccountsManagement
+        );
+      case UserAccountTabEnum.Pending1st:
+        return this.currentUser.hasPermission(SAM_PERMISSIONS.EditPending1st);
+      case UserAccountTabEnum.Pending2nd:
+        return this.currentUser.hasPermission(SAM_PERMISSIONS.EditPending2nd);
+      case UserAccountTabEnum.Pending3rd:
+        return this.currentUser.hasPermission(
+          SAM_PERMISSIONS.EditPendingSpecial
+        );
+      case UserAccountTabEnum.UserOtherPlace:
+        return this.currentUser.hasPermission(
+          SAM_PERMISSIONS.EditOtherPlaceOfWork
+        );
+      default:
+        return false;
+    }
   }
 
   private loadUsersDataAccordingToCurrentTab(): void {
@@ -3159,15 +3205,24 @@ export class UserAccountsComponent
       this.userActions = initUserActions(
         this.translateAdapterService,
         true,
-        theRight
+        theRight,
+        this.currentUser.hasPermission(
+          SAM_PERMISSIONS.BasicUserAccountsManagement
+        ),
+        this.currentUser.hasPermission(SAM_PERMISSIONS.ExportUsers)
       );
     }
   }
 
   private getCreateAccountRequestAction(): UserActionsModel {
     const createOrgUnitAction = this.getCreateOrgUnitAction();
+    const hasPermissionToCreateOrgUnitAction = this.currentUser.hasPermission(
+      SAM_PERMISSIONS.CreateOrganisationUnitInOtherPlaceOfWork
+    );
     const actions = new UserActionsModel({
-      listEssentialActions: [createOrgUnitAction]
+      listEssentialActions: hasPermissionToCreateOrgUnitAction
+        ? [createOrgUnitAction]
+        : []
     });
 
     return actions;
@@ -3679,13 +3734,18 @@ export class UserAccountsComponent
   private buildSurveyVariablesForEditUser(
     userBeingEdited: UserManagement,
     isEditNormalUser: boolean,
+    isCurrentUserHasPermissionToEdit: boolean,
     userDepartment: Department,
     userDepartmentTypes: DepartmentType[]
-  ): CxSurveyjsVariable[] {
+  ): Promise<CxSurveyjsVariable[]> {
     let surveyjsVariables = [
       new CxSurveyjsVariable({
         name: SurveyVariableEnum.formDisplayMode,
         value: 'edit'
+      }),
+      new CxSurveyjsVariable({
+        name: SurveyVariableEnum.currentUser_hasPermissionToEdit,
+        value: isCurrentUserHasPermissionToEdit
       }),
       new CxSurveyjsVariable({
         name: 'currentObject_emailAddress',
@@ -3724,27 +3784,33 @@ export class UserAccountsComponent
       })
     );
 
-    return _.union(
-      surveyjsVariables,
-      this.cxSurveyjsExtendedService.buildCurrentObjectVariables(
-        userBeingEdited
-      ),
-      this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentVariables(
-        userDepartment
-      ),
-      this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentTypes(
-        userDepartmentTypes
-      ),
-      this.cxSurveyjsExtendedService.buildCurrentObjectOrganizationUnitTypes(
-        userDepartmentTypes
-      )
-    );
+    // Get the current user variables to detect for permission changes during creating new users
+    return this.cxSurveyjsExtendedService
+      .setCurrentUserVariables(this.currentUser)
+      .then((userVariables) => {
+        return _.union(
+          surveyjsVariables,
+          this.cxSurveyjsExtendedService.buildCurrentObjectVariables(
+            userBeingEdited
+          ),
+          this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentVariables(
+            userDepartment
+          ),
+          this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentTypes(
+            userDepartmentTypes
+          ),
+          this.cxSurveyjsExtendedService.buildCurrentObjectOrganizationUnitTypes(
+            userDepartmentTypes
+          ),
+          userVariables
+        );
+      });
   }
 
   private buildSurveyVariablesForCreateNewUser(
     newUserDepartment: Department,
     newUserDepartmentTypes: DepartmentType[]
-  ): CxSurveyjsVariable[] {
+  ): Promise<CxSurveyjsVariable[]> {
     let surveyjsVariables = [
       new CxSurveyjsVariable({
         name: SurveyVariableEnum.currentObject_isExternallyMastered,
@@ -3787,15 +3853,21 @@ export class UserAccountsComponent
       })
     );
 
-    return _.union(
-      surveyjsVariables,
-      this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentVariables(
-        newUserDepartment
-      ),
-      this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentTypes(
-        newUserDepartmentTypes
-      )
-    );
+    // Get the current user variables to detect for permission changes during creating new users
+    return this.cxSurveyjsExtendedService
+      .setCurrentUserVariables(this.currentUser)
+      .then((userVariables) => {
+        return _.union(
+          surveyjsVariables,
+          this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentVariables(
+            newUserDepartment
+          ),
+          this.cxSurveyjsExtendedService.buildCurrentObjectDepartmentTypes(
+            newUserDepartmentTypes
+          ),
+          userVariables
+        );
+      });
   }
 
   private updatePendingUserListAfterPlaceOfWorkChanged(
@@ -4060,6 +4132,16 @@ export class UserAccountsComponent
             }
           });
         } else if (
+          selectedUserStatuses.length &&
+          this.isUserActionDisableSetAO(selectedUserStatuses)
+        ) {
+          this.userActions.listEssentialActions.find((item) => {
+            item.disable = false;
+            if (item.actionType === StatusActionTypeEnum.SetApprovingOfficers) {
+              item.disable = true;
+            }
+          });
+        } else if (
           this.selectedUser.length &&
           !this.isUserActionDisabled(selectedUserStatuses)
         ) {
@@ -4107,6 +4189,14 @@ export class UserAccountsComponent
         selectedUserStatus === StatusTypeEnum.Archived.code ||
         selectedUserStatus === StatusTypeEnum.Rejected.code ||
         selectedUserStatus === StatusTypeEnum.Deactive.code
+    );
+  }
+  private isUserActionDisableSetAO(selectedUserStatuses: string[]): boolean {
+    return selectedUserStatuses.some(
+      (selectedUserStatus: string) =>
+        selectedUserStatus === StatusTypeEnum.Suspended.code ||
+        selectedUserStatus === StatusTypeEnum.Inactive.code ||
+        selectedUserStatus === StatusTypeEnum.IdentityServerLocked.code
     );
   }
   private filterUserWithoutkOtherPlaceOfWork(

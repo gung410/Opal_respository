@@ -13,7 +13,12 @@ app-header {
 
       .cx-header-content {
         .general-search-box {
+          input:placeholder-shown {
+            text-overflow: ellipsis;
+          }
+
           .search-input {
+            width: 100%;
             font-size: 12px;
           }
         }
@@ -24,11 +29,9 @@ app-header {
       display: none;
       background-color: #fff;
     }
-  }
 
-  .hideSearchBar {
-    .cx-header {
-      .general-search-box {
+    .hideSearchBar {
+      .cx-header .cx-header-content .general-search-box {
         display: none;
       }
     }
@@ -39,6 +42,23 @@ app-header {
   .app-header {
     &__nav-bar {
       display: inline;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cx-header .general-search-box {
+    display: flex !important;
+    margin-right: 0 !important;
+    input {
+      min-width: auto !important;
+      padding: 8px 40px 8px 10px !important;
+    }
+  }
+
+  .hideSearchBar {
+    .cx-header .cx-header-content .general-search-box {
+      display: none !important;
     }
   }
 }

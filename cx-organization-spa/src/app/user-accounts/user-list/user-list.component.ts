@@ -27,8 +27,6 @@ import { TranslateAdapterService } from 'app-services/translate-adapter.service'
 
 import { SurveyUtils } from 'app-utilities/survey-utils';
 
-import { CellDropdownActionComponent } from 'app/shared/components/cell-dropdown-action/cell-dropdown-action.component';
-
 import { BasePresentationComponent } from 'app/shared/components/component.abstract';
 
 import { findIndexCommon } from 'app/shared/constants/common.const';
@@ -58,8 +56,6 @@ import { UserManagement } from '../models/user-management.model';
 
 import { CheckingUserRolesService } from '../services/checking-user-roles.service';
 
-import { UserAccountsHelper } from '../user-accounts.helper';
-
 import { ActionsModel } from '../user-actions/models/actions.model';
 
 import { UserActionsModel } from '../user-actions/models/user-actions.model';
@@ -77,6 +73,14 @@ import { USER_LIST_HEADER_CONST } from './models/user-list-header.const';
 import { User } from 'app-models/auth.model';
 
 import { SAM_PERMISSIONS } from 'app/shared/constants/sam-permission.constant';
+
+import { Utils } from 'app-utilities/utils';
+
+import { IUserAction } from '../models/user-action.model';
+
+import { UserActionsService } from '../user-actions.service';
+
+import { CellDropdownUserListActionsComponent } from './cell-components/cell-dropdown-user-list-actions/cell-dropdown-user-list-actions.component';
 
 import { UserStatusDisplayActionModel } from './models/user-selected-status.model';
 
@@ -104,7 +108,7 @@ export class UserListComponent
   @Input() isCurrentUserSuperAdmin: boolean = false;
   @Input() isCurrentUserDivAdmin: boolean = false;
   @Input() isCurrentUserAccountAdmin: boolean = false;
-  @Input() reloadUserAccountTab: boolean = false;
+  @Input() tabLabel: string;
 
   @Output() editUser: EventEmitter<any> = new EventEmitter<any>();
   @Output() sortChange: EventEmitter<SortModel> = new EventEmitter<SortModel>();
@@ -134,6 +138,7 @@ export class UserListComponent
 
   constructor(
     private translateAdapterService: TranslateAdapterService,
+    private userActionsService: UserActionsService,
     changeDetectorRef: ChangeDetectorRef,
     authService: AuthService,
     private checkingUserRolesService: CheckingUserRolesService
@@ -177,7 +182,15 @@ export class UserListComponent
       this.authService.userData().getValue().systemRoles
     );
     this.userActions.emit(
-      initUserActions(this.translateAdapterService, true, theRight)
+      initUserActions(
+        this.translateAdapterService,
+        true,
+        theRight,
+        this.currentUser.hasPermission(
+          SAM_PERMISSIONS.BasicUserAccountsManagement
+        ),
+        this.currentUser.hasPermission(SAM_PERMISSIONS.ExportUsers)
+      )
     );
     this.userActionsForExportButton.emit(
       initUserActionsForExportButton(this.translateAdapterService, true)
@@ -186,6 +199,7 @@ export class UserListComponent
     this.userActionsForCreateAccButton.emit(
       initUserActionsForCreateAccButton(
         this.translateAdapterService,
+        this.currentUser.hasPermission(SAM_PERMISSIONS.SingleUserCreation),
         this.currentUser.hasPermission(SAM_PERMISSIONS.MassUserCreation)
       )
     );
@@ -234,7 +248,7 @@ export class UserListComponent
         cellExpandableList: CellExpandableListComponent,
         cellApprovingOfficer: CellApprovingOfficerComponent,
         cellUserStatus: CellUserStatusComponent,
-        cellDropdownMenu: CellDropdownActionComponent
+        cellDropdownMenu: CellDropdownUserListActionsComponent
       },
 
       rowData: [],
@@ -274,9 +288,12 @@ export class UserListComponent
     }
 
     this.currentSelectedRows = event.api.getSelectedRows().length;
-    const actions: UserActionsModel = this.filterActionBasedOnStatus(
+    let actions: UserActionsModel = this.filterActionBasedOnStatus(
       selectedRows
     );
+
+    actions = this.filterSatisfiedActionsByPermissions(actions);
+
     this.userActions.emit(actions);
 
     this.selectedUser.emit(selectedRows);
@@ -509,6 +526,85 @@ export class UserListComponent
 
   openDialogToEnableColumns(): void {}
 
+  isAllowToEditUser(): boolean {
+    return this.currentUser.hasPermission(
+      SAM_PERMISSIONS.BasicUserAccountsManagement
+    );
+  }
+
+  filterSatisfiedListActionsByPermissions(
+    actions: ActionsModel[]
+  ): ActionsModel[] {
+    const filteredActions: ActionsModel[] = [];
+
+    let isAllowed: boolean;
+
+    actions.forEach((action) => {
+      switch (action.actionType) {
+        case StatusActionTypeEnum.Suspend:
+        case StatusActionTypeEnum.ResetPassword:
+        case StatusActionTypeEnum.Edit:
+        case StatusActionTypeEnum.Unlock:
+        case StatusActionTypeEnum.SetApprovingOfficers:
+        case StatusActionTypeEnum.SetExpirationDate:
+        case StatusActionTypeEnum.AddToGroup:
+          isAllowed = this.currentUser.hasPermission(
+            SAM_PERMISSIONS.BasicUserAccountsManagement
+          );
+          break;
+        case StatusActionTypeEnum.Archive:
+        case StatusActionTypeEnum.Unarchive:
+        case StatusActionTypeEnum.Active:
+        case StatusActionTypeEnum.Delete:
+        case StatusActionTypeEnum.ChangeUserPlaceOfWork:
+          isAllowed = this.currentUser.hasPermission(
+            SAM_PERMISSIONS.AdvancedUserAccountsManagement
+          );
+          break;
+        case StatusActionTypeEnum.Export:
+          isAllowed = this.currentUser.hasPermission(
+            SAM_PERMISSIONS.ExportUsers
+          );
+          break;
+        default:
+          isAllowed = false;
+          break;
+      }
+
+      if (isAllowed) {
+        filteredActions.push(action);
+      }
+    });
+
+    return filteredActions;
+  }
+
+  private filterSatisfiedActionsByPermissions(
+    userActions: UserActionsModel
+  ): UserActionsModel {
+    const filterUserActions = Utils.cloneDeep(userActions);
+
+    if (
+      filterUserActions.listEssentialActions &&
+      filterUserActions.listEssentialActions.length
+    ) {
+      filterUserActions.listEssentialActions = this.filterSatisfiedListActionsByPermissions(
+        filterUserActions.listEssentialActions
+      );
+    }
+
+    if (
+      filterUserActions.listNonEssentialActions &&
+      filterUserActions.listNonEssentialActions.length
+    ) {
+      filterUserActions.listNonEssentialActions = this.filterSatisfiedListActionsByPermissions(
+        filterUserActions.listNonEssentialActions
+      );
+    }
+
+    return filterUserActions;
+  }
+
   private getUserDataAfterUpdatingInvisibleRoles(
     userData: UserManagement[]
   ): UserManagement[] {
@@ -551,25 +647,26 @@ export class UserListComponent
   private filterActionBasedOnStatus(
     selectedItems: UserManagement[]
   ): UserActionsModel {
-    const uniqueStatusOfUser = _.uniqBy(
+    const uniqueStatusIdsOfSelectedUsers: string[] = _.uniqBy(
       selectedItems,
       'entityStatus.statusId'
     ).map((user: UserManagement) => {
       return user.entityStatus.statusId;
     });
 
-    const userActionMapping = UserAccountsHelper.getAccessibleUserActionMapping(
-      this.currentUserRoles
+    const userActions = this.userActionsService.getActions(
+      'userList',
+      this.currentUser
     );
 
-    const actCorrectWithUserActionMapping = uniqueStatusOfUser.map(
-      (statusOfUser: string) => {
-        return userActionMapping.filter((actionMapping: any) => {
+    const actCorrectWithUserActionMapping = uniqueStatusIdsOfSelectedUsers.map(
+      (statusOfSelectedUser: string) => {
+        return userActions.filter((action: IUserAction) => {
           return (
-            actionMapping.currentStatus.findIndex(
-              (statusMapping: string) => statusMapping === statusOfUser
+            action.currentStatus.findIndex(
+              (statusMapping: string) => statusMapping === statusOfSelectedUser
             ) > findIndexCommon.notFound &&
-            actionMapping.targetAction !== StatusActionTypeEnum.Edit
+            action.targetAction !== StatusActionTypeEnum.Edit
           );
         });
       }
@@ -606,7 +703,11 @@ export class UserListComponent
     const userAction = initUserActions(
       this.translateAdapterService,
       true,
-      theRight
+      theRight,
+      this.currentUser.hasPermission(
+        SAM_PERMISSIONS.BasicUserAccountsManagement
+      ),
+      this.currentUser.hasPermission(SAM_PERMISSIONS.ExportUsers)
     );
 
     userAction.listNonEssentialActions = uniqueAction.map((item: any) => {

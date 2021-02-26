@@ -11,7 +11,8 @@ import {
 } from '@angular/core';
 import {
   CxSurveyjsComponent,
-  CxSurveyjsEventModel
+  CxSurveyjsEventModel,
+  CxSurveyjsVariable
 } from '@conexus/cx-angular-common';
 import { AuthService } from 'app-auth/auth.service';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
@@ -47,7 +48,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   filterFormJSON: any = FilterFormJSON;
   appliedFilterFormJSON: any = AppliedFilterFormJSON;
   appliedData: FilterModel = new FilterModel();
-  filterVariables: any[] = [];
+  filterVariables: CxSurveyjsVariable[] = [];
   filterParams: UserGroupFilterParams;
 
   @ViewChild('filterSurveyJs') filterSurveyJs: CxSurveyjsComponent;
@@ -88,6 +89,13 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   }
 
   initFilterData(): void {
+    this.filterVariables.push(
+      new CxSurveyjsVariable({
+        name: 'replaceTS',
+        value: Math.random().toString()
+      })
+    );
+
     this.subscription.add(
       this.systemRolesStoreService.get().subscribe((systemRoles) => {
         if (!systemRoles) {
@@ -102,6 +110,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   onAddCriteriaChanged(data: CxSurveyjsEventModel): void {
     if (data.options.question.name === 'filterOptions') {
       this.handleChangingFilterOptions(data.survey, data.options.question);
+
       return;
     }
     if (
@@ -158,12 +167,18 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  onApplyFilter(data: FilterModel): void {
-    this.applyClick.emit({ filteredData: data });
+  onApplyFilter(): void {
+    this.applyClick.emit({ filteredData: this.appliedData });
   }
 
   onChanged(data: CxSurveyjsEventModel): void {
     this.appliedData.appliedFilter = data.options.value;
+  }
+
+  onFilterRemoved(filteredId: string): void {
+    this.appliedData.appliedFilter = this.appliedData.appliedFilter.filter(
+      (filteredData) => filteredData.id !== filteredId
+    );
   }
 
   convertDataToDisplay(filterData: any): void {
@@ -186,6 +201,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
     }
 
     let optionData = appliedDataWithOption.data;
+    let optionFiltered;
     switch (filterData.filterOptions.data) {
       case GroupFilterConst.STATUS:
         optionData = this.mapData(optionData, filterData.status, (item) => {
@@ -237,7 +253,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
         optionData.text = filterData.typeOU.displayText;
         break;
       case GroupFilterConst.CREATION_DATE:
-        let optionFiltered = this.addFilterDate(
+        optionFiltered = this.addFilterDate(
           filterData.creationDateFrom,
           filterData.creationDateTo
         );

@@ -1,141 +1,149 @@
 .user-group-modify-form {
-    padding: 24px;
+  padding: 24px;
 
-    &__title {
-        font-size: 24px;
-        font-weight: 500;
+  &__title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #303450;
+    margin-bottom: 32px;
+
+    button {
+      float: right;
+      border: none;
+      font-size: 27px;
+      opacity: 1;
+      font-weight: 100;
+      background-color: #fff;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  ::ng-deep .mat-tab-body {
+    height: 56%;
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    height: 90%;
+    overflow: hidden;
+  }
+
+  ::ng-deep .mat-tab-label-container {
+    .mat-tab-labels {
+      .mat-tab-label {
+        min-width: fit-content;
+        font-size: 16px;
         color: #303450;
-        margin-bottom: 32px;
+        opacity: 1;
+        font-weight: normal;
+        padding: 0px;
+        margin-right: 54px;
+      }
 
-        button {
-            float: right;
-            border: none;
-            font-size: 27px;
-            opacity: 1;
-            font-weight: 100;
-            background-color: #fff;
-
-            &:focus {
-                outline: none;
-            }
-        }
+      .mat-tab-label-active {
+        font-weight: 500 !important;
+      }
     }
 
-    ::ng-deep .mat-tab-body {
-        height: 56%;
+    .mat-ink-bar {
+      height: 8px;
+      background-color: #303450 !important;
+    }
+  }
+
+  ::ng-deep ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:horizontal {
+    background-color: transparent;
+  }
+
+  .modify-form-container {
+    margin-top: 32px;
+    margin-bottom: 6.6em;
+
+    &__label {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      padding: 8px 0;
     }
 
-    ::ng-deep .mat-tab-body-content {
-        height: 90%;
-        overflow: hidden;
+    .name-input {
+      height: 48px;
+
+      &:focus {
+        border-color: #d9dce5;
+        box-shadow: none;
+      }
     }
 
-    ::ng-deep .mat-tab-label-container {
-        .mat-tab-labels {
-            .mat-tab-label {
-                min-width: fit-content;
-                font-size: 16px;
-                color: #303450;
-                opacity: 1;
-                font-weight: normal;
-                padding: 0px;
-                margin-right: 54px;
-            }
-
-            .mat-tab-label-active {
-                font-weight: 500 !important;
-            }
-        }
-
-        .mat-ink-bar {
-            height: 8px;
-            background-color: #303450 !important;
-        }
+    .warning-text {
+      border: none;
+      padding: 0;
+      margin: -16px 0 0;
+      font-weight: 500;
+      font-size: 12px;
+      color: #ff7575;
+      background: 0 0;
+      white-space: nowrap;
+      padding-bottom: 10px;
     }
 
-    ::ng-deep ::-webkit-scrollbar-thumb,
-    ::-webkit-scrollbar-thumb:horizontal {
-        background-color: transparent;
+    .input-error {
+      ::ng-deep textarea {
+        border: solid 1px #ff7575;
+      }
     }
 
-    .modify-form-container {
-        margin-top: 32px;
-        margin-bottom: 6.6em;
+    ::ng-deep textarea {
+      resize: none;
+      font-size: 16px;
 
-        &__label {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 16px;
-            padding: 8px 0;
-        }
-
-        .name-input {
-            height: 48px;
-
-            &:focus {
-                border-color: #d9dce5;
-                box-shadow: none;
-            }
-        }
-
-        .warning-text {
-            border: none;
-            padding: 0;
-            margin: -16px 0 0;
-            font-weight: 500;
-            font-size: 12px;
-            color: #ff7575;
-            background: 0 0;
-            white-space: nowrap;
-            padding-bottom: 10px;
-        }
-
-        .input-error {
-            ::ng-deep textarea {
-                border: solid 1px #ff7575;
-            }
-        }
-
-        ::ng-deep textarea {
-            resize: none;
-
-            &:focus {
-                border-color: #d9dce5;
-                box-shadow: none;
-            }
-        }
-
-        ::ng-deep opal-textarea {
-            div {
-                width: 50%;
-                float: right;
-            }
-        }
+      &:focus {
+        border-color: #d9dce5;
+        box-shadow: none;
+      }
     }
 
-    &__footer {
-        width: 100%;
-        border-top: 1px solid #d8dce6;
-        display: inline-block;
-
-        &__actions-button {
-            float: right;
-            padding-top: 16px;
-
-            .cx-btn:first-child {
-                margin-right: 16px;
-            }
-        }
+    ::ng-deep opal-textarea {
+      div {
+        width: 50%;
+        float: right;
+      }
     }
+  }
 
-    .assign-users-container {
-        margin-top: 32px;
+  &__footer {
+    width: 100%;
+    border-top: 1px solid #d8dce6;
+    display: inline-block;
 
-        &__label {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 16px;
-            padding: 8px 0;
-        }
+    &__actions-button {
+      float: right;
+      padding-top: 16px;
+
+      .cx-btn:first-child {
+        margin-right: 16px;
+      }
     }
+  }
+
+  .assign-users-container {
+    margin-top: 32px;
+
+    &__label {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      padding: 8px 0;
+    }
+  }
+}
+
+::ng-deep {
+  .modal-dialog {
+    max-width: 850px !important;
+    height: 90vh !important;
+  }
 }

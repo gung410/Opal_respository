@@ -249,7 +249,9 @@
       "DevelopmentalRole": "Developmental Role"
     },
     "Filter": {
-      "Title": "Filter User Account"
+      "Title": "Filter User Account",
+      "Current_Filter_Title": "Current Filters",
+      "Remove_Button": "Remove"
     },
     "Export_User_Account": "Export User Account",
     "Export_User": {
@@ -475,7 +477,7 @@
       "MOE_Identifier": "MOE Identifier",
       "Level_Of_Education": "Level Of Education",
       "Is_MOE_OU": "Is MOE OU",
-      "Type_Of_School_Organisation": "Type of School/Organisation",
+      "Type_Of_School_Organisation": "Type of School / Organisation",
       "Address_Information": "Address Information",
       "Department_Is_Empty": "Department Is Empty."
     },
@@ -490,7 +492,7 @@
       "No_Result_Message": "We can’t find any results that match to your filter"
     },
     "Department_Delete": {
-      "Deactivate": "Do you sure want to delete \"{{departmentName}}\" organisation unit?",
+      "Deactivate": "Are you sure want to delete \"{{departmentName}}\" organisation unit?",
       "Successfully": "{{departmentName}} organisation unit has been deleted",
       "Error": "There is something wrong, Please try again."
     }
@@ -578,6 +580,30 @@
       "Error": "There is something wrong, Please try again."
     }
   },
+  "Taxonomy_Management_Page": {
+    "Taxonomy_Management_List": {
+      "Pending_1st_Level_List_Label": "Pending 1st level Approval",
+      "Pending_2nd_Level_List_Label": "Pending 2nd level Approval",
+      "Approved_Label": "Approved",
+      "Rejected_Label": "Rejected",
+      "Completed_Label": "Completed",
+      "No_Result_Message": "We can’t find any results",
+      "No_Search_Result_Message": "We can’t find any results that match to your search"
+    },
+    "Taxonomy_Context_Menu": {
+      "Approve": "Approve",
+      "Reject": "Reject",
+      "Complete": "Complete"
+    },
+    "Table_Header": {
+      "Title": "Title",
+      "TypeOfMetadata": "Type of metadata",
+      "Action": "Action",
+      "RequestedBy": "Requested by",
+      "RequestedDate": "Requested Date",
+      "Status": "Status"
+    }
+  },
   "Export_Confirmation": {
     "Dialog": {
       "Title": "Export Confirmation"
@@ -603,7 +629,7 @@
     },
     "LimitRecord": {
       "Header": "Warning",
-      "Content": "The file exceeds 50 records and cannot be proceeded. Please check and upload again."
+      "Content": "The file exceeds 50 records. Uploading cannot proceed. Please check the file and upload it again."
     },
     "UserRowEmpty": {
       "Header": "Warning",

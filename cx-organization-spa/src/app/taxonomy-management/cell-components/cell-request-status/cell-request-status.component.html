@@ -1,0 +1,9 @@
+<div class="request-status">
+  <div class="request-status__status-dot">
+    <div [class]="'dot-container' + ' ' + statusClass"></div>
+  </div>
+
+  <div class="request-status__status-reason" title="{{ statusReason }}">
+    {{ statusReason }}
+  </div>
+</div>

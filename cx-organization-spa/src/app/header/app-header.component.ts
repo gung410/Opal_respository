@@ -22,6 +22,7 @@ import { User } from 'app-models/auth.model';
 import { GlobalKeySearchStoreService } from 'app/core/store-services/search-key-store.service';
 import { BaseSmartComponent } from 'app/shared/components/component.abstract';
 import { Subscription } from 'rxjs';
+import { MenuRouteEnum } from './constant/menu-route-enum';
 
 @Component({
   selector: 'app-header',
@@ -53,7 +54,6 @@ export class AppHeaderComponent
   notificationList: NotificationList;
   notificationBellUrl: SafeResourceUrl;
   isHideSearchBar: boolean = true;
-  isInUserManagement: boolean = false;
 
   private previousPath: string;
   private routerEventSubscription: Subscription = new Subscription();
@@ -79,7 +79,7 @@ export class AppHeaderComponent
         this.clearUniversalSearch();
 
         this.checkToHideSearchBar(event.url);
-        this.isInUserManagement = event.url.includes('/user-accounts');
+        this.generatePlaceholderText(event.url);
 
         const currentNavigatedPath = this.getUrlPath(event.url);
         this.previousPath = currentNavigatedPath;
@@ -94,7 +94,7 @@ export class AppHeaderComponent
     );
 
     this.checkToHideSearchBar(this.router.url);
-    this.isInUserManagement = this.router.url.includes('/user-accounts');
+    this.generatePlaceholderText(this.router.url);
   }
 
   ngOnDestroy(): void {
@@ -147,7 +147,21 @@ export class AppHeaderComponent
 
   onMenuItemClicked(menuItem: CxNavbarItemModel): void {
     this.checkToHideSearchBar(menuItem.route);
-    this.isInUserManagement = menuItem.route === '/user-accounts';
+    this.generatePlaceholderText(menuItem.route);
+  }
+
+  generatePlaceholderText(menuRouteString: string): string {
+    menuRouteString = menuRouteString ? menuRouteString : this.router.url;
+    switch (menuRouteString) {
+      case MenuRouteEnum.UserAccounts:
+        return 'Search in User Management';
+      case MenuRouteEnum.Organization:
+        return 'Search in Organisation Management';
+      case MenuRouteEnum.TaxonomyManagement:
+        return 'Search in Metadata Management';
+      default:
+        return '';
+    }
   }
 
   private getUrlPath(url: string): string {
@@ -163,7 +177,11 @@ export class AppHeaderComponent
   }
 
   private checkToHideSearchBar(url: string): void {
-    this.isHideSearchBar =
-      !url.includes('/user-accounts') && !url.includes('/organization');
+    const allowToShowSearchBarRoute = [
+      MenuRouteEnum.UserAccounts.toString(),
+      MenuRouteEnum.Organization.toString(),
+      MenuRouteEnum.TaxonomyManagement.toString()
+    ];
+    this.isHideSearchBar = !allowToShowSearchBarRoute.includes(url);
   }
 }

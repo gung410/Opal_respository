@@ -19,7 +19,8 @@ export const environment = {
     event: 'uat-competence-opal-api-event',
     communication: 'uat-datahub-opal-api-communication',
     dataHub: 'uat-datahub-opal-api-query',
-    learningCatalog: 'uat-competence-opal-api-learningcatalog'
+    learningCatalog: 'uat-competence-opal-api-learningcatalog',
+    tagging: 'uat-learnapp-opal-api-tagging'
   },
   site: {
     title: 'System Admin',

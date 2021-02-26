@@ -1,6 +1,7 @@
 export const SAM_PERMISSIONS = {
   // USER MANAGEMENT
   SeeMenuUserManagement: 'OrganizationSpa.UserManagement.SeeMenu',
+  SingleUserCreation: 'OrganizationSpa.UserManagement.SingleUserCreation',
   MassUserCreation: 'OrganizationSpa.UserManagement.MassUserCreation',
   ExportUsers: 'OrganizationSpa.UserManagement.ExportUsers',
   BasicUserAccountsManagement:
@@ -31,6 +32,7 @@ export const SAM_PERMISSIONS = {
   RejectPendingSpecial: 'OrganizationSpa.UserManagement.PendingSpecial.Reject',
 
   // USER MANAGEMENT - OTHER PLACE OF WORK
+  ViewOtherPlaceOfWork: 'OrganizationSpa.UserManagement.OtherPlaceOfWork.View',
   ChangePlaceOfWorkInOtherPlaceOfWork:
     'OrganizationSpa.UserManagement.OtherPlaceOfWork.ChangePlaceOfWork',
   RejectInOtherPlaceOfWork:
@@ -46,7 +48,7 @@ export const SAM_PERMISSIONS = {
 
   // USER GROUP MANAGEMENT
   SeeMenuUserGroupManagement: 'OrganizationSpa.UserGroupManagement.SeeMenu',
-  CRUDinUserGroupManagement: 'OrganizationSpa.UserGroupManagement.CRUD',
+  CUDinUserGroupManagement: 'OrganizationSpa.UserGroupManagement.CUD',
 
   // BROADCAST
   SeeMenuBroadcastMessages: 'OrganizationSpa.BroadcastMessages.SeeMenu',
@@ -57,6 +59,22 @@ export const SAM_PERMISSIONS = {
 
   // SYSTEM_AUDIT_LOG
   SeeMenuSystemAuditLog: 'OrganizationSpa.SystemAuditLog.SeeMenu',
+
+  // METADATA
+  SuggestMetadataChange: 'OrganizationSpa.Metadata.SuggestMetadataChange',
+  MetadataViewPending1st: 'OrganizationSpa.Metadata.Pending1st.View',
+  MetadataApprovePending1st: 'OrganizationSpa.Metadata.Pending1st.Approve',
+  MetadataRejectPending1st: 'OrganizationSpa.Metadata.Pending1st.Reject',
+  MetadataEditPending1st: 'OrganizationSpa.Metadata.Pending1st.Edit',
+  MetadataViewPending2nd: 'OrganizationSpa.Metadata.Pending2nd.View',
+  MetadataApprovePending2nd: 'OrganizationSpa.Metadata.Pending2nd.Approve',
+  MetadataRejectPending2nd: 'OrganizationSpa.Metadata.Pending2nd.Reject',
+  MetadataEditPending2nd: 'OrganizationSpa.Metadata.Pending2nd.Edit',
+  MetadataViewApprovedList: 'OrganizationSpa.Metadata.ApprovedList.View',
+  MetadataMarkAsCompleteInApprovedList:
+    'OrganizationSpa.Metadata.ApprovedList.MarkAsComplete',
+  MetadataViewRejectedList: 'OrganizationSpa.Metadata.RejectedList.View',
+  MetadataViewCompletedList: 'OrganizationSpa.Metadata.CompletedList.View',
 
   // PERMISSIONS
   SeeMenuPermissions: 'OrganizationSpa.Permissions.SeeMenu'

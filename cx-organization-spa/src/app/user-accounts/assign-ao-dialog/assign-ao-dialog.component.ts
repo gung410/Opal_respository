@@ -177,8 +177,12 @@ export class AssignAODialogComponent
     const queryParams = new ApprovalGroupQueryModel({
       statusEnums: [StatusTypeEnum.Active.code],
       searchInSameDepartment: true,
-      isCrossOrganizationalUnit: false,
-      approvalGroupIds
+      isCrossOrganizationalUnit: true,
+      approvalGroupIds,
+      assigneeDepartmentId:
+        this.itemsSelected && this.itemsSelected[0]
+          ? this.itemsSelected[0].departmentId
+          : null
     });
 
     return this.approvalDataService
@@ -211,7 +215,7 @@ export class AssignAODialogComponent
     const queryParams = new ApprovalGroupQueryModel({
       assigneeDepartmentId: this.itemsSelected[0].departmentId,
       searchInSameDepartment: true,
-      isCrossOrganizationalUnit: false,
+      isCrossOrganizationalUnit: true,
       statusEnums: [StatusTypeEnum.Active.code],
       pageIndex,
       searchKey,

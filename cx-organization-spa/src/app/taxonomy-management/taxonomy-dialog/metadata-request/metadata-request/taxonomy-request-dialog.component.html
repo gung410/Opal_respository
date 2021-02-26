@@ -1,0 +1,324 @@
+<div class="dialog-container">
+  <div class="mat-dialog-title">
+    <div class="dialog-title">
+      <h3 *ngIf="mode === 'suggestion'">Suggest change</h3>
+      <h3 *ngIf="mode === 'detail' || mode === 'readonly'">Metadata request</h3>
+    </div>
+    <button
+      type="button"
+      class="close-btn"
+      aria-label="Close"
+      (click)="onCancelClicked()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div
+    [formGroup]="metadataRequestForm"
+    class="mat-dialog-content"
+  >
+    <div class="content-item">
+      <span class="item-label">
+        <b>Action</b>
+      </span>
+      <opal-select
+        [disabled]="mode === 'detail' || mode === 'readonly'"
+        [(ngModel)]="metadataRequest.action"
+        formControlName="action"
+        [items]="actionItems"
+        [valueField]="'action'"
+        [labelField]="'actionLabel'"
+        [isDisplayCloseIcon]="false"
+        (selectedValueChange)="onActionChanged($event)"
+        position="top"
+      >
+      </opal-select>
+    </div>
+    <div
+      *ngIf="mode === 'suggestion'"
+      class="content-item"
+    >
+      <span class="item-label">
+        <b>Service scheme *</b>
+      </span>
+      <opal-select
+        [(ngModel)]="metadataRequest.serviceScheme"
+        formControlName="serviceScheme"
+        [items]="serviceSchemeItems"
+        [valueField]="'tagId'"
+        placeholder="Select from the list"
+        [isDisplayCloseIcon]="false"
+        [labelField]="'displayText'"
+        (selectedValueChange)="onServiceSchemeChanged($event)"
+        position="top"
+      >
+      </opal-select>
+    </div>
+    <div class="content-item">
+      <span class="item-label">
+        <b>Type of metadata</b>
+      </span>
+      <div *ngIf="mode === 'suggestion'">
+        <input
+          [hidden]="true"
+          [(ngModel)]="metadataRequest.metadataType"
+          formControlName="metadataType"
+        />
+        <button
+          [disabled]="!metadataRequest.serviceScheme"
+          class="cx-btn metadata-type-btn"
+          mat-button
+          (click)="onChooseMetadataTypeBtnClicked()"
+          *ngIf="!selectedMetadataType"
+        >
+          Choose metadata type
+        </button>
+        <div
+          class="hyperlink-selected-metadata"
+          *ngIf="selectedMetadataType"
+          (click)="onChooseMetadataTypeBtnClicked()"
+        >
+          {{ selectedMetadataType.name }}
+        </div>
+      </div>
+      <div *ngIf="mode === 'detail' || mode === 'readonly'">
+        {{ metadataRequest.metadataType }}
+      </div>
+    </div>
+    <div
+      *ngIf="metadataRequest.metadataType && selectedMetadataType"
+      class="content-item"
+    >
+      <span class="item-label"><b>
+          {{ metadataRequest.metadataType }}
+        </b></span>
+      <opal-select
+        [(ngModel)]="metadataRequest.metadata"
+        formControlName="metadata"
+        [items]="metadataItems"
+        [valueField]="'tagId'"
+        [isDisplayCloseIcon]="false"
+        [labelField]="'fullPathName'"
+        (selectedValueChange)="onMetadataChanged($event)"
+        (selectedItemChange)="selectedMetadata = $event"
+        position="top"
+      >
+      </opal-select>
+    </div>
+    <div
+      *ngIf="
+        metadataRequest.metadata || mode === 'detail' || mode === 'readonly'
+      "
+      class="content-item"
+    >
+      <span class="item-label"><b> Path </b></span>
+      <div>
+        {{ metadataRequest.path }}
+      </div>
+    </div>
+    <div
+      *ngIf="isShowCurrentMetadataInfo && mode === 'suggestion'"
+      class="content-item"
+    >
+      <span class="item-label"><b>Current metadata and abbreviation</b></span>
+      <div>
+        <span>{{ selectedMetadata.displayText }}</span>
+        <span *ngIf="selectedMetadata.codingScheme">
+          ({{ selectedMetadata.codingScheme }})
+        </span>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        isShowCurrentMetadataInfo && (mode === 'detail' || mode === 'readonly')
+      "
+      class="content-item"
+    >
+      <span class="item-label"><b>Current metadata and abbreviation</b></span>
+      <div>
+        <span>{{ metadataRequest.currentMetadataAndAbbreviation }}</span>
+      </div>
+    </div>
+    <div
+      *ngIf="!isDeleteAction"
+      class="content-item"
+    >
+      <span class="item-label"><b>New metadata name *</b></span>
+      <opal-textarea
+        matInput
+        [isDisabledTextArea]="mode === 'readonly'"
+        [(ngModel)]="metadataRequest.metadataName"
+        formControlName="metadataName"
+        [placeholder]="'Type suggested name'"
+        [styles]="opalTextAreaStyle"
+        [height]="1"
+        [preventEnter]="true"
+        [showCharactersLeft]="false"
+        [counterPosition]="'right'"
+      >
+      </opal-textarea>
+    </div>
+    <div class="content-item">
+      <span class="item-label">
+        <b>Select Approving Officer *</b>
+      </span>
+      <opal-select
+        [disabled]="currentUser.hasAdminRole() || mode === 'readonly'"
+        [fetchDataFn]="fetchUsersFn"
+        formControlName="approvingOfficer"
+        placeholder="Select from the list"
+        [(ngModel)]="metadataRequest.approvingOfficer"
+        [items]="metadataRequest.selectedApprovingOfficer"
+        [clearable]="true"
+        [valueField]="'identity.extId'"
+        [labelField]="'firstName'"
+        [disableSelectAll]="true"
+        position="top"
+      >
+      </opal-select>
+    </div>
+    <div
+      *ngIf="!isDeleteAction"
+      class="content-item"
+    >
+      <span class="item-label"><b>Abbreviation *</b></span>
+      <opal-textarea
+        matInput
+        [(ngModel)]="metadataRequest.abbreviation"
+        [isDisabledTextArea]="mode === 'readonly'"
+        formControlName="abbreviation"
+        [placeholder]="'Type suggested abbreviation'"
+        [styles]="opalTextAreaStyle"
+        [counterDisplay]="'charsLeft'"
+        [height]="1"
+        [preventEnter]="true"
+        [counterPosition]="'right'"
+      >
+      </opal-textarea>
+    </div>
+    <div class="content-item">
+      <span class="item-label"><b>Reason</b></span>
+      <opal-textarea
+        matInput
+        [(ngModel)]="metadataRequest.reason"
+        [isDisabledTextArea]="mode === 'readonly'"
+        formControlName="reason"
+        [placeholder]="'Type the reason for metadata request'"
+        [styles]="opalTextAreaStyle"
+        [counterDisplay]="'charsLeft'"
+        [height]="4"
+        [counterPosition]="'right'"
+        [maxNumberOfCharacters]="1000"
+      >
+      </opal-textarea>
+    </div>
+    <div
+      *ngIf="mode === 'detail' || mode === 'readonly'"
+      class="content-item"
+    >
+      <span class="item-label"><b>Comment by level 1 *</b></span>
+      <opal-textarea
+        matInput
+        [isDisabledTextArea]="
+          isDisabledLevel1ApprovalOfficerComment || mode === 'readonly'
+        "
+        [(ngModel)]="metadataRequest.level1ApprovalOfficerComment"
+        formControlName="level1ApprovalOfficerComment"
+        [placeholder]="'Type your comment... '"
+        [styles]="opalTextAreaStyle"
+        [counterDisplay]="'charsLeft'"
+        [height]="4"
+        [counterPosition]="'right'"
+        [maxNumberOfCharacters]="1000"
+      >
+      </opal-textarea>
+    </div>
+    <div
+      *ngIf="mode === 'detail' || mode === 'readonly'"
+      class="content-item"
+    >
+      <span class="item-label"><b>Comment by level 2 *</b></span>
+      <opal-textarea
+        matInput
+        [isDisabledTextArea]="
+          isDisabledLevel2ApprovalOfficerComment || mode === 'readonly'
+        "
+        [(ngModel)]="metadataRequest.level2ApprovalOfficerComment"
+        formControlName="level2ApprovalOfficerComment"
+        [placeholder]="'Type your comment... '"
+        [styles]="opalTextAreaStyle"
+        [counterDisplay]="'charsLeft'"
+        [height]="4"
+        [counterPosition]="'right'"
+        [maxNumberOfCharacters]="1000"
+      >
+      </opal-textarea>
+    </div>
+  </div>
+  <div class="mat-dialog-actions">
+    <ng-container [ngSwitch]="mode">
+      <div
+        *ngSwitchCase="'detail'"
+        class="buttons-container detail"
+      >
+        <div class="left-buttons">
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            (click)="onCancelClicked()"
+          >
+            {{ 'Common.Button.Cancel' | translate }}
+          </button>
+        </div>
+        <div class="right-buttons">
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            *ngIf="isVisibleToReject"
+            [disabled]="!isEnableToReject"
+            (click)="onRejectClicked()"
+          >
+            {{ 'User_Account_Page.User_Context_Menu.Reject' | translate }}
+          </button>
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            *ngIf="isVisibleToApprove"
+            [disabled]="!isEnableToApprove"
+            (click)="onApproveClicked()"
+          >
+            {{ 'User_Account_Page.User_Context_Menu.Approve' | translate }}
+          </button>
+          <button
+            class="cx-btn"
+            mat-button
+            (click)="onSaveClicked()"
+            [disabled]="!isEnableToSave"
+          >
+            {{ 'Common.Button.Save' | translate }}
+          </button>
+        </div>
+      </div>
+      <div
+        *ngSwitchCase="'suggestion'"
+        class="buttons-container suggestion"
+      >
+        <button
+          class="cx-btn white-btn"
+          mat-button
+          (click)="onCancelClicked()"
+        >
+          {{ 'Common.Button.Cancel' | translate }}
+        </button>
+        <button
+          class="cx-btn"
+          mat-button
+          (click)="onSubmitClicked()"
+          [disabled]="!isEnableToSubmit"
+        >
+          {{ 'Common.Button.Submit' | translate }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>

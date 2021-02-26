@@ -10,6 +10,12 @@ import { ICON_CONST } from 'app/shared/constants/icon.const';
 import { StatusActionTypeEnum } from 'app/shared/constants/status-action-type.enum';
 import { UserRoleEnum } from 'app/shared/constants/user-roles.enum';
 import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
+import { TaxonomyActionButtonEnum } from 'app/taxonomy-management/constant/taxonomy-action-button.enum';
+import { TaxonomyRequestStatusLabel } from 'app/taxonomy-management/constant/taxonomy-request-status-label.enum';
+import {
+  TaxonomyActionsModel,
+  TaxonomyActionToolbarModel
+} from 'app/taxonomy-management/models/actions.model';
 import { ActionsModel } from 'app/user-accounts/user-actions/models/actions.model';
 
 // TODO: Refactor this constant:
@@ -223,41 +229,58 @@ export const USER_ACTION_MAPPING_CONST = [
 export function initUserActions(
   translateAdapterService: TranslateAdapterService,
   isMoreAction: boolean = false,
-  hasRightToAccess: boolean = false
+  hasRightToAccess: boolean = false,
+  hasRightToAccessBasicUserAccountsManagement: boolean = false,
+  hasRightToAccessExportUsers: boolean = false
 ): ActionToolbarModel {
   const essentialActions: ActionsModel[] = [];
   const specifyActions: ActionsModel[] = [];
 
-  essentialActions.push(
-    new ActionsModel({
-      text: translateAdapterService.getValueImmediately(
-        `Common.Button.Add_To_Group`
-      ),
-      actionType: StatusActionTypeEnum.AddToGroup,
-      allowActionSingle: false,
-      icon: null,
-      message: '',
-      disable: true
-    }),
-    new ActionsModel({
-      text: translateAdapterService.getValueImmediately(`Common.Button.Export`),
-      actionType: StatusActionTypeEnum.Export,
-      allowActionSingle: false,
-      icon: null,
-      message: '',
-      disable: true
-    }),
-    new ActionsModel({
-      text: translateAdapterService.getValueImmediately(
-        `Common.Button.Set_Approving_Officers`
-      ),
-      actionType: StatusActionTypeEnum.SetApprovingOfficers,
-      allowActionSingle: false,
-      icon: null,
-      message: '',
-      disable: true
-    })
-  );
+  //These user actions follow this order: Add to Group - Export - Set Approving Officers.
+  if (hasRightToAccessBasicUserAccountsManagement) {
+    essentialActions.push(
+      new ActionsModel({
+        text: translateAdapterService.getValueImmediately(
+          `Common.Button.Add_To_Group`
+        ),
+        actionType: StatusActionTypeEnum.AddToGroup,
+        allowActionSingle: false,
+        icon: null,
+        message: '',
+        disable: true
+      })
+    );
+  }
+
+  if (hasRightToAccessExportUsers) {
+    essentialActions.push(
+      new ActionsModel({
+        text: translateAdapterService.getValueImmediately(
+          `Common.Button.Export`
+        ),
+        actionType: StatusActionTypeEnum.Export,
+        allowActionSingle: false,
+        icon: null,
+        message: '',
+        disable: true
+      })
+    );
+  }
+
+  if (hasRightToAccessBasicUserAccountsManagement) {
+    essentialActions.push(
+      new ActionsModel({
+        text: translateAdapterService.getValueImmediately(
+          `Common.Button.Set_Approving_Officers`
+        ),
+        actionType: StatusActionTypeEnum.SetApprovingOfficers,
+        allowActionSingle: false,
+        icon: null,
+        message: '',
+        disable: true
+      })
+    );
+  }
 
   if (isMoreAction) {
     if (hasRightToAccess) {
@@ -305,10 +328,14 @@ export function initUserActionsForExportButton(
 
 export function initUserActionsForCreateAccButton(
   translateAdapterService: TranslateAdapterService,
-  isAllowToMassCreateUserAccountRequest: boolean
+  isAllowToSingleCreateUserAccountRequest: boolean = true,
+  isAllowToMassCreateUserAccountRequest: boolean = true
 ): ActionsModel[] {
   const userActions: ActionsModel[] = [];
-  if (environment.userAccounts.enableCreateUserAccountRequest) {
+  if (
+    environment.userAccounts.enableCreateUserAccountRequest &&
+    isAllowToSingleCreateUserAccountRequest
+  ) {
     userActions.push(
       new ActionsModel({
         text: translateAdapterService.getValueImmediately(
@@ -344,32 +371,46 @@ export function initUserActionsForCreateAccButton(
 
 export function initPendingUserActions(
   translateAdapterService: TranslateAdapterService,
-  isCurrentUserDivAdmin: boolean
+  isShowEndorseText: boolean,
+  canApprove: boolean,
+  canEndorse: boolean,
+  canReject: boolean
 ): ActionsModel[] {
   const userActions: ActionsModel[] = [];
 
-  userActions.push(
-    new ActionsModel({
+  if (canEndorse || canApprove) {
+    const acceptAction = new ActionsModel({
       text: translateAdapterService.getValueImmediately(
-        `User_Account_Page.User_Context_Menu.${
-          isCurrentUserDivAdmin ? 'Endorse' : 'Approve'
-        }`
+        'User_Account_Page.User_Context_Menu.Approve'
       ),
       actionType: StatusActionTypeEnum.Accept,
       allowActionSingle: false,
       icon: null,
       message: '',
       disable: true
-    }),
-    new ActionsModel({
-      text: StatusActionTypeEnum.Reject,
-      actionType: StatusActionTypeEnum.Reject,
-      allowActionSingle: false,
-      icon: null,
-      message: '',
-      disable: true
-    })
-  );
+    });
+
+    if (isShowEndorseText) {
+      acceptAction.text = translateAdapterService.getValueImmediately(
+        'User_Account_Page.User_Context_Menu.Endorse'
+      );
+    }
+
+    userActions.push(acceptAction);
+  }
+
+  if (canReject) {
+    userActions.push(
+      new ActionsModel({
+        text: StatusActionTypeEnum.Reject,
+        actionType: StatusActionTypeEnum.Reject,
+        allowActionSingle: false,
+        icon: null,
+        message: '',
+        disable: true
+      })
+    );
+  }
 
   return userActions;
 }
@@ -396,4 +437,73 @@ export function initUniversalToolbar(
   });
 
   return departmentModel;
+}
+
+export function initTaxonomyUserActions(
+  translateAdapterService: TranslateAdapterService,
+  currentTab: TaxonomyRequestStatusLabel,
+  hasPermissionToApprove: boolean,
+  hasPermissionToReject: boolean,
+  hasPermissionToComplete: boolean
+): TaxonomyActionToolbarModel {
+  const essentialActions: TaxonomyActionsModel[] = [];
+  const specifyActions: TaxonomyActionsModel[] = [];
+
+  if (
+    currentTab === TaxonomyRequestStatusLabel.PendingLevel1 ||
+    currentTab === TaxonomyRequestStatusLabel.PendingLevel2
+  ) {
+    if (hasPermissionToApprove) {
+      essentialActions.push(
+        new TaxonomyActionsModel({
+          text: translateAdapterService.getValueImmediately(
+            `Taxonomy_Management_Page.Taxonomy_Context_Menu.Approve`
+          ),
+          actionType: TaxonomyActionButtonEnum.Approve,
+          allowActionSingle: false,
+          icon: null,
+          message: '',
+          disable: true
+        })
+      );
+    }
+
+    if (hasPermissionToReject) {
+      essentialActions.push(
+        new TaxonomyActionsModel({
+          text: translateAdapterService.getValueImmediately(
+            `Taxonomy_Management_Page.Taxonomy_Context_Menu.Reject`
+          ),
+          actionType: TaxonomyActionButtonEnum.Reject,
+          allowActionSingle: false,
+          icon: null,
+          message: '',
+          disable: true
+        })
+      );
+    }
+  }
+
+  if (
+    currentTab === TaxonomyRequestStatusLabel.Approved &&
+    hasPermissionToComplete
+  ) {
+    essentialActions.push(
+      new TaxonomyActionsModel({
+        text: translateAdapterService.getValueImmediately(
+          `Taxonomy_Management_Page.Taxonomy_Context_Menu.Complete`
+        ),
+        actionType: TaxonomyActionButtonEnum.Complete,
+        allowActionSingle: false,
+        icon: null,
+        message: '',
+        disable: true
+      })
+    );
+  }
+
+  return new TaxonomyActionToolbarModel({
+    listEssentialActions: essentialActions,
+    listSpecifyActions: specifyActions
+  });
 }

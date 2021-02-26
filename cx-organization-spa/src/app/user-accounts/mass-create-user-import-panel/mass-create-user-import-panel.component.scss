@@ -4,6 +4,7 @@
   &__create {
     font-size: 16px;
     color: #303450;
+    margin-top: 16px;
 
     .file-template-link {
       color: blue;
@@ -36,7 +37,7 @@
     }
 
     .mass-users-creation-heading {
-      font-family: Roboto;
+      font-family: 'Roboto';
       font-style: normal;
       font-weight: normal;
       font-size: 22px;
@@ -101,9 +102,44 @@
         }
       }
 
-      .instruction-tooltips {
-        cursor: pointer;
-        color: #000000;
+      .cx-panel__label {
+        display: inline-block;
+        text-transform: none;
+        .instruction {
+          display: inline;
+          position: relative;
+          .instruction-tooltips {
+            cursor: pointer;
+            color: #000000;
+
+            &--content {
+              max-width: 410px !important;
+              width: 307px !important;
+              text-align: left !important;
+              color: #fff;
+              background-color: #000;
+              font-weight: 400;
+              font-size: 14px;
+              border-radius: 5px;
+              padding: 0 10px;
+              position: absolute;
+              top: -50%;
+              left: 150%;
+
+              .tooltip__left-arrow {
+                width: 0;
+                height: 0;
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+
+                border-right: 7px solid #000;
+                position: absolute;
+                left: -5px;
+                top: 25%;
+              }
+            }
+          }
+        }
       }
     }
 

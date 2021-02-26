@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { AgGridConfigModel } from 'app-models/ag-grid-config.model';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
 import { MassUserCreationFileGridHeader } from 'app/shared/constants/mass-user-creation-file-grid-header.enum';
@@ -10,7 +16,7 @@ import { MassUserCreationFileNameRendererComponent } from '../renderer-component
   templateUrl: './uploaded-files-list.component.html',
   styleUrls: ['./uploaded-files-list.component.scss']
 })
-export class UploadedFilesListComponent implements OnInit {
+export class UploadedFilesListComponent implements OnInit, OnDestroy {
   @Input() set fileInfoItems(files: FileInfoListViewModel[]) {
     if (!files) {
       return;
@@ -19,6 +25,8 @@ export class UploadedFilesListComponent implements OnInit {
   }
   agGridConfig: AgGridConfigModel;
   noRowsTemplate: string = '<div class="grid-nodata">No data</div>';
+  fullTableContentWidth: number = 1395;
+  RESIZE_DELAY_TIME: number = 200;
 
   constructor(
     private translateAdapterSvc: TranslateAdapterService,
@@ -29,18 +37,39 @@ export class UploadedFilesListComponent implements OnInit {
     this.initGridConfig();
     this.initGridData();
     // this.setRowData(this.items);
+
+    this.initScreenRotationEvent();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyScreenRotationEvent();
   }
 
   onGridReady(params: any): void {
     this.agGridConfig.gridApi = params.api;
     this.agGridConfig.gridColumnApi = params.columnApi;
     this.agGridConfig.gridApi.setDomLayout('autoHeight');
-    this.agGridConfig.gridApi.sizeColumnsToFit();
+    this.calculateToResize();
     this.agGridConfig.gridApi.hideOverlay();
   }
 
   onFirstDataRendered(params: any): void {
-    params.api.sizeColumnsToFit();
+    this.calculateToResize();
+  }
+
+  private initScreenRotationEvent(): void {
+    window.addEventListener(
+      'orientationchange',
+      () => {
+        this.calculateToResize();
+      },
+      false
+    );
+  }
+
+  private destroyScreenRotationEvent(): void {
+    // tslint:disable-next-line:no-empty
+    window.removeEventListener('orientationchange', () => {}, true);
   }
 
   private initGridConfig(): void {
@@ -80,7 +109,6 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.fileName.fieldName,
         colId: MassUserCreationFileGridHeader.fileName.colId,
-        minWidth: 450,
         checkboxSelection: false,
         cellRenderer: 'fileInfoRenderer'
       },
@@ -90,7 +118,6 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.CreatedBy.fieldName,
         colId: MassUserCreationFileGridHeader.CreatedBy.colId,
-        minWidth: 250,
         checkboxSelection: false
       },
       {
@@ -99,7 +126,6 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.createdDate.fieldName,
         colId: MassUserCreationFileGridHeader.createdDate.colId,
-        minWidth: 200,
         checkboxSelection: false
       },
       {
@@ -108,7 +134,6 @@ export class UploadedFilesListComponent implements OnInit {
         ),
         field: MassUserCreationFileGridHeader.numberOfAccountRequest.fieldName,
         colId: MassUserCreationFileGridHeader.numberOfAccountRequest.colId,
-        minWidth: 50,
         checkboxSelection: false
       }
     ];
@@ -118,5 +143,50 @@ export class UploadedFilesListComponent implements OnInit {
     return this.translateAdapterSvc.getValueImmediately(
       'Mass_User_Creation_Panel.Uploaded_Files_Table.Headers.' + columnName
     );
+  }
+
+  private calculateToResize(): void {
+    const agHeaderElement = document.querySelector('.ag-header');
+    const bodyViewPortElement = document.querySelector(
+      '.ag-center-cols-container'
+    );
+
+    if (!agHeaderElement || !bodyViewPortElement) {
+      this.resizeColumnsToFitScreen();
+
+      return;
+    }
+
+    setTimeout(() => {
+      const screenWidth = screen.width;
+
+      if (screenWidth <= this.fullTableContentWidth) {
+        this.resizeColumnsToFitContent(false);
+
+        const afterResizeAgHeaderWidth = agHeaderElement.getBoundingClientRect()
+          .width;
+        const afterResizeBodyViewPortWidth = bodyViewPortElement.getBoundingClientRect()
+          .width;
+
+        if (afterResizeAgHeaderWidth !== afterResizeBodyViewPortWidth) {
+          this.resizeColumnsToFitContent(false);
+        }
+      } else {
+        this.resizeColumnsToFitScreen();
+      }
+    }, this.RESIZE_DELAY_TIME);
+  }
+
+  private resizeColumnsToFitContent(isSkipHeader: boolean): void {
+    const allColumnIds = [];
+    this.agGridConfig.gridColumnApi.getAllColumns().forEach((column) => {
+      allColumnIds.push(column.colId);
+    });
+
+    this.agGridConfig.gridColumnApi.autoSizeColumns(allColumnIds, isSkipHeader);
+  }
+
+  private resizeColumnsToFitScreen(): void {
+    this.agGridConfig.gridApi.sizeColumnsToFit();
   }
 }

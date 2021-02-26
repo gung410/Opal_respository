@@ -2,6 +2,7 @@
   [ngClass]="className"
   [ngStyle]="styles"
   [cols]="width"
+  [disabled]="isDisabled"
   [rows]="height"
   [placeholder]="placeholder"
   (keydown.enter)="onEnter($event)"
@@ -9,12 +10,12 @@
   (ngModelChange)="onModelChange($event)"
   [attr.maxlength]="maxNumberOfCharacters"
 ></textarea>
-
-<div [ngStyle]="positionStyle" [ngSwitch]="counterDisplay">
-  <span *ngSwitchCase="'fraction'"
-    >{{ currentNumberOfChars }} / {{ maxNumberOfCharacters }}</span
+<ng-template [ngIf]="showCharactersLeft">
+  <div
+    [ngStyle]="positionStyle"
+    [ngSwitch]="counterDisplay"
   >
-  <span *ngSwitchCase="'charsLeft'"
-    >{{ maxNumberOfCharacters - currentNumberOfChars }} characters left</span
-  >
-</div>
+    <span *ngSwitchCase="'fraction'">{{ currentNumberOfChars }} / {{ maxNumberOfCharacters }}</span>
+    <span *ngSwitchCase="'charsLeft'">{{ maxNumberOfCharacters - currentNumberOfChars }} characters left</span>
+  </div>
+</ng-template>

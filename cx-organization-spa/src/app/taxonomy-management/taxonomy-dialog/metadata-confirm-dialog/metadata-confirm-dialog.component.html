@@ -1,0 +1,38 @@
+<div class="dialog-container">
+  <div class="mat-dialog-title">
+    <div class="dialog-title">Confirm</div>
+  </div>
+
+  <div [formGroup]="metadataConfirmForm" class="mat-dialog-content">
+    <p>Are you sure you want to {{ action }} this request?</p>
+    <opal-textarea
+      matInput
+      [(ngModel)]="comment"
+      formControlName="comment"
+      [placeholder]="'Type your comment... '"
+      [styles]="opalTextAreaStyle"
+      [height]="1"
+      [preventEnter]="true"
+      [showCharactersLeft]="false"
+      [counterPosition]="'right'"
+      [maxNumberOfCharacters]="256"
+    >
+    </opal-textarea>
+  </div>
+
+  <div class="mat-dialog-actions">
+    <div class="buttons-container">
+      <button class="cx-btn white-btn" mat-button (click)="onCancelClicked()">
+        {{ 'Common.Button.Cancel' | translate }}
+      </button>
+      <button
+        class="cx-btn"
+        mat-button
+        (click)="onConfirmClicked()"
+        [disabled]="!metadataConfirmForm.valid"
+      >
+        {{ 'Common.Button.Confirm' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

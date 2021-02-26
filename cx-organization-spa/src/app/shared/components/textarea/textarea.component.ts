@@ -34,6 +34,16 @@ export class OpalTextareaComponent implements ControlValueAccessor {
     this._preventEnter = value;
   }
 
+  get showCharactersLeft(): boolean {
+    return this._showCharactersLeft;
+  }
+  @Input() set showCharactersLeft(value: boolean) {
+    if (value == null) {
+      return;
+    }
+    this._showCharactersLeft = value;
+  }
+
   get height(): number {
     return this._height;
   }
@@ -94,6 +104,14 @@ export class OpalTextareaComponent implements ControlValueAccessor {
     this._counterDisplay = value;
   }
 
+  @Input() set isDisabledTextArea(isDisabled: boolean) {
+    if (isDisabled == null) {
+      return;
+    }
+
+    this.isDisabled = isDisabled;
+  }
+
   get counterPosition(): 'center' | 'left' | 'right' {
     return this._counterPosition;
   }
@@ -130,8 +148,10 @@ export class OpalTextareaComponent implements ControlValueAccessor {
   }
 
   onChange: (data: any) => void;
+
   onTouched: () => void;
-  isDisabled: boolean;
+
+  isDisabled: boolean = false;
 
   textValue: string = '';
   currentNumberOfChars: number = 0;
@@ -139,6 +159,7 @@ export class OpalTextareaComponent implements ControlValueAccessor {
 
   private _maxNumberOfCharacters: number = 100;
   private _preventEnter: boolean = false;
+  private _showCharactersLeft: boolean = true;
   private _height: number = 10;
   private _width: number = 80;
   private _placeholder: string = '';
@@ -153,16 +174,17 @@ export class OpalTextareaComponent implements ControlValueAccessor {
       this.currentNumberOfChars = obj.length;
     }
   }
+
   registerOnChange(fn: any): void {
-    // throw new Error("Method not implemented.");
     this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
-    // throw new Error("Method not implemented.");
     this.onTouched = fn;
   }
+
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+    this.isDisabled = isDisabled;
   }
 
   onModelChange(textValue: string): void {

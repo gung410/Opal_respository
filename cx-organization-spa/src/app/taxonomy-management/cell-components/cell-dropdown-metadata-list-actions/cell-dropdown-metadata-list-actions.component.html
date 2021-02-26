@@ -1,0 +1,68 @@
+<div
+  class="d-inline-block ag-grid-dropdown"
+  [placement]="'left'"
+  container="body"
+  ngbDropdown
+>
+  <i
+    class="material-icons more-vert ag-grid-dropdown--more-vert-icon"
+    ngbDropdownToggle
+  ></i>
+  <div
+    class="ag-grid-dropdown--menu"
+    aria-labelledby="dropdownEdit"
+    ngbDropdownMenu
+  >
+    <div class="ag-grid-dropdown--arrow-menu"></div>
+    <button
+      *ngIf="
+        (requestStatus === taxonomyRequestStatus.pendingLevel1 ||
+          requestStatus === taxonomyRequestStatus.pendingLevel2) &&
+        hasPermissionToEdit
+      "
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('edit')"
+    >
+      <span>Edit</span>
+    </button>
+
+    <button
+      *ngIf="
+        (requestStatus === taxonomyRequestStatus.pendingLevel1 ||
+          requestStatus === taxonomyRequestStatus.pendingLevel2) &&
+        hasPermissionToApprove
+      "
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('approve')"
+    >
+      <span>Approve</span>
+    </button>
+
+    <button
+      *ngIf="
+        (requestStatus === taxonomyRequestStatus.pendingLevel1 ||
+          requestStatus === taxonomyRequestStatus.pendingLevel2) &&
+        hasPermissionToReject
+      "
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('reject')"
+    >
+      <span>Reject</span>
+    </button>
+
+    <button
+      *ngIf="
+        requestStatus === taxonomyRequestStatus.approved &&
+        hasPermissionToComplete
+      "
+      class="ag-grid-dropdown--menu--item-btn dropdown-item"
+      ngbDropdownItem
+      (click)="onClick('completed')"
+    >
+      <span>Mark As Completed</span>
+    </button>
+  </div>
+</div>

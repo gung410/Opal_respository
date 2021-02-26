@@ -138,7 +138,7 @@ export class AuthService {
               currentUser.topAccessibleDepartment =
                 userInfo.topAccessibleDepartment;
               currentUser.permissionDic = this.getPermissionDic(permissions);
-              console.info(currentUser.permissionDic);
+              // console.info(JSON.stringify(currentUser.permissionDic));
               this.userSubject.next(currentUser);
               this.isAuthenticating.next(false);
 

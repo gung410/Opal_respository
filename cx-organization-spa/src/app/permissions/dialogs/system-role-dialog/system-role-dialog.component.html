@@ -1,6 +1,6 @@
 <div class="dialog-container">
   <div mat-dialog-title>
-    <h3>{{ dialogTitle }}</h3>
+    <h3 class="dialog-title">{{ dialogTitle }}</h3>
   </div>
   <div mat-dialog-content>
     <div class="header-name">
@@ -24,17 +24,15 @@
         <span>Please input role name.</span>
       </div>
       <div *ngIf="isDuplicatedSystemRoleName">
-        <span
-          >There is already a system role associated with this role title.
-          Please input a different name.</span
-        >
+        <span>There is already a system role associated with this role title.
+          Please input a different name.</span>
       </div>
-      <div *ngIf="isSpecialChars">
+      <div *ngIf="hasSpecialChars">
         <span>The following characters are not supported: !@#$%^&*()</span>
       </div>
     </div>
     <div class="description">
-      <span><b>Assignable by specific system role</b></span>
+      <span><b>Viewable and assignable by</b></span>
     </div>
     <div
       *ngIf="numberOfSelectedRoles > 1; else singularTemplate"
@@ -49,36 +47,36 @@
     </ng-template>
     <div class="checkbox-section">
       <div class="checkbox-section__left-container">
-        <ng-container
-          *ngFor="
+        <ng-container *ngFor="
             let assignableSystemRole of assignableSystemRoles;
             let even = even
-          "
-        >
-          <div class="checkbox-section__left-container__item" *ngIf="even">
+          ">
+          <div
+            class="checkbox-section__left-container__item"
+            *ngIf="even"
+          >
             <system-role-checkbox
               [systemRoleId]="assignableSystemRole.id"
               [grantedChoice]="assignableSystemRole.granted"
               (selectedValueChange)="onSelectedValueChanged($event)"
-              >{{ assignableSystemRole.name }}</system-role-checkbox
-            >
+            >{{ assignableSystemRole.name }}</system-role-checkbox>
           </div>
         </ng-container>
       </div>
       <div class="checkbox-section__right-container">
-        <ng-container
-          *ngFor="
+        <ng-container *ngFor="
             let assignableSystemRole of assignableSystemRoles;
             let odd = odd
-          "
-        >
-          <div class="checkbox-section__right-container__item" *ngIf="odd">
+          ">
+          <div
+            class="checkbox-section__right-container__item"
+            *ngIf="odd"
+          >
             <system-role-checkbox
               [systemRoleId]="assignableSystemRole.id"
               [grantedChoice]="assignableSystemRole.granted"
               (selectedValueChange)="onSelectedValueChanged($event)"
-              >{{ assignableSystemRole.name }}</system-role-checkbox
-            >
+            >{{ assignableSystemRole.name }}</system-role-checkbox>
           </div>
         </ng-container>
       </div>
@@ -93,16 +91,23 @@
           (click)="onDeleteRoleClicked()"
           mat-button
         >
-          <img class="role-action" src="assets/icons/delete.svg" />
+          <img
+            class="role-action"
+            src="assets/icons/delete.svg"
+          />
           Delete role
         </button>
       </div>
       <div class="main-buttons">
-        <button class="cx-btn cx-sub-btn" mat-button (click)="onClose()">
+        <button
+          class="cx-btn cx-sub-btn"
+          mat-button
+          (click)="onClose()"
+        >
           {{ 'Common.Button.Cancel' | translate }}
         </button>
         <button
-          class="cx-btn ml-1"
+          class="cx-btn"
           mat-button
           mat-button
           (click)="onConfirmClicked()"

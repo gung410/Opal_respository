@@ -1,38 +1,39 @@
-<cx-dialog-template
-  class="filter-department"
-  (done)="onDone()"
-  (cancel)="onCancel()"
-  [doneButtonText]="'Common.Label.Apply' | translate"
-  [cancelButtonText]="'Common.Button.Cancel' | translate"
->
-  <modal-header>
-    <h5>{{ 'Department_Page.Filter_Section.Title' | translate }}</h5>
-  </modal-header>
-  <content>
+<div class="filter-department">
+  <button class="outro-modal" (click)="onCancel()">
+    <i class="icon icon-chevron-right-bold but-left-side"></i>
+  </button>
+  <div class="header">
+    <div class="title">
+      <h4>Filter</h4>
+    </div>
+    <div class="group-action">
+      <button class="action-item cx-btn-secondary" (click)="onClear()">
+        Clear Filter
+      </button>
+      <button class="action-item cx-btn" (click)="onApply()">Apply</button>
+    </div>
+  </div>
+  <div class="content">
     <div *ngIf="departmentFilterOptions" class="filter-department__content">
       <div *ngFor="let departmentFilterOption of departmentFilterOptions">
-        <div
-          *ngIf="departmentFilterOption.name"
-          class="filter-department__header"
-        >
-          <span>{{ departmentFilterOption.name | uppercase }}</span>
+        <div *ngIf="departmentFilterOption.name">
+          <span class="deparment-name"> {{ departmentFilterOption.name }}</span>
         </div>
-        <div
-          *ngIf="departmentFilterOption.options"
-          class="filter-department__items row m-0"
-        >
+        <div *ngIf="departmentFilterOption.options">
           <ng-container
             *ngFor="let deparmentType of departmentFilterOption.options"
           >
             <cx-checkbox
               class="col-12 col-sm-6 col-lg-4 p-0"
-              [(selected)]="deparmentType.isSelected"
+              [assignedValue]="deparmentType.objectId"
+              [selected]="deparmentType.isSelected"
+              (valueSelected)="onSelected($event)"
             >
-              {{ deparmentType.value }}
+              {{ deparmentType.value | titlecase }}
             </cx-checkbox>
           </ng-container>
         </div>
       </div>
     </div>
-  </content>
-</cx-dialog-template>
+  </div>
+</div>

@@ -19,7 +19,8 @@ export const environment = {
     event: 'development-competence-opal-api-event',
     communication: 'development-datahub-opal-api-communication',
     dataHub: 'development-datahub-opal-api-query',
-    learningCatalog: 'development-competence-opal-api-learningcatalog'
+    learningCatalog: 'development-competence-opal-api-learningcatalog',
+    tagging: 'development-learnapp-opal-api-tagging/api'
   },
   site: {
     title: 'System Admin',
@@ -38,7 +39,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.development.opal2.conexus.net',
-  auditLogAppUrl: 'https://admin.development.opal2.conexus.net',
+  baseProfileUrl: 'https://admin.development.opal2.conexus.net',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',

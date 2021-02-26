@@ -1,12 +1,35 @@
+::ng-deep .cdk-overlay-pane {
+  min-height: fit-content !important;
+}
+
 .dialog-container {
   height: 100%;
+  color: #303450;
+  .mat-dialog-title {
+    margin-bottom: 42px;
+
+    .dialog-title {
+      font-size: 24px;
+      font-weight: normal;
+    }
+  }
 
   .mat-dialog-content {
-    min-height: 450px;
-
+    overflow: hidden;
     .header-name {
       .role-label {
-        margin: 10px;
+        font-size: 16px;
+      }
+    }
+
+    ::ng-deep textarea {
+      resize: none;
+      border-color: #d8dce6;
+
+      &:focus {
+        border-color: #d8dce6;
+        box-shadow: none;
+        outline: none;
       }
     }
 
@@ -15,18 +38,19 @@
     }
 
     .description {
-      margin: 10px;
+      margin: 10px 10px 10px 0;
     }
 
     .checkbox-section {
+      width: 100%;
       display: flex;
-      flex-wrap: wrap;
+      overflow: scroll;
+      height: 26vh;
 
       &__left-container {
-        width: 50%;
+        width: fit-content;
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
 
         &__item {
           padding-bottom: 10px;
@@ -34,10 +58,9 @@
       }
 
       &__right-container {
-        width: 50%;
+        width: fit-content;
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
 
         &__item {
           padding-bottom: 10px;
@@ -47,17 +70,22 @@
   }
 
   .mat-dialog-actions {
+    padding: 0px;
     .buttons-container {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      padding: 24px 0px;
+      border-top: 1px solid #d8dce6;
 
       .cx-btn {
+        padding: 0px 32px;
       }
 
       .cx-sub-btn {
         background-color: white !important;
         color: rgba(48, 52, 80, 1) !important;
+        margin-right: 16px;
       }
     }
   }

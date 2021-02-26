@@ -69,16 +69,20 @@ user-accounts {
 
             .filter-btn {
                 position: relative;
+                padding: 0px 51px 0px 31px;
+                width: 175px;
+                white-space: nowrap;
 
                 &__number {
                     position: absolute;
-                    top: -10px;
-                    right: -8px;
+                    top: 12px;
+                    right: 8px;
                     border-radius: 50%;
                     border: 1px;
                     height: 21px;
                     width: 21px;
-                    background-color: #ff6b81;
+                    color: #fff;
+                    background-color: #1dcec1;
                     z-index: 7;
                     display: flex;
                     align-items: center;
@@ -96,6 +100,14 @@ user-accounts {
         }
 
         .ag-header.ag-grid-header-fixed {
+            top: 118px;
+        }
+
+        .ag-header.ag-grid-header-pending-tab-fixed {
+            top: 118px;
+        }
+
+        .ag-header.ag-grid-header-other-place-of-work-tab-fixed {
             top: 118px;
         }
 
@@ -148,6 +160,20 @@ user-accounts {
         top: 118px;
     }
 
+    .ag-header.ag-grid-header-pending-tab-fixed {
+        top: 118px;
+        position: fixed;
+        width: calc(100% - 82.5px);
+        z-index: 2;
+    }
+
+    .ag-header.ag-grid-header-other-place-of-work-tab-fixed {
+        top: 118px;
+        position: fixed;
+        width: calc(100% - 82.5px);
+        z-index: 2;
+    }
+
     .action-group-container {
         display: flex;
         justify-content: space-between;
@@ -181,6 +207,7 @@ user-accounts {
             .action-toolbar {
                 .cx-btn {
                     border-radius: 0px;
+                    min-height: 34px;
                 }
 
                 .cx-btn:first-child {
@@ -195,6 +222,7 @@ user-accounts {
 
                 .cx-btn:only-child {
                     border-radius: 5px;
+                    border: 1px solid #d8dce6;
                 }
 
                 .action-toolbar__actions-dropdown {
@@ -219,6 +247,10 @@ user-accounts {
                 transform: unset;
             }
         }
+    }
+
+    .grid-toolbar-fixed {
+        width: calc(100% - 82.5px);
     }
 
     .user-accounts {
@@ -576,8 +608,5 @@ user-accounts {
                 }
             }
         }
-
     }
-
-
 }

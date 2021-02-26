@@ -82,6 +82,18 @@ export const routes: Routes = [
       'app/system-audit-log/system-audit-log.module#SystemAuditLogModule'
   },
   {
+    path: AppConstant.siteURL.menus.taxonomy,
+    canActivate: [AuthGuardService],
+    loadChildren:
+      'app/taxonomy-management/taxonomy-management.module#TaxonomyManagementModule'
+  },
+  {
+    path: AppConstant.siteURL.menus.batchJobsMonitoring,
+    canActivate: [AuthGuardService],
+    loadChildren:
+      'app/batch-jobs-monitoring/batch-jobs-monitoring.module#BatchJobsMonitoringModule'
+  },
+  {
     path: '**',
     redirectTo: AppConstant.siteURL.login
   }

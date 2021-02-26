@@ -722,6 +722,15 @@ export class Utils {
     return result;
   }
 
+  static removeAlls<T extends string | number>(
+    collection: T[],
+    toRemoveItems: T[]
+  ): T[] {
+    const toRemiveItemsDic = Utils.toDictionary(toRemoveItems);
+
+    return collection.filter((ele) => toRemiveItemsDic[ele] == null);
+  }
+
   static removeFirst(
     collection: Array<string | number | unknown>,
     item: string | number | unknown

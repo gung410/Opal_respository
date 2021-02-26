@@ -19,7 +19,8 @@ export const environment = {
     event: 'systemtest-competence-opal-api-event',
     communication: 'systemtest-datahub-opal-api-communication',
     dataHub: 'systemtest-datahub-opal-api-query',
-    learningCatalog: 'systemtest-competence-opal-api-learningcatalog'
+    learningCatalog: 'systemtest-competence-opal-api-learningcatalog',
+    tagging: 'systemtes-learnapp-opal-api-tagging'
   },
   site: {
     title: 'System Admin',
@@ -38,7 +39,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.systemtest.opal2.conexus.net',
-  auditLogAppUrl: 'https://admin.systemtest.opal2.conexus.net',
+  baseProfileUrl: 'https://admin.systemtest.opal2.conexus.net',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',

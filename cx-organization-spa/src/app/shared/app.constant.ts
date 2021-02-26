@@ -10,7 +10,8 @@ export const AppConstant = {
     assessment: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.assessment}`,
     portal: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.portal}`,
     communication: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.communication}`,
-    learningCatalog: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.learningCatalog}`
+    learningCatalog: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.learningCatalog}`,
+    tagging: `${environment.apiGatewayOrigin}/${environment.apiGatewayResource.tagging}`
   },
   cxId: {
     ProfileUrl: `${environment.issuer}/manage/index`
@@ -36,7 +37,9 @@ export const AppConstant = {
       userGroups: 'user-groups',
       broadcastMessages: 'broadcast-messages',
       systemAuditLog: 'audit',
-      permissions: 'permissions'
+      permissions: 'permissions',
+      taxonomy: 'taxonomy-management',
+      batchJobsMonitoring: 'batch-jobs-monitoring'
     },
     sessionTimeout: 'session-timeout'
   },

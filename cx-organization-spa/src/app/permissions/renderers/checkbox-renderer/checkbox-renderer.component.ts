@@ -17,6 +17,7 @@ import { Utils } from '../../../shared/utilities/utils';
 export class CheckboxRendererComponent
   implements ICellRendererAngularComp, OnDestroy {
   subscription: Subscription = new Subscription();
+  isCheckboxHidden: boolean = false;
   params: any;
   get checkState(): boolean {
     return this._checkState;
@@ -28,7 +29,9 @@ export class CheckboxRendererComponent
 
     this._checkState = isCheckState;
   }
+
   isDisabled: boolean = true;
+
   private _systemRoleId: string; // also Column Id
   private _accessRightId: number;
   private _currentGrantedAccessRights: GrantedAccessRightsModel = new GrantedAccessRightsModel();
@@ -49,12 +52,9 @@ export class CheckboxRendererComponent
   }
 
   agInit(params: any): void {
-    this.params = params;
-    this.checkState = Utils.isDefined(params.value) ? params.value : false;
-    this._originCheckState = this.checkState;
-    this._systemRoleId = this.params.column.colId;
-    this._accessRightId = this.params.data.accessRightId;
+    this.setupVariable(params);
     this.buildGrantedAccessRights(params.value);
+    this.checkLastRowRender();
 
     this.grantedAccessRightSubject = new BehaviorSubject<
       ColumnItemModel<GrantedAccessRightsModel>
@@ -83,6 +83,19 @@ export class CheckboxRendererComponent
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private setupVariable(params: any): void {
+    this.params = params;
+    this.checkState = Utils.isDefined(params.value) ? params.value : false;
+    this._originCheckState = this.checkState;
+    this._systemRoleId = this.params.column.colId;
+    this._accessRightId = this.params.data.accessRightId;
+    this.isCheckboxHidden = this.params.data.isHideAccessRight;
+  }
+
+  private checkLastRowRender(): void {
+    this.permissionsTableSvc.sendLastRowRenderSignal(this._accessRightId);
   }
 
   private creatEditObserver(): void {
@@ -123,12 +136,13 @@ export class CheckboxRendererComponent
     if (isDiscardChange) {
       this.checkState = this._originCheckState;
       this.sendCheckboxChange(this.checkState);
-      this.updateCheckBoxForNode();
+      // Due to registered observable issue, temporary comment this line.
+      // this.updateCheckBoxForNode();
 
       return;
     }
-
-    this.updateCheckBoxForNode();
+    // Due to registered observable issue, temporary comment this line.
+    // this.updateCheckBoxForNode();
     this._originCheckState = this.checkState;
   }
 

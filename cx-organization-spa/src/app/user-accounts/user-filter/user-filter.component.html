@@ -24,8 +24,34 @@
       [json]="appliedFilterFormJSON"
       [submitName]="'Apply'"
       (changeValue)="onChanged($event)"
-      (submit)="onApplyFilter($event)"
+      (submit)="onApplyFilter()"
     >
     </cx-surveyjs>
+    <div class="current-filters">
+      <div class="current-filters__header">
+        {{ 'User_Account_Page.Filter.Current_Filter_Title' | translate }}
+      </div>
+      <div class="current-filters__container">
+        <div
+          class="current-filters__container__criteria"
+          *ngFor="let currentFilteredData of appliedData.appliedFilter"
+        >
+          <div class="current-filters__container__criteria__text">
+            {{ currentFilteredData.filterOptions.text }}
+          </div>
+          <div class="current-filters__container__criteria__to-be">is</div>
+          <div class="current-filters__container__criteria__content">
+            {{ currentFilteredData.data.text }}
+          </div>
+
+          <button
+            class="cx-btn current-filters__container__criteria__rm-btn"
+            (click)="onFilterRemoved(currentFilteredData.id)"
+          >
+            {{ 'User_Account_Page.Filter.Remove_Button' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
   </content>
 </cx-dialog-template>

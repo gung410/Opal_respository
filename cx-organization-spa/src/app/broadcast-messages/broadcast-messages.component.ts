@@ -1,4 +1,3 @@
-import { UserAccountsDataService } from 'app/user-accounts/user-accounts-data.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -8,17 +7,21 @@ import {
 import { AuthService } from 'app-auth/auth.service';
 import { ShowHideColumnModel } from 'app-models/ag-grid-column.model';
 import { SortModel } from 'app-models/sort.model';
+import { Utils } from 'app-utilities/utils';
 import { AppConstant } from 'app/shared/app.constant';
 import { BaseScreenComponent } from 'app/shared/components/component.abstract';
 import { BroadcastMessageStatus } from 'app/shared/constants/broadcast-message-status.enum';
 import { HTTP_STATUS_CODE } from 'app/shared/constants/http-status-code';
 import { StatusActionTypeEnum } from 'app/shared/constants/status-action-type.enum';
+import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
 import {
   PagingResponseModel,
   UserManagement,
   UserManagementQueryModel
 } from 'app/user-accounts/models/user-management.model';
+import { UserAccountsDataService } from 'app/user-accounts/user-accounts-data.service';
 import { ToastrService } from 'ngx-toastr';
+import { SAM_PERMISSIONS } from '../shared/constants/sam-permission.constant';
 import { ActionsItemModel } from './events/action-items.model';
 import {
   BroadcastMessagesDto,
@@ -27,8 +30,6 @@ import {
 import { BroadcastMessageViewModel } from './models/broadcast-messages.view.model';
 import { BroadcastMessagesApiService } from './services/broadcast-messages-api.service';
 import { BroadcastMessagesService } from './services/broadcast-messages.service';
-import { StatusTypeEnum } from 'app/shared/constants/user-status-type.enum';
-import { Utils } from 'app-utilities/utils';
 
 @Component({
   selector: 'broadcast-message',
@@ -71,6 +72,12 @@ export class BroadcastMessagesComponent
   ngOnInit(): void {
     this.initFilterParams();
     this.getBroadcastMessages();
+  }
+
+  get isCurrentUserAllowToMakeActions(): boolean {
+    return this.currentUser.hasPermission(
+      SAM_PERMISSIONS.CRUDinBroadcastMessages
+    );
   }
 
   initFilterParams(): void {

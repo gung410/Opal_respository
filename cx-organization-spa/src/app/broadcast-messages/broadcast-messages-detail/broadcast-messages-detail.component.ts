@@ -12,7 +12,6 @@ import { CxGlobalLoaderService } from '@conexus/cx-angular-common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'app-auth/auth.service';
-import { User } from 'app-models/auth.model';
 import { DateTimeUtil, DAY_OF_WEEK } from 'app-utilities/date-time-utils';
 import { StringUtil } from 'app-utilities/string-utils';
 import { Utils } from 'app-utilities/utils';
@@ -59,7 +58,6 @@ import { SimpleRoleViewModel } from '../models/simple-roles.view.model';
 import { RolesRequest } from '../requests-dto/roles-request';
 import { BroadcastMessagesApiService } from '../services/broadcast-messages-api.service';
 import { UserAccountsHelper } from './../../user-accounts/user-accounts.helper';
-import { BroadcastMessageRecurringDialogComponent } from './../broadcast-messages-recurring/broadcast-messages-recurring.component';
 @Component({
   selector: 'broadcast-messages-detail',
   templateUrl: './broadcast-messages-detail.component.html',
@@ -153,10 +151,10 @@ export class BroadcastMessagesDetailComponent
   flatDepartmentsArray: Department[] = [];
   rolesArray: SimpleRoleViewModel[] = [];
   broadcastMessageId: string;
-  userDepartmentId: number;
   minFromDate: Date = new Date();
   maxFromDate: Date;
   isInvalidTargetAudience: boolean = false;
+  isDateRangeOnTheSameDate: boolean = false;
   recurrenceInfo: RecurringInfoViewModel = new RecurringInfoViewModel();
   isInvalidTimeRangeWarning: boolean = false;
   isInPastWarning: boolean = false;
@@ -274,8 +272,9 @@ export class BroadcastMessagesDetailComponent
     this.isSpecificMode = false;
   }
 
-  checkRecurring(): void {
+  onMessageTypeChanged(): void {
     this.isRecurring = !this.isRecurring;
+    this.isDateRangeOnTheSameDate = this.isDateRangeOnTheSameDateCheck();
   }
 
   openDepartmentsDialog(): void {
@@ -399,6 +398,11 @@ export class BroadcastMessagesDetailComponent
     }
 
     if (this.isRecurring) {
+      this.isDateRangeOnTheSameDate = this.isDateRangeOnTheSameDateCheck();
+      if (this.isDateRangeOnTheSameDate) {
+        return;
+      }
+
       const content: string = this.generateRecurringInformation();
 
       this.showRecurringConfirmationDialog(() => {
@@ -621,6 +625,13 @@ export class BroadcastMessagesDetailComponent
         true,
         true
       ) > 0
+    );
+  }
+
+  private isDateRangeOnTheSameDateCheck(): boolean {
+    return (
+      this.broadcastMessage.validToDate.getDate() ===
+      this.broadcastMessage.validFromDate.getDate()
     );
   }
 
@@ -940,7 +951,7 @@ export class BroadcastMessagesDetailComponent
           new UserManagementQueryModel({
             searchKey: searchText,
             orderBy: 'firstName asc',
-            parentDepartmentId: [this.userDepartmentId],
+            parentDepartmentId: [this.currentUser.departmentId],
             userEntityStatuses: [StatusTypeEnum.Active.code],
             pageIndex:
               maxResultCount === 0 ? 1 : skipCount / maxResultCount + 1,
