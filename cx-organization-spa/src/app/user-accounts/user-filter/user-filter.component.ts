@@ -50,6 +50,8 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
   appliedData: FilterModel = new FilterModel();
   filterVariables: CxSurveyjsVariable[] = [];
   filterParams: UserGroupFilterParams;
+  isNeededDisabledDoneButton: boolean = false;
+  hasExistedFilteredData: boolean = false;
 
   @ViewChild('filterSurveyJs') filterSurveyJs: CxSurveyjsComponent;
   @ViewChild('appliedFilterSurveyJs')
@@ -82,10 +84,17 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
       })
     );
+
     if (this.adjustAppliedData) {
       this.appliedData = { ...this.adjustAppliedData };
       this.changeDetectorRef.detectChanges();
     }
+
+    this.hasExistedFilteredData = !!this.appliedData.appliedFilter.length;
+  }
+
+  get isDisabledDoneButton(): boolean {
+    return !(this.appliedData && !!this.appliedData.appliedFilter.length);
   }
 
   initFilterData(): void {
@@ -360,6 +369,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
       filterData.systemRole[i] = this.systemRoles[index].identity.id;
     });
   }
+
   private handleChangingFilterOptions(
     survey: SurveyModel,
     filterOptionQuestion: any
@@ -368,6 +378,7 @@ export class UserFilterComponent extends BaseSmartComponent implements OnInit {
       this.loadUserGroupOptions(survey);
     }
   }
+
   private loadUserGroupOptions(survey: SurveyModel): void {
     this.userGroupsDataService
       .getUserGroups(this.filterParams)

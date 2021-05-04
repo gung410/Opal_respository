@@ -24,6 +24,7 @@ import {
 } from './models/user-basic-info.model';
 import {
   PagingResponseModel,
+  UserForAssigningApprovingOfficerQueryModel,
   UserManagement,
   UserManagementQueryModel
 } from './models/user-management.model';
@@ -54,6 +55,15 @@ export class UserAccountsDataService {
     return this.httpHelper.get<PagingResponseModel<UserManagement>>(
       `${AppConstant.api.organization}/usermanagement/users`,
       filterParamModel.preProcessSpecialFields()
+    );
+  }
+
+  getUsersForAssigningApprovingOfficer(
+    filterParamModel: UserForAssigningApprovingOfficerQueryModel
+  ): Observable<PagingResponseModel<UserManagement>> {
+    return this.httpHelper.get<PagingResponseModel<UserManagement>>(
+      `${AppConstant.api.organization}/usermanagement/users_for_assigning_approving_officer`,
+      filterParamModel
     );
   }
 

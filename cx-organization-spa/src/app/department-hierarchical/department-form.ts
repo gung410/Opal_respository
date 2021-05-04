@@ -59,7 +59,9 @@ export const DepartmentFormJSON = {
       storeWholeObject: true,
       keyName: 'identity.id',
       title: 'Level of education',
-      placeholder: 'Input name',
+      placeholder: 'Select from the list',
+      otherPlaceHolder: 'Select from the list',
+      startWithNewLine: false,
       isRequired: true,
       requiredErrorText: 'Please select type of Level of education.',
       choicesByUrl: {

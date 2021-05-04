@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client.DepartmentTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -15,7 +16,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class DepartmentTypesController : ApiControllerBase
     {
         private readonly IDepartmentTypeService _departmentTypeService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         /// <summary>
         /// Constructor
@@ -23,7 +24,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="departmentTypeService"></param>
         /// <param name="workContext"></param>
         public DepartmentTypesController(IDepartmentTypeService departmentTypeService,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _departmentTypeService = departmentTypeService;
             _workContext = workContext;

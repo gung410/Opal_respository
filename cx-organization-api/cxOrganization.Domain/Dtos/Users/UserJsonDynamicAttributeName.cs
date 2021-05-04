@@ -27,6 +27,7 @@ namespace cxOrganization.Domain.Dtos.Users
         public const string LastEntityStatusId = "lastEntityStatusId";
         public const string LastEntityStatusReasonId = "lastEntityStatusReasonId";
         public const string ExpirationDate = "expirationDate";
+        public const string SignupReason = "signupReason";
         public const string IsStorageUnlimited = "isStorageUnlimited";
         public const string PersonalStorageSize = "personalStorageSize";
     }

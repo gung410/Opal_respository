@@ -23,8 +23,8 @@ import {
 } from 'app/user-accounts/models/approval-group.model';
 import {
   PagingResponseModel,
-  UserManagement,
-  UserManagementQueryModel
+  UserForAssigningApprovingOfficerQueryModel,
+  UserManagement
 } from 'app/user-accounts/models/user-management.model';
 import { ApprovalDataService } from 'app/user-accounts/services/approval-data.service';
 import { UserAccountsDataService } from 'app/user-accounts/user-accounts-data.service';
@@ -200,19 +200,16 @@ export class ApprovalInfoComponent
     if (event.pageIndex === 1) {
       this.isLoadAllMemberForPrimaryGroup = false;
     }
-    const queryParams = new UserManagementQueryModel({
-      parentDepartmentId: [this.getUserDepartmentId()],
+    const queryParams = new UserForAssigningApprovingOfficerQueryModel({
+      parentDepartmentId: this.getUserDepartmentId(),
       pageIndex: event.pageIndex,
       pageSize: this.userPageSize,
       searchKey: event.key,
-      getRoles: false,
-      getDeapartments: true,
-      getUserGroups: false,
-      isCrossOrganizationalUnit: true
+      getDepartments: true
     });
 
     return this.userAccountService
-      .getUsers(queryParams)
+      .getUsersForAssigningApprovingOfficer(queryParams)
       .toPromise()
       .then(
         (response: PagingResponseModel<UserManagement>) => {
@@ -241,15 +238,12 @@ export class ApprovalInfoComponent
     if (event.pageIndex === 1) {
       this.isLoadAllMemberForAlternateGroup = false;
     }
-    const queryParams = new UserManagementQueryModel({
-      parentDepartmentId: [this.getUserDepartmentId()],
+    const queryParams = new UserForAssigningApprovingOfficerQueryModel({
+      parentDepartmentId: this.getUserDepartmentId(),
       pageIndex: event.pageIndex,
       pageSize: this.userPageSize,
       searchKey: event.key,
-      getRoles: false,
-      getDeapartments: true,
-      getUserGroups: false,
-      isCrossOrganizationalUnit: true
+      getDepartments: true
     });
 
     if (!this.isSchoolDepartment) {
@@ -257,7 +251,7 @@ export class ApprovalInfoComponent
     }
 
     return this.userAccountService
-      .getUsers(queryParams)
+      .getUsersForAssigningApprovingOfficer(queryParams)
       .toPromise()
       .then(
         (response: PagingResponseModel<UserManagement>) => {
@@ -388,14 +382,26 @@ export class ApprovalInfoComponent
   ): Promise<void> {
     const queryParams = new ApprovalGroupQueryModel({
       assigneeDepartmentId: this.getUserDepartmentId(),
-      isCrossOrganizationalUnit: true,
-      searchInSameDepartment: true,
       statusEnums: [StatusTypeEnum.Active.code],
       pageIndex,
       searchKey,
       groupTypes: [type],
       pageSize: this.numberOfItemsBeforeFetchingMoreUser
     });
+
+    if (
+      this.isSchoolDepartment ||
+      type === ApprovalGroupTypeEnum.PrimaryApprovalGroup
+    ) {
+      queryParams.searchInSameDepartment = true;
+    }
+
+    if (
+      !queryParams.searchInSameDepartment &&
+      type === ApprovalGroupTypeEnum.AlternativeApprovalGroup
+    ) {
+      queryParams.searchFromDepartmentToTop = true;
+    }
 
     return this.approvalDataService
       .getApprovalGroups(queryParams)

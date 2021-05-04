@@ -1,9 +1,16 @@
-.broadcast-message {
-  &__paging-area {
-    margin-top: 20px;
+.broadcast-message-container {
+  .actions {
+    display: flex;
+    justify-content: flex-end;
   }
-}
 
-.prevent-actions-broadcast-messages {
-  pointer-events: none;
+  .broadcast-message {
+    &__paging-area {
+      margin-top: 20px;
+    }
+  }
+
+  .prevent-actions-broadcast-messages {
+    pointer-events: none;
+  }
 }

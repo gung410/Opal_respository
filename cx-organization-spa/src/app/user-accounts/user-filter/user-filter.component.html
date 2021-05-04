@@ -1,5 +1,7 @@
 <cx-dialog-template
-  [showFooterActionButtons]="true"
+  [showCancelButton]="true"
+  [showConfirmButton]="true"
+  [doneButtonDisabled]="isDisabledDoneButton && !hasExistedFilteredData"
   (cancel)="onCancel()"
   [isShowingMandatoryText]="true"
   (done)="onSave()"

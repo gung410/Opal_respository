@@ -26,13 +26,25 @@
           "lib/netstandard2.0/AngleSharp.Css.dll": {}
         }
       },
-      "AWSSDK.Core/3.3.107.20": {
+      "AWSSDK.Core/3.3.107.40": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/AWSSDK.Core.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.KeyManagementService/3.3.106.35": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.3.107.40, 3.4.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.KeyManagementService.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.KeyManagementService.dll": {}
         }
       },
       "AWSSDK.S3/3.3.111.21": {
@@ -5368,6 +5380,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "AWSSDK.KeyManagementService": "3.3.106.35",
           "AWSSDK.S3": "3.3.111.21",
           "CsvHelper": "15.0.5",
           "IdentityServer4.AccessTokenValidation": "3.0.1",
@@ -5480,15 +5493,15 @@
         "lib/netstandard2.0/AngleSharp.Css.xml"
       ]
     },
-    "AWSSDK.Core/3.3.107.20": {
-      "sha512": "oLGgv5mtIddHwEEIw4Q0PnkgYLY+NIokPgMs19E7BPxdhrL3ePuaT+mublGGc0e3xuwjWSxWDjYChYYo8/CQGQ==",
+    "AWSSDK.Core/3.3.107.40": {
+      "sha512": "Ga6LZ1Ff9tWCN8SMSpUUXe3bs9cVn8Ts40OYlXWxABTrXYZTfMeTSvjM+7EqpLhu2ljOyzvNIFcHYMoX7jGA0g==",
       "type": "package",
-      "path": "awssdk.core/3.3.107.20",
+      "path": "awssdk.core/3.3.107.40",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.3.107.20.nupkg.sha512",
+        "awssdk.core.3.3.107.40.nupkg.sha512",
         "awssdk.core.nuspec",
         "lib/MonoAndroid10/AWSSDK.Core.XML",
         "lib/MonoAndroid10/AWSSDK.Core.dll",
@@ -5527,6 +5540,46 @@
         "lib/wpa81/AWSSDK.Core.dll",
         "lib/wpa81/AWSSDK.Core.pdb",
         "tools/account-management.ps1"
+      ]
+    },
+    "AWSSDK.KeyManagementService/3.3.106.35": {
+      "sha512": "MH689VkjIb4hTQHJZrvz245yqy/eWSAfwA3SfV1gReKfwqml3NsBoyZ4VKRnMqeIXUc8WclgJvucvPQkFd61MQ==",
+      "type": "package",
+      "path": "awssdk.keymanagementservice/3.3.106.35",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.KeyManagementService.CodeAnalysis.dll",
+        "awssdk.keymanagementservice.3.3.106.35.nupkg.sha512",
+        "awssdk.keymanagementservice.nuspec",
+        "lib/MonoAndroid10/AWSSDK.KeyManagementService.XML",
+        "lib/MonoAndroid10/AWSSDK.KeyManagementService.dll",
+        "lib/MonoTouch10/AWSSDK.KeyManagementService.XML",
+        "lib/MonoTouch10/AWSSDK.KeyManagementService.dll",
+        "lib/MonoTouch10/AWSSDK.KeyManagementService.pdb",
+        "lib/Xamarin.iOS10/AWSSDK.KeyManagementService.XML",
+        "lib/Xamarin.iOS10/AWSSDK.KeyManagementService.dll",
+        "lib/net35/AWSSDK.KeyManagementService.dll",
+        "lib/net35/AWSSDK.KeyManagementService.pdb",
+        "lib/net35/AWSSDK.KeyManagementService.xml",
+        "lib/net45/AWSSDK.KeyManagementService.dll",
+        "lib/net45/AWSSDK.KeyManagementService.pdb",
+        "lib/net45/AWSSDK.KeyManagementService.xml",
+        "lib/netstandard1.3/AWSSDK.KeyManagementService.dll",
+        "lib/netstandard1.3/AWSSDK.KeyManagementService.pdb",
+        "lib/netstandard1.3/AWSSDK.KeyManagementService.xml",
+        "lib/netstandard2.0/AWSSDK.KeyManagementService.dll",
+        "lib/netstandard2.0/AWSSDK.KeyManagementService.pdb",
+        "lib/netstandard2.0/AWSSDK.KeyManagementService.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.KeyManagementService.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.KeyManagementService.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.KeyManagementService.pdb",
+        "lib/uap/AWSSDK.KeyManagementService.XML",
+        "lib/uap/AWSSDK.KeyManagementService.dll",
+        "lib/uap/AWSSDK.KeyManagementService.pdb",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "AWSSDK.S3/3.3.111.21": {

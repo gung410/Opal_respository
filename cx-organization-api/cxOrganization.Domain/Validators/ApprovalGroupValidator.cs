@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -22,14 +23,14 @@ namespace cxOrganization.Domain.Validators
         public ApprovalGroupValidator(IHierarchyDepartmentService hierachyDepartmentService,
             IOwnerRepository ownerRepository,
             IUserGroupRepository userGroupRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
             : base(ownerRepository, workContext, userGroupRepository)
         {
             _hierachyDepartmentService = hierachyDepartmentService;
             _userGroupRepository = userGroupRepository;
         }
 
-        public override UserGroupEntity Validate(ConexusBaseDto dto)
+        public override UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             //Archetype must be ApprovalGroup
             if (dto.Identity.Archetype != ArchetypeEnum.ApprovalGroup)
@@ -67,7 +68,7 @@ namespace cxOrganization.Domain.Validators
                 }
             }
 
-            UserGroupEntity userGroupEntity = base.Validate(dto);
+            UserGroupEntity userGroupEntity = base.Validate(dto, workContext);
 
             //Take user entity from existing previous query
             if (userGroupEntity != null)

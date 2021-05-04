@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using cxOrganization.Business.Connection;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Enums;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -17,12 +18,12 @@ namespace cxOrganization.WebServiceAPI.Controllers
     [Authorize]
     public class ConnectionsController : ApiControllerBase
     {
-        readonly IWorkContext _workContext;
+        readonly IAdvancedWorkContext _workContext;
         readonly IConnectionService _connectionService;
         /// <summary>
         /// Constructor
         /// </summary>
-        public ConnectionsController(IWorkContext workContext,
+        public ConnectionsController(IAdvancedWorkContext workContext,
             IConnectionService connectionService)
         {
             _workContext = workContext;

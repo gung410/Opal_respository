@@ -8,7 +8,7 @@
 
     .menu-action {
         display: flex;
-        width: calc(100% - 3px);
+        width: 100%;
         margin: 15px 0;
 
         &__left {
@@ -76,7 +76,7 @@
         border-bottom-right-radius: 5px;
         position: fixed;
         top: 40px;
-        width: calc(100% - 85px);
+        width: calc(100% - 82px);
         z-index: 4;
         padding: 0 10px;
 
@@ -250,13 +250,13 @@
 
 .styled-grid {
     .ag-header {
-        width: calc(100% - 3px);
+        width: 100%;
         border-radius: 5px;
     }
 
     .ag-grid-header-fixed {
         top: 0px;
-        width: calc(100% - 85px);
+        width: calc(100% - 82px);
 
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
@@ -432,7 +432,7 @@
         border-radius: 5px;
         position: fixed;
         bottom: 0px;
-        width: calc(100% - 84px);
+        width: calc(100% - 82px);
         z-index: 1;
 
         @media only screen and (max-width: $screen-xs-max) {
@@ -442,7 +442,7 @@
         &.ag-body-horizontal-scroll-unfixed {
             position: unset;
             bottom: unset;
-            width: calc(100% - 3px);
+            width: 100%;
             z-index: unset;
         }
     }

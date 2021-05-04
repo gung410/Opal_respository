@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.HttpClients;
 using cxPlatform.Core;
 using cxPlatform.Core.Exceptions;
@@ -31,7 +32,7 @@ namespace cxOrganization.WebServiceAPI.Middlewares
             _logger = loggerFactory.CreateLogger<ErrorHandlingMiddleware>();
         }
 
-        public async Task Invoke(HttpContext context, IWorkContext workContext)
+        public async Task Invoke(HttpContext context, IAdvancedWorkContext workContext)
         {
             try
             {
@@ -123,7 +124,7 @@ namespace cxOrganization.WebServiceAPI.Middlewares
     }
     public static class LogExtension
     {
-        public static IRequestContext GetCxRequestContext(this HttpRequest request, IWorkContext workContext)
+        public static IRequestContext GetCxRequestContext(this HttpRequest request, IAdvancedWorkContext workContext)
         {
             return new RequestContext(workContext)
             {

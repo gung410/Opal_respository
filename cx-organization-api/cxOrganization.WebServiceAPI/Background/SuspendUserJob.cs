@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace cxOrganization.WebServiceAPI.Hangfire
 {
-    public class SuspendUserJob : ISuspendUserJob
+    public class SuspendUserJob : IOrganizationSuspendUserJob
     {
         public const string JobId = "SuspendUserJob";
         private readonly ISuspendOrDeactiveUserBackgroundJob _suspendOrDeactiveUserBackgroundJob;
@@ -28,9 +28,9 @@ namespace cxOrganization.WebServiceAPI.Hangfire
 
         public void Execute(PerformContext performContext, params object[] inputs)
         {
-            _logger.LogInformation($"ISuspendUserJob Job started - Id: {performContext.BackgroundJob.Id}, Name: {performContext.BackgroundJob.Job.Type.FullName}");
+            _logger.LogInformation($"IOrganizationSuspendUserJob Job started - Id: {performContext.BackgroundJob.Id}, Name: {performContext.BackgroundJob.Job.Type.FullName}");
             _suspendOrDeactiveUserBackgroundJob.SuspendUserStatus().Wait();
-            _logger.LogInformation($"ISuspendUserJob Job finished - Id: {performContext.BackgroundJob.Id}, Name: {performContext.BackgroundJob.Job.Type.FullName}");
+            _logger.LogInformation($"IOrganizationSuspendUserJob Job finished - Id: {performContext.BackgroundJob.Id}, Name: {performContext.BackgroundJob.Job.Type.FullName}");
         }
 
         public Task ExecuteTask(PerformContext performContext, params object[] inputs)

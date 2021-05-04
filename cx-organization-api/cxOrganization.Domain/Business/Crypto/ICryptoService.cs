@@ -4,5 +4,6 @@
     {
         string EncryptToString(string message);
         string DecryptToString(string encryptedMessage);
+
     }
 }

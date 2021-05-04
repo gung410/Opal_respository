@@ -3147,11 +3147,8 @@ export class UserAccountsComponent
                 (item: UserManagement) =>
                   item.identity.id === editedUser.identity.id
               );
-              const newEmployeeList = _.clone(this.userItemsData.items);
-              const updatingEmployee = _.clone(employee);
-              updatingEmployee.groups = editedUser.groups
-                ? [...editedUser.groups]
-                : [];
+              const newEmployeeList = Utils.cloneDeep(this.userItemsData.items);
+              const updatingEmployee = Utils.cloneDeep(employee);
               newEmployeeList[employeeIndex] = updatingEmployee;
               this.userItemsData.items = newEmployeeList;
               this.toastr.success(
@@ -4126,7 +4123,7 @@ export class UserAccountsComponent
           selectedUserStatuses.length &&
           this.isUserActionDisabled(selectedUserStatuses)
         ) {
-          this.userActions.listEssentialActions.find((item) => {
+          this.userActions.listEssentialActions.forEach((item) => {
             if (item.actionType === 'Export') {
               item.disable = false;
             }
@@ -4135,7 +4132,7 @@ export class UserAccountsComponent
           selectedUserStatuses.length &&
           this.isUserActionDisableSetAO(selectedUserStatuses)
         ) {
-          this.userActions.listEssentialActions.find((item) => {
+          this.userActions.listEssentialActions.forEach((item) => {
             item.disable = false;
             if (item.actionType === StatusActionTypeEnum.SetApprovingOfficers) {
               item.disable = true;
@@ -4145,7 +4142,7 @@ export class UserAccountsComponent
           this.selectedUser.length &&
           !this.isUserActionDisabled(selectedUserStatuses)
         ) {
-          this.userActions.listEssentialActions.find((item) => {
+          this.userActions.listEssentialActions.forEach((item) => {
             if (
               item.actionType === StatusActionTypeEnum.AddToGroup ||
               item.actionType === StatusActionTypeEnum.SetApprovingOfficers ||
@@ -4160,7 +4157,7 @@ export class UserAccountsComponent
       case UserAccountTabEnum.Pending1st:
       case UserAccountTabEnum.Pending2nd:
       case UserAccountTabEnum.Pending3rd:
-        this.userActions.listEssentialActions.find((item) => {
+        this.userActions.listEssentialActions.forEach((item) => {
           if (
             item.actionType === StatusActionTypeEnum.Reject ||
             item.actionType === StatusActionTypeEnum.Accept
@@ -4170,7 +4167,7 @@ export class UserAccountsComponent
         });
         break;
       case UserAccountTabEnum.UserOtherPlace:
-        this.userActions.listEssentialActions.find((item) => {
+        this.userActions.listEssentialActions.forEach((item) => {
           if (item.actionType === StatusActionTypeEnum.CreateNewOrgUnit) {
             item.disable = false;
           }

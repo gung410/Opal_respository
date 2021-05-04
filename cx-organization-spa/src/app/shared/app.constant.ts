@@ -39,7 +39,8 @@ export const AppConstant = {
       systemAuditLog: 'audit',
       permissions: 'permissions',
       taxonomy: 'taxonomy-management',
-      batchJobsMonitoring: 'batch-jobs-monitoring'
+      batchJobsMonitoring: 'batch-jobs-monitoring',
+      socialEngagement: 'social-engagement'
     },
     sessionTimeout: 'session-timeout'
   },
@@ -70,7 +71,8 @@ export const AppConstant = {
     LearnerAppAndroid: environment.moduleLink.LearnerAppAndroid,
     LearnerAppIOS: environment.moduleLink.LearnerAppIOS,
     Report: environment.moduleLink.Report,
-    LearnerWeb: environment.moduleLink.LearnerWeb
+    LearnerWeb: environment.moduleLink.LearnerWeb,
+    CSL: environment.moduleLink.CSL
   }
 };
 

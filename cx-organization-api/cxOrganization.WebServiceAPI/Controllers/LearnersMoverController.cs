@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -13,7 +14,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class LearnersMoverController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         /// <summary>
         /// Contructor
@@ -22,7 +23,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="workContext"></param>
         /// <param name="departmentService"></param>
         public LearnersMoverController(Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IDepartmentService> departmentService)
         {
             _userService = userService(ArchetypeEnum.Learner);

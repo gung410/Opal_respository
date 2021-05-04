@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos.Users;
@@ -35,7 +36,7 @@ namespace cxOrganization.Domain.Services
         private readonly IDepartmentService _departmentService;
         private readonly IUserTypeService _userTypeService;
         private readonly IDepartmentAccessService _departmentAccessService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IHierarchyDepartmentPermissionService _hierarchyDepartmentPermissionService;
         private readonly IUserAccessService _userAccessService;
 
@@ -48,7 +49,7 @@ namespace cxOrganization.Domain.Services
             IUserTypeService userTypeService,
             IHierarchyDepartmentPermissionService hierarchyDepartmentPermissionService,
             IDepartmentAccessService departmentAccessService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserAccessService userAccessService)
 
         {
@@ -135,7 +136,7 @@ namespace cxOrganization.Domain.Services
         }
 
         public async Task<MassUserCreationValidationResultDto> ValidateMassUserCreationData(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Stream fileOnMemory,
             string fileName)
         {
@@ -181,7 +182,7 @@ namespace cxOrganization.Domain.Services
         public async Task<List<UserGenericDto>> getUsersFromFileAsync(
             MassUserCreationValidationContract massUserCreationValidationContract,
              Stream fileOnMemory,
-             IWorkContext workContext)
+             IAdvancedWorkContext workContext)
         {
             var createdUsers = new List<UserGenericDto>();
             var massUserCreations = _csvFileReader.ReadDataFromStream<MassUserCreationDto>(fileOnMemory, _integrationSetting.MassUserCreationMappingConfig);
@@ -338,7 +339,7 @@ namespace cxOrganization.Domain.Services
             return jUserTypes;
         }
 
-        private async Task<List<InvalidMassUserCreationDto>> GetInValidUserCreation(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private async Task<List<InvalidMassUserCreationDto>> GetInValidUserCreation(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidMassUserCreationResult = new List<InvalidMassUserCreationDto>();
 
@@ -379,7 +380,7 @@ namespace cxOrganization.Domain.Services
             return invalidMassUserCreationResult;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateSalutionField(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidateSalutionField(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidSalutationFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -417,7 +418,7 @@ namespace cxOrganization.Domain.Services
             return invalidSalutationFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateNameField(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidateNameField(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidNameFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -457,7 +458,7 @@ namespace cxOrganization.Domain.Services
             return invalidNameFieldResults;
         }
 
-        private async Task<List<InvalidMassUserCreationDto>> ValidateOfficialEmail(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private async Task<List<InvalidMassUserCreationDto>> ValidateOfficialEmail(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidEmailFieldResults = new List<InvalidMassUserCreationDto>();
             var massUserCreationDic = massUserCreationDtos.GroupBy(u => u.OfficialEmail)
@@ -545,7 +546,7 @@ namespace cxOrganization.Domain.Services
             return invalidEmailFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateGender(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos, List<InvalidMassUserCreationDto> invalidSalutationFieldResults)
+        private List<InvalidMassUserCreationDto> ValidateGender(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos, List<InvalidMassUserCreationDto> invalidSalutationFieldResults)
         {
             var invalidGenderFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -599,7 +600,7 @@ namespace cxOrganization.Domain.Services
             return invalidGenderFieldResults;
         }
 
-        private async Task<List<InvalidMassUserCreationDto>> ValidatePlaceOfWork(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private async Task<List<InvalidMassUserCreationDto>> ValidatePlaceOfWork(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidPlaceOfWorkFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -681,7 +682,7 @@ namespace cxOrganization.Domain.Services
             return invalidPlaceOfWorkFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateAccountActiveFrom(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidateAccountActiveFrom(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidAccountActiveDateFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -728,7 +729,7 @@ namespace cxOrganization.Domain.Services
             return invalidAccountActiveDateFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateDateOfExpiryAccount(IWorkContext workContext,
+        private List<InvalidMassUserCreationDto> ValidateDateOfExpiryAccount(IAdvancedWorkContext workContext,
                                                                                          List<MassUserCreationDto> massUserCreationDtos,
                                                                                          List<InvalidMassUserCreationDto> usersWithInvalidAccountActiveDateField)
         {
@@ -794,7 +795,7 @@ namespace cxOrganization.Domain.Services
             return invalidDateOfExpiryAccountFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateReason(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidateReason(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidReasonFieldResults = new List<InvalidMassUserCreationDto>();
 
@@ -834,7 +835,7 @@ namespace cxOrganization.Domain.Services
             return invalidReasonFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidateSystemRole(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidateSystemRole(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidSystemRoleFieldResults = new List<InvalidMassUserCreationDto>();
             var indexedUsersDic = massUserCreationDtos.ToDictionary(u => u.Number);
@@ -946,7 +947,7 @@ namespace cxOrganization.Domain.Services
             return invalidSystemRoleFieldResults;
         }
 
-        private List<InvalidMassUserCreationDto> ValidatePersonalSpaceLimitation(IWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
+        private List<InvalidMassUserCreationDto> ValidatePersonalSpaceLimitation(IAdvancedWorkContext workContext, List<MassUserCreationDto> massUserCreationDtos)
         {
             var invalidPersonalSpaceLimitationFieldResults = new List<InvalidMassUserCreationDto>();
 

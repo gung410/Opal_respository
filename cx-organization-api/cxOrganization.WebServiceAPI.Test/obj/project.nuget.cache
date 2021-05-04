@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "z5nVML0w0MdQdumLK4lxRqS26QMTJg17fMuGbaDniZXWQU5JBlmVFtpR0JkHZ1c+B+0WawBDILmGXYHKVay9uA==",
+  "dgSpecHash": "jpy2yXTyUDGeKyHaVj+6rr4GMhVHxO4hQvNdUW9Cu5r02K/BUzlHGa4ktBvMRdBGCyfDJ2AwItV8B5JkQP6mfw==",
   "success": true,
   "projectFilePath": "C:\\hung\\cx-organization-api\\cxOrganization.WebServiceAPI.Test\\cxOrganization.WebServiceAPI.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hung.doan\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
     "C:\\Users\\hung.doan\\.nuget\\packages\\anglesharp.css\\0.14.2\\anglesharp.css.0.14.2.nupkg.sha512",
-    "C:\\Users\\hung.doan\\.nuget\\packages\\awssdk.core\\3.3.107.20\\awssdk.core.3.3.107.20.nupkg.sha512",
+    "C:\\Users\\hung.doan\\.nuget\\packages\\awssdk.core\\3.3.107.40\\awssdk.core.3.3.107.40.nupkg.sha512",
+    "C:\\Users\\hung.doan\\.nuget\\packages\\awssdk.keymanagementservice\\3.3.106.35\\awssdk.keymanagementservice.3.3.106.35.nupkg.sha512",
     "C:\\Users\\hung.doan\\.nuget\\packages\\awssdk.s3\\3.3.111.21\\awssdk.s3.3.3.111.21.nupkg.sha512",
     "C:\\Users\\hung.doan\\.nuget\\packages\\csharpfunctionalextensions\\2.8.2\\csharpfunctionalextensions.2.8.2.nupkg.sha512",
     "C:\\Users\\hung.doan\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",

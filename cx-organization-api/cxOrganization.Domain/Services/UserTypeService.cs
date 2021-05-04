@@ -2,6 +2,7 @@
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
@@ -17,13 +18,13 @@ namespace cxOrganization.Domain.Services
     {
         private readonly IUserTypeRepository _userTypeRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly OrganizationDbContext _organizationDbContext;
         private readonly IUserTypeValidator _userTypeValidator;
         private readonly IUserValidator _userValidator;
         private readonly IUserTypeMappingService _userTypeMappingService;
         public UserTypeService(IUserTypeRepository userTypeRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             OrganizationDbContext organizationDbContext,
             IUserRepository userRepository,
             IUserTypeValidator userTypeValidator,

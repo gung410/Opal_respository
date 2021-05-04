@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.Common;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Common;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos;
 using cxOrganization.Domain.Entities;
@@ -109,7 +110,7 @@ namespace cxOrganization.Domain.Services
 
         public async Task<FileInfoDto> UploadFileInfoAsync(
             IFormFile formFile,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             FileTarget fileTarget,
             Guid currentUserExId)
         {
@@ -168,7 +169,7 @@ namespace cxOrganization.Domain.Services
             }
         }
 
-        public async Task<byte[]> DownloadFile(string fileName, FileTarget fileTarget, IWorkContext workContext)
+        public async Task<byte[]> DownloadFile(string fileName, FileTarget fileTarget, IAdvancedWorkContext workContext)
         {
             string storageSubFolder = string.Empty;
 

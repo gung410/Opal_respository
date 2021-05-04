@@ -2,6 +2,7 @@
 using System.Collections;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Services;
@@ -51,7 +52,7 @@ namespace cxOrganization.Domain.Mappings
                 throw new Exception(MappingErrorDefault.ERROR_ENTITY_VERSION_INCORRECTED);
             }
         }
-        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto)
+        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto, IAdvancedWorkContext workContext = null)
         {
             if (groupEntity == null)
                 return null;

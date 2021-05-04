@@ -1,14 +1,17 @@
-﻿using cxOrganization.Domain.Settings;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.DomainEnums;
+using cxOrganization.Domain.Settings;
 using cxOrganization.WebServiceAPI.Extensions;
 using cxPlatform.Core;
 using cxPlatform.Core.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace cxOrganization.Domain
 {
-    public class WorkContext : IWorkContext
+    public class WorkContext : IAdvancedWorkContext
     {
         private readonly IHttpContextAccessor _httpContext;
         private string _clientId;
@@ -21,7 +24,7 @@ namespace cxOrganization.Domain
             CurrentHdId = setting?.HDId != null ? setting.HDId : default(int);
         }
 
-      
+
         public int CurrentUserId { get; set; }
         public int CurrentDepartmentId { get; set; }
         public int CurrentCustomerId { get; set; }
@@ -49,11 +52,22 @@ namespace cxOrganization.Domain
 
         public string Sub
         {
-            get { return _sub = _sub ??
-                                _httpContext?.HttpContext.GetSub() 
-                                ?? UserIdCXID; }
+            get
+            {
+                return _sub = _sub ??
+                              _httpContext?.HttpContext.GetSub()
+                              ?? UserIdCXID;
+            }
 
             private set { _sub = value; }
+        }
+
+        public bool isInternalRequest
+        {
+            get
+            {
+                return string.IsNullOrEmpty(this.Sub);
+            }
         }
 
         public string UserIdCXID { get; set; }
@@ -61,6 +75,10 @@ namespace cxOrganization.Domain
         public object CurrentUser { get; set; }
         public IList<UserRole> CurrentUserRoles { get; set; }
         public bool IsSelfAccess { get; set; }
+        public IEnumerable<string> CurrentUserPermissionKeys { get; set; }
+        public string OriginalTokenString => _httpContext.HttpContext?.Request.GetXOriginalAuth();
+
+        
 
         public static WorkContext CopyFrom(IWorkContext sourceWorkContext)
         {
@@ -91,5 +109,26 @@ namespace cxOrganization.Domain
             };
 
         }
+
+        public bool HasPermission(ICollection<string> permissionKeys, LogicalOperator logicalOperator = LogicalOperator.OR)
+        {
+            if (CurrentUserPermissionKeys == null || permissionKeys == null) return false;
+
+            if (logicalOperator == LogicalOperator.OR)
+            {
+                return CurrentUserPermissionKeys.Any(p => permissionKeys.Contains(p));
+            }
+
+            return CurrentUserPermissionKeys.Count(p => permissionKeys.Contains(p)) == permissionKeys.Count;
+        }
+
+        public bool HasPermission(string permissionKey)
+        {
+            return CurrentUserPermissionKeys is object
+                && !string.IsNullOrEmpty(permissionKey)
+                && CurrentUserPermissionKeys.Contains(permissionKey);
+        }
+
+       
     }
 }

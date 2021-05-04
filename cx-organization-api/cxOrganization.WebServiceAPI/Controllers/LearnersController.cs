@@ -6,6 +6,7 @@ using System.Net;
 using cxOrganization.Business.DeactivateOrganization.DeactivateUser;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Services;
@@ -24,7 +25,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class LearnersController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentService _departmentService;
         private readonly Func<ArchetypeEnum, IDepartmentService> _departmentServiceDelegate;
         private readonly IUGMemberService _userGroupUserMemberService;
@@ -45,7 +46,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="loginServiceUserService"></param>
         public LearnersController(Func<ArchetypeEnum, IUGMemberService> userGroupUserMemberService,
             Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IDepartmentService> departmentService,
             Func<ArchetypeEnum, IUserTypeService> userTypeService,
             IClassMemberService classMemberService,

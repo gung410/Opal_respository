@@ -17,6 +17,7 @@ using cxOrganization.Client.DepartmentTypes;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Settings;
 using Microsoft.Extensions.Options;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Mappings
 {
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Mappings
     {
         private readonly IUserTypeRepository _userTypeRepository;
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IPropertyService _propertyService;
         private readonly IUserRepository _userRepository;
@@ -40,7 +41,7 @@ namespace cxOrganization.Domain.Mappings
         private List<ArchetypeEnum> UserTypeArcheTypes = new List<ArchetypeEnum> { ArchetypeEnum.SystemRole, ArchetypeEnum.Role, ArchetypeEnum.CareerPath, ArchetypeEnum.Level, ArchetypeEnum.PersonnelGroup, ArchetypeEnum.ExperienceCategory };
         private readonly AppSettings _appSettings;
         public UserInfoMappingService(IUserTypeRepository userTypeRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentRepository departmentRepository,
             IPropertyService propertyService,
             IUserRepository userRepository,

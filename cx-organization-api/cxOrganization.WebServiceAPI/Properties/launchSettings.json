@@ -20,7 +20,7 @@
         "IDM_USERNAME": "Admin",
         "MONGO_CONNECTIONSTRING": "mongodb://localhost:27017/Notification",
         "RABBITMQ_HOSTNAMES": "localhost",
-        "IDM_SCOPE": "userManagement",
+        "IDM_SCOPE": "userManagement cxDomainInternalApi",
         "RABBITMQ_PASSWORD": "Three2kill",
         "IDM_CLIENT_ID": "actionstarter",
         "IDM_PASSWORD": "123456",
@@ -34,8 +34,6 @@
         "REDIS_CONNECTIONSTRING": "localhost:6379",
         "Idm_ApiName": "cxDomainInternalApi",
         "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
-
-
 
       }
     },
@@ -53,7 +51,7 @@
         "DatahubLog:EventChannel:Enable": "true",
         "DatahubLog:EventChannel:Exchange": "uat-datahub-opal-topic-event",
         "RABBITMQ_HOSTNAMES": "localhost",
-        "IDM_SCOPE": "userManagement",
+        "IDM_SCOPE": "userManagement cxDomainInternalApi",
         "RABBITMQ_PASSWORD": "Three2kill",
         "IDM_CLIENT_ID": "cxDomainInternalApi",
         "IDM_PASSWORD": "123456",
@@ -68,10 +66,12 @@
         "COMMAND_EXCHANGE_NAME": "uat-datahub-opal-topic-command",
         "REDIS_CONNECTIONSTRING": "localhost:6379",
         "Idm_ApiName": "cxDomainInternalApi",
-        "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM"
-
-
-
+        "Idm_ApiSecret": "AiOiJKV1QiLCJ4NXQiOiJhM",
+        "AwsKmsEncyption:Enabled": "False",
+        "AwsKmsEncyption:AwsAccessKey": "AKIA2QPV5ZDRUMNPN2N5",
+        "AwsKmsEncyption:AwsSecretKey": "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",
+        "AwsKmsEncyption:KmsArn": "arn:aws:kms:ap-southeast-1:722607130851:key/1b27353c-9a04-4071-8ab8-eb44feef65fb",
+        "AwsKmsEncyption:EncryptedHashKey": "AQICAHii5zKoLkhHf6qlYxk6G1G7o/F1YrdcZuFuRICiGYQHZwEV5/1rnInmNxrWvcCCOT3PAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMMddSnVCR1ZLQEO/wAgEQgC9WHLNnSSxqnawIXcfC+V7jBaWSIZysILO7RBlchFrWOT6PTxiac/z0vlDfNCectA=="
       },
       "applicationUrl": "https://localhost:44365"
     }

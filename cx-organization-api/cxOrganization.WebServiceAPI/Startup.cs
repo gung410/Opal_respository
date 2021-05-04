@@ -1,18 +1,22 @@
 ﻿using Amazon;
 using Amazon.S3;
 using Backend.CrossCutting.HttpClientHelper;
+using cxAPI.Competence.Base.Middleware;
 using cxOrganization.Adapter;
 using cxOrganization.Business;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos;
 using cxOrganization.Domain.Security.HierarchyDepartment;
 using cxOrganization.Domain.Settings;
 using cxOrganization.WebServiceAPI.ActionFilters;
+using cxOrganization.WebServiceAPI.AppStart;
 using cxOrganization.WebServiceAPI.Background;
 using cxOrganization.WebServiceAPI.DbMigration;
+using cxOrganization.WebServiceAPI.Extensions;
+using cxOrganization.WebServiceAPI.Middleware;
 using cxOrganization.WebServiceAPI.Middlewares;
 using cxOrganization.WebServiceAPI.Processor;
-using cxPlatform.Core;
 using cxPlatform.Core.Cache;
 using cxPlatform.Core.DatahubLog;
 using cxPlatform.Core.RabbitMQ;
@@ -44,8 +48,6 @@ namespace cxOrganization.WebServiceAPI
         }
 
         public IConfiguration Configuration { get; }
-
-        readonly string AllowSpecificOrigins = "_allowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -84,11 +86,12 @@ namespace cxOrganization.WebServiceAPI
             services.Configure<DataHubQueryAPISettings>(Configuration.GetSection("DataHubQueryAPISettings"));  
             services.Configure<LearningCatalogAPISettings>(Configuration.GetSection("LearningCatalogAPISettings"));
             services.Configure<AwsSettings>(Configuration.GetSection("AwsSettings"));
+            services.Configure<AwsKmsEncyption>(Configuration.GetSection("AwsKmsEncyption"));
             services.UseDomainService(Configuration);
             services.UseAdapterConfiguration(Configuration);
             services.UseBussinessConfiguration(Configuration);
             services.UseCache(Configuration);
-            services.AddScoped<IWorkContext, WorkContext>();
+            services.AddScoped<IAdvancedWorkContext, WorkContext>();
             services.UseHttpClientHelperConfiguration();
             services.AddHttpContextAccessor();
             services.AddRabbitMQ(Configuration);
@@ -104,15 +107,9 @@ namespace cxOrganization.WebServiceAPI
             services.UseRecurringJobs(Configuration, _logger);
 
             UseAmazonService(services);
+            ApiBehaviorOptionsExtensions.ConfigureModelBindingExceptionHandling(services, _logger);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: AllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyHeader();
-                    });
-            });
+            services.AddCorsConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,11 +117,10 @@ namespace cxOrganization.WebServiceAPI
         {
 
             app.UseDatabaseInitializer();
-
+            app.UseCors(env);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(AllowSpecificOrigins);
             }
             else
             {
@@ -141,7 +137,9 @@ namespace cxOrganization.WebServiceAPI
             app.UseHttpsRedirection();
 
             app.UseMiddleware<RequestContextMiddleware>()
-               .UseMiddleware<ErrorHandlingMiddleware>();
+               .UseMiddleware<ErrorHandlingMiddleware>()
+               .UseMiddleware<InitAuthorizationDataMiddleware>();
+               // .UseMiddleware<RequestValidationMiddleware>();
 
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

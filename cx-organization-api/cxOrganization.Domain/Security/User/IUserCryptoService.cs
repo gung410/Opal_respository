@@ -4,5 +4,6 @@
     {
         string DecryptSSN(string ssn);
         string EncryptSSN(string ssn);
+        string ComputeHashSsn(string ssn);
     }
 }

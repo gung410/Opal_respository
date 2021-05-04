@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -19,7 +20,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     [Authorize]
     public class LevelsController : ApiControllerBase
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ILevelService _levelService;
         private readonly IUserTypeService _userTypeService;
         private readonly IUserService _userService;
@@ -33,7 +34,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="userTypeService"></param>
         /// <param name="userService"></param>
         /// <param name="departmentService"></param>
-        public LevelsController(IWorkContext workContext,
+        public LevelsController(IAdvancedWorkContext workContext,
             ILevelService levelService, 
             IUserTypeService userTypeService,
             Func<ArchetypeEnum,IUserService> userService,

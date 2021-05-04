@@ -1,5 +1,6 @@
 ﻿using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Enums;
@@ -23,7 +24,7 @@ namespace cxOrganization.Domain.Services
     {
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
         private readonly IDepartmentRepository _departmentRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserRepository _userRepository;
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
         private readonly ICustomerRepository _customerRepository;
@@ -36,7 +37,7 @@ namespace cxOrganization.Domain.Services
 
         public DepartmentService(IHierarchyDepartmentRepository hierarchyDepartmentRepository,
             IDepartmentRepository departmentRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             OrganizationDbContext organizationDbContext,
             //ISecurityHandler securityHandler,
             IUserRepository userRepository,

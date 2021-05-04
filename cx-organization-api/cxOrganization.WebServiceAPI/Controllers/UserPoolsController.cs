@@ -17,6 +17,10 @@ using System.Threading.Tasks;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Security.AccessServices;
 using Microsoft.Extensions.Logging;
+using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.DomainEnums;
+using cxPlatform.Core.Exceptions;
+using cxOrganization.Domain.Attributes.CustomActionFilters;
 
 namespace cxOrganization.WebServiceAPI.Controllers
 {
@@ -26,13 +30,13 @@ namespace cxOrganization.WebServiceAPI.Controllers
     [Authorize]
     public class UserPoolsController : ApiControllerBase
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupService _userGroupService;
         private readonly IUserPoolMemberService _userPoolMemberService;
         private readonly IUserPoolAccessService _userPoolAccessService;
         private readonly ILogger _logger;
-        public UserPoolsController(ILogger<UserPoolsController> logger, 
-            IWorkContext workContext,
+        public UserPoolsController(ILogger<UserPoolsController> logger,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             IUserPoolMemberService userPoolMemberService,
             IUserPoolAccessService userPoolAccessService)
@@ -65,7 +69,12 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(PaginatedList<UserPoolDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public  async Task<IActionResult> GetList(
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement, 
+                            CompetencePermissionKeys.SeeMenuInOrganisationalDevelopment,
+                            CompetencePermissionKeys.ViewOrganisationalPDJourney,
+                            CompetencePermissionKeys.ViewOverallOfLearningPlanInViewOverallOfLearningPlan,
+                            CompetencePermissionKeys.SeeMenuAdhocNominations)]
+        public async Task<IActionResult> GetList(
             [FromQuery] List<int> userPoolIds = null,
             [FromQuery] List<int> departmentIds = null,
             [FromQuery] List<int> poolOwnerUserIds = null,
@@ -85,7 +94,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 return NoContent();
             }
 
-            var userGroupAccessChecking = await 
+            var userGroupAccessChecking = await
                 _userPoolAccessService.CheckReadUserPoolAccess(_workContext, poolOwnerUserIds, departmentIds);
             if (!userGroupAccessChecking.AccessStatus.IsAllowedAccess())
                 return NoContent();
@@ -110,11 +119,11 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 );
 
             // Count active members
-            if(countActiveMembers == true && pagingUserPoolDto.Items.Any())
+            if (countActiveMembers == true && pagingUserPoolDto.Items.Any())
             {
                 var existingUserPoolIds = pagingUserPoolDto
                         .Items
-                        .Where(p=> p.Identity?.Id > 0)
+                        .Where(p => p.Identity?.Id > 0)
                         .Select(p => (int)p.Identity.Id).ToList();
                 var countingMembers = _userPoolMemberService.CountMemberGroupByUserPools(existingUserPoolIds);
                 foreach (var userPool in pagingUserPoolDto.Items)
@@ -179,7 +188,8 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(UserPoolDto), StatusCodes.Status201Created)]
         [TypeFilter(typeof(PreventXSSFilter))]
-        public IActionResult Insert([Required] [FromBody]UserPoolDto userPoolDto)
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement)]
+        public IActionResult Insert([Required][FromBody] UserPoolDto userPoolDto)
         {
             var validationSpecification = userPoolDto.GetParentDepartmentId() > 0
                 ? (new HierarchyDepartmentValidationBuilder())
@@ -206,7 +216,8 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(UserPoolDto), StatusCodes.Status200OK)]
         [TypeFilter(typeof(PreventXSSFilter))]
-        public IActionResult Update(int userPoolId, [Required] [FromBody]UserPoolDto userPoolDto, [FromQuery]bool countActiveMembers = false)
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement)]
+        public IActionResult Update(int userPoolId, [Required][FromBody] UserPoolDto userPoolDto, [FromQuery] bool countActiveMembers = false)
         {
             var validationSpecification = userPoolDto.GetParentDepartmentId() > 0
                 ? (new HierarchyDepartmentValidationBuilder())
@@ -242,6 +253,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <returns></returns>
         [Route("userpools/{userPoolId}")]
         [HttpDelete]
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement)]
         public IActionResult Remove(int userPoolId)
         {
             var userPool = _userGroupService.GetUserGroups<UserPoolDto>(
@@ -287,10 +299,11 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(typeof(List<MembershipDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddMembers(int userPoolId, [Required] [FromBody] List<MembershipDto> membershipDtos)
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement)]
+        public IActionResult AddMembers(int userPoolId, [Required][FromBody] List<MembershipDto> membershipDtos)
         {
             var members = _userPoolMemberService.AddMembers(userPoolId, membershipDtos);
-            if(members == null || !members.Any())
+            if (members == null || !members.Any())
             {
                 return CreateNoContentResponse();
             }
@@ -308,7 +321,8 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(typeof(List<MembershipDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult RemoveMembers(int userPoolId, [Required] [FromBody] List<MembershipDto> membershipDtos)
+        [PermissionRequired(OrganizationPermissionKeys.CUDinUserGroupManagement)]
+        public IActionResult RemoveMembers(int userPoolId, [Required][FromBody] List<MembershipDto> membershipDtos)
         {
             var members = _userPoolMemberService.RemoveMembers(userPoolId, membershipDtos);
             return CreateResponse(members);

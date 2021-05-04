@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using cxOrganization.Business.Extensions;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -20,7 +21,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class OrganizationalUnitsController : ApiControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserService _userService;
         /// <summary>
         /// Controller constructor
@@ -29,7 +30,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="workContext"></param>
         /// <param name="userService"></param>
         public OrganizationalUnitsController(Func<ArchetypeEnum, IDepartmentService> departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserService> userService)
         {
             _departmentService = departmentService(ArchetypeEnum.OrganizationalUnit);
@@ -170,13 +171,18 @@ namespace cxOrganization.WebServiceAPI.Controllers
             List<string> departmentTypeExtIds,
             bool? externallyMastered = null)
         {
-            return parentDepartmentId > 0
+            //Only validate when authorized by user token
+            if (!string.IsNullOrEmpty(_workContext.Sub))
+            {
+                return parentDepartmentId > 0
                 || !parentDepartmentIds.IsNullOrEmpty()
                 || !string.IsNullOrEmpty(parentDepartmentExtId)
                 || !departmentTypeExtIds.IsNullOrEmpty()
                 || !organizationalUnitIds.IsNullOrEmpty()
                 || !organizationalUnitExtIds.IsNullOrEmpty()
                 || externallyMastered.HasValue;
+            }
+            return true;
         }
 
         /// <summary>
@@ -188,7 +194,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(OrganizationalUnitDto), 200)]
         [TypeFilter(typeof(PreventXSSFilter))]
-        public IActionResult InsertOrganizationalUnit([FromBody]OrganizationalUnitDto organizationalUnitDto)
+        public IActionResult InsertOrganizationalUnit([FromBody] OrganizationalUnitDto organizationalUnitDto)
         {
             var validationSpecification = (new HierarchyDepartmentValidationBuilder())
             .ValidateDepartment(organizationalUnitDto.ParentDepartmentId ?? 0, ArchetypeEnum.Unknown)
@@ -212,9 +218,9 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public async Task<IActionResult> GetOrganizationalUnit(int organizationalunitid)
         {
             var department = (await _departmentService.GetDepartmentsAsync<OrganizationalUnitDto>(
-                departmentIds: new List<int>() {organizationalunitid},
-                statusIds: new List<EntityStatusEnum> {EntityStatusEnum.All},
-                archetypeIds: new List<int>() {(int) ArchetypeEnum.OrganizationalUnit})).Items.FirstOrDefault();
+                departmentIds: new List<int>() { organizationalunitid },
+                statusIds: new List<EntityStatusEnum> { EntityStatusEnum.All },
+                archetypeIds: new List<int>() { (int)ArchetypeEnum.OrganizationalUnit })).Items.FirstOrDefault();
 
             if (department == null)
                 return CreateNoContentResponse<OrganizationalUnitDto>();
@@ -232,6 +238,14 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [TypeFilter(typeof(PreventXSSFilter))]
         public IActionResult UpdateOrganizationalUnit(int organizationalunitid, [FromBody] OrganizationalUnitDto organizationalUnitDto)
         {
+            // Special code for testing the error handler on the client side.
+            if (organizationalUnitDto != null && !string.IsNullOrEmpty(organizationalUnitDto.Name) && organizationalUnitDto.Name.StartsWith("testingerror-code"))
+            {
+                var statusCodeString = organizationalUnitDto.Name.Split("-").Last();
+                if (int.TryParse(statusCodeString, out var statusCode))
+                    return new StatusCodeResult(statusCode);
+            }
+
             var validationSpecification = (new HierarchyDepartmentValidationBuilder())
             .ValidateDepartment(organizationalUnitDto.ParentDepartmentId ?? 0, ArchetypeEnum.Unknown)
             .SkipCheckingArchetype()

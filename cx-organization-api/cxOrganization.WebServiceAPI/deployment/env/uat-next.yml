@@ -2,22 +2,21 @@ aspnetcore_environment: uat-next
 mssql_username: uat-next-competence-opal-at6qr-readwrite
 mssql_password: edAskUMC8MzTjQY
 mssql_host: mssql.opal
-BusinessConfigs_UserNotification_UserTypePending2ndNotification: "145"
-BusinessConfigs_UserNotification_UserTypePending3ndNotification: "112"
-BusinessConfigs_UserNotification_UserTypeSyncIdpNotification: "87,88,89"
+BusinessConfigs_UserNotification_UserTypePending2ndNotification: '145'
+BusinessConfigs_UserNotification_UserTypePending3ndNotification: '112'
+BusinessConfigs_UserNotification_UserTypeSyncIdpNotification: '87,88,89'
 idm_base_url: https://idm.uat-next.opal2.conexus.net
-api_base_url: https://api.uat-next.opal2.conexus.net
-portal_api: uat-next-competence-opal-api-portal
+is_cross_organizational_unit: true
 enable_migration: true
-domain_api_auth: "Basic dWF0LW5leHR1c2VyOnVhdC1uZXh0cGFzc3dvcmQ="
+domain_api_auth: 'Basic dWF0LW5leHR1c2VyOnVhdC1uZXh0cGFzc3dvcmQ='
 https_proxy: http://proxy.opal:3128
-opal_main_page_link: "https://www.uat-next.opal2.conexus.net/app"
-sam_link: "https://admin.uat-next.opal2.conexus.net"
-pdpm_link: "https://www.uat-next.opal2.conexus.net/pdplanner"
-logo_path: "https://admin.uat-next.opal2.conexus.net/assets/images/opal.png"
-learner_web_app_link: "https://www.uat-next.opal2.conexus.net/app/learner"
-learner_android_app_link: ""
-learner_ios_app_link: ""
+opal_main_page_link: 'https://www.uat-next.opal2.conexus.net/app'
+sam_link: 'https://admin.uat-next.opal2.conexus.net'
+pdpm_link: 'https://www.uat-next.opal2.conexus.net/pdplanner'
+logo_path: 'https://admin.uat-next.opal2.conexus.net/assets/images/opal.png'
+learner_web_app_link: 'https://www.uat-next.opal2.conexus.net/app/learner'
+learner_android_app_link: ''
+learner_ios_app_link: ''
 secretbox_key: 12345678901234567890123456789012
 secretbox_nonce: ABCDEFGHIJKLMNOPQRSTUVWX
 service_username: uat-nextuser
@@ -32,3 +31,8 @@ hangfireDatabase: uat-next-cx-opal-scheduling-jobs-db
 hangfireDatabaseUsername: uat-next-cx-opal-scheduling-jobs-db-readwrite
 hangfireDatabasePassword: kUMC8MzTjQYedAs
 redis_connectionstring: redis.opal
+AwsKmsEncyption_Enabled: true
+AwsKmsEncyption_AwsAccessKey: AKIA2QPV5ZDRUMNPN2N5
+AwsKmsEncyption_AwsSecretKey: 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
+AwsKmsEncyption_KmsArn: 'arn:aws:kms:ap-southeast-1:722607130851:key/1b27353c-9a04-4071-8ab8-eb44feef65fb'
+AwsKmsEncyption_EncryptedHashKey: 'AQICAHii5zKoLkhHf6qlYxk6G1G7o/F1YrdcZuFuRICiGYQHZwEV5/1rnInmNxrWvcCCOT3PAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMMddSnVCR1ZLQEO/wAgEQgC9WHLNnSSxqnawIXcfC+V7jBaWSIZysILO7RBlchFrWOT6PTxiac/z0vlDfNCectA=='

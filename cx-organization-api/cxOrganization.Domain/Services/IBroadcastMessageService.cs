@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.Dtos.BroadcastMessage;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Dtos.BroadcastMessage;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
 using System.Threading.Tasks;
@@ -9,33 +10,27 @@ namespace cxOrganization.Domain.Services
     {
         public Task<PaginatedList<BroadcastMessageDto>> GetBroadcastMessagesAsync(
             BroadcastMessageSearchRequest broadcastMessageRequest,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public Task<BroadcastMessageDto> GetBroadcastMessageByIdAsync(
             int broadcastMessageId,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public Task<BroadcastMessageDto> DeleteBroadcastMessageAsync(
             int broadcastMessageId,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public Task<BroadcastMessageDto> CreateBroadcastMessageAsync(
             BroadcastMessageCreationDto broadcastMessage,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public Task<BroadcastMessageDto> UpdateBroadcastMessageAsync(
             BroadcastMessageDto broadcastMessage,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public Task<BroadcastMessageDto> ChangeBroadcastMessageStatusAsync(
             BroadcastMessageChangeStatusDto broadcastMessageChangeStatusDto,
-            IWorkContext workContext,
-            string token = null);
+            IAdvancedWorkContext workContext);
 
         public void SendScheduledBroadcastMessages();
     }

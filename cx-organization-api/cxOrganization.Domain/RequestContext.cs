@@ -1,4 +1,5 @@
 ﻿using System;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxPlatform.Core;
 
 namespace cxOrganization.Domain
@@ -6,7 +7,7 @@ namespace cxOrganization.Domain
     public class RequestContext : IRequestContext
     {
 
-        public RequestContext(IWorkContext workContext)
+        public RequestContext(IAdvancedWorkContext workContext)
         {
             RequestId = workContext.RequestId;
             CorrelationId = workContext.CorrelationId;

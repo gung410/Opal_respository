@@ -23,7 +23,7 @@ namespace cxOrganization.Client.Departments
         /// The name of the department 
         /// </summary>
         [Required]
-        [MaxLength(256, ErrorMessage = "Name max length is 256")]
+        [MaxLength(100, ErrorMessage = "Name max length is 100")]
         public string Name { get; set; }
         /// <summary>
         /// Description

@@ -25,7 +25,7 @@ namespace cxOrganization.Domain.Dtos.Users
         public List<UserGroupDto> OwnGroups { get; set; }
         public int DepartmentId { get; set; }
         public bool? IdpLocked { get; set; }
-
+        public bool SkipGenerateUserName { get; set; }
         public override int GetParentDepartmentId()
         {
             return DepartmentId;

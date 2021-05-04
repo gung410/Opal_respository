@@ -3,7 +3,7 @@
 
 .taxonomy-management {
   .mat-tab-header {
-    width: calc(100% - 8px);
+    width: 100%;
     .mat-tab-list {
       margin-top: 8px;
       height: 60px;
@@ -39,7 +39,7 @@
   }
 
   .ag-header {
-    width: calc(100% - 8px);
+    width: 100%;
   }
 
   .cx-page-container {
@@ -642,7 +642,7 @@
 
   .menu-action {
     display: flex;
-    width: calc(100% - 8px);
+    width: 100%;
     margin: 15px 0;
 
     &__left {

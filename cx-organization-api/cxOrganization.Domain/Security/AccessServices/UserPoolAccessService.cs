@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Settings;
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Security.AccessServices
         }
 
         public async Task<(AccessStatus AccessStatus, List<int> UserIds, List<int> ParentDepartmentIds)> CheckReadUserPoolAccess(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> userIds,
             List<int> parentDepartmentIds)
         {

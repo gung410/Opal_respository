@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.Repositories;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Repositories;
 using cxPlatform.Core;
 
 namespace cxOrganization.Domain.Services
@@ -6,10 +7,10 @@ namespace cxOrganization.Domain.Services
     public class HierarchyService : IHierarchyService
     {
         private readonly IHierarchyRepository _hierarchyRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public HierarchyService(IHierarchyRepository hierarchyRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _hierarchyRepository = hierarchyRepository;
             _workContext = workContext;

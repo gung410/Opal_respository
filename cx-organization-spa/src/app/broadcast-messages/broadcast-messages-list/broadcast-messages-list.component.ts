@@ -114,10 +114,6 @@ export class BroadcastMessagesListComponent
     }
   }
 
-  createNewBroadcastMessage(): void {
-    this.router.navigate(['/broadcast-messages/detail/', '']);
-  }
-
   onEditBroadcastMessagesClicked($event: any): void {
     if (!this.isCurrentUserAllowToMakeActions) {
       return;
@@ -358,7 +354,7 @@ export class BroadcastMessagesListComponent
   }
 
   private initGridData(): void {
-    this.agGridConfig.rowData = this.broadcastMessagesData;
+    this.agGridConfig.rowData = this.broadcastMessagesData || [];
     this.changeDetectorRef.detectChanges();
   }
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Mappings;
@@ -17,14 +18,14 @@ namespace cxOrganization.Domain.Services
     public class HierarchyDepartmentService : IHierarchyDepartmentService
     {
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IHierarchyRepository _hierarchyRepository;
         private readonly IHierarchyDepartmentMappingService _hierarchyDepartmentMappingService;
         private readonly IUserRepository _userRepository;
         private readonly IHierarchyDepartmentPermissionService _hierarchyDepartmentPermissionService;
 
         public HierarchyDepartmentService(IHierarchyDepartmentRepository hierarchyDepartmentRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IHierarchyRepository hierarchyRepository,
             IDepartmentRepository departmentRepository,
             IHierarchyDepartmentMappingService hierarchyDepartmentMappingService,

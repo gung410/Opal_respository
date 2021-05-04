@@ -78,6 +78,7 @@ export class DepartmentHierarchicalComponent
   departmentTypes: DepartmentType[];
   text: CxTreeText = new CxTreeText();
   havingExtensiveArea: boolean = true;
+  isFiltering: boolean = false;
   isLoadingDepartment: boolean = false;
   levelOfEducationMap: object = {};
   isNoDepartment: boolean = false;
@@ -766,6 +767,7 @@ export class DepartmentHierarchicalComponent
     this.ngbModal.dismissAll();
     this.currentDepartmentId = department.identity.id;
     this.changeDetectorRef.detectChanges();
+    this.isFiltering = true;
     this.getDepartments(this.currentDepartmentId);
     this.isDetectExpandTree = true;
   }
@@ -804,6 +806,21 @@ export class DepartmentHierarchicalComponent
       );
     }
   }
+
+  private addIdToMeatballActionButton(): void {
+    const meatBallBtnElementList = document.querySelectorAll(
+      '.icon-meatball.meatball-action'
+    );
+
+    if (!meatBallBtnElementList) {
+      return;
+    }
+
+    meatBallBtnElementList.forEach((element: HTMLElement, index: number) => {
+      element.id = `meatball`;
+    });
+  }
+
   private convertDepartment(
     department: Department,
     destinationDepartment: any
@@ -998,6 +1015,12 @@ export class DepartmentHierarchicalComponent
             this.cxGlobalLoaderService.hideLoader();
             this.isNoDepartment = !departments || departments.length === 0;
             this.changeDetectorRef.detectChanges();
+
+            this.addIdToMeatballActionButton();
+
+            if (this.isFiltering) {
+              this.scrollToSelectedDepartment();
+            }
           },
           (error) => {
             this.cxGlobalLoaderService.hideLoader();
@@ -1034,9 +1057,25 @@ export class DepartmentHierarchicalComponent
           .trim()
           .toLowerCase()
           .replace(/\w\S*/g, (word) =>
-            word.replace(/^\w/, (character) => character.toUpperCase())
+            word.replace(/^\w/, (character) => ' ' + character.toUpperCase())
           );
       });
+  }
+
+  private scrollToSelectedDepartment(): void {
+    const selectedDepartmentElement = document.querySelector(
+      '.cx-extensive-tree__display-area--selected'
+    );
+
+    if (selectedDepartmentElement) {
+      this.isFiltering = false;
+
+      selectedDepartmentElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
+    }
   }
 
   private checkEmptyFilter(): boolean {

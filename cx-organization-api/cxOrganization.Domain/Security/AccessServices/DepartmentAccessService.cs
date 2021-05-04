@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Domain.Dtos.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Security.AccessServices
 {
@@ -38,7 +39,7 @@ namespace cxOrganization.Domain.Security.AccessServices
         /// </summary>
         /// <param name="workContext"></param>
         /// <returns></returns>
-        public async Task<(HierachyDepartmentIdentityDto TopHierachyDepartmentIdentity, List<HierarchyInfo> AccessibleHierarchyInfos)> GetTopHierarchyDepartmentsByWorkContext(IWorkContext workContext)
+        public async Task<(HierachyDepartmentIdentityDto TopHierachyDepartmentIdentity, List<HierarchyInfo> AccessibleHierarchyInfos)> GetTopHierarchyDepartmentsByWorkContext(IAdvancedWorkContext workContext)
         {
             var isAuthenticatedByToken = !string.IsNullOrEmpty(workContext.Sub);
 

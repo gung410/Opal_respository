@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Extensions;
@@ -19,7 +20,7 @@ namespace cxOrganization.Domain.Security.HierarchyDepartment
     /// </summary>
     public class HierarchyDepartmentPermissionService : IHierarchyDepartmentPermissionService
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly HierarchyDepartmentPermissionSettings _hierarchyDepartmentPermissionSettings;
         private readonly IUserRepository _userRepository;
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
@@ -27,7 +28,7 @@ namespace cxOrganization.Domain.Security.HierarchyDepartment
         private IList<UserRole> _workContextUserRoles;
 
         public HierarchyDepartmentPermissionService(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<HierarchyDepartmentPermissionSettings> hierarchyDepartmentPermissionSettings,
             IDepartmentTypeRepository departmentTypeRepository,
             IUserRepository userRepository)

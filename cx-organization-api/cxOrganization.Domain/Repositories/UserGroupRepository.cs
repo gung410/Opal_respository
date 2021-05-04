@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Amazon.Util.Internal;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories.QueryBuilders;
 using cxPlatform.Client.ConexusBase;
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Repositories
         const int MaximumRecordsReturn = 5000;
 
         public UserGroupRepository(OrganizationDbContext dbContext,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
             : base(dbContext, workContext)
         {
         }

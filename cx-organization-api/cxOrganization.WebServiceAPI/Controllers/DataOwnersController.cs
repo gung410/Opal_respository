@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
 using cxPlatform.Client.ConexusBase;
@@ -20,7 +21,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class DataOwnersController : ApiControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="workContext"></param>
         /// <param name="hierarchyDepartmentService"></param>
         public DataOwnersController(Func<ArchetypeEnum, IDepartmentService> departmentService,
-            IWorkContext workContext, IHierarchyDepartmentService hierarchyDepartmentService)
+            IAdvancedWorkContext workContext, IHierarchyDepartmentService hierarchyDepartmentService)
         {
             _departmentService = departmentService(ArchetypeEnum.DataOwner);
             _workContext = workContext;

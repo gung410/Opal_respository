@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -15,12 +16,12 @@ namespace cxOrganization.Domain.Mappings
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
         private const int DepartmentTypeCounty = 34;
         private const int DepartmentTypeMunicipality = 35;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public SchoolOwnerMappingService(List<int> departmentTypeIds,
             IDepartmentTypeRepository departmentTypeRepository,
             IPropertyService propertyService, ILanguageRepository languageRepository,
-            IWorkContext workcontext)
+            IAdvancedWorkContext workcontext)
             :base(propertyService, languageRepository, departmentTypeRepository)
         {
             DepartmentTypeIds = departmentTypeIds;

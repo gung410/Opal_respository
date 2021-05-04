@@ -5,6 +5,7 @@
 
 export const environment = {
   production: true,
+  showAuthDebugInformation: true,
   fallbackLanguage: 'en-US',
   fallbackLanguageName: 'English',
   clientId: 'OrganizationSpa',
@@ -20,7 +21,7 @@ export const environment = {
     communication: 'systemtest-datahub-opal-api-communication',
     dataHub: 'systemtest-datahub-opal-api-query',
     learningCatalog: 'systemtest-competence-opal-api-learningcatalog',
-    tagging: 'systemtes-learnapp-opal-api-tagging'
+    tagging: 'systemtest-learnapp-opal-api-tagging/api'
   },
   site: {
     title: 'System Admin',
@@ -49,8 +50,9 @@ export const environment = {
   OwnerId: 3001,
   CustomerId: 2052,
   ParentDepartmentId: 14350,
-  OtherDepartmentId: 20747,
+  OtherDepartmentId: 37768,
   topDepartmentId: 1,
+  showTechnicalInfo: true,
   firebase: {
     fcmConfig: {
       apiKey: 'AIzaSyDWLtQfk-qzpYQ4YegYPT32RagPAw9g4qo',
@@ -84,7 +86,8 @@ export const environment = {
     LearnerAppAndroid: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerAppIOS: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerWeb: 'https://www.systemtest.opal2.conexus.net/app/learner',
-    Report: 'https://www.systemtest.opal2.conexus.net/report'
+    Report: 'https://www.systemtest.opal2.conexus.net/report',
+    CSL: 'https://www.systemtest.opal2.conexus.net/csl'
   },
   userAccounts: {
     enableCreateUserAccountRequest: true,

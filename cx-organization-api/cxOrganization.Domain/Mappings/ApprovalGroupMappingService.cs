@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -19,10 +20,10 @@ namespace cxOrganization.Domain.Mappings
         private readonly IDepartmentService _departmentService;
         private readonly IUserRepository _userRepository;
 
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         public ApprovalGroupMappingService(
             IDepartmentService departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IPropertyService propertyService,
             IUserRepository userRepository)
         {
@@ -101,13 +102,14 @@ namespace cxOrganization.Domain.Mappings
             return approvalGroupDto;
         }
 
-        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto)
+        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto, IAdvancedWorkContext workContext = null)
         {
             var approvalGroup = groupDto as ApprovalGroupDto;
 
             approvalGroup.EntityStatus.LastUpdatedBy = approvalGroup.EntityStatus.LastUpdatedBy > 0
                                                              ? approvalGroup.EntityStatus.LastUpdatedBy
-                                                             : _workContext.CurrentUserId;
+                                                             : workContext is object ? workContext.CurrentUserId : _workContext.CurrentUserId;
+
             if (groupDto.Identity.Id == 0)
             {
                 var userGroup = new UserGroupEntity

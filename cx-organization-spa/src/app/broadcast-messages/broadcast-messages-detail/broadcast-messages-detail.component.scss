@@ -329,7 +329,7 @@
   .dialog-tree-body {
     overflow-y: hidden;
     .cx-extensive-tree {
-      height: 43vh;
+      height: calc(43vh - 3rem);
     }
   }
 }

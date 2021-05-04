@@ -64,8 +64,7 @@ export class UserSelectComponent extends BaseScreenComponent implements OnInit {
     StatusTypeEnum.Active.code,
     StatusTypeEnum.New.code,
     StatusTypeEnum.Inactive.code,
-    StatusTypeEnum.IdentityServerLocked.code,
-    StatusTypeEnum.Archived.code
+    StatusTypeEnum.IdentityServerLocked.code
   ];
 
   constructor(

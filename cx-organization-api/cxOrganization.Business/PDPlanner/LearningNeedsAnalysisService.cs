@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using cxOrganization.Domain.Extensions;
 using cxPlatform.Core.Cache;
 using Microsoft.Extensions.Logging;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Business.PDPlanner
 {
     public class LearningNeedsAnalysisService : ILearningNeedsAnalysisService
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IAssessmentAdapter _assessmentAdapter;
         private readonly LearningNeedsAnalysisConfig _learningNeedsAnalysisConfig;
         private readonly IAsyncDistributedCacheProvider _asyncDistributedCacheProvider;
         private readonly ILogger _logger;
-        public LearningNeedsAnalysisService(ILogger<LearningNeedsAnalysisService> logger, IWorkContext workContext,
+        public LearningNeedsAnalysisService(ILogger<LearningNeedsAnalysisService> logger, IAdvancedWorkContext workContext,
             IAssessmentAdapter assessmentAdapter,
             IOptions<LearningNeedsAnalysisConfig> learningNeedsAnalysisConfig,
             IAsyncDistributedCacheProvider asyncDistributedCacheProvider)

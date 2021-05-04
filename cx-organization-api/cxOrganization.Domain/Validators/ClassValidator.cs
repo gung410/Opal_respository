@@ -2,6 +2,7 @@
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -13,13 +14,13 @@ namespace cxOrganization.Domain.Validators
     public class ClassValidator : DepartmentValidator
     {
         private readonly IUserRepository _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         public ClassValidator(IDepartmentRepository departmentRepository,
             IOwnerRepository ownerRepository,
             ICustomerRepository customerRepository,
             ILanguageRepository languageRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserRepository userRepository)
             :base(ownerRepository, customerRepository, languageRepository, departmentRepository, hierarchyDepartmentRepository, workContext)
         {

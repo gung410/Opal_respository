@@ -71,6 +71,7 @@
         },
         "reportingofficer": {
           "inSameDepartment": true,
+          "accessToAllUserGroup": true,
           "inDescendantDepartmentTypeExtIds": [
             "*"
           ],
@@ -94,6 +95,17 @@
           ]
         },
         "learner": {
+          "inSameDepartment": false,
+          "inDescendantDepartmentTypeExtIds": [
+          ],
+          "inOwnedUserGroupArchetypes": [
+            "*"
+          ],
+          "inDepartmentUserGroupArchetypes": [
+            "*"
+          ]
+        },
+        "customrole": {
           "inSameDepartment": false,
           "inDescendantDepartmentTypeExtIds": [
           ],

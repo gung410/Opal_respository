@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Dtos.DataHub;
@@ -35,7 +36,7 @@ namespace cxOrganization.Domain.Services.Reports
     {
         private readonly IUserService _userService;
         private readonly IUGMemberService _ugMemberService;
-        //private IWorkContext _workContext;
+        //private IAdvancedWorkContext _workContext;
         private readonly IDataHubQueryApiClient _dataHubQueryApiClient;
         private readonly AppSettings _appSettings;
         private readonly IOptions<AppSettings> _appSettingOptions;
@@ -120,7 +121,7 @@ namespace cxOrganization.Domain.Services.Reports
             _hierarchyDepartmentPermissionSettings = hierarchyDepartmentPermissionSettingsOptions.Value;
         }
 
-        public async Task<List<UserEventLogInfo>> GetUserEventLogInfosAsync(IWorkContext workContext, List<UserEventType> eventTypes,
+        public async Task<List<UserEventLogInfo>> GetUserEventLogInfosAsync(IAdvancedWorkContext workContext, List<UserEventType> eventTypes,
             DateTime? eventCreatedAfter, DateTime? eventCreatedBefore, bool getDepartment, bool getRole)
         {
             const int pageSize = 500;
@@ -139,7 +140,7 @@ namespace cxOrganization.Domain.Services.Reports
 
         }
 
-        public async Task<int> CountUserEventAsync(IWorkContext workContext,
+        public async Task<int> CountUserEventAsync(IAdvancedWorkContext workContext,
             List<UserEventType> eventTypes,
             DateTime? eventCreatedAfter,
             DateTime? eventCreatedBefore)
@@ -158,7 +159,7 @@ namespace cxOrganization.Domain.Services.Reports
                 eventCreatedAfter,
                 eventCreatedBefore);
         }
-        public async Task<PaginatedList<UserEventLogInfo>> GetPaginatedUserEventLogInfosAsync(IWorkContext workContext,
+        public async Task<PaginatedList<UserEventLogInfo>> GetPaginatedUserEventLogInfosAsync(IAdvancedWorkContext workContext,
             List<UserEventType> eventTypes, 
             DateTime? eventCreatedAfter, DateTime? eventCreatedBefore,
             int pageSize, int pageIndex, bool getDepartment, bool getRole)
@@ -219,7 +220,7 @@ namespace cxOrganization.Domain.Services.Reports
             return new PaginatedList<UserEventLogInfo>();
         }
 
-        public async Task<UserStatisticsDto> GetUserStatisticsAsync(IWorkContext workContext,
+        public async Task<UserStatisticsDto> GetUserStatisticsAsync(IAdvancedWorkContext workContext,
             List<EntityStatusEnum> accountStatisticsEntityStatuses,
             List<UserEventType> eventStatisticsTypes,
             bool getOnBoardingStatistics,
@@ -252,7 +253,7 @@ namespace cxOrganization.Domain.Services.Reports
             return userStatistics;
         }
 
-        private async Task<UserEventStatisticsDto> CalculateUserEventStatisticsAsync(IWorkContext workContext, List<UserEventType> eventStatisticsTypes,
+        private async Task<UserEventStatisticsDto> CalculateUserEventStatisticsAsync(IAdvancedWorkContext workContext, List<UserEventType> eventStatisticsTypes,
             DateTime? fromDate,
             DateTime? toDate)
         {
@@ -311,7 +312,7 @@ namespace cxOrganization.Domain.Services.Reports
             return userEventStatistics;
         }
 
-        private async Task<UserOnBoardingStatisticsDto> CalculateOnBoardingStatisticsAsync(IWorkContext workContext, DateTime? fromDate, DateTime? toDate)
+        private async Task<UserOnBoardingStatisticsDto> CalculateOnBoardingStatisticsAsync(IAdvancedWorkContext workContext, DateTime? fromDate, DateTime? toDate)
         {
             var userOnBoardingStatistics = new UserOnBoardingStatisticsDto
             {
@@ -324,7 +325,7 @@ namespace cxOrganization.Domain.Services.Reports
         }
 
         public async Task<PaginatedList<ApprovingOfficerInfo>> GetPaginatedApprovingOfficerInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             bool getRole,
@@ -415,7 +416,7 @@ namespace cxOrganization.Domain.Services.Reports
 
 
         public async Task<List<ApprovingOfficerInfo>> GetApprovingOfficerInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             bool getRole, bool getDepartment,
@@ -457,7 +458,7 @@ namespace cxOrganization.Domain.Services.Reports
         }
 
         public async Task<List<UserAccountDetailsInfo>> GetUserAccountDetailsInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -518,7 +519,7 @@ namespace cxOrganization.Domain.Services.Reports
         }
 
         public async Task<PaginatedList<UserAccountDetailsInfo>> GetPaginatedUserAccountDetailsInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -636,7 +637,7 @@ namespace cxOrganization.Domain.Services.Reports
             };
         }
         
-        private async Task<PagingResult<UserAccountDetailsEntity>> GetPaginatedUserAccountDetailsEntitiesAsync(IWorkContext workContext,
+        private async Task<PagingResult<UserAccountDetailsEntity>> GetPaginatedUserAccountDetailsEntitiesAsync(IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds, bool? filterOnSubDepartment,
             List<EntityStatusEnum> userEntityStatuses, DateTime? createdAfter, DateTime? createdBefore,
             DateTime? lastUpdatedAfter,
@@ -702,7 +703,7 @@ namespace cxOrganization.Domain.Services.Reports
 
 
         public async Task<List<PrivilegedUserAccountInfo>> GetPrivilegedUserAccountInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -764,7 +765,7 @@ namespace cxOrganization.Domain.Services.Reports
             return userAccountDetailsInfos;
         }
         public async Task<PaginatedList<PrivilegedUserAccountInfo>> GetPaginatedPrivilegedUserAccountInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -884,7 +885,7 @@ namespace cxOrganization.Domain.Services.Reports
         }
 
         private async Task<PagingResult<PrivilegedUserAccountEntity>> GetPaginatedPrivilegedUserAccountEntitiesAsync(
-            IWorkContext workContext, List<int> parentDepartmentIds, bool? filterOnSubDepartment,
+            IAdvancedWorkContext workContext, List<int> parentDepartmentIds, bool? filterOnSubDepartment,
             List<EntityStatusEnum> userEntityStatuses, DateTime? createdAfter, DateTime? createdBefore,
             DateTime? lastUpdatedAfter,
             DateTime? lastUpdatedBefore, DateTime? expirationDateAfter, DateTime? expirationDateBefore,
@@ -948,7 +949,7 @@ namespace cxOrganization.Domain.Services.Reports
             return await selectQuery.ToPagingAsync(pageIndex, pageSize);
         }
 
-        private async Task<IQueryable<UserEntity>> BuildGetUserQuery(IWorkContext workContext, List<int> parentDepartmentIds, 
+        private async Task<IQueryable<UserEntity>> BuildGetUserQuery(IAdvancedWorkContext workContext, List<int> parentDepartmentIds, 
             bool? filterOnSubDepartment,  List<EntityStatusEnum> userEntityStatuses,
             DateTime? createdAfter,
             DateTime? createdBefore, 
@@ -1188,7 +1189,7 @@ namespace cxOrganization.Domain.Services.Reports
             };
         }
 
-        private async Task<Dictionary<AccountType, int>> CountUserNotStartedOnBoardingUser(IWorkContext workContext, DateTime? fromDate, DateTime? toDate)
+        private async Task<Dictionary<AccountType, int>> CountUserNotStartedOnBoardingUser(IAdvancedWorkContext workContext, DateTime? fromDate, DateTime? toDate)
         {
             var toDateJsonFilterString = (toDate ?? DateTime.MaxValue).ConvertToISO8601();
 
@@ -1210,7 +1211,7 @@ namespace cxOrganization.Domain.Services.Reports
             };
         }
 
-        private async Task<Dictionary<AccountType, int>> CountUserStartedOnBoardingUser(IWorkContext workContext, DateTime? fromDate, DateTime? toDate)
+        private async Task<Dictionary<AccountType, int>> CountUserStartedOnBoardingUser(IAdvancedWorkContext workContext, DateTime? fromDate, DateTime? toDate)
         {
             var fromDateJsonFilterString = (fromDate ?? DateTime.MinValue).ConvertToISO8601();
             var toDateJsonFilterString = (toDate ?? DateTime.MaxValue).ConvertToISO8601();
@@ -1236,7 +1237,7 @@ namespace cxOrganization.Domain.Services.Reports
 
         }
 
-        private async Task<Dictionary<AccountType, int>> CountUserFinishedOnBoardingUser(IWorkContext workContext, DateTime? fromDate, DateTime? toDate)
+        private async Task<Dictionary<AccountType, int>> CountUserFinishedOnBoardingUser(IAdvancedWorkContext workContext, DateTime? fromDate, DateTime? toDate)
         {
             var fromDateJsonFilterString = (fromDate ?? DateTime.MinValue).ConvertToISO8601();
             var toDateJsonFilterString = (toDate ?? DateTime.MaxValue).ConvertToISO8601();
@@ -1260,9 +1261,9 @@ namespace cxOrganization.Domain.Services.Reports
             };
         }
 
-        private async Task<int> CountUserAsync(IWorkContext wokContext, DateTime? fromDate, DateTime? toDate, List<string> jsonDynamicFiler,
+        private async Task<int> CountUserAsync(IAdvancedWorkContext wokContext, DateTime? fromDate, DateTime? toDate, List<string> jsonDynamicFiler,
             bool externallyMastered)
-        {
+        { 
             return  await _userService.CountUsersAsync(wokContext.CurrentOwnerId,
                 customerIds: new List<int> { wokContext.CurrentCustomerId},
                 statusIds: new List<EntityStatusEnum> {EntityStatusEnum.All},
@@ -1272,7 +1273,7 @@ namespace cxOrganization.Domain.Services.Reports
                 externallyMastered: externallyMastered);
         }
 
-        private async Task<UserAccountStatisticsDto> CalculateAccountStatisticsAsync( IWorkContext workContext, List<EntityStatusEnum> entityStatuses, DateTime? fromDate,
+        private async Task<UserAccountStatisticsDto> CalculateAccountStatisticsAsync(IAdvancedWorkContext workContext, List<EntityStatusEnum> entityStatuses, DateTime? fromDate,
             DateTime? toDate)
         {
     

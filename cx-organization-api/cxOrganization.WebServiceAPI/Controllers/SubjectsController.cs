@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.Dtos.UserGroups;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -21,7 +22,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// </summary>
         /// <param name="userGroupService"></param>
         public SubjectsController(IUserGroupService userGroupService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserGroupTypeService userGroupTypeService,
             IUserService userService,
             IDepartmentService departmentService)

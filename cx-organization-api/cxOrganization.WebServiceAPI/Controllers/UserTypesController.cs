@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserTypes;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
@@ -15,7 +16,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class UserTypesController : ApiControllerBase
     {
         private readonly IUserTypeService _userTypeService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ISystemRoleService _systemRoleService;
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="userTypeService"></param>
         /// <param name="workContext"></param>
         public UserTypesController(IUserTypeService userTypeService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ISystemRoleService systemRoleService)
         {
             _userTypeService = userTypeService;

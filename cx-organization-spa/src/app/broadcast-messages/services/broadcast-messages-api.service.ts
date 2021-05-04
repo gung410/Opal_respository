@@ -12,6 +12,8 @@ import {
 } from '../models/broadcast-messages.model';
 import { BroadcastNotification } from '../models/broadcast-notification.model';
 import { RolesRequest } from '../requests-dto/roles-request';
+import { ISaveBroadcastMessageRequest } from '../requests-dto/save-broadcast-message-request.dto';
+import { IUpdateBroadcastMessageRequest } from '../requests-dto/update-broadcast-message-request.dto';
 
 @Injectable()
 export class BroadcastMessagesApiService {
@@ -38,20 +40,23 @@ export class BroadcastMessagesApiService {
   }
 
   updateBroadcastMessage(
-    request: BroadcastMessagesDto
+    updateBroadcastMessageRequest: IUpdateBroadcastMessageRequest
   ): Observable<BroadcastMessagesDto> {
     return this.httpHelper
       .put(
-        `${this.broadcastMessagesApiUrl}/${request.broadcastMessageId}`,
-        request
+        `${this.broadcastMessagesApiUrl}/${updateBroadcastMessageRequest.broadcastMessageId}`,
+        updateBroadcastMessageRequest
       )
       .pipe(map((_) => new BroadcastMessagesDto(_)));
   }
 
   saveBroadcastMessage(
-    request: BroadcastMessagesDto
+    saveBroadcastMessageRequest: ISaveBroadcastMessageRequest
   ): Observable<BroadcastMessagesDto> {
-    return this.httpHelper.post(this.broadcastMessagesApiUrl, request);
+    return this.httpHelper.post(
+      this.broadcastMessagesApiUrl,
+      saveBroadcastMessageRequest
+    );
   }
 
   deleteBroadcastMessage(id: string): Observable<any> {

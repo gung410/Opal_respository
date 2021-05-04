@@ -56,6 +56,8 @@ import { RecurringInfoViewModel } from '../models/recurring-info.view.model';
 import { RecurringModel } from '../models/recurring.model';
 import { SimpleRoleViewModel } from '../models/simple-roles.view.model';
 import { RolesRequest } from '../requests-dto/roles-request';
+import { SaveBroadcastMessageRequest } from '../requests-dto/save-broadcast-message-request.dto';
+import { UpdateBroadcastMessageRequest } from '../requests-dto/update-broadcast-message-request.dto';
 import { BroadcastMessagesApiService } from '../services/broadcast-messages-api.service';
 import { UserAccountsHelper } from './../../user-accounts/user-accounts.helper';
 @Component({
@@ -415,6 +417,20 @@ export class BroadcastMessagesDetailComponent
     this.processSavingBroadcastMessage(onSaveDone);
   }
 
+  onValidTimeChange(): void {
+    if (
+      this.broadcastMessage &&
+      this.broadcastMessage.validFromTime &&
+      this.broadcastMessage.validToTime
+    ) {
+      this.isInvalidTimeRangeWarning = !this.isValidDateRange();
+      this.isInPastWarning = DateTimeUtil.IsDateInPast(
+        this.broadcastMessage.validToDate
+      );
+      this.isDateRangeOnTheSameDate = this.isDateRangeOnTheSameDateCheck();
+    }
+  }
+
   onDateChange(
     type: 'validFrom' | 'validTo',
     event: MatDatepickerInputEvent<Date>
@@ -422,9 +438,11 @@ export class BroadcastMessagesDetailComponent
     switch (type) {
       case 'validFrom':
         this.minToDate = event.value;
+        this.onValidTimeChange();
         break;
       case 'validTo':
         this.maxFromDate = event.value;
+        this.onValidTimeChange();
         break;
       default:
         return;
@@ -803,13 +821,17 @@ export class BroadcastMessagesDetailComponent
 
         this.broadcastDataSvc.editBroadcastMessage(data).subscribe((result) => {
           if (result.status === HTTP_STATUS_CODE.STATUS_200_SUCCESS) {
-            this.broadcastDataSvc.updateBroadcastMessage(data).subscribe(
-              (broadcastMessage) => {
-                resolve(broadcastMessage);
-              },
+            this.broadcastDataSvc
+              .updateBroadcastMessage(
+                new UpdateBroadcastMessageRequest({ ...data })
+              )
+              .subscribe(
+                (broadcastMessage) => {
+                  resolve(broadcastMessage);
+                },
 
-              reject
-            );
+                reject
+              );
           } else {
             resolve(null);
           }
@@ -828,13 +850,15 @@ export class BroadcastMessagesDetailComponent
           }
         );
 
-        this.broadcastDataSvc.saveBroadcastMessage(data).subscribe(
-          (broadcastMessage) => {
-            resolve(broadcastMessage);
-          },
+        this.broadcastDataSvc
+          .saveBroadcastMessage(new SaveBroadcastMessageRequest({ ...data }))
+          .subscribe(
+            (broadcastMessage) => {
+              resolve(broadcastMessage);
+            },
 
-          reject
-        );
+            reject
+          );
       }
     });
   }

@@ -291,7 +291,6 @@ export class TaxonomyRequestDialogComponent implements OnInit, OnDestroy {
   onChooseMetadataTypeBtnClicked(): void {
     this.onMetadataTypeDialogOpened();
   }
-
   onSaveClicked(): void {
     this.updateMetadataRequest();
   }
@@ -361,6 +360,12 @@ export class TaxonomyRequestDialogComponent implements OnInit, OnDestroy {
       this.currentUser.hasUserAccountAdministrator() ||
       this.currentUser.hasOverallSystemAdministrator()
     );
+  }
+
+  isAnyDropdownOpened(): boolean {
+    const dropdownElements = document.querySelectorAll('.ng-dropdown-panel');
+
+    return !!dropdownElements.length;
   }
 
   onCancelClicked(): void {
@@ -607,7 +612,7 @@ export class TaxonomyRequestDialogComponent implements OnInit, OnDestroy {
       return this.metadataRequestForm.valid;
     }
 
-    if (this.mode === 'detail') {
+    if (this.mode === 'detail' || this.mode === 'readonly') {
       return (
         this.metadataRequestForm.valid &&
         this.getCurrentCommentValue &&
@@ -634,7 +639,8 @@ export class TaxonomyRequestDialogComponent implements OnInit, OnDestroy {
     this.metadataItems = this.metadataReqDialogSvc.allMetadatas.filter(
       (metadata) =>
         metadata?.groupCode === newMetadataTypeNode.code &&
-        metadata?.parentTagId === this.metadataRequest.serviceScheme
+        (metadata?.parentTagId === this.metadataRequest.serviceScheme ||
+          metadata?.parentTagId == null) // check null here because with RSPS & Portofilos => they have no parent ID due to synced data. And only EO have 2 those metdata types
     );
 
     this.metadataItems = FullPathMetadataTagModel.buildFullPathMetadataTag(

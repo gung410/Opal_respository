@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -15,12 +16,12 @@ namespace cxOrganization.Domain.Validators
     {
         private readonly IHierarchyDepartmentService _hierachyDepartmentService;
         private readonly IUserGroupRepository _userGroupRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public UserPoolValidator(IHierarchyDepartmentService hierachyDepartmentService,
             IOwnerRepository ownerRepository,
             IUserGroupRepository userGroupRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
             : base(ownerRepository, workContext, userGroupRepository)
         {
             _hierachyDepartmentService = hierachyDepartmentService;
@@ -28,7 +29,7 @@ namespace cxOrganization.Domain.Validators
             _workContext = workContext;
         }
 
-        public override UserGroupEntity Validate(ConexusBaseDto dto)
+        public override UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             // Archetype must be UserPool
             if (dto.Identity.Archetype != ArchetypeEnum.UserPool)

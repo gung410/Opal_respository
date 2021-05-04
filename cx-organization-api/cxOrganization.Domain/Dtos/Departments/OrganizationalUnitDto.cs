@@ -11,10 +11,12 @@ namespace cxOrganization.Client.Departments
         /// <summary>
         /// 9 digits. Also known as Business Registration Number. Present on all business documents.
         /// </summary>
+        [StringLength(4, ErrorMessage = "School code cannot exceed 4 numbers. ")]
         public string OrganizationNumber { get; set; }
         /// <summary>
         /// Address
         /// </summary>
+        [StringLength(500, ErrorMessage = "Address value cannot exceed 500 characters. ")]
         public string Address { get; set; }
         /// <summary>
         /// Postal Code

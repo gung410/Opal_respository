@@ -11,12 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Domain.Settings;
 using Microsoft.Extensions.Options;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Mappings
 {
     public class LearnerMappingService : UserMappingService
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentService _departmentService;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
         private readonly IUserTypeRepository _userTypeRepository;
@@ -25,7 +26,7 @@ namespace cxOrganization.Domain.Mappings
 
         public LearnerMappingService(
             IUserTypeRepository userTypeRepository, int userTypeId,
-            IWorkContext workContext, IDepartmentService departmentService,
+            IAdvancedWorkContext workContext, IDepartmentService departmentService,
             IPropertyService propertyService,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
             IOwnerRepository ownerRepository,

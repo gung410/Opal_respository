@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using cxOrganization.Domain.Services.Reports;
 using Gender = cxOrganization.Domain.Enums.Gender;
 using cxOrganization.Domain.DomainEnums;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Repositories
 {
@@ -75,7 +76,7 @@ namespace cxOrganization.Domain.Repositories
             DateTime? entityActiveDateAfter = null,
             bool filterOnUd = false,
             List<int> exceptUserIds = null);
-        Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex);
+        Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex, int pageSize);
         Task<PaginatedList<UserEntity>> GetUsersAsync(int ownerId = 0,
             List<int> customerIds = null,
             List<int> userIds = null,
@@ -127,7 +128,8 @@ namespace cxOrganization.Domain.Repositories
             DateTime? entityActiveDateBefore = null,
             DateTime? entityActiveDateAfter = null,
             bool filterOnUd = false,
-            List<int> exceptUserIds = null);
+            List<int> exceptUserIds = null,
+            int? currentDepartmentIdForSorting = null);
 
         PaginatedList<UserEntity> SearchActors(int ownerId = 0,
             List<int> customerIds = null,
@@ -295,8 +297,8 @@ namespace cxOrganization.Domain.Repositories
          bool filterOnUd = false,
          List<int> exceptUserIds = null);
 
-        Task<UserEntity> GetOrSetUserFromWorkContext(IWorkContext workContext);
-        Task<IList<UserRole>> GetOrSetUserRoleFromWorkContext(IWorkContext workContext);
+        Task<UserEntity> GetOrSetUserFromWorkContext(IAdvancedWorkContext workContext);
+        Task<IList<UserRole>> GetOrSetUserRoleFromWorkContext(IAdvancedWorkContext workContext);
 
         IQueryable<UserEntity> GetQueryAsNoTracking(params EntityStatusEnum[] entityStatus);
 
@@ -323,5 +325,10 @@ namespace cxOrganization.Domain.Repositories
             DateTime? createdBefore = null,
             DateTime? createdAfter = null,
             UserGroupByField groupByField = UserGroupByField.None);
+        List<UserEntity> GetUserForMigratingSsn(int pageNo, int pageSize);
+        List<UserEntity> GetUserForFixingSSN(int pageNo, int pageSize);
+
+        List<UserEntity> GetUserForUpdateSsnHash(int pageNo, int pageSize);
     }
+    
 }

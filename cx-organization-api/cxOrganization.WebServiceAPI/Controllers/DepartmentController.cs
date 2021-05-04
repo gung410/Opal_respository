@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using cxOrganization.Business.DeactivateOrganization.DeactivateDepartment;
 using cxOrganization.Business.MoveOrganization.MoveDepartment;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Departments;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Mappings;
@@ -34,7 +35,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         private readonly IDepartmentMappingService _departmentMappingService;
         private readonly IUserMappingService _userMappingService;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentTypeService _departmentTypeService;
         private readonly IUserGroupService _userGroupService;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
@@ -62,7 +63,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public DepartmentController(
             ILogger<DepartmentController> logger,
             IDepartmentService departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentTypeService departmentTypeService,
             IHierarchyDepartmentService hierarchyDepartmentService,
             IUserService userService,
@@ -644,7 +645,9 @@ namespace cxOrganization.WebServiceAPI.Controllers
             [FromQuery]bool getParentNode = false,
             [FromQuery] bool countUser = false, 
             [FromQuery] List<EntityStatusEnum> countUserEntityStatuses = null,
-            [FromQuery] List<string> jsonDynamicData = null)
+            [FromQuery] List<string> jsonDynamicData = null,
+            [FromQuery] string searchTextKey = null
+            )
         {
             //Set includeParent is true as default to keep backward compatible with existing consumer
             
@@ -675,6 +678,13 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 countUserEntityStatuses,
                 KeepTheRootDepartment);
 
+            // TODO: move search logic to DB
+            if (searchTextKey is object)
+            {
+                hierarchyDepartmentIdentities = hierarchyDepartmentIdentities
+                    .Where(hierarchyDepartmentIdentity => hierarchyDepartmentIdentity.DepartmentName.Contains(searchTextKey))
+                    .ToList();
+            }    
             return CreateResponse(hierarchyDepartmentIdentities);
         }
 

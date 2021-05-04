@@ -6,6 +6,7 @@ using cxOrganization.Business.Exceptions;
 using cxOrganization.Business.Extensions;
 using cxOrganization.Client.UserTypes;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
@@ -23,14 +24,14 @@ namespace cxOrganization.Business.DeactivateOrganization.DeactivateDepartment
     {
         private readonly ILogger _logger;
 
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly OrganizationDbContext _organizationUnitOfWork;
         private readonly IUserService _userService;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
         private readonly IDepartmentService _departmentService;
 
         private readonly DeactivateDepartmentConfig _deactivateDepartmentConfig;
-        public DeactivateDepartmentService(IWorkContext workContext,
+        public DeactivateDepartmentService(IAdvancedWorkContext workContext,
             ILoggerFactory loggerFactory,
             Func<ArchetypeEnum, IUserService> userService,
             OrganizationDbContext organizationUnitOfWork,

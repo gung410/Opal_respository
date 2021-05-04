@@ -6,6 +6,7 @@ using System.Net.Http;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -23,7 +24,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class TeachingGroupsController : ApiControllerBase
     {
         private readonly ITeachingGroupMemberService _teachingGroupMemberService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupService _userGroupService;
         private readonly OrganizationDbContext _organizationUnitOfWork;
         private readonly IUserService _userService;
@@ -31,7 +32,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// Constructor
         /// </summary>
         public TeachingGroupsController(ITeachingGroupMemberService teachingGroupMemberService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IUserService> userService,
             OrganizationDbContext unitOfWork)

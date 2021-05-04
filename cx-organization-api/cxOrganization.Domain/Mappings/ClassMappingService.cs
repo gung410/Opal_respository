@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -13,11 +14,11 @@ namespace cxOrganization.Domain.Mappings
     public class ClassMappingService : DepartmentMappingService
     {
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public ClassMappingService(List<int> departmentTypeIds,
             IDepartmentTypeRepository departmentTypeRepository,
-            IWorkContext workContext, ILanguageRepository languageRepository,
+            IAdvancedWorkContext workContext, ILanguageRepository languageRepository,
             IPropertyService propertyService) :
             base(propertyService, languageRepository, departmentTypeRepository)
         {

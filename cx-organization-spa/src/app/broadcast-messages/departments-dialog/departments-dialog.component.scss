@@ -1,5 +1,9 @@
 $close-icon-color: #aaa;
 
+.mat-dialog-container {
+  overflow: hidden;
+}
+
 .dialog-header {
   .selected-departments-container {
     .selected-departments {

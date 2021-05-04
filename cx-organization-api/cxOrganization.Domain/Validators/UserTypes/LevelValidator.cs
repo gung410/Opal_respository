@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -11,7 +12,7 @@ namespace cxOrganization.Domain.Validators.UserTypes
     {
         public LevelValidator(IUserRepository userRepository,
             IUserTypeRepository userTypeRepository,
-            IWorkContext workContext) : base(userRepository, userTypeRepository, workContext)
+            IAdvancedWorkContext workContext) : base(userRepository, userTypeRepository, workContext)
         {
         }
         public override UserTypeEntity ValidateMembership(MemberDto userTypeMemberDto)

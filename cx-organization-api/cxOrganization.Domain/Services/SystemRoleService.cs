@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserTypes;
 using cxOrganization.Domain.HttpClients;
 using cxOrganization.Domain.Settings;
@@ -17,12 +18,12 @@ namespace cxOrganization.Domain.Services
     public class SystemRoleService : ISystemRoleService
     {
         private readonly HttpClient _httpClient;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly AppSettings _appSettings;
 
         public SystemRoleService(
             HttpClient httpClient,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<AppSettings> appSettingsOptions)
         {
             _httpClient = httpClient;

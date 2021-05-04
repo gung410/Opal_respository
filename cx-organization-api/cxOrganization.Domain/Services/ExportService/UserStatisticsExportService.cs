@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services.Reports;
@@ -18,7 +19,7 @@ namespace cxOrganization.Domain.Services.ExportService
     {
         public UserStatisticsExportService(
             ILogger<UserManagementExportService> logger,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<AppSettings> appSettingOptions,
             IDepartmentService departmentService,
             IDepartmentTypeRepository departmentTypeRepository,
@@ -29,12 +30,12 @@ namespace cxOrganization.Domain.Services.ExportService
         }
 
         public override byte[] ExportDataToBytes(IList<UserStatisticsDto> source, ExportOption exportOption,
-            IWorkContext currentWorkContext = null)
+            IAdvancedWorkContext currentWorkContext = null)
         {
             throw new NotSupportedException(
                 $"Not support export collection of {typeof(UserStatisticsDto).Name} to bytes");
         }
-        public override byte[] ExportDataToBytes(UserStatisticsDto source, ExportOption exportOption, IWorkContext currentWorkContext = null)
+        public override byte[] ExportDataToBytes(UserStatisticsDto source, ExportOption exportOption, IAdvancedWorkContext currentWorkContext = null)
         {
             if (currentWorkContext != null)
                 _workContext = currentWorkContext;

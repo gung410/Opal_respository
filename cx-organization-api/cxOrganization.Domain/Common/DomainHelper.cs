@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
@@ -22,6 +23,8 @@ namespace cxOrganization.Domain.Common
 {
     public static class DomainHelper
     {
+        public const string MOEDepartmentExtId = "10000658";
+
         public static object BuildEntityStatusChangedEventInfo(int? oldEntityStatusId, int? oldEntityStatusReasonId, int? newEntityStatusId, int? newEntityStatusReasonId)
         {
             return new
@@ -33,7 +36,7 @@ namespace cxOrganization.Domain.Common
             };
         }
 
-        public static object BuildMoveDepartmentInfo(IWorkContext workContext,
+        public static object BuildMoveDepartmentInfo(IAdvancedWorkContext workContext,
             DepartmentEntity fromDepartmentEntity,
             DepartmentEntity toDepartmentEntity,
             int? updatedBy,
@@ -87,7 +90,7 @@ namespace cxOrganization.Domain.Common
             return default(T);
         }
 
-        public static UserGenericDto GetUserFromWorkContext(IWorkContext workContext, IUserService userService,
+        public static UserGenericDto GetUserFromWorkContext(IAdvancedWorkContext workContext, IUserService userService,
             bool getRoles = true, bool getLoginServiceClaims = false)
         {
             if (!string.IsNullOrEmpty(workContext.Sub))
@@ -101,7 +104,7 @@ namespace cxOrganization.Domain.Common
             return null;
         }
 
-        public static UserEntity GetUserEntityFromWorkContextSub(IWorkContext workContext, IUserRepository userRepository, bool includeUserTypes = true)
+        public static UserEntity GetUserEntityFromWorkContextSub(IAdvancedWorkContext workContext, IUserRepository userRepository, bool includeUserTypes = true)
         {
             if (string.IsNullOrEmpty(workContext.Sub))
             {

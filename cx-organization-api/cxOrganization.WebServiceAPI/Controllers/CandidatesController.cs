@@ -8,6 +8,7 @@ using cxOrganization.Business.DeactivateOrganization.DeactivateUser;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Services;
@@ -33,7 +34,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         //private readonly IUserGroupUserMemberService _userGroupUserMemberService;
         private readonly IUserService _userService;
         private readonly IUserGroupService _userGroupService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentService _departmentService;
         private readonly IUserTypeService _userTypeService;
         private readonly bool _checkSingleUserAccess = false;
@@ -55,7 +56,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public CandidatesController(Func<ArchetypeEnum, IUserService> userService,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IDepartmentService> departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUGMemberService> userGroupUserMemberService,
             ICandidatePoolMemberService candidatePoolMemberService,
             Func<ArchetypeEnum, IUserTypeService> userTypeService,

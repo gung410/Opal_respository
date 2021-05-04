@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
@@ -11,7 +12,6 @@ using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Settings;
 using cxPlatform.Client.ConexusBase;
-using cxPlatform.Core;
 using cxPlatform.Core.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -48,7 +48,7 @@ namespace cxOrganization.Domain.Security.AccessServices
         }
       
    
-        public UserAccessResult CheckReadUserAccess(IWorkContext workContext, int ownerId,
+        public UserAccessResult CheckReadUserAccess(IAdvancedWorkContext workContext, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -85,7 +85,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return accessResultCheckingResult;
         }
-        public async Task<UserAccessResult> CheckReadUserAccessAsync(IWorkContext workContext, int ownerId,
+        public async Task<UserAccessResult> CheckReadUserAccessAsync(IAdvancedWorkContext workContext, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -122,7 +122,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return accessResultCheckingResult;
         }
-        public UserAccessResult CheckReadUserAccess(IWorkContext workContext, UserEntity executorUser, int ownerId,
+        public UserAccessResult CheckReadUserAccess(IAdvancedWorkContext workContext, UserEntity executorUser, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -160,7 +160,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return accessResultCheckingResult;
         }
 
-        public async Task<UserAccessResult> CheckReadUserAccessAsync(IWorkContext workContext, UserEntity executorUser,
+        public async Task<UserAccessResult> CheckReadUserAccessAsync(IAdvancedWorkContext workContext, UserEntity executorUser,
             int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
@@ -198,7 +198,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return accessResultCheckingResult;
         }
 
-        public UserAccessResult CheckEditUserAccess<T>(IWorkContext workContext, T editingUserDto,
+        public UserAccessResult CheckEditUserAccess<T>(IAdvancedWorkContext workContext, T editingUserDto,
             IUserMappingService userMappingService) where T : UserDtoBase
         {
             var editAccessCheckingResult = CheckEditUserAccessInternal(workContext, editingUserDto, userMappingService);
@@ -210,7 +210,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return editAccessCheckingResult;
         }
-        public async Task<UserAccessResult> CheckEditUserAccessAsync<T>(IWorkContext workContext, T editingUserDto,
+        public async Task<UserAccessResult> CheckEditUserAccessAsync<T>(IAdvancedWorkContext workContext, T editingUserDto,
             IUserMappingService userMappingService) where T : UserDtoBase
         {
             var editAccessCheckingResult = await CheckEditUserAccessInternalAsync(workContext, editingUserDto, userMappingService);
@@ -223,7 +223,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return editAccessCheckingResult;
         }
 
-        public bool CheckCreateUserAccess<T>(IWorkContext workContext, T editingUserDto) where T : UserDtoBase
+        public bool CheckCreateUserAccess<T>(IAdvancedWorkContext workContext, T editingUserDto) where T : UserDtoBase
         {
             var isAuthenticatedByToken = !string.IsNullOrEmpty(workContext.Sub);
             if (isAuthenticatedByToken
@@ -256,7 +256,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return true;
         }
 
-        public EditabilityAccessSettingElement GetAssignRolePermission(IWorkContext workContext)
+        public EditabilityAccessSettingElement GetAssignRolePermission(IAdvancedWorkContext workContext)
         {
             var executorUser = DomainHelper.GetUserEntityFromWorkContextSub(workContext, _userRepository, true);
             var executorRoles = MapToUserRoles(executorUser.UT_Us);
@@ -265,7 +265,7 @@ namespace cxOrganization.Domain.Security.AccessServices
            return accessSetting;
         }
 
-        public async Task<bool> CheckCreateUserAccessAsync<T>(IWorkContext workContext, T editingUserDto) where T : UserDtoBase
+        public async Task<bool> CheckCreateUserAccessAsync<T>(IAdvancedWorkContext workContext, T editingUserDto) where T : UserDtoBase
         {
             var isAuthenticatedByToken = !string.IsNullOrEmpty(workContext.Sub);
             if (isAuthenticatedByToken
@@ -295,7 +295,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
             return true;
         }
-        public UserAccessResult CheckEditUserAccessInternal<T>(IWorkContext workContext, T editingUserDto, IUserMappingService userMappingService) where T : UserDtoBase
+        public UserAccessResult CheckEditUserAccessInternal<T>(IAdvancedWorkContext workContext, T editingUserDto, IUserMappingService userMappingService) where T : UserDtoBase
         {
             var isAuthenticatedByToken = !string.IsNullOrEmpty(workContext.Sub);
             UserEntity executorUser = null;
@@ -373,7 +373,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return UserAccessResult.CreateAccessGrantedResult(executorUser);
         }
 
-        public async Task<UserAccessResult> CheckEditUserAccessInternalAsync<T>(IWorkContext workContext, T editingUserDto, IUserMappingService userMappingService) where T : UserDtoBase
+        public async Task<UserAccessResult> CheckEditUserAccessInternalAsync<T>(IAdvancedWorkContext workContext, T editingUserDto, IUserMappingService userMappingService) where T : UserDtoBase
         {
             var isAuthenticatedByToken = !string.IsNullOrEmpty(workContext.Sub);
             UserEntity executorUser = null;
@@ -875,7 +875,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return true;
         }
 
-        private UserAccessResult CheckReadUserAccessInternal(IWorkContext workContext, int ownerId,
+        private UserAccessResult CheckReadUserAccessInternal(IAdvancedWorkContext workContext, int ownerId,
             List<int> customerIds,
             List<string> userExtIdsFilter,
             List<string> loginServiceClaimsFilter,
@@ -946,6 +946,17 @@ namespace cxOrganization.Domain.Security.AccessServices
 
                 multipleUserTypeIdsFilter = accessibleUserTypeResult.MultipleUserTypeIds;
 
+                // For accessing CAO accross the system.
+                if (accessSetting.AccessToAllUserGroup && workContext.ClientId == "CompetenceSpa")
+                {
+                    return UserAccessResult.CreateAccessGrantedResult(
+                        userIdsFilter,
+                        userGroupIdsFilter,
+                        new List<int>(),
+                        multiUserGroupFilters,
+                        multipleUserTypeIdsFilter,
+                        executorUser);
+                }
 
                 if (accessSetting.HasFullAccessOnHierarchy)
                 {
@@ -1194,7 +1205,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return userTypeIds;
         }
 
-        private async Task<UserAccessResult>  CheckReadUserAccessInternalAsync(IWorkContext workContext, int ownerId,
+        private async Task<UserAccessResult>  CheckReadUserAccessInternalAsync(IAdvancedWorkContext workContext, int ownerId,
            List<int> customerIds,
            List<string> userExtIds,
            List<string> loginServiceClaims,
@@ -1266,6 +1277,18 @@ namespace cxOrganization.Domain.Security.AccessServices
                 }
 
                 multipleUserTypeIdsFilter = accessibleUserTypeResult.MultipleUserTypeIds;
+
+                // For accessing CAO accross the system.
+                if (accessSetting.AccessToAllUserGroup && workContext.ClientId == "CompetenceSpa")
+                {
+                    return UserAccessResult.CreateAccessGrantedResult(
+                        userIds,
+                        userGroupIds,
+                        new List<int>(),
+                        multiUserGroupFilters,
+                        multipleUserTypeIdsFilter,
+                        executorUser);
+                }
 
 
                 if (accessSetting.HasFullAccessOnHierarchy)

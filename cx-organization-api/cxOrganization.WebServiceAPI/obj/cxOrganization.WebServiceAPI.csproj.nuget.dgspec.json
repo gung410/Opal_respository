@@ -219,6 +219,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "AWSSDK.KeyManagementService": {
+              "target": "Package",
+              "version": "[3.3.106.35, )"
+            },
             "AWSSDK.S3": {
               "target": "Package",
               "version": "[3.3.111.21, )"

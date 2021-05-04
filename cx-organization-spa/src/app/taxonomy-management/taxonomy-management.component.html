@@ -21,7 +21,10 @@
     </div>
   </div>
   <div class="cx-page-container">
-    <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+    <mat-tab-group
+      (selectedTabChange)="onSelectedTabChange($event)"
+      [(selectedIndex)]="selectedTabIndex"
+    >
       label="{{
         'Taxonomy_Management_Page.Taxonomy_Management_List.Pending_1st_Level_List_Label'
           | translate

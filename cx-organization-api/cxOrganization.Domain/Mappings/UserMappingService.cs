@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using cxOrganization.Client;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -14,6 +15,7 @@ using cxOrganization.Domain.Settings;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
 using Microsoft.Extensions.Options;
+using NPOI.HSSF.Record;
 
 namespace cxOrganization.Domain.Mappings
 {
@@ -24,10 +26,10 @@ namespace cxOrganization.Domain.Mappings
         private readonly IUserCryptoService _userCryptoService;
         private readonly IUserTypeRepository _userTypeRepository;
         private readonly AppSettings _appSettings;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private List<UserTypeEntity> _userTypeEntities;
         public UserMappingService(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IPropertyService propertyService,
             IUserTypeMappingService userTypeMappingService,
             IUserCryptoService userCryptoService,
@@ -65,13 +67,13 @@ namespace cxOrganization.Domain.Mappings
         }
 
         public virtual ConexusBaseDto ToUserDto(UserEntity user,
-            bool? getDynamicProperties = null, 
+            bool? getDynamicProperties = null,
             bool keepEncryptedSsn = false, bool keepDecryptedSsn = false,
             List<UGMemberEntity> ugMemberEntities = null)
         {
             var userDto = ToIdentityStatusDto(user);
             if (userDto == null) return null;
-            if(getDynamicProperties.HasValue)
+            if (getDynamicProperties.HasValue)
                 userDto.DynamicAttributes = GetDynamicProperties(user.UserId, getDynamicProperties);
             return userDto;
         }
@@ -227,9 +229,8 @@ namespace cxOrganization.Domain.Mappings
                     userDto.SSN = _userCryptoService.DecryptSSN(userEntity.SSN);
                 }
             }
-
         }
-        public void HideOrDecryptSSN(UserDtoBase userDto)
+        public void HideOrDecryptSSN(UserDtoBase userDto, bool useKms = false)
         {
             userDto.SSN = ShouldHideSsn() ? null : _userCryptoService.DecryptSSN(userDto.SSN);
         }
@@ -249,7 +250,7 @@ namespace cxOrganization.Domain.Mappings
             return loginServiceUserEntities == null
                 ? new List<LoginServiceClaimDto>()
                 : loginServiceUserEntities
-                    .Select(lu => new LoginServiceClaimDto {Id = lu.LoginServiceId, Value = lu.PrimaryClaimValue})
+                    .Select(lu => new LoginServiceClaimDto { Id = lu.LoginServiceId, Value = lu.PrimaryClaimValue })
                     .ToList();
         }
 
@@ -265,6 +266,6 @@ namespace cxOrganization.Domain.Mappings
 
             return null;
         }
-    
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Services;
@@ -13,11 +14,11 @@ namespace cxOrganization.Domain.Mappings
     public class UserPoolMappingService : IUserGroupMappingService
     {
         private readonly IDepartmentService _departmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public UserPoolMappingService(
             IDepartmentService departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IPropertyService propertyService)
         {
             _departmentService = departmentService;
@@ -65,7 +66,7 @@ namespace cxOrganization.Domain.Mappings
             return userPoolDto;
         }
 
-        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto)
+        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto, IAdvancedWorkContext workContext = null)
         {
             var userPool = groupDto as UserPoolDto;
 

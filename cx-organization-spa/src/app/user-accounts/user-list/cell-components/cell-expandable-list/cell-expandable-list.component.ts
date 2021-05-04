@@ -51,18 +51,4 @@ export class CellExpandableListComponent implements ICellRendererAngularComp {
         )
       : [];
   }
-
-  expandEvent(params: any): void {
-    if (this.params && this.params.api) {
-      const newHeight =
-        this.itemExpand &&
-        this.itemExpand.nativeElement &&
-        this.itemExpand.nativeElement.offsetHeight
-          ? this.itemExpand.nativeElement.offsetHeight * this.items.length +
-            this.defaultPadding
-          : this.defaultHeight;
-      this.params.node.setRowHeight(newHeight);
-      this.params.api.onRowHeightChanged();
-    }
-  }
 }

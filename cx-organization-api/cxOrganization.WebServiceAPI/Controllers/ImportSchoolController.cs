@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using cxOrganization.Business.JsonAnalyzer;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxPlatform.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,8 @@ namespace cxOrganization.WebServiceAPI.Controllers
     {
         private readonly ILogger _logger;
         private readonly IImportSchoolAnalyzer _importOrganizationAnalyzer;
-        private readonly IWorkContext _workContext;
-        public ImportSchoolController(IImportSchoolAnalyzer importOrganizationAnalyzer, IWorkContext workContext, ILoggerFactory loggerFactory)
+        private readonly IAdvancedWorkContext _workContext;
+        public ImportSchoolController(IImportSchoolAnalyzer importOrganizationAnalyzer, IAdvancedWorkContext workContext, ILoggerFactory loggerFactory)
         {
             _importOrganizationAnalyzer = importOrganizationAnalyzer;
             _workContext = workContext;

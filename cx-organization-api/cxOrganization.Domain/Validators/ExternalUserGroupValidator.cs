@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -17,13 +18,13 @@ namespace cxOrganization.Domain.Validators
 
         public ExternalUserGroupValidator(IHierarchyDepartmentService hierachyDepartmentService, 
             IOwnerRepository ownerRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserGroupRepository userGroupRepository) : base(ownerRepository, workContext, userGroupRepository)
         {
             _hierachyDepartmentService = hierachyDepartmentService;
         }
 
-        public override UserGroupEntity Validate(ConexusBaseDto dto)
+        public override UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             //Archetype must be ExternalUserGroup
             if (dto.Identity.Archetype != ArchetypeEnum.ExternalUserGroup)

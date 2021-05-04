@@ -12,13 +12,14 @@ using System.Linq;
 using cxOrganization.Domain.Settings;
 using Microsoft.Extensions.Options;
 using NPOI.SS.Formula.Functions;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Mappings
 {
     public class ActorMappingService : UserMappingService
     {
         private readonly IUserTypeRepository _userTypeRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IPropertyService _propertyService;
         private readonly IUserRepository _userRepository;
@@ -28,7 +29,7 @@ namespace cxOrganization.Domain.Mappings
 
         public ActorMappingService(IUserTypeRepository userTypeRepository,
             int userTypeId,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentRepository departmentRepository,
             IPropertyService propertyService,
             IUserRepository userRepository,
@@ -53,7 +54,7 @@ namespace cxOrganization.Domain.Mappings
         public override ConexusBaseDto ToUserDto(UserEntity user,
             bool? getDynamicProperties = null, 
             bool keepEncryptedSsn = false,
-            bool keepDecryptedSsn = false, 
+            bool keepDecryptedSsn = false,
             List<UGMemberEntity> ugMemberEntities = null)
         {
             if (user == null || string.IsNullOrWhiteSpace(user.SSN))

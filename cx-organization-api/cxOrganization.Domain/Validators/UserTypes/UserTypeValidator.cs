@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Core;
@@ -9,10 +10,10 @@ namespace cxOrganization.Domain.Validators.UserTypes
     public class UserTypeValidator : IUserTypeValidator
     {
         protected readonly IUserTypeRepository _userTypeRepository;
-        protected readonly IWorkContext _workContext;
+        protected readonly IAdvancedWorkContext _workContext;
         public UserTypeValidator(IUserRepository userRepository,
             IUserTypeRepository userTypeRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _userTypeRepository = userTypeRepository;
             _workContext = workContext;

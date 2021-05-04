@@ -47,13 +47,23 @@ namespace cxOrganization.Domain.Settings
 
         }
         public bool HasFullAccessOnHierarchy { get; set; }
+
         public bool InSameDepartment { get; set; }
+
+        public bool AccessToAllUserGroup { get; set; }
+
         public bool OnlyMoveUpOneAncestor { get; set; }
+
         public List<string> InAncestorDepartmentTypeExtIds { get; set; }
+
         public List<string> InRelativeDepartmentTypeExtIds { get; set; }
+
         public List<string> InDescendantDepartmentTypeExtIds { get; set; }
+
         public List<string> InOwnedUserGroupArchetypes { get; set; }
+
         public List<string> InDepartmentUserGroupArchetypes { get; set; }
+
         public Dictionary<ArchetypeEnum,List<string>> OnlyUserWithUserTypeExtIds { get; set; }
 
         public static bool ContainsAllSymbol(List<string> values)

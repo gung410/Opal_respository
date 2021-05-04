@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -21,7 +22,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class SchoolOwnersController : ApiControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
         private readonly Func<ArchetypeEnum, IDepartmentService> _departmentServiceDelegate;
         private readonly Func<ArchetypeEnum, IUserService> _userServiceDelegate;
@@ -34,7 +35,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="hierarchyDepartmentService"></param>
         /// <param name="userService"></param>
         public SchoolOwnersController(Func<ArchetypeEnum, IDepartmentService> departmentService, Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext, IHierarchyDepartmentService hierarchyDepartmentService)
+            IAdvancedWorkContext workContext, IHierarchyDepartmentService hierarchyDepartmentService)
         {
             _userServiceDelegate = userService;
             _departmentService = departmentService(ArchetypeEnum.SchoolOwner);

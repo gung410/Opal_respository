@@ -141,7 +141,6 @@ export class UserManagementQueryModel {
   orgUnittypeIds: any[];
   filterOnSubDepartment: boolean;
   multiUserTypeExtIdFilters: string[][];
-  isCrossOrganizationalUnit: boolean;
 
   constructor(data?: Partial<UserManagementQueryModel>) {
     if (!data) {
@@ -224,7 +223,6 @@ export class UserManagementQueryModel {
       this.multiUserTypeExtIdFilters.push([]);
       this.multiUserTypeExtIdFilters.push([]);
     }
-    this.isCrossOrganizationalUnit = data.isCrossOrganizationalUnit;
   }
 
   preProcessSpecialFields?(): UserManagementQueryModel {
@@ -251,6 +249,71 @@ export class UserManagementQueryModel {
     }
 
     return result;
+  }
+}
+
+export class UserForAssigningApprovingOfficerQueryModel {
+  parentDepartmentId?: number;
+  userIds?: number[];
+  extIds?: string[];
+  userEntityStatuses?: string[];
+  userTypeIds?: number[];
+  userTypeExtIds?: string[];
+  multiUserTypeExtIdFilters: string[][];
+  pageIndex?: number;
+  pageSize?: number;
+  orderBy?: string;
+  searchKey?: string;
+  filterOnSubDepartment: boolean;
+  getUserGroups?: boolean;
+  getRoles: boolean;
+  getDepartments: boolean;
+
+  constructor(data?: Partial<UserForAssigningApprovingOfficerQueryModel>) {
+    if (!data) {
+      this.pageIndex = 1;
+      this.pageSize = AppConstant.ItemPerPage;
+      this.userTypeExtIds = [];
+      this.userEntityStatuses = [];
+      this.multiUserTypeExtIdFilters = [];
+      this.multiUserTypeExtIdFilters.push([]);
+      this.multiUserTypeExtIdFilters.push([]);
+
+      return;
+    }
+    this.parentDepartmentId = data.parentDepartmentId;
+    this.userIds = data.userIds ? data.userIds : [];
+    this.extIds = data.extIds ? data.extIds : [];
+    this.userTypeIds = data.userTypeIds ? data.userTypeIds : [];
+    this.userEntityStatuses = data.userEntityStatuses
+      ? data.userEntityStatuses
+      : [];
+    this.getUserGroups =
+      data.getUserGroups !== null ? data.getUserGroups : undefined;
+    this.getRoles = data.getRoles !== null ? data.getRoles : undefined;
+    this.getDepartments =
+      data.getDepartments !== null ? data.getDepartments : undefined;
+    this.pageIndex = data.pageIndex !== undefined ? data.pageIndex : 1;
+    this.pageSize =
+      data.pageSize !== undefined ? data.pageSize : AppConstant.ItemPerPage;
+    this.orderBy = data.orderBy ? data.orderBy : '';
+    this.searchKey = data.searchKey ? data.searchKey : '';
+    if (data.userTypeExtIds) {
+      this.userTypeExtIds = data.userTypeExtIds;
+    } else {
+      this.userTypeExtIds = [];
+    }
+
+    this.filterOnSubDepartment = data.filterOnSubDepartment
+      ? data.filterOnSubDepartment
+      : undefined;
+    if (data.multiUserTypeExtIdFilters) {
+      this.multiUserTypeExtIdFilters = data.multiUserTypeExtIdFilters;
+    } else {
+      this.multiUserTypeExtIdFilters = [];
+      this.multiUserTypeExtIdFilters.push([]);
+      this.multiUserTypeExtIdFilters.push([]);
+    }
   }
 }
 

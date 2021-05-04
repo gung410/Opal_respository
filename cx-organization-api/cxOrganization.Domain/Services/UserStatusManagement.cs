@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.BaseEnums;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.BaseEnums;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.HttpClients;
 using cxOrganization.Domain.Settings;
@@ -40,7 +41,7 @@ namespace cxOrganization.Domain.Services
         {
             using (var insideBackgroundTaskScope = _serviceProvider.CreateScope())
             {
-                var workContext = insideBackgroundTaskScope.ServiceProvider.GetService<IWorkContext>();
+                var workContext = insideBackgroundTaskScope.ServiceProvider.GetService<IAdvancedWorkContext>();
                 var userService = insideBackgroundTaskScope.ServiceProvider.GetService<Func<ArchetypeEnum, IUserService>>()(ArchetypeEnum.Unknown);
                 var identityServerClientService = insideBackgroundTaskScope.ServiceProvider.GetService<IIdentityServerClientService>();
                 var changeUserStatusSetting = insideBackgroundTaskScope.ServiceProvider.GetService<IOptions<ChangeUserStatusSettings>>()?.Value;
@@ -86,7 +87,7 @@ namespace cxOrganization.Domain.Services
         private List<ConexusBaseDto> UpdateUserStatusInOrg(
             EntityStatusEnum destinationStatus,
             IUserService userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<UserGenericDto> orgUsers)
         {
             if (orgUsers == null)
@@ -95,7 +96,6 @@ namespace cxOrganization.Domain.Services
             }
 
             var successChangingStatusUsers = new List<ConexusBaseDto>();
-
             foreach (var user in orgUsers)
             {
                 try
@@ -116,13 +116,13 @@ namespace cxOrganization.Domain.Services
                     if (destinationStatus == EntityStatusEnum.Inactive)
                     {
                         user.EntityStatus.StatusReasonId = EntityStatusReasonEnum.Inactive_Automatically_Inactivity;
-                        user.AddJsonPropertyIfNotExisting($"Automatically_Inactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToUniversalTime());
+                        user.AddJsonPropertyIfNotExisting($"Automatically_Inactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'"));
                     }
 
                     if (destinationStatus == EntityStatusEnum.Deactive)
                     {
                         user.EntityStatus.StatusReasonId = EntityStatusReasonEnum.Deactive_AutomaticallySetDeactive;
-                        user.AddJsonPropertyIfNotExisting($"Automatically_Deactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToUniversalTime());
+                        user.AddJsonPropertyIfNotExisting($"Automatically_Deactive_By_{GetJobName()}_Datetime", DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'"));
                     }
 
                     var updatedUser = userService.UpdateUser(validationSpecification, user);
@@ -141,7 +141,7 @@ namespace cxOrganization.Domain.Services
         private async Task<List<UserIdentityResponseDto>> UpdateUserStatusInIdm(
             EntityStatusEnum destinationStatus,
             IIdentityServerClientService identityServerClientService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<UserIdentityDto> idmUsers)
         {
             if (idmUsers == null)

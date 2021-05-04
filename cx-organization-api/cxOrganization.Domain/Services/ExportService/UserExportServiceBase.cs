@@ -8,6 +8,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using cxOrganization.Client.ConexusBase;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Enums;
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Services.ExportService
     public abstract class UserExportServiceBase<T>
     {
         protected ILogger _logger;
-        protected IWorkContext _workContext;
+        protected IAdvancedWorkContext _workContext;
         protected readonly IUserRepository _userRepository;
         protected readonly IDepartmentService _departmentService;
         protected readonly IDepartmentTypeRepository _departmentTypeRepository;
@@ -39,7 +40,7 @@ namespace cxOrganization.Domain.Services.ExportService
 
 
         protected UserExportServiceBase(ILogger logger, 
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<AppSettings> appSettingOptions,
             IUserRepository userRepository,
             IDepartmentService departmentService,
@@ -54,7 +55,7 @@ namespace cxOrganization.Domain.Services.ExportService
 
         }
 
-        public virtual byte[] ExportDataToBytes(IList<T> source, ExportOption exportOption, IWorkContext currentWorkContext = null)
+        public virtual byte[] ExportDataToBytes(IList<T> source, ExportOption exportOption, IAdvancedWorkContext currentWorkContext = null)
         {
             if (currentWorkContext != null)
                 _workContext = currentWorkContext;
@@ -68,7 +69,7 @@ namespace cxOrganization.Domain.Services.ExportService
                 return ExcelExporter.ExportFromDataTables(exportOption, exportDataTables);
             return CsvExporter.ExportFromDataTables(exportOption, exportDataTables);
         }
-        public virtual byte[] ExportDataToBytes(IDictionary<string, List<T>> source, ExportOption exportOption, IWorkContext currentWorkContext = null)
+        public virtual byte[] ExportDataToBytes(IDictionary<string, List<T>> source, ExportOption exportOption, IAdvancedWorkContext currentWorkContext = null)
         {
             if (currentWorkContext != null)
                 _workContext = currentWorkContext;
@@ -82,7 +83,7 @@ namespace cxOrganization.Domain.Services.ExportService
                 return ExcelExporter.ExportFromDataSets(exportOption, exportToDataSets);
             return CsvExporter.ExportFromDataSets(exportOption, exportToDataSets);
         }
-        public virtual byte[] ExportDataToBytes(T source, ExportOption exportOption, IWorkContext currentWorkContext = null)
+        public virtual byte[] ExportDataToBytes(T source, ExportOption exportOption, IAdvancedWorkContext currentWorkContext = null)
         {
             return ExportDataToBytes(new List<T> {source}, exportOption, currentWorkContext);
         }

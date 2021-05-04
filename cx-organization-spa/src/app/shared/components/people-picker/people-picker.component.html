@@ -74,6 +74,8 @@
         <span
           class="ng-value-icon people-picker__clear-button"
           (click)="clear(user)"
+          (mouseenter)="triggerEnterHover(user)"
+          (mouseleave)="triggerLeaveHover()"
         >
           <i class="material-icons close-icon"></i>
         </span>

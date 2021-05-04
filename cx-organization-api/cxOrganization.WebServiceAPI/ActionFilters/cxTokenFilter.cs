@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Settings;
 using cxOrganization.WebServiceAPI.Extensions;
 using cxPlatform.Core;
@@ -19,9 +20,9 @@ namespace cxOrganization.WebServiceAPI.ActionFilters
             "owners/{ownerId}/",
             "odata/"
         };
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly AppSettings _appSettings;
-        public cxTokenFilter(IWorkContext workContext,
+        public cxTokenFilter(IAdvancedWorkContext workContext,
             IOptions<AppSettings> options)
         {
             _workContext = workContext;

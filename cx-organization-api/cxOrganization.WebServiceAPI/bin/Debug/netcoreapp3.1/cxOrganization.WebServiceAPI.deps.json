@@ -346,20 +346,34 @@
           "lib/netstandard2.0/AngleSharp.Css.dll": {}
         }
       },
-      "AWSSDK.Core/3.3.107.20": {
+      "AWSSDK.Core/3.3.107.40": {
         "runtime": {
           "lib/netstandard2.0/AWSSDK.Core.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.3.107.20"
+            "fileVersion": "3.3.107.40"
           }
         },
         "compile": {
           "lib/netstandard2.0/AWSSDK.Core.dll": {}
         }
       },
+      "AWSSDK.KeyManagementService/3.3.106.35": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.107.40"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.KeyManagementService.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.106.35"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.KeyManagementService.dll": {}
+        }
+      },
       "AWSSDK.S3/3.3.111.21": {
         "dependencies": {
-          "AWSSDK.Core": "3.3.107.20"
+          "AWSSDK.Core": "3.3.107.40"
         },
         "runtime": {
           "lib/netstandard2.0/AWSSDK.S3.dll": {
@@ -4111,6 +4125,7 @@
       },
       "cxOrganization.Domain/1.0.0": {
         "dependencies": {
+          "AWSSDK.KeyManagementService": "3.3.106.35",
           "AWSSDK.S3": "3.3.111.21",
           "CsvHelper": "15.0.5",
           "IdentityServer4.AccessTokenValidation": "3.0.1",
@@ -5723,12 +5738,19 @@
       "path": "anglesharp.css/0.14.2",
       "hashPath": "anglesharp.css.0.14.2.nupkg.sha512"
     },
-    "AWSSDK.Core/3.3.107.20": {
+    "AWSSDK.Core/3.3.107.40": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-oLGgv5mtIddHwEEIw4Q0PnkgYLY+NIokPgMs19E7BPxdhrL3ePuaT+mublGGc0e3xuwjWSxWDjYChYYo8/CQGQ==",
-      "path": "awssdk.core/3.3.107.20",
-      "hashPath": "awssdk.core.3.3.107.20.nupkg.sha512"
+      "sha512": "sha512-Ga6LZ1Ff9tWCN8SMSpUUXe3bs9cVn8Ts40OYlXWxABTrXYZTfMeTSvjM+7EqpLhu2ljOyzvNIFcHYMoX7jGA0g==",
+      "path": "awssdk.core/3.3.107.40",
+      "hashPath": "awssdk.core.3.3.107.40.nupkg.sha512"
+    },
+    "AWSSDK.KeyManagementService/3.3.106.35": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MH689VkjIb4hTQHJZrvz245yqy/eWSAfwA3SfV1gReKfwqml3NsBoyZ4VKRnMqeIXUc8WclgJvucvPQkFd61MQ==",
+      "path": "awssdk.keymanagementservice/3.3.106.35",
+      "hashPath": "awssdk.keymanagementservice.3.3.106.35.nupkg.sha512"
     },
     "AWSSDK.S3/3.3.111.21": {
       "type": "package",

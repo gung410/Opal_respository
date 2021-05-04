@@ -259,3 +259,4 @@ C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.dll
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.pdb
 C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\obj\Debug\netcoreapp3.1\cxOrganization.WebServiceAPI.genruntimeconfig.cache
+C:\hung\cx-organization-api\cxOrganization.WebServiceAPI\bin\Debug\netcoreapp3.1\AWSSDK.KeyManagementService.dll

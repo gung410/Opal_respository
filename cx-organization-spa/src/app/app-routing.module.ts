@@ -94,6 +94,12 @@ export const routes: Routes = [
       'app/batch-jobs-monitoring/batch-jobs-monitoring.module#BatchJobsMonitoringModule'
   },
   {
+    path: AppConstant.siteURL.menus.socialEngagement,
+    canActivate: [AuthGuardService],
+    loadChildren:
+      'app/social-engagement/social-engagement.module#SocialEngagementModule'
+  },
+  {
     path: '**',
     redirectTo: AppConstant.siteURL.login
   }

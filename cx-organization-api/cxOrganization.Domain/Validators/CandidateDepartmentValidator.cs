@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -15,7 +16,7 @@ namespace cxOrganization.Domain.Validators
             ICustomerRepository customerRepository,
             ILanguageRepository languageRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
             : base(ownerRepository, customerRepository, languageRepository, departmentRepository, hierarchyDepartmentRepository, workContext)
         {
         }

@@ -53,7 +53,9 @@ import { UserPendingComponent } from './user-pending/user-pending.component';
 import { UserReportingTemplateComponent } from './user-reporting-template/user-reporting-template.component';
 import { UserShowHideComponent } from './user-show-hide-column/user-show-hide-column.component';
 import { UserStatusComponent } from './user-status/user-status.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -101,7 +103,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgSelectModule,
     NgbModule,
     SharedModule,
+    MatDatepickerModule,
     MomentModule,
+    FormsModule,
+    ReactiveFormsModule,
     AgGridModule.withComponents([
       CellUserInfoComponent,
       CellDropdownActionComponent,
@@ -113,6 +118,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       CellApprovingOfficerComponent,
       CellUserStatusComponent,
       UserStatusComponent,
+      MatSliderModule,
       MassUserCreationFileNameRendererComponent
     ]),
     RouterModule.forChild([

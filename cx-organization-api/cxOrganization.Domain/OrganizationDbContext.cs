@@ -148,7 +148,6 @@ namespace cxOrganization.Domain
 
             modelBuilder.AddJsonValue();
             modelBuilder.AddJsonQuery();
-
         }
     }
 }

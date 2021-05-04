@@ -5,6 +5,7 @@
 
 export const environment = {
   production: true,
+  showAuthDebugInformation: true,
   fallbackLanguage: 'en-US',
   fallbackLanguageName: 'English',
   clientId: 'OrganizationSpa',
@@ -20,7 +21,7 @@ export const environment = {
     communication: 'pre-prod-datahub-opal-api-communication',
     dataHub: 'pre-prod-datahub-opal-api-query',
     learningCatalog: 'pre-prod-competence-opal-api-learningcatalog',
-    tagging: 'pre-prod-learnapp-opal-api-tagging'
+    tagging: 'pre-prod-learnapp-opal-api-tagging/api'
   },
   site: {
     title: 'System Admin',
@@ -51,6 +52,7 @@ export const environment = {
   ParentDepartmentId: 14350,
   OtherDepartmentId: 20747,
   topDepartmentId: 1,
+  showTechnicalInfo: true,
   firebase: {
     fcmConfig: {
       apiKey: 'AIzaSyAQYaxjtyRu8_BEnG83lyKNbAJo9eNVRRw',
@@ -84,7 +86,8 @@ export const environment = {
     LearnerAppAndroid: 'https://www.pre-prod.opal2.conexus.net/pdplanner/',
     LearnerAppIOS: 'https://www.pre-prod.opal2.conexus.net/pdplanner/',
     LearnerWeb: 'https://www.pre-prod.opal2.conexus.net/app/learner',
-    Report: 'https://www.pre-prod.opal2.conexus.net/report'
+    Report: 'https://www.pre-prod.opal2.conexus.net/report',
+    CSL: 'https://www.pre-prod.opal2.conexus.net/csl'
   },
   userAccounts: {
     enableCreateUserAccountRequest: true,

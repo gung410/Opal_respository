@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.DomainEnums;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos;
 using cxOrganization.Domain.RequestDtos.FileRequest;
 using cxPlatform.Client.ConexusBase;
@@ -13,7 +14,7 @@ namespace cxOrganization.Domain.Services
     {
         public Task<PaginatedList<FileInfoDto>> GetFileInfosByUserIdAsync(GetFileByUserIdRequest getFileByOwnerIdRequest);
         public Task<FileInfoDto> CreateFileInfoAsync(FileInfoDto fileInfoEntity);
-        public Task<FileInfoDto> UploadFileInfoAsync(IFormFile formFile, IWorkContext workContext, FileTarget fileTarget, Guid currentUserExId);
-        public Task<byte[]> DownloadFile(string fileName, FileTarget fileTarget, IWorkContext workContext);
+        public Task<FileInfoDto> UploadFileInfoAsync(IFormFile formFile, IAdvancedWorkContext workContext, FileTarget fileTarget, Guid currentUserExId);
+        public Task<byte[]> DownloadFile(string fileName, FileTarget fileTarget, IAdvancedWorkContext workContext);
     }
 }

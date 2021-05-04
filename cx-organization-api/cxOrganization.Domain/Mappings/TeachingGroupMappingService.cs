@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Services;
@@ -15,11 +16,11 @@ namespace cxOrganization.Domain.Mappings
     public class TeachingGroupMappingService : IUserGroupMappingService
     {
         private readonly IDepartmentService _departmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IPropertyService _propertyService;
         public TeachingGroupMappingService(
             IDepartmentService departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IPropertyService propertyService)
         {
             _departmentService = departmentService;
@@ -78,7 +79,7 @@ namespace cxOrganization.Domain.Mappings
             return teachingGroupDto;
         }
 
-        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto)
+        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto, IAdvancedWorkContext workContext = null)
         {
             var teachingGroup = groupDto as TeachingGroupDto;
 

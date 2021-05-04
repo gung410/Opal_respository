@@ -16,7 +16,8 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\hung.doan\.nuget\packages\awssdk.core\3.3.107.20</PkgAWSSDK_Core>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\hung.doan\.nuget\packages\awssdk.core\3.3.107.40</PkgAWSSDK_Core>
     <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">C:\Users\hung.doan\.nuget\packages\awssdk.s3\3.3.111.21</PkgAWSSDK_S3>
+    <PkgAWSSDK_KeyManagementService Condition=" '$(PkgAWSSDK_KeyManagementService)' == '' ">C:\Users\hung.doan\.nuget\packages\awssdk.keymanagementservice\3.3.106.35</PkgAWSSDK_KeyManagementService>
   </PropertyGroup>
 </Project>

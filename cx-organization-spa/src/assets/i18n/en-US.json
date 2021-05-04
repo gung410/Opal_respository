@@ -59,7 +59,9 @@
     "InvalidSession": "You have been logged out of the OPAL2.0 session as your account has been logged in from another device/location. If you have not authorised the login, please reset your password and/or contact your administrator.",
     "Common": "Oops, Something went wrong, please try again.",
     "DownloadFile": "You have no right to download the file",
-    "FileNotFound": "File not found."
+    "FileNotFound": "File not found.",
+    "InternalSerrverErrorText": "An error has occurred. Please contact the Helpdesk if the issue persists.",
+    "BadGatewayErrorText": "Some services is under maintenance. Please wait for some minutes and come back later."
   },
   "Common": {
     "Navigation": {

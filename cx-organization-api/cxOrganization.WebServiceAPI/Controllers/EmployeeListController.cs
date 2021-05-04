@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Business.PDPlanner.EmployeeList;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Extensions;
 using cxPlatform.Core;
 using cxPlatform.Core.Extentions.Request;
@@ -19,9 +20,9 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class EmployeeListController : ApiControllerBase
     {
         private readonly IEmployeeListService _employeeListService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ILogger _logger;
-        public EmployeeListController(ILogger<EmployeeListController> logger, IWorkContext workContext, IEmployeeListService employeeListService)
+        public EmployeeListController(ILogger<EmployeeListController> logger, IAdvancedWorkContext workContext, IEmployeeListService employeeListService)
         {
             _employeeListService = employeeListService;
             _workContext = workContext;

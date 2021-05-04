@@ -126,7 +126,7 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
                                                            parentDepartmentIds.Contains(t.Parent.DepartmentId)));
                         }
                     }
-                    else if(filterOnUd)
+                    else if (filterOnUd)
                     {
                         _query = _query.Where(u => parentDepartmentIds.Contains(u.DepartmentId)
                                                    || u.U_D.Any(x => parentDepartmentIds.Contains(x.DepartmentId)));
@@ -181,7 +181,7 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
                 }
             }
             return this;
-        } 
+        }
         public UserQueryBuilder FilterByUserGroupIds(List<int> userGroupIds,
             List<EntityStatusEnum> memberStatuses,
             DateTime? memberValidFromBefore,
@@ -349,7 +349,7 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
                     processedSSNList = new List<string>();
                     foreach (var ssn in ssnList)
                     {
-                        processedSSNList.Add(_userCryptoService.EncryptSSN(ssn));
+                        processedSSNList.Add(_userCryptoService.ComputeHashSsn(ssn));
                     }
                 }
                 else
@@ -359,11 +359,13 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
                 if (processedSSNList.Count == 1)
                 {
                     string value = processedSSNList[0];
-                    _query = _query.Where(t => t.SSN == value);
+                    _query = _query.Where(t => t.SSNHash == value);
+                    //var s = _query.ToSql();
                 }
                 else
                 {
-                    _query = _query.Where(p => processedSSNList.Contains(p.SSN));
+                    var ss = string.Join(",", processedSSNList);
+                    _query = _query.Where(p => processedSSNList.Contains(p.SSNHash));
                 }
             }
             return this;
@@ -443,7 +445,7 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
         }
 
         public UserQueryBuilder FilterByDate(
-            DateTime? createdAfter, DateTime? createdBefore, 
+            DateTime? createdAfter, DateTime? createdBefore,
             DateTime? lastUpdatedAfter, DateTime? lastUpdatedBefore,
             DateTime? expirationDateAfter, DateTime? expirationDateBefore,
             DateTime? entityActiveDateAfter, DateTime? entityActiveDateBefore)
@@ -782,7 +784,7 @@ namespace cxOrganization.Domain.Repositories.QueryBuilders
             }
 
             return this;
-          
+
         }
 
         private static ExpressionStarter<LoginServiceUserEntity> SearchLoginServiceUserWithClaimType(List<string> loginServiceClaimTypes, ExpressionStarter<LoginServiceUserEntity> searchLoginServiceUserPredicate)

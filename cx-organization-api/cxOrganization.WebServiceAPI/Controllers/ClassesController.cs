@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -24,7 +25,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     {
         private readonly IDepartmentService _departmentService;
         private readonly IClassMemberService _classMemberService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserService _userService;
         private readonly Func<ArchetypeEnum, IDepartmentService> _departmentServiceDelegate;
 
@@ -36,7 +37,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="classMemberService"></param>
         /// <param name="userService"></param>
         public ClassesController(Func<ArchetypeEnum, IDepartmentService> departmentService, Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext, IClassMemberService classMemberService)
+            IAdvancedWorkContext workContext, IClassMemberService classMemberService)
         {
             _departmentService = departmentService(ArchetypeEnum.Class);
             _workContext = workContext;

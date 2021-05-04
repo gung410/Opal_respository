@@ -78,7 +78,7 @@ export class ApprovalGroupQueryModel {
   orderBy: string;
   searchKey: string;
   searchInSameDepartment: boolean;
-  isCrossOrganizationalUnit: boolean;
+  searchFromDepartmentToTop: boolean;
   assigneeDepartmentId: number;
   constructor(data?: Partial<ApprovalGroupQueryModel>) {
     if (!data) {
@@ -99,7 +99,7 @@ export class ApprovalGroupQueryModel {
     this.orderBy = data.orderBy;
     this.searchKey = data.searchKey;
     this.searchInSameDepartment = data.searchInSameDepartment;
-    this.isCrossOrganizationalUnit = data.isCrossOrganizationalUnit;
+    this.searchFromDepartmentToTop = data.searchFromDepartmentToTop;
     this.assigneeDepartmentId = data.assigneeDepartmentId;
   }
 }

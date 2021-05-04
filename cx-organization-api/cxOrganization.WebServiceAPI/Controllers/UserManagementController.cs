@@ -4,11 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-
+using Amazon.KeyManagementService;
+using Amazon.KeyManagementService.Model;
 using cxOrganization.Business.Exceptions;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Attributes.CustomActionFilters;
+using cxOrganization.Domain.Business.Crypto;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos.UserGroups;
@@ -18,8 +23,10 @@ using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.HttpClients;
 using cxOrganization.Domain.Mappings;
+using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Security.AccessServices;
 using cxOrganization.Domain.Security.HierarchyDepartment;
+using cxOrganization.Domain.Security.User;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Services.ExportService;
 using cxOrganization.Domain.Services.StorageServices;
@@ -31,11 +38,11 @@ using cxOrganization.WebServiceAPI.Extensions;
 using cxOrganization.WebServiceAPI.Models;
 
 using cxPlatform.Client.ConexusBase;
-using cxPlatform.Core;
 using cxPlatform.Core.DatahubLog;
+using cxPlatform.Core.Exceptions;
 using cxPlatform.Core.Extentions.Request;
 using cxPlatform.Core.Logging;
-
+using cxPlatform.Core.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +51,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using FileExtension = cxOrganization.WebServiceAPI.Models.FileExtension;
+using Microsoft.IdentityModel.Tokens;
+using cxPlatform.Core;
+using cxOrganization.Client.UserGroups;
+using cxOrganization.Client.UserTypes;
 
 namespace cxOrganization.WebServiceAPI.Controllers
 {
@@ -52,7 +63,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public partial class UserManagementController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ILoginServiceUserService _loginServiceUserService;
         private readonly IIdentityServerClientService _identityServerClientService;
         private readonly IExportService<UserGenericDto> _exportService;
@@ -75,7 +86,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         private readonly IMassCreationUserService _massCreationUserService;
         public UserManagementController(
             Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ISuspendOrDeactiveUserBackgroundJob suspendOrDeactiveUserBackgroundJob,
             IUserGroupService userGroupService,
             ILoginServiceUserService loginServiceUserService,
@@ -167,8 +178,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             bool getOwnGroups = false,
             [FromQuery] DateTime? activeDateBefore = null,
             [FromQuery] DateTime? activeDateAfter = null,
-            [FromQuery] List<int> exceptUserIds = null,
-            [FromQuery] bool isCrossOrganizationalUnit = false)
+            [FromQuery] List<int> exceptUserIds = null)
         {
             //var departmentIds = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToTheTop(14350);
             bool returnAsCsv = false;
@@ -216,8 +226,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 includeOwnUserGroups: getOwnGroups,
                 activeDateBefore: activeDateBefore,
                 activeDateAfter: activeDateAfter,
-                exceptUserIds: exceptUserIds,
-                isCrossOrganizationalUnit: isCrossOrganizationalUnit);
+                exceptUserIds: exceptUserIds);
 
             if (returnAsCsv)
             {
@@ -252,6 +261,65 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 return CreateResponse(users);
         }
 
+        [Produces("application/json", "text/csv")]
+        [Route("users_for_assigning_approving_officer")]
+        [HttpGet]
+        [ProducesResponseType(typeof(PaginatedList<UserGenericDto>), 200)]
+        [PermissionRequired(OrganizationPermissionKeys.SeeMenuUserManagement, OrganizationPermissionKeys.BasicUserAccountsManagement)]
+        public async Task<IActionResult> GetUsersForAssigningApprovingOfficer([FromQuery] int? parentDepartmentId = null,
+            [FromQuery] List<int> userIds = null,
+            [FromQuery] List<string> extIds = null,
+            [FromQuery] List<EntityStatusEnum> userEntityStatuses = null,
+            [FromQuery] List<int> userTypeIds = null,
+            [FromQuery] List<string> userTypeExtIds = null,
+            [FromQuery] List<List<string>> multiUserTypeExtIdFilters = null,
+            [FromQuery] int pageIndex = 1,
+            [FromQuery] int pageSize = 100,
+            [FromQuery] string orderBy = "",
+            [FromQuery] string searchKey = null,
+            [FromQuery] bool? filterOnSubDepartment = null,
+            [FromQuery] bool getUserGroups = false,
+            [FromQuery] bool getRoles = false,
+            [FromQuery] bool getDepartments = false
+            )
+        {
+            if (!_appSettings.Value.IsCrossOrganizationalUnit)
+            {
+                // If the Cross OU is disabled, then apply the old logic from R2.2.
+                return await this.GetUserList(
+                    parentDepartmentId: parentDepartmentId > 0 ? new List<int> { parentDepartmentId.Value } : null,
+                    userIds: userIds,
+                    extIds: extIds,
+                    userEntityStatuses: userEntityStatuses,
+                    usertypeIds: userTypeIds,
+                    userTypeExtIds: userTypeExtIds,
+                    multiUserTypeExtIdFilters: multiUserTypeExtIdFilters,
+                    pageIndex: pageIndex,
+                    pageSize: pageSize,
+                    orderBy: orderBy,
+                    searchKey: searchKey,
+                    filterOnSubDepartment: filterOnSubDepartment,
+                    getUserGroups: getUserGroups,
+                    getRoles: getRoles,
+                    getDeapartments: getDepartments
+                    );
+            }
+
+            // Retrieves all users in the system.
+            var users = await _userService.GetUsersAsync<UserGenericDto>(parentDepartmentIds: null, userIds: userIds,
+                extIds: extIds,
+                statusIds: userEntityStatuses, searchKey: searchKey,
+                pageIndex: pageIndex, userTypeIds: userTypeIds,
+                pageSize: pageSize, includeUGMembers: getUserGroups,
+                getRoles: getRoles, includeDepartment: getDepartments,
+                userTypeExtIds: userTypeExtIds,
+                multiUserTypeExtIdFilters: multiUserTypeExtIdFilters,
+                ignoreCheckReadUserAccess: true,
+                currentDepartmentIdForSorting: parentDepartmentId
+                );
+
+            return CreateResponse(users);
+        }
 
         /// <summary>
         /// Export list of user asynchronously. Response return the url of file that data is exported to.
@@ -261,6 +329,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [Route("users/export/async")]
         [HttpPost]
         [ProducesResponseType(typeof(AcceptExportDto), StatusCodes.Status202Accepted)]
+        [PermissionRequired(OrganizationPermissionKeys.ExportUsers)]
         public IActionResult ExportUserListAsync([FromBody][Required] ExportUserDto exportUserDto)
         {
             if (!ValidateMinimalFilter(exportUserDto))
@@ -276,7 +345,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportUser", new { fileName = fileName });
             var fallBackLanguageCode = _appSettings.Value.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -353,6 +422,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <returns></returns>
         [Route("users/export")]
         [HttpPost]
+        [PermissionRequired(OrganizationPermissionKeys.ExportUsers)]
         public async Task<IActionResult> ExportUserList([FromBody][Required] ExportUserDto exportUserDto)
         {
             if (exportUserDto.SendEmail)
@@ -419,9 +489,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
 
         public async Task<IActionResult> GetUserListByBody([FromBody] SearchInput searchInput)
         {
-            var token = HttpContext.Request.Headers["Authorization"][0];
-
-            if (token is null)
+            if (_workContext.OriginalTokenString is null)
             {
                 return BadRequest();
             }
@@ -438,7 +506,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             }
 
             var users = await GetUsersBySearchInput(searchInput, _userService, _hierarchyDepartmentPermissionService,
-                _workContext, false, isAsync: false, token);
+                _workContext, false, isAsync: false, _workContext.OriginalTokenString);
 
             return CreateResponse(users);
         }
@@ -504,6 +572,10 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [TypeFilter(typeof(PreventXSSFilter))]
         public async Task<IActionResult> UpdateUser(long userId, [FromBody] UserGenericDto userGenericDto, bool skipCheckingEntityVersion = true, [FromQuery] bool syncToIdp = true)
         {
+            CheckPermissionsForUpdateUser(userGenericDto, _workContext);
+
+            _userService.ValidateUserData(userGenericDto);
+
             userGenericDto.Identity.Id = userId;
             var checkAccessResult = await _userAccessService.CheckEditUserAccessAsync(_workContext, userGenericDto, _userGenericMappingService);
 
@@ -557,6 +629,42 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return CreateResponse(user);
         }
 
+        private void CheckPermissionsForUpdateUser(UserGenericDto userGenericDto, IAdvancedWorkContext workContext)
+        {
+            if (workContext.isInternalRequest)
+            {
+                return;
+            }
+
+            switch (userGenericDto.EntityStatus.StatusId)
+            {
+                case EntityStatusEnum.PendingApproval1st:
+                    if (!_workContext.HasPermission(OrganizationPermissionKeys.EditPending1st))
+                    {
+                        throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_USER, PermissionErrorMessage.No_PERMISSION);
+                    }
+                    break;
+                case EntityStatusEnum.PendingApproval2nd:
+                    if (!_workContext.HasPermission(OrganizationPermissionKeys.EditPending2nd))
+                    {
+                        throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_USER, PermissionErrorMessage.No_PERMISSION);
+                    }
+                    break;
+                case EntityStatusEnum.PendingApproval3rd:
+                    if (!_workContext.HasPermission(OrganizationPermissionKeys.EditPendingSpecial))
+                    {
+                        throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_USER, PermissionErrorMessage.No_PERMISSION);
+                    }
+                    break;
+                default:
+                    if (!_workContext.HasPermission(OrganizationPermissionKeys.BasicUserAccountsManagement))
+                    {
+                        throw new CXValidationException(cxExceptionCodes.ERROR_ACCESS_DENIED_USER, PermissionErrorMessage.No_PERMISSION);
+                    }
+                    break;
+            }
+        }
+
         private void SetEntityActiveDate(UserGenericDto user)
         {
             var entityActiveDateConfigs = _configuration.GetSection("UserEntityActiveDateConfiguration").Get<List<UserEntityActiveDateDto>>();
@@ -587,14 +695,19 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(UserGenericDto), 201)]
         [TypeFilter(typeof(PreventXSSFilter))]
+        [PermissionRequired(OrganizationPermissionKeys.SingleUserCreation)]
         public async Task<IActionResult> CreateUser([FromBody] UserGenericDto userGenericDto, [FromQuery] bool syncToIdp = true)
         {
+            _userService.ValidateUserData(userGenericDto);
+
             userGenericDto.Identity.Id = 0;
 
             if (!(await _userAccessService.CheckCreateUserAccessAsync(_workContext, userGenericDto)))
             {
                 return AccessDenied();
             }
+
+            var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
             var validationSpecification = (new HierarchyDepartmentValidationBuilder())
             .ValidateDepartment(userGenericDto.DepartmentId, ArchetypeEnum.Unknown)
@@ -636,6 +749,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [PermissionRequired(OrganizationPermissionKeys.MassUserCreation)]
         public async Task<ActionResult> CreateMassUser(
             [FromForm] MassUserCreationValidationContract massUserCreationValidationContract)
         {
@@ -656,9 +770,19 @@ namespace cxOrganization.WebServiceAPI.Controllers
 
             var users = await _massCreationUserService.getUsersFromFileAsync(massUserCreationValidationContract, fileOnMemory, copiedWorkContext);
 
+            var approvingOfficerUserTypeExtIds = _appSettings.Value.ApprovingOfficerUserTypeExtIds;
+
             users.ForEach(async user =>
             {
-                await processUserCreation(user, true);
+                var createdUser = await processUserCreation(user, true);
+
+                var userRoles = createdUser.GetAllRoleUserTypes();
+                
+
+                if (userRoles.Any(role => approvingOfficerUserTypeExtIds.Contains(role.Identity.ExtId, StringComparer.CurrentCultureIgnoreCase)))
+                {
+                    AddUserToApprovalGroups(createdUser);
+                }
             });
 
             return await Task.FromResult(StatusCode((int)HttpStatusCode.Created, users));
@@ -733,6 +857,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [Route("users/{userid}")]
         [HttpDelete]
         [ProducesResponseType(typeof(UserGenericDto), 200)]
+        [PermissionRequired(OrganizationPermissionKeys.AdvancedUserAccountsManagement)]
 
         public async Task<IActionResult> Delete(int userid, [FromQuery] bool syncToIdp = true, [FromQuery] EntityStatusReasonEnum? entityStatusReason = null)
         {
@@ -812,14 +937,14 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [Route("archive/{userid}")]
         [HttpPost]
         [ProducesResponseType(typeof(UserGenericDto), 200)]
-
+        [PermissionRequired(OrganizationPermissionKeys.AdvancedUserAccountsManagement)]
         public async Task<IActionResult> ArchiveUser(int userid, [FromQuery] EntityStatusReasonEnum? entityStatusReason = null)
         {
             try
             {
                 var archivedUser = await _userService.ArchiveUserByIdAsync(userid, true, entityStatusReason.Value, false);
 
-                if(archivedUser == null)
+                if (archivedUser == null)
                 {
                     return NotFound();
                 }
@@ -835,7 +960,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         [Route("unarchive/{userid}")]
         [HttpPost]
         [ProducesResponseType(typeof(UserGenericDto), 200)]
-
+        [PermissionRequired(OrganizationPermissionKeys.AdvancedUserAccountsManagement)]
         public async Task<IActionResult> UnarchiveUser(int userid)
         {
             try
@@ -938,52 +1063,42 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <summary>
         /// Send users information to the queue as update event to support sync data to other modules
         /// </summary>
-        /// <returns></returns>
-        [Route("send-userinfor-to-datahub")]
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        [Route("send-userinfo-to-datahub")]
         [HttpPost]
-        public async Task SendUserinforToDatahub([FromQuery] int pageIndex = 1)
+        public async Task<IActionResult> SendUserInfoToDatahub([FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 5000)
         {
-            var appSetting = _appSettings.Value;
-
-            var workContext = new WorkContext(_appSettings, null)
-            {
-                CurrentUserId = appSetting.CurrentUserId,
-                CurrentOwnerId = 3001,
-                CurrentCustomerId = 2052,
-                IsEnableFiltercxToken = true,
-                RequestId = Guid.Empty.ToString(),
-                CorrelationId = Guid.Empty.ToString()
-            };
-
             var usersList = new List<UserEntity>();
-            var paginatedUserEntities = await _userService.GetAllUsers(pageIndex);
-            if (paginatedUserEntities.Items.Count > 0)
+            var paginatedUserEntities = await _userService.GetAllUsers(pageIndex, pageSize);
+            if (paginatedUserEntities.Items.Any())
             {
                 usersList.AddRange(paginatedUserEntities.Items);
             }
+            _logger.LogWarning($"Started sync user data to datahub. PageIndex={pageIndex}, PageSize={pageSize}, TotalItems={paginatedUserEntities.TotalItems}, HasMoreData={paginatedUserEntities.HasMoreData}.");
 
-            foreach (var user in usersList)
+            var userEntities = paginatedUserEntities.Items;
+
+            foreach (var userEntity in userEntities)
             {
                 try
                 {
-                    var currentUserGenericDto = _userGenericMappingService.ToUserDto(user, true, false, false) as UserGenericDto;
-                    var validationSpecification = (new HierarchyDepartmentValidationBuilder())
-                    .ValidateDepartment(currentUserGenericDto.DepartmentId, ArchetypeEnum.Unknown)
-                    .SkipCheckingArchetype()
-                     .WithStatus(EntityStatusEnum.All)
-                    .IsDirectParent()
-                    .Create();
-                    SetEntityActiveDate(currentUserGenericDto);
-
-                    _userService.UpdateUser(validationSpecification, currentUserGenericDto, false, workContext);
-
+                    var currentUserGenericDto = _userGenericMappingService.ToUserDto(
+                        userEntity,
+                        true,
+                        true,
+                        false) as UserGenericDto;
+                    _userService.SyncUserDataToDataHub(userEntity, currentUserGenericDto);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"Error for proceed sending event of user's email: {user.Email}:' {ex.Message}'");
+                    _logger.LogError(ex, $"Error for proceed sending event of user's email: {userEntity.Email}:' {ex.Message}'");
                 }
             }
 
+            _logger.LogInformation($"Sync user data to datahub successfully for pageSize: {pageSize} and pageIndex: {pageIndex}");
+
+            return Ok();
         }
 
 
@@ -1038,7 +1153,69 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return CreateResponse(users.Items.First());
         }
 
-        private async Task<ConexusBaseDto> processUserCreation(UserGenericDto userGenericDto, bool syncToIdp)
+        private void AddUserToApprovalGroups(UserGenericDto user)
+        {
+            var primaryAprovalGroupDto = BuildApprovalGroupDto(user, GrouptypeEnum.PrimaryApprovalGroup);
+            var alternativeAprovalGroupDto = BuildApprovalGroupDto(user, GrouptypeEnum.AlternativeApprovalGroup);
+
+            AddNewApprovalGroup(primaryAprovalGroupDto);
+            AddNewApprovalGroup(alternativeAprovalGroupDto);
+        }
+
+        private ApprovalGroupDto BuildApprovalGroupDto(UserGenericDto user, GrouptypeEnum type)
+        {
+            var aprovalGroupDto = new ApprovalGroupDto();
+            aprovalGroupDto.ApproverId = (int?)user.Identity.Id;
+            aprovalGroupDto.DepartmentId = user.DepartmentId;
+            aprovalGroupDto.Name = user.FirstName;
+            aprovalGroupDto.Type = type;
+            aprovalGroupDto.Identity = new IdentityDto()
+            {
+                OwnerId = _workContext.CurrentOwnerId,
+                CustomerId = _workContext.CurrentCustomerId,
+                Archetype = ArchetypeEnum.ApprovalGroup
+            };
+            aprovalGroupDto.EntityStatus = new EntityStatusDto()
+            {
+                StatusId = EntityStatusEnum.Active,
+                StatusReasonId = EntityStatusReasonEnum.Unknown
+            };
+
+            return aprovalGroupDto;
+        }
+
+        private void AddNewApprovalGroup(ApprovalGroupDto approvalGroup)
+        {
+            try
+            {
+                var copiedWorkContext = WorkContext.CopyFrom(_workContext);
+                using (var serviceScope = _serviceScopeFactory.CreateScope())
+                {
+                    var scopedLogger = serviceScope.ServiceProvider.GetService<ILogger<UserManagementController>>();
+                    var userGroupService = serviceScope.ServiceProvider.GetService<Func<ArchetypeEnum, IUserGroupService>>()(ArchetypeEnum.ApprovalGroup);
+                    var requestContext = new RequestContext(copiedWorkContext);
+
+                    using (scopedLogger.SetContextToScope(requestContext))
+                    {
+                        var validationSpecification = (new HierarchyDepartmentValidationBuilder())
+                        .WithStatus(EntityStatusEnum.All)
+                        .IsDirectParent()
+                        .Create();
+
+                        approvalGroup.Identity.Id = 0;
+
+                        userGroupService.InsertUserGroup(validationSpecification, approvalGroup, copiedWorkContext);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task<UserGenericDto> processUserCreation(UserGenericDto userGenericDto, bool syncToIdp)
         {
             try
             {
@@ -1084,7 +1261,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                             });
                         }
 
-                        return createdUser;
+                        return createdUser as UserGenericDto;
                     }
                 }
             }
@@ -1113,7 +1290,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         private static async Task<PaginatedList<UserGenericDto>> GetUsersBySearchInput(SearchInput searchInput,
             IUserService userService,
             IHierarchyDepartmentPermissionService hierarchyDepartmentPermissionService,
-            IWorkContext copiedWorkContent, bool skipPaging, bool isAsync, string token = null)
+            IAdvancedWorkContext copiedWorkContent, bool skipPaging, bool isAsync, string token = null)
         {
             int ownerId = 0;
             List<int> customerIds = null;
@@ -1177,11 +1354,10 @@ namespace cxOrganization.WebServiceAPI.Controllers
             ExportUserDto exportUserDto,
             IUserService userService,
             IHierarchyDepartmentPermissionService hierarchyDepartmentPermissionService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IExportService<UserGenericDto> exportService,
             bool isAsync)
         {
-
             bool skipPaging = exportUserDto.PageIndex <= 0 && exportUserDto.PageSize <= 0;
 
             if (exportUserDto.ExportOption.ExportFields == null ||
@@ -1218,7 +1394,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
 
 
-        private static void SendEmailWhenExportingUser(ExportUserDto exportUserDto, IWorkContext workContext,
+        private static void SendEmailWhenExportingUser(ExportUserDto exportUserDto, IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1334,7 +1510,271 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 searchInput.SsnList);
 
         }
+
+        [HttpGet("migrate_ssn")]
+        public ActionResult MigrateSsn([FromQuery] bool dry_run = true)
+        {
+            var copiedWorkContext = WorkContext.CopyFrom(_workContext);
+            _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
+            {
+                using (var serviceScope = _serviceScopeFactory.CreateScope())
+                {
+                    var scopedWorkContext = serviceScope.ServiceProvider.GetService<IAdvancedWorkContext>();
+                    scopedWorkContext.CurrentCustomerId = _workContext.CurrentCustomerId;
+                    scopedWorkContext.CurrentOwnerId = _workContext.CurrentOwnerId;
+                    var scopedLogger = serviceScope.ServiceProvider.GetService<ILogger<UserManagementController>>();
+                    var userCryptoService = serviceScope.ServiceProvider.GetService<IUserCryptoService>();
+                    var userRepository = serviceScope.ServiceProvider.GetService<IUserRepository>();
+                    var dbContext = serviceScope.ServiceProvider.GetService<OrganizationDbContext>();
+                    var requestContext = new RequestContext(copiedWorkContext);
+                    await Task.CompletedTask;
+                    var oldValueAutoDetectChangesEnabled = dbContext.ChangeTracker.AutoDetectChangesEnabled;
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+                    using (scopedLogger.SetContextToScope(requestContext))
+                    {
+                        try
+                        {
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            scopedLogger.LogInformation($"Start processing for migrating ssn");
+                            var hasMore = true;
+                            int pageIndex = 1;
+                            int count = 1;
+                            while (hasMore)
+                            {
+                                var users = userRepository.GetUserForMigratingSsn(pageIndex, 1000);
+
+                                foreach (var item in users)
+                                {
+                                    try
+                                    {
+                                        if (!string.IsNullOrEmpty(item.SSN))
+                                        {
+                                            var ssn = userCryptoService.DecryptSSN(item.SSN);
+                                            ssn = ssn.Length > 9 ? ssn.Substring(0, 9) : ssn;
+                                            if (!dry_run)
+                                            {
+                                                item.SSN = userCryptoService.EncryptSSN(ssn);
+                                                item.SSNHash = userCryptoService.ComputeHashSsn(ssn);
+                                                userRepository.Update(item);
+                                            }
+                                            scopedLogger.LogInformation($"{count}-Done setting SSN with hashing value {item.SSNHash} for user {item.Email}");
+                                            count++;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        scopedLogger.LogError($"An error occurred when update SSN: {item.SSN} : {ex.Message}");
+                                    }
+                                }
+                                try
+                                {
+                                    if (!dry_run)
+                                        dbContext.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    scopedLogger.LogError($"An error occurred when update users SSN: {ex.Message}");
+                                }
+                                hasMore = users.Count >= 1000;
+                                pageIndex++;
+                            }
+                            watch.Stop();
+                            scopedLogger.LogInformation($"End processing migrating ssn in {watch.ElapsedMilliseconds}ms.");
+
+                        }
+                        catch (Exception e)
+                        {
+                            scopedLogger.LogError(e, $"An error occurred when processing migrating ssn");
+                        }
+
+                    }
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = oldValueAutoDetectChangesEnabled;
+                }
+            });
+            return Accepted();
+        }
+
+        [HttpGet("update_ssn_hash")]
+        public ActionResult UpdateSsnHash([FromQuery] bool dry_run = true)
+        {
+            var copiedWorkContext = WorkContext.CopyFrom(_workContext);
+            _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
+            {
+                using (var serviceScope = _serviceScopeFactory.CreateScope())
+                {
+                    var scopedWorkContext = serviceScope.ServiceProvider.GetService<IWorkContext>();
+                    scopedWorkContext.CurrentCustomerId = _workContext.CurrentCustomerId;
+                    scopedWorkContext.CurrentOwnerId = _workContext.CurrentOwnerId;
+                    var scopedLogger = serviceScope.ServiceProvider.GetService<ILogger<UserManagementController>>();
+                    var userCryptoService = serviceScope.ServiceProvider.GetService<IUserCryptoService>();
+                    var userRepository = serviceScope.ServiceProvider.GetService<IUserRepository>();
+                    var dbContext = serviceScope.ServiceProvider.GetService<OrganizationDbContext>();
+                    var requestContext = new RequestContext(copiedWorkContext);
+                    await Task.CompletedTask;
+                    var oldValueAutoDetectChangesEnabled = dbContext.ChangeTracker.AutoDetectChangesEnabled;
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+                    using (scopedLogger.SetContextToScope(requestContext))
+                    {
+                        try
+                        {
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            scopedLogger.LogInformation($"Start processing for migrating ssn");
+                            var hasMore = true;
+                            int pageIndex = 1;
+                            int count = 1;
+                            while (hasMore)
+                            {
+                                var users = userRepository.GetUserForUpdateSsnHash(pageIndex, 500);
+
+                                foreach (var item in users)
+                                {
+                                    try
+                                    {
+                                        if (!string.IsNullOrEmpty(item.SSN))
+                                        {
+                                            var ssn = userCryptoService.DecryptSSN(item.SSN);
+                                            ssn = ssn.Length > 9 ? ssn.Substring(0, 9) : ssn;
+                                            item.SSNHash = userCryptoService.ComputeHashSsn(ssn);
+                                            if (!dry_run)
+                                            {
+                                                userRepository.Update(item);
+                                            }
+                                            scopedLogger.LogInformation($"{count}-Done hashing SSN: {item.SSNHash} for user {item.Email}");
+                                            count++;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        scopedLogger.LogError($"An error occurred when update SSN: {item.SSN} : {ex.Message}");
+                                    }
+                                }
+                                try
+                                {
+                                    if (!dry_run)
+                                        dbContext.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    scopedLogger.LogError($"An error occurred when update users SSN: {ex.Message}");
+                                }
+                                hasMore = users.Count >= 500;
+                                pageIndex++;
+                            }
+                            watch.Stop();
+                            scopedLogger.LogInformation($"End processing migrating ssn in {watch.ElapsedMilliseconds}ms.");
+
+                        }
+                        catch (Exception e)
+                        {
+                            scopedLogger.LogError(e, $"An error occurred when processing migrating ssn");
+                        }
+
+                    }
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = oldValueAutoDetectChangesEnabled;
+                }
+            });
+            return Accepted();
+        }
+
+        [HttpGet("fix_ssn")]
+        public ActionResult FixSsn([FromQuery] bool dry_run = true)
+        {
+            var copiedWorkContext = WorkContext.CopyFrom(_workContext);
+            _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
+            {
+                using (var serviceScope = _serviceScopeFactory.CreateScope())
+                {
+                    var scopedWorkContext = serviceScope.ServiceProvider.GetService<IWorkContext>();
+                    scopedWorkContext.CurrentCustomerId = _workContext.CurrentCustomerId;
+                    scopedWorkContext.CurrentOwnerId = _workContext.CurrentOwnerId;
+                    var scopedLogger = serviceScope.ServiceProvider.GetService<ILogger<UserManagementController>>();
+                    var userCryptoService = serviceScope.ServiceProvider.GetService<IUserCryptoService>();
+                    var userRepository = serviceScope.ServiceProvider.GetService<IUserRepository>();
+                    var dbContext = serviceScope.ServiceProvider.GetService<OrganizationDbContext>();
+                    var requestContext = new RequestContext(copiedWorkContext);
+                    await Task.CompletedTask;
+                    var oldValueAutoDetectChangesEnabled = dbContext.ChangeTracker.AutoDetectChangesEnabled;
+
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+                    var sodiumEncryption = serviceScope.ServiceProvider.GetServices<ICryptoService>().FirstOrDefault(x => x.GetType() == typeof(SodiumCryptoService));
+                    using (scopedLogger.SetContextToScope(requestContext))
+                    {
+                        var oldAmazonKeyManagementServiceClient = new AmazonKeyManagementServiceClient("AKIA2QPV5ZDRUMNPN2N5", "t3hKrVkeqv8WSAJgx+czQzGP+9MGo6FBVEqG2OW9");
+                        try
+                        {
+                            var watch = System.Diagnostics.Stopwatch.StartNew();
+                            scopedLogger.LogInformation($"Start processing for migrating ssn");
+                            var hasMore = true;
+                            int pageIndex = 1;
+                            int count = 1;
+                            while (hasMore)
+                            {
+                                var users = userRepository.GetUserForFixingSSN(pageIndex, 1000);
+
+                                foreach (var item in users)
+                                {
+                                    try
+                                    {
+                                        if (!string.IsNullOrEmpty(item.SSN))
+                                        {
+                                            var ssn = DecryptToString(oldAmazonKeyManagementServiceClient, item.SSN);
+                                            ssn = ssn.Length > 9 ? ssn.Substring(0, 9) : ssn;
+                                            ssn = sodiumEncryption.EncryptToString(ssn);
+                                            if (!dry_run)
+                                            {
+                                                item.SSN = ssn;
+                                                userRepository.Update(item);
+                                            }
+                                            //scopedLogger.LogInformation($"{count}-Done setting SSN: {ssn} for user {item.Email}");
+                                            count++;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        scopedLogger.LogError($"An error occurred when update SSN: {item.SSN} : {ex.Message}");
+                                    }
+                                }
+                                try
+                                {
+                                    if (!dry_run)
+                                        dbContext.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    scopedLogger.LogError($"An error occurred when update users SSN: {ex.Message}");
+                                }
+                                hasMore = users.Count >= 1000;
+                                pageIndex++;
+                            }
+                            watch.Stop();
+                            scopedLogger.LogInformation($"End processing migrating ssn in {watch.ElapsedMilliseconds}ms.");
+
+                        }
+                        catch (Exception e)
+                        {
+                            scopedLogger.LogError(e, $"An error occurred when processing migrating ssn");
+                        }
+
+                    }
+                    dbContext.ChangeTracker.AutoDetectChangesEnabled = oldValueAutoDetectChangesEnabled;
+                }
+            });
+            return Accepted();
+        }
+        private string DecryptToString(AmazonKeyManagementServiceClient amazonKeyManagementServiceClient, string encryptedMessageUnicode)
+        {
+            var bytes = Convert.FromBase64String(encryptedMessageUnicode);
+            MemoryStream ciphertextBlob = new MemoryStream(bytes);
+            // Write ciphertext to memory stream
+
+            DecryptRequest decryptRequest = new DecryptRequest()
+            {
+                CiphertextBlob = ciphertextBlob,
+                KeyId = "arn:aws:kms:ap-southeast-1:722607130851:key/1b27353c-9a04-4071-8ab8-eb44feef65fb"
+            };
+            var plainText = amazonKeyManagementServiceClient.DecryptAsync(decryptRequest).GetAwaiter().GetResult().Plaintext.ToArray();
+            return Encoding.UTF8.GetString(plainText);
+        }
+
     }
-
-
 }

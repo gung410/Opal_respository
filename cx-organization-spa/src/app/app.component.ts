@@ -64,6 +64,7 @@ export class AppComponent
   enableBroadCast: boolean = environment.notification.enableBroadCast;
   cssClass: string;
   heightIframe: string = 'auto';
+  downloadReportUrl: RegExp = new RegExp(/\/reports\?filepath.+\.xlsx$/);
 
   private isSessionTimeoutWarning: boolean = false;
   private finishedInitFirebaseCloudMessaging: boolean = false;
@@ -323,15 +324,35 @@ export class AppComponent
       localStorage.removeItem(RouteConstant.RETURN_URL);
       localStorage.removeItem(RouteConstant.RETURN_URL_PATH);
       let url = returnUrl ? returnUrl : location.pathname + location.search;
+
       if (url.includes('/' + AppConstant.siteURL.login)) {
         url = '/';
       }
       this.router.navigateByUrl(url);
+      if (!this.isCurrentUserAllowToAccess(url) && url !== 'null') {
+        this.router.navigateByUrl('/error/access-denied');
+      }
     } else {
       this.hasValidUser = false;
     }
     this.hasLoading = false;
   };
+
+  private isCurrentUserAllowToAccess(url: string): boolean {
+    return this.isCurrentUserHasMenu(url) || this.isDownloadReportUrl(url);
+  }
+
+  private isCurrentUserHasMenu(url: string): boolean {
+    return this.currentUser.headerData.menus.some((menu) => menu.route === url);
+  }
+
+  private isDownloadReportUrl(url: string): boolean {
+    return (
+      this.currentUser.headerData.menus.some(
+        (menu) => menu.route === '/reports'
+      ) && this.downloadReportUrl.test(url)
+    );
+  }
 
   private setLanguageDefault(): void {
     const languageCode = localStorage.getItem('language-code');

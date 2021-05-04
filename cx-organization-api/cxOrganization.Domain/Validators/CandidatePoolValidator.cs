@@ -2,6 +2,7 @@
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -16,13 +17,13 @@ namespace cxOrganization.Domain.Validators
         private readonly IHierarchyDepartmentService _hierachyDepartmentService;
         private readonly IUserGroupRepository _userGroupRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public CandidatePoolValidator(IHierarchyDepartmentService hierachyDepartmentService,
             IOwnerRepository ownerRepository,
             IUserGroupRepository userGroupRepository,
             IUserRepository userRepository,
-            IWorkContext workContext) 
+            IAdvancedWorkContext workContext) 
             : base(ownerRepository, workContext,userGroupRepository)
         {
             _hierachyDepartmentService = hierachyDepartmentService;
@@ -31,7 +32,7 @@ namespace cxOrganization.Domain.Validators
             _workContext = workContext;
         }
 
-        public override UserGroupEntity Validate(ConexusBaseDto dto)
+        public override UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             //TODO: Consider to move some common code to base class
 

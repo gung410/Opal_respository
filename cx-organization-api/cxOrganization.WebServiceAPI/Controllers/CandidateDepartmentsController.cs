@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
 using cxPlatform.Client.ConexusBase;
@@ -19,7 +20,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class CandidateDepartmentsController : ApiControllerBase
     {
         private readonly IDepartmentService _candidateDepartmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         /// <summary>
         /// CandidateDepartments API Constructor
@@ -27,7 +28,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="departmentService"></param>
         /// <param name="workContext"></param>
         public CandidateDepartmentsController(Func<ArchetypeEnum, IDepartmentService> departmentService,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _candidateDepartmentService = departmentService(ArchetypeEnum.CandidateDepartment);
             _workContext = workContext;

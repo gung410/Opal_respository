@@ -57,7 +57,7 @@ namespace cxOrganization.WebServiceAPI.Background
             services.AddScoped<ISuspendAndDeactivateUserJob, DeactivateUserJob>();
             services.AddScoped<ISendBroadcastMessageJob, SendBroadcastMessageJob>();
             services.AddScoped<IArchiveUserJob, ArchiveUserJob>();
-            services.AddScoped<ISuspendUserJob, SuspendUserJob>();
+            services.AddScoped<IOrganizationSuspendUserJob, SuspendUserJob>();
             return services;
         }
 
@@ -82,61 +82,11 @@ namespace cxOrganization.WebServiceAPI.Background
         {
             try
             {
-        
-                if (recurringJobSettings.TryGetValue(SendWelcomeEmailJob.JobId, out var sendWelcomeEmailJobSetting) && sendWelcomeEmailJobSetting.Enable)
-                {
-                    RecurringJob.AddOrUpdate<ISendWelcomeEmailJob>(SendWelcomeEmailJob.JobId, job => job.Execute(null),
-                        sendWelcomeEmailJobSetting.CronExpression, queue: sendWelcomeEmailJobSetting.Queue);
-                    logger.LogInformation($"Add RecurringJob with id {SendWelcomeEmailJob.JobId}");
-                }
-                else
-                {
-                    logger.LogWarning($"RecurringJob with id {SendWelcomeEmailJob.JobId} has NOT been added because missing setting or disabled.");
-                }
-
-                if (recurringJobSettings.TryGetValue(SuspendUserJob.JobId, out var suspendUserJobSetting) && suspendUserJobSetting.Enable)
-                {
-                    RecurringJob.AddOrUpdate<ISuspendUserJob>(SuspendUserJob.JobId, job => job.Execute(null),
-                        suspendUserJobSetting.CronExpression, queue: suspendUserJobSetting.Queue);
-                    logger.LogInformation($"Add RecurringJob with id {SuspendUserJob.JobId}");
-                }
-                else
-                {
-                    logger.LogWarning($"RecurringJob with id {SuspendUserJob.JobId} has NOT been added because missing setting or disabled.");
-                }
-
-                if (recurringJobSettings.TryGetValue(DeactivateUserJob.JobId, out var deactivateUserJobSetting) && deactivateUserJobSetting.Enable)
-                {
-                    RecurringJob.AddOrUpdate<ISuspendAndDeactivateUserJob>(DeactivateUserJob.JobId, job => job.Execute(null),
-                        deactivateUserJobSetting.CronExpression, queue: deactivateUserJobSetting.Queue);
-                    logger.LogInformation($"Add RecurringJob with id {DeactivateUserJob.JobId}");
-                }
-                else
-                {
-                    logger.LogWarning($"RecurringJob with id {DeactivateUserJob.JobId} has NOT been added because missing setting or disabled.");
-                }
-
-                if (recurringJobSettings.TryGetValue(SendBroadcastMessageJob.JobId, out var sendBroadcastMessageJobSetting) && sendBroadcastMessageJobSetting.Enable)
-                {
-                    RecurringJob.AddOrUpdate<ISendBroadcastMessageJob>(SendBroadcastMessageJob.JobId, job => job.Execute(null),
-                        sendBroadcastMessageJobSetting.CronExpression, queue: sendBroadcastMessageJobSetting.Queue);
-                    logger.LogInformation($"Add RecurringJob with id {SendBroadcastMessageJob.JobId}");
-                }
-                else
-                {
-                    logger.LogWarning($"RecurringJob with id {SendBroadcastMessageJob.JobId} has NOT been added because missing setting or disabled.");
-                }
-
-                if (recurringJobSettings.TryGetValue(ArchiveUserJob.JobId, out var archiveUserJobSetting) && archiveUserJobSetting.Enable)
-                {
-                    RecurringJob.AddOrUpdate<IArchiveUserJob>(ArchiveUserJob.JobId, job => job.Execute(null),
-                        archiveUserJobSetting.CronExpression, queue: archiveUserJobSetting.Queue);
-                    logger.LogInformation($"Add RecurringJob with id {ArchiveUserJob.JobId}");
-                }
-                else
-                {
-                    logger.LogWarning($"RecurringJob with id {ArchiveUserJob.JobId} has NOT been added because missing setting or disabled.");
-                }
+                AddRecurringJob<ISendWelcomeEmailJob>(recurringJobSettings, logger, SendWelcomeEmailJob.JobId);
+                AddRecurringJob<IOrganizationSuspendUserJob>(recurringJobSettings, logger, SuspendUserJob.JobId);
+                AddRecurringJob<ISuspendAndDeactivateUserJob>(recurringJobSettings, logger, DeactivateUserJob.JobId);
+                AddRecurringJob<ISendBroadcastMessageJob>(recurringJobSettings, logger, SendBroadcastMessageJob.JobId);
+                AddRecurringJob<IArchiveUserJob>(recurringJobSettings, logger, ArchiveUserJob.JobId);
             }
             catch (Exception ex)
             {
@@ -145,6 +95,20 @@ namespace cxOrganization.WebServiceAPI.Background
 
             return services;
         }
-       
+
+        private static void AddRecurringJob<T>(RecurringJobSettings recurringJobSettings, ILogger logger, string jobId)
+            where T : IBackgroundJob
+        {
+            if (recurringJobSettings.TryGetValue(jobId, out var jobSetting) && jobSetting.Enable)
+            {
+                RecurringJob.AddOrUpdate<T>(jobId, job => job.Execute(null),
+                    jobSetting.CronExpression, queue: jobSetting.Queue);
+                logger.LogWarning($"Successfully registering recurring job {jobId} with CronExpression {jobSetting.CronExpression}.");
+            }
+            else
+            {
+                logger.LogWarning($"Successfully unregistering recurring job {jobId}.");
+            }
+        }
     }
 }

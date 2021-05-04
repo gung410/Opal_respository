@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
@@ -17,7 +18,7 @@ namespace cxOrganization.Domain.Services
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IUserRepository _userRepository;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentMappingService _departmentMappingService;
         private readonly IUserMappingService _userMappingService;
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
@@ -31,7 +32,7 @@ namespace cxOrganization.Domain.Services
             IDepartmentRepository departmentRepository,
             IUserRepository userRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentMappingService departmentMappingService,
             IUserMappingService userMappingService,
             IDepartmentTypeRepository departmentTypeRepository,

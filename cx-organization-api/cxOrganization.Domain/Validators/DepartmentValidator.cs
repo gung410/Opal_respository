@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -18,14 +19,14 @@ namespace cxOrganization.Domain.Validators
         private readonly ILanguageRepository _languageRepository;
         protected readonly IDepartmentRepository _departmentRepository;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public DepartmentValidator(IOwnerRepository ownerRepository,
             ICustomerRepository customerRepository,
             ILanguageRepository languageRepository,
             IDepartmentRepository departmentRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _ownerRepository = ownerRepository;
             _customerRepository = customerRepository;

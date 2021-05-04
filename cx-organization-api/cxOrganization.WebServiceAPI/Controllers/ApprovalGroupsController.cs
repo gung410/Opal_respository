@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Business.Queries.ApprovingOfficer;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Dtos.Users;
@@ -32,13 +33,13 @@ namespace cxOrganization.WebServiceAPI.Controllers
         private readonly IUserService _userService;
         private readonly SearchApprovingOfficersQueryHandler _searchApprovingOfficersQueryHandler;
         private readonly ILogger _logger;
-        private readonly IWorkContext _workContex;
+        private readonly IAdvancedWorkContext _workContex;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public ApprovalGroupsController( ILogger<ApprovalGroupsController> logger, IApprovalGroupMemberService approvalGroupMemberService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IUserService> userService,
             SearchApprovingOfficersQueryHandler searchApprovingOfficersQueryHandler)
@@ -89,7 +90,6 @@ namespace cxOrganization.WebServiceAPI.Controllers
             DateTime? lastUpdatedAfter = null,
             int? assigneeDepartmentId = null,
             bool searchInSameDepartment = false,
-            bool isCrossOrganizationalUnit = false,
             bool searchFromDepartmentToTop = false,
             int pageIndex = 0,
             int pageSize = 0,
@@ -112,7 +112,6 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 PageSize = pageSize,
                 ParentDepartmentId = parentDepartmentId,
                 SearchFromDepartmentToTop = searchFromDepartmentToTop,
-                IsCrossOrganizationalUnit = isCrossOrganizationalUnit,
                 SearchInSameDepartment = searchInSameDepartment,
                 SearchKey = searchKey,
                 StatusEnums = statusEnums,

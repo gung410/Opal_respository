@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Business.PDPlanner;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Services;
@@ -24,14 +25,14 @@ namespace cxOrganization.WebServiceAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUserInfoService _userInfoService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ILogger _logger;
         private readonly ILearningNeedsAnalysisService _learningNeedsAnalysisService;
 
         private readonly AppSettings _appSettings;
         public UserInfoController(
             ILogger<UserInfoController> logger,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService userService,
             IUserInfoService userInfoService,
             ILearningNeedsAnalysisService learningNeedsAnalysisService,

@@ -9,14 +9,20 @@
     <h3>Confirmation</h3>
   </modal-header>
   <content>
-    <input
-      *ngIf="showDatePicker"
-      type="date"
-      [value]="expirationDate"
-      [min]="minDate"
-      (input)="onDateChanged($event.target.value)"
-      matInput
-    />
+    <mat-form-field appearance="fill">
+        <input 
+        matInput 
+        [matDatepicker]="picker1" 
+        [(ngModel)]="expirationDate"
+        placeholder="dd/mm/yyyy"
+        *ngIf="showDatePicker"
+        [min]="minDate"
+        (dateInput)= "onDateChanged($event.target.value)"
+        readonly
+        >
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>   
     <h5>
       {{
         message

@@ -5,6 +5,7 @@
 
 export const environment = {
   production: true,
+  showAuthDebugInformation: true,
   fallbackLanguage: 'en-US',
   fallbackLanguageName: 'English',
   clientId: 'OrganizationSpa',
@@ -20,7 +21,7 @@ export const environment = {
     communication: 'uat-datahub-opal-api-communication',
     dataHub: 'uat-datahub-opal-api-query',
     learningCatalog: 'uat-competence-opal-api-learningcatalog',
-    tagging: 'uat-learnapp-opal-api-tagging'
+    tagging: 'uat-learnapp-opal-api-tagging/api'
   },
   site: {
     title: 'System Admin',
@@ -39,7 +40,7 @@ export const environment = {
     dateRelease: '12 June 2020'
   },
   baseProfileAppUrl: 'https://www.uat.opal2.conexus.net',
-  auditLogAppUrl: 'https://admin.uat.opal2.conexus.net',
+  baseProfileUrl: 'https://admin.uat.opal2.conexus.net',
   autoNavigateToIDP: true,
   gravatarUrl: 'https://secure.gravatar.com/avatar',
   buildVersion: '1.0.0',
@@ -51,6 +52,7 @@ export const environment = {
   ParentDepartmentId: 14350,
   OtherDepartmentId: 25031,
   topDepartmentId: 1,
+  showTechnicalInfo: true,
   firebase: {
     fcmConfig: {
       apiKey: 'AIzaSyAQYaxjtyRu8_BEnG83lyKNbAJo9eNVRRw',
@@ -84,7 +86,8 @@ export const environment = {
     LearnerAppAndroid: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerAppIOS: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerWeb: 'https://www.uat.opal2.conexus.net/app/learner',
-    Report: 'https://www.uat.opal2.conexus.net/report'
+    Report: 'https://www.uat.opal2.conexus.net/report',
+    CSL: 'https://www.uat.opal2.conexus.net/csl'
   },
   userAccounts: {
     enableCreateUserAccountRequest: true,

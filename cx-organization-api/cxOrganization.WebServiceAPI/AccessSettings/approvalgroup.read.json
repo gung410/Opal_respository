@@ -54,6 +54,7 @@
         ]
       },
       "reportingofficer": {
+        "accessToAllUserGroup": true,
         "inSameDepartment": true,
         "inAncestorDepartmentTypeExtIds": [
           "*"

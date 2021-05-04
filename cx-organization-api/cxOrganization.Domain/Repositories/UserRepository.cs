@@ -24,6 +24,7 @@ using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Services.Reports;
 using Microsoft.Data.SqlClient;
 using Gender = cxOrganization.Domain.Enums.Gender;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Repositories
 {
@@ -38,7 +39,7 @@ namespace cxOrganization.Domain.Repositories
         private readonly Func<string, ICryptographyService> _cryptographyService;
         private IOptions<AppSettings> _options;
         private readonly IUserCryptoService _userCryptoService;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRepository" /> class.
         /// </summary>
@@ -52,7 +53,7 @@ namespace cxOrganization.Domain.Repositories
         public UserRepository(OrganizationDbContext dbContext,
             Func<string, ICryptographyService> cryptographyService,
             IUserTypeRepository userTypeRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IHierarchyDepartmentRepository hierarchyDepartmetRepository,
             IOptions<AppSettings> options,
             IUserCryptoService userCryptoService)
@@ -93,8 +94,8 @@ namespace cxOrganization.Domain.Repositories
             int pageSize = 0,
             string orderBy = "",
             IncludeDepartmentOption includeDepartment = IncludeDepartmentOption.None,
-            bool includeLoginServiceUsers = false, 
-            IncludeUserTypeOption  includeUserTypes = IncludeUserTypeOption.None,
+            bool includeLoginServiceUsers = false,
+            IncludeUserTypeOption includeUserTypes = IncludeUserTypeOption.None,
             bool filterOnParentHd = true,
             IncludeUgMemberOption includeUGMembers = IncludeUgMemberOption.None,
             List<string> jsonDynamicData = null,
@@ -128,7 +129,7 @@ namespace cxOrganization.Domain.Repositories
                 var jsonHasMoreData = false;
                 //Build paging from IQueryable
                 var jsonTotalItem = 0;
-                var jsonItems =  jsonQuery.ToPaging(pageIndex, pageSize, skipPaging, out jsonHasMoreData, out jsonTotalItem);
+                var jsonItems = jsonQuery.ToPaging(pageIndex, pageSize, skipPaging, out jsonHasMoreData, out jsonTotalItem);
                 return new PaginatedList<UserEntity>(jsonItems, pageIndex, pageSize, jsonHasMoreData)
                 { TotalItems = jsonTotalItem };
             }
@@ -143,7 +144,7 @@ namespace cxOrganization.Domain.Repositories
                 var jsonHasMoreData = false;
                 //Build paging from IQueryable
                 var jsonTotalItem = 0;
-                var jsonItems =  jsonQuery.ToPaging(pageIndex, pageSize, skipPaging, out jsonHasMoreData, out jsonTotalItem);
+                var jsonItems = jsonQuery.ToPaging(pageIndex, pageSize, skipPaging, out jsonHasMoreData, out jsonTotalItem);
                 return new PaginatedList<UserEntity>(jsonItems, pageIndex, pageSize, jsonHasMoreData)
                 { TotalItems = jsonTotalItem };
             }
@@ -212,8 +213,9 @@ namespace cxOrganization.Domain.Repositories
             }
             if (includeLoginServiceUsers)
             {
-                query = query.Include(q => q.LoginServiceUsers);}
-         
+                query = query.Include(q => q.LoginServiceUsers);
+            }
+
 
             if (includeOwnUserGroups)
             {
@@ -287,7 +289,9 @@ namespace cxOrganization.Domain.Repositories
             DateTime? entityActiveDateBefore = null,
             DateTime? entityActiveDateAfter = null,
             bool filterOnUd = false,
-            List<int> exceptUserIds = null)
+            List<int> exceptUserIds = null,
+            int? currentDepartmentIdForSorting = null
+            )
         {
             //temporary to query user json array data
             if (jsonDynamicData != null && jsonDynamicData.Any(x => x.Contains("hrmsLeaveFrom")))
@@ -302,7 +306,7 @@ namespace cxOrganization.Domain.Repositories
                 var jsonHasMoreData = false;
                 var paginatedJsonItems = await jsonQuery.ToPagingAsync(pageIndex, pageSize, skipPaging);
                 return new PaginatedList<UserEntity>(paginatedJsonItems.Items, pageIndex, pageSize, jsonHasMoreData)
-                    {TotalItems = paginatedJsonItems.TotalItems};
+                { TotalItems = paginatedJsonItems.TotalItems };
             }
             if (jsonDynamicData != null && jsonDynamicData.Any(x => x.Contains("hrmsLeaveEndDate")))
             {
@@ -396,13 +400,34 @@ namespace cxOrganization.Domain.Repositories
                 var itemsTemp = await query.Take(MaximumRecordsReturn).ToListAsync();
                 return new PaginatedList<UserEntity>(itemsTemp, pageIndex, MaximumRecordsReturn, false) { TotalItems = itemsTemp.Count };
             }
+
             //Query must be ordered before apply paging
-            if (searchKey != null)
-                query = query.OrderBy(x => x.FirstName);
-            else
-                query = query.ApplyOrderBy(p => p.UserId, orderBy);
+            query = ApplyOrder(searchKey, orderBy, currentDepartmentIdForSorting, query);
+
             var pagingResult = await query.ToPagingAsync(pageIndex, pageSize, skipPaging);
             return new PaginatedList<UserEntity>(pagingResult.Items, pageIndex, pageSize, pagingResult.HasMoreData) { TotalItems = pagingResult.TotalItems };
+        }
+
+        private IQueryable<UserEntity> ApplyOrder(string searchKey, string orderBy, int? currentDepartmentIdForSorting, IQueryable<UserEntity> query)
+        {
+            if (currentDepartmentIdForSorting > 0)
+            {
+                // Show users at the same OU as the current department to the top of the list.
+                // Then show users at other departments sorting by department, then name of the user.
+                query = query
+                    .OrderByDescending(user => currentDepartmentIdForSorting == user.DepartmentId)
+                    .ThenBy(user => user.Department.Name)
+                    .ThenBy(user => user.FirstName);
+            }
+            else
+            {
+                if (searchKey != null)
+                    query = query.OrderBy(x => x.FirstName);
+                else
+                    query = query.ApplyOrderBy(p => p.UserId, orderBy);
+            }
+
+            return query;
         }
 
         private bool HandleUserTypeArguments(List<string> userTypeExtIds, List<List<string>> multiUserTypeExtIdFilters, ref List<List<int>> multiUserTypeFilters)
@@ -430,7 +455,7 @@ namespace cxOrganization.Domain.Repositories
                 usertypesLookup = usertypesLookup ?? _userTypeRepository.GetAllUserTypesLookupByExtIdInCache();
 
                 multiUserTypeFilters = multiUserTypeFilters ?? new List<List<int>>();
-            
+
                 foreach (var filteringUserTypeExtIds in multiUserTypeExtIdFilters)
                 {
                     if (!filteringUserTypeExtIds.IsNullOrEmpty())
@@ -452,10 +477,10 @@ namespace cxOrganization.Domain.Repositories
         private static List<int> FindFilteringUserTypeIds(List<string> filteringUserTypeExtIds, ILookup<string, UserTypeEntity> usertypesLookup)
         {
             return (from ext in filteringUserTypeExtIds
-                select usertypesLookup[ext].FirstOrDefault()
+                    select usertypesLookup[ext].FirstOrDefault()
                 into userType
-                where userType != null
-                select userType.UserTypeId).ToList();
+                    where userType != null
+                    select userType.UserTypeId).ToList();
         }
 
         public PaginatedList<UserEntity> SearchActors(int ownerId = 0,
@@ -1136,7 +1161,7 @@ namespace cxOrganization.Domain.Repositories
                 externallyMastered: externallyMastered,
                 filterOnUd: filterOnUd,
                 exceptUserIds: exceptUserIds);
-            return  await  query.CountAsync();
+            return await query.CountAsync();
         }
         private IQueryable<UserEntity> BuildCountUsersQuery(int ownerId, List<int> customerIds, List<int> userIds, List<int> userGroupIds, List<EntityStatusEnum> statusIds,
             List<ArchetypeEnum> archetypeIds, List<int> userTypeIds, List<string> userTypeExtIds, List<int> parentDepartmentIds, List<string> extIds, List<string> ssnList,
@@ -1226,7 +1251,7 @@ namespace cxOrganization.Domain.Repositories
          List<Gender> genders = null,
          bool filterOnParentHd = true,
          bool filterOnUd = false,
-         List<int> exceptUserIds= null)
+         List<int> exceptUserIds = null)
         {
             IQueryable<UserEntity> query = GetUserGroupByDepartmentQuery(ownerId: ownerId, customerIds: customerIds,
                 userIds: userIds, userGroupIds: userGroupIds,
@@ -1291,7 +1316,7 @@ namespace cxOrganization.Domain.Repositories
             return modifiedProperties;
         }
 
-        public async Task<UserEntity> GetOrSetUserFromWorkContext(IWorkContext workContext)
+        public async Task<UserEntity> GetOrSetUserFromWorkContext(IAdvancedWorkContext workContext)
         {
             if (string.IsNullOrEmpty(workContext.Sub))
             {
@@ -1316,7 +1341,7 @@ namespace cxOrganization.Domain.Repositories
             return userEntity;
         }
 
-        public async Task<IList<UserRole>> GetOrSetUserRoleFromWorkContext(IWorkContext workContext)
+        public async Task<IList<UserRole>> GetOrSetUserRoleFromWorkContext(IAdvancedWorkContext workContext)
         {
             UserEntity userEntity = await GetOrSetUserFromWorkContext(workContext);
 
@@ -1364,8 +1389,8 @@ namespace cxOrganization.Domain.Repositories
             if (!entityStatuses.IsNullOrEmpty())
             {
                 sqFilter.Append(entityStatuses.Count == 1
-                    ? $" and u.EntityStatusId = {(int) entityStatuses[0]}"
-                    : $" and u.EntityStatusId in ({string.Join(",", entityStatuses.Select(e => (int) e))})");
+                    ? $" and u.EntityStatusId = {(int)entityStatuses[0]}"
+                    : $" and u.EntityStatusId in ({string.Join(",", entityStatuses.Select(e => (int)e))})");
             }
             if (createdAfter.HasValue)
             {
@@ -1388,7 +1413,7 @@ namespace cxOrganization.Domain.Repositories
 
         }
 
-        public async Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex)
+        public async Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex, int pageSize)
         {
             IQueryable<UserEntity> query = GetAllAsNoTracking()
                 .Include(j => j.UT_Us)
@@ -1401,8 +1426,8 @@ namespace cxOrganization.Domain.Repositories
 
             //Build paging from IQueryable
             var hasMoreData = false;
-            var paginatedJsonItems = await query.ToPagingAsync(pageIndex, 5000, false);
-            return new PaginatedList<UserEntity>(paginatedJsonItems.Items, pageIndex, 5000, paginatedJsonItems.HasMoreData)
+            var paginatedJsonItems = await query.ToPagingAsync(pageIndex, pageSize, false);
+            return new PaginatedList<UserEntity>(paginatedJsonItems.Items, pageIndex, pageSize, paginatedJsonItems.HasMoreData)
             { TotalItems = paginatedJsonItems.TotalItems };
         }
 
@@ -1494,7 +1519,38 @@ namespace cxOrganization.Domain.Repositories
             return (countingData, totalUser);
         }
 
-        private static  string GetGroupByField(string userTableAlias, UserGroupByField groupByField, out StringBuilder leftJoinExpressionBuilder)
+        /// <summary>
+        // For SSN migrating only
+        /// </summary>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public List<UserEntity> GetUserForMigratingSsn(int pageNo, int pageSize)
+        {
+            return GetAll().Where(x => !string.IsNullOrEmpty(x.SSN)).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        /// <summary>
+        // For SSN migrating only
+        /// </summary>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public List<UserEntity> GetUserForUpdateSsnHash(int pageNo, int pageSize)
+        {
+            return GetAll().Where(x => !string.IsNullOrEmpty(x.SSN) && string.IsNullOrEmpty(x.SSNHash)).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        }
+        /// <summary>
+        // For Fixing SSN only
+        /// </summary>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public List<UserEntity> GetUserForFixingSSN(int pageNo, int pageSize)
+        {
+            return GetAll().Where(x => !string.IsNullOrEmpty(x.SSN) && x.SSN.Length > 60).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        }
+        private static string GetGroupByField(string userTableAlias, UserGroupByField groupByField, out StringBuilder leftJoinExpressionBuilder)
         {
             leftJoinExpressionBuilder = new StringBuilder();
             string groupField = null;
@@ -1675,7 +1731,7 @@ namespace cxOrganization.Domain.Repositories
             }
         }
     }
-   
+
 }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Adapter.Shared.Extensions;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -27,7 +28,7 @@ namespace cxOrganization.Domain.Repositories
         /// <param name="departmentTypeRepository">The user group repository.</param>
         /// <param name="entityFrameworkCache"></param>
         public DepartmentRepository(OrganizationDbContext dbContext,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentTypeRepository departmentTypeRepository)
             : base(dbContext, workContext)
         {

@@ -8,6 +8,7 @@ import {
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  CxConfirmationDialogComponent,
   CxGlobalLoaderService,
   CxInformationDialogService
 } from '@conexus/cx-angular-common';
@@ -22,6 +23,7 @@ import { v4 as uuid } from 'uuid';
 import { ErrorAPI } from 'app-models/auth.model';
 import { AppConstant, Constant, RouteConstant } from '../app.constant';
 import { findIndexCommon } from '../constants/common.const';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export enum HttpStatusCode {
   Unknown = 0,
@@ -31,6 +33,7 @@ export enum HttpStatusCode {
   RequestTimeout = 408,
   InternalServerError = 500,
   ServiceUnavailable = 503,
+  BadGateway = 502,
   GatewayTimeout = 504,
   HttpVersionNotSupported = 505
 }
@@ -190,6 +193,16 @@ export class AuthHttpInterceptorService implements HttpInterceptor {
       return Observable.throwError(httpErrorResponse);
     }
 
+    const isServerInternalErrorStatusCode =
+      // tslint:disable-next-line:no-magic-numbers
+      httpErrorResponse.status >= 500 && httpErrorResponse.status < 600;
+
+    if (isServerInternalErrorStatusCode) {
+      this.showErrowRequestPopup(httpErrorResponse);
+
+      return Observable.of(httpErrorResponse);
+    }
+
     switch (httpErrorResponse.status) {
       case HttpStatusCode.Unauthorized:
         this.showErrorCodeMessage(HttpStatusCode.Unauthorized);
@@ -334,5 +347,51 @@ export class AuthHttpInterceptorService implements HttpInterceptor {
 
   private navigateToLearnerIfForbiddenUser(): void {
     location.href = AppConstant.moduleLink.LearnerWeb;
+  }
+
+  private showErrowRequestPopup(httpErrorResponse: HttpErrorResponse): void {
+    const requestId = httpErrorResponse.headers.get('request-id');
+    const translateService: TranslateService = this.injector.get(
+      TranslateService
+    );
+    const statusCode = httpErrorResponse.status;
+    const ngbModal: NgbModal = this.injector.get(NgbModal);
+
+    if (ngbModal.hasOpenModals()) {
+      ngbModal.dismissAll();
+    }
+
+    const modalRef = ngbModal.open(CxConfirmationDialogComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    const commonContent = translateService.instant(
+      'RequestErrorMessage.InternalSerrverErrorText'
+    );
+
+    const badGatewayContent = translateService.instant(
+      'RequestErrorMessage.BadGatewayErrorText'
+    );
+
+    const subContent =
+      !!requestId && environment.showTechnicalInfo
+        ? `Technical Info:
+          ${'* ' + requestId}
+          ${'* ' + new Date().toISOString()}
+        `
+        : null;
+
+    const modalComponent = modalRef.componentInstance as CxConfirmationDialogComponent;
+    modalComponent.cancelButtonText = 'OK';
+    modalComponent.showConfirmButton = false;
+    modalComponent.centeredFooterButton = true;
+    modalComponent.header = 'Error';
+    modalComponent.content =
+      statusCode === HttpStatusCode.BadGateway
+        ? badGatewayContent
+        : commonContent;
+    modalComponent.subContent = subContent;
+    modalComponent.cancel.subscribe(() => modalRef.close());
   }
 }

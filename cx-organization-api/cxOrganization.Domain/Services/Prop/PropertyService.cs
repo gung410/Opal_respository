@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -13,14 +14,14 @@ namespace cxOrganization.Domain.Services
         private readonly IPropValueRepository _propValueRepository;
         private readonly IPropOptionRepository _propOptionRepository;
         private readonly IPropPageRepository _propPageRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IPropertyRepository _propertyRepository;
 
         public PropertyService(IPropPageRepository propPageRepository,
             IPropOptionRepository propOptionRepository,
             IPropValueRepository propValueRepository,
             IPropertyRepository propertyRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _propValueRepository = propValueRepository;
             _propOptionRepository = propOptionRepository;

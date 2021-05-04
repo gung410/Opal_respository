@@ -18,12 +18,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Domain.Extensions;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Mappings
 {
     public class UserGenericMappingService : UserMappingService
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IUserRepository _userRepository;
         private readonly IOwnerRepository _ownerRepository;
@@ -32,7 +33,7 @@ namespace cxOrganization.Domain.Mappings
             ArchetypeEnum.PersonnelGroup, ArchetypeEnum.ExperienceCategory, ArchetypeEnum.DevelopmentalRole, ArchetypeEnum.LearningFramework };
 
         public UserGenericMappingService(IUserTypeRepository userTypeRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IDepartmentRepository departmentRepository,
             IPropertyService propertyService,
             IUserRepository userRepository,
@@ -249,6 +250,7 @@ namespace cxOrganization.Domain.Mappings
             if (userGeneric.SSN != null)
             {
                 userEntity.SSN = _userCryptoService.EncryptSSN(userGeneric.SSN);
+                userEntity.SSNHash = _userCryptoService.ComputeHashSsn(userDto.SSN);
             }
 
             userEntity.Gender = userGeneric.Gender;
@@ -310,18 +312,26 @@ namespace cxOrganization.Domain.Mappings
             var statusBeforeChangeStatus = userGeneric.GetJsonPropertyValue(UserJsonDynamicAttributeName.LastEntityStatusId);
             var isFinishOnBoarding = userGeneric.GetJsonPropertyValue(UserJsonDynamicAttributeName.FinishOnBoarding);
 
+            // Add latest status when status changed
+            bool isUserStatusChanged = oldStatus.Value != (int)userGeneric.EntityStatus.StatusId;
+
             // If Unlock/Activate the user has status before is New. Then must return New status to that user
             if (oldStatus.HasValue 
+                && isUserStatusChanged
                 && (oldStatus.Value == (int) EntityStatusEnum.IdentityServerLocked || oldStatus.Value == (int)EntityStatusEnum.Inactive) 
                 && userEntity.EntityStatusId != (int)EntityStatusEnum.Archived
                 && (statusBeforeChangeStatus == (int)EntityStatusEnum.New || isFinishOnBoarding == false))
             {
                 userEntity.EntityStatusId = (int)EntityStatusEnum.New;
+                userEntity.EntityStatusReasonId = (int) EntityStatusReasonEnum.Unknown;
             }
 
-            // Add latest status when status changed
-            userGeneric.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.LastEntityStatusId, oldStatus);
-            userGeneric.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.LastEntityStatusReasonId, oldStatusReason);
+            if (isUserStatusChanged)
+            {
+                userGeneric.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.LastEntityStatusId, oldStatus);
+                userGeneric.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.LastEntityStatusReasonId, oldStatusReason);
+            }
+
             userGeneric.AddOrUpdateJsonProperty(UserJsonDynamicAttributeName.ExpirationDate, userGeneric.EntityStatus.ExpirationDate);
             userEntity.DynamicAttributes = userGeneric.JsonDynamicAttributes == null
                 ? null
@@ -409,7 +419,6 @@ namespace cxOrganization.Domain.Mappings
                 CountryCode = userDto.MobileCountryCode,
                 ExtId = userDto.Identity.ExtId ?? string.Empty,
                 DepartmentId = userDto.DepartmentId,
-                SSN = _userCryptoService.EncryptSSN(userDto.SSN),
                 Tag = userDto.Tag ?? string.Empty,
                 SaltPassword = string.Empty,
                 HashPassword = string.Empty,
@@ -429,6 +438,15 @@ namespace cxOrganization.Domain.Mappings
                 DynamicAttributes = userDto.JsonDynamicAttributes == null ? null : JsonConvert.SerializeObject(userDto.JsonDynamicAttributes),
                 Department = _departmentRepository.GetById(userDto.DepartmentId)
             };
+            if (userDto.SSN != null)
+            {
+                userNew.SSN = _userCryptoService.EncryptSSN(userDto.SSN);
+                userNew.SSNHash = _userCryptoService.ComputeHashSsn(userDto.SSN);
+            }
+            else
+            {
+                userNew.SSN = string.Empty;
+            }
             var defaultUserType = UserTypeEntities.FirstOrDefault(u => u.UserTypeId == UserTypeId);
             if (defaultUserType != null)
             {
@@ -527,35 +545,36 @@ namespace cxOrganization.Domain.Mappings
                     return empDto.EmailAddress;
                 }
             }
-
-            //Using 4 first letters in firstname and 4 first letters in lastname
-            try
+            if (!empDto.SkipGenerateUserName)
             {
-                var fourFirstLettersOfFirstName = empDto.FirstName;
-                if (!string.IsNullOrEmpty(empDto.FirstName) && empDto.FirstName.Length >= 4)
+                //Using 4 first letters in firstname and 4 first letters in lastname
+                try
                 {
-                    fourFirstLettersOfFirstName = empDto.FirstName.Substring(0, 4);
-                }
-                var fourFirstLettersOfLastName = empDto.LastName;
-                if (!string.IsNullOrEmpty(empDto.FirstName) && empDto.FirstName.Length >= 4)
-                {
-                    fourFirstLettersOfLastName = empDto.LastName.Substring(0, 4);
-                }
-                var username = RemoveSpecialCharactersAndSpaces(string.Format("{0}{1}", fourFirstLettersOfFirstName, fourFirstLettersOfLastName));
-                if (!string.IsNullOrEmpty(username))
-                {
-                    var usersByUserName = _userRepository.GetUsersByUsername(currentOwnerId ?? _workContext.CurrentOwnerId, username, EntityStatusEnum.All);
-                    if (!usersByUserName.Any())
+                    var fourFirstLettersOfFirstName = empDto.FirstName;
+                    if (!string.IsNullOrEmpty(empDto.FirstName) && empDto.FirstName.Length >= 4)
                     {
-                        return username;
+                        fourFirstLettersOfFirstName = empDto.FirstName.Substring(0, 4);
+                    }
+                    var fourFirstLettersOfLastName = empDto.LastName;
+                    if (!string.IsNullOrEmpty(empDto.LastName) && empDto.LastName.Length >= 4)
+                    {
+                        fourFirstLettersOfLastName = empDto.LastName.Substring(0, 4);
+                    }
+                    var username = RemoveSpecialCharactersAndSpaces(string.Format("{0}{1}", fourFirstLettersOfFirstName, fourFirstLettersOfLastName));
+                    if (!string.IsNullOrEmpty(username))
+                    {
+                        var usersByUserName = _userRepository.GetUsersByUsername(currentOwnerId ?? _workContext.CurrentOwnerId, username, EntityStatusEnum.All);
+                        if (!usersByUserName.Any())
+                        {
+                            return username;
+                        }
                     }
                 }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
             }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-
             //Generate a GUID as username
             return Guid.NewGuid().ToString();
         }

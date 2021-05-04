@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Globalization;
 
 namespace cxOrganization.Domain.Extensions
@@ -18,13 +20,26 @@ namespace cxOrganization.Domain.Extensions
         public static DateTime? toDateTimeWithFormat(this string dateString, string format)
         {
             DateTime convertedDateTime;
-            var result = DateTime.TryParseExact(dateString, 
+            var result = DateTime.TryParseExact(dateString,
                                                 format,
                                                 CultureInfo.InvariantCulture,
                                                 DateTimeStyles.None,
                                                 out convertedDateTime);
-            
+
             return result ? convertedDateTime : (DateTime?)null;
+        }
+
+        public static bool IsValidJson(this string strInput)
+        {
+            try
+            {
+                var obj = JToken.Parse(strInput);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /// <summary>

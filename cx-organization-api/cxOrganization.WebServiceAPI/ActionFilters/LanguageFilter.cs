@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Settings;
@@ -13,7 +14,7 @@ namespace cxOrganization.WebServiceAPI.ActionFilters
 {
     public class LanguageFilter : IActionFilter
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly string FallBackLanguageCode;
         private static Dictionary<string, LanguageEntity> LanguagesDic
         {
@@ -21,7 +22,7 @@ namespace cxOrganization.WebServiceAPI.ActionFilters
             set;
         }
 
-        public LanguageFilter(ILanguageRepository languageRepository, IWorkContext workContext, IOptions<AppSettings> options)
+        public LanguageFilter(ILanguageRepository languageRepository, IAdvancedWorkContext workContext, IOptions<AppSettings> options)
         {
             _workContext = workContext;
             if (LanguagesDic == null || !LanguagesDic.Any())

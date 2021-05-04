@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserTypes;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Security.HierarchyDepartment;
 using cxOrganization.Domain.Services;
@@ -29,7 +30,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     {
         private readonly OrganizationDbContext _unitOfWorkForOrganization;
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserTypeService _userTypeService;
         private readonly IUserGroupService _userGroupService;
         private readonly IDepartmentService _departmentService;
@@ -53,7 +54,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public UsersController(
             OrganizationDbContext organizationUnitOfWork,
             IUserService userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserTypeService userTypeService,
             IUserGroupService userGroupService,
             IDepartmentService departmentService,

@@ -7,6 +7,7 @@ using cxOrganization.Adapter.JobChannel;
 using cxOrganization.Adapter.JobMatch;
 using cxOrganization.Business.Connection;
 using cxOrganization.Business.Extensions;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Extensions;
 using cxPlatform.Client.ConexusBase;
@@ -21,14 +22,14 @@ namespace cxOrganization.Business.CandidateList
     {
         private readonly ILogger _logger;
 
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IConnectionService _connectionService;
         private readonly IAssessmentAdapter _assessmentAdapter;
         private readonly ICacheProvider _memoryCacheProvider;
        private readonly CandidateListConfig _candidateListConfig;
         private readonly IJobChannelAdapter _jobChannelAdapter;
         private readonly IJobMatchAdapter _jobMatchAdapter;
-        public CandidateListService(IWorkContext workContext,
+        public CandidateListService(IAdvancedWorkContext workContext,
             ILoggerFactory loggerFactory,
             IConnectionService connectionService,
             IAssessmentAdapter assessmentAdapter,

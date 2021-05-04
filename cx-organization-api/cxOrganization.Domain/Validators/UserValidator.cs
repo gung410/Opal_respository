@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -15,13 +16,13 @@ namespace cxOrganization.Domain.Validators
     public class UserValidator : IUserValidator
     {
         private readonly IUserRepository _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOwnerRepository _ownerRepository;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
 
         public UserValidator(IUserRepository userRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ICustomerRepository customerRepository,
             IOwnerRepository ownerRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository)

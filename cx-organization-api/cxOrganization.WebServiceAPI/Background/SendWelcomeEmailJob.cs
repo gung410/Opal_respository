@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using cx.datahub.scheduling.jobs.shared;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Repositories;
@@ -108,7 +109,7 @@ namespace cxOrganization.WebServiceAPI.Background
             return Task.Factory.StartNew(() => { Execute(performContext, inputs); });
         }
 
-        private IWorkContext InitWorkContext(RecurringJobSetting currentRecurringJobSetting, string requestId, string correlationId)
+        private IAdvancedWorkContext InitWorkContext(RecurringJobSetting currentRecurringJobSetting, string requestId, string correlationId)
         {
             var appSetting = _appSettingOption.Value;
 
@@ -143,7 +144,7 @@ namespace cxOrganization.WebServiceAPI.Background
             return workContext;
         }
 
-        private void SetLanguageToWorkContext(IWorkContext workContext, Locale locale)
+        private void SetLanguageToWorkContext(IAdvancedWorkContext workContext, Locale locale)
         {
             if (locale != null)
             {

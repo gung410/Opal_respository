@@ -8,8 +8,9 @@ services:
       - BuildVersion=${GO_PIPELINE_LABEL}
       - VIRTUAL_HOST=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-organization.${DOMAIN_POSTFIX}${PUBLIC_DNS}
       - AppSettings:AuthorityUrl={{ idm_base_url }}
-      - AppSettings:ApiBaseUrl={{ api_base_url }}
-      - AppSettings:PortalAPI={{ portal_api }}
+      - AppSettings:ApiBaseUrl=http://api.opal
+      - AppSettings:PortalAPI=${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-portal
+      - AppSettings:IsCrossOrganizationalUnit={{ is_cross_organizational_unit }}
       - AppSettings:ServiceUsername={{ service_username }}
       - AppSettings:ServicePassword={{ service_password }}
       - AppSettings:AdminUsername={{ admin_username }}
@@ -79,6 +80,11 @@ services:
       - LearningCatalogAPISettings:APIBaseUrl=http://${ENVIRONMENT_NAME}-competence-${PROJECT_NAME}-api-learningcatalog.${PROJECT_NAME}/
       - Idm_ApiName=${INTERNAL_DOMAIN_API_NAME}
       - Idm_ApiSecret=${INTERNAL_DOMAIN_API_SECRET}
+      - AwsKmsEncyption:Enabled={{ AwsKmsEncyption_Enabled }}
+      - AwsKmsEncyption:AwsAccessKey={{ AwsKmsEncyption_AwsAccessKey }}
+      - AwsKmsEncyption:AwsSecretKey={{ AwsKmsEncyption_AwsSecretKey }}
+      - AwsKmsEncyption:KmsArn={{ AwsKmsEncyption_KmsArn }}
+      - AwsKmsEncyption:EncryptedHashKey={{ AwsKmsEncyption_EncryptedHashKey }}
 {% if https_proxy is defined %}
       - HTTPS_PROXY={{ https_proxy }}
 {% endif %}

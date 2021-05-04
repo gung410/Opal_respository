@@ -5,6 +5,7 @@ using cxOrganization.Client;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserGroups;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -22,7 +23,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class CandidatePoolsController : ApiControllerBase
     {
         private readonly ICandidatePoolMemberService _candidatePoolMemberService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupService _userGroupService;
         private readonly IUserService _userService;
         private readonly OrganizationDbContext _organizationUnitOfWork;
@@ -33,7 +34,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// Constructor
         /// </summary>
         public CandidatePoolsController(ICandidatePoolMemberService candidatePoolMemberService,
-            IWorkContext workContext, Func<ArchetypeEnum, IUserService> userService,
+            IAdvancedWorkContext workContext, Func<ArchetypeEnum, IUserService> userService,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IDepartmentService> departmentService,
             OrganizationDbContext unitOfWork)

@@ -1,32 +1,36 @@
-<div
-  *ngIf="
-  broadcastMessageOwners 
-  && broadcastMessageOwners.length
-  && broadcastMessagesDataPaging
-  && broadcastMessagesDataPaging.items"
-  class="broadcast-messages-container"
->
-  <broadcast-messages-list
-    [isCurrentUserAllowToMakeActions]="isCurrentUserAllowToMakeActions"
-    [broadcastMessagesData]="broadcastMessagesDataPaging?.items"
-    [broadcastMessageOwners]="broadcastMessageOwners"
-    (singleAction)="onSingleActionClicked($event)"
-    (editBroadcastMessages)="onEditBroadcastMessagesClicked($event)"
-    (sortChange)="onSortTypeChange($event)"
-  >
-  </broadcast-messages-list>
-  <div
-    *ngIf="broadcastMessagesDataPaging"
-    class="broadcast-message__paging-area"
-  >
-    <cx-paging
-      [currentPage]="broadcastMessagesDataPaging.pageIndex"
-      [recordsPerPage]="broadcastMessagesDataPaging.pageSize"
-      [currentPageSize]="defaultPageSize"
-      [totalRecords]="broadcastMessagesDataPaging.totalItems"
-      (currentPageChange)="onBroadcastMessagesPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)"
+<div class="broadcast-message-container">
+  <div class="actions">
+    <button
+      *ngIf="isCurrentUserAllowToMakeActions"
+      class="cx-btn create-btn"
+      (click)="createNewBroadcastMessage()"
     >
-    </cx-paging>
+      {{ 'Common.Button.CreateNew' | translate }}
+    </button>
+  </div>
+  <div>
+    <broadcast-messages-list
+      [isCurrentUserAllowToMakeActions]="isCurrentUserAllowToMakeActions"
+      [broadcastMessagesData]="broadcastMessagesDataPaging?.items"
+      [broadcastMessageOwners]="broadcastMessageOwners"
+      (singleAction)="onSingleActionClicked($event)"
+      (editBroadcastMessages)="onEditBroadcastMessagesClicked($event)"
+      (sortChange)="onSortTypeChange($event)"
+    >
+    </broadcast-messages-list>
+    <div
+      *ngIf="broadcastMessagesDataPaging"
+      class="broadcast-message__paging-area"
+    >
+      <cx-paging
+        [currentPage]="broadcastMessagesDataPaging.pageIndex"
+        [recordsPerPage]="broadcastMessagesDataPaging.pageSize"
+        [currentPageSize]="defaultPageSize"
+        [totalRecords]="broadcastMessagesDataPaging.totalItems"
+        (currentPageChange)="onBroadcastMessagesPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)"
+      >
+      </cx-paging>
+    </div>
   </div>
 </div>

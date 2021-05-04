@@ -10,6 +10,7 @@ using cxOrganization.Business.Extensions;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Enums;
@@ -35,7 +36,7 @@ namespace cxOrganization.Business.Connection
         private readonly IUGMemberRepository _ugMemberRepository;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly Func<ArchetypeEnum, IUserGroupService> _userGroupService;
         private readonly Func<ArchetypeEnum, IUGMemberService> _userGroupMemberService;
         private readonly ICacheProvider _memoryCacheProvider;
@@ -49,7 +50,7 @@ namespace cxOrganization.Business.Connection
             IUserRepository userRepository,
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IUGMemberService> userGroupMemberService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ICacheProvider cacheProvider,
             IOptions<ConnectionConfig> connectionConfigOption,
             IEventLogDomainApiClient eventClientService,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Mappings;
@@ -25,13 +26,13 @@ namespace cxOrganization.Domain.Services
         private readonly IUserValidator _userValidator;
         private readonly IUserGroupValidator _userGroupValidator;
         private readonly IUserGroupUserMappingService _userGroupUserMappingService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IDatahubLogger _datahubLogger;
         private readonly ILogger _logger;
 
         public ApprovalGroupMemberService(IUserGroupRepository userGroupRepository,
             OrganizationDbContext organizationDbContext, IUGMemberRepository uGMemberRepository, IUserGroupUserMappingService userGroupUserMappingService, IServiceProvider serviceProvider,
-            IDatahubLogger datahubLogger, IWorkContext workContext, ILoggerFactory loggerFactory)
+            IDatahubLogger datahubLogger, IAdvancedWorkContext workContext, ILoggerFactory loggerFactory)
         {
             _userGroupRepository = userGroupRepository;
             _organizationDbContext = organizationDbContext;
@@ -124,7 +125,7 @@ namespace cxOrganization.Domain.Services
         {
             var usergroup = _userGroupValidator.ValidateMembership(memberDto);
             var existingUGMembers = _uGMemberRepository
-           .GetUGMembers(userIds: employeeIds, userGroupIds: new List<int> { (int)memberDto.Identity.Id },
+           .GetUGMembers(userIds: employeeIds, includeUser: true, userGroupIds: new List<int> { (int)memberDto.Identity.Id },
                ugmemberIds: memberDto.UserGroupMemberId.HasValue
                    ? new List<long> { memberDto.UserGroupMemberId.Value }
                    : new List<long>());

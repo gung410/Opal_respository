@@ -192,7 +192,7 @@ export class TaxonomyRequestItemViewModel {
   isDataDifferentForDetail(isCommentIncluded: boolean = true): boolean {
     if (isCommentIncluded) {
       const viewData: unknown = {
-        ...this.data,
+        ...this.originalData,
         level1ApprovalOfficerComment: this.originLevel1ApprovalOfficerComment,
         level2ApprovalOfficerComment: this.originLevel2ApprovalOfficerComment
       };

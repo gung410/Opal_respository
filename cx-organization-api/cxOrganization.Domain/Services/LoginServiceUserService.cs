@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -16,14 +17,14 @@ namespace cxOrganization.Domain.Services
     public class LoginServiceUserService : ILoginServiceUserService
     {
         private readonly OrganizationDbContext _organizationDbContext;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly ILoginServiceUserRepository _loginServiceUserRepository;
         private readonly ILoginServiceRepository _loginServiceRepository;
         private readonly IUserRepository _userRepository;
         private readonly ILogger<LoginServiceUserService> _logger;
 
         public LoginServiceUserService(OrganizationDbContext organizationDbContext,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ILoginServiceUserRepository loginServiceUserRepository,
             ILoginServiceRepository loginServiceRepository,
             IUserRepository userRepository, ILogger<LoginServiceUserService> logger)

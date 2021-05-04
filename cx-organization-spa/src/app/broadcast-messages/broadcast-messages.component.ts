@@ -89,15 +89,32 @@ export class BroadcastMessagesComponent
     });
   }
 
+  createNewBroadcastMessage(): void {
+    this.router.navigate(['/broadcast-messages/detail/', '']);
+  }
+
   getBroadcastMessages(): void {
     this.cxGlobalLoaderService.showLoader();
     const loadMessageSub = this.broadcastMessagesService
       .getBroadcastMessages(this._filterParams)
       .subscribe(
         (broadcastMessageDtos) => {
+          // No data response
           if (!broadcastMessageDtos) {
             return;
           }
+
+          // empty data at first page
+          if (
+            !broadcastMessageDtos.items.length &&
+            this._filterParams.pageIndex <= 1
+          ) {
+            this.broadcastMessagesDataPaging = broadcastMessageDtos;
+
+            return;
+          }
+
+          // when delete the last record on a page, it will go back to the preceding page index
           if (!broadcastMessageDtos.items.length) {
             this.onBroadcastMessagesPageChange(
               this._filterParams.pageIndex - 1

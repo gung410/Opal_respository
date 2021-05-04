@@ -295,9 +295,15 @@ export class UserGroupListComponent
           submitData
         );
         this.userGroupsDataService.createUserGroup(newUserGroupDTO).subscribe(
-          (newCreatedUserGroup: any) => {
+          (newCreatedUserGroup: UserGroupDto) => {
+            // Embed member count to newCreatedUserGroup.
+            newCreatedUserGroup.memberCount = submitData.addedUsers.length;
             // Push the new one on the top of the list.
-            this.agGridConfig.rowData = [...this.userGroupData.items];
+            this.agGridConfig.rowData = [
+              newCreatedUserGroup,
+              ...this.userGroupData.items
+            ];
+
             this.changeDetectorRef.detectChanges();
             this.toastr.success(
               `User group ${newCreatedUserGroup.name} has been created successfully`

@@ -7,6 +7,7 @@ using cxOrganization.Business.Common;
 using cxOrganization.Business.Exceptions;
 using cxOrganization.Business.Extensions;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
@@ -24,13 +25,13 @@ namespace cxOrganization.Business.MoveOrganization.MoveDepartment
     {
         private readonly ILogger _logger;
 
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly OrganizationDbContext _organizationUnitOfWork;
         private readonly IUserService _userService;
         private readonly IEventLogDomainApiClient _eventClientService;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
         private readonly MoveDepartmentConfig _moveDepartmentConfig;
-        public MoveDepartmentService(IWorkContext workContext,
+        public MoveDepartmentService(IAdvancedWorkContext workContext,
             IUserService userService,
             ILoggerFactory loggerFactory,
             IEventLogDomainApiClient eventClientService,

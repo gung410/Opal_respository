@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.RequestDtos.FileRequest;
 using cxOrganization.Domain.Services;
@@ -18,10 +19,10 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class FileController : ApiControllerBase
     {
         private readonly IFileInfoService _fileInfoService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         public FileController(
                 IFileInfoService fileInfoService,
-                IWorkContext workContext
+                IAdvancedWorkContext workContext
                 )
         {
             _fileInfoService = fileInfoService;

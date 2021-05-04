@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Mappings;
@@ -10,7 +11,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 {
     public interface IUserAccessService
     {
-        UserAccessResult CheckReadUserAccess(IWorkContext workContext, UserEntity executorUser, int ownerId,
+        UserAccessResult CheckReadUserAccess(IAdvancedWorkContext workContext, UserEntity executorUser, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             List<List<string>> multipleUserTypeExtIdsFilter,
             string accessPolicy = null);
 
-        Task<UserAccessResult> CheckReadUserAccessAsync(IWorkContext workContext, UserEntity executorUser, int ownerId,
+        Task<UserAccessResult> CheckReadUserAccessAsync(IAdvancedWorkContext workContext, UserEntity executorUser, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -38,7 +39,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             List<List<string>> multipleUserTypeExtIdsFilter,
             string accessPolicy = null);
 
-        UserAccessResult CheckReadUserAccess(IWorkContext workContext, int ownerId,
+        UserAccessResult CheckReadUserAccess(IAdvancedWorkContext workContext, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -52,7 +53,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             List<List<string>> multipleUserTypeExtIdsFilter,
             string accessPolicy = null);
 
-        Task<UserAccessResult> CheckReadUserAccessAsync(IWorkContext workContext, int ownerId,
+        Task<UserAccessResult> CheckReadUserAccessAsync(IAdvancedWorkContext workContext, int ownerId,
             List<int> customerIds,
             List<string> userExtIds,
             List<string> loginServiceClaims,
@@ -66,15 +67,15 @@ namespace cxOrganization.Domain.Security.AccessServices
             List<List<string>> multipleUserTypeExtIdsFilter,
             string accessPolicy = null);
 
-        UserAccessResult CheckEditUserAccess<T>(IWorkContext workContext, T editingUserDto,
+        UserAccessResult CheckEditUserAccess<T>(IAdvancedWorkContext workContext, T editingUserDto,
             IUserMappingService userMappingService) where T : UserDtoBase;
 
-        Task<UserAccessResult> CheckEditUserAccessAsync<T>(IWorkContext workContext, T editingUserDto,
+        Task<UserAccessResult> CheckEditUserAccessAsync<T>(IAdvancedWorkContext workContext, T editingUserDto,
             IUserMappingService userMappingService) where T : UserDtoBase;
 
-        EditabilityAccessSettingElement GetAssignRolePermission(IWorkContext workContext);
+        EditabilityAccessSettingElement GetAssignRolePermission(IAdvancedWorkContext workContext);
 
-        bool CheckCreateUserAccess<T>(IWorkContext workContext, T editingUserDto) where T : UserDtoBase;
-        Task<bool> CheckCreateUserAccessAsync<T>(IWorkContext workContext, T editingUserDto) where T : UserDtoBase;
+        bool CheckCreateUserAccess<T>(IAdvancedWorkContext workContext, T editingUserDto) where T : UserDtoBase;
+        Task<bool> CheckCreateUserAccessAsync<T>(IAdvancedWorkContext workContext, T editingUserDto) where T : UserDtoBase;
     }
 }

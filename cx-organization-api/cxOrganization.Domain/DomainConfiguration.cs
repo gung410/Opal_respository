@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Amazon.KeyManagementService;
 using Backend.CrossCutting.HttpClientHelper;
-
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Business.Crypto;
 using cxOrganization.Domain.Business.Queries.ApprovingOfficer;
@@ -88,6 +88,9 @@ namespace cxOrganization.Domain
             services.AddScoped<IBroadcastMessageService, BroadcastMessageService>();
             services.AddScoped<IBroadcastMessageRepository, BroadcastMessageRepository>();
 
+            // Auth
+            services.AddScoped<IPortalApiClient, PortalApiClient>();
+
             services.AddScoped<IFileInfoRepository, FileInfoRepository>();
             services.AddScoped<IFileInfoService, FileInfoService>();
 
@@ -149,6 +152,7 @@ namespace cxOrganization.Domain
         private static void RegisterCryptoService(IServiceCollection services, IConfiguration configuration)
         {
             var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
+            var awsKmsEncyption = configuration.GetSection("AwsKmsEncyption").Get<AwsKmsEncyption>();
             string secretboxNonce = null;
             string secretboxKey = null;
 
@@ -161,8 +165,15 @@ namespace cxOrganization.Domain
                     throw new Exception("EncryptSSN mode is enabled but missing the Environment Variable (SECRETBOX_NONCE or SECRETBOX_KEY)");
                 }
             }
-            services.AddSingleton(new CryptoSetting(secretboxNonce, secretboxKey));
-            services.AddSingleton<ICryptoService, SodiumCryptoService>();
+            services.AddSingleton(new CryptoSetting(secretboxNonce, secretboxKey, awsKmsEncyption));
+            if (awsKmsEncyption.Enabled)
+            {
+                services.AddSingleton(new AmazonKeyManagementServiceClient(awsKmsEncyption.AwsAccessKey, awsKmsEncyption.AwsSecretKey));
+                services.AddSingleton<ICryptoService, AwsKmsCryptoService>();
+                services.AddSingleton<ICryptoService, SodiumCryptoService>();
+            }
+            else
+                services.AddSingleton<ICryptoService, SodiumCryptoService>();
             services.AddSingleton<IUserCryptoService, UserCryptoService>();
         }
 
@@ -181,7 +192,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Learner:
                         return new UserTypeService(
                             serviceProvider.GetService<IUserTypeRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IUserRepository>(),
                             serviceProvider.GetService<LevelValidator>(),
@@ -190,7 +201,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Employee:
                         return new UserTypeService(
                             serviceProvider.GetService<IUserTypeRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IUserRepository>(),
                             serviceProvider.GetService<RoleValidator>(),
@@ -199,7 +210,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Candidate:
                         return new UserTypeService(
                             serviceProvider.GetService<IUserTypeRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IUserRepository>(),
                             serviceProvider.GetService<RoleValidator>(),
@@ -250,7 +261,7 @@ namespace cxOrganization.Domain
                             serviceProvider.GetService<IUGMemberValidator>(),
                             serviceProvider.GetService<IUGMemberRepository>(),
                             serviceProvider.GetService<IEventLogDomainApiClient>(),
-                            serviceProvider.GetService<IWorkContext>());
+                            serviceProvider.GetService<IAdvancedWorkContext>());
                     case ArchetypeEnum.CandidatePool:
                         return new UGMemberService(
                             serviceProvider.GetService<OrganizationDbContext>(),
@@ -261,7 +272,7 @@ namespace cxOrganization.Domain
                             serviceProvider.GetService<IUGMemberValidator>(),
                             serviceProvider.GetService<IUGMemberRepository>(),
                             serviceProvider.GetService<IEventLogDomainApiClient>(),
-                            serviceProvider.GetService<IWorkContext>());
+                            serviceProvider.GetService<IAdvancedWorkContext>());
                     case ArchetypeEnum.ExternalUserGroup:
                         return new UGMemberService(
                             serviceProvider.GetService<OrganizationDbContext>(),
@@ -272,7 +283,7 @@ namespace cxOrganization.Domain
                             serviceProvider.GetService<IUGMemberValidator>(),
                             serviceProvider.GetService<IUGMemberRepository>(),
                             serviceProvider.GetService<IEventLogDomainApiClient>(),
-                            serviceProvider.GetService<IWorkContext>());
+                            serviceProvider.GetService<IAdvancedWorkContext>());
                     default:
                         return serviceProvider.GetService<UGMemberService>();
                 }
@@ -291,7 +302,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.SchoolOwner):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -305,7 +316,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.OrganizationalUnit):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -319,7 +330,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.Company):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -333,7 +344,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.DataOwner):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -347,7 +358,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.Class):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -361,7 +372,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.Country):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -375,7 +386,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.School):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -389,7 +400,7 @@ namespace cxOrganization.Domain
                     case (ArchetypeEnum.CandidateDepartment):
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -404,7 +415,7 @@ namespace cxOrganization.Domain
 
                         return new DepartmentService(serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                                                     serviceProvider.GetService<IDepartmentRepository>(),
-                                                    serviceProvider.GetService<IWorkContext>(),
+                                                    serviceProvider.GetService<IAdvancedWorkContext>(),
                                                     serviceProvider.GetService<OrganizationDbContext>(),
                                                     //ISecurityHandler securityHandler,
                                                     serviceProvider.GetService<IUserRepository>(),
@@ -431,7 +442,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.CandidatePool:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<CandidatePoolMappingService>(),
                             serviceProvider.GetService<CandidatePoolValidator>(),
@@ -440,7 +451,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.ApprovalGroup:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<ApprovalGroupMappingService>(),
                             serviceProvider.GetService<ApprovalGroupValidator>(),
@@ -449,7 +460,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.ExternalUserGroup:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<ExternalUserGroupMappingService>(),
                             serviceProvider.GetService<ExternalUserGroupValidator>(),
@@ -458,7 +469,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Team:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<TeamMappingService>(),
                             serviceProvider.GetService<UserGroupValidator>(),
@@ -467,7 +478,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.TeachingGroup:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<TeachingGroupMappingService>(),
                             serviceProvider.GetService<TeachingGroupValidator>(),
@@ -476,7 +487,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.UserPool:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<UserPoolMappingService>(),
                             serviceProvider.GetService<UserPoolValidator>(),
@@ -485,7 +496,7 @@ namespace cxOrganization.Domain
                     default:
                         return new UserGroupService(
                             serviceProvider.GetService<IUserGroupRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<UserGroupMappingService>(),
                             serviceProvider.GetService<UserGroupValidator>(),
@@ -506,7 +517,7 @@ namespace cxOrganization.Domain
                 service.GetService<IUserTypeService>(),
                 service.GetService<IHierarchyDepartmentPermissionService>(),
                 service.GetService<IDepartmentAccessService>(),
-                service.GetService<IWorkContext>(),
+                service.GetService<IAdvancedWorkContext>(),
                 service.GetService<IUserAccessService>()
                 ));
         }
@@ -521,7 +532,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Candidate:
                         return new UserService(
                             serviceProvider.GetService<IUserRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                             serviceProvider.GetService<IUserTypeRepository>(),
@@ -557,7 +568,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Learner:
                         return new UserService(
                             serviceProvider.GetService<IUserRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                             serviceProvider.GetService<IUserTypeRepository>(),
@@ -593,7 +604,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Employee:
                         return new UserService(
                             serviceProvider.GetService<IUserRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                             serviceProvider.GetService<IUserTypeRepository>(),
@@ -629,7 +640,7 @@ namespace cxOrganization.Domain
                     case ArchetypeEnum.Unknown:
                         return new UserService(
                             serviceProvider.GetService<IUserRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                             serviceProvider.GetService<IUserTypeRepository>(),
@@ -665,7 +676,7 @@ namespace cxOrganization.Domain
                     default:
                         return new UserService(
                             serviceProvider.GetService<IUserRepository>(),
-                            serviceProvider.GetService<IWorkContext>(),
+                            serviceProvider.GetService<IAdvancedWorkContext>(),
                             serviceProvider.GetService<OrganizationDbContext>(),
                             serviceProvider.GetService<IHierarchyDepartmentRepository>(),
                             serviceProvider.GetService<IUserTypeRepository>(),
@@ -840,7 +851,7 @@ namespace cxOrganization.Domain
             {
                 return new EmployeeMappingService(serviceProvider.GetService<IUserTypeRepository>(),
                     75,
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<IDepartmentRepository>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<IUserRepository>(),
@@ -855,7 +866,7 @@ namespace cxOrganization.Domain
             {
                 return new CandidateMappingService(serviceProvider.GetService<IUserTypeRepository>(),
                     39,
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<IOwnerRepository>(),
                     serviceProvider.GetService<IUserTypeMappingService>(),
@@ -866,7 +877,7 @@ namespace cxOrganization.Domain
             {
                 return new LearnerMappingService(serviceProvider.GetService<IUserTypeRepository>(),
                     75,
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<IDepartmentService>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<IHierarchyDepartmentRepository>(),
@@ -879,7 +890,7 @@ namespace cxOrganization.Domain
             {
                 return new ActorMappingService(serviceProvider.GetService<IUserTypeRepository>(),
                     75,
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<IDepartmentRepository>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<IUserRepository>(),
@@ -892,7 +903,7 @@ namespace cxOrganization.Domain
             services.AddScoped<UserGenericMappingService>(serviceProvider =>
             {
                 return new UserGenericMappingService(serviceProvider.GetService<IUserTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<IDepartmentRepository>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<IUserRepository>(),
@@ -937,7 +948,7 @@ namespace cxOrganization.Domain
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<ILanguageRepository>(),
-                    serviceProvider.GetService<IWorkContext>()
+                    serviceProvider.GetService<IAdvancedWorkContext>()
                     );
             });
             services.AddScoped<CountryMappingService>(serviceProvider =>
@@ -945,7 +956,7 @@ namespace cxOrganization.Domain
                 return new CountryMappingService(
                     new List<int> { 3 },
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<ILanguageRepository>(),
                     serviceProvider.GetService<IPropertyService>()
                     );
@@ -955,7 +966,7 @@ namespace cxOrganization.Domain
                 return new CandidateDepartmentMappingService(
                     new List<int> { 4 },
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<ILanguageRepository>(),
                     serviceProvider.GetService<IPropertyService>()
                     );
@@ -965,7 +976,7 @@ namespace cxOrganization.Domain
                 return new CompanyMappingService(
                     new List<int> { 2 },
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<ILanguageRepository>(),
                     serviceProvider.GetService<IPropertyService>()
                     );
@@ -975,7 +986,7 @@ namespace cxOrganization.Domain
                 return new ClassMappingService(
                     new List<int> { 37 },
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<ILanguageRepository>(),
                     serviceProvider.GetService<IPropertyService>()
                     );
@@ -985,7 +996,7 @@ namespace cxOrganization.Domain
                 return new DataOwnerMappingService(
                     new List<int> { 1 },
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
-                    serviceProvider.GetService<IWorkContext>(),
+                    serviceProvider.GetService<IAdvancedWorkContext>(),
                     serviceProvider.GetService<ILanguageRepository>(),
                     serviceProvider.GetService<IPropertyService>()
                     );
@@ -997,7 +1008,7 @@ namespace cxOrganization.Domain
                     serviceProvider.GetService<IDepartmentTypeRepository>(),
                     serviceProvider.GetService<IPropertyService>(),
                     serviceProvider.GetService<ILanguageRepository>(),
-                    serviceProvider.GetService<IWorkContext>()
+                    serviceProvider.GetService<IAdvancedWorkContext>()
                     );
             });
             services.AddScoped<Func<ArchetypeEnum, IDepartmentMappingService>>(serviceProvider => key =>

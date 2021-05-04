@@ -1,6 +1,8 @@
-﻿using cxOrganization.Domain.Extensions;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Settings;
 using cxPlatform.Core;
+using cxPlatform.Core.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -16,12 +18,12 @@ namespace cxOrganization.Domain.HttpClients
     public class InternalHttpClientRequestService : IInternalHttpClientRequestService
     {
         private readonly HttpClient _httpClient;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly AppSettings _appSettings;
 
         public InternalHttpClientRequestService(
             HttpClient httpClient,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<AppSettings> appSettingsOptions)
         {
             _httpClient = httpClient;
@@ -43,6 +45,36 @@ namespace cxOrganization.Domain.HttpClients
             {
                 HandleToken(_httpClient, token);
 
+                var result = await processGetRequest<T>(baseUrl, payloads);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<T> GetAsync<T>(string token, string cxToken, string baseUrl, params (string, List<string>)[] payloads)
+        {
+            try
+            {
+                HandleToken(_httpClient, token, cxToken);
+
+                var result = await processGetRequest<T>(baseUrl, payloads);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task<T> processGetRequest<T>(string baseUrl, params (string, List<string>)[] payloads)
+        {
+            try
+            {
                 var urlQuery = getUrlQuery(baseUrl, payloads);
 
                 var response = _httpClient.GetAsync(urlQuery);
@@ -61,13 +93,20 @@ namespace cxOrganization.Domain.HttpClients
             }
         }
 
-        private void HandleToken(HttpClient client, string token)
+        private void HandleToken(HttpClient client, string token, string cxToken = null)
         {
             try
             {
                 var _accessToken = token.Replace("Bearer ", "");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-                client.DefaultRequestHeaders.Add("cxToken", $"{_workContext.CurrentOwnerId}:{_workContext.CurrentCustomerId}");
+
+                if (cxToken is null)
+                {
+                    client.DefaultRequestHeaders.Add("cxToken", $"{_workContext.CurrentOwnerId}:{_workContext.CurrentCustomerId}");
+                    return;
+                }
+
+                client.DefaultRequestHeaders.Add("cxToken", cxToken);
             }
             catch (Exception ex)
             {

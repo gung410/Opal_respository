@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="CustomSqlServerQuerySqlGeneratorFactory.cs" />
+    <Compile Remove="Extensions\HashBytesExtension.cs" />
     <Compile Remove="Services\CandidatePoolMemberService.cs" />
     <Compile Remove="Services\TeachingGroupMemberService.cs" />
   </ItemGroup>
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.KeyManagementService" Version="3.3.106.35" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.111.21" />
     <PackageReference Include="CsvHelper" Version="15.0.5" />
     <PackageReference Include="cxPlatform.Core" Version="1.0.84-beta" />

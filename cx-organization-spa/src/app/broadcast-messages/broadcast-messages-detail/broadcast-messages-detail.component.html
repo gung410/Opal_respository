@@ -5,10 +5,7 @@
         class="cx-btn pull-right cx-back-button"
         (click)="onBackButtonClicked()"
       >
-        <img
-          class="back-icon"
-          src="assets/icons/icon-chevron-right-bold.svg"
-        />
+        <img class="back-icon" src="assets/icons/icon-chevron-right-bold.svg" />
         {{ 'Common.Button.Back' | translate }}
       </button>
 
@@ -16,10 +13,7 @@
     </div>
     <div class="broadcast-message__header__center-container"></div>
     <div class="broadcast-message__header__right-container">
-      <div
-        class="modification-info"
-        *ngIf="broadcastMessage.ownerInfo"
-      >
+      <div class="modification-info" *ngIf="broadcastMessage.ownerInfo">
         <div class="modification-info__metadata">
           <div class="avatar">
             <img
@@ -49,38 +43,40 @@
           <div class="modification-info__metadata__time-text">
             <p *ngIf="broadcastMessage.ownerInfo">
               <span>{{ 'Common.Label.Created' | translate }}</span>
-              <span title="{{ getDateTimeFormat(broadcastMessage.createdDate) }}">{{
+              <span
+                title="{{ getDateTimeFormat(broadcastMessage.createdDate) }}"
+                >{{
                   ' ' + getDateTimeFromNow(broadcastMessage.createdDate) + ' '
-                }}</span>
+                }}</span
+              >
               <span>
                 {{ 'Common.Label.By' | translate }}
-                {{ broadcastMessage.ownerInfo.fullName }}</span>
+                {{ broadcastMessage.ownerInfo.fullName }}</span
+              >
             </p>
             <p *ngIf="broadcastMessage.lastUpdatedUserInfo">
               <span>{{ 'Common.Label.LastUpdated' | translate }}</span>
-              <span title="{{ getDateTimeFormat(broadcastMessage.lastUpdated) }}">{{
+              <span
+                title="{{ getDateTimeFormat(broadcastMessage.lastUpdated) }}"
+                >{{
                   ' ' + getDateTimeFromNow(broadcastMessage.lastUpdated) + ' '
-                }}</span>
+                }}</span
+              >
               <span *ngIf="broadcastMessage.lastUpdatedBy">
                 {{ 'Common.Label.By' | translate }}
-                {{ broadcastMessage.lastUpdatedUserInfo.fullName }}</span>
+                {{ broadcastMessage.lastUpdatedUserInfo.fullName }}</span
+              >
             </p>
           </div>
         </div>
       </div>
-      <button
-        class="cx-btn pull-right cx-save-button"
-        (click)="onSave()"
-      >
+      <button class="cx-btn pull-right cx-save-button" (click)="onSave()">
         {{ 'Common.Button.Confirm' | translate }}
       </button>
     </div>
   </div>
 </div>
-<div
-  [formGroup]="broadcastMessageForm"
-  class="row broadcast-message"
->
+<div [formGroup]="broadcastMessageForm" class="row broadcast-message">
   <div class="broadcast-message-col-left broadcast-message__body">
     <div class="broadcast-message__body__container__head__title">
       <span>CONFIGURATION</span>
@@ -90,10 +86,11 @@
       <section class="recurring mb-4">
         <mat-checkbox
           [checked]="isRecurring"
-          style="cursor: pointer;"
+          style="cursor: pointer"
           (click)="onMessageTypeChanged()"
           class="config-label recurring-checked"
-        >Message Type</mat-checkbox>
+          >Message Type</mat-checkbox
+        >
         <div class="mb-2 mt-3">
           <mat-radio-group
             [disabled]="isEditMode"
@@ -104,15 +101,17 @@
             <mat-radio-button
               class="option-layout"
               [checked]="!isRecurring"
-              [ngClass]="{greyout: isEditMode && isRecurring}"
+              [ngClass]="{ greyout: isEditMode && isRecurring }"
               [value]="false"
-            >One-time</mat-radio-button>
+              >One-time</mat-radio-button
+            >
             <mat-radio-button
               class="option-layout"
-              [ngClass]="{greyout: isEditMode && !isRecurring}"
+              [ngClass]="{ greyout: isEditMode && !isRecurring }"
               [checked]="isRecurring"
               [value]="true"
-            >Recurring</mat-radio-button>
+              >Recurring</mat-radio-button
+            >
           </mat-radio-group>
         </div>
       </section>
@@ -120,7 +119,9 @@
         <div class="row configuration-item">
           <span class="config-label col-12 pl-0">Start Date *</span>
           <mat-form-field
-            [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+            [ngClass]="{
+              'configuration-item__disabled': isEditMode && isRecurring
+            }"
             appearance="outline"
             class="pl-0 pr-0 col-12"
             (click)="validFromDate.open()"
@@ -130,10 +131,7 @@
               src="assets/icons/calendar.svg"
               (click)="validFromDate.open()"
             />
-            <mat-datepicker
-              #validFromDate
-              disabled="false"
-            ></mat-datepicker>
+            <mat-datepicker #validFromDate disabled="false"></mat-datepicker>
             <input
               [disabled]="isEditMode && isRecurring"
               readonly
@@ -157,7 +155,9 @@
         <div class="row configuration-item">
           <span class="config-label col-12 pl-0">End Date *</span>
           <mat-form-field
-            [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+            [ngClass]="{
+              'configuration-item__disabled': isEditMode && isRecurring
+            }"
             appearance="outline"
             class="pl-0 pr-0 col-12"
             (click)="validToDate.open()"
@@ -167,10 +167,7 @@
               src="assets/icons/calendar.svg"
               (click)="validToDate.open()"
             />
-            <mat-datepicker
-              #validToDate
-              disabled="false"
-            ></mat-datepicker>
+            <mat-datepicker #validToDate disabled="false"></mat-datepicker>
             <input
               readonly
               [disabled]="isEditMode && isRecurring"
@@ -195,19 +192,19 @@
           <div class="config-label col-6 pr-0">Show until *</div>
           <div class="mat-form-field col-6">
             <div
-              [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+              [ngClass]="{
+                'configuration-item__disabled': isEditMode && isRecurring
+              }"
               class="time-field"
               (click)="validFromTime.open()"
             >
-              <img
-                class="custom-clock"
-                src="assets/icons/clock.svg"
-              />
+              <img class="custom-clock" src="assets/icons/clock.svg" />
               <input
                 [disabled]="isEditMode && isRecurring"
                 class="custom-timepicker"
                 formControlName="validFromTime"
                 [(ngModel)]="broadcastMessage.validFromTime"
+                (ngModelChange)="onValidTimeChange()"
                 [ngxTimepicker]="validFromTime"
                 readonly
               />
@@ -221,19 +218,19 @@
 
           <div class="mat-form-field col-6">
             <div
-              [ngClass]="{'configuration-item__disabled': isEditMode && isRecurring}"
+              [ngClass]="{
+                'configuration-item__disabled': isEditMode && isRecurring
+              }"
               class="time-field"
               (click)="validToTime.open()"
             >
-              <img
-                class="custom-clock"
-                src="assets/icons/clock.svg"
-              />
+              <img class="custom-clock" src="assets/icons/clock.svg" />
               <input
                 [disabled]="isEditMode && isRecurring"
                 class="custom-timepicker"
                 formControlName="validToTime"
                 [(ngModel)]="broadcastMessage.validToTime"
+                (ngModelChange)="onValidTimeChange()"
                 [ngxTimepicker]="validToTime"
                 readonly
               />
@@ -245,29 +242,26 @@
             </div>
           </div>
         </div>
-        <div
-          *ngIf="isInPastWarning"
-          class="warning-container"
-        >
-          <span class="date-range-warning">Date/Time range cannot be in the past.</span>
+        <div *ngIf="isInPastWarning" class="warning-container">
+          <span class="date-range-warning"
+            >Date/Time range cannot be in the past.</span
+          >
         </div>
-        <div
-          *ngIf="isInvalidTimeRangeWarning"
-          class="warning-container"
-        >
-          <span class="date-range-warning">Show until must be after Show from.</span>
+        <div *ngIf="isInvalidTimeRangeWarning" class="warning-container">
+          <span class="date-range-warning"
+            >Show until must be after Show from.</span
+          >
         </div>
         <div
           *ngIf="isDateRangeOnTheSameDate && isRecurring"
           class="warning-container"
         >
-          <span class="date-range-warning">This is a recurring broadcast message. It cannot start and end on the same
-            day.</span>
+          <span class="date-range-warning"
+            >This is a recurring broadcast message. It cannot start and end on
+            the same day.</span
+          >
         </div>
-        <div
-          [hidden]="!isRecurring"
-          class="recurring-section"
-        >
+        <div [hidden]="!isRecurring" class="recurring-section">
           <recurring-message
             [(recurringTypeOption)]="broadcastMessage.recurringType"
             [(dayRepetitions)]="broadcastMessage.dayRepetitions"
@@ -280,7 +274,9 @@
       </div>
       <div class="configuration-item">
         <span class="config-label">Send As *</span> <br />
-        <span>All messages will be shown as a notification and sent on email.</span>
+        <span
+          >All messages will be shown as a notification and sent on email.</span
+        >
         <br />
         <opal-select
           [disabled]="isEditMode"
@@ -306,29 +302,17 @@
           position="top"
         >
         </opal-select>
-        <div
-          class="target-audience-container"
-          [hidden]="!isSpecificMode"
-        >
-          <div
-            *ngIf="isInvalidTargetAudience && isSpecificMode"
-            class="error"
-          >
+        <div class="target-audience-container" [hidden]="!isSpecificMode">
+          <div *ngIf="isInvalidTargetAudience && isSpecificMode" class="error">
             Please choose 1 out of 4 target audiences below.
           </div>
-          <div
-            formGroupName="recipients"
-            class="target-audience-container"
-          >
+          <div formGroupName="recipients" class="target-audience-container">
             <div
               *ngIf="!isEditMode || flatDepartmentsArray.length"
               class="configuration-item"
             >
               <span class="config-label">Organisation(s) / Department(s)</span>
-              <div
-                class="modal-container"
-                (click)="openDepartmentsDialog()"
-              >
+              <div class="modal-container" (click)="openDepartmentsDialog()">
                 <opal-select
                   [disabled]="
                     isDisabledTargetAudienceSelectBox('department') ||
@@ -442,26 +426,19 @@
           [maxNumberOfCharacters]="MESSAGE_TITLE_MAX_LENGTH"
         >
         </opal-textarea>
-        <div *ngIf="
+        <div
+          *ngIf="
             broadcastMessageTitle.invalid &&
             (broadcastMessageTitle.dirty || broadcastMessageTitle.touched)
-          ">
-          <div
-            *ngIf="broadcastMessageTitle.errors.required"
-            class="error"
-          >
+          "
+        >
+          <div *ngIf="broadcastMessageTitle.errors.required" class="error">
             Title is required.
           </div>
-          <div
-            *ngIf="broadcastMessageTitle.errors.whiteSpace"
-            class="error"
-          >
+          <div *ngIf="broadcastMessageTitle.errors.whiteSpace" class="error">
             Title can not only contain white space.
           </div>
-          <div
-            *ngIf="broadcastMessageTitle.errors.maxlength"
-            class="error"
-          >
+          <div *ngIf="broadcastMessageTitle.errors.maxlength" class="error">
             Title must be less than 100 characters long.
           </div>
         </div>
@@ -485,14 +462,13 @@
             [maxNumberOfCharacters]="MESSAGE_CONTENT_MAX_LENGTH"
           >
           </opal-textarea>
-          <div *ngIf="
+          <div
+            *ngIf="
               broadcastMessageContent.invalid &&
               (broadcastMessageContent.dirty || broadcastMessageContent.touched)
-            ">
-            <div
-              *ngIf="broadcastMessageContent.errors.required"
-              class="error"
-            >
+            "
+          >
+            <div *ngIf="broadcastMessageContent.errors.required" class="error">
               Content is required.
             </div>
             <div
@@ -501,10 +477,7 @@
             >
               Content can not only contain white space.
             </div>
-            <div
-              *ngIf="broadcastMessageContent.errors.maxlength"
-              class="error"
-            >
+            <div *ngIf="broadcastMessageContent.errors.maxlength" class="error">
               Content must be less than 1000 characters long.
             </div>
           </div>

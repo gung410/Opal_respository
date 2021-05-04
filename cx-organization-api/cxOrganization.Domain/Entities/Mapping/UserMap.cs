@@ -49,7 +49,10 @@ namespace cxOrganization.Domain.Entities
 
             builder.Property(t => t.SSN)
                 .IsRequired()
-                .HasMaxLength(64);
+                .HasMaxLength(256);
+
+            builder.Property(t => t.SSNHash)
+            .HasMaxLength(64);
 
             builder.Property(t => t.Tag)
                 .IsRequired()
@@ -88,6 +91,7 @@ namespace cxOrganization.Domain.Entities
             builder.Property(t => t.Mobile).HasColumnName("Mobile");
             builder.Property(t => t.ExtId).HasColumnName("ExtID");
             builder.Property(t => t.SSN).HasColumnName("SSN");
+            builder.Property(t => t.SSNHash).HasColumnName("SSNHash");
             builder.Property(t => t.Tag).HasColumnName("Tag");
             builder.Property(t => t.Locked).HasColumnName("Locked");
             builder.Property(t => t.Created).HasColumnName("Created");

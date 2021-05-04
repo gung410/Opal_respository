@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -13,14 +14,14 @@ namespace cxOrganization.Domain.Mappings
 {
     public class HierarchyDepartmentMappingService : DepartmentMappingService, IHierarchyDepartmentMappingService
     {
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         public IDepartmentTypeRepository _departmentTypeRepository { get; }
 
         private List<ArchetypeEnum> DepartmentTypeArcheTypes = new List<ArchetypeEnum> { ArchetypeEnum.Level, ArchetypeEnum.OrganizationalUnitType };
 
         public HierarchyDepartmentMappingService(IPropertyService propertyService,
-           IWorkContext workContext, ILanguageRepository languageRepository,
+           IAdvancedWorkContext workContext, ILanguageRepository languageRepository,
            IDepartmentTypeRepository departmentTypeRepository)
            : base(propertyService, languageRepository, departmentTypeRepository)
         {

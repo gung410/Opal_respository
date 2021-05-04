@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using cxOrganization.Business.DeactivateOrganization.DeactivateUser;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Services;
@@ -28,7 +29,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class EmployeesController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserTypeService _userTypeService;
         private readonly ILoginServiceUserService _loginServiceUserService;
         private readonly IDeactivateUserService<EmployeeDto> _deactivateUserService;
@@ -43,7 +44,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="userTypeService"></param>
         /// <param name="loginServiceUserService"></param>
         public EmployeesController(Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserTypeService> userTypeService,
             ILoginServiceUserService loginServiceUserService,
             IDeactivateUserService<EmployeeDto> deactivateUserService,

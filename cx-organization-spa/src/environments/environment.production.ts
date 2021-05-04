@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  showAuthDebugInformation: false,
   fallbackLanguage: 'en-US',
   fallbackLanguageName: 'English',
   clientId: 'OrganizationSpa',
@@ -48,6 +49,7 @@ export const environment = {
   ParentDepartmentId: 14350,
   OtherDepartmentId: 20747,
   topDepartmentId: 1,
+  showTechnicalInfo: false,
   firebase: {
     fcmConfig: {
       apiKey: '${FIREBASE_API_KEY}',
@@ -73,7 +75,8 @@ export const environment = {
     LearnerAppAndroid: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerAppIOS: 'https://www.uat.opal2.conexus.net/pdplanner/',
     LearnerWeb: 'https://www.prod.opal2.conexus.net/app/learner',
-    Report: 'https://www.prod.opal2.conexus.net/report'
+    Report: 'https://www.prod.opal2.conexus.net/report',
+    CSL: 'https://www.prod.opal2.conexus.net/csl'
   },
   userAccounts: {
     enableCreateUserAccountRequest: true,

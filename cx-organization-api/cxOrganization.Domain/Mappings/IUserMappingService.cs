@@ -24,6 +24,6 @@ namespace cxOrganization.Domain.Mappings
         MemberDto ToMemberDto(UserEntity user);
         UserEntity ToUserEntity(DepartmentEntity parentDepartment,UserEntity entity, UserDtoBase userDto, int? currentOwnerId = null);
 
-        void HideOrDecryptSSN(UserDtoBase userDto);
+        void HideOrDecryptSSN(UserDtoBase userDto, bool useKms = false);
     }
 }

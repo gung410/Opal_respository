@@ -18,6 +18,7 @@ import { SurveyUtils } from '../../utilities/survey-utils';
 import { BasePresentationComponent } from '../component.abstract';
 import { PeoplePickerEventModel } from './people-picker.model';
 import { AppConstant } from 'app/shared/app.constant';
+import { UserManagement } from 'app/user-accounts/models/user-management.model';
 
 @Component({
   selector: 'people-picker',
@@ -59,6 +60,8 @@ export class PeoplePickerComponent<T>
   @ViewChild('ngSelect') ngSelect: any;
   @ViewChild('selecHeaderInput') selecHeaderInput: ElementRef;
   @ViewChild('selectFooterInput') selectFooterInput: ElementRef;
+
+  hoveredUser: UserManagement;
 
   private pageIndex: number = 1;
   private searchKey: any = '';
@@ -130,6 +133,9 @@ export class PeoplePickerComponent<T>
   }
 
   onFocus(): void {
+    if (this.hoveredUser) {
+      this.updateSelectedPeople();
+    }
     if (!this.people || !this.people.length) {
       this.ngSelect.isOpen = true;
     }
@@ -141,10 +147,22 @@ export class PeoplePickerComponent<T>
   }
 
   onOpen(): void {
+    if (this.hoveredUser) {
+      this.updateSelectedPeople();
+    }
+
     if (this.searchKey) {
       this.onSearch({ term: '' });
     }
     this.open.emit();
+  }
+
+  triggerEnterHover(user: UserManagement): void {
+    this.hoveredUser = user;
+  }
+
+  triggerLeaveHover(): void {
+    this.hoveredUser = null;
   }
 
   onScroll(event: any): void {
@@ -162,6 +180,21 @@ export class PeoplePickerComponent<T>
 
   selectPeople(selectedPeople: T): void {
     this.selectedPeopleChange.emit(selectedPeople);
+  }
+
+  private updateSelectedPeople(): void {
+    /* There is an issue regrading to deleting user by (x) icon at AA/AAO fields in case we have many users added at the first time
+    after open the popup. The selectPeople() function is not get executed because open event from ng-select triggered first,
+    so we need to check for it.
+    */
+
+    this.selectedPeople = this.selectedPeople.filter(
+      (person: UserManagement) =>
+        person.emailAddress !== this.hoveredUser.emailAddress
+    );
+    this.selectedPeopleChange.emit(this.selectedPeople);
+
+    this.hoveredUser = null;
   }
 
   private fetchMore(): void {

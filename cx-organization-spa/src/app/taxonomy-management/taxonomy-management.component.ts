@@ -3,10 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   ActionsModel,
   CxGlobalLoaderService
@@ -17,7 +19,7 @@ import { PagedResultDto } from 'app-models/paged-result.dto';
 import { TranslateAdapterService } from 'app-services/translate-adapter.service';
 import { Utils } from 'app-utilities/utils';
 import { GlobalKeySearchStoreService } from 'app/core/store-services/search-key-store.service';
-import { AppConstant } from 'app/shared/app.constant';
+import { AppConstant, RouteConstant } from 'app/shared/app.constant';
 import { stringEmpty } from 'app/shared/common.constant';
 import { BaseScreenComponent } from 'app/shared/components/component.abstract';
 import { SAM_PERMISSIONS } from 'app/shared/constants/sam-permission.constant';
@@ -28,10 +30,12 @@ import {
   UserManagementQueryModel
 } from 'app/user-accounts/models/user-management.model';
 import { UserAccountsDataService } from 'app/user-accounts/user-accounts-data.service';
+import { indexOf } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaxonomyActionButtonEnum } from './constant/taxonomy-action-button.enum';
+import { TaxonomyActiveTab } from './constant/taxonomy-management-active-tab.enum';
 import { TaxonomyRequestStatusLabel } from './constant/taxonomy-request-status-label.enum';
 import { TaxonomyRequestStatus } from './constant/taxonomy-request-status.enum';
 import { ApproveTaxonomyRequest } from './dtos/approve-taxonomy-request.dto';
@@ -44,6 +48,7 @@ import {
   TaxonomyActionsModel,
   TaxonomyActionToolbarModel
 } from './models/actions.model';
+import { TaxonomyRouteParams } from './models/taxonomy-management-route-params.model';
 import { TaxonomyRequestItem } from './models/taxonomy-request-item.model';
 import { TaxonomyRequestStatusLabelType } from './models/taxonomy-request-status-label-type';
 import { TaxonomyRequest } from './models/taxonomy-request.model';
@@ -112,8 +117,10 @@ export class TaxonomyManagementComponent
     TaxonomyRequestStatusLabel.Rejected,
     TaxonomyRequestStatusLabel.Completed
   ];
-  currentTabAriaLabel: TaxonomyRequestStatusLabel =
-    TaxonomyRequestStatusLabel.PendingLevel1;
+  selectedTabIndex: number = 0;
+
+  availableTab: TaxonomyRequestStatusLabel[] = [];
+  currentTabAriaLabel: TaxonomyRequestStatusLabel;
 
   private filterParams: UserManagementQueryModel = new UserManagementQueryModel();
 
@@ -146,13 +153,18 @@ export class TaxonomyManagementComponent
     private toastrService: ToastrService,
     private translateAdapterService: TranslateAdapterService,
     private userAccountsDataService: UserAccountsDataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super(changeDetectorRef, authService);
   }
 
   async ngOnInit(): Promise<void> {
     this.filterParams.pageSize = this.defaultPageSize;
+    this.availableTab = this.getAvailableTab();
+    this.currentTabAriaLabel = this.updateCurrentTabAriaLabel();
+    this.getQueryParamsFromRouteAndNavigate();
     this.getTaxonomyListBasedOnCurrentTab();
     this.registerGlobalSearchSubscription();
   }
@@ -170,13 +182,12 @@ export class TaxonomyManagementComponent
     this.clearSelectedItems();
 
     this.currentPageIndex = 1;
+    this.selectedTabIndex = tabChangeEvent.index;
     this.currentTabAriaLabel = tabChangeEvent.tab
       .ariaLabel as TaxonomyRequestStatusLabel;
     this.getTaxonomyListBasedOnCurrentTab();
 
     this.initTaxonomyActionsListBasedOnRoles();
-
-    // this.gridApi.sizeColumnsToFit();
   }
 
   onMenuActionClick($event: TaxonomyActionsModel): void {
@@ -353,6 +364,49 @@ export class TaxonomyManagementComponent
         .pipe(map((metadataResponse) => metadataResponse.totalCount));
   }
 
+  private getAvailableTab(): TaxonomyRequestStatusLabel[] {
+    const availableTab: TaxonomyRequestStatusLabel[] = [];
+    if (
+      this.currentUser.hasPermission(SAM_PERMISSIONS.MetadataViewPending1st)
+    ) {
+      availableTab.push(TaxonomyRequestStatusLabel.PendingLevel1);
+    }
+
+    if (
+      this.currentUser.hasPermission(SAM_PERMISSIONS.MetadataViewPending2nd)
+    ) {
+      availableTab.push(TaxonomyRequestStatusLabel.PendingLevel2);
+    }
+
+    if (
+      this.currentUser.hasPermission(SAM_PERMISSIONS.MetadataViewApprovedList)
+    ) {
+      availableTab.push(TaxonomyRequestStatusLabel.Approved);
+    }
+
+    if (
+      this.currentUser.hasPermission(SAM_PERMISSIONS.MetadataViewRejectedList)
+    ) {
+      availableTab.push(TaxonomyRequestStatusLabel.Rejected);
+    }
+
+    if (
+      this.currentUser.hasPermission(SAM_PERMISSIONS.MetadataViewCompletedList)
+    ) {
+      availableTab.push(TaxonomyRequestStatusLabel.Completed);
+    }
+
+    return availableTab;
+  }
+
+  private updateCurrentTabAriaLabel(): TaxonomyRequestStatusLabel {
+    if (this.availableTab.length > 0) {
+      return this.availableTab[0];
+    } else {
+      this.navigateToErrorPage(true);
+    }
+  }
+
   private registerGlobalSearchSubscription(): void {
     this.subscription.add(
       this.globalKeySearchStoreService.get().subscribe((result: any) => {
@@ -386,7 +440,9 @@ export class TaxonomyManagementComponent
       ).subscribe((approvedRequests: TaxonomyRequest[]) => {
         if (approvedRequests.length > 0) {
           this.toastrService.success(
-            'These requests were successfully approved'
+            approvedRequests.length > 1
+              ? 'These requests were successfully approved'
+              : 'The request was successfully approved'
           );
           this.getTaxonomyListBasedOnCurrentTab();
           this.updateTaxonomyActionButtons();
@@ -414,7 +470,9 @@ export class TaxonomyManagementComponent
       ).subscribe((rejectedRequests: TaxonomyRequest[]) => {
         if (rejectedRequests.length > 0) {
           this.toastrService.success(
-            'These requests were successfully rejected'
+            rejectedRequests.length > 1
+              ? 'These requests were successfully rejected'
+              : 'The request was successfully rejected'
           );
           this.getTaxonomyListBasedOnCurrentTab();
           this.updateTaxonomyActionButtons();
@@ -433,7 +491,9 @@ export class TaxonomyManagementComponent
     ).subscribe((completedRequests: TaxonomyRequest[]) => {
       if (completedRequests.length > 0) {
         this.toastrService.success(
-          'These requests were successfully completed'
+          completedRequests.length > 1
+            ? 'These requests were successfully completed'
+            : 'The request was successfully completed'
         );
         this.getTaxonomyListBasedOnCurrentTab();
         this.updateTaxonomyActionButtons();
@@ -574,6 +634,77 @@ export class TaxonomyManagementComponent
     modelResult.taxonomyRequestItemId = metadata.taxonomyRequestItemId;
 
     return modelResult;
+  }
+
+  private getQueryParamsFromRouteAndNavigate(): void {
+    this.route.queryParams.subscribe((params: TaxonomyRouteParams) => {
+      const activeTab = params.activeTab;
+      if (!activeTab) {
+        return;
+      }
+      this.directToActiveTab(activeTab);
+    });
+  }
+
+  private directToActiveTab(activeTab: TaxonomyActiveTab): void {
+    let tabRequest: TaxonomyRequestStatusLabel;
+    switch (activeTab) {
+      case TaxonomyActiveTab.pendingLevel1: {
+        tabRequest = TaxonomyRequestStatusLabel.PendingLevel1;
+        this.checkPermissionAndNavigate(tabRequest);
+        break;
+      }
+      case TaxonomyActiveTab.pendingLevel2: {
+        tabRequest = TaxonomyRequestStatusLabel.PendingLevel2;
+        this.checkPermissionAndNavigate(tabRequest);
+        break;
+      }
+
+      default:
+        this.navigateToErrorPage(false);
+        break;
+    }
+  }
+
+  private checkPermissionAndNavigate(
+    tabRequest: TaxonomyRequestStatusLabel
+  ): void {
+    const hasPermissionToAccessTab = this.checkTabAccessPermission(tabRequest);
+
+    if (!hasPermissionToAccessTab) {
+      this.navigateToErrorPage(true);
+    }
+
+    this.selectedTabIndex = this.availableTab.indexOf(tabRequest);
+    this.currentTabAriaLabel = tabRequest;
+  }
+
+  private checkTabAccessPermission(
+    currentTab: TaxonomyRequestStatusLabel
+  ): boolean {
+    switch (currentTab) {
+      case TaxonomyRequestStatusLabel.PendingLevel1:
+        return this.currentUser.hasPermission(
+          SAM_PERMISSIONS.MetadataViewPending1st
+        );
+      case TaxonomyRequestStatusLabel.PendingLevel2:
+        return this.currentUser.hasPermission(
+          SAM_PERMISSIONS.MetadataViewPending2nd
+        );
+      default:
+        return false;
+    }
+  }
+
+  private navigateToErrorPage(isForbbiden: boolean): void {
+    let errorUrl = '';
+    if (isForbbiden) {
+      errorUrl += RouteConstant.ERROR_FORBIDDEN_USER;
+    } else {
+      errorUrl += RouteConstant.ERROR_COMMON;
+    }
+
+    this.router.navigateByUrl(errorUrl);
   }
 
   private getTaxonomyListBasedOnCurrentTab(): void {

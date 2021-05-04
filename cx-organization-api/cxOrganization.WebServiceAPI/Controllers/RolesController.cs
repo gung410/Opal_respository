@@ -2,6 +2,7 @@
 using System.Net;
 using cxOrganization.Client;
 using cxOrganization.Client.UserTypes;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -15,7 +16,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class RolesController : ApiControllerBase
     {
         private readonly IUserTypeService _userTypeService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         /// <summary>
         /// Constructor
@@ -23,7 +24,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="userTypeService"></param>
         /// <param name="workContext"></param>
         public RolesController(IUserTypeService userTypeService,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _userTypeService = userTypeService;
             _workContext = workContext;

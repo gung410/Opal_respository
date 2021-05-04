@@ -7,8 +7,7 @@ BusinessConfigs_UserNotification_UserTypePending2ndNotification: "145"
 BusinessConfigs_UserNotification_UserTypePending3ndNotification: "112"
 BusinessConfigs_UserNotification_UserTypeSyncIdpNotification: "87,88,89"
 idm_base_url: https://idm.opal2.moe.edu.sg
-api_base_url: https://api.opal2.moe.edu.sg
-portal_api: prod-competence-opal-api-portal
+is_cross_organizational_unit: false
 enable_migration: true
 domain_api_auth: "Basic QXp4Y25tYXNrbGRqdnExd2E6anZ4bWFza2NuQXExd2F6bGQ="
 https_proxy: http://proxy.opal:3128
@@ -33,3 +32,8 @@ hangfireDatabase: prod-cx-opal-scheduling-jobs-db
 hangfireDatabaseUsername: prod-cx-opal-scheduling-jobs-db-readwrite
 hangfireDatabasePassword: kUMC8MzTjQYedAs
 redis_connectionstring: redis.opal:6379,ConnectTimeout=5000,abortConnect=false
+AwsKmsEncyption_Enabled: true
+AwsKmsEncyption_AwsAccessKey: AKIA6KUBMYDLJECARWE5
+AwsKmsEncyption_AwsSecretKey: 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
+AwsKmsEncyption_KmsArn: "arn:aws:kms:ap-southeast-1:984892621014:key/f4a2f427-8014-4b6d-9d4c-905ded939d45"
+AwsKmsEncyption_EncryptedHashKey: "AQECAHginPN8fcfVeyDY/oUrCy6BbXmeIdvw/iEYjX0xjmA/7wAAAHIwcAYJKoZIhvcNAQcGoGMwYQIBADBcBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJ7B/B+0M3CaQWo4dQIBEIAvN0dJylkLZhINNFsNXUo2eGvXJZkP0DrCxPu2JpX9AtXeWHDiYPe0bq5aLfoXi3M="

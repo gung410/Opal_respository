@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Security.AccessServices;
 using cxOrganization.Domain.Services;
-
+using cxOrganization.Domain.Settings;
 using cxPlatform.Client.ConexusBase;
-using cxPlatform.Core;
 using cxPlatform.Core.Exceptions;
+using Microsoft.Extensions.Options;
 
 namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
 {
@@ -30,7 +32,6 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
         public int? AssigneeDepartmentId { get; set; }
         public bool SearchInSameDepartment { get; set; }
         public bool SearchFromDepartmentToTop { get; set; }
-        public bool IsCrossOrganizationalUnit { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public string OrderBy { get; set; }
@@ -40,20 +41,27 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
     {
         private readonly IUserGroupRepository _userGroupRepository;
         private readonly ApprovalGroupMappingService _approvalGroupMappingService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IHierarchyDepartmentService _hierarchyDepartmentService;
         private readonly IApprovalGroupAccessService _aprovalGroupAccessService;
+        private readonly IDepartmentRepository _departmentRepository;
+        private readonly AppSettings _appSettings;
+
         public SearchApprovingOfficersQueryHandler(IUserGroupRepository userGroupRepository,
             ApprovalGroupMappingService approvalGroupMappingService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IHierarchyDepartmentService hierarchyDepartmentService,
-            IApprovalGroupAccessService aprovalGroupAccessService)
+            IApprovalGroupAccessService aprovalGroupAccessService,
+            IDepartmentRepository departmentRepository,
+            IOptions<AppSettings> appSettingOptions)
         {
             _userGroupRepository = userGroupRepository;
             _approvalGroupMappingService = approvalGroupMappingService;
             _workContext = workContext;
             _hierarchyDepartmentService = hierarchyDepartmentService;
             _aprovalGroupAccessService = aprovalGroupAccessService;
+            _departmentRepository = departmentRepository;
+            _appSettings = appSettingOptions.Value;
         }
         public PaginatedList<ApprovalGroupDto> Handle(SearchApprovingOfficersQuery query)
         {
@@ -67,30 +75,28 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
             if (query.ParentDepartmentId > 0)
                 parentDepartmentIds.Add(query.ParentDepartmentId);
 
-            if (query.SearchInSameDepartment)
-                parentDepartmentIds.Add(query.AssigneeDepartmentId.Value);
-
-            if (query.IsCrossOrganizationalUnit)
-            {
-                // 15813 - Testing only, should be replaced by ExtId
-                var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToBelow(15813);
-                parentDepartmentIds.AddRange(ids);
-            }
-            else if (query.SearchFromDepartmentToTop)
-            {
-                var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToTheTop(query.AssigneeDepartmentId.Value);
-                parentDepartmentIds.AddRange(ids);
-            }
-
             var userIds = query.ApproverIds;
-            if (!_aprovalGroupAccessService.CheckReadApprovalGroupAccess(_workContext, ref userIds,
-                ref parentDepartmentIds).IsAllowedAccess())
+
+            if (!_appSettings.IsCrossOrganizationalUnit)
             {
-                return new PaginatedList<ApprovalGroupDto>();
+                if (query.SearchInSameDepartment)
+                {
+                    parentDepartmentIds.Add(query.AssigneeDepartmentId.Value);
+                }
+                else if (query.SearchFromDepartmentToTop)
+                {
+                    var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToTheTop(query.AssigneeDepartmentId.Value);
+                    parentDepartmentIds.AddRange(ids);
+                }
+
+                if (!_aprovalGroupAccessService.CheckReadApprovalGroupAccess(_workContext, ref userIds, ref parentDepartmentIds).IsAllowedAccess())
+                {
+                    return new PaginatedList<ApprovalGroupDto>();
+                }
             }
 
             var pagingEntity = _userGroupRepository.GetUserGroups(
-                customerIds: new List<int> {_workContext.CurrentCustomerId},
+                customerIds: new List<int> { _workContext.CurrentCustomerId },
                 userGroupIds: query.ApprovalGroupIds,
                 parentUserIds: userIds,
                 memberUserIds: query.EmployeeIds,
@@ -99,7 +105,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
                 userStatusIds: query.UserStatusEnums,
                 groupTypes: query.GroupTypes,
                 extIds: query.ExtIds,
-                archetypeIds: new List<int>() {(int) ArchetypeEnum.ApprovalGroup},
+                archetypeIds: new List<int>() { (int)ArchetypeEnum.ApprovalGroup },
                 lastUpdatedBefore: query.LastUpdatedBefore,
                 lastUpdatedAfter: query.LastUpdatedAfter,
                 pageIndex: query.PageIndex,
@@ -115,7 +121,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
         }
         public async Task<PaginatedList<ApprovalGroupDto>> HandleAsync(SearchApprovingOfficersQuery query)
         {
-            if ((query.SearchInSameDepartment || query.SearchFromDepartmentToTop) && !query.IsCrossOrganizationalUnit)
+            if ((query.SearchInSameDepartment || query.SearchFromDepartmentToTop) && !_appSettings.IsCrossOrganizationalUnit)
             {
                 {
                     if (!query.AssigneeDepartmentId.HasValue || query.AssigneeDepartmentId == 0)
@@ -123,27 +129,24 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
                             "SearchInSameDepartment, SearchFromDepartmentToTop required AssigneeDepartmentId value");
                 }
             }
+
             var parentDepartmentIds = new List<int>();
             if (query.ParentDepartmentId > 0)
                 parentDepartmentIds.Add(query.ParentDepartmentId);
 
-            if (query.SearchInSameDepartment)
-                parentDepartmentIds.Add(query.AssigneeDepartmentId.Value);
-
-            if (query.IsCrossOrganizationalUnit)
-            {
-                // 15813 - Testing only, should be replaced by ExtId
-                var ids = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToBelow(15813);
-                parentDepartmentIds.AddRange(ids);
-            } else if(query.SearchFromDepartmentToTop)
-            {
-                var ids = await _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToTheTopAsync(query.AssigneeDepartmentId.Value);
-                parentDepartmentIds.AddRange(ids);
-            }
-
             var userIds = query.ApproverIds;
-            if (!query.IsCrossOrganizationalUnit)
+
+            if (!_appSettings.IsCrossOrganizationalUnit)
             {
+                if (query.SearchInSameDepartment)
+                {
+                    parentDepartmentIds.Add(query.AssigneeDepartmentId.Value);
+                }
+                else if (query.SearchFromDepartmentToTop)
+                {
+                    var ids = await _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToTheTopAsync(query.AssigneeDepartmentId.Value);
+                    parentDepartmentIds.AddRange(ids);
+                }
 
                 var userGroupAccess = await _aprovalGroupAccessService.CheckReadApprovalGroupAccessAsync(_workContext,
                     userIds,
@@ -155,7 +158,7 @@ namespace cxOrganization.Domain.Business.Queries.ApprovingOfficer
                 {
                     return new PaginatedList<ApprovalGroupDto>();
                 }
-            }    
+            }
 
             var pagingEntity = await _userGroupRepository.GetUserGroupsAsync(
                 customerIds: new List<int> { _workContext.CurrentCustomerId },

@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.Web;
 using cxOrganization.WebServiceAPI.Extensions;
 using FileExtension = cxOrganization.WebServiceAPI.Models.FileExtension;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.WebServiceAPI.Controllers
 {
@@ -37,7 +38,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class ReportsController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IExportService<UserEventLogInfo> _exportUserEventService;
         private readonly IExportService<UserStatisticsDto> _exportUserStatisticsService;
         private readonly IExportService<ApprovingOfficerInfo> _exportApprovingOfficerService;
@@ -56,7 +57,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
 
         public ReportsController(
             Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IExportService<UserEventLogInfo> exportUserEventService,
             IExportService<UserStatisticsDto> exportUserStatisticsService,
             IExportService<ApprovingOfficerInfo> exportApprovingOfficerDto,
@@ -175,7 +176,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportUserEvents", new { fileName = fileName });
             var fallBackLanguageCode = _appSettings.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -340,7 +341,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportUserStatistics", new { fileName = fileName });
             var fallBackLanguageCode = _appSettings.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -516,7 +517,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportApprovingOfficers", new { fileName = fileName });
             var fallBackLanguageCode = _appSettings.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -710,7 +711,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportUserAccountDetails", new {fileName = fileName});
             var fallBackLanguageCode = _appSettings.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -915,7 +916,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             //For thread safe
             var copiedWorkContext = WorkContext.CopyFrom(_workContext);
 
-            //TODO: deal with IWorkContext injection when calling async
+            //TODO: deal with IAdvancedWorkContext injection when calling async
             var apiDownloadUrl = this.Url.Link("DownloadExportPrivilegedUserAccount", new { fileName = fileName });
             var fallBackLanguageCode = _appSettings.FallBackLanguageCode;
             _backgroundTaskQueue.QueueBackgroundWorkItem(async cancellationToken =>
@@ -1000,7 +1001,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return await DownloadFile(_appSettings.ExportUserAccountDetailsStorageSubFolder, fileName);
         }
         private static async Task<PaginatedList<ApprovingOfficerInfo>> GetPaginatedApprovingOfficerInfosAsync(
-            IWorkContext workContext, IUserReportService userReportService,
+            IAdvancedWorkContext workContext, IUserReportService userReportService,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             bool getRole,
@@ -1045,7 +1046,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
 
         private static async Task<PaginatedList<UserAccountDetailsInfo>> GetPaginatedUserAccountDetailsInfosAsync(
-            IWorkContext workContext, IUserReportService userReportService,
+            IAdvancedWorkContext workContext, IUserReportService userReportService,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             DateTime? userCreatedAfter,
@@ -1082,7 +1083,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 pageIndex: pageIndex);
         }
         private static async Task<PaginatedList<PrivilegedUserAccountInfo>> GetPaginatedPrivilegedUserAccountInfosAsync(
-            IWorkContext workContext, IUserReportService userReportService,
+            IAdvancedWorkContext workContext, IUserReportService userReportService,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             DateTime? userCreatedAfter,
@@ -1203,7 +1204,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             }
         }
 
-        private static async Task<PaginatedList<UserEventLogInfo>> GetPaginatedEventInfosAsync(IWorkContext workContext,
+        private static async Task<PaginatedList<UserEventLogInfo>> GetPaginatedEventInfosAsync(IAdvancedWorkContext workContext,
             IUserReportService userReportService, List<UserEventType> eventTypes,  DateTime? eventCreatedAfter,
             DateTime? eventCreatedBefore,
             int pageSize, int pageIndex, bool getDepartment, bool getRole, bool skipPaging)
@@ -1225,7 +1226,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
 
         private static async Task<(byte[]  Data, int ExportedUserCount, int TotalUserCount) > ExecuteExportingUserEvents(ILogger logger, ExportUserEventLogInfoDto exportUserDto,
-            IWorkContext workContext, IUserReportService userReportService, IExportService<UserEventLogInfo> exportService, bool isAsync)
+            IAdvancedWorkContext workContext, IUserReportService userReportService, IExportService<UserEventLogInfo> exportService, bool isAsync)
         {
             bool skipPaging = exportUserDto.PageIndex <= 0 && exportUserDto.PageSize <= 0;
 
@@ -1268,7 +1269,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return (exportedData, exportedUserCount, totalUserCount);
         }
         private static async Task<byte[]> ExecuteExportingUserStatisticsAsync(ILogger logger, ExportUserStatisticsDto exportUserDto,
-            IWorkContext workContext, IUserReportService userReportService, IExportService<UserStatisticsDto> exportService)
+            IAdvancedWorkContext workContext, IUserReportService userReportService, IExportService<UserStatisticsDto> exportService)
         {
 
             if (exportUserDto.ExportOption.ExportFields == null ||
@@ -1358,7 +1359,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
 
         private static async Task<(byte[] Data,  int ExportedUserCount, int TotalUserCount)> ExecuteExportingApprovingOfficers(ILogger logger, ExportApprovingOfficerDto exportUserDto,
-             IWorkContext workContext,
+             IAdvancedWorkContext workContext,
              IUserReportService userReportService, 
              IExportService<ApprovingOfficerInfo> exportService, bool isAsync)
         {
@@ -1410,7 +1411,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return (exportedData, exportedUserCount, totalUserCount);
         }
         private async Task<(byte[] Data, int ExportedUserCount, int TotalUserCount)> ExecuteUserAccountDetails(ILogger logger, ExportUserAccountDetailsDto exportUserAccountDetailsDto,
-             IWorkContext workContext,
+             IAdvancedWorkContext workContext,
              IUserReportService userReportService,
              IExportService<UserAccountDetailsInfo> exportService)
         {
@@ -1481,7 +1482,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
             return (exportedData, exportedUserCount, totalUserCount);
         }
         private async Task<(byte[] Data, int ExportedUserCount, int TotalUserCount)> ExecutePrivilegedUserAccount(ILogger logger, ExportPrivilegedUserAccountDto exportPrivilegedUserAccountDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserReportService userReportService,
             IExportService<PrivilegedUserAccountInfo> exportService)
         {
@@ -1563,7 +1564,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
 
         private static void SendEmailWhenExportingUserEvents(ExportUserEventLogInfoDto exportUserDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1579,7 +1580,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 apiDownloadUrl, filePath, fallBackLanguageCode);
         }
         private static void SendEmailWhenExportingUserStatistics(ExportUserStatisticsDto exportUserDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1595,7 +1596,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 apiDownloadUrl, filePath, fallBackLanguageCode);
         }
         private static void SendEmailWhenExportingApprovingOfficers(ExportApprovingOfficerDto exportUserDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1611,7 +1612,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 apiDownloadUrl, filePath, fallBackLanguageCode);
         }
         private static void SendEmailWhenExportingUserAccountDetails(ExportUserAccountDetailsDto exportUserDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1627,7 +1628,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
                 apiDownloadUrl, filePath, fallBackLanguageCode);
         }
         private static void SendEmailWhenExportingPrivilegedUserAccount(ExportPrivilegedUserAccountDto exportUserDto,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {
@@ -1644,7 +1645,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         }
         private static void SendEmailWhenExportingData(MultiLanguageEmailTemplate exportEmailTemplate,
             EmailOption emailOption,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserService scopeUserService, ILogger logger, IServiceScope serviceScope, string apiDownloadUrl,
             string filePath, string fallBackLanguageCode)
         {

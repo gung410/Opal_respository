@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Departments;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Extensions;
@@ -172,7 +173,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return null;
         }
 
-        protected List<HierarchyInfo> GetAccessibleHierarchyInfos(IWorkContext workContext, int executorDepartmentId, AccessSettingElement accessSetting)
+        protected List<HierarchyInfo> GetAccessibleHierarchyInfos(IAdvancedWorkContext workContext, int executorDepartmentId, AccessSettingElement accessSetting)
         {
             var accessibleHierarchyInfos = new List<HierarchyInfo>();
             var currentHd = _hierarchyDepartmentRepository.GetById(workContext.CurrentHdId);
@@ -241,7 +242,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
 
         protected async Task<List<HierarchyInfo>> GetAccessibleHierarchyInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             int executorDepartmentId,
             AccessSettingElement accessSetting,
             List<int> parentDepartmentId = null)
@@ -425,7 +426,8 @@ namespace cxOrganization.Domain.Security.AccessServices
                         .AddRange(topToBelowHierarchyInfos
                         .Where(hd => parentDepartmentId is object && parentDepartmentId.Contains(hd.DepartmentId))
                         .ToList());
-                    relativeHierarchyInfos.Distinct();
+
+                    relativeHierarchyInfos = relativeHierarchyInfos.Distinct().ToList();
                 }
 
                 if (AccessSettingElement.ContainsAllSymbol(accessSetting.InRelativeDepartmentTypeExtIds))

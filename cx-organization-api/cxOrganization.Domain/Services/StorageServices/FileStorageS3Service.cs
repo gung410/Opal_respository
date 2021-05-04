@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Settings;
 using cxPlatform.Core;
 using cxPlatform.Core.Exceptions;
@@ -65,7 +66,7 @@ namespace cxOrganization.Domain.Services.StorageServices
             _logger.LogError(e, $"Unexpected error occurred when downloading '{fileName}' to bucket '{bucketName}', s3 server. {e.Message}");
         }
 
-        public async Task<string> UploadFileAsync(IWorkContext workContext, byte[] data, string filePath)
+        public async Task<string> UploadFileAsync(IAdvancedWorkContext workContext, byte[] data, string filePath)
         {
             var fileName = "";
             var bucketName = _awsSettings.BucketName;
@@ -101,7 +102,7 @@ namespace cxOrganization.Domain.Services.StorageServices
             return null;
         }
 
-        private void AddMetadataCollection(IWorkContext workContext, TransferUtilityUploadRequest transferUtilityUploadRequest)
+        private void AddMetadataCollection(IAdvancedWorkContext workContext, TransferUtilityUploadRequest transferUtilityUploadRequest)
         {
             if (workContext == null) return;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -21,14 +22,14 @@ namespace cxOrganization.Domain.Validators
         public TeachingGroupValidator(IHierarchyDepartmentService hierachyDepartmentService,
             IOwnerRepository ownerRepository,
             IUserGroupRepository userGroupRepository,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
             : base(ownerRepository, workContext, userGroupRepository)
         {
             _hierachyDepartmentService = hierachyDepartmentService;
             _userGroupRepository = userGroupRepository;
         }
 
-        public override UserGroupEntity Validate(ConexusBaseDto dto)
+        public override UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             //Archetype must be TeachingGroup
             if (dto.Identity.Archetype != ArchetypeEnum.TeachingGroup && dto.Identity.Archetype != ArchetypeEnum.EducationProgram)

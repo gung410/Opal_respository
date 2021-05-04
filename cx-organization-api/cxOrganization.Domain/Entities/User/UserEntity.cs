@@ -83,6 +83,11 @@ namespace cxOrganization.Domain.Entities
         /// <value>The SSN.</value>
         public string SSN { get; set; }
         /// <summary>
+        /// Gets or sets the SSN hash.
+        /// </summary>
+        /// <value>The SSN hash.</value>
+        public string SSNHash { get; set; }
+        /// <summary>
         /// Gets or sets the tag.
         /// </summary>
         /// <value>The tag.</value>

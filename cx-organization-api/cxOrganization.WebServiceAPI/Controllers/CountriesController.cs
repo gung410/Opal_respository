@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -20,7 +21,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class CountriesController : ApiControllerBase
     {
         private readonly IDepartmentService _countrydepartmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserService _userService;
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="workContext"></param>
         /// <param name="userService"></param>
         public CountriesController(Func<ArchetypeEnum, IDepartmentService> departmentService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserService> userService)
         {
             _countrydepartmentService = departmentService(ArchetypeEnum.Country);

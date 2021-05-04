@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Services;
 using cxPlatform.Client.ConexusBase;
@@ -18,7 +19,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class UserGroupsController : ApiControllerBase
     {
         private readonly IUserGroupService _userGroupService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupTypeService _userGroupTypeService;
         private readonly IUserService _userService;
         private readonly IDepartmentService _departmentService;
@@ -31,7 +32,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         /// <param name="userGroupTypeService"></param>
         /// <param name="userService"></param>
         public UserGroupsController(IUserGroupService userGroupService,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserGroupTypeService userGroupTypeService,
             IUserService userService,
             IDepartmentService departmentService)

@@ -5,6 +5,7 @@
 
 export const environment = {
   production: true,
+  showAuthDebugInformation: false,
   fallbackLanguage: 'en-US',
   fallbackLanguageName: 'English',
   clientId: 'OrganizationSpa',
@@ -20,7 +21,7 @@ export const environment = {
     communication: 'prod-datahub-opal-api-communication',
     dataHub: 'prod-datahub-opal-api-query',
     learningCatalog: 'prod-competence-opal-api-learningcatalog',
-    tagging: 'prod-learnapp-opal-api-tagging'
+    tagging: 'prod-learnapp-opal-api-tagging/api'
   },
   site: {
     title: 'System Admin',
@@ -50,6 +51,7 @@ export const environment = {
   ParentDepartmentId: 14350,
   OtherDepartmentId: 25030,
   topDepartmentId: 1,
+  showTechnicalInfo: false,
   firebase: {
     fcmConfig: {
       apiKey: 'AIzaSyAQYaxjtyRu8_BEnG83lyKNbAJo9eNVRRw',
@@ -81,7 +83,8 @@ export const environment = {
     LearnerAppAndroid: 'https://www.opal2.moe.edu.sg/pdplanner/',
     LearnerAppIOS: 'https://www.opal2.moe.edu.sg/pdplanner/',
     LearnerWeb: 'https://www.opal2.moe.edu.sg/app/learner',
-    Report: 'https://www.opal2.moe.edu.sg/report'
+    Report: 'https://www.opal2.moe.edu.sg/report',
+    CSL: 'https://www.opal2.moe.edu.sg/csl'
   },
   userAccounts: {
     enableCreateUserAccountRequest: true,

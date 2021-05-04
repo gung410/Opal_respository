@@ -242,7 +242,7 @@
       border-radius: 5px;
       position: fixed;
       bottom: 0px;
-      width: calc(100% - 84px);
+      width: calc(100% - 80px);
       z-index: 1;
 
       @media only screen and (max-width: $screen-xs-max) {
@@ -252,7 +252,7 @@
       &.ag-body-horizontal-scroll-unfixed {
         position: unset;
         bottom: unset;
-        width: calc(100% - 8px);
+        width: 100%;
         z-index: unset;
       }
     }

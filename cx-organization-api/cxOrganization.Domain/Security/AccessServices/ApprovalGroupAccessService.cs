@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Settings;
 using cxPlatform.Core;
@@ -24,7 +25,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             _accessSettings = accessSettingsOption.Value;
         }
 
-        public AccessStatus CheckReadApprovalGroupAccess(IWorkContext workContext,
+        public AccessStatus CheckReadApprovalGroupAccess(IAdvancedWorkContext workContext,
             ref List<int> userIds,
             ref List<int> parentDepartmentIds)
         {
@@ -45,7 +46,7 @@ namespace cxOrganization.Domain.Security.AccessServices
             return AccessStatus.AccessGranted;
         }
         public async Task<(AccessStatus AccessStatus, List<int> UserIds, List<int> ParentDepartmentIds)> CheckReadApprovalGroupAccessAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> userIds,
             List<int> parentDepartmentIds)
         {

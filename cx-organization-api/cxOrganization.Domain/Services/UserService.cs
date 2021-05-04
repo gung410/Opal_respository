@@ -11,6 +11,7 @@ using cxOrganization.Client;
 using cxOrganization.Client.Account;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.DomainEnums;
@@ -29,7 +30,6 @@ using cxOrganization.Domain.Settings;
 using cxOrganization.Domain.Validators;
 
 using cxPlatform.Client.ConexusBase;
-using cxPlatform.Core;
 using cxPlatform.Core.DatahubLog;
 using cxPlatform.Core.Exceptions;
 using cxPlatform.Core.Extentions;
@@ -46,7 +46,7 @@ namespace cxOrganization.Domain.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private IWorkContext _workContext;
+        private IAdvancedWorkContext _workContext;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
         private readonly IUserTypeRepository _userTypeRepository;
         //private readonly ISecurityHandler _securityHandler;
@@ -84,7 +84,7 @@ namespace cxOrganization.Domain.Services
         private readonly IInternalHttpClientRequestService _internalHttpClientRequestService;
 
         public UserService(IUserRepository userRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             OrganizationDbContext organizationDbContext,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
             IUserTypeRepository userTypeRepository,
@@ -117,8 +117,7 @@ namespace cxOrganization.Domain.Services
             IUserGroupService userGroupService,
             IUGMemberService uGMemberService,
             IServiceScopeFactory serviceScopeFactory,
-            IInternalHttpClientRequestService internalHttpClientRequestService
-            )
+            IInternalHttpClientRequestService internalHttpClientRequestService)
         {
             _userRepository = userRepository;
             _workContext = workContext;
@@ -159,7 +158,7 @@ namespace cxOrganization.Domain.Services
         public ConexusBaseDto InsertUser(
             HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto,
             UserDtoBase userDto,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool isInsertedByImport = false)
         {
             //Pre-checking: make sure the path of hierarchy department is correct
@@ -222,17 +221,55 @@ namespace cxOrganization.Domain.Services
             return reponsingUserDto;
         }
 
+        public void ValidateUserData(UserGenericDto userGenericDto)
+        {
+            var userJsonDynamic = JsonConvert.SerializeObject(userGenericDto.JsonDynamicAttributes);
+
+            var userJsonDynamicDic = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(userJsonDynamic);
+
+            userJsonDynamicDic.TryGetValue(UserJsonDynamicAttributeName.PersonalStorageSize, out var personalStorageSize);
+            userJsonDynamicDic.TryGetValue(UserJsonDynamicAttributeName.SignupReason, out var signupReason);
+
+            if (personalStorageSize is object)
+            {
+                if (int.Parse(personalStorageSize) > 100 || int.Parse(personalStorageSize) < 0)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_USER_PROPERTY_VALIDATION, "personal storage size is not from 1 to 100GBs", cxStudioExceptionType.BadRequest);
+                }
+            }
+
+            if (signupReason is object)
+            {
+                string signupReasonStr = Convert.ToString(signupReason);
+                if (signupReasonStr.Trim().Length > 1000)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_USER_PROPERTY_VALIDATION, "Sign up reason must be less than 1000 characters", cxStudioExceptionType.BadRequest);
+                }
+            }
+
+            if (userGenericDto.EntityStatus.ExpirationDate.HasValue && userGenericDto.EntityStatus.ActiveDate.HasValue)
+            {
+                if (userGenericDto.EntityStatus.ExpirationDate.Value < userGenericDto.EntityStatus.ActiveDate.Value)
+                {
+                    throw new CXValidationException(cxExceptionCodes.ERROR_USER_PROPERTY_VALIDATION, "Account expiry date should be after account creation date.", cxStudioExceptionType.BadRequest);
+                }
+            }
+        }
+
         /// <summary>
-        /// Inserts the user.
+        /// Inserts the user, it should be async, risk to refactor.
         /// </summary>
         /// <param name="hierarchyDepartmentValidationDto"></param>
-        /// <param name="userDto">The userDto.</param>
-        /// <returns>Department.</returns>
+        /// <param name="userDto"></param>
+        /// <param name="skipCheckingEntityVersion"></param>
+        /// <param name="workContext"></param>
+        /// <param name="isAutoArchived"></param>
+        /// <returns></returns>
         public ConexusBaseDto UpdateUser(
             HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto,
             UserDtoBase userDto,
             bool skipCheckingEntityVersion = false,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool? isAutoArchived = null)
         {
             _workContext = workContext ?? _workContext;
@@ -257,15 +294,11 @@ namespace cxOrganization.Domain.Services
             //Map to Department Entity
             var userEntity = _userMappingService.ToUserEntity(parentDepartment, null, entity, userDto, skipCheckingEntityVersion);
 
-            if (userEntity == null) return null;
+            if (userEntity == null)
+            {
+                return null;
+            }
 
-            //in case publish user data to datahub only, no changes of data.
-            userEntity.LastUpdated = _workContext.CorrelationId == Guid.Empty.ToString() && _workContext.RequestId == Guid.Empty.ToString()
-                ? oldEntity.LastUpdated
-                : userEntity.LastUpdated;
-            userEntity.LastUpdatedBy = _workContext.CorrelationId == Guid.Empty.ToString() && _workContext.RequestId == Guid.Empty.ToString()
-                ? oldEntity.LastUpdatedBy
-                : userEntity.LastUpdatedBy;
             var isChangedStatus = userEntity.EntityStatusId != oldEntity.EntityStatusId;
             var isResettingOtp = !isChangedStatus && userDto.ResetOtp == true;
 
@@ -282,34 +315,26 @@ namespace cxOrganization.Domain.Services
             //Until now, we only need to get modified property when entity status is changed. This method should be call before updating entity
             var modifiedProperties = isChangedStatus ? _userRepository.GetModifiedProperties(userEntity) : null;
 
-            if (!(_workContext.CorrelationId == Guid.Empty.ToString() && _workContext.RequestId == Guid.Empty.ToString()))
-            {
-                //Call update user Entity
-                userEntity = UpdateUser(userEntity);
-            }
+            //Call update user Entity
+            userEntity = UpdateUser(userEntity);
+
             var userIsMoved = userEntity.DepartmentId != oldEntity.DepartmentId;
             userEntity.Department = userEntity.Department ?? parentDepartment;
             oldEntity.Department = userIsMoved ? _departmentRepository.GetById(oldEntity.DepartmentId) : userEntity.Department;
 
-            if (!(_workContext.CorrelationId == Guid.Empty.ToString() && _workContext.RequestId == Guid.Empty.ToString()))
-            {
-                userEntity = SendCommunicationMessagesWhenInsertOrUpdateUser(oldEntity, userEntity, isResettingOtp, userDto.OtpValue, userDto.OtpExpiration);
-                SetUserGroupOwnerUser(userEntity);
-            }
+            userEntity = SendCommunicationMessagesWhenInsertOrUpdateUser(oldEntity, userEntity, isResettingOtp, userDto.OtpValue, userDto.OtpExpiration);
+            SetUserGroupOwnerUser(userEntity);
 
             //Map entity to Dto for return later
             //We keep original ssn from UserEntity for logging
             var repondingUserDto = _userMappingService.ToUserDto(userEntity, keepEncryptedSsn: true);
 
-            if (!(_workContext.CorrelationId == Guid.Empty.ToString() && _workContext.RequestId == Guid.Empty.ToString()))
+            //Insert domain event
+            var updatedUserDto = repondingUserDto as UserDtoBase;
+            if (updatedUserDto != null)
             {
-                //Insert domain event
-                var updatedUserDto = repondingUserDto as UserDtoBase;
-                if (updatedUserDto != null)
-                {
-                    updatedUserDto.OtpValue = userDto.OtpValue;
-                    _userMappingService.HideOrDecryptSSN(updatedUserDto);
-                }
+                updatedUserDto.OtpValue = userDto.OtpValue;
+                _userMappingService.HideOrDecryptSSN(updatedUserDto);
             }
 
             var hierarchyInfo = GetEventHierarchyInfo(userEntity, parentDepartment);
@@ -343,12 +368,7 @@ namespace cxOrganization.Domain.Services
                     parentDepartment,
                     repondingUserDto,
                     hierarchyInfo,
-                    EventType.UPDATED,
-                    null,
-                    false,
-                    null,
-                    _workContext.CorrelationId == Guid.Empty.ToString()
-                        && _workContext.RequestId == Guid.Empty.ToString());
+                    EventType.UPDATED);
             }
 
             if (userIsMoved)
@@ -364,6 +384,29 @@ namespace cxOrganization.Domain.Services
                 InsertUserEvent(userEntity, parentDepartment, moveDepartmentInfo, hierarchyInfo, EventType.USER_MOVED);
             }
             return repondingUserDto;
+        }
+
+        /// <summary>
+        /// Send users information to the queue as update event to support sync data to other modules
+        /// </summary>
+        /// <param name="userEntity"></param>
+        /// <param name="userDtoBase"></param>
+        public void SyncUserDataToDataHub(UserEntity userEntity, UserDtoBase userDtoBase)
+        {
+            var parentDepartment = _departmentRepository.GetDepartmentByIdIncludeHd(
+                userEntity.DepartmentId,
+                userEntity.OwnerId,
+                userEntity.CustomerId ?? 0);
+
+            var hierarchyInfo = GetEventHierarchyInfo(userEntity, parentDepartment);
+
+            InsertUserEvent(
+                userEntity,
+                parentDepartment,
+                userDtoBase,
+                hierarchyInfo,
+                EventType.UPDATED,
+                isSyncDataOnly: true);
         }
 
         private void SetUserGroupOwnerUser(UserEntity userEntity)
@@ -436,12 +479,13 @@ namespace cxOrganization.Domain.Services
         }
 
 
-        private void InsertUserEvent(UserEntity userEntity,
+        private void InsertUserEvent(
+            UserEntity userEntity,
             DepartmentEntity parentDepartment,
             object additionalInformation,
             object hierarchyInfo,
             EventType eventType,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool isInsertedByImport = false,
             bool? isAutoArchived = null,
             bool isSyncDataOnly = false)
@@ -472,30 +516,26 @@ namespace cxOrganization.Domain.Services
             var objectType = userEntity.ArchetypeId == null || userEntity.ArchetypeId == (int)ArchetypeEnum.Unknown
                 ? "unknown_archetype_user"
                 : ((ArchetypeEnum)userEntity.ArchetypeId).ToString();
-            if (isSyncDataOnly)
+
+            var actionName = isSyncDataOnly
+                ? $"{eventType.ToEventName(objectType)}-syncdata" 
+                : $"{eventType.ToEventName(objectType)}";
+
+            Task.Run(async delegate
             {
-                Task.Run(async delegate
-                {
-                    var logEventMessage = new LogEventMessage($"{eventType.ToEventName(objectType)}-syncdata", workContext ?? _workContext)
-                        .EntityId(userEntity.UserId.ToString())
-                        .Entity("domain", "user")
-                        .WithBody(body);
-                    _datahubLogger.WriteEventLog(logEventMessage);
-                    await Task.Delay(100);
-                });
-            }
-            else
-            {
-                Task.Run(async delegate
-                {
-                    var logEventMessage = new LogEventMessage($"{eventType.ToEventName(objectType)}", workContext ?? _workContext)
-                        .EntityId(userEntity.UserId.ToString())
-                        .Entity("domain", "user")
-                        .WithBody(body);
-                    _datahubLogger.WriteEventLog(logEventMessage);
-                    await Task.Delay(100);
-                });
-            }
+                var logEventMessage = new LogEventMessage(actionName, workContext ?? _workContext)
+                    .EntityId(userEntity.UserId.ToString())
+                    .Entity("domain", "user")
+                    .WithBody(body);
+                _datahubLogger.WriteEventLog(logEventMessage);
+
+                /*
+                 * In case update/sync data for thousands of users, it would be failed to send the event to datahub,
+                 * we have tried some ways to fix it but no help yet.
+                 * If you know something that may help, please help us to give it a try
+                 */
+                await Task.Delay(100);
+            });
         }
 
         private dynamic GetEventHierarchyInfo(UserEntity userEntity, DepartmentEntity parentDepartment)
@@ -1179,7 +1219,7 @@ namespace cxOrganization.Domain.Services
             bool? filterOnSubDepartment = null,
             List<List<int>> multiUserGroupFilters = null,
             List<List<string>> multiUserTypeExtIdFilters = null,
-            IWorkContext currentWorkContext = null,
+            IAdvancedWorkContext currentWorkContext = null,
             bool checkDepartmentPermission = false,
             List<string> emails = null,
             bool ignoreCheckReadUserAccess = false,
@@ -1451,16 +1491,16 @@ namespace cxOrganization.Domain.Services
             List<string> departmentExtIds = null,
             List<List<int>> multiUserGroupFilters = null,
             List<List<string>> multiUserTypeExtIdFilters = null,
-            IWorkContext currentWorkContext = null,
+            IAdvancedWorkContext currentWorkContext = null,
             List<string> emails = null,
             bool ignoreCheckReadUserAccess = false,
             bool includeOwnUserGroups = false,
             DateTime? activeDateBefore = null,
             DateTime? activeDateAfter = null,
             List<int> exceptUserIds = null,
-            bool isCrossOrganizationalUnit = false,
             List<string> systemRolePermissions = null,
-            string token = null) where T : ConexusBaseDto
+            string token = null,
+            int? currentDepartmentIdForSorting = null) where T : ConexusBaseDto
         {
             if (currentWorkContext != null)
                 _workContext = currentWorkContext;
@@ -1478,7 +1518,7 @@ namespace cxOrganization.Domain.Services
                 if (parentDepartmentIds.IsNullOrEmpty())
                     return new PaginatedList<T>();
             }
-            if (!ignoreCheckReadUserAccess && !isCrossOrganizationalUnit)
+            if (!ignoreCheckReadUserAccess)
             {
                 var userAccessChecking = await _userAccessService.CheckReadUserAccessAsync(workContext: _workContext,
                     ownerId: ownerId,
@@ -1524,13 +1564,6 @@ namespace cxOrganization.Domain.Services
                 : IncludeUserTypeOption.None;
 
             var includeUGMemberOption = IncludeUgMemberOption.None;
-
-            if (isCrossOrganizationalUnit)
-            {
-                // 15813 - Testing only, should be replaced by ExtId
-                var toBelowDepartmentIds = _hierarchyDepartmentService.GetAllDepartmentIdsFromAHierachyDepartmentToBelow(15813);
-                parentDepartmentIds.AddRange(toBelowDepartmentIds);
-            }
 
             if (systemRolePermissions is object)
             {
@@ -1610,7 +1643,8 @@ namespace cxOrganization.Domain.Services
                 includeOwnUserGroups: includeOwnUserGroups,
                 entityActiveDateAfter: activeDateAfter,
                 entityActiveDateBefore: activeDateBefore,
-                exceptUserIds: exceptUserIds);
+                exceptUserIds: exceptUserIds,
+                currentDepartmentIdForSorting: currentDepartmentIdForSorting);
 
             _logger.LogDebug($"End retrieving UserEntities with page index {pagingEntity.PageIndex}, page size {pagingEntity.PageSize}. {pagingEntity.Items.Count} of {pagingEntity.TotalItems} has been returned.");
 
@@ -1674,9 +1708,9 @@ namespace cxOrganization.Domain.Services
             return paginatedDtos;
         }
 
-        public async Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex)
+        public async Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex, int pageSize)
         {
-            return await _userRepository.GetAllUsers(pageIndex);
+            return await _userRepository.GetAllUsers(pageIndex, pageSize);
         }
 
         public PaginatedList<T> SearchActors<T>(int ownerId = 0,
@@ -2552,7 +2586,7 @@ namespace cxOrganization.Domain.Services
             return pagingEntity.ToPaginatedListDto(mapEntityToDtoFunc, dtdEntitiesOfUsers, ugMembersOfUsers);
         }
 
-        public void ManuallySendWelcomeEmail(IWorkContext workContext,
+        public void ManuallySendWelcomeEmail(IAdvancedWorkContext workContext,
             List<int> userIds = null,
             List<string> userExtIds = null,
             List<int> parentDepartmentIds = null,
@@ -2692,7 +2726,7 @@ namespace cxOrganization.Domain.Services
             _logger.LogInformation(logInfoBuilder.ToString());
 
         }
-        public void SchedulySendWelcomeEmail(IWorkContext workContext, DateTime? entityActiveDateBefore = null, DateTime? entityActiveDateAfter = null)
+        public void SchedulySendWelcomeEmail(IAdvancedWorkContext workContext, DateTime? entityActiveDateBefore = null, DateTime? entityActiveDateAfter = null)
 
         {
             if (workContext != null)
@@ -2854,7 +2888,7 @@ namespace cxOrganization.Domain.Services
             int departmentId,
             bool syncToIdp = true,
             EntityStatusReasonEnum? entityStatusReason = null,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool? isAutoArchived = null)
         {
             _workContext = workContext ?? _workContext;
@@ -2904,7 +2938,7 @@ namespace cxOrganization.Domain.Services
             return updatedUser;
         }
 
-        public async Task ProcessAutoArchiveUser(IWorkContext workContext)
+        public async Task ProcessAutoArchiveUser(IAdvancedWorkContext workContext)
         {
             if (workContext != null)
             {

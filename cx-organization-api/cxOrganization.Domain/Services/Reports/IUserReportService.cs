@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
 
@@ -8,25 +9,25 @@ namespace cxOrganization.Domain.Services.Reports
 {
     public interface IUserReportService
     {
-        Task<PaginatedList<UserEventLogInfo>> GetPaginatedUserEventLogInfosAsync(IWorkContext workContext, List<UserEventType> eventTypes, DateTime? eventCreatedAfter,
+        Task<PaginatedList<UserEventLogInfo>> GetPaginatedUserEventLogInfosAsync(IAdvancedWorkContext workContext, List<UserEventType> eventTypes, DateTime? eventCreatedAfter,
             DateTime? eventCreatedBefore, int pageSize, int pageIndex, bool getDepartment, bool getRole);
 
-        Task<List<UserEventLogInfo>> GetUserEventLogInfosAsync(IWorkContext workContext, List<UserEventType> eventTypes,
+        Task<List<UserEventLogInfo>> GetUserEventLogInfosAsync(IAdvancedWorkContext workContext, List<UserEventType> eventTypes,
             DateTime? eventCreatedAfter, DateTime? eventCreatedBefore, bool getDepartment, bool getRole);
 
-        Task<UserStatisticsDto> GetUserStatisticsAsync(IWorkContext workContext,
+        Task<UserStatisticsDto> GetUserStatisticsAsync(IAdvancedWorkContext workContext,
             List<EntityStatusEnum> accountStatisticsEntityStatuses,
             List<UserEventType> eventStatisticsTypes,
             bool getOnBoardingStatistics,
             DateTime? fromDate, DateTime? toDate);
 
-        Task<int> CountUserEventAsync(IWorkContext workContext,
+        Task<int> CountUserEventAsync(IAdvancedWorkContext workContext,
             List<UserEventType> eventTypes,
             DateTime? eventCreatedAfter,
             DateTime? eventCreatedBefore);
 
         Task<List<ApprovingOfficerInfo>> GetApprovingOfficerInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             bool getRole, bool getDepartment,
@@ -37,7 +38,7 @@ namespace cxOrganization.Domain.Services.Reports
              List<EntityStatusEnum> userEntityStatuses);
 
         Task<PaginatedList<ApprovingOfficerInfo>> GetPaginatedApprovingOfficerInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool filterOnSubDepartment,
             bool getRole, bool getDepartment,
@@ -50,7 +51,7 @@ namespace cxOrganization.Domain.Services.Reports
             int pageIndex);
 
         Task<PaginatedList<UserAccountDetailsInfo>> GetPaginatedUserAccountDetailsInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -73,7 +74,7 @@ namespace cxOrganization.Domain.Services.Reports
             string orderBy = null);
 
         Task<List<UserAccountDetailsInfo>> GetUserAccountDetailsInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -94,7 +95,7 @@ namespace cxOrganization.Domain.Services.Reports
             string orderBy = null);
 
         Task<List<PrivilegedUserAccountInfo>> GetPrivilegedUserAccountInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,
@@ -116,7 +117,7 @@ namespace cxOrganization.Domain.Services.Reports
             bool? needDepartmentPathName = null);
 
         Task<PaginatedList<PrivilegedUserAccountInfo>> GetPaginatedPrivilegedUserAccountInfosAsync(
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             List<int> parentDepartmentIds,
             bool? filterOnSubDepartment = null,
             List<EntityStatusEnum> userEntityStatuses = null,

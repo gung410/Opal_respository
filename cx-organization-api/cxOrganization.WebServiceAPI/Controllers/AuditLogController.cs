@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Business.Queries.ApprovingOfficer;
 using cxOrganization.Domain.Common;
@@ -27,7 +28,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     {
         private readonly ILogger<AuditLogController> _logger;
         private readonly IDataHubQueryApiClient _dataHubQueryApiClient;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserService _userService;
         private readonly IUserGroupService _userGroupService;
         private readonly SearchApprovingOfficersQueryHandler _searchApprovingOfficersQueryHandler;
@@ -36,7 +37,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public AuditLogController(
             ILogger<AuditLogController> logger,
             IDataHubQueryApiClient dataHubQueryApiClient,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserService> userService,
             IUserGroupService userGroupService,
             SearchApprovingOfficersQueryHandler searchApprovingOfficersQueryHandler,

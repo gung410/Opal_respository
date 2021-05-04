@@ -44,7 +44,7 @@
           "Serilog.Sinks.RollingFile": "3.3.0",
           "Swashbuckle.AspNetCore": "5.5.1",
           "Swashbuckle.AspNetCore.Newtonsoft": "5.5.1",
-          "cx.datahub.scheduling.jobs.shared": "1.0.33",
+          "cx.datahub.scheduling.jobs.shared": "1.0.34",
           "cxOrganization.Adapter": "1.0.0",
           "cxOrganization.Business": "1.0.0",
           "cxOrganization.Domain": "1.0.0",
@@ -396,14 +396,14 @@
           "lib/netstandard2.1/CsvHelper.dll": {}
         }
       },
-      "cx.datahub.scheduling.jobs.shared/1.0.33": {
+      "cx.datahub.scheduling.jobs.shared/1.0.34": {
         "dependencies": {
           "Hangfire.Core": "1.7.11"
         },
         "runtime": {
           "lib/netstandard2.0/cx.datahub.scheduling.jobs.shared.dll": {
-            "assemblyVersion": "1.0.33.0",
-            "fileVersion": "1.0.33.0"
+            "assemblyVersion": "1.0.34.0",
+            "fileVersion": "1.0.34.0"
           }
         },
         "compile": {
@@ -5751,12 +5751,12 @@
       "path": "csvhelper/15.0.5",
       "hashPath": "csvhelper.15.0.5.nupkg.sha512"
     },
-    "cx.datahub.scheduling.jobs.shared/1.0.33": {
+    "cx.datahub.scheduling.jobs.shared/1.0.34": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-xmCA7KDZv9pY1VT+yuyr8m2lFmeD6KWpOTkCcwPOu0IIplzaqiGFgIZxMgDj5swJ530g9s8EJhrStul57msNxw==",
-      "path": "cx.datahub.scheduling.jobs.shared/1.0.33",
-      "hashPath": "cx.datahub.scheduling.jobs.shared.1.0.33.nupkg.sha512"
+      "sha512": "sha512-AWjMV8QIj8Qn33IA/Gg6adU8fViJl2R7Q3VB061PBtupacGmBf35GyU+EYiqKYY+dQ+jOE4O2oqKI6tYltA31Q==",
+      "path": "cx.datahub.scheduling.jobs.shared/1.0.34",
+      "hashPath": "cx.datahub.scheduling.jobs.shared.1.0.34.nupkg.sha512"
     },
     "cxPlatform.Core/1.0.84-beta": {
       "type": "package",

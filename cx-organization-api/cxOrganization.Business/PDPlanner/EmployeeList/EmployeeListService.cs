@@ -1,6 +1,7 @@
 ﻿using cxOrganization.Business.Extensions;
 using cxOrganization.Client.UserGroups;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Enums;
@@ -57,7 +58,7 @@ namespace cxOrganization.Business.PDPlanner.EmployeeList
         private readonly AppSettings _appSettings;
 
         private readonly OrganizationDbContext _organizationDbContext;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserAccessService _userAccessService;
         private readonly IHierarchyDepartmentRepository _hierarchyDepartmentRepository;
         private readonly IUserTypeRepository _userTypeRepository;
@@ -65,7 +66,7 @@ namespace cxOrganization.Business.PDPlanner.EmployeeList
 
 
         public EmployeeListService(ILogger<EmployeeListService> logger,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             OrganizationDbContext organizationDbContext,
             IUserAccessService userAccessService,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository,
@@ -417,8 +418,8 @@ namespace cxOrganization.Business.PDPlanner.EmployeeList
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                //Console.WriteLine(e);
+                throw e;
             }
         }
 

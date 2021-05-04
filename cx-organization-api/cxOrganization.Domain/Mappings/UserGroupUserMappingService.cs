@@ -1,5 +1,6 @@
 ﻿using System;
 using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxPlatform.Client.ConexusBase;
 using cxPlatform.Core;
@@ -11,8 +12,8 @@ namespace cxOrganization.Domain.Mappings
     /// </summary>
     public class UserGroupUserMappingService : IUserGroupUserMappingService
     {
-        private readonly IWorkContext _workContext;
-        public UserGroupUserMappingService(IWorkContext workContext)
+        private readonly IAdvancedWorkContext _workContext;
+        public UserGroupUserMappingService(IAdvancedWorkContext workContext)
         {
             _workContext = workContext;
         }

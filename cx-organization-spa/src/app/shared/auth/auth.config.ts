@@ -19,7 +19,7 @@ export const authConfig: AuthConfig = {
   // The first three are defined by OIDC. The 4th is a usecase-specific one
   scope: 'profile cxprofile openid cxDomainInternalApi userManagement',
   disablePKCE: false,
-  showDebugInformation: true,
+  showDebugInformation: environment.showAuthDebugInformation,
   sessionChecksEnabled: true,
   sessionCheckIntervall: 2 * 1000,
   skipIssuerCheck: true

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using cxOrganization.Client.Customers;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Services;
 using cxPlatform.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -17,13 +18,13 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class CustomerController : ApiControllerBase
     {
         private readonly ICustomerService _customerService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         /// <summary>
         /// Contructor
         /// </summary>
         /// <param name="customerService"></param>
         /// <param name="workContext"></param>
-        public CustomerController(ICustomerService customerService, IWorkContext workContext)
+        public CustomerController(ICustomerService customerService, IAdvancedWorkContext workContext)
         {
             _customerService = customerService;
             _workContext = workContext;

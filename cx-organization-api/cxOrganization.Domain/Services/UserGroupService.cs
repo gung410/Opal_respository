@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using cxEvent.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Dtos.UserGroups;
@@ -22,7 +23,7 @@ namespace cxOrganization.Domain.Services
     public class UserGroupService : IUserGroupService
     {
         private readonly IUserGroupRepository _userGroupRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         //private readonly ISecurityHandler _securityHandler;
         private readonly OrganizationDbContext _organizationDbContext;
         private readonly IUserGroupMappingService _userGroupMappingService;
@@ -31,7 +32,7 @@ namespace cxOrganization.Domain.Services
         private readonly IDatahubLogger _datahubLogger;
 
         public UserGroupService(IUserGroupRepository userGroupRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             //ISecurityHandler securityHandler,
             OrganizationDbContext organizationDbContext,
             IUserGroupMappingService userGroupMappingService,
@@ -49,17 +50,17 @@ namespace cxOrganization.Domain.Services
             _datahubLogger = datahubLogger;
         }
 
-        public ConexusBaseDto InsertUserGroup(HierarchyDepartmentValidationSpecification validationSpecification, UserGroupDtoBase usergroup)
+        public ConexusBaseDto InsertUserGroup(HierarchyDepartmentValidationSpecification validationSpecification, UserGroupDtoBase usergroup, IAdvancedWorkContext workContext = null)
         {
             if (validationSpecification != null)
             {
                 _departmentValidator.ValidateHierarchyDepartment(validationSpecification);
             }
             //Do the validation
-            var entity = _userGroupValidator.Validate(usergroup);
+            var entity = _userGroupValidator.Validate(usergroup, workContext ?? _workContext);
 
             //Map to User Entity
-            var userGroupEntity = _userGroupMappingService.ToUserGroupEntity(entity, usergroup);
+            var userGroupEntity = _userGroupMappingService.ToUserGroupEntity(entity, usergroup, workContext ?? _workContext);
 
             //Check security
             //_securityHandler.AllowAccess(departmentEntity, true);

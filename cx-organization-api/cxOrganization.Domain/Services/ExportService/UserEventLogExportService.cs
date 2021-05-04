@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services.Reports;
@@ -17,7 +18,7 @@ namespace cxOrganization.Domain.Services.ExportService
     {
         public UserEventLogExportService(
             ILogger<UserManagementExportService> logger,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IOptions<AppSettings> appSettingOptions,
             IDepartmentService departmentService,
             IDepartmentTypeRepository departmentTypeRepository,

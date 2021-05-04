@@ -23,6 +23,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.HttpClients;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Services
 {
@@ -30,7 +31,7 @@ namespace cxOrganization.Domain.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserInfoService> _logger;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly AppSettings _appSettings;
         private IOptions<AppSettings> _appSettingOption;
         private readonly IUserCryptoService _userCryptoService;
@@ -43,7 +44,7 @@ namespace cxOrganization.Domain.Services
 
         public UserInfoService(IUserRepository userRepository,
             ILogger<UserInfoService> logger,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserCryptoService userCryptoService,
             IUserAccessService userAccessService,
             IOptions<AppSettings> appSettingOption,

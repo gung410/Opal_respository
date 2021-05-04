@@ -7,6 +7,7 @@ using cxOrganization.Client;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserGroups;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -30,7 +31,7 @@ namespace cxOrganization.Business.JsonAnalyzer
         private readonly IDepartmentService _schoolService;
         private readonly IDepartmentService _classService;
         private readonly ILevelService _levelService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IClassMemberService _classMemberService;
         private readonly IUserTypeService _userTypeService;
         private readonly IUGMemberService _uGMemberService;
@@ -39,7 +40,7 @@ namespace cxOrganization.Business.JsonAnalyzer
         private readonly OrganizationDbContext _organizationUnitOfWork;
         private readonly IDepartmentService _departmentService;
         private readonly ICommonService _commonService;
-        public ImportSchoolnAnalyzer(IWorkContext workContext,
+        public ImportSchoolnAnalyzer(IAdvancedWorkContext workContext,
             IClassMemberService classMemberService,
             Func<ArchetypeEnum, IUGMemberService> uGMemberService,
             ILevelService levelService,

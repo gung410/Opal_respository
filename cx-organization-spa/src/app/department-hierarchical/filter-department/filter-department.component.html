@@ -10,7 +10,13 @@
       <button class="action-item cx-btn-secondary" (click)="onClear()">
         Clear Filter
       </button>
-      <button class="action-item cx-btn" (click)="onApply()">Apply</button>
+      <button
+        class="action-item cx-btn"
+        (click)="onApply()"
+        [disabled]="isDisabledApplyButton && !hasExistedFilteredData"
+      >
+        Apply
+      </button>
     </div>
   </div>
   <div class="content">

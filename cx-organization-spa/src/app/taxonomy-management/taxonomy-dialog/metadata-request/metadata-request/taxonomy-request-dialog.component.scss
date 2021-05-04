@@ -68,6 +68,10 @@
     }
   }
 
+  .mat-dialog-content.no-scrolling {
+    overflow: hidden;
+  }
+
   .mat-dialog-actions {
     padding: 0px;
     border-top: 1px solid #d8dce6;
@@ -84,6 +88,10 @@
       }
 
       &.suggestion {
+        justify-content: flex-end;
+      }
+
+      &.readonly {
         justify-content: flex-end;
       }
     }

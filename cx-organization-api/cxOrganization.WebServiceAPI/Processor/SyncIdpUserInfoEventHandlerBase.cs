@@ -1,4 +1,5 @@
-﻿using cxOrganization.Domain.Dtos.Users;
+﻿using cxOrganization.Domain.AdvancedWorkContext;
+using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Mappings;
 using cxOrganization.Domain.Repositories;
 using cxOrganization.Domain.Services;
@@ -98,7 +99,7 @@ namespace cxOrganization.WebServiceAPI.Processor
                 }
                 _logger.LogInformation($"Sync 'User-Edit' operation started. User external id: ({eventData.Routing.EntityId})");
 
-                var workContext = scope.ServiceProvider.GetService<IWorkContext>();
+                var workContext = scope.ServiceProvider.GetService<IAdvancedWorkContext>();
                 workContext.IsEnableFiltercxToken = false;
 
                 workContext.UserIdCXID = eventData.Payload?.Identity?.UserId;

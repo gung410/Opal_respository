@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using cxPlatform.Core.Exceptions;
 using cxPlatform.Core.Extentions.Request;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -29,6 +31,19 @@ namespace cxOrganization.WebServiceAPI.Extensions
                 }
             }
             throw new CXValidationException(cxExceptionCodes.ERROR_CXTOKEN_INVALID);
+        }
+
+        public static string GetXOriginalAuth(this HttpRequest request)
+        {
+            var xOrinalAuth = request.GetHeaderValue(HeaderKeys.XOriginalAuth);
+            if (string.IsNullOrEmpty(xOrinalAuth))
+            {
+                var authHeaderValue = request.Headers["Authorization"];
+                var authHeader = AuthenticationHeaderValue.Parse(authHeaderValue);
+                if (authHeader.Scheme == JwtBearerDefaults.AuthenticationScheme)
+                    xOrinalAuth = authHeaderValue;
+            }
+            return xOrinalAuth;
         }
 
         public static string GetUserIdFromCXID(this HttpContext context)

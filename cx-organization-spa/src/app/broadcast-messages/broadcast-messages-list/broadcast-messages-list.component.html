@@ -1,18 +1,4 @@
 <div class="broadcast-messages-list">
-  <div class="fluid-container menu-action">
-    <div class="menu-action__left">
-    </div>
-    <div class="menu-action__right">
-      <button
-        *ngIf="isCurrentUserAllowToMakeActions"
-        class="cx-btn create-btn"
-        (click)="createNewBroadcastMessage()"
-      >
-        {{ 'Common.Button.CreateNew' | translate }}
-      </button>
-    </div>
-  </div>
-
   <div>
     <ag-grid-angular
       *ngIf="agGridConfig"
@@ -26,6 +12,7 @@
       [rowData]="agGridConfig.rowData"
       [rowMultiSelectWithClick]="true"
       [rowSelection]="'multiple'"
+      [overlayNoRowsTemplate]="'No Result'"
       [frameworkComponents]="agGridConfig.frameworkComponents"
       [suppressRowClickSelection]="true"
       [suppressMenuHide]="true"

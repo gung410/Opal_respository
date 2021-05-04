@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Validators;
@@ -11,7 +12,7 @@ namespace cxOrganization.Domain.Services
     public interface IUserGroupService
     {
         ConexusBaseDto InsertUserGroup(HierarchyDepartmentValidationSpecification validationSpecification,
-            UserGroupDtoBase usergroup);
+            UserGroupDtoBase usergroup, IAdvancedWorkContext workContext = null);
 
         ConexusBaseDto UpdateUserGroup(HierarchyDepartmentValidationSpecification validationSpecification,
             UserGroupDtoBase usergroup);

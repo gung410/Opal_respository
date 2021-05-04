@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.UserGroups;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -16,12 +17,12 @@ namespace cxOrganization.Domain.Mappings
     public class ExternalUserGroupMappingService : IUserGroupMappingService
     {
         private readonly IDepartmentRepository _departmentRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IPropertyService _propertyService;
 
         public ExternalUserGroupMappingService(
             IDepartmentRepository departmentRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IPropertyService propertyService)
         {
             _departmentRepository = departmentRepository;
@@ -82,7 +83,7 @@ namespace cxOrganization.Domain.Mappings
             }
             return null;
         }
-        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto)
+        public UserGroupEntity ToUserGroupEntity(UserGroupEntity groupEntity, UserGroupDtoBase groupDto, IAdvancedWorkContext workContext = null)
         {
             var externalUserGroupDto = groupDto as ExternalUserGroupDto;
 

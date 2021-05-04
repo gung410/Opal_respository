@@ -16,6 +16,7 @@
   <div
     [formGroup]="metadataRequestForm"
     class="mat-dialog-content"
+    [ngClass]="{ 'no-scrolling': isAnyDropdownOpened() }"
   >
     <div class="content-item">
       <span class="item-label">
@@ -34,10 +35,7 @@
       >
       </opal-select>
     </div>
-    <div
-      *ngIf="mode === 'suggestion'"
-      class="content-item"
-    >
+    <div *ngIf="mode === 'suggestion'" class="content-item">
       <span class="item-label">
         <b>Service scheme *</b>
       </span>
@@ -89,9 +87,11 @@
       *ngIf="metadataRequest.metadataType && selectedMetadataType"
       class="content-item"
     >
-      <span class="item-label"><b>
+      <span class="item-label"
+        ><b>
           {{ metadataRequest.metadataType }}
-        </b></span>
+        </b></span
+      >
       <opal-select
         [(ngModel)]="metadataRequest.metadata"
         formControlName="metadata"
@@ -139,10 +139,7 @@
         <span>{{ metadataRequest.currentMetadataAndAbbreviation }}</span>
       </div>
     </div>
-    <div
-      *ngIf="!isDeleteAction"
-      class="content-item"
-    >
+    <div *ngIf="!isDeleteAction" class="content-item">
       <span class="item-label"><b>New metadata name *</b></span>
       <opal-textarea
         matInput
@@ -177,10 +174,7 @@
       >
       </opal-select>
     </div>
-    <div
-      *ngIf="!isDeleteAction"
-      class="content-item"
-    >
+    <div *ngIf="!isDeleteAction" class="content-item">
       <span class="item-label"><b>Abbreviation *</b></span>
       <opal-textarea
         matInput
@@ -212,15 +206,13 @@
       >
       </opal-textarea>
     </div>
-    <div
-      *ngIf="mode === 'detail' || mode === 'readonly'"
-      class="content-item"
-    >
+    <div *ngIf="mode === 'detail' || mode === 'readonly'" class="content-item">
       <span class="item-label"><b>Comment by level 1 *</b></span>
       <opal-textarea
         matInput
         [isDisabledTextArea]="
-          isDisabledLevel1ApprovalOfficerComment || mode === 'readonly'
+          isDisabledLevel1ApprovalOfficerComment ||
+          (mode === 'readonly' && !isVisibleToApprove && !isVisibleToReject)
         "
         [(ngModel)]="metadataRequest.level1ApprovalOfficerComment"
         formControlName="level1ApprovalOfficerComment"
@@ -233,15 +225,13 @@
       >
       </opal-textarea>
     </div>
-    <div
-      *ngIf="mode === 'detail' || mode === 'readonly'"
-      class="content-item"
-    >
+    <div *ngIf="mode === 'detail' || mode === 'readonly'" class="content-item">
       <span class="item-label"><b>Comment by level 2 *</b></span>
       <opal-textarea
         matInput
         [isDisabledTextArea]="
-          isDisabledLevel2ApprovalOfficerComment || mode === 'readonly'
+          isDisabledLevel2ApprovalOfficerComment ||
+          (mode === 'readonly' && !isVisibleToApprove && !isVisibleToReject)
         "
         [(ngModel)]="metadataRequest.level2ApprovalOfficerComment"
         formControlName="level2ApprovalOfficerComment"
@@ -257,10 +247,7 @@
   </div>
   <div class="mat-dialog-actions">
     <ng-container [ngSwitch]="mode">
-      <div
-        *ngSwitchCase="'detail'"
-        class="buttons-container detail"
-      >
+      <div *ngSwitchCase="'detail'" class="buttons-container detail">
         <div class="left-buttons">
           <button
             class="cx-btn white-btn"
@@ -299,15 +286,39 @@
           </button>
         </div>
       </div>
-      <div
-        *ngSwitchCase="'suggestion'"
-        class="buttons-container suggestion"
-      >
-        <button
-          class="cx-btn white-btn"
-          mat-button
-          (click)="onCancelClicked()"
-        >
+      <div *ngSwitchCase="'readonly'" class="buttons-container readonly">
+        <div class="left-buttons">
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            (click)="onCancelClicked()"
+          >
+            {{ 'Common.Button.Cancel' | translate }}
+          </button>
+        </div>
+        <div class="right-buttons">
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            *ngIf="isVisibleToReject"
+            [disabled]="!isEnableToReject"
+            (click)="onRejectClicked()"
+          >
+            {{ 'User_Account_Page.User_Context_Menu.Reject' | translate }}
+          </button>
+          <button
+            class="cx-btn white-btn"
+            mat-button
+            *ngIf="isVisibleToApprove"
+            [disabled]="!isEnableToApprove"
+            (click)="onApproveClicked()"
+          >
+            {{ 'User_Account_Page.User_Context_Menu.Approve' | translate }}
+          </button>
+        </div>
+      </div>
+      <div *ngSwitchCase="'suggestion'" class="buttons-container suggestion">
+        <button class="cx-btn white-btn" mat-button (click)="onCancelClicked()">
           {{ 'Common.Button.Cancel' | translate }}
         </button>
         <button

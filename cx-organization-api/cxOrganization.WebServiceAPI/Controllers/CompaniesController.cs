@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using cxOrganization.Client.Departments;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Services;
 using cxOrganization.Domain.Validators;
@@ -22,7 +23,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
     public class CompaniesController : ApiControllerBase
     {
         private readonly IDepartmentService _companydepartmentService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupService _userGroupService;
         private readonly IUserService _userService;
 
@@ -36,7 +37,7 @@ namespace cxOrganization.WebServiceAPI.Controllers
         public CompaniesController(Func<ArchetypeEnum, IDepartmentService> departmentService, 
             Func<ArchetypeEnum, IUserGroupService> userGroupService,
             Func<ArchetypeEnum, IUserService> userService,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _companydepartmentService = departmentService(ArchetypeEnum.Company);
             _workContext = workContext;

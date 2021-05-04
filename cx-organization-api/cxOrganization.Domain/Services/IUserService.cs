@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using cxOrganization.Client;
+﻿using cxOrganization.Client;
 using cxOrganization.Client.Account;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.DomainEnums;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
@@ -11,7 +9,9 @@ using cxOrganization.Domain.Enums;
 using cxOrganization.Domain.Settings;
 using cxOrganization.Domain.Validators;
 using cxPlatform.Client.ConexusBase;
-using cxPlatform.Core;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace cxOrganization.Domain.Services
 {
@@ -23,19 +23,32 @@ namespace cxOrganization.Domain.Services
         /// <param name="hierarchyDepartmentValidationDto"></param>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        ConexusBaseDto InsertUser(HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto, UserDtoBase userDto, IWorkContext workContext = null, bool isInsertedByImport = false);
+        ConexusBaseDto InsertUser(HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto, UserDtoBase userDto, IAdvancedWorkContext workContext = null, bool isInsertedByImport = false);
+
         /// <summary>
         /// Update user from user dto
         /// </summary>
         /// <param name="hierarchyDepartmentValidationDto"></param>
         /// <param name="userDto"></param>
+        /// <param name="skipCheckingEntityVersion"></param>
+        /// <param name="workContext"></param>
+        /// <param name="isAutoArchived"></param>
         /// <returns></returns>
         ConexusBaseDto UpdateUser(
             HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto,
             UserDtoBase userDto,
             bool skipCheckingEntityVersion = false,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool? isAutoArchived = null);
+
+
+        /// <summary>
+        /// Send users information to the queue as update event to support sync data to other modules
+        /// </summary>
+        /// <param name="userEntity"></param>
+        /// <param name="userDtoBase"></param>
+        public void SyncUserDataToDataHub(UserEntity userEntity, UserDtoBase userDtoBase);
+
         List<UserDtoBase> GetUsers(HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto, bool includeSubUsers = false);
         /// <summary>
         /// Get userdto
@@ -51,7 +64,9 @@ namespace cxOrganization.Domain.Services
         /// <returns></returns>
         ConexusBaseDto GetUser(int userId);
 
-        Task ProcessAutoArchiveUser(IWorkContext workContext);
+        void ValidateUserData(UserGenericDto userGenericDto);
+
+        Task ProcessAutoArchiveUser(IAdvancedWorkContext workContext);
         List<MemberDto> GetUserMemberships(HierarchyDepartmentValidationSpecification hierarchyDepartmentValidationDto, int userId, ArchetypeEnum userArcheType, ArchetypeEnum useTypeArcheType, ArchetypeEnum departmentTypeArcheType);
         List<MemberDto> GetUserMemberships(int userId,
             ArchetypeEnum userArcheType,
@@ -70,7 +85,7 @@ namespace cxOrganization.Domain.Services
             bool countUser = false, List<EntityStatusEnum> countUserEntityStatuses = null,
             List<string> jsonDynamicData = null);
 
-        Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex);
+        Task<PaginatedList<UserEntity>> GetAllUsers(int pageIndex, int pageSize);
 
         /// <summary>
         /// Get User HierachyDepartment Identities
@@ -117,7 +132,7 @@ namespace cxOrganization.Domain.Services
             int departmentId,
             bool syncToIdp = true,
             EntityStatusReasonEnum? entityStatusReason = null,
-            IWorkContext workContext = null,
+            IAdvancedWorkContext workContext = null,
             bool? isAutoArchived = null);
         Task<ConexusBaseDto> UnarchiveAsync(int userId, bool syncToIdp = true, EntityStatusReasonEnum? entityStatusReason = null);
         /// <summary>
@@ -238,7 +253,7 @@ namespace cxOrganization.Domain.Services
             bool? filterOnSubDepartment = null,
             List<List<int>> multiUserGroupFilters = null,
             List<List<string>> multiUserTypeExtIdFilters = null,
-            IWorkContext currentWorkContext = null,
+            IAdvancedWorkContext currentWorkContext = null,
             bool checkDepartmentPermission = false,
             List<string> emails = null,
             bool ignoreCheckReadUserAccess = false,
@@ -354,7 +369,7 @@ namespace cxOrganization.Domain.Services
             List<int> exceptUserIds = null);
         dynamic BuildCommunicationCommandRecipient(UserDtoBase executorUser, UserDtoBase objectiveUser, SendEmailToDto sendEmailToDto);
 
-        void ManuallySendWelcomeEmail(IWorkContext workContext,
+        void ManuallySendWelcomeEmail(IAdvancedWorkContext workContext,
             List<int> userIds = null,
             List<string> userExtIds = null,
             List<int> parentDepartmentIds = null,
@@ -417,17 +432,17 @@ namespace cxOrganization.Domain.Services
             List<string> departmentExtIds = null,
             List<List<int>> multiUserGroupFilters = null,
             List<List<string>> multiUserTypeExtIdFilters = null,
-            IWorkContext currentWorkContext = null,
+            IAdvancedWorkContext currentWorkContext = null,
             List<string> emails = null,
             bool ignoreCheckReadUserAccess = false,
             bool includeOwnUserGroups = false,
             DateTime? activeDateBefore = null,
             DateTime? activeDateAfter = null,
             List<int> exceptUserIds = null,
-            bool isCrossOrganizationalUnit = false,
             List<string> systemRolePermissions = null,
-            string token = null) where T : ConexusBaseDto;
-        void SchedulySendWelcomeEmail(IWorkContext workContext, DateTime? entityActiveDateBefore = null,
+            string token = null,
+            int? currentDepartmentIdForSorting = null) where T : ConexusBaseDto;
+        void SchedulySendWelcomeEmail(IAdvancedWorkContext workContext, DateTime? entityActiveDateBefore = null,
             DateTime? entityActiveDateAfter = null);
 
         Task<CountUserResultDto> CountUserGroupByAsync(int ownerId,

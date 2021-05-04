@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Extensions;
@@ -27,7 +28,7 @@ namespace cxOrganization.Domain.Security.AccessServices
 
       
 
-        protected UserAccessResult CheckUserGroupAccessInternal(IWorkContext workContext,
+        protected UserAccessResult CheckUserGroupAccessInternal(IAdvancedWorkContext workContext,
             Dictionary<string, AccessSettingElement> accessSettingGroup,
             List<int> userIds,
             List<int> parentDepartmentIds)
@@ -104,7 +105,7 @@ namespace cxOrganization.Domain.Security.AccessServices
                 executor: executorUser);
 
         }
-        protected async Task<UserAccessResult> CheckUserGroupAccessInternalAsync(IWorkContext workContext,
+        protected async Task<UserAccessResult> CheckUserGroupAccessInternalAsync(IAdvancedWorkContext workContext,
            Dictionary<string, AccessSettingElement> accessSettingGroup,
             List<int> userIds,
             List<int> parentDepartmentIds)

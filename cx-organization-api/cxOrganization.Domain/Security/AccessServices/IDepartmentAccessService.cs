@@ -3,6 +3,7 @@ using cxOrganization.Client.Departments;
 using cxPlatform.Core;
 using System.Threading.Tasks;
 using cxOrganization.Domain.Dtos.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 
 namespace cxOrganization.Domain.Security.AccessServices
 {
@@ -14,6 +15,6 @@ namespace cxOrganization.Domain.Security.AccessServices
         /// </summary>
         /// <param name="workContext"></param>
         /// <returns></returns>
-        Task<(HierachyDepartmentIdentityDto TopHierachyDepartmentIdentity, List<HierarchyInfo> AccessibleHierarchyInfos)> GetTopHierarchyDepartmentsByWorkContext(IWorkContext workContext);
+        Task<(HierachyDepartmentIdentityDto TopHierachyDepartmentIdentity, List<HierarchyInfo> AccessibleHierarchyInfos)> GetTopHierarchyDepartmentsByWorkContext(IAdvancedWorkContext workContext);
     }
 }

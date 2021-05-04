@@ -1,4 +1,5 @@
 ﻿using cxOrganization.Client;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -11,7 +12,7 @@ namespace cxOrganization.Domain.Validators
     public class LearnerValidator : UserValidator
     {
         public LearnerValidator(IUserRepository userRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             ICustomerRepository customerRepository,
             IOwnerRepository ownerRepository,
             IHierarchyDepartmentRepository hierarchyDepartmentRepository)
@@ -30,7 +31,7 @@ namespace cxOrganization.Domain.Validators
                 throw new CXValidationException(cxExceptionCodes.ERROR_ARCHETYPE_IS_NOT_SUPPORTED);
             }
 
-            UserEntity userEntity = base.Validate(parentDepartment, dto, currentOwnerId);
+            UserEntity userEntity = base.Validate(parentDepartment, dto, currentOwnerId, currentCustomerId);
             var userDto = (LearnerDto)dto;
 
             //User.ArchetypeId must be Learner

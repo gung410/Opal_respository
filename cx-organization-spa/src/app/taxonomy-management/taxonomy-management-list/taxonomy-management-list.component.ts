@@ -338,7 +338,7 @@ export class TaxonomyManagementListComponent
 
     if (
       !nonAcceptedRequestStatus.includes(representRequestStatus) &&
-      (this.hasPermissionToEditBasesOn() ||
+      (this.hasPermissionToEdit() ||
         this.checkIfHasPermissionToApprove() ||
         this.checkIfHasPermissionToReject() ||
         this.checkIfHasPermissionToComplete())
@@ -359,7 +359,7 @@ export class TaxonomyManagementListComponent
           },
 
           cellRendererParams: {
-            hasPermissionToEdit: this.hasPermissionToEditBasesOn(),
+            hasPermissionToEdit: this.hasPermissionToEdit(),
             hasPermissionToApprove: this.checkIfHasPermissionToApprove(),
             hasPermissionToReject: this.checkIfHasPermissionToReject(),
             hasPermissionToComplete: this.checkIfHasPermissionToComplete(),
@@ -372,7 +372,7 @@ export class TaxonomyManagementListComponent
     return columnDef;
   }
 
-  private hasPermissionToEditBasesOn(): boolean {
+  private hasPermissionToEdit(): boolean {
     switch (this.currentTab) {
       case TaxonomyRequestStatusLabel.PendingLevel1:
         return this.currentUser.hasPermission(
@@ -382,10 +382,6 @@ export class TaxonomyManagementListComponent
         return this.currentUser.hasPermission(
           SAM_PERMISSIONS.MetadataEditPending2nd
         );
-      case TaxonomyRequestStatusLabel.Rejected:
-      case TaxonomyRequestStatusLabel.Completed:
-      case TaxonomyRequestStatusLabel.Approved:
-        return true;
       default:
         return false;
     }

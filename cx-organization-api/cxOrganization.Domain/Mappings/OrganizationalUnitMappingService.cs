@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using cxOrganization.Client.Departments;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.DepartmentType;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
@@ -17,11 +18,11 @@ namespace cxOrganization.Domain.Mappings
     public class OrganizationalUnitMappingService : DepartmentMappingService
     {
         private readonly IDepartmentTypeRepository _departmentTypeRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private List<ArchetypeEnum> DepartmentTypeArcheTypes = new List<ArchetypeEnum> { ArchetypeEnum.Level, ArchetypeEnum.OrganizationalUnitType };
 
         public OrganizationalUnitMappingService(IPropertyService propertyService, IDepartmentTypeRepository  departmentTypeRepository,
-            IWorkContext workContext, ILanguageRepository languageRepository) 
+            IAdvancedWorkContext workContext, ILanguageRepository languageRepository) 
             : base(propertyService, languageRepository, departmentTypeRepository)
         {
             _departmentTypeRepository = departmentTypeRepository;

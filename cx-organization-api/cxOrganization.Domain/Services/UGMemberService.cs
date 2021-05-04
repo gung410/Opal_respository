@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using cxEvent.Client;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.ApiClient;
 using cxOrganization.Domain.Common;
 using cxOrganization.Domain.Entities;
@@ -29,7 +30,7 @@ namespace cxOrganization.Domain.Services
         private readonly IUGMemberValidator _uGMemberValidator;
         private readonly IUGMemberRepository _uGMemberRepository;
         private readonly IEventLogDomainApiClient _eventClientService;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
 
         private const string EventObjectName = "UGMEMBER";
         public UGMemberService(
@@ -41,7 +42,7 @@ namespace cxOrganization.Domain.Services
             IUGMemberValidator uGMemberValidator,
             IUGMemberRepository uGMemberRepository,
             IEventLogDomainApiClient eventClientService,
-            IWorkContext workContext)
+            IAdvancedWorkContext workContext)
         {
             _organizationDbContext = organizationDbContext;
             _userGroupValidator = userGroupValidator;

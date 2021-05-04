@@ -15,6 +15,7 @@ namespace cxOrganization.Domain.Settings
         public string AuthorityUrl { get; set; }
         public string ApiBaseUrl { get; set; }
         public string PortalAPI { get; set; }
+        public bool IsCrossOrganizationalUnit { get; set; }
         public int CurrentUserId { get; set; }
         public bool CheckSingleUserAccess { get; set; }
         public string FallBackLanguageCode { get; set; }
@@ -44,7 +45,7 @@ namespace cxOrganization.Domain.Settings
         public int? TimeZoneOffset { get; set; }
         public string DateTimeDisplayFormat { get; set; }
         public bool EncryptSSN { get; set; }
-
+        public bool AwsKmsEnabled { get; set; }
         public bool HideSSN { get; set; }
         public bool HideDateOfBirth { get; set; }
         public List<string> ApprovingOfficerUserTypeExtIds { get; set; }

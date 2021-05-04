@@ -6,6 +6,7 @@ using cxOrganization.Business.Exceptions;
 using cxOrganization.Business.Extensions;
 using cxOrganization.Client;
 using cxOrganization.Domain;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Dtos.Users;
 using cxOrganization.Domain.Extensions;
 using cxOrganization.Domain.Services;
@@ -21,7 +22,7 @@ namespace cxOrganization.Business.DeactivateOrganization.DeactivateUser
     {
         private readonly ILogger _logger;
 
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         /// <summary>
         /// User service to handle specific archetype user
         /// </summary>
@@ -42,7 +43,7 @@ namespace cxOrganization.Business.DeactivateOrganization.DeactivateUser
         private readonly ILoginServiceUserService _loginServiceUserService;
         private readonly IUGMemberService _ugMemberService;
 
-        public DeactivateUserService(IWorkContext workContext,
+        public DeactivateUserService(IAdvancedWorkContext workContext,
             Func<ArchetypeEnum, IUserService> userServiceFunc,
             OrganizationDbContext organizationUnitOfWork,
             IUserService userService,

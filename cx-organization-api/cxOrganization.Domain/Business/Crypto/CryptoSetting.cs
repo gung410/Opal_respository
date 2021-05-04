@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using cxOrganization.Domain.Settings;
+using System.Text;
 
 namespace cxOrganization.Domain.Business.Crypto
 {
@@ -6,11 +7,13 @@ namespace cxOrganization.Domain.Business.Crypto
     {
         private byte[] _nonceAsBytes;
         private byte[] _keyAsBytes;
+        public readonly AwsKmsEncyption AwsKmsEncyption;
 
-        public CryptoSetting(string nonce, string key)
+        public CryptoSetting(string nonce, string key, AwsKmsEncyption awsKmsEncyption)
         {
             Nonce = nonce;
             Key = key;
+            AwsKmsEncyption = awsKmsEncyption;
         }
 
         public string Nonce { get; private set; }

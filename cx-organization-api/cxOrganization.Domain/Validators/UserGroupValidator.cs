@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using cxOrganization.Client;
 using cxOrganization.Client.UserGroups;
+using cxOrganization.Domain.AdvancedWorkContext;
 using cxOrganization.Domain.Entities;
 using cxOrganization.Domain.Repositories;
 using cxPlatform.Client.ConexusBase;
@@ -15,11 +16,11 @@ namespace cxOrganization.Domain.Validators
     public class UserGroupValidator : IUserGroupValidator
     {
         private readonly IOwnerRepository _ownerRepository;
-        private readonly IWorkContext _workContext;
+        private readonly IAdvancedWorkContext _workContext;
         private readonly IUserGroupRepository _userGroupRepository;
 
         public UserGroupValidator(IOwnerRepository ownerRepository,
-            IWorkContext workContext,
+            IAdvancedWorkContext workContext,
             IUserGroupRepository userGroupRepository)
         {
             _ownerRepository = ownerRepository;
@@ -27,7 +28,7 @@ namespace cxOrganization.Domain.Validators
             _userGroupRepository = userGroupRepository;
         }
 
-        public virtual UserGroupEntity Validate(ConexusBaseDto dto)
+        public virtual UserGroupEntity Validate(ConexusBaseDto dto, IAdvancedWorkContext workContext = null)
         {
             var groupDto = (UserGroupDtoBase)dto;
 
@@ -41,7 +42,9 @@ namespace cxOrganization.Domain.Validators
                 throw new CXValidationException(cxExceptionCodes.VALIDATION_OWNERID_NOT_FOUND);
             }
 
-            if (groupDto.Identity.CustomerId != _workContext.CurrentCustomerId)
+            var currentCustomerId = workContext is object ? workContext.CurrentCustomerId : _workContext.CurrentCustomerId;
+
+            if (groupDto.Identity.CustomerId != currentCustomerId)
             {
                 throw new CXValidationException(cxExceptionCodes.VALIDATION_CUSTOMER_ID_NOT_MATCH);
             }
@@ -124,7 +127,7 @@ namespace cxOrganization.Domain.Validators
 
         public virtual UserGroupEntity Validate(int userGroupId)
         {
-            if(userGroupId <= 0)
+            if (userGroupId <= 0)
                 throw new CXValidationException(cxExceptionCodes.ERROR_IDENTITY_ID_IS_REQUIRED);
 
             var userGroupEntity = _userGroupRepository.GetById(userGroupId);

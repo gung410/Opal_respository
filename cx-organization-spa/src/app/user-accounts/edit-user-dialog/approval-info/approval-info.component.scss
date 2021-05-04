@@ -70,3 +70,7 @@
     overflow: auto;
   }
 }
+
+::ng-deep .ng-dropdown-panel-items {
+  max-height: 150px !important;
+}

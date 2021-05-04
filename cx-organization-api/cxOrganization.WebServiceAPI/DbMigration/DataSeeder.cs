@@ -11,7 +11,6 @@ namespace cxOrganization.WebServiceAPI.DbMigration
     {
         public static void UseDatabaseInitializer(this IApplicationBuilder app)
         {
-
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
